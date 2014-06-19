@@ -148,7 +148,7 @@ HTTP Body when there is data
         "date": 1402815600000,
         "ptax": "0.0000",
         "rid": "10000000002",
-        "expenseReport": null
+        "expenseReport": "vhnyqRVKW0tTUiq6"
       },
       {
         "id": "539ceb490364da3e933db72b",
