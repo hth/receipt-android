@@ -5,11 +5,40 @@ There two ways to test through command line
 - <code>curl</code> using mac
 - <code>httpie</code> on windows or mac. https://github.com/jakubroztocil/httpie and helpful command can be found  https://gist.github.com/BlakeGardner/5586954
 
+
+![Mobile Api Architecture](/architecture/Mobile-Architecture.png)
+
+###Check if site is up and running###
+
+Following call will make sure if site is up and running
+
+    curl -ik -X GET https://67.148.60.37:9443/receipt-mobile/healthCheck.json
+
+HTTP Response success
+
+    HTTP/1.1 200 OK
+    Server: Apache-Coyote/1.1
+    ......
+
+HTTP Body
+
+    {"working":true}
+
+If there is no response then site is not working. This call should return a response very quickly.
+
 ##User Authentication##
 ____________
 
 Use following <code>curl</code> or <code>httpie</code> with your <code>username</code> and <code>password</code>.<br>
 **Note**: Application should make secure <code>HTTPS</code> calls, only <code>HTTPS</code> calls will be supported and responded. Any other call will get exception.
+
+Curl command options used 
+
+    -i include header
+    -k insecure call over ssl
+    -X request type
+    -H header
+    -d Data
 
 QA Secure login for getting <code>X-R-AUTH</code> code from user's account
 
@@ -28,7 +57,6 @@ HTTP Response Header
     X-Content-Type-Options: nosniff
     X-R-MAIL: test@receiptofi.com
     X-R-AUTH: $2a$15$x9M5cc3mR24Ns4wgL47gaut/3.pM2tW9J.0SWeLroGbi2q8OU2k4C
-    Set-Cookie: id="test@receiptofi.com|$2a$15$x9M5cc3mR24Ns4wgL47gaut/3.pM2tW9J.0SWeLroGbi2q8OU2k4C"; Version=1; Domain=localhost; Max-Age=1814400; Expires=Sun, 06-Jul-2014 04:09:38 GMT; Path=/receipt-mobile
     Content-Length: 0
     Date: Sun, 15 Jun 2014 04:09:38 GMT
 
@@ -40,27 +68,80 @@ Values from <code>X-R-MAIL</code> and <code>X-R-AUTH</code> has to be supplied i
     Decoded X-R-AUTH code:  $2a$15$x9M5cc3mR24Ns4wgL47gaut/3.pM2tW9J.0SWeLroGbi2q8OU2k4C
     Encoded X-R-AUTH code:  %242a%2415%24x9M5cc3mR24Ns4wgL47gaut%2F3.pM2tW9J.0SWeLroGbi2q8OU2k4C
 
+##Social Authentication and Signup##
+______________________
 
-##API Call##
+API call <code>POST</code> path <code>/receipt-mobile/authenticate.json</code> to signup or login through social
+
+	http https://67.148.60.37:9443/receipt-mobile/authenticate.json < ~/Downloads/pid.json
+
+Curl command gives connection refusal, prefer to use above <code>http</code> command
+
+	curl -ik -X POST -H "Content-Type: application/json" -d '{"pid": "GOOGLE","at": "ya29"}' https://67.148.60.37:9443/receipt-mobile/authenticate.json
+
+	curl -i  -X POST -H "Content-Type: application/json" -d '{"pid": "GOOGLE","at": "ya29"}' http://localhost:9090/receipt-mobile/authenticate.json
+
+Sample <code>pid.json</code> file
+
+	{
+      "pid": "FACEBOOK",
+      "at": "XXXX-SOME-ACCESS-TOKEN-XXXX"
+    }
+
+When login or signup fails for invalid token, which probably results in <code>401</code> HTTP error in message
+
+	HTTP/1.1 200 OK
+	...............
+
+    {
+        "error": {
+            "httpStatus": "UNAUTHORIZED",
+            "httpStatusCode": 401,
+            "reason": "denied by provider GOOGLE",
+            "systemError": "AUTHENTICATION",
+            "systemErrorCode": "400"
+        }
+    }
+
+When there is some system issue. <code>Error</code> would be reported as below. Though these messages are not to be displayed to user, it could be used as reference by the Mobile App.
+
+	HTTP/1.1 200 OK
+	................
+	{
+        "error": {
+            "reason": "could not connect to server",
+            "systemError": "SEVERE",
+            "systemErrorCode": "500"
+        }
+    }
+
+
+Successful response when credentials are validated. <code>X-R-AUTH</code> is encoded string.
+
+	HTTP/1.1 200 OK
+	...........
+    X-R-AUTH: %242fsdfsdfa%LtFxE8jVIijuHbm5r2b2m.fgdfgdfgdfg%2FiDvy
+    X-R-MAIL: realemailaddress@youknowho.com
+    X-XSS-Protection: 1; mode=block
+
+    {
+        "X-R-AUTH": "%242a%2415%24y%CCCCCC-XXXXXXXXXXXXXXX",
+        "X-R-MAIL": "100007981713206"
+    }
+
+
+##API Calls##
 ________
 
-###Check if site is up and running###
+###Logout user and login again###
 
-Following call will make sure if site is up and running
+Upon log out, <code>X-R-AUTH</code> should be deleted and <code>X-R-MAIL</code> remains intact. Logout action complete by re-directing user to login page.
 
-    curl -ik -X GET https://67.148.60.37:9443/receipt-mobile/healthCheck.json
-    
-HTTP Response success
+Different scenarios when user tries to login again
 
-    HTTP/1.1 200 OK
-    Server: Apache-Coyote/1.1
-    ......
-    
-HTTP Body
+- If user enters correct credentials then <code>X-R-AUTH</code> should be restored and everything is available as it was before logout. Account remains as is with all the receipts information in the Mobile App.
 
-    {"working":true}
-
-If there is no response then site is not working. This call should return a response very quickly. 
+- If user enters different credentials than existing <code>X-R-MAIL</code>, Mobile App should drop all the tables and recreate as if the user is login for first time. Start with saving new <code>X-R-MAIL</code> and <code><X-R-AUTH</code>
 
 ###Check if user has access###
 
@@ -70,8 +151,10 @@ To query use following <code>curl</code> or <code>httpie</code>. (replace XXX wi
 Check if user has access using <code>X-R-AUTH</code> code
 
     curl -i -X GET -H "X-R-MAIL: XXX" -H "X-R-AUTH: XXX" http://localhost:9090/receipt-mobile/api/hasAccess.json
-    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%2415%24x9M5cc3mR24Ns4wgL47gaut%2F3.pM2tW9J.0SWeLroGbi2q8OU2k4C" https://67.148.60.37:9443/receipt-mobile/api/hasAccess.json
-    http GET http://localhost:9090/receipt-mobile/api/hasAccess.json X-R-MAIL:test@receiptofi.com X-R-AUTH:%242a%2415%24x9M5cc3mR24Ns4wgL47gaut%2F3.pM2tW9J.0SWeLroGbi2q8OU2k4C
+
+    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%241" https://67.148.60.37:9443/receipt-mobile/api/hasAccess.json
+
+    http GET http://localhost:9090/receipt-mobile/api/hasAccess.json X-R-MAIL:test@receiptofi.com X-R-AUTH:%242a%241
     
 HTTP Header response when success
 
@@ -94,10 +177,153 @@ HTTP Header response when access denied **HTTP/1.1 401 Unauthorized**
     X-XSS-Protection: 1; mode=block
     X-Frame-Options: DENY
     X-Content-Type-Options: nosniff
-    Content-Type: text/html;charset=utf-8
+    Content-Type: text/html;charset=UTF-8
     Content-Language: en
     Content-Length: 975
     Date: Sun, 15 Jun 2014 04:29:39 GMT
+
+###Updates avaliable 
+
+API call <code>GET</code> path <code>receipt-mobile/api/hasRecentUpdate/2014-08-07T10:47:32.173Z.json</code>
+
+Note: Date format is ISO 8601.
+Different types of updates supported are:
+
+	RECEIPT,
+	MILEAGE,
+	PROFILE,
+	UPLOAD_DOCUMENT
+
+***Success***
+
+When there are updates avaliable, response will contain what updates are available
+
+	{
+	  "accountUpdates": [
+	    {
+	      "earliest": "2014-08-10T03:47:32.173-07:00",
+	      "update": "UPLOAD_DOCUMENT"
+	    },
+	    {
+	      "earliest": "2014-08-08T00:00:00.000-07:00",
+	      "update": "RECEIPT"
+	    }
+	  ]
+	}
+	
+* First scenario
+
+	When APP installed for first time, and/or user logs in for first time
+
+	In this scenario there will be no last fetched data available. Hence the process to fetch would be 
+
+  		1. Create a variable containing Datetime before fetching data from server.
+  		2. Fetch receipts for the month, as we want the data to be available to user as soon as possible. 
+  		3. After that, fetch receipts for the year to date.
+  		4. Upon success update the cache holding information of last updated with Datetime in first bullet point. Now everytime, a request can check the last fetched date
+
+* Second scenario
+
+	If there is last fetched Datetime available, pass that value as ISO 8601 to the above URL. Before calling the above URL, hold the new Datetime. Upon successful response, replace the old fetch Datetime with new Datetime. 
+
+	Response will contain what all data has changed. As per the response, APP should make those calls to fetch the data. Above list shows the possible data set to look for.
+
+###Upload Document
+
+API call <code>POST</code> path <code>/receipt-mobile/api/upload.json</code>
+
+Note: Max file upload size - 10 MB
+
+    curl -i  -X POST -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%241" -F "qqfile=@/Absolute/Location/File.jpg" http://localhost:9090/receipt-mobile/api/upload.json
+
+    curl -ik -X POST -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%241" -F "qqfile=@/Absolute/Location/File.jpg" https://67.148.60.37:9443/receipt-mobile/api/upload.json
+
+**Success**
+
+When document <code>original.jpg</code> is uploaded successfully, response returned with the name of the document uploaded and number of unprocessed documents
+
+    {
+      "blobId": "53e439597830a10417794f64",
+      "unprocessedDocuments": {
+        "unprocessedCount": 21
+      },
+      "uploadedDocumentName": "original.jpg"
+    }
+
+**Map image blobId with filename in App Gallery**
+
+* First scenario
+
+    Take photo. Save photo to gallery. Use iOS/Android naming convention. Stack new image in Wi-Fi queue. Upload image to server.
+    On success response, above JSON is returned.
+
+    Local App DB
+
+    Make a entry and map blobId with Filenames in APP DB
+
+        blobId | Filename in gallery
+        -------|---------------------
+        53e439597830a10417794f64 | IMG_1425.JPG
+        53e439597830a10417794f55 | 20140808_89897.PNG
+
+* Second scenario
+
+    For new device
+
+    APP DB does not contain map entry for new device. when entry not found, download the file using blobId. Save the file to gallery with iOS/Andorid naming convention.
+    Then map the saved file to blobId as above
+
+
+* Third scenario
+
+    When user deletes the file from gallery.
+
+    For receipt detailed review. BlobId is returned. Find the corresponding file in gallery. When file size is '0', then load the image from server.
+    When images is loaded in the APP, add the same file with iOS/Android naming convention in gallery. When file is added to gallery, write the
+    filename and blobId to local APP DB.
+
+**Error**
+
+If <code>qqfile</code> missing pr file is empty
+
+	{
+      "error": {
+        "systemErrorCode": "300",
+        "systemError": "DOCUMENT_UPLOAD",
+        "reason": "qqfile name missing in request or no file uploaded"
+      }
+    }
+
+If failed to upload document will include which document failed to upload with error message
+
+	{
+	  "error": {
+		"systemErrorCode": "300",
+		"systemError": "DOCUMENT_UPLOAD",
+		"reason": "failed document upload",
+		"document": "File.jpg"
+	  }
+	}
+
+Other errors could be
+
+	{
+	  "error": {
+		"systemErrorCode": "300",
+		"systemError": "DOCUMENT_UPLOAD",
+		"reason": "multipart failure for document upload"
+	  }
+	}
+
+###Get unprocessed file count
+
+API call <code>/receipt-mobile/api/unprocessed.json</code>
+
+	curl -i -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%241"  http://localhost:9090/receipt-mobile/api/unprocessed.json
+
+	{
+      "unprocessedCount": 20
+    }
 
 ###Get receipts
 
@@ -105,26 +331,26 @@ HTTP Header response when access denied **HTTP/1.1 401 Unauthorized**
 
 API call <code>/receipt-mobile/api/allReceipts.json</code>
 
-    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%2415%24x9M5cc3mR24Ns4wgL47gaut%2F3.pM2tW9J.0SWeLroGbi2q8OU2k4C" https://67.148.60.37:9443/receipt-mobile/api/allReceipts.json
+    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%241" https://67.148.60.37:9443/receipt-mobile/api/allReceipts.json
     
 **To get Receipts from start of the year** 
 
 API call <code>/receipt-mobile/api/ytdReceipts.json</code>
 
-    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%2415%24x9M5cc3mR24Ns4wgL47gaut%2F3.pM2tW9J.0SWeLroGbi2q8OU2k4C" https://67.148.60.37:9443/receipt-mobile/api/ytdReceipts.json
+    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%241" https://67.148.60.37:9443/receipt-mobile/api/ytdReceipts.json
 
 **To get Receipts for this month**
 
 API call <code>/receipt-mobile/api/thisMonthReceipts.json</code>
 
-    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%2415%24x9M5cc3mR24Ns4wgL47gaut%2F3.pM2tW9J.0SWeLroGbi2q8OU2k4C" https://67.148.60.37:9443/receipt-mobile/api/thisMonthReceipts.json
+    curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%241" https://67.148.60.37:9443/receipt-mobile/api/thisMonthReceipts.json
     
 HTTP Header response
 
     HTTP/1.1 200 OK
     Server: Apache-Coyote/1.1
     
-HTTP Body when there is data
+HTTP Body when there is data. Note: Date format is ISO8601 format
 
     [
       {
@@ -145,7 +371,7 @@ HTTP Body when there is data
             "orientation": 90
           }
         ],
-        "date": 1402815600000,
+        "date": "2014-07-03T18:00:00.000+0000",
         "ptax": "0.0000",
         "rid": "10000000002",
         "expenseReport": "vhnyqRVKW0tTUiq6"
@@ -170,7 +396,7 @@ HTTP Body when there is data
             "orientation": 90
           }
         ],
-        "date": 1402786020000,
+          "date": "2014-06-28T04:00:00.000+0000",
         "ptax": "0.085610",
         "rid": "10000000002",
         "expenseReport": null
