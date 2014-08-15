@@ -1,6 +1,5 @@
 receipt-mobile
 ==============
-
 There two ways to test through command line
 - <code>curl</code> using mac
 - <code>httpie</code> on windows or mac. https://github.com/jakubroztocil/httpie and helpful command can be found  https://gist.github.com/BlakeGardner/5586954
@@ -186,7 +185,7 @@ HTTP Header response when access denied **HTTP/1.1 401 Unauthorized**
 
 As soon as user logs in for the first time and when APP has noticed there is no Device ID registered/saved internally, APP should make a call to register the device
 
-API call <code>POST</code> path <code>curl -i -X POST -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" -H "X-R-DID: Unique-Device-Id" http://localhost:9090/receipt-mobile/api/register.json</code>
+API call <code>POST</code> path <code>curl -ik -X POST -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" -H "X-R-DID: Unique-Device-Id" https://receiptofi.com:9443/receipt-mobile/api/register.json</code>
 
 ***Success***
 
@@ -200,7 +199,7 @@ This call should always return the same response below.
 
 API below will get all the updates available. Currently it just gets "Receipt" updates, but in future it will get "Profile", "Mileage", "Uploaded Document" updates. When device is not registred, this API will register the device too. It would be better not to use this API for registering the device.
 
-API call <code>GET</code> path <code>curl -i -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" -H "X-R-DID: Unique-Device-Id" http://localhost:9090/receipt-mobile/api/update.json</code>
+API call <code>GET</code> path <code>curl -ik -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" -H "X-R-DID: Unique-Device-Id" https://receiptofi.com:9443/receipt-mobile/api/update.json</code>
 
 Different types of updates supported are:
 
