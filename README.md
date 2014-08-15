@@ -181,12 +181,27 @@ HTTP Header response when access denied **HTTP/1.1 401 Unauthorized**
     Content-Language: en
     Content-Length: 975
     Date: Sun, 15 Jun 2014 04:29:39 GMT
+    
+###Register device 
+
+As soon as user logs in for the first time and when APP has noticed there is no Device ID registered/saved internally, APP should make a call to register the device
+
+API call <code>POST</code> path <code>curl -i -X POST -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" -H "X-R-DID: Unique-Device-Id" http://localhost:9090/receipt-mobile/api/register.json</code>
+
+***Success***
+
+This call should always return the same response below. 
+- If the device is not registered, it will register the device and then return the response below. 
+- If device is registered then it still returns the same response because device is registered.
+
+	{"registered":true}
 
 ###Updates avaliable 
 
-API call <code>GET</code> path <code>receipt-mobile/api/hasRecentUpdate/2014-08-07T10:47:32.173Z.json</code>
+API below will get all the updates available. Currently it just gets "Receipt" updates, but in future it will get "Profile", "Mileage", "Uploaded Document" updates. When device is not registred, this API will register the device too. It would be better not to use this API for registering the device.
 
-Note: Date format is ISO 8601.
+API call <code>GET</code> path <code>curl -i -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" -H "X-R-DID: Unique-Device-Id" http://localhost:9090/receipt-mobile/api/update.json</code>
+
 Different types of updates supported are:
 
 	RECEIPT,
@@ -196,37 +211,39 @@ Different types of updates supported are:
 
 ***Success***
 
-When there are updates avaliable, response will contain what updates are available
+When there are no updates avaliable, response will contain empty receipts list
+
+	{"receipts":[]}
+	
+When there are updates avaliable, response will contain receipts list ordered by Receipt Date
 
 	{
-	  "accountUpdates": [
+	  "receipts": [
 	    {
-	      "earliest": "2014-08-10T03:47:32.173-07:00",
-	      "update": "UPLOAD_DOCUMENT"
-	    },
-	    {
-	      "earliest": "2014-08-08T00:00:00.000-07:00",
-	      "update": "RECEIPT"
+	      "id": "53edc24030040bbe580c7566",
+	      "total": 1.0,
+	      "bizName": {
+	        "name": "Costco"
+	      },
+	      "bizStore": {
+	        "address": "Sunnyvale, CA, USA",
+	        "phone": "(408) 000-0001"
+	      },
+	      "notes": null,
+	      "files": [
+	        {
+	          "blobId": "53edc21530040bbe580c755d",
+	          "sequence": 0,
+	          "orientation": 90
+	        }
+	      ],
+	      "date": 1407517201000,
+	      "ptax": "0.0000",
+	      "rid": "10000000011",
+	      "expenseReport": null
 	    }
 	  ]
 	}
-	
-* First scenario
-
-	When APP installed for first time, and/or user logs in for first time
-
-	In this scenario there will be no last fetched data available. Hence the process to fetch would be 
-
-  		1. Create a variable containing Datetime before fetching data from server.
-  		2. Fetch receipts for the month, as we want the data to be available to user as soon as possible. 
-  		3. After that, fetch receipts for the year to date.
-  		4. Upon success update the cache holding information of last updated with Datetime in first bullet point. Now everytime, a request can check the last fetched date
-
-* Second scenario
-
-	If there is last fetched Datetime available, pass that value as ISO 8601 to the above URL. Before calling the above URL, hold the new Datetime. Upon successful response, replace the old fetch Datetime with new Datetime. 
-
-	Response will contain what all data has changed. As per the response, APP should make those calls to fetch the data. Above list shows the possible data set to look for.
 
 ###Upload Document
 
