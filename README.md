@@ -1,4 +1,4 @@
-receipt-mobile
+receipt-mobile 
 ==============
 There two ways to test through command line
 - <code>curl</code> using mac
