@@ -1,0 +1,8 @@
+<resources>
+
+    <color name="screen_background">#F8F8F8</color>
+    <color name="login_screen_blue">#007AFF</color>
+    <color name="login_screen_green">#55D76A</color>
+    <color name="login_screen_bg">#E4E4E4</color>
+
+</resources>
