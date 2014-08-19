@@ -39,7 +39,7 @@ public class LoginActivity extends ParentActivity {
         userName.setOnFocusChangeListener(edittextListner);
         password.setOnFocusChangeListener(edittextListner);
 
-        signupText.setText(Html.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font> </u>, it's free!"));
+        signupText.setText(Html.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font></u>, it's free!"));
     }
 
 
@@ -54,7 +54,7 @@ public class LoginActivity extends ParentActivity {
             } else {
                 String input = ((EditText) v).getText().toString();
                 if (input != null && input.length() == 0) {
-                    int id = ((EditText) v).getId();
+                    int id = v.getId();
                     if (id == R.id.userName) {
                         ((EditText) v).setHint("Email");
                     } else if (id == R.id.password) {
