@@ -1,16 +1,22 @@
 package com.receiptofi.android.http;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.Header;
 
 public class HTTPutils {
 
@@ -28,7 +34,7 @@ public class HTTPutils {
 			throws Exception {
 
 		HttpClient client = new DefaultHttpClient();
-		HttpPost httpPost = new HttpPost(URL);
+		HttpPost httpPost = new HttpPost(URLEncoder.encode(URL, "UTF-8"));
 
 		httpPost.setEntity(new UrlEncodedFormEntity(params));
 		HttpResponse response = client.execute(httpPost);
@@ -41,7 +47,7 @@ public class HTTPutils {
 			responseBuffer.append(line);
 		}
 
-		return responseBuffer.toString();
+		return URLDecoder.decode(responseBuffer.toString(), "UTF-8");
 	}
 
 	public static String getResponse(ArrayList<NameValuePair> params)
@@ -56,7 +62,8 @@ public class HTTPutils {
 						.append(keyval.getValue());
 			}
 		}
-		HttpGet httpGet = new HttpGet(URL + getParamString.toString());
+		HttpGet httpGet = new HttpGet(URLEncoder.encode(
+				URL + getParamString.toString(), "UTF-8"));
 		HttpResponse response = client.execute(httpGet);
 
 		BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -67,7 +74,7 @@ public class HTTPutils {
 			responseBuffer.append(line);
 		}
 
-		return responseBuffer.toString();
+		return URLDecoder.decode(responseBuffer.toString(), "UTF-8");
 
 	}
 
@@ -76,15 +83,49 @@ public class HTTPutils {
 		String response = null;
 		try {
 			if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_POST)) {
-				response=getPostResponse(params);
-			}else if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_GET)) {
-				response=getResponse(params);
+				response = getPostResponse(params);
+			} else if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_GET)) {
+				response = getResponse(params);
 			}
 			handler.onSuccess(response);
 		} catch (Exception e) {
 			handler.onExeption(e);
 		}
 
+	}
+
+	public static Header[] getHTTPheaders(
+			final ArrayList<NameValuePair> params, String API) throws Exception {
+
+		final Header[] headers;
+		HttpPost httpPost;
+		HttpClient client = new DefaultHttpClient();
+		if (API != null) {
+			httpPost = new HttpPost(URL + API);
+		} else {
+			httpPost = new HttpPost(URL);
+		}
+
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpResponse response = null;
+		try {
+			response = client.execute(httpPost);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		headers = response.getAllHeaders();
+
+		return headers;
 	}
 
 }
