@@ -1,14 +1,21 @@
 package com.receiptofi.android;
 
+import java.net.URI;
+import java.net.URISyntaxException;
+
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.provider.MediaStore.Images;
+import android.util.Log;
 import android.view.View;
 
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPutils;
+import com.receiptofi.android.utils.AppUtils;
 
 public class HomePageActivity extends ParentActivity {
 
@@ -35,7 +42,7 @@ public class HomePageActivity extends ParentActivity {
 	
 	public void takePhoto(View view){
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivity(intent);
+		startActivityForResult(intent, RESULT_IMAGE_CAPTURE);
 	
 	}
 	
@@ -52,12 +59,7 @@ public class HomePageActivity extends ParentActivity {
 		if(requestCode==RESULT_IMAGE_GALLARY && resultCode==RESULT_OK && data!=null){
 			
 			Uri imageGallary = data.getData();
-			String[] filePathColoumn = { MediaStore.Images.Media.DATA };
-			Cursor c = getContentResolver().query(imageGallary,
-					filePathColoumn, null, null, null);
-			c.moveToFirst();
-			final String imageAbsolutePath = c.getString(c
-					.getColumnIndex(filePathColoumn[0]));
+			final String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallary);
 			try {
 				new Thread(){
 					public void run() {
@@ -75,7 +77,35 @@ public class HomePageActivity extends ParentActivity {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		} else if (requestCode == RESULT_IMAGE_CAPTURE
+				&& resultCode == RESULT_OK && data != null) {
+			Bitmap photo = (Bitmap) data.getExtras().get("data");
+			String url=Images.Media
+					.insertImage(getContentResolver(), photo, "receipt_"+calender.getTimeInMillis(), null);
+			Uri uri=  Uri.parse(url);
+			final String imageAbsolutePath = AppUtils.getImageFileFromURI(this, uri);
+			try {
+				new Thread(){
+					public void run() {
+						try {
+						String str=	HTTPutils.uploadImage(API.UPLOAD_IMAGE_API,imageAbsolutePath);
+						showErrorMsg(str);
+						} catch (Exception e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					};
+				}.start();
+				
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
+		
 	}
+	
+	
 
 }
