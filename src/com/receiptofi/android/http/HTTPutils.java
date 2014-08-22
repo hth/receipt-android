@@ -1,12 +1,15 @@
 package com.receiptofi.android.http;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.apache.http.Header;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -14,7 +17,12 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+
+import com.receiptofi.android.utils.UserUtils;
 
 public final class HTTPutils {
 
@@ -124,6 +132,45 @@ public final class HTTPutils {
 		headers = response.getAllHeaders();
 
 		return headers;
+	}
+
+	public static String uploadImage( String api,String filename) throws Exception {
+		
+		HttpPost post;
+		HttpResponse response;
+
+		HttpClient client = new DefaultHttpClient();
+		if (api != null) {
+			post = new HttpPost(URL + api);
+		} else {
+			post = new HttpPost(URL);
+		}
+
+		File imageFile = new File(filename);
+		FileBody fileBody = new FileBody(imageFile);
+		
+		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+		builder.addPart("qqfile", fileBody);
+
+		HttpEntity entity = builder.build();
+
+		post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+		post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
+		post.setEntity(entity);
+
+		response = client.execute(post);
+
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				response.getEntity().getContent()));
+		StringBuffer responseBuffer = new StringBuffer();
+		String line;
+		while ((line = reader.readLine()) != null) {
+			responseBuffer.append(line);
+		}
+
+		return responseBuffer.toString();
+
 	}
 
 }

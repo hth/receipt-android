@@ -117,7 +117,7 @@ public class LoginActivity extends ParentActivity {
 				startActivity(new Intent(LoginActivity.this,
 						HomePageActivity.class));
 				LoginActivity.this.overridePendingTransition(
-						R.anim.right_slide_in, R.anim.right_slide_out);
+						R.anim.right_slide_in, R.anim.left_slide_out);
 			}
 		});
 
@@ -167,8 +167,8 @@ public class LoginActivity extends ParentActivity {
 					for (Header header : headers) {
 						String key = header.getName();
 						if (key != null
-								&& (key.trim().equals(DBhelper.key.XR_MAIL) || key
-										.trim().equals(DBhelper.key.XR_AUTH))) {
+								&& (key.trim().equals(API.key.XR_MAIL) || key
+										.trim().equals(API.key.XR_AUTH))) {
 							String value = header.getValue();
 							DBhelper.insertKeyValue(LoginActivity.this, key,
 									value);
