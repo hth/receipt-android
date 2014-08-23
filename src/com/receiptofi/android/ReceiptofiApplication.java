@@ -13,7 +13,6 @@ public class ReceiptofiApplication extends Application {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		receiptofiDatabaseHandler = new ReceiptofiDatabaseHandler(this,
-				ReceiptDB.DB_NAME);
+		receiptofiDatabaseHandler = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
 	}
 }

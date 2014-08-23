@@ -8,8 +8,6 @@ import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.Toast;
 
 public class ParentActivity extends Activity {
@@ -23,30 +21,31 @@ public class ParentActivity extends Activity {
 		super.onCreate(savedInstanceState);
 	}
 	
-	private static ArrayList<Activity> backstack;
-	ProgressDialog loader;
+	private static ArrayList<Activity> backStack;
+	private ProgressDialog loader;
 
 	protected void addToBackStack(Activity activity) {
-		if(backstack==null)
-			backstack=new ArrayList<Activity>();
+		if(backStack == null) {
+			backStack = new ArrayList<Activity>();
+        }
 		
-		backstack.add(activity);
+		backStack.add(activity);
 	}
 
-	protected ArrayList<Activity> getBackStack(){
-		return backstack;
-	}
+    protected ArrayList<Activity> getBackStack() {
+        return backStack;
+    }
 
-	protected void clearBackStack() {
-		if(backstack!=null){
-			for(int i=0;i<(backstack.size()-1);i++){
-				Activity activity=backstack.get(i);
-				if(backstack.size()>1 ){
-					activity.finish();
-				}
-			}
-		}
-	}
+    protected void clearBackStack() {
+        if (backStack != null) {
+            for (int i = 0; i < (backStack.size() - 1); i++) {
+                Activity activity = backStack.get(i);
+                if (backStack.size() > 1) {
+                    activity.finish();
+                }
+            }
+        }
+    }
 
 	protected void showLoader(String msg) {
 		loader=new ProgressDialog(this);
@@ -71,8 +70,7 @@ public class ParentActivity extends Activity {
 
 			@Override
 			public void run() {
-				Toast.makeText(ParentActivity.this, msg, Toast.LENGTH_SHORT)
-						.show();
+				Toast.makeText(ParentActivity.this, msg, Toast.LENGTH_SHORT).show();
 			}
 
 		});
