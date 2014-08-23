@@ -1,18 +1,22 @@
 package com.receiptofi.android.http;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import org.apache.http.Header;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 
-public final class HTTPUtils {
+public final class HTTPutils {
 
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
@@ -87,5 +91,39 @@ public final class HTTPUtils {
         }
 
     }
+
+	public static Header[] getHTTPheaders(
+			final ArrayList<NameValuePair> params, String API) throws Exception {
+
+		final Header[] headers;
+		HttpPost httpPost;
+		HttpClient client = new DefaultHttpClient();
+		if (API != null) {
+			httpPost = new HttpPost(URL + API);
+		} else {
+			httpPost = new HttpPost(URL);
+		}
+
+		try {
+			httpPost.setEntity(new UrlEncodedFormEntity(params));
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		HttpResponse response = null;
+		try {
+			response = client.execute(httpPost);
+		} catch (ClientProtocolException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		headers = response.getAllHeaders();
+
+		return headers;
+	}
 
 }

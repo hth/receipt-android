@@ -1,5 +1,9 @@
 package com.receiptofi.android.utils;
 
-public class AppUtils {
+import java.util.ArrayList;
 
+import android.app.Activity;
+
+public class AppUtils {
+	
 }
