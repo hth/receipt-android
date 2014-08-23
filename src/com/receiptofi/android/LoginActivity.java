@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.receiptofi.android.db.DBhelper;
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.http.HTTPutils;
 import com.receiptofi.android.utils.UserUtils;
 
 public class LoginActivity extends ParentActivity {
@@ -149,7 +149,7 @@ public class LoginActivity extends ParentActivity {
                 super.run();
                 Header[] headers;
                 try {
-                    headers = HTTPUtils.getHTTPheaders(pairs, API.LOGIN_API);
+                    headers = HTTPutils.getHTTPheaders(pairs, API.LOGIN_API);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     hideloader();
