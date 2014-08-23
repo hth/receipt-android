@@ -1,6 +1,7 @@
 package com.receiptofi.android;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -12,7 +13,9 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 public class ParentActivity extends Activity {
+	
 	Handler uiThread = new Handler();
+	protected Calendar calender = Calendar.getInstance();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -70,4 +73,5 @@ public class ParentActivity extends Activity {
 
 		});
 	}
+	
 }
