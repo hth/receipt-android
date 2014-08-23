@@ -45,15 +45,15 @@ public class LoginActivity extends ParentActivity {
 		password = (EditText) findViewById(R.id.password);
 		signupText = (TextView) findViewById(R.id.signupText);
 
-		userName.setOnFocusChangeListener(edittextListner);
-		password.setOnFocusChangeListener(edittextListner);
+		userName.setOnFocusChangeListener(editTextListener);
+		password.setOnFocusChangeListener(editTextListener);
 
 		signupText
 				.setText(Html
 						.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font></u>, it's free!"));
 	}
 
-	private static OnFocusChangeListener edittextListner = new OnFocusChangeListener() {
+	private static OnFocusChangeListener editTextListener = new OnFocusChangeListener() {
 
 		@Override
 		public void onFocusChange(View v, boolean hasFocus) {
