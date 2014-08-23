@@ -1,20 +1,15 @@
 package com.receiptofi.android;
 
-import java.net.URI;
-import java.net.URISyntaxException;
-
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
-import android.util.Log;
 import android.view.View;
 
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.http.HTTPutils;
 import com.receiptofi.android.utils.AppUtils;
 
 public class HomePageActivity extends ParentActivity {
@@ -64,7 +59,7 @@ public class HomePageActivity extends ParentActivity {
 				new Thread(){
 					public void run() {
 						try {
-						String str=	HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API,imageAbsolutePath);
+						String str=	HTTPutils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
 						showErrorMsg(str);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -88,7 +83,7 @@ public class HomePageActivity extends ParentActivity {
 				new Thread(){
 					public void run() {
 						try {
-						String str=	HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API,imageAbsolutePath);
+						String str=	HTTPutils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
 						showErrorMsg(str);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
