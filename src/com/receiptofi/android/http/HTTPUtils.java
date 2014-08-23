@@ -23,7 +23,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.receiptofi.android.utils.UserUtils;
 
-public final class HTTPUtilss {
+public final class HTTPUtils {
 
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";

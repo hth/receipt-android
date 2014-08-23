@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 import com.receiptofi.android.db.DBhelper;
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPUtilss;
+import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.utils.UserUtils;
 
 public class LoginActivity extends ParentActivity {
@@ -131,12 +131,12 @@ public class LoginActivity extends ParentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		addTobackStack(this);
+		addToBackStack(this);
 	}
 
     private void authenticateUser() {
 
-        showloader(this.getResources().getString(R.string.login_auth_msg));
+        showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
         pairs.add(new BasicNameValuePair("mail", userNameStr));
@@ -149,16 +149,16 @@ public class LoginActivity extends ParentActivity {
                 super.run();
                 Header[] headers;
                 try {
-                    headers = HTTPUtilss.getHTTPheaders(pairs, API.LOGIN_API);
+                    headers = HTTPUtils.getHTTPheaders(pairs, API.LOGIN_API);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
-                    hideloader();
+                    hideLoader();
                     if (e instanceof IOException)
                         showErrorMsg("Please check your network connection");
                     return;
                 }
 
-                hideloader();
+                hideLoader();
                 if (headers != null) {
                     for (Header header : headers) {
                         String key = header.getName();

@@ -26,16 +26,18 @@ public class ParentActivity extends Activity {
 	private static ArrayList<Activity> backstack;
 	ProgressDialog loader;
 
-	protected void addTobackStack(Activity activity) {
+	protected void addToBackStack(Activity activity) {
 		if(backstack==null)
 			backstack=new ArrayList<Activity>();
 		
 		backstack.add(activity);
 	}
+
 	protected ArrayList<Activity> getBackStack(){
 		return backstack;
 	}
-	protected void clearbackStack() {
+
+	protected void clearBackStack() {
 		if(backstack!=null){
 			for(int i=0;i<(backstack.size()-1);i++){
 				Activity activity=backstack.get(i);
@@ -45,7 +47,8 @@ public class ParentActivity extends Activity {
 			}
 		}
 	}
-	protected void showloader(String msg) {
+
+	protected void showLoader(String msg) {
 		loader=new ProgressDialog(this);
 		loader.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 		loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -55,7 +58,8 @@ public class ParentActivity extends Activity {
 		loader.show();
 
 	}
-	protected void hideloader() {
+
+	protected void hideLoader() {
 		if(loader!=null){
 			loader.dismiss();
 		}
@@ -73,5 +77,4 @@ public class ParentActivity extends Activity {
 
 		});
 	}
-	
 }

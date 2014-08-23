@@ -17,11 +17,11 @@ public class SettingsPage extends ParentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		addTobackStack(this);
+		addToBackStack(this);
 	}
 	public void logout(View view){
 		finish();
-		clearbackStack();
+		clearBackStack();
 		DBhelper.clearKeyValues();
 		startActivity(new Intent(this,LoginActivity.class));
 	}
