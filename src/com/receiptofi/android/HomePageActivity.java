@@ -14,7 +14,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPutils;
+import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.utils.AppUtils;
 
 public class HomePageActivity extends ParentActivity {
@@ -64,7 +64,7 @@ public class HomePageActivity extends ParentActivity {
 				new Thread(){
 					public void run() {
 						try {
-						String str=	HTTPutils.uploadImage(API.UPLOAD_IMAGE_API,imageAbsolutePath);
+						String str=	HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API,imageAbsolutePath);
 						showErrorMsg(str);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
@@ -88,7 +88,7 @@ public class HomePageActivity extends ParentActivity {
 				new Thread(){
 					public void run() {
 						try {
-						String str=	HTTPutils.uploadImage(API.UPLOAD_IMAGE_API,imageAbsolutePath);
+						String str=	HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API,imageAbsolutePath);
 						showErrorMsg(str);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
