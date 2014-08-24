@@ -1,6 +1,6 @@
 package com.receiptofi.android;
 
-import com.receiptofi.android.db.DBhelper;
+import com.receiptofi.android.db.DBHelper;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,7 +22,7 @@ public class SettingsPage extends ParentActivity {
 	public void logout(View view){
 		finish();
 		clearBackStack();
-		DBhelper.clearKeyValues();
+		DBHelper.clearKeyValues();
 		startActivity(new Intent(this,LoginActivity.class));
 	}
 }

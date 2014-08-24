@@ -17,7 +17,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.receiptofi.android.db.DBhelper;
+import com.receiptofi.android.db.DBHelper;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.utils.UserUtils;
@@ -164,7 +164,7 @@ public class LoginActivity extends ParentActivity {
                         String key = header.getName();
                         if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
                             String value = header.getValue();
-                            DBhelper.insertKeyValue(LoginActivity.this, key, value);
+                            DBHelper.insertKeyValue(LoginActivity.this, key, value);
                         }
                     }
                 }
