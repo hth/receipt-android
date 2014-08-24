@@ -149,7 +149,7 @@ public class LoginActivity extends ParentActivity {
                 super.run();
                 Header[] headers;
                 try {
-                    headers = HTTPUtils.getHTTPheaders(pairs, API.LOGIN_API);
+                    headers = HTTPUtils.getHTTPHeaders(pairs, API.LOGIN_API);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     hideLoader();
