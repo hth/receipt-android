@@ -16,49 +16,48 @@ public class DBHelper {
 
 	ReceiptofiApplication application;
 
-	public static boolean insertKeyValue(Context context, String Key,
-			String Value) {
-
+	public static boolean insertKeyValue(Context context, String key, String value) {
 		ContentValues values = new ContentValues();
-		values.put(ReceiptDB.KeyVal.KEY, Key);
-		values.put(ReceiptDB.KeyVal.VALUE, Value);
+		values.put(ReceiptDB.KeyVal.KEY, key);
+		values.put(ReceiptDB.KeyVal.VALUE, value);
 
-		if (ReceiptofiApplication.receiptofiDatabaseHandler
-				.getWritableDatabase().update(ReceiptDB.KeyVal.TABLE_NAME,
-						values, ReceiptDB.KeyVal.KEY +"= ?" , new String[]{Key}) <= 0) {
-			long code = ReceiptofiApplication.receiptofiDatabaseHandler
-					.getWritableDatabase().insert(ReceiptDB.KeyVal.TABLE_NAME,
-							null, values);
-			if (code != -1) {
-				return true;
-			} else {
-				return false;
-			}
+		if (ReceiptofiApplication.rdh.getWritableDatabase().update(
+                ReceiptDB.KeyVal.TABLE_NAME,
+                values,
+                ReceiptDB.KeyVal.KEY + "= ?",
+                new String[]{key}
+        ) <= 0) {
+            long code = ReceiptofiApplication.rdh.getWritableDatabase().insert(
+                    ReceiptDB.KeyVal.TABLE_NAME,
+                    null,
+                    values
+            );
+
+            return code != -1;
 		} else {
 			return true;
 		}
 	}
 
 	public static String getValue(String key) {
-		Cursor c = ReceiptofiApplication.receiptofiDatabaseHandler
-				.getReadableDatabase().rawQuery(
-						"select * from " + ReceiptDB.KeyVal.TABLE_NAME
-								+ " where " + ReceiptDB.KeyVal.KEY + "='" + key +"'",
-						null);
+		Cursor c = ReceiptofiApplication.rdh.getReadableDatabase().rawQuery(
+                "select * from " + ReceiptDB.KeyVal.TABLE_NAME + " where " + ReceiptDB.KeyVal.KEY + "=" + "'" + key + "'",
+                null
+        );
+
 		if (c != null && c.getCount() > 0) {
 			c.moveToFirst();
-			String thevalue = c.getString(c
-					.getColumnIndex(ReceiptDB.KeyVal.VALUE));
-			c = null;
-			return thevalue;
+			return c.getString(c.getColumnIndex(ReceiptDB.KeyVal.VALUE));
 		} else {
 			return null;
 		}
-
 	}
 	
 	public static void clearKeyValues() {
-		 ReceiptofiApplication.receiptofiDatabaseHandler
-			.getReadableDatabase().delete(ReceiptDB.KeyVal.TABLE_NAME, null, null);
+		 ReceiptofiApplication.rdh.getReadableDatabase().delete(
+                 ReceiptDB.KeyVal.TABLE_NAME,
+                 null,
+                 null
+         );
 	}
 }
