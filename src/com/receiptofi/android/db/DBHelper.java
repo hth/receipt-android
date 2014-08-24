@@ -7,7 +7,7 @@ import android.database.Cursor;
 import com.receiptofi.android.ReceiptofiApplication;
 import com.receiptofi.android.models.ReceiptDB;
 
-public class DBHelperA {
+public class DBHelper {
 
 	public static class key {
 		public static String XR_MAIL = "X-R-MAIL";

@@ -1,6 +1,6 @@
 package com.receiptofi.android.utils;
 
-import com.receiptofi.android.db.DBHelperA;
+import com.receiptofi.android.db.DBHelper;
 
 public class UserUtils {
 	static String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -14,11 +14,11 @@ public class UserUtils {
 	}
 
 	public static String getEmail() {
-		return DBHelperA.getValue(DBHelperA.key.XR_MAIL);
+		return DBHelper.getValue(DBHelper.key.XR_MAIL);
 	}
 
 	public static String getAuth() {
-		return DBHelperA.getValue(DBHelperA.key.XR_AUTH);
+		return DBHelper.getValue(DBHelper.key.XR_AUTH);
 	}
 
 	public static boolean isValidAppUser() {
