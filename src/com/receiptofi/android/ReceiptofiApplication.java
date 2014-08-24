@@ -7,12 +7,12 @@ import com.receiptofi.android.models.ReceiptDB;
 
 public class ReceiptofiApplication extends Application {
 
-	public static ReceiptofiDatabaseHandler receiptofiDatabaseHandler;
+	public static ReceiptofiDatabaseHandler rdh;
 
 	@Override
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		receiptofiDatabaseHandler = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
+		rdh = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
 	}
 }
