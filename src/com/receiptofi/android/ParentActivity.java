@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -21,6 +22,12 @@ public class ParentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
+	}
+	
+	public void startFragment(Fragment fragment,boolean isaddToBackStack,int viewId) {
+		// TODO Auto-generated method stub
+		getFragmentManager().beginTransaction().replace(viewId, fragment)
+				.addToBackStack(null).commit();
 	}
 	
 	private static ArrayList<Activity> backstack;

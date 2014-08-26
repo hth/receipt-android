@@ -8,6 +8,7 @@ import android.provider.MediaStore;
 import android.provider.MediaStore.Images;
 import android.view.View;
 
+import com.receiptofi.android.fragments.ReceiptListFragment;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPutils;
 import com.receiptofi.android.utils.AppUtils;
@@ -46,6 +47,11 @@ public class HomePageActivity extends ParentActivity {
 		startActivityForResult(g, RESULT_IMAGE_GALLARY);
 	}
 	
+	public void invokeReceiptList(View view) {
+		 View container=findViewById(R.id.leftSidePane);
+		 startFragment(new ReceiptListFragment(), true,container.getId());
+	}
+
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub
