@@ -212,11 +212,21 @@ Different types of updates supported are:
 
 When there are no updates avaliable, response will contain empty receipts list
 
-	{"receipts":[]}
+	{
+	  "profile": null,
+	  "receipts": []
+	}
 	
 When there are updates avaliable, response will contain receipts list ordered by Receipt Date
 
 	{
+	  "profile": {
+	    "firstName": "Test",
+	    "lastName": "Test",
+	    "mail": "test@receiptofi.com",
+	    "name": "Test Test",
+	    "rid": "10000000002"
+	  },
 	  "receipts": [
 	    {
 	      "id": "53edc24030040bbe580c7566",
@@ -240,6 +250,11 @@ When there are updates avaliable, response will contain receipts list ordered by
 	      "ptax": "0.0000",
 	      "rid": "10000000011",
 	      "expenseReport": null
+	    },
+	    {
+	    ...
+	    ...
+	    ...
 	    }
 	  ]
 	}
