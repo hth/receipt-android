@@ -4,39 +4,10 @@
     android:background="@color/login_screen_bg"
     android:orientation="vertical" >
 
-    <RelativeLayout
+    <include
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="15dp" >
-
-        <ImageView
-            android:id="@+id/R_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/r" />
-
-        <ImageView
-            android:id="@+id/menu"
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:onClick="invokeMenu"
-            android:src="@drawable/menu" />
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/sync" />
-    </RelativeLayout>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
+        layout="@layout/header" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -132,6 +103,7 @@
                 android:layout_marginTop="15dp"
                 android:background="@android:color/white"
                 android:gravity="center_vertical"
+                android:onClick="invokeReceiptList"
                 android:paddingBottom="15dp"
                 android:paddingLeft="35dp"
                 android:paddingRight="15dp"

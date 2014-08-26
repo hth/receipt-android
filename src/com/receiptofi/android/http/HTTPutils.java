@@ -32,11 +32,17 @@ public final class HTTPutils {
 
     private static final String URL = CONNECTION_URL_STAGING;
 
-    public static String getPostResponse(ArrayList<NameValuePair> params)
+    public static String getPostResponse(ArrayList<NameValuePair> params,String API)
             throws Exception {
 
         HttpClient client = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(URL);
+        HttpPost httpPost ;
+        
+        if(API!=null){
+        	httpPost = new HttpPost(URL+API);
+        }else {
+        	httpPost = new HttpPost(URL);
+		}
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse response = client.execute(httpPost);
@@ -55,19 +61,30 @@ public final class HTTPutils {
         return responseBuffer.toString();
     }
 
-    public static String getResponse(ArrayList<NameValuePair> params)
+    public static String getResponse(ArrayList<NameValuePair> params,String API)
             throws Exception {
         StringBuilder getParamString = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
-
+        HttpGet httpGet;
+        
+        if(API!=null){
+        	httpGet = new HttpGet(URL+API+getParamString.toString());
+        }else {
+        	httpGet = new HttpGet(URL+getParamString.toString());
+		}
         if (params != null) {
 
-            for (NameValuePair key : params) {
-                getParamString.append("&").append(key.getName() + "=")
-                        .append(key.getValue());
-            }
+//            for (NameValuePair key : params) {
+//                getParamString.append("&").append(key.getName() + "=")
+//                        .append(key.getValue());
+//            }
+        	
+        	for(NameValuePair pair:params){
+        		 httpGet.addHeader(pair.getName(), pair.getValue());
+        	}
+        	  
         }
-        HttpGet httpGet = new HttpGet(URL + getParamString.toString());
+
         HttpResponse response = client.execute(httpGet);
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(
@@ -82,20 +99,28 @@ public final class HTTPutils {
 
     }
 
-    public static void AsyncRequest(ArrayList<NameValuePair> params,
-                                    String HTTP_method, ResponseHandler handler) {
-        String response = null;
-        try {
-            if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_POST)) {
-                response = getPostResponse(params);
-            } else if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_GET)) {
-                response = getResponse(params);
-            }
-            handler.onSuccess(response);
-        } catch (Exception e) {
-            handler.onExeption(e);
-        }
+    public static void AsyncRequest(final ArrayList<NameValuePair> params,
+    		final String API,final String HTTP_method, final ResponseHandler handler) {
+    	new Thread(){
+    		@Override
+    		public void run() {
+    			// TODO Auto-generated method stub
+    			super.run();
+    			   String response = null;
+    		        try {
+    		            if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_POST)) {
+    		                response = getPostResponse(params,API);
+    		            } else if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_GET)) {
+    		                response = getResponse(params,API);
+    		            }
+    		            handler.onSuccess(response);
+    		        } catch (Exception e) {
+    		            handler.onExeption(e);
+    		        }
 
+    		}
+    	}.start();
+     
     }
 
 	public static Header[] getHTTPheaders(
@@ -133,7 +158,11 @@ public final class HTTPutils {
 	}
 
 	public static String uploadImage( String api,String filename) throws Exception {
-		
+		try {
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		HttpPost post;
 		HttpResponse response;
 

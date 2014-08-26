@@ -21,7 +21,7 @@ public class HomePageActivity extends ParentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.homepage);
+		setContentView(R.layout.home_page);
 	}
 
 	public void invokeMenu(View view) {
