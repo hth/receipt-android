@@ -24,12 +24,13 @@ import com.receiptofi.android.utils.UserUtils;
 
 public class LoginActivity extends ParentActivity {
 
-	EditText userName, password;
-	String userNameStr, passwordStr;
+	private EditText userName;
+    private EditText password;
+	private String userNameStr;
+    private String passwordStr;
 
-	StringBuilder errors = new StringBuilder();
-	TextView signupText;
-	
+	private StringBuilder errors = new StringBuilder();
+	private TextView signupText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +50,7 @@ public class LoginActivity extends ParentActivity {
 
 		signupText
 				.setText(Html
-						.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font> </u>,it�s free!"));
+						.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font></u>, it's free!"));
 	}
 
 	private static OnFocusChangeListener edittextListner = new OnFocusChangeListener() {
@@ -63,7 +64,7 @@ public class LoginActivity extends ParentActivity {
 			} else {
 				String input = ((EditText) v).getText().toString();
 				if (input != null && input.length() == 0) {
-					int id = ((EditText) v).getId();
+					int id = v.getId();
 					if (id == R.id.userName) {
 						((EditText) v).setHint("Email");
 					} else if (id == R.id.password) {
@@ -81,17 +82,14 @@ public class LoginActivity extends ParentActivity {
 		userNameStr = userName.getText().toString();
 		passwordStr = password.getText().toString();
 
-		if (userNameStr == null
-				|| (userNameStr != null && userNameStr.length() == 0)) {
+		if (userNameStr == null	|| (userNameStr != null && userNameStr.length() == 0)) {
 			errors.append(this.getResources().getString(R.string.enter_email));
 		} else {
 			if (!UserUtils.isValidEmail(userNameStr)) {
-				addErrorMsg(this.getResources().getString(
-						R.string.enter_valid_email));
+				addErrorMsg(this.getResources().getString(R.string.enter_valid_email));
 			}
 		}
-		if (passwordStr == null
-				|| (passwordStr != null && passwordStr.length() == 0)) {
+		if (passwordStr == null || (passwordStr != null && passwordStr.length() == 0)) {
 			addErrorMsg(this.getResources().getString(R.string.enter_password));
 		}
 		// error string is for keeping the error that needs to be shown to the
@@ -114,10 +112,8 @@ public class LoginActivity extends ParentActivity {
 			public void run() {
 				// TODO Auto-generated method stub
 				finish();
-				startActivity(new Intent(LoginActivity.this,
-						HomePageActivity.class));
-				LoginActivity.this.overridePendingTransition(
-						R.anim.right_slide_in, R.anim.left_slide_out);
+				startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
+				LoginActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
 			}
 		});
 
@@ -138,50 +134,47 @@ public class LoginActivity extends ParentActivity {
 		addTobackStack(this);
 	}
 
-	private void authenticateUser() {
+    private void authenticateUser() {
 
-		showloader(this.getResources().getString(R.string.login_auth_msg));
+        showloader(this.getResources().getString(R.string.login_auth_msg));
 
-		final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
-		pairs.add(new BasicNameValuePair("mail", userNameStr));
-		pairs.add(new BasicNameValuePair("password", passwordStr));
+        final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        pairs.add(new BasicNameValuePair("mail", userNameStr));
+        pairs.add(new BasicNameValuePair("password", passwordStr));
 
-		new Thread() {
-			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				super.run();
-				Header[] headers = null;
-				try {
-					headers = HTTPutils.getHTTPheaders(pairs, API.LOGIN_API);
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					hideloader();
-					if(e instanceof IOException)
-					showErrorMsg("Please check your network connection");
-					return;
-				}
-				
-				hideloader();
-				if(headers!=null){
-					for (Header header : headers) {
-						String key = header.getName();
-						if (key != null
-								&& (key.trim().equals(API.key.XR_MAIL) || key
-										.trim().equals(API.key.XR_AUTH))) {
-							String value = header.getValue();
-							DBhelper.insertKeyValue(LoginActivity.this, key,
-									value);
-						}
-					}
-				}
-				if (UserUtils.isValidAppUser()) {
-					launchHomeScreen();
-				} else {
-					showErrorMsg("Login Failed !!!");
-				}
-			}
-		}.start();
-	}
+        new Thread() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                super.run();
+                Header[] headers;
+                try {
+                    headers = HTTPutils.getHTTPheaders(pairs, API.LOGIN_API);
+                } catch (Exception e) {
+                    // TODO Auto-generated catch block
+                    hideloader();
+                    if (e instanceof IOException)
+                        showErrorMsg("Please check your network connection");
+                    return;
+                }
+
+                hideloader();
+                if (headers != null) {
+                    for (Header header : headers) {
+                        String key = header.getName();
+                        if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
+                            String value = header.getValue();
+                            DBhelper.insertKeyValue(LoginActivity.this, key, value);
+                        }
+                    }
+                }
+                if (UserUtils.isValidAppUser()) {
+                    launchHomeScreen();
+                } else {
+                    showErrorMsg("Login Failed !!!");
+                }
+            }
+        }.start();
+    }
 
 }
