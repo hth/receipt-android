@@ -11,7 +11,7 @@ public class SettingsPage extends ParentActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.log_out);
+		setContentView(R.layout.settings_page);
 	}
 	@Override
 	protected void onResume() {
@@ -24,5 +24,8 @@ public class SettingsPage extends ParentActivity {
 		clearBackStack();
 		DBHelper.clearKeyValues();
 		startActivity(new Intent(this,LoginActivity.class));
+	}
+	public void onBackPressed(View view){
+		onBackPressed();
 	}
 }
