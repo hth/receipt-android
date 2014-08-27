@@ -17,9 +17,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.receiptofi.android.db.DBhelper;
+import com.receiptofi.android.db.DBHelper;
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPutils;
+import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.utils.UserUtils;
 
 public class LoginActivity extends ParentActivity {
@@ -45,15 +45,15 @@ public class LoginActivity extends ParentActivity {
 		password = (EditText) findViewById(R.id.password);
 		signupText = (TextView) findViewById(R.id.signupText);
 
-		userName.setOnFocusChangeListener(edittextListner);
-		password.setOnFocusChangeListener(edittextListner);
+		userName.setOnFocusChangeListener(editTextListener);
+		password.setOnFocusChangeListener(editTextListener);
 
 		signupText
 				.setText(Html
 						.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font></u>, it's free!"));
 	}
 
-	private static OnFocusChangeListener edittextListner = new OnFocusChangeListener() {
+	private static OnFocusChangeListener editTextListener = new OnFocusChangeListener() {
 
 		@Override
 		public void onFocusChange(View v, boolean hasFocus) {
@@ -131,12 +131,12 @@ public class LoginActivity extends ParentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		addTobackStack(this);
+		addToBackStack(this);
 	}
 
     private void authenticateUser() {
 
-        showloader(this.getResources().getString(R.string.login_auth_msg));
+        showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
         pairs.add(new BasicNameValuePair("mail", userNameStr));
@@ -149,22 +149,22 @@ public class LoginActivity extends ParentActivity {
                 super.run();
                 Header[] headers;
                 try {
-                    headers = HTTPutils.getHTTPheaders(pairs, API.LOGIN_API);
+                    headers = HTTPUtils.getHTTPHeaders(pairs, API.LOGIN_API);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
-                    hideloader();
+                    hideLoader();
                     if (e instanceof IOException)
                         showErrorMsg("Please check your network connection");
                     return;
                 }
 
-                hideloader();
+                hideLoader();
                 if (headers != null) {
                     for (Header header : headers) {
                         String key = header.getName();
                         if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
                             String value = header.getValue();
-                            DBhelper.insertKeyValue(LoginActivity.this, key, value);
+                            DBHelper.insertKeyValue(LoginActivity.this, key, value);
                         }
                     }
                 }

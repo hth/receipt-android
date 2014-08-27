@@ -23,7 +23,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import com.receiptofi.android.utils.UserUtils;
 
-public final class HTTPutils {
+public final class HTTPUtils {
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
 
@@ -32,27 +32,17 @@ public final class HTTPutils {
 
     private static final String URL = CONNECTION_URL_STAGING;
 
-    public static String getPostResponse(ArrayList<NameValuePair> params,String API)
+    public static String getPostResponse(ArrayList<NameValuePair> params)
             throws Exception {
 
         HttpClient client = new DefaultHttpClient();
-        HttpPost httpPost ;
-        
-        if(API!=null){
-        	httpPost = new HttpPost(URL+API);
-        }else {
-        	httpPost = new HttpPost(URL);
-		}
+        HttpPost httpPost = new HttpPost(URL);
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse response = client.execute(httpPost);
 
-        BufferedReader reader = new BufferedReader(
-                new InputStreamReader(
-                        response.getEntity().getContent()
-                )
-        );
-        StringBuffer responseBuffer = new StringBuffer();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        StringBuilder responseBuffer = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
             responseBuffer.append(line);
@@ -87,9 +77,8 @@ public final class HTTPutils {
 
         HttpResponse response = client.execute(httpGet);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                response.getEntity().getContent()));
-        StringBuffer responseBuffer = new StringBuffer();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        StringBuilder responseBuffer = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
             responseBuffer.append(line);
@@ -128,7 +117,7 @@ public final class HTTPutils {
 
 		final Header[] headers;
 		HttpPost httpPost;
-		HttpClient client = new DefaultHttpClient();
+        HttpClient client = new DefaultHttpClient();
 		if (API != null) {
 			httpPost = new HttpPost(URL + API);
 		} else {
@@ -157,7 +146,7 @@ public final class HTTPutils {
 		return headers;
 	}
 
-	public static String uploadImage( String api,String filename) throws Exception {
+	public static String uploadImage(String api, String filename) throws Exception {
 		try {
 			
 		} catch (Exception e) {
@@ -188,16 +177,13 @@ public final class HTTPutils {
 
 		response = client.execute(post);
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				response.getEntity().getContent()));
-		StringBuffer responseBuffer = new StringBuffer();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+		StringBuilder responseBuffer = new StringBuilder();
 		String line;
 		while ((line = reader.readLine()) != null) {
 			responseBuffer.append(line);
 		}
 
 		return responseBuffer.toString();
-
 	}
-
 }

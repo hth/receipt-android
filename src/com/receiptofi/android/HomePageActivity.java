@@ -10,13 +10,13 @@ import android.view.View;
 
 import com.receiptofi.android.fragments.ReceiptListFragment;
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPutils;
+import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.utils.AppUtils;
 
 public class HomePageActivity extends ParentActivity {
 
-	private static final int RESULT_IMAGE_GALLARY=0x4c5;
-	private static final int RESULT_IMAGE_CAPTURE=0x4c6;
+	private static final int RESULT_IMAGE_GALLERY = 0x4c5;
+	private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +33,7 @@ public class HomePageActivity extends ParentActivity {
 	protected void onResume() {
 		// TODO Auto-generated method stub
 		super.onResume();
-		addTobackStack(this);
+		addToBackStack(this);
 	}
 	
 	public void takePhoto(View view){
@@ -44,7 +44,7 @@ public class HomePageActivity extends ParentActivity {
 	
 	public void chooseImage(View view){
 		Intent g = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);	
-		startActivityForResult(g, RESULT_IMAGE_GALLARY);
+		startActivityForResult(g, RESULT_IMAGE_GALLERY);
 	}
 	
 	public void invokeReceiptList(View view) {
@@ -57,45 +57,43 @@ public class HomePageActivity extends ParentActivity {
 		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		if(requestCode==RESULT_IMAGE_GALLARY && resultCode==RESULT_OK && data!=null){
+		if(requestCode== RESULT_IMAGE_GALLERY && resultCode==RESULT_OK && data!=null){
 			
-			Uri imageGallary = data.getData();
-			final String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallary);
+			Uri imageGallery = data.getData();
+			final String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallery);
 			try {
 				new Thread(){
 					public void run() {
 						try {
-						String str=	HTTPutils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
+						String str = HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
 						showErrorMsg(str);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					};
+					}
 				}.start();
 				
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else if (requestCode == RESULT_IMAGE_CAPTURE
-				&& resultCode == RESULT_OK && data != null) {
+		} else if (requestCode == RESULT_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
 			Bitmap photo = (Bitmap) data.getExtras().get("data");
-			String url=Images.Media
-					.insertImage(getContentResolver(), photo, "receipt_"+calender.getTimeInMillis(), null);
-			Uri uri=  Uri.parse(url);
+			String url = Images.Media.insertImage(getContentResolver(), photo, "receipt_" + calender.getTimeInMillis(), null);
+			Uri uri = Uri.parse(url);
 			final String imageAbsolutePath = AppUtils.getImageFileFromURI(this, uri);
 			try {
 				new Thread(){
 					public void run() {
 						try {
-						String str=	HTTPutils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
+						String str=	HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
 						showErrorMsg(str);
 						} catch (Exception e) {
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-					};
+					}
 				}.start();
 				
 			} catch (Exception e) {
@@ -106,7 +104,4 @@ public class HomePageActivity extends ParentActivity {
 		}
 		
 	}
-	
-	
-
 }

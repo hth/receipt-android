@@ -1,5 +1,6 @@
 receipt-mobile 
 ==============
+
 There two ways to test through command line
 - <code>curl</code> using mac
 - <code>httpie</code> on windows or mac. https://github.com/jakubroztocil/httpie and helpful command can be found  https://gist.github.com/BlakeGardner/5586954
@@ -195,7 +196,7 @@ This call should always return the same response below.
 
 	{"registered":true}
 
-###Updates avaliable 
+###Updates available 
 
 API below will get all the updates available. Currently it just gets "Receipt" updates, but in future it will get "Profile", "Mileage", "Uploaded Document" updates. When device is not registred, this API will register the device too. It would be better not to use this API for registering the device.
 
@@ -212,37 +213,59 @@ Different types of updates supported are:
 
 When there are no updates avaliable, response will contain empty receipts list
 
-	{"receipts":[]}
+	{
+	  "profile": null,
+	  "receipts": []
+	}
 	
 When there are updates avaliable, response will contain receipts list ordered by Receipt Date
 
 	{
-	  "receipts": [
-	    {
-	      "id": "53edc24030040bbe580c7566",
-	      "total": 1.0,
-	      "bizName": {
-	        "name": "Costco"
-	      },
-	      "bizStore": {
-	        "address": "Sunnyvale, CA, USA",
-	        "phone": "(408) 000-0001"
-	      },
-	      "notes": null,
-	      "files": [
-	        {
-	          "blobId": "53edc21530040bbe580c755d",
-	          "sequence": 0,
-	          "orientation": 90
-	        }
-	      ],
-	      "date": 1407517201000,
-	      "ptax": "0.0000",
-	      "rid": "10000000011",
-	      "expenseReport": null
-	    }
-	  ]
-	}
+    "profile": {
+      "firstName": "Test",
+      "lastName": "Test",
+      "mail": "test@receiptofi.com",
+      "name": "Test Test",
+      "rid": "10000000002"
+    },
+    "receipts": [
+      {
+        "bizName": {
+          "name": "Any Resturant"
+        },
+        "bizStore": {
+          "address": "Sunnyvale, CA, USA",
+          "phone": "(696) 969-6969"
+        },
+        "date": "2014-08-17T11:11:00.000-07:00",
+        "expenseReport": null,
+        "files": [
+          {
+            "blobId": "53f0dbf40364600e14bd9e30",
+            "orientation": 0,
+            "sequence": 0
+          }
+        ],
+        "id": "53f0e42b0364e0a0a79efc68",
+        "notes": {
+          "text": "Notes goes here"
+        },
+        "ptax": "0.0000",
+        "rid": "10000000002",
+        "total": 1969.0
+      },
+      {
+        "date": "2014-08-17T00:00:00.000-07:00",
+        "expenseReport": null,
+        "notes": {
+          "text": null
+        },
+        ..
+        ..
+      }
+    ]
+  }
+	
 
 ###Upload Document
 
