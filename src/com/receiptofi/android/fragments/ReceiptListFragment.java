@@ -16,7 +16,7 @@ import android.widget.ListView;
 
 import com.receiptofi.android.R;
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPutils;
+import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.utils.UserUtils;
 
@@ -51,7 +51,7 @@ public class ReceiptListFragment extends Fragment {
 		headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
 		headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 		
-		HTTPutils.AsyncRequest(headerData, API.GET_ALL_RECEIPTS, HTTPutils.HTTP_METHOD_GET, new ResponseHandler() {
+		HTTPUtils.AsyncRequest(headerData, API.GET_ALL_RECEIPTS, HTTPUtils.HTTP_METHOD_GET, new ResponseHandler() {
 			
 			@Override
 			public void onSuccess(String response) {

@@ -32,17 +32,27 @@ public final class HTTPUtils {
 
     private static final String URL = CONNECTION_URL_STAGING;
 
-    public static String getPostResponse(ArrayList<NameValuePair> params)
+    public static String getPostResponse(ArrayList<NameValuePair> params,String API)
             throws Exception {
 
         HttpClient client = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(URL);
+        HttpPost httpPost ;
+
+        if(API!=null){
+        	httpPost = new HttpPost(URL+API);
+        }else {
+        	httpPost = new HttpPost(URL);
+		}
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse response = client.execute(httpPost);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-        StringBuilder responseBuffer = new StringBuilder();
+        BufferedReader reader = new BufferedReader(
+                new InputStreamReader(
+                        response.getEntity().getContent()
+                )
+        );
+        StringBuffer responseBuffer = new StringBuffer();
         String line;
         while ((line = reader.readLine()) != null) {
             responseBuffer.append(line);
@@ -77,8 +87,9 @@ public final class HTTPUtils {
 
         HttpResponse response = client.execute(httpGet);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-        StringBuilder responseBuffer = new StringBuilder();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(
+                response.getEntity().getContent()));
+        StringBuffer responseBuffer = new StringBuffer();
         String line;
         while ((line = reader.readLine()) != null) {
             responseBuffer.append(line);
@@ -112,12 +123,12 @@ public final class HTTPUtils {
      
     }
 
-	public static Header[] getHTTPheaders(
+	public static Header[] getHTTPHeaders(
 			final ArrayList<NameValuePair> params, String API) throws Exception {
 
 		final Header[] headers;
 		HttpPost httpPost;
-        HttpClient client = new DefaultHttpClient();
+		HttpClient client = new DefaultHttpClient();
 		if (API != null) {
 			httpPost = new HttpPost(URL + API);
 		} else {
@@ -177,13 +188,16 @@ public final class HTTPUtils {
 
 		response = client.execute(post);
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-		StringBuilder responseBuffer = new StringBuilder();
+		BufferedReader reader = new BufferedReader(new InputStreamReader(
+				response.getEntity().getContent()));
+		StringBuffer responseBuffer = new StringBuffer();
 		String line;
 		while ((line = reader.readLine()) != null) {
 			responseBuffer.append(line);
 		}
 
 		return responseBuffer.toString();
+
 	}
+
 }
