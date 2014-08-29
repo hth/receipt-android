@@ -82,7 +82,7 @@ public class ParentActivity extends Activity {
 		loader=null;
 	}
 
-	protected void showErrorMsg(final String msg) {
+	public void showErrorMsg(final String msg) {
 		uiThread.post(new Runnable() {
 
 			@Override

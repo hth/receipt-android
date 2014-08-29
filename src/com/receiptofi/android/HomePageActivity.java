@@ -1,11 +1,13 @@
+
 package com.receiptofi.android;
 
+import java.io.File;
+import java.io.IOException;
+
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.provider.MediaStore.Images;
 import android.view.View;
 
 import com.receiptofi.android.fragments.ReceiptListFragment;
@@ -37,12 +39,20 @@ public class HomePageActivity extends ParentActivity {
 	}
 	
 	public void takePhoto(View view){
-		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		startActivityForResult(intent, RESULT_IMAGE_CAPTURE);
-	
+		
+		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+		File photoFile = AppUtils.createImageFile();
+	        // Continue only if the File was successfully created
+	        if (photoFile != null) {
+	            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+	    		startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
+	        }else {
+	        	showErrorMsg("some error occured !!");
+			}
 	}
 	
 	public void chooseImage(View view){
+		
 		Intent g = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);	
 		startActivityForResult(g, RESULT_IMAGE_GALLERY);
 	}
@@ -62,49 +72,26 @@ public class HomePageActivity extends ParentActivity {
 		super.onActivityResult(requestCode, resultCode, data);
 		
 		if(requestCode== RESULT_IMAGE_GALLERY && resultCode==RESULT_OK && data!=null){
-			
+
 			Uri imageGallery = data.getData();
-			final String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallery);
-			try {
-				new Thread(){
-					public void run() {
-						try {
-						String str = HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
-						showErrorMsg(str);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}.start();
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		} else if (requestCode == RESULT_IMAGE_CAPTURE && resultCode == RESULT_OK && data != null) {
-			Bitmap photo = (Bitmap) data.getExtras().get("data");
-			String url = Images.Media.insertImage(getContentResolver(), photo, "receipt_" + calender.getTimeInMillis(), null);
-			Uri uri = Uri.parse(url);
-			final String imageAbsolutePath = AppUtils.getImageFileFromURI(this, uri);
-			try {
-				new Thread(){
-					public void run() {
-						try {
-						String str=	HTTPUtils.uploadImage(API.UPLOAD_IMAGE_API, imageAbsolutePath);
-						showErrorMsg(str);
-						} catch (Exception e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}.start();
-				
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+			String imageAbsolutePath = AppUtils.getImageFileFromURI(this,imageGallery);
+			HTTPUtils.uploadImage(this,API.UPLOAD_IMAGE_API,imageAbsolutePath);
 			
+		} else if (requestCode == RESULT_IMAGE_CAPTURE	&& resultCode == RESULT_OK) {
+
+			Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+			
+			String captiredImgFile= AppUtils.getImageFilePath();
+			if (captiredImgFile!= null) {
+				
+				File capturedFile = new File(captiredImgFile);
+				Uri contentUri = Uri.fromFile(capturedFile);
+				mediaScanIntent.setData(contentUri);
+				this.sendBroadcast(mediaScanIntent);
+				
+				HTTPUtils.uploadImage(this,API.UPLOAD_IMAGE_API,captiredImgFile);
+				
+			}
 		}
 		
 	}
