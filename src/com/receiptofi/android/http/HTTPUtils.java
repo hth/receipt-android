@@ -21,6 +21,9 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.Context;
+
+import com.receiptofi.android.ParentActivity;
 import com.receiptofi.android.utils.UserUtils;
 
 public final class HTTPUtils {
@@ -152,47 +155,54 @@ public final class HTTPUtils {
 		return headers;
 	}
 
-	public static String uploadImage(String api, String filename) throws Exception {
-		try {
-			
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		HttpPost post;
-		HttpResponse response;
-
-		HttpClient client = new DefaultHttpClient();
-		if (api != null) {
-			post = new HttpPost(URL + api);
-		} else {
-			post = new HttpPost(URL);
-		}
-
-		File imageFile = new File(filename);
-		FileBody fileBody = new FileBody(imageFile);
+	public static void uploadImage(final Context context,final String api, final String filename){
 		
-		MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-		builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-		builder.addPart("qqfile", fileBody);
+		new Thread(){
+			public void run() {
+				
+				try {
+					HttpPost post;
+					HttpResponse response;
 
-		HttpEntity entity = builder.build();
+					HttpClient client = new DefaultHttpClient();
+					if (api != null) {
+						post = new HttpPost(URL + api);
+					} else {
+						post = new HttpPost(URL);
+					}
 
-		post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
-		post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-		post.setEntity(entity);
+					File imageFile = new File(filename);
+					FileBody fileBody = new FileBody(imageFile);
+					
+					MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+					builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+					builder.addPart("qqfile", fileBody);
 
-		response = client.execute(post);
+					HttpEntity entity = builder.build();
 
-		BufferedReader reader = new BufferedReader(new InputStreamReader(
-				response.getEntity().getContent()));
-		StringBuffer responseBuffer = new StringBuffer();
-		String line;
-		while ((line = reader.readLine()) != null) {
-			responseBuffer.append(line);
-		}
+					post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+					post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
+					post.setEntity(entity);
 
-		return responseBuffer.toString();
+					response = client.execute(post);
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(
+							response.getEntity().getContent()));
+					StringBuffer responseBuffer = new StringBuffer();
+					String line;
+					while ((line = reader.readLine()) != null) {
+						responseBuffer.append(line);
+					}
+					
+					((ParentActivity)context).showErrorMsg(responseBuffer.toString());
+
+				} catch (Exception e) {
+					// TODO: handle exception
+				}
+			};
+		}.start();
+		
+		
 
 	}
-
 }
