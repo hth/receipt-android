@@ -3,6 +3,16 @@ package com.receiptofi.android;
 import java.util.ArrayList;
 import java.util.Calendar;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import com.receiptofi.android.http.API;
+import com.receiptofi.android.http.ApiParser;
+import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.models.ReceiptModel;
+import com.receiptofi.android.utils.UserUtils;
+
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -82,4 +92,5 @@ public class ParentActivity extends Activity {
 
 		});
 	}
+	
 }

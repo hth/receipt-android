@@ -52,6 +52,10 @@ public class HomePageActivity extends ParentActivity {
 		 startFragment(new ReceiptListFragment(), true,container.getId());
 	}
 
+	public void onBackPressed(View view) {
+		onBackPressed();
+	}
+	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

@@ -43,4 +43,5 @@ public class ReceiptDB {
 		public static final String VALUE = "value";
 	}
 
+	
 }

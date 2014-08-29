@@ -68,16 +68,11 @@ public final class HTTPUtils {
         HttpGet httpGet;
         
         if(API!=null){
-        	httpGet = new HttpGet(URL+API+getParamString.toString());
+        	httpGet = new HttpGet(URL+API);
         }else {
-        	httpGet = new HttpGet(URL+getParamString.toString());
+        	httpGet = new HttpGet(URL);
 		}
         if (params != null) {
-
-//            for (NameValuePair key : params) {
-//                getParamString.append("&").append(key.getName() + "=")
-//                        .append(key.getValue());
-//            }
         	
         	for(NameValuePair pair:params){
         		 httpGet.addHeader(pair.getName(), pair.getValue());

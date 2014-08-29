@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.receiptofi.android.db.DBHelper;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.models.ReceiptDB;
+import com.receiptofi.android.utils.ReceiptUtils;
 import com.receiptofi.android.utils.UserUtils;
 
 public class LoginActivity extends ParentActivity {
@@ -170,6 +172,7 @@ public class LoginActivity extends ParentActivity {
                 }
                 if (UserUtils.isValidAppUser()) {
                     launchHomeScreen();
+                    ReceiptUtils.fetchReceiptsAndSave();
                 } else {
                     showErrorMsg("Login Failed !!!");
                 }
