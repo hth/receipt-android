@@ -7,7 +7,6 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.inputmethodservice.Keyboard.Key;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +14,13 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.receiptofi.android.R;
+import com.receiptofi.android.adapters.ReceiptListAdapter;
 import com.receiptofi.android.http.API;
+import com.receiptofi.android.http.ApiParser;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.models.ReceiptModel;
+import com.receiptofi.android.utils.ReceiptUtils;
 import com.receiptofi.android.utils.UserUtils;
 
 public class ReceiptListFragment extends Fragment {
@@ -25,6 +28,7 @@ public class ReceiptListFragment extends Fragment {
 	Context context;
 	View screen;
 	ListView recepitList;
+	ReceiptListAdapter adapter;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -42,32 +46,8 @@ public class ReceiptListFragment extends Fragment {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
 		context = getActivity();
-		fetchReceipts();
-		
-	}
-	
-	private void fetchReceipts(){
-		ArrayList<NameValuePair> headerData= new ArrayList<NameValuePair>();
-		headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
-		headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
-		
-		HTTPUtils.AsyncRequest(headerData, API.GET_ALL_RECEIPTS, HTTPUtils.HTTP_METHOD_GET, new ResponseHandler() {
-			
-			@Override
-			public void onSuccess(String response) {
-				
-			}
-			
-			@Override
-			public void onExeption(Exception exception) {
-				
-			}
-			
-			@Override
-			public void onError(String Error) {
-				
-			}
-		});
+		adapter= new ReceiptListAdapter(context, ReceiptUtils.getAllReciepts());
+		recepitList.setAdapter(adapter);
 	}
 	
 	
