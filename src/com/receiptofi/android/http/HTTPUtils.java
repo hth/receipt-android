@@ -24,13 +24,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import android.content.Context;
 
 import com.receiptofi.android.ParentActivity;
+import com.receiptofi.android.models.ImageModel;
 import com.receiptofi.android.utils.UserUtils;
 
 public final class HTTPUtils {
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
 
-    private static final String CONNECTION_URL_STAGING = "https://receiptofi.com:9443/receipt-mobile";
+//    private static final String CONNECTION_URL_STAGING = "https://receiptofi.com:9443/receipt-mobile";
+    private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
     private static final String CONNECTION_URL_PRODUCTION = "https://receiptofi.com/receipt-mobile";
 
     private static final String URL = CONNECTION_URL_STAGING;
@@ -155,11 +157,10 @@ public final class HTTPUtils {
 		return headers;
 	}
 
-	public static void uploadImage(final Context context,final String api, final String filename){
-		
+	public static Thread uploadImage(final Context context,final String api, final ImageModel imageModel, final ImageResponseHandler handler){
+		Thread t=
 		new Thread(){
 			public void run() {
-				
 				try {
 					HttpPost post;
 					HttpResponse response;
@@ -171,9 +172,9 @@ public final class HTTPUtils {
 						post = new HttpPost(URL);
 					}
 
-					File imageFile = new File(filename);
+					File imageFile = new File(imageModel.imgPath);
 					FileBody fileBody = new FileBody(imageFile);
-					
+
 					MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 					builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
 					builder.addPart("qqfile", fileBody);
@@ -193,16 +194,15 @@ public final class HTTPUtils {
 					while ((line = reader.readLine()) != null) {
 						responseBuffer.append(line);
 					}
-					
-					((ParentActivity)context).showErrorMsg(responseBuffer.toString());
 
+					handler.onSuccess(imageModel,responseBuffer.toString());
 				} catch (Exception e) {
 					// TODO: handle exception
+					handler.onExeption(imageModel,e);
 				}
 			};
-		}.start();
-		
-		
-
+		};
+		t.start();
+		return t;
 	}
 }

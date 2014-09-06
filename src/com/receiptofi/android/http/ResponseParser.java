@@ -6,9 +6,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.os.Bundle;
+
+import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.models.ReceiptModel;
 
-public class ApiParser {
+public class ResponseParser {
 
 	public static void getLoginDetails(String response) {
 		try {
@@ -20,6 +23,23 @@ public class ApiParser {
 		}
 	}
 
+
+	public synchronized static Bundle getImageUploadResponse(String response) {
+		
+		Bundle bundle =new Bundle();
+		try {
+			JSONObject imageResponse = new JSONObject(response);
+			bundle.putString(ReceiptDB.ImageIndex.BLOB_ID, imageResponse.getString("blobId"));
+			
+			JSONObject unprocessedDocuments=imageResponse.getJSONObject("unprocessedDocuments");
+			bundle.putInt("unprocessedCount", unprocessedDocuments.getInt("unprocessedCount"));
+			
+		} catch (JSONException e) {
+		
+		}
+		return bundle;
+	}
+	
 	public static ArrayList<ReceiptModel> getReceipts(String response) {
 
 		ArrayList<ReceiptModel> models = new ArrayList<ReceiptModel>();

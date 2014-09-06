@@ -98,11 +98,12 @@
                     android:textSize="12sp" />
 
                 <ToggleButton
-                    android:id="@+id/toggleButton1"
+                    android:id="@+id/wifiSyncBtn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
+                    android:onClick="onWifiSyncToggle"
                     android:text="ToggleButton" />
             </RelativeLayout>
 

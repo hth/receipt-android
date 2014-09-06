@@ -7,7 +7,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.ApiParser;
+import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.models.ReceiptModel;
@@ -23,7 +23,7 @@ import android.widget.Toast;
 
 public class ParentActivity extends Activity {
 	
-	Handler uiThread = new Handler();
+	protected Handler uiThread = new Handler();
 	protected Calendar calender = Calendar.getInstance();
 	
 	@Override

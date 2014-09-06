@@ -24,12 +24,26 @@
             android:paddingRight="15dp"
             android:paddingTop="15dp" >
 
-            <TextView
-                android:id="@+id/add_receipt_txt"
-                style="@style/homepage_text_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="ADD RECEIPT" />
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/add_receipt_txt"
+                    style="@style/homepage_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD RECEIPT" />
+
+                <TextView
+                    android:id="@+id/unprocessDoucumentCount"
+                    style="@style/homepage_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text=""
+                    android:textColor="@color/login_screen_blue" />
+            </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
