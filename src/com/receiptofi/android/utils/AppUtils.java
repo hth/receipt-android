@@ -1,12 +1,13 @@
 package com.receiptofi.android.utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -14,6 +15,7 @@ import android.provider.MediaStore;
 public class AppUtils {
 	
 	static File image;
+	private static Context homePageContext;
 	
 	public static String getImageFileFromURI(Context context,Uri uri){
 		String[] filePathColoumn = { MediaStore.Images.Media.DATA };
@@ -57,4 +59,40 @@ public class AppUtils {
 			return null;
 		}
 	}
+	
+	public static Context getHomePageContext(){
+		return homePageContext;
+		
+	}
+	
+	public static void setHomePageContext(Context context){
+		homePageContext=context;
+		
+	}
+	
+	public static boolean isWifiConnected(Context context){
+		
+			ConnectivityManager connManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo wifiNetwork = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+
+			if (wifiNetwork.isConnected()) {
+			   return true;
+			}else {
+			   return false;
+			}	
+
+	}
+	
+	public static boolean isMobileInternetConnected(Context context){
+		
+		ConnectivityManager connManager = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
+		NetworkInfo mobileInternet = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+		if (mobileInternet.isConnected()) {
+		   return true;
+		}else {
+		   return false;
+		}	
+
+}
 }

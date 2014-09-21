@@ -52,7 +52,7 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper{
 	private void createTableImageIndex(SQLiteDatabase db){
 		db.execSQL("CREATE TABLE IF NOT EXISTS "+ReceiptDB.ImageIndex.TABLE_NAME+"("
 				+ ReceiptDB.ImageIndex.BLOB_ID + " TEXT ,"
-				+ ReceiptDB.ImageIndex.IMAGE_NAME + " TEXT " +
+				+ ReceiptDB.ImageIndex.IMAGE_PATH + " TEXT " +
 
 		");");
 	}
@@ -60,7 +60,7 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper{
 	private void createTableUploadQueue(SQLiteDatabase db){
 		db.execSQL("CREATE TABLE IF NOT EXISTS "+ReceiptDB.UploadQueue.TABLE_NAME+"("
 				+ ReceiptDB.UploadQueue.IMAGE_DATE + " TEXT ,"
-				+ ReceiptDB.UploadQueue.IMAGE_NAME + " TEXT ," 
+				+ ReceiptDB.UploadQueue.IMAGE_PATH + " TEXT UNIQUE ," 
 				+ ReceiptDB.UploadQueue.STATUS + " TEXT " +
 
 		");");

@@ -9,7 +9,7 @@ import android.database.Cursor;
 
 import com.receiptofi.android.ReceiptofiApplication;
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.ApiParser;
+import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.models.ReceiptDB;
@@ -28,7 +28,7 @@ public class ReceiptUtils {
 
 					@Override
 					public void onSuccess(String response) {
-						ArrayList<ReceiptModel> models = ApiParser.getReceipts(response);
+						ArrayList<ReceiptModel> models = ResponseParser.getReceipts(response);
 						for (ReceiptModel model : models) {
 							model.save();
 						}

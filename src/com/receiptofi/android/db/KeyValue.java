@@ -7,11 +7,13 @@ import android.database.Cursor;
 import com.receiptofi.android.ReceiptofiApplication;
 import com.receiptofi.android.models.ReceiptDB;
 
-public class DBHelper {
+public class KeyValue {
 
     public static class key {
         public static String XR_MAIL = "X-R-MAIL";
         public static String XR_AUTH = "X-R-AUTH";
+        
+        public static String WIFI_SYNC = "wifi_sync";
     }
 
     ReceiptofiApplication application;

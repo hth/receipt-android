@@ -26,14 +26,14 @@ public class ReceiptDB {
 	public static class ImageIndex {
 		public static final String TABLE_NAME = "ImageIndex";
 		public static final String BLOB_ID = "blobId";
-		public static final String IMAGE_NAME = "image_name";
+		public static final String IMAGE_PATH = "imagePath";
 
 	}
 
 	public static class UploadQueue {
 		public static final String TABLE_NAME = "UploadQueue";
-		public static final String IMAGE_DATE = "imageData";
-		public static final String IMAGE_NAME = "imageName";
+		public static final String IMAGE_DATE = "imageDate";
+		public static final String IMAGE_PATH = "imagePath";
 		public static final String STATUS = "status";
 	}
 

@@ -6,25 +6,43 @@ import java.util.ArrayList;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import android.content.Intent;
+import android.content.IntentSender.SendIntentException;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.receiptofi.android.db.DBHelper;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.plus.Plus;
+import com.google.android.gms.plus.PlusClient;
+import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.http.API;
+import com.receiptofi.android.http.API.key;
 import com.receiptofi.android.http.HTTPUtils;
-import com.receiptofi.android.models.ReceiptDB;
+import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.utils.ReceiptUtils;
 import com.receiptofi.android.utils.UserUtils;
 
-public class LoginActivity extends ParentActivity {
+public class LoginActivity extends ParentActivity implements OnClickListener ,ConnectionCallbacks, OnConnectionFailedListener{
 
 	private EditText userName;
     private EditText password;
@@ -33,7 +51,14 @@ public class LoginActivity extends ParentActivity {
 
 	private StringBuilder errors = new StringBuilder();
 	private TextView signupText;
-
+	private static final int GOOGLE_PLUS_SIGN_IN = 0;
+	private GoogleApiClient mGoogleApiClient;
+	private boolean mSignInClicked;
+	private ConnectionResult mConnectionResult;
+	private boolean mIntentInProgress;
+	SignInButton googlePlusLogin;
+	
+	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 
@@ -46,15 +71,40 @@ public class LoginActivity extends ParentActivity {
 		userName = (EditText) findViewById(R.id.userName);
 		password = (EditText) findViewById(R.id.password);
 		signupText = (TextView) findViewById(R.id.signupText);
+		
+		googlePlusLogin =(SignInButton)findViewById(R.id.loginGooglePlus);
 
 		userName.setOnFocusChangeListener(editTextListener);
 		password.setOnFocusChangeListener(editTextListener);
+		googlePlusLogin.setOnClickListener(this);
+		
 
 		signupText
 				.setText(Html
 						.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font></u>, it's free!"));
+		// Initializing google plus api client
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this).addApi(Plus.API)
+                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+	}
+	
+	@Override
+	protected void onStart() {
+		// TODO Auto-generated method stub
+		super.onStart();
+		mGoogleApiClient.connect();
 	}
 
+	@Override
+	protected void onStop() {
+		// TODO Auto-generated method stub
+		super.onStop();
+		if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
+        }
+	}
+	
 	private static OnFocusChangeListener editTextListener = new OnFocusChangeListener() {
 
 		@Override
@@ -102,7 +152,7 @@ public class LoginActivity extends ParentActivity {
 			toast.show();
 			errors.delete(0, errors.length());
 		} else {
-			authenticateUser();
+			authenticateUser(true,null);
 		}
 	}
 
@@ -136,8 +186,46 @@ public class LoginActivity extends ParentActivity {
 		addToBackStack(this);
 	}
 
-    private void authenticateUser() {
+    private void authenticateUser(boolean isSocialLogin,Bundle data) {
+    	if(isSocialLogin){
 
+            showLoader(this.getResources().getString(R.string.login_auth_msg));
+            
+            JSONObject postData =new JSONObject();
+            
+            try {
+                postData.put(API.key.PID, data.getString(key.PID));
+				postData.put(API.key.ACCESS_TOKEN, data.getString(key.ACCESS_TOKEN));
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+            
+            Log.i("ACCESS TOKEN", data.getString(key.ACCESS_TOKEN));
+       
+            HTTPUtils.doSocialAuthentication(LoginActivity.this,postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
+				
+				@Override
+				public void onSuccess(String response) {
+					  afterSuccessfullLogin();
+				}
+				
+				@Override
+				public void onExeption(Exception exception) {
+					
+				}
+				
+				@Override
+				public void onError(String Error) {
+					String errorMsg=ResponseParser.getSocialAuthError(Error);
+					((ParentActivity)LoginActivity.this).showErrorMsg(errorMsg);
+				}
+			});
+            
+            
+    	}else {
+		
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
@@ -166,18 +254,165 @@ public class LoginActivity extends ParentActivity {
                         String key = header.getName();
                         if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
                             String value = header.getValue();
-                            DBHelper.insertKeyValue(LoginActivity.this, key, value);
+                            KeyValue.insertKeyValue(LoginActivity.this, key, value);
                         }
                     }
                 }
-                if (UserUtils.isValidAppUser()) {
-                    launchHomeScreen();
-                    ReceiptUtils.fetchReceiptsAndSave();
-                } else {
-                    showErrorMsg("Login Failed !!!");
-                }
+                afterSuccessfullLogin();
             }
-        }.start();
-    }
+			}.start();
 
+		}   	
+    	}
+
+	@Override
+	public void onClick(View v) {
+		// TODO Auto-generated method stub
+		switch (v.getId()) {
+        case R.id.loginGooglePlus:
+            // Signin button clicked
+            signInWithGplus();
+            break;
+        }
+	}
+
+	private void signInWithGplus() {
+	    if (!mGoogleApiClient.isConnecting()) {
+	        mSignInClicked = true;
+	        resolveSignInError();
+	    }
+	}
+	 
+	private void afterSuccessfullLogin(){
+        if (UserUtils.isValidAppUser()) {
+            launchHomeScreen();
+            ReceiptUtils.fetchReceiptsAndSave();
+        } else {
+            showErrorMsg("Login Failed !!!");
+        }
+	}
+
+	private void resolveSignInError() {
+	    if (mConnectionResult.hasResolution()) {
+	        try {
+	            mIntentInProgress = true;
+	            mConnectionResult.startResolutionForResult(this, GOOGLE_PLUS_SIGN_IN);
+	        } catch (SendIntentException e) {
+	            mIntentInProgress = false;
+	            mGoogleApiClient.connect();
+	        }
+	    }
+	}
+	
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		// TODO Auto-generated method stub
+		super.onActivityResult(requestCode, resultCode, data);
+		if (requestCode == GOOGLE_PLUS_SIGN_IN) {
+	        if (resultCode != RESULT_OK) {
+	            mSignInClicked = false;
+	        }
+	 
+	        mIntentInProgress = false;
+	 
+	        if (!mGoogleApiClient.isConnecting()) {
+	            mGoogleApiClient.connect();
+	        }
+	    }
+	}
+	
+	@Override
+	public void onConnectionFailed(ConnectionResult result) {
+		// TODO Auto-generated method stub
+		 if (!result.hasResolution()) {
+		        GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this,
+		                0).show();
+		        return;
+		    }
+		 
+		    if (!mIntentInProgress) {
+		        // Store the ConnectionResult for later usage
+		        mConnectionResult = result;
+		 
+		        if (mSignInClicked) {
+		            // The user has already clicked 'sign-in' so we attempt to
+		            // resolve all
+		            // errors until the user is signed in, or they cancel.
+		            resolveSignInError();
+		        }
+		    }
+	}
+
+	@Override
+	public void onConnected(Bundle connectionHint) {
+		// TODO Auto-generated method stub
+		mSignInClicked = false;
+	    Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+	 
+	    // Get user's information
+	    getUserInformation();
+	}
+	
+	private void signOutFromGplus() {
+	    if (mGoogleApiClient.isConnected()) {
+	        Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+	        mGoogleApiClient.disconnect();
+	        mGoogleApiClient.connect();
+	    }
+	}
+
+	private void getUserInformation() {
+		// TODO Auto-generated method stub
+		AccessTokenGooglePlus gToken=new AccessTokenGooglePlus();
+		gToken.execute((Void)null);
+	}
+
+	@Override
+	public void onConnectionSuspended(int cause) {
+		// TODO Auto-generated method stub
+		  mGoogleApiClient.connect();
+		  
+	}
+	
+	public class AccessTokenGooglePlus extends AsyncTask<Void,Void,Void> {
+		
+		String token = null;
+		String scope= Scopes.PLUS_LOGIN + " "+Scopes.PLUS_ME;
+		String scopes = "audience:server:client_id:" + API.key.SERVER_CLIENT_ID ;
+		
+		@Override
+		protected Void doInBackground(Void... params) {
+			// TODO Auto-generated method stub
+			try {
+				// We can retrieve the token to check via
+				// tokeninfo or to pass to a service-side
+				// application.
+				token = GoogleAuthUtil.getToken(LoginActivity.this,Plus.AccountApi.getAccountName(mGoogleApiClient), scopes);
+			} catch (Exception e) {
+				// This error is recoverable, so we could fix this
+				// by displaying the intent to the user.
+			}
+			return null;
+		}
+		
+		@Override
+		protected void onPostExecute(Void result) {
+			// TODO Auto-generated method stub
+			super.onPostExecute(result);
+			
+
+			if(token!=null){
+				Log.i("TOKEN IS NOT NULL MAKING QUERY", "TOKEN IS NOT NULL MAKING QUERY");
+				Bundle data=new Bundle();
+				data.putString(key.PID, key.PID_GOOGLE);
+				data.putString(key.ACCESS_TOKEN, token);
+				authenticateUser(true, data);
+			}else {
+				Log.i("TOKEN IS  NULL MAKING QUERY", "TOKEN IS  NULL MAKING QUERY");
+			}
+		}
+		
+		
+	}
+	
 }

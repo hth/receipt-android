@@ -16,7 +16,7 @@ import android.widget.ListView;
 import com.receiptofi.android.R;
 import com.receiptofi.android.adapters.ReceiptListAdapter;
 import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.ApiParser;
+import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.models.ReceiptModel;
