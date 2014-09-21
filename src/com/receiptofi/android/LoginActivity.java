@@ -152,7 +152,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
 			toast.show();
 			errors.delete(0, errors.length());
 		} else {
-			authenticateUser(true,null);
+			authenticateUser(false,null);
 		}
 	}
 
