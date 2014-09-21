@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.Header;
@@ -16,14 +17,18 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Log;
 
-import com.receiptofi.android.ParentActivity;
+import com.receiptofi.android.db.KeyValue;
+import com.receiptofi.android.http.API.key;
 import com.receiptofi.android.models.ImageModel;
 import com.receiptofi.android.utils.UserUtils;
 
@@ -157,6 +162,74 @@ public final class HTTPUtils {
 		return headers;
 	}
 
+	public static void doSocialAuthentication(Context ctx,
+			final JSONObject postData, String API,ResponseHandler responseHandler) {
+
+		try {
+			final Header[] headers;
+			HttpPost httpPost;
+			HttpClient client = new DefaultHttpClient();
+			StringBuffer responseBuffer = new StringBuffer();
+			
+			if (API != null) {
+				httpPost = new HttpPost(URL + API);
+			} else {
+				httpPost = new HttpPost(URL);
+			}
+			Log.i("making api request to server", URL + API +"Data" + postData.toString());
+			
+			StringEntity postEntity = new StringEntity(postData.toString());
+
+			httpPost.setEntity(postEntity);
+			HttpResponse response = null;
+
+			response = client.execute(httpPost);
+
+			BufferedReader reader = new BufferedReader(new InputStreamReader(
+					response.getEntity().getContent()));
+			
+			String line;
+			while ((line = reader.readLine()) != null) {
+				responseBuffer.append(line);
+			}
+			headers = response.getAllHeaders();
+		    Log.i("Response", responseBuffer.toString());
+			if(isValidSocialAuthResponse(ctx,headers)){
+				responseHandler.onSuccess(responseBuffer.toString());
+			}else {
+				responseHandler.onError(responseBuffer.toString());
+			}
+			
+		} catch (Exception e) {
+			responseHandler.onExeption(e);
+		}
+		
+	}
+	
+	private static boolean isValidSocialAuthResponse(Context ctx,Header[] headers) {
+		if(headers!=null && headers.length>=2){
+			ArrayList<String> headerList = new ArrayList<String>();
+			
+			for(Header header:headers){
+				 String key = header.getName();
+                 if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
+                	 headerList.add(key);
+                	 KeyValue.insertKeyValue(ctx, key, header.getValue());
+                 }
+			}
+			if(headerList.contains(API.key.XR_MAIL) && headerList.contains(API.key.XR_AUTH)){
+				return true;
+			}else {
+				return false;
+			}
+			
+		}else {
+			return false;
+		}
+	
+
+	}
+	
 	public static Thread uploadImage(final Context context,final String api, final ImageModel imageModel, final ImageResponseHandler handler){
 		Thread t=
 		new Thread(){
