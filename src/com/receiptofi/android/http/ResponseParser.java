@@ -10,6 +10,7 @@ import android.os.Bundle;
 
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.models.ReceiptModel;
+import com.receiptofi.android.models.RecieptElement;
 
 public class ResponseParser {
 
@@ -106,6 +107,32 @@ public class ResponseParser {
 		}
 
 		return models;
+	}
+	
+	
+	public static ArrayList<RecieptElement> getReceiptDetails(String response) {
+
+		ArrayList<RecieptElement> elemets= new ArrayList<RecieptElement>();
+		try {
+			JSONArray array = new JSONArray(response);
+			for (int i = 0; i < array.length(); i++) {
+				RecieptElement receiptElement=new RecieptElement();
+				JSONObject receiptElementJson=array.getJSONObject(i);
+				receiptElement.quantity=receiptElementJson.getString("quant");
+				receiptElement.id=receiptElementJson.getString("id");
+				receiptElement.name=receiptElementJson.getString("name");
+				receiptElement.price=receiptElementJson.getString("price");
+				receiptElement.receipt_id=receiptElementJson.getString("receiptId");
+				receiptElement.sequence=receiptElementJson.getString("seq");
+				receiptElement.tax=receiptElementJson.getString("tax");
+				
+				elemets.add(receiptElement);
+			}
+		} catch (JSONException e) {
+			return null;
+		}
+		
+		return elemets;
 	}
 
 }

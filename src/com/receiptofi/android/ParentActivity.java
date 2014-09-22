@@ -3,16 +3,6 @@ package com.receiptofi.android;
 import java.util.ArrayList;
 import java.util.Calendar;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.ResponseParser;
-import com.receiptofi.android.http.HTTPUtils;
-import com.receiptofi.android.http.ResponseHandler;
-import com.receiptofi.android.models.ReceiptModel;
-import com.receiptofi.android.utils.UserUtils;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
@@ -64,7 +54,7 @@ public class ParentActivity extends Activity {
         }
     }
 
-	protected void showLoader(String msg) {
+    public void showLoader(String msg) {
 		loader=new ProgressDialog(this);
 		loader.getWindow().setBackgroundDrawable(new ColorDrawable(0));
 		loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -75,7 +65,7 @@ public class ParentActivity extends Activity {
 
 	}
 
-	protected void hideLoader() {
+    public void hideLoader() {
 		if(loader!=null){
 			loader.dismiss();
 		}
