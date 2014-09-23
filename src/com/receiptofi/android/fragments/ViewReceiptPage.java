@@ -1,6 +1,9 @@
 package com.receiptofi.android.fragments;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -12,6 +15,7 @@ import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.models.RecieptElement;
+import com.receiptofi.android.utils.ISO8601DateParser;
 import com.receiptofi.android.utils.UserUtils;
 
 import android.app.Activity;
@@ -86,11 +90,44 @@ public class ViewReceiptPage extends Fragment{
 			for(RecieptElement element : elements){
 				final View view =inflator.inflate(R.layout.receiptdetail_element_row, null);
 				((TextView)view.findViewById(R.id.elementName)).setText(element.name);
-				((TextView)view.findViewById(R.id.elemntPrice)).setText(element.price);
+				((TextView)view.findViewById(R.id.elemntPrice)).setText("$"+element.price);
 				((HomePageActivity)getActivity()).runOnUiThread(new Runnable() {
 					
 					@Override
 					public void run() {
+						
+						String receiptName=getArguments().getString("receiptName");
+						if(receiptName!=null){
+							((TextView)((Activity)context).findViewById(R.id.receiptName)).setText(receiptName);
+						}
+						
+						Date dateISO8601=null;
+						String date=getArguments().getString("date");
+//						if(date!=null){
+//
+//							try {
+//								dateISO8601=ISO8601DateParser.parse(date);
+//								
+//							} catch (ParseException e) {
+//								// TODO Auto-generated catch block
+//								e.printStackTrace();
+//							}
+//						}
+						if(date!=null){
+//						if(dateISO8601!=null){
+//							((TextView)((Activity)context).findViewById(R.id.receiptName)).setText(dateISO8601.getMonth()+" "+dateISO8601.getDate()+" , "+dateISO8601.getYear());
+							((TextView)((Activity)context).findViewById(R.id.date)).setText(date.substring(0, 10));
+						}
+
+						double totalPrice=getArguments().getDouble("totalPrice");
+						if(totalPrice>0){
+							((TextView)((Activity)context).findViewById(R.id.totalPrice)).setText("$"+totalPrice);
+						}
+						
+						((Activity)context).findViewById(R.id.vrp_title_container).setVisibility(View.VISIBLE);
+						((Activity)context).findViewById(R.id.vrp_header).setVisibility(View.VISIBLE);
+						
+						
 						elementsContainer.addView(view);
 					}
 				});

@@ -51,7 +51,7 @@ public class ReceiptListFragment extends Fragment {
 		public void onItemClick(AdapterView<?> adapter, View view, int position,
 				long id) {
 			ReceiptModel model = (ReceiptModel) view.getTag();
-			((HomePageActivity)context).invokeDetailReceiptView(view, model.id);
+			((HomePageActivity)context).invokeDetailReceiptView(view, model);
 		}
 	};
 	
