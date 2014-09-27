@@ -52,7 +52,7 @@ public class ReceiptUtils {
 	
 	public static ArrayList<ReceiptModel> getAllReciepts() {
 
-		String[] coloumns = new String[] { ReceiptDB.Receipt.BIZ_NAME,ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX,ReceiptDB.Receipt.TOTAL };
+		String[] coloumns = new String[] { ReceiptDB.Receipt.BIZ_NAME,ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX,ReceiptDB.Receipt.TOTAL,ReceiptDB.Receipt.ID };
 		Cursor recieptsRecords = ReceiptofiApplication.rdh.getReadableDatabase().query(ReceiptDB.Receipt.TABLE_NAME, coloumns, null, null,	null, null, null);
 		
 		ArrayList<ReceiptModel> rModels =new ArrayList<ReceiptModel>();
@@ -63,6 +63,7 @@ public class ReceiptUtils {
 				model.date = recieptsRecords.getString(1);
 				model.ptax = recieptsRecords.getDouble(2);
 				model.total = recieptsRecords.getDouble(3);
+				model.id = recieptsRecords.getString(4);
 				rModels.add(model);
 			}
 

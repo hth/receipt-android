@@ -1,27 +1,21 @@
 package com.receiptofi.android.fragments;
 
-import java.util.ArrayList;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ListView;
 
+import com.receiptofi.android.HomePageActivity;
 import com.receiptofi.android.R;
 import com.receiptofi.android.adapters.ReceiptListAdapter;
-import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.ResponseParser;
-import com.receiptofi.android.http.HTTPUtils;
-import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.models.ReceiptModel;
 import com.receiptofi.android.utils.ReceiptUtils;
-import com.receiptofi.android.utils.UserUtils;
 
 public class ReceiptListFragment extends Fragment {
 
@@ -48,7 +42,17 @@ public class ReceiptListFragment extends Fragment {
 		context = getActivity();
 		adapter= new ReceiptListAdapter(context, ReceiptUtils.getAllReciepts());
 		recepitList.setAdapter(adapter);
+		recepitList.setOnItemClickListener(receiptListner);
 	}
 	
+	OnItemClickListener receiptListner =new OnItemClickListener() {
+
+		@Override
+		public void onItemClick(AdapterView<?> adapter, View view, int position,
+				long id) {
+			ReceiptModel model = (ReceiptModel) view.getTag();
+			((HomePageActivity)context).invokeDetailReceiptView(view, model);
+		}
+	};
 	
 }

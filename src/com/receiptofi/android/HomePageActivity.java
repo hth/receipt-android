@@ -14,8 +14,10 @@ import android.widget.Toast;
 
 import com.receiptofi.android.adapters.ImageUpload;
 import com.receiptofi.android.fragments.ReceiptListFragment;
+import com.receiptofi.android.fragments.ViewReceiptPage;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.models.ReceiptModel;
 import com.receiptofi.android.utils.AppUtils;
 
 public class HomePageActivity extends ParentActivity {
@@ -70,6 +72,22 @@ public class HomePageActivity extends ParentActivity {
 		 startFragment(new ReceiptListFragment(), true,container.getId());
 	}
 
+	public void invokeDetailReceiptView(View view,ReceiptModel model) {
+		 View container=findViewById(R.id.leftSidePane);
+		 
+		 Bundle blobData= new Bundle();
+		 blobData.putString("date", model.date);
+		 blobData.putString("receiptId", model.id);
+		 blobData.putDouble("totalPrice", model.total);
+		 blobData.putString("receiptName", model.bizName);
+		 blobData.putDouble("ptax", model.ptax);
+		 
+		 ViewReceiptPage detaiPage= new ViewReceiptPage();
+		 detaiPage.setArguments(blobData);
+		 startFragment(detaiPage, true,container.getId());
+	}
+
+	
 	public void onBackPressed(View view) {
 		onBackPressed();
 	}
