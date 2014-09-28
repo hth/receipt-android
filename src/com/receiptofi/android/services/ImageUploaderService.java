@@ -15,6 +15,8 @@ import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.models.ImageModel;
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.utils.AppUtils;
+import com.receiptofi.android.utils.UserUtils;
+import com.receiptofi.android.utils.UserUtils.UserSettings;
 
 public class ImageUploaderService {
 	
@@ -138,7 +140,9 @@ public class ImageUploaderService {
 				Log.i("Thread  Died  ", thread.getName());			
 			}
 		}
-		start(context);
+		if(UserSettings.isStartImageUploadProcess(context)){
+			start(context);
+		}
 	}
 	
 }
