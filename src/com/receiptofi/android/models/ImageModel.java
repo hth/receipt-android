@@ -17,7 +17,7 @@ public class ImageModel {
 	public String imgStatus;
 	public boolean LOCK=false;
 	public boolean isTriedForUpload=false;
-	public int noOfTimesTried;
+	public int noOfTimesTried=1;
 	public Thread uploaderThread ;
 
 	public static final class STATUS {
@@ -50,7 +50,12 @@ public class ImageModel {
 	
 	public synchronized boolean updateStatus(boolean isProcessed) {
 		
-		noOfTimesTried++;
+		if(isProcessed){
+			// if image is uploaded successfully then noOfTimesTried =0 , which is useful in next iteration of queue.
+ 			noOfTimesTried=0;
+		}else {
+			noOfTimesTried++;
+		}
 		
 		ContentValues uploadValues = new ContentValues();
 		

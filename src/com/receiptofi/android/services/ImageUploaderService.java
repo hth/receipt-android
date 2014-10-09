@@ -58,7 +58,7 @@ public class ImageUploaderService {
 	private static boolean validateImageForUpload(ImageModel iModel){
 		if (iModel.imgPath != null
 				&& (iModel.imgStatus == null || iModel.imgStatus.equalsIgnoreCase(ImageModel.STATUS.UNPROCESSED))
-				&& !iModel.LOCK && iModel.noOfTimesTried<MAX_RETRY_UPLOAD) {
+				&& !iModel.LOCK && iModel.noOfTimesTried<=MAX_RETRY_UPLOAD &&  iModel.noOfTimesTried>0) {
 			return true;
 		} else {
 			return false;
