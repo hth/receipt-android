@@ -131,7 +131,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/wifiSyncText"
                     style="@style/settings_text_heading_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -161,7 +160,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/wifiSyncText"
                     style="@style/settings_text_heading_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -171,7 +169,6 @@
                     android:textSize="20sp" />
 
                 <TextView
-                    android:id="@+id/toggleButton1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -204,7 +201,6 @@
                 android:padding="10dp" >
 
                 <TextView
-                    android:id="@+id/wifiSyncText"
                     style="@style/settings_text_heading_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -254,7 +250,6 @@
                     android:textColor="#424242" />
 
                 <TextView
-                    android:id="@+id/toggleButton2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"

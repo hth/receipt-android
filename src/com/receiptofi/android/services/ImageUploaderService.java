@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 
 import com.receiptofi.android.HomePageActivity;
-import com.receiptofi.android.ParentActivity;
 import com.receiptofi.android.adapters.ImageUpload;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
@@ -16,6 +15,8 @@ import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.models.ImageModel;
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.utils.AppUtils;
+import com.receiptofi.android.utils.UserUtils;
+import com.receiptofi.android.utils.UserUtils.UserSettings;
 
 public class ImageUploaderService {
 	
@@ -23,6 +24,7 @@ public class ImageUploaderService {
 	private static ArrayList<Thread> imageUploadThreads = new ArrayList<Thread>();
 	private static boolean isServiceStarted = false;
 	private static int MAX_NUMBER_THREAD = 5;
+	private static int MAX_RETRY_UPLOAD = 5;
 	private static Context context;
 	
 	public static final void start(Context context) {
@@ -56,7 +58,7 @@ public class ImageUploaderService {
 	private static boolean validateImageForUpload(ImageModel iModel){
 		if (iModel.imgPath != null
 				&& (iModel.imgStatus == null || iModel.imgStatus.equalsIgnoreCase(ImageModel.STATUS.UNPROCESSED))
-				&& !iModel.LOCK && !iModel.isTriedForUpload) {
+				&& !iModel.LOCK && iModel.noOfTimesTried<=MAX_RETRY_UPLOAD &&  iModel.noOfTimesTried>0) {
 			return true;
 		} else {
 			return false;
@@ -138,7 +140,9 @@ public class ImageUploaderService {
 				Log.i("Thread  Died  ", thread.getName());			
 			}
 		}
-		start(context);
+		if(UserSettings.isStartImageUploadProcess(context)){
+			start(context);
+		}
 	}
 	
 }
