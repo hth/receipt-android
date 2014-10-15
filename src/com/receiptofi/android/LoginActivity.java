@@ -21,6 +21,7 @@ import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -64,7 +65,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
 	private boolean mIntentInProgress;
 	SignInButton googlePlusLogin;
 	Button facebookLogin;
-	
+	private boolean isFbLoginClick = false;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,6 +97,8 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
 	}
+	
+	
 	
 	@Override
 	protected void onStart() {
@@ -192,6 +195,19 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
 		// TODO Auto-generated method stub
 		super.onResume();
 		addToBackStack(this);
+		
+		if(isFbLoginClick){
+			isFbLoginClick=false;
+			Session s=Session.getActiveSession();
+			if(s!=null && s.isOpened()){
+				Bundle data = new Bundle();
+				data.putString(key.ACCESS_TOKEN, s.getAccessToken());
+				data.putString(key.PID, key.PID_FACEBOOK);
+				authenticateUser(true, data);
+				
+			}
+		}
+		
 	}
 
     private void authenticateUser(boolean isSocialLogin,Bundle data) {
@@ -282,6 +298,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
             signInWithGplus();
             break;
         case R.id.loginFacebook:
+        	isFbLoginClick=true;
         	Session.openActiveSession(this, true, new Session.StatusCallback() {
 
                 // callback when session changes state
