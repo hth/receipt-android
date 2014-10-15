@@ -88,6 +88,11 @@
                     android:layout_alignParentTop="true"
                     android:src="@drawable/vrp_detail" />
             </RelativeLayout>
+
+            <ImageView
+                android:id="@+id/receiptImage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
 

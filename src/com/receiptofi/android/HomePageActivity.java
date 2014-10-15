@@ -77,6 +77,7 @@ public class HomePageActivity extends ParentActivity {
 		 
 		 Bundle blobData= new Bundle();
 		 blobData.putString("date", model.date);
+		 blobData.putString("blobId", model.filesBlobId);
 		 blobData.putString("receiptId", model.id);
 		 blobData.putDouble("totalPrice", model.total);
 		 blobData.putString("receiptName", model.bizName);

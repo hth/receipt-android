@@ -21,6 +21,7 @@ public class ReceiptofiApplication extends Application {
 		rdh = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
 		ImageUpload.initializeQueue();
 		AppUtils.setHomePageContext(null);
+		AppUtils.createImageDir();
 	}
 	
 	public void setGoogleApiClient(GoogleApiClient googleApiClient){

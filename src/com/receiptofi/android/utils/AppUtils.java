@@ -16,6 +16,7 @@ public class AppUtils {
 	
 	static File image;
 	private static Context homePageContext;
+	static File receiptofiImgDir;
 	
 	public static String getImageFileFromURI(Context context,Uri uri){
 		String[] filePathColoumn = { MediaStore.Images.Media.DATA };
@@ -33,8 +34,8 @@ public class AppUtils {
 		try {
 				String timeStamp = new SimpleDateFormat("dd_MM_yyyy_HHmmss").format(new Date());
 			    String imageFileName = "Receipt_android_" + timeStamp + "_";
-			    File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-			    image = File.createTempFile(imageFileName,".jpg",storageDir);
+			    
+			    image = File.createTempFile(imageFileName,".jpg",getImageDir());
 
 			    // Save a file: path for use with ACTION_VIEW intents
 			    String  mCurrentPhotoPath = "file:" + image.getAbsolutePath();
@@ -95,4 +96,21 @@ public class AppUtils {
 		}	
 
 }
+	
+	public static void createImageDir() {
+
+		File storageDir = Environment
+				.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+
+		receiptofiImgDir = new File(storageDir.getAbsolutePath()
+				+ File.separator + "Receiptofi");
+
+		if (!receiptofiImgDir.exists()) {
+			receiptofiImgDir.mkdir();
+		}
+	}
+	
+	public static File getImageDir() {
+		return receiptofiImgDir;
+	}
 }
