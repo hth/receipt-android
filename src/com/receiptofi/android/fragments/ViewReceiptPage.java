@@ -1,12 +1,23 @@
 package com.receiptofi.android.fragments;
 
-import java.text.ParseException;
+import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.receiptofi.android.HomePageActivity;
 import com.receiptofi.android.R;
@@ -15,18 +26,8 @@ import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.models.RecieptElement;
-import com.receiptofi.android.utils.ISO8601DateParser;
+import com.receiptofi.android.utils.AppUtils;
 import com.receiptofi.android.utils.UserUtils;
-
-import android.app.Activity;
-import android.app.Fragment;
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 
 public class ViewReceiptPage extends Fragment{
 
@@ -40,10 +41,13 @@ public class ViewReceiptPage extends Fragment{
 		context=getActivity();
 		
 		String receiptId=null;
+		String blobId=null;
 		if(getArguments()!=null && getArguments().getString("receiptId")!=null){
 			receiptId=getArguments().getString("receiptId");
 		}
-		
+		if(getArguments()!=null && getArguments().getString("blobId")!=null){
+			blobId=getArguments().getString("blobId");
+		}
 		((HomePageActivity)context).showLoader("Fetching receipt details");
 		
 		ArrayList<NameValuePair> headerData = new ArrayList<NameValuePair>();
@@ -75,10 +79,41 @@ public class ViewReceiptPage extends Fragment{
 			}
 		});
 		
+		final File imageFile = new File(AppUtils.getImageDir()+File.separator+blobId+".jpg");
 		
+		HTTPUtils.downloadImage(context, imageFile,  API.DOWNLOAD_IMAGE+blobId+".json", new ResponseHandler() {
+			
+			@Override
+			public void onSuccess(String response) {
+				// TODO Auto-generated method stub
+				disaplayImage(imageFile.getAbsolutePath());
+			}
+			
+			@Override
+			public void onExeption(Exception exception) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+			@Override
+			public void onError(String Error) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
 
 	}
 	
+	private void disaplayImage(final String imgFilePath){
+		
+		((HomePageActivity)getActivity()).runOnUiThread(new Runnable() {
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				((ImageView)((Activity)context).findViewById(R.id.receiptImage)).setImageBitmap(BitmapFactory.decodeFile(imgFilePath));
+			}});
+	}
 	
 	private void displayElements(ArrayList<RecieptElement> elements) {
 		// TODO Auto-generated method stub

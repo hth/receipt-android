@@ -1,11 +1,15 @@
 package com.receiptofi.android.http;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 import org.apache.http.Header;
@@ -28,8 +32,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.receiptofi.android.db.KeyValue;
-import com.receiptofi.android.http.API.key;
 import com.receiptofi.android.models.ImageModel;
+import com.receiptofi.android.utils.AppUtils;
 import com.receiptofi.android.utils.UserUtils;
 
 public final class HTTPUtils {
@@ -228,6 +232,53 @@ public final class HTTPUtils {
 		}
 	
 
+	}
+	
+	
+	public static void downloadImage(Context ctx,
+			final File imageFile, final String api,final ResponseHandler responseHandler) {
+		
+		new Thread(){
+			public void run() {
+				FileWriter imageWriter = null;
+				try {
+					
+					HttpPost post;
+					HttpResponse response;
+					char[] bufferSize= new char[8096];
+					imageWriter =new FileWriter(imageFile);
+					HttpClient client = new DefaultHttpClient();
+					
+					HttpGet httpGet;
+			        
+			        if(api!=null){
+			        	httpGet = new HttpGet(URL+api);
+			        }else {
+			        	httpGet = new HttpGet(URL);
+					}
+			        
+			        httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+			        httpGet.addHeader(API.key.XR_MAIL,UserUtils.getEmail());
+			        
+
+					response = client.execute(httpGet);
+
+					BufferedReader reader = new BufferedReader(new InputStreamReader(
+							response.getEntity().getContent()));
+					while (reader.read(bufferSize)!=-1) {
+						imageWriter.write(bufferSize, 0, bufferSize.length);
+					}
+					
+					reader.close();
+					imageWriter.close();
+					responseHandler.onSuccess(null);
+				} catch (Exception e) {
+					responseHandler.onExeption(e);
+				}
+				
+			};
+		}.start();
+		
 	}
 	
 	public static Thread uploadImage(final Context context,final String api, final ImageModel imageModel, final ImageResponseHandler handler){

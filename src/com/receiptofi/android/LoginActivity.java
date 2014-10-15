@@ -19,10 +19,16 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnFocusChangeListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.Request;
+import com.facebook.Response;
+import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.model.GraphUser;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -32,7 +38,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
-import com.google.android.gms.plus.PlusClient;
 import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.API.key;
@@ -51,12 +56,14 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
 
 	private StringBuilder errors = new StringBuilder();
 	private TextView signupText;
-	private static final int GOOGLE_PLUS_SIGN_IN = 0;
+	private static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
+	private static final int FACEBOOK_SIGN_IN = 0x2566;
 	private GoogleApiClient mGoogleApiClient;
 	private boolean mSignInClicked;
 	private ConnectionResult mConnectionResult;
 	private boolean mIntentInProgress;
 	SignInButton googlePlusLogin;
+	Button facebookLogin;
 	
 	 
 	@Override
@@ -77,8 +84,9 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
 		userName.setOnFocusChangeListener(editTextListener);
 		password.setOnFocusChangeListener(editTextListener);
 		googlePlusLogin.setOnClickListener(this);
+		facebookLogin = (Button)findViewById(R.id.loginFacebook);
+		facebookLogin.setOnClickListener(this);
 		
-
 		signupText
 				.setText(Html
 						.fromHtml("Don't have an account? <u><font color=\"blue\">Sign up</font></u>, it's free!"));
@@ -273,6 +281,21 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
             // Signin button clicked
             signInWithGplus();
             break;
+        case R.id.loginFacebook:
+        	Session.openActiveSession(this, true, new Session.StatusCallback() {
+
+                // callback when session changes state
+                @Override
+                public void call(Session session, SessionState state,
+                        Exception exception) {
+                    if (session.isOpened()) {
+                   
+                    }
+                }
+            });
+
+        	break;
+            
         }
 	}
 
@@ -318,7 +341,9 @@ public class LoginActivity extends ParentActivity implements OnClickListener ,Co
 	        if (!mGoogleApiClient.isConnecting()) {
 	            mGoogleApiClient.connect();
 	        }
-	    }
+	    }else {
+	    	 Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+		}
 	}
 	
 	@Override
