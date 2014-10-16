@@ -187,6 +187,7 @@ public final class HTTPUtils {
 					StringEntity postEntity = new StringEntity(postData.toString());
 
 					httpPost.setEntity(postEntity);
+					httpPost.setHeader("Content-Type", "application/json");
 					HttpResponse response = null;
 
 					response = client.execute(httpPost);
