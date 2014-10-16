@@ -42,7 +42,7 @@ public final class HTTPUtils {
 
 //    private static final String CONNECTION_URL_STAGING = "https://receiptofi.com:9443/receipt-mobile";
     private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
-    private static final String CONNECTION_URL_PRODUCTION = "https://receiptofi.com/receipt-mobile";
+    private static final String CONNECTION_URL_PRODUCTION = "https://live.receiptofi.com/receipt-mobile";
 
     private static final String URL = CONNECTION_URL_STAGING;
 
