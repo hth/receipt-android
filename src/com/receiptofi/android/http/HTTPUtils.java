@@ -166,47 +166,53 @@ public final class HTTPUtils {
 		return headers;
 	}
 
-	public static void doSocialAuthentication(Context ctx,
-			final JSONObject postData, String API,ResponseHandler responseHandler) {
+	public static void doSocialAuthentication(final Context ctx,
+			final JSONObject postData, final String API,final ResponseHandler responseHandler) {
+		
+		new Thread() {
+			public void run() {
+				try {
+					final Header[] headers;
+					HttpPost httpPost;
+					HttpClient client = new DefaultHttpClient();
+					StringBuffer responseBuffer = new StringBuffer();
+					
+					if (API != null) {
+						httpPost = new HttpPost(URL + API);
+					} else {
+						httpPost = new HttpPost(URL);
+					}
+					Log.i("making api request to server", URL + API + ", Data: " + postData.toString());
+					
+					StringEntity postEntity = new StringEntity(postData.toString());
 
-		try {
-			final Header[] headers;
-			HttpPost httpPost;
-			HttpClient client = new DefaultHttpClient();
-			StringBuffer responseBuffer = new StringBuffer();
-			
-			if (API != null) {
-				httpPost = new HttpPost(URL + API);
-			} else {
-				httpPost = new HttpPost(URL);
-			}
-			Log.i("making api request to server", URL + API + ", Data: " + postData.toString());
-			
-			StringEntity postEntity = new StringEntity(postData.toString());
+					httpPost.setEntity(postEntity);
+					HttpResponse response = null;
 
-			httpPost.setEntity(postEntity);
-			HttpResponse response = null;
+					response = client.execute(httpPost);
 
-			response = client.execute(httpPost);
+					BufferedReader reader = new BufferedReader(new InputStreamReader(
+							response.getEntity().getContent()));
+					
+					String line;
+					while ((line = reader.readLine()) != null) {
+						responseBuffer.append(line);
+					}
+					headers = response.getAllHeaders();
+				    Log.i("Response", responseBuffer.toString());
+					if(isValidSocialAuthResponse(ctx,headers)){
+						responseHandler.onSuccess(responseBuffer.toString());
+					}else {
+						responseHandler.onError(responseBuffer.toString());
+					}
+					
+				} catch (Exception e) {
+					responseHandler.onExeption(e);
+				}
+			};
+		}.start();
 
-			BufferedReader reader = new BufferedReader(new InputStreamReader(
-					response.getEntity().getContent()));
-			
-			String line;
-			while ((line = reader.readLine()) != null) {
-				responseBuffer.append(line);
-			}
-			headers = response.getAllHeaders();
-		    Log.i("Response", responseBuffer.toString());
-			if(isValidSocialAuthResponse(ctx,headers)){
-				responseHandler.onSuccess(responseBuffer.toString());
-			}else {
-				responseHandler.onError(responseBuffer.toString());
-			}
-			
-		} catch (Exception e) {
-			responseHandler.onExeption(e);
-		}
+		
 		
 	}
 	
@@ -243,7 +249,6 @@ public final class HTTPUtils {
 				FileWriter imageWriter = null;
 				try {
 					
-					HttpPost post;
 					HttpResponse response;
 					char[] bufferSize= new char[8096];
 					imageWriter =new FileWriter(imageFile);
