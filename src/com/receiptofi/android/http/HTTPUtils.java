@@ -180,7 +180,7 @@ public final class HTTPUtils {
 			} else {
 				httpPost = new HttpPost(URL);
 			}
-			Log.i("making api request to server", URL + API +"Data" + postData.toString());
+			Log.i("making api request to server", URL + API + ", Data: " + postData.toString());
 			
 			StringEntity postEntity = new StringEntity(postData.toString());
 
