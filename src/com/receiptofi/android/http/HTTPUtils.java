@@ -1,13 +1,9 @@
 package com.receiptofi.android.http;
 
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -33,7 +29,6 @@ import android.util.Log;
 
 import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.models.ImageModel;
-import com.receiptofi.android.utils.AppUtils;
 import com.receiptofi.android.utils.UserUtils;
 
 public final class HTTPUtils {
@@ -44,7 +39,7 @@ public final class HTTPUtils {
     private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
     private static final String CONNECTION_URL_PRODUCTION = "https://live.receiptofi.com/receipt-mobile";
 
-    private static final String URL = CONNECTION_URL_STAGING;
+    private static final String RECEIPTOFI_MOBILE_URL = CONNECTION_URL_STAGING;
 
     public static String getPostResponse(ArrayList<NameValuePair> params,String API)
             throws Exception {
@@ -53,9 +48,9 @@ public final class HTTPUtils {
         HttpPost httpPost ;
 
         if(API!=null){
-        	httpPost = new HttpPost(URL+API);
+        	httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL +API);
         }else {
-        	httpPost = new HttpPost(URL);
+        	httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
 		}
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -82,9 +77,9 @@ public final class HTTPUtils {
         HttpGet httpGet;
         
         if(API!=null){
-        	httpGet = new HttpGet(URL+API);
+        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL + API);
         }else {
-        	httpGet = new HttpGet(URL);
+        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
 		}
         if (params != null) {
         	
@@ -139,9 +134,9 @@ public final class HTTPUtils {
 		HttpPost httpPost;
 		HttpClient client = new DefaultHttpClient();
 		if (API != null) {
-			httpPost = new HttpPost(URL + API);
+			httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
 		} else {
-			httpPost = new HttpPost(URL);
+			httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
 		}
 
 		try {
@@ -178,11 +173,11 @@ public final class HTTPUtils {
 					StringBuffer responseBuffer = new StringBuffer();
 					
 					if (API != null) {
-						httpPost = new HttpPost(URL + API);
+						httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
 					} else {
-						httpPost = new HttpPost(URL);
+						httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
 					}
-					Log.i("making api request to server", URL + API + ", Data: " + postData.toString());
+					Log.i("making api request to server", RECEIPTOFI_MOBILE_URL + API + ", Data: " + postData.toString());
 					
 					StringEntity postEntity = new StringEntity(postData.toString());
 
@@ -258,9 +253,9 @@ public final class HTTPUtils {
 					HttpGet httpGet;
 			        
 			        if(api!=null){
-			        	httpGet = new HttpGet(URL+api);
+			        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL + api);
 			        }else {
-			        	httpGet = new HttpGet(URL);
+			        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
 					}
 			        
 			        httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
@@ -297,9 +292,9 @@ public final class HTTPUtils {
 
 					HttpClient client = new DefaultHttpClient();
 					if (api != null) {
-						post = new HttpPost(URL + api);
+						post = new HttpPost(RECEIPTOFI_MOBILE_URL + api);
 					} else {
-						post = new HttpPost(URL);
+						post = new HttpPost(RECEIPTOFI_MOBILE_URL);
 					}
 
 					File imageFile = new File(imageModel.imgPath);
@@ -317,8 +312,7 @@ public final class HTTPUtils {
 
 					response = client.execute(post);
 
-					BufferedReader reader = new BufferedReader(new InputStreamReader(
-							response.getEntity().getContent()));
+					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 					StringBuffer responseBuffer = new StringBuffer();
 					String line;
 					while ((line = reader.readLine()) != null) {
