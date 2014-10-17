@@ -50,6 +50,7 @@ public class ImageDownloadService {
                         if (header[0].getValue().equalsIgnoreCase("image/jpeg")) {
                             file = new File(AppUtils.getImageDir() + File.separator + blobId + ".jpg");
                         }
+                        //other conditions for PNG and GIF
                         imageWriter = new FileWriter(file);
 
                         reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
