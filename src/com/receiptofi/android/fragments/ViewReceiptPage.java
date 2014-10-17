@@ -22,6 +22,7 @@ import android.widget.TextView;
 import com.receiptofi.android.HomePageActivity;
 import com.receiptofi.android.R;
 import com.receiptofi.android.http.API;
+import com.receiptofi.android.http.DownloadImageResponseHandler;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.http.ResponseParser;
@@ -79,24 +80,23 @@ public class ViewReceiptPage extends Fragment{
 			}
 		});
 		
-		final File imageFile = new File(AppUtils.getImageDir()+File.separator+blobId+".jpg");
-		
-		HTTPUtils.downloadImage(context, imageFile,  API.DOWNLOAD_IMAGE+blobId+".json", new ResponseHandler() {
+		//final File imageFile = new File(AppUtils.getImageDir()+File.separator+blobId+".jpg");
+		HTTPUtils.downloadImage(blobId, API.DOWNLOAD_IMAGE + blobId + ".json", new DownloadImageResponseHandler() {
 			
 			@Override
-			public void onSuccess(String response) {
+			public void onSuccess(File file, String response) {
 				// TODO Auto-generated method stub
-				disaplayImage(imageFile.getAbsolutePath());
+				disaplayImage(file.getAbsolutePath());
 			}
 			
 			@Override
-			public void onExeption(Exception exception) {
+			public void onException(Exception exception) {
 				// TODO Auto-generated method stub
 				
 			}
 			
 			@Override
-			public void onError(String Error) {
+			public void onError(File file, String Error) {
 				// TODO Auto-generated method stub
 				
 			}

@@ -2,10 +2,11 @@ package com.receiptofi.android.http;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.Header;
@@ -29,6 +30,7 @@ import android.util.Log;
 
 import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.models.ImageModel;
+import com.receiptofi.android.services.ImageDownloadService;
 import com.receiptofi.android.utils.UserUtils;
 
 public final class HTTPUtils {
@@ -235,51 +237,14 @@ public final class HTTPUtils {
 	
 
 	}
-	
-	
-	public static void downloadImage(Context ctx,
-			final File imageFile, final String api,final ResponseHandler responseHandler) {
-		
-		new Thread(){
-			public void run() {
-				FileWriter imageWriter = null;
-				try {
-					
-					HttpResponse response;
-					char[] bufferSize= new char[8096];
-					imageWriter =new FileWriter(imageFile);
-					HttpClient client = new DefaultHttpClient();
-					
-					HttpGet httpGet;
-			        
-			        if(api!=null){
-			        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL + api);
-			        }else {
-			        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
-					}
-			        
-			        httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
-			        httpGet.addHeader(API.key.XR_MAIL,UserUtils.getEmail());
-			        
 
-					response = client.execute(httpGet);
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(
-							response.getEntity().getContent()));
-					while (reader.read(bufferSize)!=-1) {
-						imageWriter.write(bufferSize, 0, bufferSize.length);
-					}
-					
-					reader.close();
-					imageWriter.close();
-					responseHandler.onSuccess(null);
-				} catch (Exception e) {
-					responseHandler.onExeption(e);
-				}
-				
-			};
-		}.start();
-		
+	public static void downloadImage(String blobId, String uri, DownloadImageResponseHandler responseHandler) {
+		ImageDownloadService imageDownloadService = new ImageDownloadService(blobId, uri, responseHandler);
+		try {
+			imageDownloadService.fetchFile(new URL(RECEIPTOFI_MOBILE_URL + uri));
+		} catch (MalformedURLException e) {
+			responseHandler.onException(e);
+		}
 	}
 	
 	public static Thread uploadImage(final Context context,final String api, final ImageModel imageModel, final ImageResponseHandler handler){
