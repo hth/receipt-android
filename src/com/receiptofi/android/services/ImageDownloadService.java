@@ -21,10 +21,12 @@ import android.os.AsyncTask;
 import android.util.Log;
 
 public class ImageDownloadService {
-    private volatile File file;
+    private static final String TAG = ImageDownloadService.class.getSimpleName();
+    private File file;
     private DownloadImageResponseHandler responseHandler;
     private String uri;
     private String blobId;
+
 
     public ImageDownloadService(String blobId, String uri, DownloadImageResponseHandler responseHandler) {
         this.blobId = blobId;
@@ -47,24 +49,26 @@ public class ImageDownloadService {
                 switch(response.getStatusLine().getStatusCode()) {
                     case 200:
                         Header[] header = response.getHeaders("Content-Type");
-                        if (header[0].getValue().equalsIgnoreCase("image/jpeg")) {
-                            file = new File(AppUtils.getImageDir() + File.separator + blobId + ".jpg");
-                        }
-                        //other conditions for PNG and GIF
+                        file = new File(
+                                AppUtils.getImageDir() +
+                                        File.separator +
+                                        blobId +
+                                        (header[0].getValue() != null ? findFileExtension(header[0].getValue()) : ".jpg")
+                        );
                         imageWriter = new FileWriter(file);
 
                         reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                         while (reader.read(bufferSize) != -1) {
                             imageWriter.write(bufferSize, 0, bufferSize.length);
                         }
-                        responseHandler.onSuccess(file, null);
-
+                        Log.e(TAG, "Download completed");
                         break;
                     default:
                         //TODO(hth) log error
                         break;
                 }
             } catch (Exception e) {
+                Log.e(TAG, e.getMessage());
                 responseHandler.onException(e);
             } finally {
                 try {
@@ -79,11 +83,32 @@ public class ImageDownloadService {
                     //Do nothing
                 }
             }
-            return file.length();
+            return 1l;
+        }
+
+        protected void onPostExecute(Long result) {
+            Log.e(TAG, "Download");
+            responseHandler.onSuccess(file, null);
         }
     }
 
     public void fetchFile(URL url) {
         new DownloadFilesTask().execute(url);
+    }
+
+    public String findFileExtension(String contentType) {
+        if(contentType.equalsIgnoreCase("image/jpeg")) {
+            return ".jpg";
+        }
+
+        if(contentType.equalsIgnoreCase("image/png")) {
+            return ".png";
+        }
+
+        if(contentType.equalsIgnoreCase("image/gif")) {
+            return ".gif";
+        }
+
+        return ".jpg";
     }
 }
