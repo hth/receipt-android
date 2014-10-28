@@ -1,8 +1,10 @@
 package com.receiptofi.android.http;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
@@ -242,12 +244,9 @@ public final class HTTPUtils {
 		
 		new Thread(){
 			public void run() {
-				FileWriter imageWriter = null;
 				try {
 					
 					HttpResponse response;
-					char[] bufferSize= new char[8096];
-					imageWriter =new FileWriter(imageFile);
 					HttpClient client = new DefaultHttpClient();
 					
 					HttpGet httpGet;
@@ -263,15 +262,16 @@ public final class HTTPUtils {
 			        
 
 					response = client.execute(httpGet);
-
-					BufferedReader reader = new BufferedReader(new InputStreamReader(
-							response.getEntity().getContent()));
-					while (reader.read(bufferSize)!=-1) {
-						imageWriter.write(bufferSize, 0, bufferSize.length);
-					}
 					
-					reader.close();
-					imageWriter.close();
+					HttpEntity entity=response.getEntity();
+
+					BufferedInputStream bis = new BufferedInputStream(entity.getContent());
+					BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(imageFile));
+					int inByte;
+					while((inByte = bis.read()) != -1) bos.write(inByte);
+					bis.close();
+					bos.close();
+					
 					responseHandler.onSuccess(null);
 				} catch (Exception e) {
 					responseHandler.onExeption(e);

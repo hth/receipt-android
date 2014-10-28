@@ -6,7 +6,7 @@ public class API {
 	public static final String GET_ALL_RECEIPTS ="/api/allReceipts.json";
 	public static final String SOCIAL_LOGIN_API ="/authenticate.json";
 	public static final String VIEW_RECEIPT_DETAIL ="/api/receiptDetail/";
-	public static final String DOWNLOAD_IMAGE ="/api/image/";
+	public static final String DOWNLOAD_IMAGE ="/image1/";
 	
 	public static class key {
 		public static final String XR_MAIL = "X-R-MAIL";

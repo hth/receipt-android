@@ -79,7 +79,7 @@ public class ViewReceiptPage extends Fragment{
 			}
 		});
 		
-		final File imageFile = new File(AppUtils.getImageDir()+File.separator+blobId+".jpg");
+		final File imageFile = new File(AppUtils.getImageDir()+File.separator+blobId+".png");
 		
 		HTTPUtils.downloadImage(context, imageFile,  API.DOWNLOAD_IMAGE+blobId+".json", new ResponseHandler() {
 			
