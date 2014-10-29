@@ -242,6 +242,7 @@ public final class HTTPUtils {
 	public static void downloadImage(Context ctx,
 			final File imageFile, final String api,final ResponseHandler responseHandler) {
 		
+		
 		new Thread(){
 			public void run() {
 				try {

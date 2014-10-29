@@ -38,6 +38,7 @@ public class ViewReceiptPage extends Fragment{
 	public void onActivityCreated(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onActivityCreated(savedInstanceState);
+		
 		context=getActivity();
 		
 		String receiptId=null;

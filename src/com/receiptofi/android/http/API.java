@@ -8,6 +8,7 @@ public class API {
 	public static final String VIEW_RECEIPT_DETAIL ="/api/receiptDetail/";
 	public static final String DOWNLOAD_IMAGE ="/image1/";
 	
+	
 	public static class key {
 		public static final String XR_MAIL = "X-R-MAIL";
 		public static final String XR_AUTH = "X-R-AUTH";
