@@ -113,8 +113,17 @@ public class HomePageActivity extends ParentActivity {
 
 			Uri imageGallery = data.getData();
 			String imageAbsolutePath = AppUtils.getImageFileFromURI(this,imageGallery);
-//			HTTPUtils.uploadImage(this,API.UPLOAD_IMAGE_API,imageAbsolutePath);
-			ImageUpload.process(this, imageAbsolutePath);
+			
+			if(imageAbsolutePath!=null){
+				File pickerImage = new File(imageAbsolutePath);
+				if((pickerImage.length()/1048576)>=10){
+					showErrorMsg("image size should be upto 10Mb");
+				}else {
+					ImageUpload.process(this, imageAbsolutePath);
+				}
+			
+			}
+		
 		} else if (requestCode == RESULT_IMAGE_CAPTURE	&& resultCode == RESULT_OK) {
 
 			Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);

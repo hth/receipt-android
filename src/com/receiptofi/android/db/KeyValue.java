@@ -62,4 +62,11 @@ public class KeyValue {
                 null
         );
     }
+    public static void clearReceiptsDB() {
+        ReceiptofiApplication.rdh.getReadableDatabase().delete(
+                ReceiptDB.Receipt.TABLE_NAME,
+                null,
+                null
+        );
+    }
 }
