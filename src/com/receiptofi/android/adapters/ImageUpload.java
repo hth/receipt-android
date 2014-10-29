@@ -54,7 +54,7 @@ public class ImageUpload {
 				ImageUploaderService.start(context);
 			}
 		} catch (SQLiteConstraintException e) {
-			((ParentActivity)context).showErrorMsg("Image is already in Queue");
+			((ParentActivity)context).showErrorMsg("This image already exists in upload queue.");
 		}
 		
 	}
