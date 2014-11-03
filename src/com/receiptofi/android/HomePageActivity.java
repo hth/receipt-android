@@ -2,21 +2,19 @@
 package com.receiptofi.android;
 
 import java.io.File;
-import java.io.IOException;
 
 import android.content.Intent;
+import android.graphics.Point;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.receiptofi.android.adapters.ImageUpload;
 import com.receiptofi.android.fragments.ReceiptListFragment;
 import com.receiptofi.android.fragments.ViewReceiptPage;
-import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.models.ReceiptModel;
 import com.receiptofi.android.utils.AppUtils;
 
@@ -25,6 +23,8 @@ public class HomePageActivity extends ParentActivity {
 	private static final int RESULT_IMAGE_GALLERY = 0x4c5;
 	private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
 	
+	Display display;
+	Point size;
 	TextView unprocessDoucumentCount;
 	
 	@Override
@@ -33,6 +33,10 @@ public class HomePageActivity extends ParentActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.home_page);
 		AppUtils.setHomePageContext(this);
+		
+		display = getWindowManager().getDefaultDisplay();
+		size = new Point();
+		display.getSize(size);
 		
 		unprocessDoucumentCount=(TextView)findViewById(R.id.unprocessDoucumentCount);
 	}
@@ -148,5 +152,16 @@ public class HomePageActivity extends ParentActivity {
 		super.onDestroy();
 		AppUtils.setHomePageContext(null);
 	}
-
+	
+	public int getHeight(){
+		return size.y;
+	}
+	
+	public int getWidth(){
+		return size.x;
+	}
+	
+	public int getAspectRatio(){
+		return size.y/size.x;
+	}
 }

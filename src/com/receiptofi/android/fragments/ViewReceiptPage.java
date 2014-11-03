@@ -16,7 +16,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.receiptofi.android.HomePageActivity;
@@ -49,7 +51,9 @@ public class ViewReceiptPage extends Fragment{
 		if(getArguments()!=null && getArguments().getString("blobId")!=null){
 			blobId=getArguments().getString("blobId");
 		}
+		
 		((HomePageActivity)context).showLoader("Fetching receipt details");
+		final File imageFile = new File(AppUtils.getImageDir()+File.separator+blobId+".png");
 		
 		ArrayList<NameValuePair> headerData = new ArrayList<NameValuePair>();
 		headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
@@ -63,6 +67,9 @@ public class ViewReceiptPage extends Fragment{
 				((HomePageActivity)context).hideLoader();
 				ArrayList<RecieptElement> elements=	ResponseParser.getReceiptDetails(response);
 				displayElements(elements);
+				if(imageFile.exists()){
+					disaplayImage(imageFile.getAbsolutePath());
+				}
 			}
 			
 			
@@ -80,29 +87,32 @@ public class ViewReceiptPage extends Fragment{
 			}
 		});
 		
-		final File imageFile = new File(AppUtils.getImageDir()+File.separator+blobId+".png");
-		
-		HTTPUtils.downloadImage(context, imageFile,  API.DOWNLOAD_IMAGE+blobId+".json", new ResponseHandler() {
-			
-			@Override
-			public void onSuccess(String response) {
-				// TODO Auto-generated method stub
-				disaplayImage(imageFile.getAbsolutePath());
-			}
-			
-			@Override
-			public void onExeption(Exception exception) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onError(String Error) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
 
+		
+		if(!imageFile.exists()){
+			HTTPUtils.downloadImage(context, imageFile,  API.DOWNLOAD_IMAGE+blobId+".json", new ResponseHandler() {
+				
+				@Override
+				public void onSuccess(String response) {
+					// TODO Auto-generated method stub
+					disaplayImage(imageFile.getAbsolutePath());
+				}
+				
+				@Override
+				public void onExeption(Exception exception) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void onError(String Error) {
+					// TODO Auto-generated method stub
+					
+				}
+			});
+
+		}
+		
 	}
 	
 	private void disaplayImage(final String imgFilePath){
@@ -113,6 +123,14 @@ public class ViewReceiptPage extends Fragment{
 			public void run() {
 				// TODO Auto-generated method stub
 				((ImageView)((Activity)context).findViewById(R.id.receiptImage)).setImageBitmap(BitmapFactory.decodeFile(imgFilePath));
+				((Activity)context).findViewById(R.id.receiptImage).setVisibility(View.VISIBLE);
+				
+				int width = ((HomePageActivity)context).getHeight();
+				int height = ((HomePageActivity)context).getHeight();
+				
+				height= width * ((HomePageActivity)context).getAspectRatio();
+				((Activity)context).findViewById(R.id.receiptImage).setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, height));
+				
 			}});
 	}
 	

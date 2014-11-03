@@ -113,4 +113,6 @@ public class AppUtils {
 	public static File getImageDir() {
 		return receiptofiImgDir;
 	}
+	
+
 }
