@@ -1,18 +1,18 @@
 package com.receiptofi.android.db;
 
+import com.receiptofi.android.ReceiptofiApplication;
+import com.receiptofi.android.models.ReceiptDB;
+
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-
-import com.receiptofi.android.ReceiptofiApplication;
-import com.receiptofi.android.models.ReceiptDB;
 
 public class KeyValue {
 
     public static class key {
         public static String XR_MAIL = "X-R-MAIL";
         public static String XR_AUTH = "X-R-AUTH";
-        
+
         public static String WIFI_SYNC = "wifi_sync";
     }
 
@@ -62,6 +62,7 @@ public class KeyValue {
                 null
         );
     }
+
     public static void clearReceiptsDB() {
         ReceiptofiApplication.rdh.getReadableDatabase().delete(
                 ReceiptDB.Receipt.TABLE_NAME,
