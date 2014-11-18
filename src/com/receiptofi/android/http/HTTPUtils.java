@@ -10,6 +10,10 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
+import com.receiptofi.android.db.KeyValue;
+import com.receiptofi.android.models.ImageModel;
+import com.receiptofi.android.utils.UserUtils;
+
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -24,36 +28,32 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONObject;
 
 import android.content.Context;
 import android.util.Log;
-
-import com.receiptofi.android.db.KeyValue;
-import com.receiptofi.android.models.ImageModel;
-import com.receiptofi.android.utils.UserUtils;
+import org.json.JSONObject;
 
 public final class HTTPUtils {
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
 
-//    private static final String CONNECTION_URL_STAGING = "https://receiptofi.com:9443/receipt-mobile";
+    //    private static final String CONNECTION_URL_STAGING = "https://receiptofi.com:9443/receipt-mobile";
     private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
     private static final String CONNECTION_URL_PRODUCTION = "https://live.receiptofi.com/receipt-mobile";
 
     private static final String RECEIPTOFI_MOBILE_URL = CONNECTION_URL_STAGING;
 
-    public static String getPostResponse(ArrayList<NameValuePair> params,String API)
+    public static String getPostResponse(ArrayList<NameValuePair> params, String API)
             throws Exception {
 
         HttpClient client = new DefaultHttpClient();
-        HttpPost httpPost ;
+        HttpPost httpPost;
 
-        if(API!=null){
-        	httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL +API);
-        }else {
-        	httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
-		}
+        if (API != null) {
+            httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
+        } else {
+            httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
+        }
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse response = client.execute(httpPost);
@@ -72,23 +72,23 @@ public final class HTTPUtils {
         return responseBuffer.toString();
     }
 
-    public static String getResponse(ArrayList<NameValuePair> params,String API)
+    public static String getResponse(ArrayList<NameValuePair> params, String API)
             throws Exception {
         StringBuilder getParamString = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet;
-        
-        if(API!=null){
-        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL + API);
-        }else {
-        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
-		}
+
+        if (API != null) {
+            httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL + API);
+        } else {
+            httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
+        }
         if (params != null) {
-        	
-        	for(NameValuePair pair:params){
-        		 httpGet.addHeader(pair.getName(), pair.getValue());
-        	}
-        	  
+
+            for (NameValuePair pair : params) {
+                httpGet.addHeader(pair.getName(), pair.getValue());
+            }
+
         }
 
         HttpResponse response = client.execute(httpGet);
@@ -106,228 +106,233 @@ public final class HTTPUtils {
     }
 
     public static void AsyncRequest(final ArrayList<NameValuePair> params,
-    		final String API,final String HTTP_method, final ResponseHandler handler) {
-    	new Thread(){
-    		@Override
-    		public void run() {
-    			// TODO Auto-generated method stub
-    			super.run();
-    			   String response = null;
-    		        try {
-    		            if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_POST)) {
-    		                response = getPostResponse(params,API);
-    		            } else if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_GET)) {
-    		                response = getResponse(params,API);
-    		            }
-    		            handler.onSuccess(response);
-    		        } catch (Exception e) {
-    		            handler.onExeption(e);
-    		        }
+                                    final String API, final String HTTP_method, final ResponseHandler handler) {
+        new Thread() {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                super.run();
+                String response = null;
+                try {
+                    if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_POST)) {
+                        response = getPostResponse(params, API);
+                    } else if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_GET)) {
+                        response = getResponse(params, API);
+                    }
+                    handler.onSuccess(response);
+                } catch (Exception e) {
+                    handler.onExeption(e);
+                }
 
-    		}
-    	}.start();
-     
+            }
+        }.start();
+
     }
 
-	public static Header[] getHTTPHeaders(
-			final ArrayList<NameValuePair> params, String API) throws Exception {
+    public static Header[] getHTTPHeaders(
+            final ArrayList<NameValuePair> params, String API) throws Exception {
 
-		final Header[] headers;
-		HttpPost httpPost;
-		HttpClient client = new DefaultHttpClient();
-		if (API != null) {
-			httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
-		} else {
-			httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
-		}
+        final Header[] headers;
+        HttpPost httpPost;
+        HttpClient client = new DefaultHttpClient();
+        if (API != null) {
+            httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
+        } else {
+            httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
+        }
 
-		try {
-			httpPost.setEntity(new UrlEncodedFormEntity(params));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		HttpResponse response = null;
-		try {
-			response = client.execute(httpPost);
-		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        try {
+            httpPost.setEntity(new UrlEncodedFormEntity(params));
+        } catch (UnsupportedEncodingException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        HttpResponse response = null;
+        try {
+            response = client.execute(httpPost);
+        } catch (ClientProtocolException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
-		headers = response.getAllHeaders();
+        headers = response.getAllHeaders();
 
-		return headers;
-	}
+        return headers;
+    }
 
-	public static void doSocialAuthentication(final Context ctx,
-			final JSONObject postData, final String API,final ResponseHandler responseHandler) {
-		
-		new Thread() {
-			public void run() {
-				try {
-					final Header[] headers;
-					HttpPost httpPost;
-					HttpClient client = new DefaultHttpClient();
-					StringBuffer responseBuffer = new StringBuffer();
-					
-					if (API != null) {
-						httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
-					} else {
-						httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
-					}
-					Log.i("making api request to server", RECEIPTOFI_MOBILE_URL + API + ", Data: " + postData.toString());
-					
-					StringEntity postEntity = new StringEntity(postData.toString());
+    public static void doSocialAuthentication(final Context ctx,
+                                              final JSONObject postData, final String API, final ResponseHandler responseHandler) {
 
-					httpPost.setEntity(postEntity);
-					httpPost.setHeader("Content-Type", "application/json");
-					HttpResponse response = null;
+        new Thread() {
+            public void run() {
+                try {
+                    final Header[] headers;
+                    HttpPost httpPost;
+                    HttpClient client = new DefaultHttpClient();
+                    StringBuffer responseBuffer = new StringBuffer();
 
-					response = client.execute(httpPost);
+                    if (API != null) {
+                        httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
+                    } else {
+                        httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
+                    }
+                    Log.i("making api request to server", RECEIPTOFI_MOBILE_URL + API + ", Data: " + postData.toString());
 
-					BufferedReader reader = new BufferedReader(new InputStreamReader(
-							response.getEntity().getContent()));
-					
-					String line;
-					while ((line = reader.readLine()) != null) {
-						responseBuffer.append(line);
-					}
-					headers = response.getAllHeaders();
-				    Log.i("Response", responseBuffer.toString());
-					if(isValidSocialAuthResponse(ctx,headers)){
-						responseHandler.onSuccess(responseBuffer.toString());
-					}else {
-						responseHandler.onError(responseBuffer.toString());
-					}
-					
-				} catch (Exception e) {
-					responseHandler.onExeption(e);
-				}
-			};
-		}.start();
+                    StringEntity postEntity = new StringEntity(postData.toString());
 
-		
-		
-	}
-	
-	private static boolean isValidSocialAuthResponse(Context ctx,Header[] headers) {
-		if(headers!=null && headers.length>=2){
-			ArrayList<String> headerList = new ArrayList<String>();
-			
-			for(Header header:headers){
-				 String key = header.getName();
-                 if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
-                	 headerList.add(key);
-                	 KeyValue.insertKeyValue(ctx, key, header.getValue());
-                 }
-			}
-			if(headerList.contains(API.key.XR_MAIL) && headerList.contains(API.key.XR_AUTH)){
-				return true;
-			}else {
-				return false;
-			}
-			
-		}else {
-			return false;
-		}
-	
+                    httpPost.setEntity(postEntity);
+                    httpPost.setHeader("Content-Type", "application/json");
+                    HttpResponse response = null;
 
-	}
-	
-	
-	public static void downloadImage(Context ctx,
-			final File imageFile, final String api,final ResponseHandler responseHandler) {
-		
-		
-		new Thread(){
-			public void run() {
-				try {
-					
-					HttpResponse response;
-					HttpClient client = new DefaultHttpClient();
-					
-					HttpGet httpGet;
-			        
-			        if(api!=null){
-			        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL + api);
-			        }else {
-			        	httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
-					}
-			        
-			        httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
-			        httpGet.addHeader(API.key.XR_MAIL,UserUtils.getEmail());
-			        
+                    response = client.execute(httpPost);
 
-					response = client.execute(httpGet);
-					
-					HttpEntity entity=response.getEntity();
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(
+                            response.getEntity().getContent()));
 
-					BufferedInputStream bis = new BufferedInputStream(entity.getContent());
-					BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(imageFile));
-					int inByte;
-					while((inByte = bis.read()) != -1) bos.write(inByte);
-					bis.close();
-					bos.close();
-					
-					responseHandler.onSuccess(null);
-				} catch (Exception e) {
-					responseHandler.onExeption(e);
-				}
-				
-			};
-		}.start();
-		
-	}
-	
-	public static Thread uploadImage(final Context context,final String api, final ImageModel imageModel, final ImageResponseHandler handler){
-		Thread t=
-		new Thread(){
-			public void run() {
-				try {
-					HttpPost post;
-					HttpResponse response;
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        responseBuffer.append(line);
+                    }
+                    headers = response.getAllHeaders();
+                    Log.i("Response", responseBuffer.toString());
+                    if (isValidSocialAuthResponse(ctx, headers)) {
+                        responseHandler.onSuccess(responseBuffer.toString());
+                    } else {
+                        responseHandler.onError(responseBuffer.toString());
+                    }
 
-					HttpClient client = new DefaultHttpClient();
-					if (api != null) {
-						post = new HttpPost(RECEIPTOFI_MOBILE_URL + api);
-					} else {
-						post = new HttpPost(RECEIPTOFI_MOBILE_URL);
-					}
+                } catch (Exception e) {
+                    responseHandler.onExeption(e);
+                }
+            }
 
-					File imageFile = new File(imageModel.imgPath);
-					FileBody fileBody = new FileBody(imageFile);
+            ;
+        }.start();
 
-					MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-					builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-					builder.addPart("qqfile", fileBody);
 
-					HttpEntity entity = builder.build();
+    }
 
-					post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
-					post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-					post.setEntity(entity);
+    private static boolean isValidSocialAuthResponse(Context ctx, Header[] headers) {
+        if (headers != null && headers.length >= 2) {
+            ArrayList<String> headerList = new ArrayList<String>();
 
-					response = client.execute(post);
+            for (Header header : headers) {
+                String key = header.getName();
+                if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
+                    headerList.add(key);
+                    KeyValue.insertKeyValue(ctx, key, header.getValue());
+                }
+            }
+            if (headerList.contains(API.key.XR_MAIL) && headerList.contains(API.key.XR_AUTH)) {
+                return true;
+            } else {
+                return false;
+            }
 
-					BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-					StringBuffer responseBuffer = new StringBuffer();
-					String line;
-					while ((line = reader.readLine()) != null) {
-						responseBuffer.append(line);
-					}
+        } else {
+            return false;
+        }
 
-					handler.onSuccess(imageModel,responseBuffer.toString());
-				} catch (Exception e) {
-					// TODO: handle exception
-					handler.onExeption(imageModel,e);
-				}
-			};
-		};
-		t.start();
-		return t;
-	}
+
+    }
+
+
+    public static void downloadImage(Context ctx,
+                                     final File imageFile, final String api, final ResponseHandler responseHandler) {
+
+
+        new Thread() {
+            public void run() {
+                try {
+
+                    HttpResponse response;
+                    HttpClient client = new DefaultHttpClient();
+
+                    HttpGet httpGet;
+
+                    if (api != null) {
+                        httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL + api);
+                    } else {
+                        httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
+                    }
+
+                    httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+                    httpGet.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
+
+
+                    response = client.execute(httpGet);
+
+                    HttpEntity entity = response.getEntity();
+
+                    BufferedInputStream bis = new BufferedInputStream(entity.getContent());
+                    BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(imageFile));
+                    int inByte;
+                    while ((inByte = bis.read()) != -1) bos.write(inByte);
+                    bis.close();
+                    bos.close();
+
+                    responseHandler.onSuccess(null);
+                } catch (Exception e) {
+                    responseHandler.onExeption(e);
+                }
+
+            }
+
+            ;
+        }.start();
+
+    }
+
+    public static Thread uploadImage(final Context context, final String api, final ImageModel imageModel, final ImageResponseHandler handler) {
+        Thread t =
+                new Thread() {
+                    public void run() {
+                        try {
+                            HttpPost post;
+                            HttpResponse response;
+
+                            HttpClient client = new DefaultHttpClient();
+                            if (api != null) {
+                                post = new HttpPost(RECEIPTOFI_MOBILE_URL + api);
+                            } else {
+                                post = new HttpPost(RECEIPTOFI_MOBILE_URL);
+                            }
+
+                            File imageFile = new File(imageModel.imgPath);
+                            FileBody fileBody = new FileBody(imageFile);
+
+                            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+                            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+                            builder.addPart("qqfile", fileBody);
+
+                            HttpEntity entity = builder.build();
+
+                            post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+                            post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
+                            post.setEntity(entity);
+
+                            response = client.execute(post);
+
+                            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                            StringBuffer responseBuffer = new StringBuffer();
+                            String line;
+                            while ((line = reader.readLine()) != null) {
+                                responseBuffer.append(line);
+                            }
+
+                            handler.onSuccess(imageModel, responseBuffer.toString());
+                        } catch (Exception e) {
+                            // TODO: handle exception
+                            handler.onExeption(imageModel, e);
+                        }
+                    }
+
+                    ;
+                };
+        t.start();
+        return t;
+    }
 }
