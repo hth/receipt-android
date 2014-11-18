@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Receiptofi</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="login_auth_msg">Please wait ...</string>
+    <string name="enter_valid_email">Please enter valid email</string>
+	<string name="enter_email">Please enter email</string>
+	<string name="enter_password">Please enter password</string>
+	<string name="app_id">260975157440024</string>
+</resources>

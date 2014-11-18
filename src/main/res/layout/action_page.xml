@@ -1,0 +1,174 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/login_screen_bg"
+    android:orientation="vertical" >
+
+    <include
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/header" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/screen_background"
+            android:orientation="vertical"
+            android:paddingBottom="35dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp" >
+
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/add_receipt_txt"
+                    style="@style/homepage_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="ADD RECEIPT" />
+
+                <TextView
+                    android:id="@+id/unprocessDoucumentCount"
+                    style="@style/homepage_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text=""
+                    android:textColor="@color/login_screen_blue" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="takePhoto"
+                android:paddingBottom="15dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp" >
+
+                <ImageView
+                    android:id="@+id/take_photo_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/take_picture" />
+
+                <TextView
+                    android:id="@+id/take_photo_txt"
+                    style="@style/homepage_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="TAKE PHOTO" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#DCDCD8" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/white"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:onClick="chooseImage"
+                android:paddingBottom="15dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp" >
+
+                <ImageView
+                    android:id="@+id/choose_photo_txt_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/choose_photo" />
+
+                <TextView
+                    android:id="@+id/choose_photo_txt"
+                    style="@style/homepage_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="CHOOSE PHOTO" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#DCDCD8" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:onClick="invokeReceiptList"
+                android:paddingBottom="15dp"
+                android:paddingLeft="35dp"
+                android:paddingRight="15dp"
+                android:paddingTop="15dp" >
+
+                <ImageView
+                    android:id="@+id/view_receipts_img"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/view_reciept" />
+
+                <TextView
+                    android:id="@+id/view_receipts_txt"
+                    style="@style/homepage_text_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="25dp"
+                    android:text="VIEW RECEIPTS" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#DCDCD8" />
+        </LinearLayout>
+    </ScrollView>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="18dp"
+        android:background="@drawable/saw" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|right" >
+
+        <TextView
+            style="@style/homepage_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="JUNE 2014" />
+
+        <TextView
+            style="@style/homepage_text_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="20dp"
+            android:text="$20.14"
+            android:textColor="#246BB2" />
+    </LinearLayout>
+
+</LinearLayout>
