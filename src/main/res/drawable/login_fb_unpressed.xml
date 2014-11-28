@@ -1,16 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    shape="rectangle" >
+       shape="rectangle">
 
     <!-- this is to give gradient effect -->
     <gradient
-        android:angle="0"
-        android:endColor="#007AFF"
-        android:startColor="#007AFF" />
+            android:angle="0"
+            android:endColor="#007AFF"
+            android:startColor="#007AFF"/>
 
     <corners
-        android:bottomLeftRadius="4dp"
-        android:bottomRightRadius="4dp"
-        android:topLeftRadius="4dp"
-        android:topRightRadius="4dp" />
-</shape>
+            android:bottomLeftRadius="4dp"
+            android:bottomRightRadius="4dp"
+            android:topLeftRadius="4dp"
+            android:topRightRadius="4dp"/>
+
+</shape>

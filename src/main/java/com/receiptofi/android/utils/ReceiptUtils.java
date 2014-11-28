@@ -1,7 +1,5 @@
 package com.receiptofi.android.utils;
 
-import java.util.ArrayList;
-
 import com.receiptofi.android.ReceiptofiApplication;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
@@ -14,6 +12,8 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import android.database.Cursor;
+
+import java.util.ArrayList;
 
 public class ReceiptUtils {
 

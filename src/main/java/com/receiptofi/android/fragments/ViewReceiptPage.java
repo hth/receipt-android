@@ -1,9 +1,5 @@
 package com.receiptofi.android.fragments;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Date;
-
 import com.receiptofi.android.HomePageActivity;
 import com.receiptofi.android.R;
 import com.receiptofi.android.http.API;
@@ -28,6 +24,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
 
 public class ViewReceiptPage extends Fragment {
 

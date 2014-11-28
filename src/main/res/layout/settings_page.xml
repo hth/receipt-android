@@ -1,281 +1,281 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:paddingBottom="18dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:paddingTop="15dp" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:paddingBottom="18dp"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="15dp">
 
         <TextView
-            android:id="@+id/settingsText"
-            style="@style/homepage_text_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="Settings"
-            android:textSize="20sp" />
+                android:id="@+id/settingsText"
+                style="@style/homepage_text_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="Settings"
+                android:textSize="20sp"/>
 
         <ImageView
-            android:id="@+id/backIcon"
-            android:layout_width="20dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:layout_centerVertical="true"
-            android:clickable="true"
-            android:onClick="onBackPressed"
-            android:src="@drawable/back_navigation" />
+                android:id="@+id/backIcon"
+                android:layout_width="20dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:clickable="true"
+                android:onClick="onBackPressed"
+                android:src="@drawable/back_navigation"/>
 
         <TextView
-            android:id="@+id/backText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@+id/backIcon"
-            android:clickable="true"
-            android:onClick="onBackPressed"
-            android:text=" Back"
-            android:textColor="@color/login_screen_blue"
-            android:textSize="16sp"
-            android:textStyle="bold" />
+                android:id="@+id/backText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/backIcon"
+                android:clickable="true"
+                android:onClick="onBackPressed"
+                android:text=" Back"
+                android:textColor="@color/login_screen_blue"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
     </RelativeLayout>
 
     <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"/>
 
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:background="@color/login_screen_bg"
-        android:fillViewport="true" >
-
-        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="vertical" >
+            android:background="@color/login_screen_bg"
+            android:fillViewport="true">
+
+        <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
             <TextView
-                android:id="@+id/syncText"
-                style="@style/settings_text_heading_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="SYNC" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/wifiSyncText"
+                    android:id="@+id/syncText"
                     style="@style/settings_text_heading_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="WIFI Sync"
-                    android:textColor="#424242" />
-
-                <TextView
-                    android:id="@+id/textView1"
-                    style="@style/settings_text_subheading_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/wifiSyncText"
-                    android:text="Account now syncs over wifi"
-                    android:textColor="#424242"
-                    android:textSize="12sp" />
-
-                <ToggleButton
-                    android:id="@+id/wifiSyncBtn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:onClick="onWifiSyncToggle"
-                    android:text="ToggleButton" />
-            </RelativeLayout>
+                    android:text="SYNC"/>
 
             <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/emailAndPasswordText"
-                style="@style/settings_text_heading_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="EMAIL &amp; PASWORD" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
 
             <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:padding="10dp" >
-
-                <TextView
-                    style="@style/settings_text_heading_style"
-                    android:layout_width="wrap_content"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/white"
-                    android:text="WIFI Sync"
-                    android:textColor="#424242" />
+                    android:padding="10dp">
 
                 <TextView
-                    android:id="@+id/toggleButton1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:text="Edit"
-                    android:textColor="@color/login_screen_blue" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:padding="10dp" >
+                        android:id="@+id/wifiSyncText"
+                        style="@style/settings_text_heading_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="WIFI Sync"
+                        android:textColor="#424242"/>
 
                 <TextView
-                    style="@style/settings_text_heading_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/white"
-                    android:text="*******"
-                    android:textColor="@color/login_screen_blue"
-                    android:textSize="20sp" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:text="Edit"
-                    android:textColor="@color/login_screen_blue" />
-            </RelativeLayout>
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
-
-            <TextView
-                android:id="@+id/notifications"
-                style="@style/settings_text_heading_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NOTIFICATIONS" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:padding="10dp" >
-
-                <TextView
-                    style="@style/settings_text_heading_style"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Show rejected receipts"
-                    android:textColor="#424242" />
+                        android:id="@+id/textView1"
+                        style="@style/settings_text_subheading_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/wifiSyncText"
+                        android:text="Account now syncs over wifi"
+                        android:textColor="#424242"
+                        android:textSize="12sp"/>
 
                 <ToggleButton
-                    android:id="@+id/toggleButton2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:text="ToggleButton" />
+                        android:id="@+id/wifiSyncBtn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:onClick="onWifiSyncToggle"
+                        android:text="ToggleButton"/>
             </RelativeLayout>
 
             <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
 
             <TextView
-                android:id="@+id/cards"
-                style="@style/settings_text_heading_style"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CARDS" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                android:padding="10dp" >
-
-                <TextView
-                    android:id="@+id/manageUrCards"
+                    android:id="@+id/emailAndPasswordText"
                     style="@style/settings_text_heading_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:text="Manage your cards"
-                    android:textColor="#424242" />
+                    android:text="EMAIL &amp; PASWORD"/>
+
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="10dp">
 
                 <TextView
+                        style="@style/settings_text_heading_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:text="WIFI Sync"
+                        android:textColor="#424242"/>
+
+                <TextView
+                        android:id="@+id/toggleButton1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:text="Edit"
+                        android:textColor="@color/login_screen_blue"/>
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="10dp">
+
+                <TextView
+                        style="@style/settings_text_heading_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@android:color/white"
+                        android:text="*******"
+                        android:textColor="@color/login_screen_blue"
+                        android:textSize="20sp"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:text="Edit"
+                        android:textColor="@color/login_screen_blue"/>
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
+
+            <TextView
+                    android:id="@+id/notifications"
+                    style="@style/settings_text_heading_style"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_centerInParent="true"
-                    android:text=">"
-                    android:textColor="@color/login_screen_blue" >
+                    android:text="NOTIFICATIONS"/>
+
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="10dp">
+
+                <TextView
+                        style="@style/settings_text_heading_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Show rejected receipts"
+                        android:textColor="#424242"/>
+
+                <ToggleButton
+                        android:id="@+id/toggleButton2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:text="ToggleButton"/>
+            </RelativeLayout>
+
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
+
+            <TextView
+                    android:id="@+id/cards"
+                    style="@style/settings_text_heading_style"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="CARDS"/>
+
+            <View
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
+
+            <RelativeLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white"
+                    android:padding="10dp">
+
+                <TextView
+                        android:id="@+id/manageUrCards"
+                        style="@style/settings_text_heading_style"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:text="Manage your cards"
+                        android:textColor="#424242"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerInParent="true"
+                        android:text=">"
+                        android:textColor="@color/login_screen_blue">
                 </TextView>
             </RelativeLayout>
 
             <View
-                android:layout_width="fill_parent"
-                android:layout_height="1px"
-                android:background="@android:color/darker_gray" />
+                    android:layout_width="fill_parent"
+                    android:layout_height="1px"
+                    android:background="@android:color/darker_gray"/>
 
             <Button
-                android:id="@+id/logout"
-                style="@style/login_button_style"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="10dp"
-                android:onClick="logout"
-                android:text="Logout"
-                android:textColor="@android:color/white"
-                android:textStyle="bold"
-                android:typeface="sans" />
+                    android:id="@+id/logout"
+                    style="@style/login_button_style"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:onClick="logout"
+                    android:text="Logout"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
+                    android:typeface="sans"/>
         </LinearLayout>
     </ScrollView>
 

@@ -1,8 +1,5 @@
 package com.receiptofi.android;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -44,6 +41,9 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class LoginActivity extends ParentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 

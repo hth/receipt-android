@@ -1,7 +1,5 @@
 package com.receiptofi.android;
 
-import java.io.File;
-
 import com.receiptofi.android.adapters.ImageUpload;
 import com.receiptofi.android.fragments.ReceiptListFragment;
 import com.receiptofi.android.fragments.ViewReceiptPage;
@@ -16,6 +14,8 @@ import android.provider.MediaStore;
 import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
+
+import java.io.File;
 
 public class HomePageActivity extends ParentActivity {
 
