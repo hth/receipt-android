@@ -1,4 +1,4 @@
-package com.receiptofi.android.recievers;
+package com.receiptofi.android.receivers;
 
 import com.receiptofi.android.services.ImageUploaderService;
 import com.receiptofi.android.utils.UserUtils;
