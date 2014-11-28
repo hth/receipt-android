@@ -32,5 +32,4 @@ public class ReceiptofiApplication extends Application {
         return this.googleApiClient;
     }
 
-
 }

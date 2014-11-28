@@ -27,8 +27,7 @@ public class UserUtils {
         String mail = UserUtils.getEmail();
         String auth = UserUtils.getAuth();
 
-        if (mail != null && mail.trim().length() > 0 && auth != null
-                && auth.trim().length() > 0) {
+        if (mail != null && mail.trim().length() > 0 && auth != null && auth.trim().length() > 0) {
             return true;
         } else {
             return false;
@@ -36,7 +35,6 @@ public class UserUtils {
     }
 
     public static class UserSettings {
-
         public static boolean isWifiSyncOnly() {
             String s = KeyValue.getValue(KeyValue.key.WIFI_SYNC);
             if (s == null || s.equalsIgnoreCase("true")) {
@@ -58,6 +56,4 @@ public class UserUtils {
             }
         }
     }
-
-
 }

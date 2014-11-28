@@ -62,7 +62,6 @@ public class ParentActivity extends Activity {
         loader.setIndeterminate(true);
         loader.setMessage(msg);
         loader.show();
-
     }
 
     public void hideLoader() {
@@ -82,5 +81,4 @@ public class ParentActivity extends Activity {
 
         });
     }
-
 }

@@ -15,7 +15,7 @@ public class ImageUpload {
 
     public static ArrayList<ImageModel> imageQueue = null;
 
-    public static final void initializeQueue() {
+    public static void initializeQueue() {
 
         if (imageQueue == null) {
             imageQueue = new ArrayList<ImageModel>();
@@ -29,25 +29,22 @@ public class ImageUpload {
         return imageQueue;
     }
 
-    public static final void process(Context context, String imgFilePath) {
-
+    public static void process(Context context, String imgFilePath) {
         ImageModel model = new ImageModel();
-        boolean isAddedTodb = false;
+        boolean isAddedToDB;
         model.imgPath = imgFilePath;
         model.imgStatus = ImageModel.STATUS.UNPROCESSED;
 
         try {
-            isAddedTodb = model.addToQueue();
+            isAddedToDB = model.addToQueue();
             imageQueue.add(model);
 
-            if (!ImageUploaderService.isServiceConnected() && isAddedTodb && UserSettings.isStartImageUploadProcess(context)) {
+            if (!ImageUploaderService.isServiceConnected() && isAddedToDB && UserSettings.isStartImageUploadProcess(context)) {
                 Log.i("image added to queue", model.imgPath);
                 ImageUploaderService.start(context);
             }
         } catch (SQLiteConstraintException e) {
             ((ParentActivity) context).showErrorMsg("This image already exists in upload queue.");
         }
-
     }
-
 }

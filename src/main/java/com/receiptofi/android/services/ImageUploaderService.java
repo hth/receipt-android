@@ -89,7 +89,7 @@ public class ImageUploaderService {
             }
 
             @Override
-            public void onExeption(ImageModel iModel, Exception exception) {
+            public void onException(ImageModel iModel, Exception exception) {
                 // TODO Auto-generated method stub
                 iModel.updateStatus(false);
                 updateProcessStatus(iModel);

@@ -29,6 +29,4 @@ public class ActionFragment extends ParentFragment {
         homeScreen.findViewById(R.id.menu).setVisibility(View.VISIBLE);
         return homeScreen;
     }
-
-
 }

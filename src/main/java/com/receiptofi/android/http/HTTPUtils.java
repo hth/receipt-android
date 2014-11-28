@@ -8,7 +8,6 @@ import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
@@ -63,7 +62,7 @@ public final class HTTPUtils {
                         response.getEntity().getContent()
                 )
         );
-        StringBuffer responseBuffer = new StringBuffer();
+        StringBuilder responseBuffer = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
             responseBuffer.append(line);
@@ -72,9 +71,7 @@ public final class HTTPUtils {
         return responseBuffer.toString();
     }
 
-    public static String getResponse(ArrayList<NameValuePair> params, String API)
-            throws Exception {
-        StringBuilder getParamString = new StringBuilder();
+    public static String getResponse(ArrayList<NameValuePair> params, String API) throws Exception {
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet;
 
@@ -84,29 +81,29 @@ public final class HTTPUtils {
             httpGet = new HttpGet(RECEIPTOFI_MOBILE_URL);
         }
         if (params != null) {
-
             for (NameValuePair pair : params) {
                 httpGet.addHeader(pair.getName(), pair.getValue());
             }
-
         }
 
         HttpResponse response = client.execute(httpGet);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(
-                response.getEntity().getContent()));
-        StringBuffer responseBuffer = new StringBuffer();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+        StringBuilder responseBuffer = new StringBuilder();
         String line;
         while ((line = reader.readLine()) != null) {
             responseBuffer.append(line);
         }
 
         return responseBuffer.toString();
-
     }
 
-    public static void AsyncRequest(final ArrayList<NameValuePair> params,
-                                    final String API, final String HTTP_method, final ResponseHandler handler) {
+    public static void AsyncRequest(
+            final ArrayList<NameValuePair> params,
+            final String api,
+            final String httpMethod,
+            final ResponseHandler handler
+    ) {
         new Thread() {
             @Override
             public void run() {
@@ -114,23 +111,24 @@ public final class HTTPUtils {
                 super.run();
                 String response = null;
                 try {
-                    if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_POST)) {
-                        response = getPostResponse(params, API);
-                    } else if (HTTP_method.equalsIgnoreCase(HTTP_METHOD_GET)) {
-                        response = getResponse(params, API);
+                    if (httpMethod.equalsIgnoreCase(HTTP_METHOD_POST)) {
+                        response = getPostResponse(params, api);
+                    } else if (httpMethod.equalsIgnoreCase(HTTP_METHOD_GET)) {
+                        response = getResponse(params, api);
                     }
                     handler.onSuccess(response);
                 } catch (Exception e) {
-                    handler.onExeption(e);
+                    handler.onException(e);
                 }
 
             }
         }.start();
-
     }
 
     public static Header[] getHTTPHeaders(
-            final ArrayList<NameValuePair> params, String API) throws Exception {
+            final ArrayList<NameValuePair> params,
+            String API
+    ) throws Exception {
 
         final Header[] headers;
         HttpPost httpPost;
@@ -150,9 +148,6 @@ public final class HTTPUtils {
         HttpResponse response = null;
         try {
             response = client.execute(httpPost);
-        } catch (ClientProtocolException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -163,16 +158,19 @@ public final class HTTPUtils {
         return headers;
     }
 
-    public static void doSocialAuthentication(final Context ctx,
-                                              final JSONObject postData, final String API, final ResponseHandler responseHandler) {
-
+    public static void doSocialAuthentication(
+            final Context ctx,
+            final JSONObject postData,
+            final String API,
+            final ResponseHandler responseHandler
+    ) {
         new Thread() {
             public void run() {
                 try {
                     final Header[] headers;
                     HttpPost httpPost;
                     HttpClient client = new DefaultHttpClient();
-                    StringBuffer responseBuffer = new StringBuffer();
+                    StringBuilder responseBuffer = new StringBuilder();
 
                     if (API != null) {
                         httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
@@ -185,12 +183,10 @@ public final class HTTPUtils {
 
                     httpPost.setEntity(postEntity);
                     httpPost.setHeader("Content-Type", "application/json");
-                    HttpResponse response = null;
+                    HttpResponse response;
 
                     response = client.execute(httpPost);
-
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(
-                            response.getEntity().getContent()));
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
 
                     String line;
                     while ((line = reader.readLine()) != null) {
@@ -205,14 +201,10 @@ public final class HTTPUtils {
                     }
 
                 } catch (Exception e) {
-                    responseHandler.onExeption(e);
+                    responseHandler.onException(e);
                 }
             }
-
-            ;
         }.start();
-
-
     }
 
     private static boolean isValidSocialAuthResponse(Context ctx, Header[] headers) {
@@ -235,19 +227,16 @@ public final class HTTPUtils {
         } else {
             return false;
         }
-
-
     }
 
-
-    public static void downloadImage(Context ctx,
-                                     final File imageFile, final String api, final ResponseHandler responseHandler) {
-
-
+    public static void downloadImage(
+            Context ctx,
+            final File imageFile,
+            final String api,
+            final ResponseHandler responseHandler) {
         new Thread() {
             public void run() {
                 try {
-
                     HttpResponse response;
                     HttpClient client = new DefaultHttpClient();
 
@@ -262,9 +251,7 @@ public final class HTTPUtils {
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
                     httpGet.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
 
-
                     response = client.execute(httpGet);
-
                     HttpEntity entity = response.getEntity();
 
                     BufferedInputStream bis = new BufferedInputStream(entity.getContent());
@@ -276,62 +263,62 @@ public final class HTTPUtils {
 
                     responseHandler.onSuccess(null);
                 } catch (Exception e) {
-                    responseHandler.onExeption(e);
+                    responseHandler.onException(e);
                 }
 
             }
-
-            ;
         }.start();
-
     }
 
-    public static Thread uploadImage(final Context context, final String api, final ImageModel imageModel, final ImageResponseHandler handler) {
-        Thread t =
-                new Thread() {
-                    public void run() {
-                        try {
-                            HttpPost post;
-                            HttpResponse response;
+    public static Thread uploadImage(
+            final Context context,
+            final String api,
+            final ImageModel imageModel,
+            final ImageResponseHandler handler
+    ) {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    HttpPost post;
+                    HttpResponse response;
 
-                            HttpClient client = new DefaultHttpClient();
-                            if (api != null) {
-                                post = new HttpPost(RECEIPTOFI_MOBILE_URL + api);
-                            } else {
-                                post = new HttpPost(RECEIPTOFI_MOBILE_URL);
-                            }
-
-                            File imageFile = new File(imageModel.imgPath);
-                            FileBody fileBody = new FileBody(imageFile);
-
-                            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-                            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-                            builder.addPart("qqfile", fileBody);
-
-                            HttpEntity entity = builder.build();
-
-                            post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
-                            post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-                            post.setEntity(entity);
-
-                            response = client.execute(post);
-
-                            BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-                            StringBuffer responseBuffer = new StringBuffer();
-                            String line;
-                            while ((line = reader.readLine()) != null) {
-                                responseBuffer.append(line);
-                            }
-
-                            handler.onSuccess(imageModel, responseBuffer.toString());
-                        } catch (Exception e) {
-                            // TODO: handle exception
-                            handler.onExeption(imageModel, e);
-                        }
+                    HttpClient client = new DefaultHttpClient();
+                    if (api != null) {
+                        post = new HttpPost(RECEIPTOFI_MOBILE_URL + api);
+                    } else {
+                        post = new HttpPost(RECEIPTOFI_MOBILE_URL);
                     }
 
-                    ;
-                };
+                    File imageFile = new File(imageModel.imgPath);
+                    FileBody fileBody = new FileBody(imageFile);
+
+                    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+                    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+                    builder.addPart("qqfile", fileBody);
+
+                    HttpEntity entity = builder.build();
+
+                    post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+                    post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
+                    post.setEntity(entity);
+
+                    response = client.execute(post);
+
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
+                    StringBuilder responseBuffer = new StringBuilder();
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        responseBuffer.append(line);
+                    }
+
+                    handler.onSuccess(imageModel, responseBuffer.toString());
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    handler.onException(imageModel, e);
+                }
+            }
+        };
+
         t.start();
         return t;
     }

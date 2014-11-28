@@ -35,7 +35,7 @@ public class ReceiptUtils {
                     }
 
                     @Override
-                    public void onExeption(Exception exception) {
+                    public void onException(Exception exception) {
 
                     }
 

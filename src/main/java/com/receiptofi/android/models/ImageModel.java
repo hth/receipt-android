@@ -48,7 +48,6 @@ public class ImageModel {
     }
 
     public synchronized boolean updateStatus(boolean isProcessed) {
-
         if (isProcessed) {
             // if image is uploaded successfully then noOfTimesTried =0 , which is useful in next iteration of queue.
             noOfTimesTried = 0;
@@ -70,8 +69,11 @@ public class ImageModel {
             uploadValues.put(ReceiptDB.UploadQueue.STATUS, STATUS.UNPROCESSED);
         }
 
-        ReceiptofiApplication.rdh.getWritableDatabase().update(ReceiptDB.UploadQueue.TABLE_NAME, uploadValues, ReceiptDB.UploadQueue.IMAGE_PATH + "=?", new String[]{imgPath});
-
+        ReceiptofiApplication.rdh.getWritableDatabase().update(
+                ReceiptDB.UploadQueue.TABLE_NAME,
+                uploadValues,
+                ReceiptDB.UploadQueue.IMAGE_PATH + "=?",
+                new String[]{imgPath});
 
         ContentValues imageIndexValue = new ContentValues();
 
@@ -88,9 +90,16 @@ public class ImageModel {
     }
 
     public static ArrayList<ImageModel> getAllUnprocessedImages() {
-
         ArrayList<ImageModel> models = new ArrayList<ImageModel>();
-        Cursor c = ReceiptofiApplication.rdh.getReadableDatabase().query(ReceiptDB.UploadQueue.TABLE_NAME, new String[]{ReceiptDB.UploadQueue.IMAGE_PATH}, null, null, null, null, null);
+        Cursor c = ReceiptofiApplication.rdh.getReadableDatabase().query
+                (ReceiptDB.UploadQueue.TABLE_NAME,
+                        new String[]{ReceiptDB.UploadQueue.IMAGE_PATH},
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                );
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
             ImageModel model = new ImageModel();
@@ -99,5 +108,4 @@ public class ImageModel {
         }
         return models;
     }
-
 }

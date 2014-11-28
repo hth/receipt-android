@@ -20,7 +20,6 @@ public class ReceiptDB {
         public static final String R_ID = "rid";
         public static final String SEQUENCE = "sequence";
         public static final String TOTAL = "total";
-
     }
 
     public static class ImageIndex {
@@ -42,6 +41,4 @@ public class ReceiptDB {
         public static final String KEY = "key";
         public static final String VALUE = "value";
     }
-
-
 }

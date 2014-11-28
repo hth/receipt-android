@@ -91,9 +91,7 @@ public class ISO8601DateParser {
 
             input = s0 + "GMT" + s1;
         }
-
         return df.parse(input);
-
     }
 
     public static String toString(Date date) {
@@ -117,13 +115,6 @@ public class ISO8601DateParser {
         result = result.replaceAll("UTC", "+00:00");
 
         return result;
-
     }
-
 }
-
-   
-    
-    
-    
     

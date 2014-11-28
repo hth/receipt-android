@@ -1,7 +1,6 @@
 package com.receiptofi.android.models;
 
-public class RecieptElement {
-
+public class ReceiptElement {
     public String quantity;
     public String id;
     public String name;
@@ -9,5 +8,4 @@ public class RecieptElement {
     public String receipt_id;
     public String sequence;
     public String tax;
-
 }

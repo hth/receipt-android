@@ -2,7 +2,7 @@ package com.receiptofi.android.http;
 
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.models.ReceiptModel;
-import com.receiptofi.android.models.RecieptElement;
+import com.receiptofi.android.models.ReceiptElement;
 
 import android.os.Bundle;
 import org.json.JSONArray;
@@ -109,13 +109,13 @@ public class ResponseParser {
     }
 
 
-    public static ArrayList<RecieptElement> getReceiptDetails(String response) {
+    public static ArrayList<ReceiptElement> getReceiptDetails(String response) {
 
-        ArrayList<RecieptElement> elemets = new ArrayList<RecieptElement>();
+        ArrayList<ReceiptElement> elemets = new ArrayList<ReceiptElement>();
         try {
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++) {
-                RecieptElement receiptElement = new RecieptElement();
+                ReceiptElement receiptElement = new ReceiptElement();
                 JSONObject receiptElementJson = array.getJSONObject(i);
                 receiptElement.quantity = receiptElementJson.getString("quant");
                 receiptElement.id = receiptElementJson.getString("id");

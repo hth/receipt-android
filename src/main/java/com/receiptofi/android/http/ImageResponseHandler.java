@@ -8,6 +8,5 @@ public interface ImageResponseHandler {
 
     public void onError(ImageModel iModel, String Error);
 
-    public void onExeption(ImageModel iModel, Exception exception);
-
+    public void onException(ImageModel iModel, Exception exception);
 }

@@ -50,10 +50,7 @@ public class ReceiptListAdapter extends ArrayAdapter<ReceiptModel> {
         }
 
         convertView.setTag(receipt);
-
         return convertView;
-
-
     }
 
     @Override
