@@ -60,14 +60,14 @@ android {
 
     buildTypes {
         debug {
-            runProguard true // required
-            proguardFile file("android-proguard.config")
+            minifyEnabled true
+            proguardFile getDefaultProguardFile("android-proguard.config")
 //            signingConfig signingConfigs.debug
         }
 
         release {
-            runProguard true
-            proguardFile file("android-test-proguard.config")
+            minifyEnabled true
+            proguardFile getDefaultProguardFile("android-test-proguard.config")
 //            signingConfig signingConfigs.release
         }
     }
