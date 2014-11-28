@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class ReceiptListAdapter extends ArrayAdapter<ReceiptModel> {
 
     private Context context;
-    ArrayList<ReceiptModel> models;
+    private ArrayList<ReceiptModel> models;
 
     public ReceiptListAdapter(Context context, ArrayList<ReceiptModel> models) {
         super(context, android.R.layout.simple_expandable_list_item_1);
