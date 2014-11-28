@@ -232,7 +232,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener, Co
                 }
 
                 @Override
-                public void onExeption(Exception exception) {
+                public void onException(Exception exception) {
 
                 }
 

@@ -36,7 +36,5 @@ public class ReceiptModel {
 
         ReceiptofiApplication.rdh.getWritableDatabase().insert(ReceiptDB.Receipt.TABLE_NAME, null, values);
         return false;
-
     }
-
 }

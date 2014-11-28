@@ -21,7 +21,6 @@ public class SettingsPage extends ParentActivity {
         initializeUI();
     }
 
-
     private void initializeUI() {
         // TODO Auto-generated method stub
         boolean wifiOnly = UserUtils.UserSettings.isWifiSyncOnly();
@@ -52,7 +51,6 @@ public class SettingsPage extends ParentActivity {
     }
 
     public void onWifiSyncToggle(View view) {
-
         boolean on = ((ToggleButton) view).isChecked();
 
         if (on) {
@@ -60,6 +58,5 @@ public class SettingsPage extends ParentActivity {
         } else {
             UserUtils.UserSettings.setWifiSync(this, false);
         }
-
     }
 }

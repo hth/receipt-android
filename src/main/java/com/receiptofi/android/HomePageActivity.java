@@ -24,7 +24,7 @@ public class HomePageActivity extends ParentActivity {
 
     Display display;
     Point size;
-    TextView unprocessDoucumentCount;
+    TextView unprocessedDocumentCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +37,7 @@ public class HomePageActivity extends ParentActivity {
         size = new Point();
         display.getSize(size);
 
-        unprocessDoucumentCount = (TextView) findViewById(R.id.unprocessDoucumentCount);
+        unprocessedDocumentCount = (TextView) findViewById(R.id.unprocessDoucumentCount);
     }
 
     public void invokeMenu(View view) {
@@ -61,7 +61,7 @@ public class HomePageActivity extends ParentActivity {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
-            showErrorMsg("some error occured !!");
+            showErrorMsg("some error occurred !!");
         }
     }
 
@@ -102,7 +102,7 @@ public class HomePageActivity extends ParentActivity {
 
             @Override
             public void run() {
-                unprocessDoucumentCount.setText("UNPROCESSED COUNT: " + count);
+                unprocessedDocumentCount.setText("UNPROCESSED COUNT: " + count);
             }
 
         });
@@ -132,16 +132,16 @@ public class HomePageActivity extends ParentActivity {
 
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 
-            String captiredImgFile = AppUtils.getImageFilePath();
-            if (captiredImgFile != null) {
+            String capturedImgFile = AppUtils.getImageFilePath();
+            if (capturedImgFile != null) {
 
-                File capturedFile = new File(captiredImgFile);
+                File capturedFile = new File(capturedImgFile);
                 Uri contentUri = Uri.fromFile(capturedFile);
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
                 // HTTPUtils.uploadImage(this,API.UPLOAD_IMAGE_API,captiredImgFile);
-                ImageUpload.process(this, captiredImgFile);
+                ImageUpload.process(this, capturedImgFile);
             }
         }
 

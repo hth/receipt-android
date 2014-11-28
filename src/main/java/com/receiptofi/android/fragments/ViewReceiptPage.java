@@ -6,7 +6,7 @@ import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.http.ResponseParser;
-import com.receiptofi.android.models.RecieptElement;
+import com.receiptofi.android.models.ReceiptElement;
 import com.receiptofi.android.utils.AppUtils;
 import com.receiptofi.android.utils.UserUtils;
 
@@ -63,7 +63,7 @@ public class ViewReceiptPage extends Fragment {
             public void onSuccess(String response) {
                 // TODO Auto-generated method stub
                 ((HomePageActivity) context).hideLoader();
-                ArrayList<RecieptElement> elements = ResponseParser.getReceiptDetails(response);
+                ArrayList<ReceiptElement> elements = ResponseParser.getReceiptDetails(response);
                 displayElements(elements);
                 if (imageFile.exists()) {
                     disaplayImage(imageFile.getAbsolutePath());
@@ -72,7 +72,7 @@ public class ViewReceiptPage extends Fragment {
 
 
             @Override
-            public void onExeption(Exception exception) {
+            public void onException(Exception exception) {
                 // TODO Auto-generated method stub
                 ((HomePageActivity) context).hideLoader();
             }
@@ -95,7 +95,7 @@ public class ViewReceiptPage extends Fragment {
                 }
 
                 @Override
-                public void onExeption(Exception exception) {
+                public void onException(Exception exception) {
                     // TODO Auto-generated method stub
 
                 }
@@ -131,14 +131,14 @@ public class ViewReceiptPage extends Fragment {
         });
     }
 
-    private void displayElements(ArrayList<RecieptElement> elements) {
+    private void displayElements(ArrayList<ReceiptElement> elements) {
         // TODO Auto-generated method stub
         if (elements != null) {
 
             LayoutInflater inflator = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             final ViewGroup elementsContainer = (ViewGroup) ((Activity) context).findViewById(R.id.receiptElements);
 
-            for (RecieptElement element : elements) {
+            for (ReceiptElement element : elements) {
                 final View view = inflator.inflate(R.layout.receiptdetail_element_row, null);
                 ((TextView) view.findViewById(R.id.elementName)).setText(element.name);
                 ((TextView) view.findViewById(R.id.elemntPrice)).setText("$" + element.price);

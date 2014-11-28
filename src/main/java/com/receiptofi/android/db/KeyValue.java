@@ -12,7 +12,6 @@ public class KeyValue {
     public static class key {
         public static String XR_MAIL = "X-R-MAIL";
         public static String XR_AUTH = "X-R-AUTH";
-
         public static String WIFI_SYNC = "wifi_sync";
     }
 

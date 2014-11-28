@@ -6,7 +6,7 @@ public interface ResponseHandler {
 
     public void onError(String Error);
 
-    public void onExeption(Exception exception);
+    public void onException(Exception exception);
 
 }
 

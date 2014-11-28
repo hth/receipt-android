@@ -19,15 +19,11 @@ public class AppUtils {
     static File receiptofiImgDir;
 
     public static String getImageFileFromURI(Context context, Uri uri) {
-        String[] filePathColoumn = {MediaStore.Images.Media.DATA};
-        Cursor c = context.getContentResolver().query(uri,
-                filePathColoumn, null, null, null);
+        String[] filePathColumn = {MediaStore.Images.Media.DATA};
+        Cursor c = context.getContentResolver().query(uri, filePathColumn, null, null, null);
         c.moveToFirst();
-        final String imageAbsolutePath = c.getString(c
-                .getColumnIndex(filePathColoumn[0]));
-        return imageAbsolutePath;
+        return c.getString(c.getColumnIndex(filePathColumn[0]));
     }
-
 
     public static File createImageFile() {
         // Create an image file name
@@ -49,9 +45,7 @@ public class AppUtils {
             }
             return null;
         }
-
     }
-
 
     public static String getImageFilePath() {
         if (image != null) {
@@ -63,16 +57,13 @@ public class AppUtils {
 
     public static Context getHomePageContext() {
         return homePageContext;
-
     }
 
     public static void setHomePageContext(Context context) {
         homePageContext = context;
-
     }
 
     public static boolean isWifiConnected(Context context) {
-
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetwork = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
@@ -81,11 +72,9 @@ public class AppUtils {
         } else {
             return false;
         }
-
     }
 
     public static boolean isMobileInternetConnected(Context context) {
-
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobileInternet = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
@@ -94,17 +83,11 @@ public class AppUtils {
         } else {
             return false;
         }
-
     }
 
     public static void createImageDir() {
-
-        File storageDir = Environment
-                .getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-
-        receiptofiImgDir = new File(storageDir.getAbsolutePath()
-                + File.separator + "Receiptofi");
-
+        File storageDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
+        receiptofiImgDir = new File(storageDir.getAbsolutePath() + File.separator + "Receiptofi");
         if (!receiptofiImgDir.exists()) {
             receiptofiImgDir.mkdir();
         }
@@ -113,6 +96,4 @@ public class AppUtils {
     public static File getImageDir() {
         return receiptofiImgDir;
     }
-
-
 }

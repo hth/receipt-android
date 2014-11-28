@@ -20,15 +20,14 @@ public class ReceiptListFragment extends Fragment {
 
     Context context;
     View screen;
-    ListView recepitList;
+    ListView receiptList;
     ReceiptListAdapter adapter;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         View view = inflater.inflate(R.layout.receipt_list, null);
-        recepitList = (ListView) view.findViewById(R.id.reciptListView);
+        receiptList = (ListView) view.findViewById(R.id.reciptListView);
         view.findViewById(R.id.back).setVisibility(View.VISIBLE);
         view.findViewById(R.id.menu).setVisibility(View.GONE);
         return view;
@@ -40,18 +39,15 @@ public class ReceiptListFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
         adapter = new ReceiptListAdapter(context, ReceiptUtils.getAllReciepts());
-        recepitList.setAdapter(adapter);
-        recepitList.setOnItemClickListener(receiptListner);
+        receiptList.setAdapter(adapter);
+        receiptList.setOnItemClickListener(receiptListener);
     }
 
-    OnItemClickListener receiptListner = new OnItemClickListener() {
-
+    OnItemClickListener receiptListener = new OnItemClickListener() {
         @Override
-        public void onItemClick(AdapterView<?> adapter, View view, int position,
-                                long id) {
+        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
             ReceiptModel model = (ReceiptModel) view.getTag();
             ((HomePageActivity) context).invokeDetailReceiptView(view, model);
         }
     };
-
 }

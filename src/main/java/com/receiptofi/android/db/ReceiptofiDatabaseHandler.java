@@ -12,7 +12,6 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
 
     public ReceiptofiDatabaseHandler(Context context, String name) {
         super(context, name, null, DB_VERSION);
-
     }
 
     @Override
@@ -74,5 +73,4 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
 
                 ");");
     }
-
 }

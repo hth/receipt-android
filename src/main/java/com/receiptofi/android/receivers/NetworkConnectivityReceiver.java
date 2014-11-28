@@ -18,7 +18,5 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
                 ImageUploaderService.start(context);
             }
         }
-
     }
-
 }
