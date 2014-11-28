@@ -1,9 +1,5 @@
 package com.receiptofi.android.utils;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
 import android.content.Context;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
@@ -11,6 +7,10 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class AppUtils {
 

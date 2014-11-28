@@ -1,49 +1,49 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/login_screen_bg"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/login_screen_bg"
+              android:orientation="vertical">
 
     <RelativeLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        android:padding="15dp" >
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:padding="15dp">
 
         <ImageView
-            android:id="@+id/R_logo"
-            android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            android:layout_centerHorizontal="true"
-            android:src="@drawable/r" />
+                android:id="@+id/R_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_centerHorizontal="true"
+                android:src="@drawable/r"/>
 
         <ImageView
-            android:id="@+id/menu"
-            android:layout_width="25dp"
-            android:layout_height="30dp"
-            android:layout_alignParentLeft="true"
-            android:onClick="invokeMenu"
-            android:src="@drawable/menu" />
+                android:id="@+id/menu"
+                android:layout_width="25dp"
+                android:layout_height="30dp"
+                android:layout_alignParentLeft="true"
+                android:onClick="invokeMenu"
+                android:src="@drawable/menu"/>
 
         <View
-            android:id="@+id/back"
-            android:layout_width="23dp"
-            android:layout_height="34dp"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/back_navigation"
-            android:onClick="onBackPressed" />
+                android:id="@+id/back"
+                android:layout_width="23dp"
+                android:layout_height="34dp"
+                android:layout_alignParentLeft="true"
+                android:background="@drawable/back_navigation"
+                android:onClick="onBackPressed"/>
 
         <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/sync" />
+                android:id="@+id/imageView1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/sync"/>
     </RelativeLayout>
 
     <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dp"
-        android:background="@android:color/darker_gray" />
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="@android:color/darker_gray"/>
 
 </LinearLayout>

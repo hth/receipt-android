@@ -1,7 +1,5 @@
 package com.receiptofi.android.adapters;
 
-import java.util.ArrayList;
-
 import com.receiptofi.android.ParentActivity;
 import com.receiptofi.android.models.ImageModel;
 import com.receiptofi.android.services.ImageUploaderService;
@@ -10,6 +8,8 @@ import com.receiptofi.android.utils.UserUtils.UserSettings;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 import android.util.Log;
+
+import java.util.ArrayList;
 
 public class ImageUpload {
 

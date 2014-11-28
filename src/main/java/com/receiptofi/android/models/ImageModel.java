@@ -1,12 +1,12 @@
 package com.receiptofi.android.models;
 
-import java.util.ArrayList;
-
 import com.receiptofi.android.ReceiptofiApplication;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
+
+import java.util.ArrayList;
 
 public class ImageModel {
 

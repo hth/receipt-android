@@ -1,38 +1,38 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@android:color/white"
-    android:orientation="vertical" >
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@android:color/white"
+              android:orientation="vertical">
 
     <View
-        android:layout_width="fill_parent"
-        android:layout_height="1px"
-        android:background="#cccccc" />
+            android:layout_width="fill_parent"
+            android:layout_height="1px"
+            android:background="#cccccc"/>
 
     <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="9dp" >
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="9dp">
 
         <TextView
-            android:id="@+id/elementName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true"
-            android:text=""
-            android:textSize="17sp" />
+                android:id="@+id/elementName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text=""
+                android:textSize="17sp"/>
 
         <TextView
-            android:id="@+id/elemntPrice"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:text=""
-            android:textSize="17sp"
-            android:textStyle="bold" />
+                android:id="@+id/elemntPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:text=""
+                android:textSize="17sp"
+                android:textStyle="bold"/>
     </RelativeLayout>
 
 </LinearLayout>

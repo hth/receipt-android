@@ -1,7 +1,5 @@
 package com.receiptofi.android.http;
 
-import java.util.ArrayList;
-
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.models.ReceiptModel;
 import com.receiptofi.android.models.RecieptElement;
@@ -10,6 +8,8 @@ import android.os.Bundle;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
 
 public class ResponseParser {
 
