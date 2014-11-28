@@ -19,14 +19,14 @@ import java.util.ArrayList;
 
 public class ImageUploaderService {
 
-    private static ArrayList<Thread> allthreads = new ArrayList<Thread>();
+    private static ArrayList<Thread> allThreads = new ArrayList<Thread>();
     private static ArrayList<Thread> imageUploadThreads = new ArrayList<Thread>();
     private static boolean isServiceStarted = false;
     private static int MAX_NUMBER_THREAD = 5;
     private static int MAX_RETRY_UPLOAD = 5;
     private static Context context;
 
-    public static final void start(Context context) {
+    public static void start(Context context) {
         // TODO Auto-generated method stub
         ImageUploaderService.context = context;
         ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
@@ -42,16 +42,14 @@ public class ImageUploaderService {
 
                     Thread imageUploaderThread = getUploaderThread(context, iModel);
                     imageUploadThreads.add(imageUploaderThread);
-                    allthreads.add(imageUploaderThread);
+                    allThreads.add(imageUploaderThread);
                 }
 
                 if (i == (queue.size() - 1)) {
                     isServiceStarted = false;
                 }
             }
-
         }
-
     }
 
     private static boolean validateImageForUpload(ImageModel iModel) {
@@ -65,7 +63,6 @@ public class ImageUploaderService {
     }
 
     private static Thread getUploaderThread(Context context, ImageModel iModel) {
-
         iModel.LOCK = true;
 
         Thread imageUploaderThread = HTTPUtils.uploadImage(context, API.UPLOAD_IMAGE_API, iModel, new ImageResponseHandler() {
@@ -80,8 +77,8 @@ public class ImageUploaderService {
                 iModel.updateStatus(true);
                 updateProcessStatus(iModel);
                 if (AppUtils.getHomePageContext() != null) {
-                    ((HomePageActivity) AppUtils.getHomePageContext()).showErrorMsg(response.toString());
-                    Log.i("UNPROCESS DOCUMENT COUNT", "UNPROCESS DOCUMENT COUNT" + unprocessedCount);
+                    ((HomePageActivity) AppUtils.getHomePageContext()).showErrorMsg(response);
+                    Log.i("UNPROCESSED DOCUMENT COUNT", "UNPROCESSED DOCUMENT COUNT" + unprocessedCount);
                     ((HomePageActivity) AppUtils.getHomePageContext()).updatUnprocessCount(unprocessedCount);
                 }
 
@@ -133,7 +130,7 @@ public class ImageUploaderService {
 
         Log.i("queuing done", "In updateProcessStatus");
         model.LOCK = false;
-        for (Thread thread : allthreads) {
+        for (Thread thread : allThreads) {
             if (!thread.isAlive()) {
 
                 Log.i("Thread  Died  ", thread.getName());

@@ -25,7 +25,6 @@ public class ImageModel {
     }
 
     public boolean addToQueue() throws SQLiteConstraintException {
-
         long responseCode = -1;
 
         ContentValues values = new ContentValues();
@@ -56,10 +55,8 @@ public class ImageModel {
         }
 
         ContentValues uploadValues = new ContentValues();
-
         uploadValues.put(ReceiptDB.UploadQueue.IMAGE_DATE, imgDate);
         uploadValues.put(ReceiptDB.UploadQueue.IMAGE_PATH, imgPath);
-
 
         if (isProcessed) {
             imgStatus = STATUS.PROCESSED;
