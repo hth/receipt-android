@@ -79,7 +79,7 @@ public class ImageUploaderService {
                 if (AppUtils.getHomePageContext() != null) {
                     ((HomePageActivity) AppUtils.getHomePageContext()).showErrorMsg(response);
                     Log.i("UNPROCESSED DOCUMENT COUNT", "UNPROCESSED DOCUMENT COUNT" + unprocessedCount);
-                    ((HomePageActivity) AppUtils.getHomePageContext()).updatUnprocessCount(unprocessedCount);
+                    ((HomePageActivity) AppUtils.getHomePageContext()).updateUnprocessedCount(unprocessedCount);
                 }
 
                 Log.i("image upload done for ", iModel.imgPath);

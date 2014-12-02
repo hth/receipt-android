@@ -14,6 +14,8 @@ apply plugin: 'idea'
 
 repositories {
     mavenCentral()
+    maven { url "http://repo.spring.io/libs-milestone" }
+    maven { url "http://repo1.maven.org/maven2/" }
 }
 
 dependencies {
@@ -28,13 +30,23 @@ dependencies {
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
 }
 
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = false
+    }
+}
+
 android {
     compileSdkVersion 19
     buildToolsVersion "19.1.0"
 
     defaultConfig {
+        applicationId "com.receiptofi.android"
         minSdkVersion 14
         targetSdkVersion 16
+        testHandleProfiling true
+        testFunctionalTest true
         versionCode 1
         versionName "1.0"
     }
@@ -55,6 +67,8 @@ android {
         exclude 'META-INF/license.txt'
         exclude 'META-INF/dependencies.txt'
         exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/services/javax.annotation.processing.Processor'
+        exclude 'LICENSE.txt'
     }
 
 //    signingConfigs {
@@ -140,6 +154,8 @@ android {
     }
 }
 
-task wrapper(type: Wrapper){
+task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
 }
+
+defaultTasks 'clean', 'build'

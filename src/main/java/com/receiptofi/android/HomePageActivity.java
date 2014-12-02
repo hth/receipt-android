@@ -87,9 +87,9 @@ public class HomePageActivity extends ParentActivity {
         blobData.putString("receiptName", model.bizName);
         blobData.putDouble("ptax", model.ptax);
 
-        ViewReceiptPage detaiPage = new ViewReceiptPage();
-        detaiPage.setArguments(blobData);
-        startFragment(detaiPage, true, container.getId());
+        ViewReceiptPage detailPage = new ViewReceiptPage();
+        detailPage.setArguments(blobData);
+        startFragment(detailPage, true, container.getId());
     }
 
 
@@ -97,7 +97,7 @@ public class HomePageActivity extends ParentActivity {
         onBackPressed();
     }
 
-    public void updatUnprocessCount(final int count) {
+    public void updateUnprocessedCount(final int count) {
         uiThread.post(new Runnable() {
 
             @Override
