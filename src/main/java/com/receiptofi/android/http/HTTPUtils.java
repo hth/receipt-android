@@ -304,7 +304,6 @@ public final class HTTPUtils {
 
                     post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
                     post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-                    post.setHeader("Content-Type", getMimeType(imageFile.toString()));
                     post.setEntity(entity);
 
                     response = client.execute(post);
@@ -329,7 +328,8 @@ public final class HTTPUtils {
     }
 
     /**
-     * Sets content type based on file extension.
+     * Get content type from file extension.
+     * Note: Do not set the content type when uploading file to server as it will stop uploading.
      * @param url
      * @return
      */
