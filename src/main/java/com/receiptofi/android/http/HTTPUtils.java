@@ -304,8 +304,8 @@ public final class HTTPUtils {
 
                     post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
                     post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-                    post.setEntity(entity);
                     post.setHeader("Content-Type", getMimeType(imageFile.toString()));
+                    post.setEntity(entity);
 
                     response = client.execute(post);
 
