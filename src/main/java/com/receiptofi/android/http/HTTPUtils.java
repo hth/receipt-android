@@ -18,8 +18,11 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.content.ContentResolver;
 import android.content.Context;
+import android.net.Uri;
 import android.util.Log;
+import android.webkit.MimeTypeMap;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -30,6 +33,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.net.URI;
 import java.util.ArrayList;
 
 public final class HTTPUtils {
@@ -301,6 +305,7 @@ public final class HTTPUtils {
                     post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
                     post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
                     post.setEntity(entity);
+                    post.setHeader("Content-Type", getMimeType(imageFile.toString()));
 
                     response = client.execute(post);
 
@@ -321,5 +326,21 @@ public final class HTTPUtils {
 
         t.start();
         return t;
+    }
+
+    /**
+     * Sets content type based on file extension.
+     * @param url
+     * @return
+     */
+    public static String getMimeType(String url) {
+        String type = null;
+        String extension = MimeTypeMap.getFileExtensionFromUrl(url);
+        if (extension != null) {
+            MimeTypeMap mime = MimeTypeMap.getSingleton();
+            type = mime.getMimeTypeFromExtension(extension);
+        }
+        Log.d("Content-Type", type);
+        return type;
     }
 }
