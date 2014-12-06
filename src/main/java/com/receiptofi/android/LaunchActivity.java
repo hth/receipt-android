@@ -45,42 +45,44 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class LoginActivity extends ParentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
+/**
+ *  Launch activity facilities user to login using either of 4 ways:
+ *  1. Facebook Account
+ *  2. Google Account
+ *  3. Sign up
+ *  4. Sign in
+ *
+ *  This activity won't generated any error message or notifications
+ */
+public class LaunchActivity extends ParentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 
-    private EditText userName;
-    private EditText password;
-    private String userNameStr;
-    private String passwordStr;
+    private static final String TAG = LaunchActivity.class.getSimpleName();
 
-    private StringBuilder errors = new StringBuilder();
-    private TextView signupText;
     private static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     private static final int FACEBOOK_SIGN_IN = 0x2566;
+
+    private TextView signupText;
     private GoogleApiClient mGoogleApiClient;
-    private boolean mSignInClicked;
     private ConnectionResult mConnectionResult;
-    private boolean mIntentInProgress;
-    SignInButton googlePlusLogin;
-    Button facebookLogin;
+    private Button facebookLogin;
     private boolean isFbLoginClick = false;
+    private boolean mSignInClicked;
+    private boolean mIntentInProgress;
+    private SignInButton googlePlusLogin;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
-            finish();
             startActivity(new Intent(this, HomePageActivity.class));
+            finish();
         }
-        setContentView(R.layout.login_page);
-        userName = (EditText) findViewById(R.id.userName);
-        password = (EditText) findViewById(R.id.password);
+        setContentView(R.layout.launch_page);
         signupText = (TextView) findViewById(R.id.signupText);
 
         googlePlusLogin = (SignInButton) findViewById(R.id.loginGooglePlus);
 
-        userName.setOnFocusChangeListener(editTextListener);
-        password.setOnFocusChangeListener(editTextListener);
         googlePlusLogin.setOnClickListener(this);
         facebookLogin = (Button) findViewById(R.id.loginFacebook);
         facebookLogin.setOnClickListener(this);
@@ -171,8 +173,8 @@ public class LoginActivity extends ParentActivity implements OnClickListener, Co
             public void run() {
                 // TODO Auto-generated method stub
                 finish();
-                startActivity(new Intent(LoginActivity.this, HomePageActivity.class));
-                LoginActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
+                startActivity(new Intent(LaunchActivity.this, HomePageActivity.class));
+                LaunchActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
             }
         });
 
@@ -224,7 +226,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener, Co
 
             Log.i("ACCESS TOKEN", data.getString(key.ACCESS_TOKEN));
 
-            HTTPUtils.doSocialAuthentication(LoginActivity.this, postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
+            HTTPUtils.doSocialAuthentication(LaunchActivity.this, postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
 
                 @Override
                 public void onSuccess(String response) {
@@ -239,7 +241,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener, Co
                 @Override
                 public void onError(String Error) {
                     String errorMsg = ResponseParser.getSocialAuthError(Error);
-                    ((ParentActivity) LoginActivity.this).showErrorMsg(errorMsg);
+                    ((ParentActivity) LaunchActivity.this).showErrorMsg(errorMsg);
                 }
             });
 
@@ -274,7 +276,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener, Co
                             String key = header.getName();
                             if (key != null && (key.trim().equals(API.key.XR_MAIL) || key.trim().equals(API.key.XR_AUTH))) {
                                 String value = header.getValue();
-                                KeyValue.insertKeyValue(LoginActivity.this, key, value);
+                                KeyValue.insertKeyValue(LaunchActivity.this, key, value);
                             }
                         }
                     }
@@ -425,7 +427,7 @@ public class LoginActivity extends ParentActivity implements OnClickListener, Co
                 // We can retrieve the token to check via
                 // tokeninfo or to pass to a service-side
                 // application.
-                token = GoogleAuthUtil.getToken(LoginActivity.this, Plus.AccountApi.getAccountName(mGoogleApiClient), scopes);
+                token = GoogleAuthUtil.getToken(LaunchActivity.this, Plus.AccountApi.getAccountName(mGoogleApiClient), scopes);
             } catch (Exception e) {
                 // This error is recoverable, so we could fix this
                 // by displaying the intent to the user.

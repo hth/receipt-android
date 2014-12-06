@@ -1,5 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <!--        Launch page         -->
+    <string name="login_with_facebook">Login via Facebook</string>
+    <string name="login_with_google">Login via Google+</string>
+    <string name="use_email">------ Use your email -------</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Log in</string>
+
+    <string name="app_info_cnt_dscp">Where do you park your receipt at checkout</string>
+    <string name="facebook_login_cnt_dscp">Login using your Facebook account</string>
+    <string name="google_login_cnt_dscp">Login using your Google account</string>
+
+
+
+
     <string name="app_name">Receiptofi</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

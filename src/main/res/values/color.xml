@@ -1,5 +1,28 @@
 <resources>
 
+    <!--       App theme blue      -->
+    <color name="app_light_bg">#E6E6E5</color>
+    <color name="app_theme_bg">#43BDE7</color>
+    <color name="app_theme_txt_color">#0F9CBC</color>
+
+    <!--       Color from Android      -->
+    <color name="transparent">@android:color/transparent</color>
+
+    <!--       App gray      -->
+    <color name="gray_light">#CCCCCC</color>
+    <color name="gray">#B2B2B2</color>
+
+    <!--       Facebook blue      -->
+    <color name="facebook_bg">#3C5A99</color>
+    <color name="facebook_bg_light">#526FA3</color>
+
+    <!--       Gmail red      -->
+    <color name="google_bg">#DD4B39</color>
+    <color name="google_bg_light">#EA4E42</color>
+
+
+
+
     <color name="screen_background">#F8F8F8</color>
     <color name="login_screen_blue">#007AFF</color>
     <color name="login_screen_green">#55D76A</color>
