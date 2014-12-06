@@ -46,7 +46,7 @@
                     android:contentDescription="@string/facebook_login_cnt_dscp"/>
 
             <TextView
-                    android:id="@+id/facebook_login_button"
+                    android:id="@+id/facebook_login_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
@@ -88,7 +88,7 @@
                     android:contentDescription="@string/google_login_cnt_dscp"/>
 
             <TextView
-                    android:id="@+id/google_login_button"
+                    android:id="@+id/google_login_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
