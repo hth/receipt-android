@@ -43,7 +43,7 @@ public class SettingsPage extends ParentActivity {
         clearBackStack();
         KeyValue.clearKeyValues();
         KeyValue.clearReceiptsDB();
-        startActivity(new Intent(this, LoginActivity.class));
+        startActivity(new Intent(this, LaunchActivity.class));
     }
 
     public void onBackPressed(View view) {

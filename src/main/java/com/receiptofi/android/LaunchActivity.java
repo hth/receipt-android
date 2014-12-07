@@ -30,6 +30,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -50,10 +51,12 @@ import java.util.ArrayList;
  */
 public class LaunchActivity extends ParentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 
-    private static final String TAG = LaunchActivity.class.getSimpleName();
+    private static final String TAG = "Testing"; //LaunchActivity.class.getSimpleName();
 
     private static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     private static final int FACEBOOK_SIGN_IN = 0x2566;
+
+
 
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
@@ -74,16 +77,39 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
         setContentView(R.layout.launch_page);
 
 
-        mGooglePlusLogin = (LinearLayout) findViewById(R.id.google_login);
-        mGooglePlusLogin.setOnClickListener(this);
+        //login via Facebook
         mFacebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
         mFacebookLogin.setOnClickListener(this);
+
+        // login via Google
+        mGooglePlusLogin = (LinearLayout) findViewById(R.id.google_login);
+        mGooglePlusLogin.setOnClickListener(this);
         // Initializing google plus api client
-       /* mGoogleApiClient = new GoogleApiClient.Builder(this)
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this).addApi(Plus.API)
                 .addScope(Plus.SCOPE_PLUS_LOGIN).build();
-                */
+
+        // Sign up
+        TextView signUp = (TextView)findViewById(R.id.sign_up_button);
+        signUp.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LaunchActivity.this, HomePageActivity.class));
+                finish();
+            }
+        });
+
+        // Sign in
+        TextView signIn = (TextView)findViewById(R.id.sign_in_button);
+        signIn.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LaunchActivity.this, HomePageActivity.class));
+                finish();
+            }
+        });
+
     }
 
 
@@ -206,11 +232,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
     }
 
     private void signInWithGplus() {
-        // Initializing google plus api client
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
-                .addConnectionCallbacks(this)
-                .addOnConnectionFailedListener(this).addApi(Plus.API)
-                .addScope(Plus.SCOPE_PLUS_LOGIN).build();
+        Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         if (!mGoogleApiClient.isConnecting()) {
             isGPlusLoginClicked = true;
             resolveSignInError();
@@ -241,7 +263,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
     }
 
     private void resolveSignInError() {
-        if (mConnectionResult.hasResolution()) {
+       /* if (mConnectionResult.hasResolution()) {
             try {
                 mIntentInProgress = true;
                 mConnectionResult.startResolutionForResult(this, GOOGLE_PLUS_SIGN_IN);
@@ -250,12 +272,29 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
                 mGoogleApiClient.connect();
             }
         }
+       */
+        Log.d(TAG, "Google Sign in: resolveSignInError: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
+
+        if (mConnectionResult.hasResolution()) {
+            try {
+                mIntentInProgress = true;
+                startIntentSenderForResult(mConnectionResult.getResolution().getIntentSender(),
+                        GOOGLE_PLUS_SIGN_IN, null, 0, 0, 0);
+            } catch (SendIntentException e) {
+                // The intent was canceled before it was sent.  Return to the default
+                // state and attempt to connect to get an updated ConnectionResult.
+                Log.e(TAG, "The intent was canceled before it was sent");
+                mIntentInProgress = false;
+                mGoogleApiClient.connect();
+            }
+        }
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
-        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "Google Sign in: onActivityResult: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
+
+        //super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == GOOGLE_PLUS_SIGN_IN) {
             if (resultCode != RESULT_OK) {
                 isGPlusLoginClicked = false;
@@ -273,7 +312,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        // TODO Auto-generated method stub
+        Log.d(TAG, "Google Sign in: onConnectionFailed: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         if (!result.hasResolution()) {
             GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this,
                     0).show();
@@ -295,6 +334,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
 
     @Override
     public void onConnected(Bundle connectionHint) {
+        Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         isGPlusLoginClicked = false;
         Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
 
