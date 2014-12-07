@@ -72,7 +72,7 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
             finish();
             startActivity(new Intent(this, HomePageActivity.class));
         }
-        setContentView(R.layout.launch_page);
+        setContentView(R.layout.login_page);
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
         signupText = (TextView) findViewById(R.id.signupText);
