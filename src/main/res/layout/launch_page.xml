@@ -108,7 +108,7 @@
             <TextView
                     android:id="@+id/sign_up_button"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/app_button_height"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:background="@drawable/blue_button_selector"
@@ -123,7 +123,7 @@
             <TextView
                     android:id="@+id/sign_in_button"
                     android:layout_width="0dp"
-                    android:layout_height="50dp"
+                    android:layout_height="@dimen/app_button_height"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:background="@drawable/blue_button_selector"

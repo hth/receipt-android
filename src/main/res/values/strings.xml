@@ -13,6 +13,12 @@
     <string name="google_login_cnt_dscp">Login using your Google account</string>
 
 
+    <!--        Sign in page         -->
+    <string name="sign_in_label">Sign in</string>
+    <string name="hint_email">example@receiptofi.com</string>
+    <string name="hint_password">Password</string>
+    <string name="use_social">------ Use social account -------</string>
+    <string name="forgot_password">Forgot your password</string>
 
 
     <string name="app_name">Receiptofi</string>

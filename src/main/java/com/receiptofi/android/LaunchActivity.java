@@ -13,7 +13,9 @@ import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
+import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.auth.UserRecoverableAuthException;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.common.Scopes;
@@ -32,6 +34,8 @@ import com.receiptofi.android.utils.UserUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
+
 /**
  * Launch activity facilities user to login using either of 4 ways:
  * 1. Facebook Account
@@ -43,7 +47,7 @@ import org.json.JSONObject;
  */
 public class LaunchActivity extends ParentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 
-    private static final String TAG = LaunchActivity.class.getSimpleName();
+    private static final String TAG = "GTest"; //LaunchActivity.class.getSimpleName();
 
     private static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     private static final int FACEBOOK_SIGN_IN = 0x2566;
@@ -85,7 +89,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
         signUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LaunchActivity.this, HomePageActivity.class));
+                startActivity(new Intent(LaunchActivity.this, SignInActivity.class));
                 finish();
             }
         });
@@ -106,23 +110,23 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
     protected void onStart() {
         super.onStart();
         Log.d(TAG, "executing onStart");
-        mGoogleApiClient.connect();
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "executing onStop");
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
+       // if (mGoogleApiClient.isConnected()) {
+       //     mGoogleApiClient.disconnect();
+       // }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "executing onResume");
-        //addToBackStack(this);
+        addToBackStack(this);
 
         if (isFbLoginClicked) {
             isFbLoginClicked = false;
@@ -131,49 +135,19 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
                 Bundle data = new Bundle();
                 data.putString(key.ACCESS_TOKEN, s.getAccessToken());
                 data.putString(key.PID, key.PID_FACEBOOK);
-                authenticateUser(data);
+                authenticateUser(true, data);
             }
         }
 
     }
 
-    private void authenticateUser(Bundle data) {
-        Log.d(TAG, "executing authenticateUser");
-        showLoader(this.getResources().getString(R.string.login_auth_msg));
-
-        JSONObject postData = new JSONObject();
-
-        try {
-            postData.put(API.key.PID, data.getString(key.PID));
-            postData.put(API.key.ACCESS_TOKEN, data.getString(key.ACCESS_TOKEN));
-        } catch (JSONException e) {
-            e.printStackTrace();
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "executing onDestroy");
+        if (mGoogleApiClient.isConnected()) {
+            mGoogleApiClient.disconnect();
         }
-
-
-        Log.i("ACCESS TOKEN", data.getString(key.ACCESS_TOKEN));
-
-        HTTPUtils.doSocialAuthentication(LaunchActivity.this, postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
-
-            @Override
-            public void onSuccess(String response) {
-                Log.d(TAG, "executing authenticateUser: onSuccess");
-                afterSuccessfullLogin();
-            }
-
-            @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "executing authenticateUser: onException");
-            }
-
-            @Override
-            public void onError(String Error) {
-                Log.d(TAG, "executing authenticateUser: onError");
-                String errorMsg = ResponseParser.getSocialAuthError(Error);
-                ((ParentActivity) LaunchActivity.this).showErrorMsg(errorMsg);
-            }
-        });
-
     }
 
     @Override
@@ -226,34 +200,11 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
     private void signInWithGplus() {
         Log.d(TAG, "executing signInWithGplus");
         Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
+        mGoogleApiClient.connect();
         if (!mGoogleApiClient.isConnecting()) {
             isGPlusLoginClicked = true;
             resolveSignInError();
         }
-    }
-
-    private void afterSuccessfullLogin() {
-        Log.d(TAG, "executing afterSuccessfullLogin");
-        if (UserUtils.isValidAppUser()) {
-            launchHomeScreen();
-            ReceiptUtils.fetchReceiptsAndSave();
-        } else {
-            showErrorMsg("Login Failed !!!");
-        }
-    }
-
-    private void launchHomeScreen() {
-        Log.d(TAG, "executing launchHomeScreen");
-        uiThread.post(new Runnable() {
-
-            @Override
-            public void run() {
-                finish();
-                startActivity(new Intent(LaunchActivity.this, HomePageActivity.class));
-                LaunchActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
-            }
-        });
-
     }
 
     private void resolveSignInError() {
@@ -291,6 +242,8 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
             if (!mGoogleApiClient.isConnecting()) {
                 mGoogleApiClient.connect();
             }
+            AccessTokenGooglePlus gToken = new AccessTokenGooglePlus();
+            gToken.execute((Void) null);
         } else {
             Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
         }
@@ -354,22 +307,59 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
 
     }
 
+
+
     public class AccessTokenGooglePlus extends AsyncTask<Void, Void, Void> {
 
         String token = null;
-        String scope = Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME;
-        String scopes = "audience:server:client_id:" + API.key.SERVER_CLIENT_ID;
+        //String scope = Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME;
+        //String scopes = "audience:server:client_id:" + API.key.SERVER_CLIENT_ID;
 
         @Override
         protected Void doInBackground(Void... params) {
+            Log.d(TAG, "executing AccessTokenGooglePlus");
             try {
                 // We can retrieve the token to check via
                 // tokeninfo or to pass to a service-side
                 // application.
-                token = GoogleAuthUtil.getToken(LaunchActivity.this, Plus.AccountApi.getAccountName(mGoogleApiClient), scopes);
+                //token = GoogleAuthUtil.getToken(LaunchActivity.this, Plus.AccountApi.getAccountName(mGoogleApiClient), scopes);
+
+                Bundle appActivities = new Bundle();
+                appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES, "");
+                String scope = Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME;
+                String scopes = "oauth2:server:client_id:" + API.key.SERVER_CLIENT_ID + ":api_scope:" + scope;
+                //String scopes = "oauth2:server:client_id:<SERVER-CLIENT-ID>:api_scope:<SCOPE1> <SCOPE2>";
+
+                token = GoogleAuthUtil.getToken(
+                        LaunchActivity.this,                                              // Context context
+                        Plus.AccountApi.getAccountName(mGoogleApiClient),  // String accountName
+                        scopes,                                            // String scope
+                        appActivities                                      // Bundle bundle
+                );
+                Log.d(TAG, "token is: " + token);
+            } catch (IOException transientEx) {
+                // network or server error, the call is expected to succeed if you try again later.
+                // Don't attempt to call again immediately - the request is likely to
+                // fail, you'll hit quotas or back-off.
+                Log.d(TAG, "executing AccessTokenGooglePlus: got IOException: " + transientEx.getMessage());
+                return null;
+            } catch (UserRecoverableAuthException e) {
+                // Requesting an authorization code will always throw
+                // UserRecoverableAuthException on the first call to GoogleAuthUtil.getToken
+                // because the user must consent to offline access to their data.  After
+                // consent is granted control is returned to your activity in onActivityResult
+                // and the second call to GoogleAuthUtil.getToken will succeed.
+                Log.d(TAG, "executing AccessTokenGooglePlus: got UserRecoverableAuthException: " + e.getMessage());
+                startActivityForResult(e.getIntent(), GOOGLE_PLUS_SIGN_IN);
+                return null;
+            } catch (GoogleAuthException authEx) {
+                // Failure. The call is not expected to ever succeed so it should not be
+                // retried.
+                Log.d(TAG, "executing AccessTokenGooglePlus: got GoogleAuthException: " + authEx.getMessage());
+                return null;
             } catch (Exception e) {
-                // This error is recoverable, so we could fix this
-                // by displaying the intent to the user.
+                Log.d(TAG, "executing AccessTokenGooglePlus: got Exception: " + e.getMessage());
+
             }
             return null;
         }
@@ -383,7 +373,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
                 Bundle data = new Bundle();
                 data.putString(key.PID, key.PID_GOOGLE);
                 data.putString(key.ACCESS_TOKEN, token);
-                authenticateUser(data);
+                authenticateUser(true, data);
             } else {
                 Log.i("TOKEN IS  NULL MAKING QUERY", "TOKEN IS  NULL MAKING QUERY");
             }

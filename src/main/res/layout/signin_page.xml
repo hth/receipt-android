@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="@dimen/activity_horizontal_margin"
+    tools:context="com.example.uicheck.SignInActivity" >
+
+    <EditText
+        android:id="@+id/email"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textEmailAddress"
+        android:hint="@string/hint_email"/>
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:hint="@string/hint_password" />
+
+    <TextView
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_button_height"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:background="@drawable/blue_button_selector"
+        android:text="@string/sign_in"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/white"
+        android:enabled="false"/>
+
+    <TextView
+        android:id="@+id/forgot_password_button"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/app_button_height"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:background="@drawable/gray_button_selector"
+        android:text="@string/forgot_password"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin_wide"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:text="@string/use_social"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@android:color/darker_gray" />
+
+    <LinearLayout
+        android:id="@+id/facebook_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/facebook_bg_selector"
+        android:orientation="horizontal"
+        android:contentDescription="@string/facebook_login_cnt_dscp">
+
+        <ImageView
+            android:id="@+id/facebook_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/facebook"
+            android:contentDescription="@string/facebook_login_cnt_dscp" />
+
+        <TextView
+            android:id="@+id/facebook_login_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/login_with_facebook"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/google_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/google_bg_selector"
+        android:orientation="horizontal"
+        android:contentDescription="@string/google_login_cnt_dscp">
+
+        <ImageView
+            android:id="@+id/google_logo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/google"
+            android:contentDescription="@string/google_login_cnt_dscp" />
+
+        <TextView
+            android:id="@+id/google_login_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:text="@string/login_with_google"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@android:color/white"/>
+    </LinearLayout>
+
+
+</LinearLayout>

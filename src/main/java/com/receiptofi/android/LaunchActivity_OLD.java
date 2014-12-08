@@ -23,6 +23,7 @@ import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.AsyncTask;
@@ -45,7 +46,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class LaunchActivity_OLD extends ParentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
+public class LaunchActivity_OLD extends Activity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 
     private EditText userName;
     private EditText password;
@@ -160,11 +161,14 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
             errors.delete(0, errors.length());
         } else {
             authenticateUser(false, null);
+
+
         }
     }
 
     private void launchHomeScreen() {
 
+        /*
         uiThread.post(new Runnable() {
 
             @Override
@@ -175,6 +179,7 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
                 LaunchActivity_OLD.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
             }
         });
+        */
 
     }
 
@@ -190,7 +195,7 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-        addToBackStack(this);
+       // addToBackStack(this);
 
         if (isFbLoginClick) {
             isFbLoginClick = false;
@@ -209,7 +214,7 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
     private void authenticateUser(boolean isSocialLogin, Bundle data) {
         if (isSocialLogin) {
 
-            showLoader(this.getResources().getString(R.string.login_auth_msg));
+            //showLoader(this.getResources().getString(R.string.login_auth_msg));
 
             JSONObject postData = new JSONObject();
 
@@ -239,14 +244,14 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
                 @Override
                 public void onError(String Error) {
                     String errorMsg = ResponseParser.getSocialAuthError(Error);
-                    ((ParentActivity) LaunchActivity_OLD.this).showErrorMsg(errorMsg);
+                   // ((ParentActivity) LaunchActivity_OLD.this).showErrorMsg(errorMsg);
                 }
             });
 
 
         } else {
 
-            showLoader(this.getResources().getString(R.string.login_auth_msg));
+           // showLoader(this.getResources().getString(R.string.login_auth_msg));
 
             final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("mail", userNameStr));
@@ -257,18 +262,18 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
                 public void run() {
                     // TODO Auto-generated method stub
                     super.run();
-                    Header[] headers;
+                    Header[] headers = null;
                     try {
                         headers = HTTPUtils.getHTTPHeaders(pairs, API.LOGIN_API);
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
-                        hideLoader();
+                       // hideLoader();
                         if (e instanceof IOException)
-                            showErrorMsg("Please check your network connection");
+                          //  showErrorMsg("Please check your network connection");
                         return;
                     }
 
-                    hideLoader();
+                    //hideLoader();
                     if (headers != null) {
                         for (Header header : headers) {
                             String key = header.getName();
@@ -324,7 +329,7 @@ public class LaunchActivity_OLD extends ParentActivity implements OnClickListene
             launchHomeScreen();
             ReceiptUtils.fetchReceiptsAndSave();
         } else {
-            showErrorMsg("Login Failed !!!");
+           // showErrorMsg("Login Failed !!!");
         }
     }
 

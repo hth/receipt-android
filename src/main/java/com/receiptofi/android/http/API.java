@@ -13,8 +13,14 @@ public class API {
         public static final String XR_AUTH = "X-R-AUTH";
         public static final String PID = "pid";
         public static final String ACCESS_TOKEN = "at";
+        public static final String AUTH_KEY = "auth";
         public static final String PID_FACEBOOK = "FACEBOOK";
         public static final String PID_GOOGLE = "GOOGLE";
-        public static final String SERVER_CLIENT_ID = "917069462497-8adldf383r8d5g5cdj867dpuus444i49.apps.googleusercontent.com";
+        public static final String EMAIL = "mail";
+        public static final String PASSWORD = "password";
+        public static final String SERVER_CLIENT_ID_LOCAL = "917069462497-aa1hduf9dh69niv19aq57hp422vqc5p1.apps.googleusercontent.com";
+        public static final String SERVER_CLIENT_ID_TEST = "917069462497-8adldf383r8d5g5cdj867dpuus444i49.apps.googleusercontent.com";
+        public static final String SERVER_CLIENT_ID_LIVE = "917069462497-62ejpasmc8ptjpujgi207fqsldh2lma3.apps.googleusercontent.com";
+        public static final String SERVER_CLIENT_ID = SERVER_CLIENT_ID_LOCAL;
     }
 }
