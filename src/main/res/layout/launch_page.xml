@@ -54,7 +54,8 @@
                     android:layout_weight="1"
                     android:text="@string/login_with_facebook"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/white"/>
+                    android:textColor="@android:color/white"
+                android:background="@color/google_bg"/>
         </LinearLayout>
 
         <LinearLayout

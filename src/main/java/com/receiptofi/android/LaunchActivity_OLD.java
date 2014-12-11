@@ -73,7 +73,7 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
             finish();
             startActivity(new Intent(this, HomePageActivity.class));
         }
-        setContentView(R.layout.login_page);
+        setContentView(R.layout.login_page_old);
         userName = (EditText) findViewById(R.id.userName);
         password = (EditText) findViewById(R.id.password);
         signupText = (TextView) findViewById(R.id.signupText);
@@ -143,14 +143,14 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
         passwordStr = password.getText().toString();
 
         if (userNameStr == null || (userNameStr != null && userNameStr.length() == 0)) {
-            errors.append(this.getResources().getString(R.string.enter_email));
+            //errors.append(this.getResources().getString(R.string.enter_email));
         } else {
             if (!UserUtils.isValidEmail(userNameStr)) {
-                addErrorMsg(this.getResources().getString(R.string.enter_valid_email));
+                //addErrorMsg(this.getResources().getString(R.string.enter_valid_email));
             }
         }
         if (passwordStr == null || (passwordStr != null && passwordStr.length() == 0)) {
-            addErrorMsg(this.getResources().getString(R.string.enter_password));
+            //addErrorMsg(this.getResources().getString(R.string.enter_password));
         }
         // error string is for keeping the error that needs to be shown to the
         // user.
@@ -232,7 +232,7 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
             HTTPUtils.doSocialAuthentication(LaunchActivity_OLD.this, postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
 
                 @Override
-                public void onSuccess(String response) {
+                public void onSuccess(Header[] arr) {
                     afterSuccessfullLogin();
                 }
 
@@ -242,8 +242,8 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
                 }
 
                 @Override
-                public void onError(String Error) {
-                    String errorMsg = ResponseParser.getSocialAuthError(Error);
+                public void onError(int statusCode, String error) {
+                    String errorMsg = ResponseParser.getSocialAuthError(error);
                    // ((ParentActivity) LaunchActivity_OLD.this).showErrorMsg(errorMsg);
                 }
             });

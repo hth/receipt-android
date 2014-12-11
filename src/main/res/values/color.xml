@@ -7,10 +7,14 @@
 
     <!--       Color from Android      -->
     <color name="transparent">@android:color/transparent</color>
+    <color name="black">@android:color/black</color>
+    <color name="white">@android:color/white</color>
 
     <!--       App gray      -->
     <color name="gray_light">#CCCCCC</color>
     <color name="gray">#B2B2B2</color>
+    <color name="gray_dark">#B2B2B2</color>
+
 
     <!--       Facebook blue      -->
     <color name="facebook_bg">#3C5A99</color>

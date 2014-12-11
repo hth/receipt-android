@@ -45,6 +45,16 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".LogInActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
+            android:name=".SignUpActivity"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity
                 android:name="com.receiptofi.android.HomePageActivity"
                 android:screenOrientation="portrait">
         </activity>

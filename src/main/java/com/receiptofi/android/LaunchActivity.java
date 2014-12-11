@@ -1,5 +1,6 @@
 package com.receiptofi.android;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
 import android.os.AsyncTask;
@@ -25,16 +26,11 @@ import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListe
 import com.google.android.gms.plus.Plus;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.API.key;
-import com.receiptofi.android.http.HTTPUtils;
-import com.receiptofi.android.http.ResponseHandler;
-import com.receiptofi.android.http.ResponseParser;
-import com.receiptofi.android.utils.ReceiptUtils;
 import com.receiptofi.android.utils.UserUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Launch activity facilities user to login using either of 4 ways:
@@ -45,20 +41,16 @@ import java.io.IOException;
  * <p/>
  * This activity won't generated any error message or notifications
  */
-public class LaunchActivity extends ParentActivity implements OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
+public class LaunchActivity extends ParentActivity implements View.OnClickListener, ConnectionCallbacks, OnConnectionFailedListener {
 
-    private static final String TAG = "GTest"; //LaunchActivity.class.getSimpleName();
+    private static final String TAG = "SUMAN"; //LaunchActivity.class.getSimpleName();
 
-    private static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
-    private static final int FACEBOOK_SIGN_IN = 0x2566;
 
 
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
-    private LinearLayout mGooglePlusLogin;
-    private LinearLayout mFacebookLogin;
-    private boolean isFbLoginClicked = false;
-    private boolean isGPlusLoginClicked;
+
+    private boolean isGPlusLoginClicked = false;
     private boolean mIntentInProgress;
 
     @Override
@@ -72,11 +64,11 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
         setContentView(R.layout.launch_page);
 
         //login via Facebook
-        mFacebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
+        LinearLayout mFacebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
         mFacebookLogin.setOnClickListener(this);
 
         // login via Google
-        mGooglePlusLogin = (LinearLayout) findViewById(R.id.google_login);
+        LinearLayout mGooglePlusLogin = (LinearLayout) findViewById(R.id.google_login);
         mGooglePlusLogin.setOnClickListener(this);
         // Initializing google plus api client
         mGoogleApiClient = new GoogleApiClient.Builder(this)
@@ -89,7 +81,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
         signUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LaunchActivity.this, SignInActivity.class));
+                startActivity(new Intent(LaunchActivity.this, LogInActivity.class));
                 finish();
             }
         });
@@ -99,7 +91,7 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
         signIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LaunchActivity.this, HomePageActivity.class));
+                startActivity(new Intent(LaunchActivity.this, SignUpActivity.class));
                 finish();
             }
         });
@@ -117,37 +109,12 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
     protected void onStop() {
         super.onStop();
         Log.d(TAG, "executing onStop");
-       // if (mGoogleApiClient.isConnected()) {
-       //     mGoogleApiClient.disconnect();
-       // }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "executing onResume");
-        addToBackStack(this);
-
-        if (isFbLoginClicked) {
-            isFbLoginClicked = false;
-            Session s = Session.getActiveSession();
-            if (s != null && s.isOpened()) {
-                Bundle data = new Bundle();
-                data.putString(key.ACCESS_TOKEN, s.getAccessToken());
-                data.putString(key.PID, key.PID_FACEBOOK);
-                authenticateUser(true, data);
-            }
-        }
-
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.d(TAG, "executing onDestroy");
-        if (mGoogleApiClient.isConnected()) {
-            mGoogleApiClient.disconnect();
-        }
     }
 
     @Override
@@ -158,40 +125,14 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
                 isGPlusLoginClicked = true;
                 signInWithGplus();
                 break;
-            case R.id.google_logo:
-                isGPlusLoginClicked = true;
-                signInWithGplus();
-                break;
             case R.id.facebook_login:
+                Log.d(TAG, "facebook_login clicked");
 
                 isFbLoginClicked = true;
-                Session.openActiveSession(this, true, new Session.StatusCallback() {
-
-                    // callback when session changes state
-                    @Override
-                    public void call(Session session, SessionState state,
-                                     Exception exception) {
-                        if (session.isOpened()) {
-
-                        }
-                    }
-                });
-
+                openFacebookSession();
                 break;
-            case R.id.facebook_logo:
-                isFbLoginClicked = true;
-                Session.openActiveSession(this, true, new Session.StatusCallback() {
-
-                    // callback when session changes state
-                    @Override
-                    public void call(Session session, SessionState state,
-                                     Exception exception) {
-                        if (session.isOpened()) {
-
-                        }
-                    }
-                });
-
+            default:
+                Log.d(TAG, "done executing onClick no id match");
                 break;
 
         }
@@ -202,7 +143,6 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
         Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         mGoogleApiClient.connect();
         if (!mGoogleApiClient.isConnecting()) {
-            isGPlusLoginClicked = true;
             resolveSignInError();
         }
     }
@@ -239,13 +179,11 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
 
             mIntentInProgress = false;
 
-            if (!mGoogleApiClient.isConnecting()) {
+            if (!mGoogleApiClient.isConnected()) {
                 mGoogleApiClient.connect();
             }
-            AccessTokenGooglePlus gToken = new AccessTokenGooglePlus();
-            gToken.execute((Void) null);
         } else {
-            Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+            super.onActivityResult(requestCode, resultCode, data);
         }
     }
 
@@ -373,7 +311,8 @@ public class LaunchActivity extends ParentActivity implements OnClickListener, C
                 Bundle data = new Bundle();
                 data.putString(key.PID, key.PID_GOOGLE);
                 data.putString(key.ACCESS_TOKEN, token);
-                authenticateUser(true, data);
+                //mGoogleApiClient.disconnect();
+                authenticateSocialAccount(data);
             } else {
                 Log.i("TOKEN IS  NULL MAKING QUERY", "TOKEN IS  NULL MAKING QUERY");
             }

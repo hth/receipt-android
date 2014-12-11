@@ -1,10 +1,15 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="@dimen/activity_horizontal_margin"
-    tools:context="com.example.uicheck.SignInActivity" >
+    android:orientation="vertical" >
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:inputType="textPersonName"
+        android:hint="@string/hint_name"/>
 
     <EditText
         android:id="@+id/email"
@@ -20,33 +25,45 @@
         android:inputType="textPassword"
         android:hint="@string/hint_password" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/age"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:text="@string/age"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/age_spinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gray_button_selector"
+            android:spinnerMode="dropdown" />
+
+    </LinearLayout>
+
     <TextView
-        android:id="@+id/sign_in_button"
+        android:id="@+id/sign_up_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_button_height"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:background="@drawable/blue_button_selector"
-        android:text="@string/sign_in"
+        android:text="@string/sign_up"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@android:color/white"
+        android:textColor="@color/white"
         android:enabled="false"/>
-
-    <TextView
-        android:id="@+id/forgot_password_button"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/app_button_height"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:gravity="center"
-        android:background="@drawable/gray_button_selector"
-        android:text="@string/forgot_password"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin_wide"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:text="@string/use_social"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -56,10 +73,9 @@
         android:id="@+id/facebook_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@drawable/facebook_bg_selector"
-        android:orientation="horizontal"
-        android:contentDescription="@string/facebook_login_cnt_dscp">
+        android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/facebook_logo"
@@ -77,16 +93,16 @@
             android:layout_weight="1"
             android:text="@string/login_with_facebook"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
 
     <LinearLayout
         android:id="@+id/google_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:background="@drawable/google_bg_selector"
-        android:orientation="horizontal"
-        android:contentDescription="@string/google_login_cnt_dscp">
+        android:orientation="horizontal" >
 
         <ImageView
             android:id="@+id/google_logo"
@@ -104,8 +120,7 @@
             android:layout_weight="1"
             android:text="@string/login_with_google"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@android:color/white"/>
+            android:textColor="@color/white"/>
     </LinearLayout>
-
 
 </LinearLayout>

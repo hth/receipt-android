@@ -2,6 +2,7 @@ package com.receiptofi.android.http;
 
 import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.models.ImageModel;
+import com.receiptofi.android.utils.StringUtil;
 import com.receiptofi.android.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -23,6 +24,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
+
+import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
@@ -35,12 +38,17 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public final class HTTPUtils {
+
+    private static final String TAG = "SUMAN"; //HTTPUtils.class.getSimpleName();
+
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
 
-    //    private static final String CONNECTION_URL_STAGING = "https://receiptofi.com:9443/receipt-mobile";
     private static final String CONNECTION_URL_LOCAL = "http://192.168.0.150:9090/receipt-mobile";
     //private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
     private static final String CONNECTION_URL_STAGING = CONNECTION_URL_LOCAL;
@@ -122,7 +130,7 @@ public final class HTTPUtils {
                     } else if (httpMethod.equalsIgnoreCase(HTTP_METHOD_GET)) {
                         response = getResponse(params, api);
                     }
-                    handler.onSuccess(response);
+                    handler.onSuccess(null);
                 } catch (Exception e) {
                     handler.onException(e);
                 }
@@ -201,9 +209,9 @@ public final class HTTPUtils {
                     headers = response.getAllHeaders();
                     Log.i("Response", responseBuffer.toString());
                     if (isValidSocialAuthResponse(ctx, headers)) {
-                        responseHandler.onSuccess(responseBuffer.toString());
+                        responseHandler.onSuccess(headers);
                     } else {
-                        responseHandler.onError(responseBuffer.toString());
+                        responseHandler.onError(response.getStatusLine().getStatusCode(), responseBuffer.toString());
                     }
 
                 } catch (Exception e) {
@@ -233,6 +241,60 @@ public final class HTTPUtils {
         } else {
             return false;
         }
+    }
+
+    public static void doPost(
+            final JSONObject postData,
+            final String API,
+            final ResponseHandler responseHandler
+    ) {
+        new Thread() {
+            public void run() {
+                try {
+                    Log.d(TAG, "executing doPost");
+                    HttpPost httpPost;
+                    HttpClient client = new DefaultHttpClient();
+
+                    if (API != null) {
+                        httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
+                    } else {
+                        httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
+                    }
+                    Log.d(TAG, "making api request to server: " + RECEIPTOFI_MOBILE_URL + API + ", Data: " + postData.toString());
+
+                    StringEntity postEntity = new StringEntity(postData.toString(),"UTF-8");
+                    //StringEntity postEntity = new StringEntity(postData.toString());
+
+                    httpPost.setEntity(postEntity);
+                    httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
+                    HttpResponse response;
+
+                    response = client.execute(httpPost);
+
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    Log.i(TAG, "statusCode is:  " + statusCode);
+                    String body = EntityUtils.toString(response.getEntity());
+                    Log.i(TAG, "body is:  " + body);
+                    if(statusCode != 200){
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
+                        responseHandler.onError(statusCode, null);
+                        return;
+                    }
+                   // if(StringUtil.isEmpty(body)){
+                    if(!bodyContainsError(body)){
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
+                        responseHandler.onSuccess(response.getAllHeaders());
+                        return;
+                    } else {
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
+                        responseHandler.onError(statusCode, body);
+                        return;
+                    }
+                } catch (Exception e) {
+                    responseHandler.onException(e);
+                }
+            }
+        }.start();
     }
 
     public static void downloadImage(
@@ -327,6 +389,31 @@ public final class HTTPUtils {
 
         t.start();
         return t;
+    }
+
+
+    public static boolean bodyContainsError(String body){
+        return !StringUtil.isEmpty(body) && body.contains("error");
+    }
+
+    public static Map<String, String> parseHeader( Header[] headers, Set<String> keys){
+        Log.d(TAG, "executing parseHeader");
+        if (headers != null && headers.length > 0
+                && keys !=null && keys.size() > 0) {
+            Map<String, String> headerData = new HashMap<String, String>();
+
+            for (Header header : headers) {
+                String key = header.getName();
+                if (!StringUtil.isEmpty(key) && (keys.contains(key))) {
+                    headerData.put(key, header.getValue());
+                    Log.d(TAG, "Fetching header data: key is:  " + key + "  value is:  " + header.getValue());
+                }
+            }
+            Log.d(TAG, "headerData is: " + headerData);
+            return headerData;
+        }
+        Log.d(TAG, "Couldn't parse header");
+        return null;
     }
 
     /**
