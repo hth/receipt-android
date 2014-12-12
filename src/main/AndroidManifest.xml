@@ -35,7 +35,7 @@
                 android:value="@integer/google_play_services_version"/>
 
         <activity
-                android:name="com.receiptofi.android.LaunchActivity"
+                android:name=".LaunchActivity"
                 android:label="@string/app_name"
                 android:screenOrientation="portrait">
             <intent-filter>
@@ -53,6 +53,10 @@
             android:name=".SignUpActivity"
             android:screenOrientation="portrait">
 
+        </activity>
+        <activity
+            android:name=".PasswordRecoveryActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
                 android:name="com.receiptofi.android.HomePageActivity"

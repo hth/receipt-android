@@ -48,19 +48,21 @@ import java.util.Set;
 
 public class ParentActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 
-    private static final String TAG = "SUMAN"; //ParentActivity.class.getSimpleName();
+    private static final String TAG = ParentActivity.class.getSimpleName();
 
     protected static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     protected static final int FACEBOOK_SIGN_IN = 0x2566;
-    private static ArrayList<Activity> backStack;
+
     protected boolean isFbLoginClicked = false;
-    protected Handler uiThread = new Handler();
-    protected Calendar calender = Calendar.getInstance();
+    protected boolean isGPlusLoginClicked = false;
+
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
-    protected boolean isGPlusLoginClicked = false;
     private boolean mIntentInProgress;
+
+    protected Handler uiThread = new Handler();
     private ProgressDialog loader;
+    private static ArrayList<Activity> backStack;
 
     private static Session openActiveSession(Activity activity, boolean allowLoginUI, List permissions, Session.StatusCallback callback) {
         Log.d(TAG, "Parent executing openActiveSession");

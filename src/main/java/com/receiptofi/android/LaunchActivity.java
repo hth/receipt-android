@@ -8,8 +8,6 @@ import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.GoogleApiClient;
 import com.receiptofi.android.utils.UserUtils;
 
 /**
@@ -23,7 +21,7 @@ import com.receiptofi.android.utils.UserUtils;
  */
 public class LaunchActivity extends ParentActivity implements View.OnClickListener {
 
-    private static final String TAG = "SUMAN"; //LaunchActivity.class.getSimpleName();
+    private static final String TAG = LaunchActivity.class.getSimpleName();
 
 
     @Override
@@ -50,7 +48,6 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LaunchActivity.this, SignUpActivity.class));
-                finish();
             }
         });
 
@@ -60,15 +57,8 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LaunchActivity.this, LogInActivity.class));
-                finish();
             }
         });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        addToBackStack(this);
     }
 
     @Override

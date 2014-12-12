@@ -1,5 +1,6 @@
 package com.receiptofi.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -37,7 +38,7 @@ import java.util.Set;
  */
 public class LogInActivity extends ParentActivity implements View.OnClickListener {
 
-    private static final String TAG = "SUMAN"; //LogInActivity.class.getSimpleName();
+    private static final String TAG = LogInActivity.class.getSimpleName();
 
     private StringBuilder errors = new StringBuilder();
     private EditText email;
@@ -82,9 +83,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
             @Override
             public void onClick(View v) {
-                // show Notification page
-                // Intent i = new Intent(getApplicationContext(), PasswordRecoveryActivity.class);
-                //startActivity(i);
+                startActivity(new Intent(LogInActivity.this, PasswordRecoveryActivity.class));
             }
         });
 
@@ -94,11 +93,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         LinearLayout googlelogin = (LinearLayout) findViewById(R.id.google_login);
         googlelogin.setOnClickListener(this);
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
@@ -159,7 +153,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             bundle.putString(API.key.SIGNIN_PASSWORD, passwordStr);
             authenticateLogIn(bundle);
         }
-
     }
 
     private void authenticateLogIn(Bundle data) {
@@ -202,57 +195,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 }
             }
         }.start();
-
-
-
-
-
-        /*
-        Log.d(TAG, "executing authenticateLogIn");
-        showLoader(this.getResources().getString(R.string.login_auth_msg));
-
-        if (data == null) {
-            errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
-            errors.delete(0, errors.length());
-            return;
-        }
-        JSONObject postData = new JSONObject();
-
-        try {
-            postData.put(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL));
-            postData.put(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD));
-        } catch (JSONException e) {
-            Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
-        }
-
-        HTTPUtils.doPost(postData, API.LOGIN_API, new ResponseHandler() {
-
-            @Override
-            public void onSuccess(Header[] headers) {
-                Log.d(TAG, "executing authenticateSignUp: onSuccess");
-                Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
-                saveAuthKey(LogInActivity.this, headerData);
-                hideLoader();
-                afterSuccessfullLogin();
-            }
-
-            @Override
-            public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing authenticateSignUp: onError" + error);
-                hideLoader();
-            }
-
-            @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "executing authenticateSignUp: onException" + exception.getMessage());
-                hideLoader();
-            }
-        });
-        */
     }
 
     private void addErrorMsg(String msg) {

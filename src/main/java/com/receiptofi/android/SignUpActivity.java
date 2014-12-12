@@ -1,5 +1,6 @@
 package com.receiptofi.android;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -31,7 +32,7 @@ import java.util.Set;
  */
 public class SignUpActivity extends ParentActivity implements View.OnClickListener {
 
-    private static final String TAG = "SUMAN"; //SignUpActivity.class.getSimpleName();
+    private static final String TAG = SignUpActivity.class.getSimpleName();
 
     private StringBuilder errors = new StringBuilder();
     private EditText name;
@@ -83,11 +84,6 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         LinearLayout googlelogin = (LinearLayout) findViewById(R.id.google_login);
         googlelogin.setOnClickListener(this);
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
     }
 
     @Override
