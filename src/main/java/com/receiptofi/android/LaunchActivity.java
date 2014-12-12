@@ -26,12 +26,6 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
     private static final String TAG = "SUMAN"; //LaunchActivity.class.getSimpleName();
 
 
-    private GoogleApiClient mGoogleApiClient;
-    private ConnectionResult mConnectionResult;
-
-    private boolean isGPlusLoginClicked = false;
-    private boolean mIntentInProgress;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,7 +49,7 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         signUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LaunchActivity.this, LogInActivity.class));
+                startActivity(new Intent(LaunchActivity.this, SignUpActivity.class));
                 finish();
             }
         });
@@ -65,10 +59,16 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         signIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LaunchActivity.this, SignUpActivity.class));
+                startActivity(new Intent(LaunchActivity.this, LogInActivity.class));
                 finish();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        addToBackStack(this);
     }
 
     @Override
@@ -76,19 +76,18 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         Log.d(TAG, "executing onClick");
         switch (v.getId()) {
             case R.id.google_login:
+                Log.d(TAG, "google_login clicked");
                 isGPlusLoginClicked = true;
                 signInWithGplus();
                 break;
             case R.id.facebook_login:
                 Log.d(TAG, "facebook_login clicked");
-
                 isFbLoginClicked = true;
                 openFacebookSession();
                 break;
             default:
                 Log.d(TAG, "done executing onClick no id match");
                 break;
-
         }
     }
 }

@@ -58,7 +58,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     protected Calendar calender = Calendar.getInstance();
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
-    private boolean isGPlusLoginClicked = false;
+    protected boolean isGPlusLoginClicked = false;
     private boolean mIntentInProgress;
     private ProgressDialog loader;
 

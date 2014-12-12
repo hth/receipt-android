@@ -86,15 +86,24 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
     public void onClick(View view) {
         Log.d(TAG, "executing onClick");
         switch (view.getId()) {
             case R.id.sign_up_button:
                 signUp();
                 break;
+            case R.id.google_login:
+                Log.d(TAG, "google_login clicked");
+                isGPlusLoginClicked = true;
+                signInWithGplus();
+                break;
             case R.id.facebook_login:
                 Log.d(TAG, "facebook_login clicked");
-
                 isFbLoginClicked = true;
                 openFacebookSession();
                 break;
