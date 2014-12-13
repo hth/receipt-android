@@ -5,20 +5,26 @@
     <string name="app_name">Receiptofi</string>
 
 
+    <!--        Label         -->
+    <string name="label_app_name">Receiptofi</string>
+    <string name="label_sign_up">Sign Up</string>
+    <string name="label_log_in">Log In</string>
+    <string name="label_password_recovery">Password Recovery</string>
+
+
     <!--        Launch page         -->
     <string name="login_with_facebook">Login via Facebook</string>
     <string name="login_with_google">Login via Google+</string>
     <string name="use_email">------ Use your email -------</string>
     <string name="sign_up">Sign Up</string>
-    <string name="sign_in">Log in</string>
+    <string name="log_in">Log In</string>
 
     <string name="app_info_cnt_dscp">Where do you park your receipt at checkout</string>
     <string name="facebook_login_cnt_dscp">Login using your Facebook account</string>
     <string name="google_login_cnt_dscp">Login using your Google account</string>
 
 
-    <!--        Sign in page         -->
-    <string name="sign_in_label">Sign in</string>
+    <!--        Log in page         -->
     <string name="hint_email">example@receiptofi.com</string>
     <string name="hint_password">Password</string>
     <string name="use_social">------ Use social account -------</string>
@@ -26,16 +32,14 @@
 
 
     <!--        Sign up page         -->
-    <string name="sign_up_label">Sign Up</string>
     <string name="hint_name">John Doe</string>
     <string name="age">Age</string>
 
 
     <!--        Password recovery page         -->
-    <string name="password_recovery_label">Password recovery</string>
     <string name="password_recovery">send recovery email</string>
-    <string name="password_recovery_message">An email has been sent to your email-address with
-        instructions to reset your password</string>
+    <string name="password_recovery_message">An email has been sent to above email-address with
+        instructions to reset password</string>
 
 
     <!--        Error String         -->

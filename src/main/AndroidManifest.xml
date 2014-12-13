@@ -26,7 +26,7 @@
             android:allowBackup="true"
             android:icon="@drawable/r"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+            android:theme="@style/CustomActionBarTheme">
         <meta-data
                 android:name="com.facebook.sdk.ApplicationId"
                 android:value="@string/app_id"/>
@@ -46,16 +46,19 @@
         </activity>
         <activity
             android:name=".LogInActivity"
+            android:label="@string/label_log_in"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
             android:name=".SignUpActivity"
+            android:label="@string/label_sign_up"
             android:screenOrientation="portrait">
 
         </activity>
         <activity
             android:name=".PasswordRecoveryActivity"
+            android:label="@string/label_password_recovery"
             android:screenOrientation="portrait">
         </activity>
         <activity

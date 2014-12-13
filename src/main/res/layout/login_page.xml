@@ -27,7 +27,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:background="@drawable/blue_button_selector"
-        android:text="@string/sign_in"
+        android:text="@string/log_in"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@android:color/white"
         android:enabled="false"/>

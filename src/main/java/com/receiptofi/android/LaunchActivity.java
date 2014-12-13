@@ -33,6 +33,7 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         }
         Log.d(TAG, "executing onCreate");
         setContentView(R.layout.launch_page);
+        getActionBar().hide();
 
         //login via Facebook
         LinearLayout mFacebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
