@@ -16,6 +16,7 @@ import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.utils.Constants;
 import com.receiptofi.android.utils.StringUtil;
 import com.receiptofi.android.utils.UserUtils;
 
@@ -122,7 +123,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private boolean areFieldsSet() {
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        return emailStr.length() > 5 && passwordStr.length() > 3;
+        return emailStr.length() >= Constants.EMAIL_MIN && passwordStr.length() >= Constants.PASSWORD_MIN;
     }
 
     private void login() {
@@ -182,7 +183,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                     Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
                     saveAuthKey(LogInActivity.this, headerData);
                     hideLoader();
-                    afterSuccessfullLogin();
+                    afterSuccessfulLogin();
                 } catch (Exception e) {
                     hideLoader();
                     if (e instanceof IOException) {
