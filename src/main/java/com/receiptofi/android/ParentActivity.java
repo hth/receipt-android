@@ -213,7 +213,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
                 saveAuthKey(ParentActivity.this, headerData);
                 hideLoader();
-                afterSuccessfullLogin();
+                afterSuccessfulLogin();
             }
 
             @Override
@@ -241,8 +241,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         }
     }
 
-    protected void afterSuccessfullLogin() {
-        Log.d(TAG, "Parent executing afterSuccessfullLogin");
+    protected void afterSuccessfulLogin() {
+        Log.d(TAG, "Parent executing afterSuccessfulLogin");
         if (UserUtils.isValidAppUser()) {
             launchHomeScreen();
             ReceiptUtils.fetchReceiptsAndSave();

@@ -1,7 +1,11 @@
 package com.receiptofi.android;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.os.Message;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -11,8 +15,17 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.receiptofi.android.http.API;
+import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.utils.Constants;
 import com.receiptofi.android.utils.StringUtil;
 import com.receiptofi.android.utils.UserUtils;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 /**
  * Created by PT on 12/11/14.
@@ -21,9 +34,24 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
     private static final String TAG = PasswordRecoveryActivity.class.getSimpleName();
 
+    protected static final int PASSWORD_RECOVERY_SUCCESS = 0x2565;
+    protected static final int PASSWORD_RECOVERY_FAILURE = 0x2566;
+
     private StringBuilder errors = new StringBuilder();
     private EditText email;
     private String emailStr;
+
+    private ProgressDialog loader;
+
+    private final Handler myHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            final int what = msg.what;
+            switch(what) {
+                case PASSWORD_RECOVERY_SUCCESS: passwordChanged(true); break;
+                case PASSWORD_RECOVERY_FAILURE: passwordChanged(false); break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +75,8 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable editable) {
 
-                passwordRecovery.setEnabled(editable.length() > 5);
+                passwordRecovery.setEnabled(editable.length() >= Constants.EMAIL_MIN
+                );
             }
         };
 
@@ -96,11 +125,46 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     }
 
     private void sendRecoveryInfo(String email) {
-        TextView infoSent = (TextView) findViewById(R.id.password_recovery_info);
-        infoSent.setVisibility(View.VISIBLE);
+        Log.d(TAG, "executing authenticateSignUp");
+        showLoader(this.getResources().getString(R.string.login_auth_msg));
 
+        if (StringUtil.isEmpty(email)) {
+            errors.append(this.getResources().getString(R.string.err_str_bundle_null));
+            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.TOP, 0, 20);
+            toast.show();
+            errors.delete(0, errors.length());
+            return;
+        }
+
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put(API.key.PASSWORD_RECOVERY_EMAIL, email);
+        } catch (JSONException e) {
+            Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
+        }
+
+        HTTPUtils.doPost(postData, API.PASSWORD_RECOVER_API, new ResponseHandler() {
+
+            @Override
+            public void onSuccess(Header[] headers) {
+                Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
+                myHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+                Log.d(TAG, "executing sendRecoveryInfo: onError" + error);
+                myHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                Log.d(TAG, "executing sendRecoveryInfo: onException" + exception.getMessage());
+                myHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+            }
+        });
         //TODO
-
         // startActivity(new Intent(PasswordRecoveryActivity.this, LaunchActivity.class));
         // finish();
     }
@@ -111,5 +175,35 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         } else {
             errors.append("\n").append("\n").append(msg);
         }
+    }
+
+    public void showLoader(String msg) {
+        loader = new ProgressDialog(this);
+        loader.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        loader.setCancelable(false);
+        loader.setIndeterminate(true);
+        loader.setMessage(msg);
+        loader.show();
+    }
+
+    public void hideLoader() {
+        if (loader != null) {
+            loader.dismiss();
+        }
+        loader = null;
+    }
+
+    private void passwordChanged(boolean success){
+        hideLoader();
+        TextView recoveryStatus = (TextView) findViewById(R.id.password_recovery_info);
+        if(success){
+            recoveryStatus.setText(PasswordRecoveryActivity.this.getText(R.string.password_recovery_message));
+        } else {
+            recoveryStatus.setText(PasswordRecoveryActivity.this.getText(R.string.password_recovery_failed));
+            final TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
+            passwordRecovery.setEnabled(true);
+        }
+        recoveryStatus.setVisibility(View.VISIBLE);
     }
 }

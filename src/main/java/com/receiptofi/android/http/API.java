@@ -3,6 +3,7 @@ package com.receiptofi.android.http;
 public class API {
     public static final String LOGIN_API = "/j_spring_security_check";
     public static final String SIGNUP_API = "/registration.json";
+    public static final String PASSWORD_RECOVER_API = "/recover.json";
     public static final String UPLOAD_IMAGE_API = "/api/upload.json";
     public static final String GET_ALL_RECEIPTS = "/api/allReceipts.json";
     public static final String SOCIAL_LOGIN_API = "/authenticate.json";
@@ -35,6 +36,9 @@ public class API {
         public static final String SIGNUP_FIRSTNAME = "FN";
         public static final String SIGNUP_PASSWORD = "PW";
         public static final String SIGNUP_AGE = "BD";
+
+        // Password recovery
+        public static final String PASSWORD_RECOVERY_EMAIL = "EM";
 
     }
 }

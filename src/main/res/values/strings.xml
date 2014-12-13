@@ -38,6 +38,7 @@
 
     <!--        Password recovery page         -->
     <string name="password_recovery">send recovery email</string>
+    <string name="password_recovery_failed"> request failed, try again later.</string>
     <string name="password_recovery_message">An email has been sent to above email-address with
         instructions to reset password</string>
 

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.utils.Constants;
 import com.receiptofi.android.utils.StringUtil;
 import com.receiptofi.android.utils.UserUtils;
 
@@ -113,7 +114,8 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         nameStr = name.getText().toString();
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        return nameStr.length() > 1 && emailStr.length() > 5 && passwordStr.length() > 3;
+        return nameStr.length() >= Constants.NAME_MIN && emailStr.length() >= Constants.EMAIL_MIN
+                && passwordStr.length() >= Constants.PASSWORD_MIN;
     }
 
     private void signUp() {
@@ -186,7 +188,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
                 Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
                 saveAuthKey(SignUpActivity.this, headerData);
                 hideLoader();
-                afterSuccessfullLogin();
+                afterSuccessfulLogin();
             }
 
             @Override
