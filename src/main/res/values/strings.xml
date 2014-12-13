@@ -25,14 +25,17 @@
     <string name="forgot_password">Forgot your password</string>
 
 
-
-
-
-
     <!--        Sign up page         -->
     <string name="sign_up_label">Sign Up</string>
     <string name="hint_name">John Doe</string>
     <string name="age">Age</string>
+
+
+    <!--        Password recovery page         -->
+    <string name="password_recovery_label">Password recovery</string>
+    <string name="password_recovery">send recovery email</string>
+    <string name="password_recovery_message">An email has been sent to your email-address with
+        instructions to reset your password</string>
 
 
     <!--        Error String         -->

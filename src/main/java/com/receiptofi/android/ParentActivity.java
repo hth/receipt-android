@@ -258,7 +258,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             @Override
             public void run() {
                 startActivity(new Intent(ParentActivity.this, HomePageActivity.class));
-                ParentActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
+                //TODO
+               // ParentActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
                 finish();
             }
         });
