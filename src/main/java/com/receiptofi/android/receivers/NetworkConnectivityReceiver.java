@@ -1,11 +1,11 @@
 package com.receiptofi.android.receivers;
 
-import com.receiptofi.android.services.ImageUploaderService;
-import com.receiptofi.android.utils.UserUtils;
-
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+
+import com.receiptofi.android.services.ImageUploaderService;
+import com.receiptofi.android.utils.UserUtils;
 
 public class NetworkConnectivityReceiver extends BroadcastReceiver {
 

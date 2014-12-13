@@ -1,12 +1,12 @@
 package com.receiptofi.android.fragments;
 
-import com.receiptofi.android.R;
-
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.receiptofi.android.R;
 
 public class ActionFragment extends ParentFragment {
 

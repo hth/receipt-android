@@ -1,10 +1,10 @@
 package com.receiptofi.android.db;
 
-import com.receiptofi.android.models.ReceiptDB;
-
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.receiptofi.android.models.ReceiptDB;
 
 public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
 

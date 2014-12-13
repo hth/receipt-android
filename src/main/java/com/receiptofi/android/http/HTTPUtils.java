@@ -1,5 +1,9 @@
 package com.receiptofi.android.http;
 
+import android.content.Context;
+import android.util.Log;
+import android.webkit.MimeTypeMap;
+
 import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.models.ImageModel;
 import com.receiptofi.android.utils.StringUtil;
@@ -18,13 +22,6 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-
-import android.content.ContentResolver;
-import android.content.Context;
-import android.net.Uri;
-import android.util.Log;
-import android.webkit.MimeTypeMap;
-
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
@@ -36,7 +33,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -49,9 +45,9 @@ public final class HTTPUtils {
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
 
-    private static final String CONNECTION_URL_LOCAL = "http://192.168.0.150:9090/receipt-mobile";
-    //private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
-    private static final String CONNECTION_URL_STAGING = CONNECTION_URL_LOCAL;
+    //private static final String CONNECTION_URL_LOCAL = "http://192.168.0.150:9090/receipt-mobile";
+    private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
+    //private static final String CONNECTION_URL_STAGING = CONNECTION_URL_LOCAL;
     private static final String CONNECTION_URL_PRODUCTION = "https://live.receiptofi.com/receipt-mobile";
 
     private static final String RECEIPTOFI_MOBILE_URL = CONNECTION_URL_STAGING;
@@ -262,7 +258,7 @@ public final class HTTPUtils {
                     }
                     Log.d(TAG, "making api request to server: " + RECEIPTOFI_MOBILE_URL + API + ", Data: " + postData.toString());
 
-                    StringEntity postEntity = new StringEntity(postData.toString(),"UTF-8");
+                    StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
                     //StringEntity postEntity = new StringEntity(postData.toString());
 
                     httpPost.setEntity(postEntity);
@@ -275,13 +271,13 @@ public final class HTTPUtils {
                     Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
                     Log.i(TAG, "body is:  " + body);
-                    if(statusCode != 200){
+                    if (statusCode != 200) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
                         responseHandler.onError(statusCode, null);
                         return;
                     }
-                   // if(StringUtil.isEmpty(body)){
-                    if(!bodyContainsError(body)){
+                    // if(StringUtil.isEmpty(body)){
+                    if (!bodyContainsError(body)) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
                         responseHandler.onSuccess(response.getAllHeaders());
                         return;
@@ -392,14 +388,14 @@ public final class HTTPUtils {
     }
 
 
-    public static boolean bodyContainsError(String body){
+    public static boolean bodyContainsError(String body) {
         return !StringUtil.isEmpty(body) && body.contains("error");
     }
 
-    public static Map<String, String> parseHeader( Header[] headers, Set<String> keys){
+    public static Map<String, String> parseHeader(Header[] headers, Set<String> keys) {
         Log.d(TAG, "executing parseHeader");
         if (headers != null && headers.length > 0
-                && keys !=null && keys.size() > 0) {
+                && keys != null && keys.size() > 0) {
             Map<String, String> headerData = new HashMap<String, String>();
 
             for (Header header : headers) {
@@ -419,6 +415,7 @@ public final class HTTPUtils {
     /**
      * Get content type from file extension.
      * Note: Do not set the content type when uploading file to server as it will stop uploading.
+     *
      * @param url
      * @return
      */

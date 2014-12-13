@@ -1,11 +1,11 @@
 package com.receiptofi.android.db;
 
-import com.receiptofi.android.ReceiptofiApplication;
-import com.receiptofi.android.models.ReceiptDB;
-
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+
+import com.receiptofi.android.ReceiptofiApplication;
+import com.receiptofi.android.models.ReceiptDB;
 
 public class KeyValue {
 

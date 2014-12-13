@@ -1,11 +1,5 @@
 package com.receiptofi.android.fragments;
 
-import com.receiptofi.android.HomePageActivity;
-import com.receiptofi.android.R;
-import com.receiptofi.android.adapters.ReceiptListAdapter;
-import com.receiptofi.android.models.ReceiptModel;
-import com.receiptofi.android.utils.ReceiptUtils;
-
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -15,6 +9,12 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
+
+import com.receiptofi.android.HomePageActivity;
+import com.receiptofi.android.R;
+import com.receiptofi.android.adapters.ReceiptListAdapter;
+import com.receiptofi.android.models.ReceiptModel;
+import com.receiptofi.android.utils.ReceiptUtils;
 
 public class ReceiptListFragment extends Fragment {
 

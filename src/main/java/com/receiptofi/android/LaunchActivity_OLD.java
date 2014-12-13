@@ -1,28 +1,5 @@
 package com.receiptofi.android;
 
-import com.google.android.gms.auth.GoogleAuthUtil;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.common.Scopes;
-import com.google.android.gms.common.SignInButton;
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-import com.google.android.gms.plus.Plus;
-
-import com.receiptofi.android.db.KeyValue;
-import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.API.key;
-import com.receiptofi.android.http.HTTPUtils;
-import com.receiptofi.android.http.ResponseHandler;
-import com.receiptofi.android.http.ResponseParser;
-import com.receiptofi.android.utils.ReceiptUtils;
-import com.receiptofi.android.utils.UserUtils;
-
-import org.apache.http.Header;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.content.IntentSender.SendIntentException;
@@ -38,8 +15,30 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.facebook.Session;
 import com.facebook.SessionState;
+import com.google.android.gms.auth.GoogleAuthUtil;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.Scopes;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.plus.Plus;
+import com.receiptofi.android.db.KeyValue;
+import com.receiptofi.android.http.API;
+import com.receiptofi.android.http.API.key;
+import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.http.ResponseParser;
+import com.receiptofi.android.utils.ReceiptUtils;
+import com.receiptofi.android.utils.UserUtils;
+
+import org.apache.http.Header;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -195,7 +194,7 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
     protected void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
-       // addToBackStack(this);
+        // addToBackStack(this);
 
         if (isFbLoginClick) {
             isFbLoginClick = false;
@@ -244,14 +243,14 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
                 @Override
                 public void onError(int statusCode, String error) {
                     String errorMsg = ResponseParser.getSocialAuthError(error);
-                   // ((ParentActivity) LaunchActivity_OLD.this).showErrorMsg(errorMsg);
+                    // ((ParentActivity) LaunchActivity_OLD.this).showErrorMsg(errorMsg);
                 }
             });
 
 
         } else {
 
-           // showLoader(this.getResources().getString(R.string.login_auth_msg));
+            // showLoader(this.getResources().getString(R.string.login_auth_msg));
 
             final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
             pairs.add(new BasicNameValuePair("mail", userNameStr));
@@ -267,10 +266,10 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
                         headers = HTTPUtils.getHTTPHeaders(pairs, API.LOGIN_API);
                     } catch (Exception e) {
                         // TODO Auto-generated catch block
-                       // hideLoader();
+                        // hideLoader();
                         if (e instanceof IOException)
-                          //  showErrorMsg("Please check your network connection");
-                        return;
+                            //  showErrorMsg("Please check your network connection");
+                            return;
                     }
 
                     //hideLoader();
@@ -329,7 +328,7 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
             launchHomeScreen();
             ReceiptUtils.fetchReceiptsAndSave();
         } else {
-           // showErrorMsg("Login Failed !!!");
+            // showErrorMsg("Login Failed !!!");
         }
     }
 

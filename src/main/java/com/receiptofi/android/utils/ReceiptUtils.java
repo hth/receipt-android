@@ -1,18 +1,17 @@
 package com.receiptofi.android.utils;
 
+import android.database.Cursor;
+
 import com.receiptofi.android.ReceiptofiApplication;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
 import com.receiptofi.android.http.ResponseHandler;
-import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.models.ReceiptModel;
 
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-
-import android.database.Cursor;
 
 import java.util.ArrayList;
 

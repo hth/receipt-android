@@ -1,13 +1,12 @@
 package com.receiptofi.android;
 
-import com.google.android.gms.common.api.GoogleApiClient;
+import android.app.Application;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.receiptofi.android.adapters.ImageUpload;
 import com.receiptofi.android.db.ReceiptofiDatabaseHandler;
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.utils.AppUtils;
-
-import android.app.Application;
 
 public class ReceiptofiApplication extends Application {
 

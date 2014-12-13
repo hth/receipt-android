@@ -1,12 +1,12 @@
 package com.receiptofi.android;
 
-import com.receiptofi.android.db.KeyValue;
-import com.receiptofi.android.utils.UserUtils;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ToggleButton;
+
+import com.receiptofi.android.db.KeyValue;
+import com.receiptofi.android.utils.UserUtils;
 
 public class SettingsPage extends ParentActivity {
 

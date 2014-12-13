@@ -12,10 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.receiptofi.android.db.KeyValue;
 import com.receiptofi.android.http.API;
 import com.receiptofi.android.http.HTTPUtils;
-import com.receiptofi.android.http.ResponseHandler;
 import com.receiptofi.android.utils.Constants;
 import com.receiptofi.android.utils.StringUtil;
 import com.receiptofi.android.utils.UserUtils;
@@ -23,8 +21,6 @@ import com.receiptofi.android.utils.UserUtils;
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;

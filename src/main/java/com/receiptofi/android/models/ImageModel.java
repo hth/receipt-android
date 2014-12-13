@@ -1,10 +1,10 @@
 package com.receiptofi.android.models;
 
-import com.receiptofi.android.ReceiptofiApplication;
-
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
+
+import com.receiptofi.android.ReceiptofiApplication;
 
 import java.util.ArrayList;
 
