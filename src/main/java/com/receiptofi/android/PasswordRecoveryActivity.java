@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.os.Message;
 import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -46,9 +46,13 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     private final Handler myHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
-            switch(what) {
-                case PASSWORD_RECOVERY_SUCCESS: passwordChanged(true); break;
-                case PASSWORD_RECOVERY_FAILURE: passwordChanged(false); break;
+            switch (what) {
+                case PASSWORD_RECOVERY_SUCCESS:
+                    passwordChanged(true);
+                    break;
+                case PASSWORD_RECOVERY_FAILURE:
+                    passwordChanged(false);
+                    break;
             }
         }
     };
@@ -194,10 +198,10 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         loader = null;
     }
 
-    private void passwordChanged(boolean success){
+    private void passwordChanged(boolean success) {
         hideLoader();
         TextView recoveryStatus = (TextView) findViewById(R.id.password_recovery_info);
-        if(success){
+        if (success) {
             recoveryStatus.setText(PasswordRecoveryActivity.this.getText(R.string.password_recovery_message));
         } else {
             recoveryStatus.setText(PasswordRecoveryActivity.this.getText(R.string.password_recovery_failed));

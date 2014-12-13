@@ -1,8 +1,8 @@
 package com.receiptofi.android.models;
 
-import com.receiptofi.android.ReceiptofiApplication;
-
 import android.content.ContentValues;
+
+import com.receiptofi.android.ReceiptofiApplication;
 
 public class ReceiptModel {
     public String bizName;

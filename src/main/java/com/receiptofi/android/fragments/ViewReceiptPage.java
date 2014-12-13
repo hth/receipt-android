@@ -1,19 +1,5 @@
 package com.receiptofi.android.fragments;
 
-import com.receiptofi.android.HomePageActivity;
-import com.receiptofi.android.R;
-import com.receiptofi.android.http.API;
-import com.receiptofi.android.http.HTTPUtils;
-import com.receiptofi.android.http.ResponseHandler;
-import com.receiptofi.android.http.ResponseParser;
-import com.receiptofi.android.models.ReceiptElement;
-import com.receiptofi.android.utils.AppUtils;
-import com.receiptofi.android.utils.UserUtils;
-
-import org.apache.http.Header;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
@@ -25,6 +11,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.receiptofi.android.HomePageActivity;
+import com.receiptofi.android.R;
+import com.receiptofi.android.http.API;
+import com.receiptofi.android.http.HTTPUtils;
+import com.receiptofi.android.http.ResponseHandler;
+import com.receiptofi.android.models.ReceiptElement;
+import com.receiptofi.android.utils.AppUtils;
+import com.receiptofi.android.utils.UserUtils;
+
+import org.apache.http.Header;
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 
 import java.io.File;
 import java.util.ArrayList;

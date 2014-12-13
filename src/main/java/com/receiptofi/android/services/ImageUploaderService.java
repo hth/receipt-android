@@ -1,5 +1,9 @@
 package com.receiptofi.android.services;
 
+import android.content.Context;
+import android.os.Bundle;
+import android.util.Log;
+
 import com.receiptofi.android.HomePageActivity;
 import com.receiptofi.android.adapters.ImageUpload;
 import com.receiptofi.android.http.API;
@@ -10,10 +14,6 @@ import com.receiptofi.android.models.ImageModel;
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.utils.AppUtils;
 import com.receiptofi.android.utils.UserUtils.UserSettings;
-
-import android.content.Context;
-import android.os.Bundle;
-import android.util.Log;
 
 import java.util.ArrayList;
 

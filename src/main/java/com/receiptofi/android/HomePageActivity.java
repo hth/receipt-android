@@ -1,11 +1,5 @@
 package com.receiptofi.android;
 
-import com.receiptofi.android.adapters.ImageUpload;
-import com.receiptofi.android.fragments.ReceiptListFragment;
-import com.receiptofi.android.fragments.ViewReceiptPage;
-import com.receiptofi.android.models.ReceiptModel;
-import com.receiptofi.android.utils.AppUtils;
-
 import android.content.Intent;
 import android.graphics.Point;
 import android.net.Uri;
@@ -14,6 +8,12 @@ import android.provider.MediaStore;
 import android.view.Display;
 import android.view.View;
 import android.widget.TextView;
+
+import com.receiptofi.android.adapters.ImageUpload;
+import com.receiptofi.android.fragments.ReceiptListFragment;
+import com.receiptofi.android.fragments.ViewReceiptPage;
+import com.receiptofi.android.models.ReceiptModel;
+import com.receiptofi.android.utils.AppUtils;
 
 import java.io.File;
 

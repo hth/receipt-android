@@ -40,7 +40,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -259,7 +258,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             public void run() {
                 startActivity(new Intent(ParentActivity.this, HomePageActivity.class));
                 //TODO
-               // ParentActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
+                // ParentActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
                 finish();
             }
         });

@@ -5,7 +5,7 @@ package com.receiptofi.android.utils;
  */
 public class StringUtil {
 
-    public static boolean isEmpty (String str){
+    public static boolean isEmpty(String str) {
         return !(str != null && str.length() > 0);
     }
 }

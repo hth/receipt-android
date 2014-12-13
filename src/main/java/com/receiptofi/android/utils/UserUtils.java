@@ -1,9 +1,9 @@
 package com.receiptofi.android.utils;
 
-import com.receiptofi.android.db.KeyValue;
-
 import android.content.Context;
 import android.util.Log;
+
+import com.receiptofi.android.db.KeyValue;
 
 public class UserUtils {
 

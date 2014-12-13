@@ -1,10 +1,11 @@
 package com.receiptofi.android.http;
 
-import com.receiptofi.android.models.ReceiptDB;
-import com.receiptofi.android.models.ReceiptModel;
-import com.receiptofi.android.models.ReceiptElement;
-
 import android.os.Bundle;
+
+import com.receiptofi.android.models.ReceiptDB;
+import com.receiptofi.android.models.ReceiptElement;
+import com.receiptofi.android.models.ReceiptModel;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
