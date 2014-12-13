@@ -8,6 +8,7 @@ import com.receiptofi.android.http.ResponseParser;
 import com.receiptofi.android.models.ReceiptDB;
 import com.receiptofi.android.models.ReceiptModel;
 
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -27,8 +28,8 @@ public class ReceiptUtils {
                 HTTPUtils.HTTP_METHOD_GET, new ResponseHandler() {
 
                     @Override
-                    public void onSuccess(String response) {
-                        ArrayList<ReceiptModel> models = ResponseParser.getReceipts(response);
+                    public void onSuccess(Header[] arr) {
+                        ArrayList<ReceiptModel> models = null; //ResponseParser.getReceipts(response);
                         for (ReceiptModel model : models) {
                             model.save();
                         }
@@ -40,7 +41,7 @@ public class ReceiptUtils {
                     }
 
                     @Override
-                    public void onError(String Error) {
+                    public void onError(int statusCode, String error) {
 
                     }
                 });

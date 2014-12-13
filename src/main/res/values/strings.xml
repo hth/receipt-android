@@ -1,26 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!--        App         -->
+    <string name="app_name">Receiptofi</string>
+
+
+    <!--        Label         -->
+    <string name="label_app_name">Receiptofi</string>
+    <string name="label_sign_up">Sign Up</string>
+    <string name="label_log_in">Log In</string>
+    <string name="label_password_recovery">Password Recovery</string>
+
+
     <!--        Launch page         -->
     <string name="login_with_facebook">Login via Facebook</string>
     <string name="login_with_google">Login via Google+</string>
     <string name="use_email">------ Use your email -------</string>
     <string name="sign_up">Sign Up</string>
-    <string name="sign_in">Log in</string>
+    <string name="log_in">Log In</string>
 
     <string name="app_info_cnt_dscp">Where do you park your receipt at checkout</string>
     <string name="facebook_login_cnt_dscp">Login using your Facebook account</string>
     <string name="google_login_cnt_dscp">Login using your Google account</string>
 
 
+    <!--        Log in page         -->
+    <string name="hint_email">example@receiptofi.com</string>
+    <string name="hint_password">Password</string>
+    <string name="use_social">------ Use social account -------</string>
+    <string name="forgot_password">Forgot your password</string>
 
 
-    <string name="app_name">Receiptofi</string>
+    <!--        Sign up page         -->
+    <string name="hint_name">John Doe</string>
+    <string name="age">Age</string>
+
+
+    <!--        Password recovery page         -->
+    <string name="password_recovery">send recovery email</string>
+    <string name="password_recovery_message">An email has been sent to above email-address with
+        instructions to reset password</string>
+
+
+    <!--        Error String         -->
+    <string name="err_str_enter_name">Please enter name</string>
+    <string name="err_str_enter_email">Please enter email</string>
+    <string name="err_str_enter_password">Please enter password</string>
+    <string name="err_str_enter_valid_email">Please enter valid email</string>
+    <string name="err_str_bundle_null">Bundle is null</string>
+
+
+    <!--       //////////////////////        -->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login_auth_msg">Please wait ...</string>
-    <string name="enter_valid_email">Please enter valid email</string>
-    <string name="enter_email">Please enter email</string>
-    <string name="enter_password">Please enter password</string>
     <string name="app_id">260975157440024</string>
 </resources>

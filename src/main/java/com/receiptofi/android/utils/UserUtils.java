@@ -3,8 +3,12 @@ package com.receiptofi.android.utils;
 import com.receiptofi.android.db.KeyValue;
 
 import android.content.Context;
+import android.util.Log;
 
 public class UserUtils {
+
+    private static final String TAG = "SUMAN"; //UserUtils.class.getSimpleName();
+
     static String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
     public static boolean isValidEmail(String email) {
@@ -26,6 +30,7 @@ public class UserUtils {
     public static boolean isValidAppUser() {
         String mail = UserUtils.getEmail();
         String auth = UserUtils.getAuth();
+        Log.d(TAG, "mail is:  " + mail + "  auth is:  " + auth);
 
         if (mail != null && mail.trim().length() > 0 && auth != null && auth.trim().length() > 0) {
             return true;

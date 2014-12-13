@@ -10,6 +10,7 @@ import com.receiptofi.android.models.ReceiptElement;
 import com.receiptofi.android.utils.AppUtils;
 import com.receiptofi.android.utils.UserUtils;
 
+import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -60,10 +61,10 @@ public class ViewReceiptPage extends Fragment {
         HTTPUtils.AsyncRequest(headerData, API.VIEW_RECEIPT_DETAIL + receiptId + ".json", HTTPUtils.HTTP_METHOD_GET, new ResponseHandler() {
 
             @Override
-            public void onSuccess(String response) {
+            public void onSuccess(Header[] arr) {
                 // TODO Auto-generated method stub
                 ((HomePageActivity) context).hideLoader();
-                ArrayList<ReceiptElement> elements = ResponseParser.getReceiptDetails(response);
+                ArrayList<ReceiptElement> elements = null; //ResponseParser.getReceiptDetails(response);
                 displayElements(elements);
                 if (imageFile.exists()) {
                     disaplayImage(imageFile.getAbsolutePath());
@@ -78,7 +79,7 @@ public class ViewReceiptPage extends Fragment {
             }
 
             @Override
-            public void onError(String Error) {
+            public void onError(int statusCode, String error) {
                 // TODO Auto-generated method stub
                 ((HomePageActivity) context).hideLoader();
             }
@@ -89,7 +90,7 @@ public class ViewReceiptPage extends Fragment {
             HTTPUtils.downloadImage(context, imageFile, API.DOWNLOAD_IMAGE + blobId + ".json", new ResponseHandler() {
 
                 @Override
-                public void onSuccess(String response) {
+                public void onSuccess(Header[] arr) {
                     // TODO Auto-generated method stub
                     disaplayImage(imageFile.getAbsolutePath());
                 }
@@ -101,7 +102,7 @@ public class ViewReceiptPage extends Fragment {
                 }
 
                 @Override
-                public void onError(String Error) {
+                public void onError(int statusCode, String error) {
                     // TODO Auto-generated method stub
 
                 }
