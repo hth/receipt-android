@@ -45,9 +45,9 @@ public final class HTTPUtils {
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
 
-    private static final String CONNECTION_URL_LOCAL = "http://192.168.0.150:9090/receipt-mobile";
-    //private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
-    private static final String CONNECTION_URL_STAGING = CONNECTION_URL_LOCAL;
+    //private static final String CONNECTION_URL_LOCAL = "http://192.168.0.150:9090/receipt-mobile";
+    private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
+    //private static final String CONNECTION_URL_STAGING = CONNECTION_URL_LOCAL;
     private static final String CONNECTION_URL_PRODUCTION = "https://live.receiptofi.com/receipt-mobile";
 
     private static final String RECEIPTOFI_MOBILE_URL = CONNECTION_URL_STAGING;
