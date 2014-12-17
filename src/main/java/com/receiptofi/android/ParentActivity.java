@@ -122,7 +122,9 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 mGoogleApiClient.connect();
             }
         } else {
-            Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+            if (null != Session.getActiveSession()) {
+                Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
+            }
         }
     }
 
@@ -318,7 +320,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         Log.d(TAG, "executing resolveSignInError");
         Log.d(TAG, "Google Sign in: resolveSignInError: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
 
-        if (mConnectionResult.hasResolution()) {
+        if (null != mConnectionResult && mConnectionResult.hasResolution()) {
             try {
                 mIntentInProgress = true;
                 startIntentSenderForResult(mConnectionResult.getResolution().getIntentSender(),
