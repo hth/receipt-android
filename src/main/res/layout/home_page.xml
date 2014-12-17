@@ -10,7 +10,7 @@
             android:layout_height="fill_parent">
 
         <fragment
-                android:name="com.receiptofi.android.fragments.ActionFragment"
+                android:name="com.receiptofi.checkout.fragments.ActionFragment"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"/>
     </FrameLayout>

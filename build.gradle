@@ -42,7 +42,7 @@ android {
     buildToolsVersion "19.1.0"
 
     defaultConfig {
-        applicationId "com.receiptofi.android"
+        applicationId "com.receiptofi.checkout"
         minSdkVersion 14
         targetSdkVersion 16
         testHandleProfiling true
