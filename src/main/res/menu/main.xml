@@ -1,6 +1,6 @@
 <menu
         xmlns:tools="http://schemas.android.com/tools"
-        tools:context="com.receiptofi.android.MainActivity">
+        tools:context="com.receiptofi.checkout.MainActivity">
 
 
 </menu>
