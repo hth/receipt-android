@@ -62,11 +62,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-                android:name="com.receiptofi.checkout.HomePageActivity"
-                android:screenOrientation="portrait">
-        </activity>
-        <activity
-                android:name="com.facebook.LoginActivity"
+                android:name=".HomeActivity"
                 android:screenOrientation="portrait">
         </activity>
         <activity

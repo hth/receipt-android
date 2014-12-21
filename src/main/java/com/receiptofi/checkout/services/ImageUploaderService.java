@@ -4,7 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.receiptofi.checkout.HomePageActivity;
+import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
@@ -77,9 +78,9 @@ public class ImageUploaderService {
                 iModel.updateStatus(true);
                 updateProcessStatus(iModel);
                 if (AppUtils.getHomePageContext() != null) {
-                    ((HomePageActivity) AppUtils.getHomePageContext()).showErrorMsg(response);
+                    ((HomeActivity) AppUtils.getHomePageContext()).showErrorMsg(response);
                     Log.i("UNPROCESSED DOCUMENT COUNT", "UNPROCESSED DOCUMENT COUNT" + unprocessedCount);
-                    ((HomePageActivity) AppUtils.getHomePageContext()).updateUnprocessedCount(unprocessedCount);
+                    ((HomeActivity) AppUtils.getHomePageContext()).updateUnprocessedCount(unprocessedCount);
                 }
 
                 Log.i("image upload done for ", iModel.imgPath);
