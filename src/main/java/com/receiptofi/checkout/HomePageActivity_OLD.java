@@ -30,7 +30,7 @@ public class HomePageActivity_OLD extends ParentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home_page_old1);
+        setContentView(R.layout.home_page_old);
         AppUtils.setHomePageContext(this);
 
         display = getWindowManager().getDefaultDisplay();
