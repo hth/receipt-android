@@ -70,7 +70,7 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
             finish();
-            startActivity(new Intent(this, HomePageActivity.class));
+            startActivity(new Intent(this, HomePageActivity_OLD.class));
         }
         setContentView(R.layout.login_page_old);
         userName = (EditText) findViewById(R.id.userName);
@@ -174,7 +174,7 @@ public class LaunchActivity_OLD extends Activity implements OnClickListener, Con
             public void run() {
                 // TODO Auto-generated method stub
                 finish();
-                startActivity(new Intent(LaunchActivity_OLD.this, HomePageActivity.class));
+                startActivity(new Intent(LaunchActivity_OLD.this, HomePageActivity_OLD.class));
                 LaunchActivity_OLD.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
             }
         });

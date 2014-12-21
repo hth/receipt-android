@@ -10,7 +10,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 
-import com.receiptofi.checkout.HomePageActivity;
+import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter;
 import com.receiptofi.checkout.models.ReceiptModel;
@@ -47,7 +47,7 @@ public class ReceiptListFragment extends Fragment {
         @Override
         public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
             ReceiptModel model = (ReceiptModel) view.getTag();
-            ((HomePageActivity) context).invokeDetailReceiptView(view, model);
+            ((HomePageActivity_OLD) context).invokeDetailReceiptView(view, model);
         }
     };
 }

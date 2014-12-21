@@ -12,7 +12,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.receiptofi.checkout.HomePageActivity;
+import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
@@ -50,7 +50,7 @@ public class ViewReceiptPage extends Fragment {
             blobId = getArguments().getString("blobId");
         }
 
-        ((HomePageActivity) context).showLoader("Fetching receipt details");
+        ((HomePageActivity_OLD) context).showLoader("Fetching receipt details");
         final File imageFile = new File(AppUtils.getImageDir() + File.separator + blobId + ".png");
 
         ArrayList<NameValuePair> headerData = new ArrayList<NameValuePair>();
@@ -62,7 +62,7 @@ public class ViewReceiptPage extends Fragment {
             @Override
             public void onSuccess(Header[] arr) {
                 // TODO Auto-generated method stub
-                ((HomePageActivity) context).hideLoader();
+                ((HomePageActivity_OLD) context).hideLoader();
                 ArrayList<ReceiptElement> elements = null; //ResponseParser.getReceiptDetails(response);
                 displayElements(elements);
                 if (imageFile.exists()) {
@@ -74,13 +74,13 @@ public class ViewReceiptPage extends Fragment {
             @Override
             public void onException(Exception exception) {
                 // TODO Auto-generated method stub
-                ((HomePageActivity) context).hideLoader();
+                ((HomePageActivity_OLD) context).hideLoader();
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 // TODO Auto-generated method stub
-                ((HomePageActivity) context).hideLoader();
+                ((HomePageActivity_OLD) context).hideLoader();
             }
         });
 
@@ -113,7 +113,7 @@ public class ViewReceiptPage extends Fragment {
 
     private void disaplayImage(final String imgFilePath) {
 
-        ((HomePageActivity) getActivity()).runOnUiThread(new Runnable() {
+        ((HomePageActivity_OLD) getActivity()).runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
@@ -121,10 +121,10 @@ public class ViewReceiptPage extends Fragment {
                 ((ImageView) ((Activity) context).findViewById(R.id.receiptImage)).setImageBitmap(BitmapFactory.decodeFile(imgFilePath));
                 ((Activity) context).findViewById(R.id.receiptImage).setVisibility(View.VISIBLE);
 
-                int width = ((HomePageActivity) context).getHeight();
-                int height = ((HomePageActivity) context).getHeight();
+                int width = ((HomePageActivity_OLD) context).getHeight();
+                int height = ((HomePageActivity_OLD) context).getHeight();
 
-                height = width * ((HomePageActivity) context).getAspectRatio();
+                height = width * ((HomePageActivity_OLD) context).getAspectRatio();
                 ((Activity) context).findViewById(R.id.receiptImage).setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, height));
 
             }
@@ -142,7 +142,7 @@ public class ViewReceiptPage extends Fragment {
                 final View view = inflator.inflate(R.layout.receiptdetail_element_row, null);
                 ((TextView) view.findViewById(R.id.elementName)).setText(element.name);
                 ((TextView) view.findViewById(R.id.elemntPrice)).setText("$" + element.price);
-                ((HomePageActivity) getActivity()).runOnUiThread(new Runnable() {
+                ((HomePageActivity_OLD) getActivity()).runOnUiThread(new Runnable() {
 
                     @Override
                     public void run() {

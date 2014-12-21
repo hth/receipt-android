@@ -42,6 +42,13 @@
     <string name="password_recovery_message">An email has been sent to above email-address with
         instructions to reset password</string>
 
+    <!--        Home page         -->
+    <string name="take_photo">TAKE PHOTO</string>
+    <string name="view_receipt">VIEW RECEIPT</string>
+    <string name="choose_photo">CHOOSE PHOTO</string>
+    <string name="month">JUNE 2014</string>
+    <string name="amount">$77.67</string>
+    <string name="processing_info" formatted="false">Receipts in-process %d</string>
 
     <!--        Error String         -->
     <string name="err_str_enter_name">Please enter name</string>
