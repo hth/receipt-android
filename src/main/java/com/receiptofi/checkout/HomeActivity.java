@@ -6,9 +6,13 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -33,9 +37,26 @@ public class HomeActivity extends Activity {
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
     }
 
-    public void invokeMenu(View view) {
-        startActivity(new Intent(this, SettingsPage.class));
-        this.overridePendingTransition(R.anim.left_slide_in, R.anim.right_side_out);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_home, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                // TODO call getUpdate
+                return true;
+            case R.id.menu_settings:
+                launchSettings();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void takePhoto(View view) {
@@ -109,6 +130,10 @@ public class HomeActivity extends Activity {
         });
     }
 
+    private void launchSettings(){
+        startActivity(new Intent(this, SettingsPage.class));
+        finish();
+    }
     @Override
     protected void onDestroy() {
         super.onDestroy();
