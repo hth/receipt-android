@@ -15,6 +15,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
+import com.receiptofi.checkout.db.KeyValue;
 import com.receiptofi.checkout.utils.AppUtils;
 
 import java.io.File;
@@ -53,6 +54,9 @@ public class HomeActivity extends Activity {
                 return true;
             case R.id.menu_settings:
                 launchSettings();
+                return true;
+            case R.id.menu_logout:
+                logout();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -134,6 +138,14 @@ public class HomeActivity extends Activity {
         startActivity(new Intent(this, SettingsPage.class));
         finish();
     }
+
+    public void logout() {
+        KeyValue.clearKeyValues();
+        KeyValue.clearReceiptsDB();
+        startActivity(new Intent(this, LaunchActivity.class));
+        finish();
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
