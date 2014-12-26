@@ -1,12 +1,12 @@
 package com.receiptofi.checkout.http;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.receiptofi.checkout.db.KeyValue;
 import com.receiptofi.checkout.models.ImageModel;
-import com.receiptofi.checkout.utils.StringUtil;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -389,7 +389,7 @@ public final class HTTPUtils {
 
 
     public static boolean bodyContainsError(String body) {
-        return !StringUtil.isEmpty(body) && body.contains("error");
+        return !TextUtils.isEmpty(body) && body.contains("error");
     }
 
     public static Map<String, String> parseHeader(Header[] headers, Set<String> keys) {
@@ -400,7 +400,7 @@ public final class HTTPUtils {
 
             for (Header header : headers) {
                 String key = header.getName();
-                if (!StringUtil.isEmpty(key) && (keys.contains(key))) {
+                if (!TextUtils.isEmpty(key) && (keys.contains(key))) {
                     headerData.put(key, header.getValue());
                     Log.d(TAG, "Fetching header data: key is:  " + key + "  value is:  " + header.getValue());
                 }

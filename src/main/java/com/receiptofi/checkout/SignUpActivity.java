@@ -2,6 +2,7 @@ package com.receiptofi.checkout;
 
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -15,7 +16,6 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.StringUtil;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -123,17 +123,17 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
 
-        if (StringUtil.isEmpty(nameStr)) {
+        if (TextUtils.isEmpty(nameStr)) {
             addErrorMsg(this.getResources().getString(R.string.err_str_enter_name));
         }
-        if (StringUtil.isEmpty(emailStr)) {
+        if (TextUtils.isEmpty(emailStr)) {
             errors.append(this.getResources().getString(R.string.err_str_enter_email));
         } else {
             if (!UserUtils.isValidEmail(emailStr)) {
                 addErrorMsg(this.getResources().getString(R.string.err_str_enter_valid_email));
             }
         }
-        if (StringUtil.isEmpty(passwordStr)) {
+        if (TextUtils.isEmpty(passwordStr)) {
             addErrorMsg(this.getResources().getString(R.string.err_str_enter_password));
         }
         // error string is for keeping the error that needs to be shown to the
