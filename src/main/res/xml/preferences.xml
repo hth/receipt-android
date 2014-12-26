@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <SwitchPreference
+        android:id="@+id/pref_wifi_sync"
+        android:key="@string/key_pref_sync"
+        android:title="@string/pref_sync"
+        android:summaryOn="@string/pref_sync_on"
+        android:summaryOff="@string/pref_sync_off" />
+
+    <EditTextPreference
+        android:id="@+id/pref_username"
+        android:key="@string/key_pref_username"
+        android:title="@string/pref_username"
+        android:inputType="textEmailAddress"/>
+
+    <EditTextPreference
+        android:id="@+id/pref_password"
+        android:key="@string/key_pref_password"
+        android:title="@string/pref_password"
+        android:summary="@string/pref_password_text"
+        android:inputType="textPassword"/>
+
+    <SwitchPreference
+        android:id="@+id/pref_wifi_notification"
+        android:key="@string/key_pref_notification"
+        android:title="@string/pref_notification"
+        android:summaryOn="@string/pref_notification_on"
+        android:summaryOff="@string/pref_notification_off" />
+
+</PreferenceScreen>

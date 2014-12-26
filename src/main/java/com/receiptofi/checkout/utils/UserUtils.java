@@ -7,7 +7,7 @@ import com.receiptofi.checkout.db.KeyValue;
 
 public class UserUtils {
 
-    private static final String TAG = "SUMAN"; //UserUtils.class.getSimpleName();
+    private static final String TAG = UserUtils.class.getSimpleName();
 
     static String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -40,6 +40,7 @@ public class UserUtils {
     }
 
     public static class UserSettings {
+
         public static boolean isWifiSyncOnly() {
             String s = KeyValue.getValue(KeyValue.key.WIFI_SYNC);
             if (s == null || s.equalsIgnoreCase("true")) {
@@ -50,6 +51,7 @@ public class UserUtils {
         }
 
         public static void setWifiSync(Context context, boolean value) {
+            Log.d(TAG, "saving wifi sync only to: " + value);
             KeyValue.insertKeyValue(context, KeyValue.key.WIFI_SYNC, String.valueOf(value));
         }
 

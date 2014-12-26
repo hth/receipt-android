@@ -135,7 +135,7 @@ public class HomeActivity extends Activity {
     }
 
     private void launchSettings(){
-        startActivity(new Intent(this, SettingsPage.class));
+        startActivity(new Intent(this, SettingsActivity.class));
         finish();
     }
 
