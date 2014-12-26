@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.db.KeyValue;
@@ -9,13 +10,11 @@ public class UserUtils {
 
     private static final String TAG = UserUtils.class.getSimpleName();
 
-    static String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
-
     public static boolean isValidEmail(String email) {
-        if (email.matches(emailPattern)) {
-            return true;
-        } else {
+        if (TextUtils.isEmpty(email)) {
             return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
         }
     }
 
