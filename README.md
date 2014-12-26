@@ -653,6 +653,9 @@ HTTP header response when there is exception
 - HTTP body response when there is data
 
     ##### Application submission success
+    
+	Updated data returned in header. Similar to login success. Using the same method update
+    X-R-AUTH and X-R-MAIL when response status code is 200.
 
     - HTTP/1.1 200 OK
 
@@ -669,6 +672,4 @@ HTTP header response when there is exception
 	        Content-Type: application/json;charset=UTF-8
 	        Content-Length: 101
 	        Date: Fri, 26 Dec 2014 10:29:16 GMT
-	
-	        {"auth":"%242a%2415%24aiQz","mail":"email@receiptofi.com"}
 
