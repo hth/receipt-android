@@ -41,7 +41,7 @@ public class HomePageActivity_OLD extends ParentActivity {
     }
 
     public void invokeMenu(View view) {
-        startActivity(new Intent(this, SettingsPage.class));
+        startActivity(new Intent(this, SettingsActivity.class));
         this.overridePendingTransition(R.anim.left_slide_in, R.anim.right_side_out);
     }
 

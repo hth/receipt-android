@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -19,7 +20,6 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.StringUtil;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -109,7 +109,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         // getting username and password
         emailStr = email.getText().toString();
 
-        if (StringUtil.isEmpty(emailStr)) {
+        if (TextUtils.isEmpty(emailStr)) {
             errors.append(this.getResources().getString(R.string.err_str_enter_email));
         } else {
             if (!UserUtils.isValidEmail(emailStr)) {
@@ -132,7 +132,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         Log.d(TAG, "executing authenticateSignUp");
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
-        if (StringUtil.isEmpty(email)) {
+        if (TextUtils.isEmpty(email)) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
             Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);

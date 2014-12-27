@@ -1,21 +1,20 @@
 package com.receiptofi.checkout.utils;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.db.KeyValue;
 
 public class UserUtils {
 
-    private static final String TAG = "SUMAN"; //UserUtils.class.getSimpleName();
-
-    static String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    private static final String TAG = UserUtils.class.getSimpleName();
 
     public static boolean isValidEmail(String email) {
-        if (email.matches(emailPattern)) {
-            return true;
-        } else {
+        if (TextUtils.isEmpty(email)) {
             return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
         }
     }
 
@@ -40,6 +39,7 @@ public class UserUtils {
     }
 
     public static class UserSettings {
+
         public static boolean isWifiSyncOnly() {
             String s = KeyValue.getValue(KeyValue.key.WIFI_SYNC);
             if (s == null || s.equalsIgnoreCase("true")) {
@@ -50,6 +50,7 @@ public class UserUtils {
         }
 
         public static void setWifiSync(Context context, boolean value) {
+            Log.d(TAG, "saving wifi sync only to: " + value);
             KeyValue.insertKeyValue(context, KeyValue.key.WIFI_SYNC, String.valueOf(value));
         }
 
