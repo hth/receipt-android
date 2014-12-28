@@ -6,9 +6,11 @@ package com.receiptofi.checkout.utils;
 public class Constants {
 
     // String length min-max
-    public static final int NAME_MIN = 2;
-    public static final int EMAIL_MIN = 5;
-    public static final int PASSWORD_MIN = 6;
+    public static final int NAME_MIN_LENGTH = 2;
+    public static final int EMAIL_MIN_LENGTH = 5;
+    public static final int PASSWORD_MIN_LENGTH = 6;
+
+
 
 
 }

@@ -79,7 +79,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable editable) {
 
-                passwordRecovery.setEnabled(editable.length() >= Constants.EMAIL_MIN
+                passwordRecovery.setEnabled(editable.length() >= Constants.EMAIL_MIN_LENGTH
                 );
             }
         };

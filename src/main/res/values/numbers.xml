@@ -1,0 +1,8 @@
+<resources>
+
+    <!--    Edit fields limits    -->
+    <integer name="name_max_length">70</integer>
+    <integer name="email_max_length">40</integer>
+    <integer name="password_max_length">30</integer>
+
+</resources>

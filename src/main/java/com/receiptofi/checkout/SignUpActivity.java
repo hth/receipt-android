@@ -113,8 +113,8 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         nameStr = name.getText().toString();
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        return nameStr.length() >= Constants.NAME_MIN && emailStr.length() >= Constants.EMAIL_MIN
-                && passwordStr.length() >= Constants.PASSWORD_MIN;
+        return nameStr.length() >= Constants.NAME_MIN_LENGTH && emailStr.length() >= Constants.EMAIL_MIN_LENGTH
+                && passwordStr.length() >= Constants.PASSWORD_MIN_LENGTH;
     }
 
     private void signUp() {
