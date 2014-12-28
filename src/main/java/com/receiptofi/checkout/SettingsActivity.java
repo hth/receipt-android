@@ -2,12 +2,13 @@ package com.receiptofi.checkout;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.preference.EditTextPreference;
+//import android.preference.EditTextPreference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
+import com.receiptofi.checkout.views.UserNamePreference;
 import com.receiptofi.checkout.utils.UserUtils;
 
 public class SettingsActivity extends PreferenceActivity {
@@ -37,6 +38,7 @@ public class SettingsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
             // set fields in the view
             setPrefs();
+
         }
 
         private void initializePref(){
@@ -51,7 +53,7 @@ public class SettingsActivity extends PreferenceActivity {
         private void setPrefs(){
             // userlogin
             String username = UserUtils.getEmail();
-            EditTextPreference usernamePref = (EditTextPreference)findPreference(getString(R.string.key_pref_username));
+            UserNamePreference usernamePref = (UserNamePreference)findPreference(getString(R.string.key_pref_username));
             usernamePref.setSummary(username);
         }
 
@@ -74,8 +76,37 @@ public class SettingsActivity extends PreferenceActivity {
                 Log.d(TAG, "wifi setting changed");
                 boolean wifiSync = sharedPreferences.getBoolean(key, false);
                 UserUtils.UserSettings.setWifiSync(getActivity().getApplicationContext(), wifiSync);
+            } else if(key.equals(getString(R.string.key_pref_username))) {
+                Log.d(TAG, "Username changed");
+                String username = sharedPreferences.getString(key, null);
+                updateUserCredential(key, username);
+            } else if(key.equals(getString(R.string.key_pref_password))) {
+                Log.d(TAG, "password changed");
+
+            } else if(key.equals(getString(R.string.key_pref_notification))) {
+                Log.d(TAG, "notification setting changed");
+            } else {
+                Log.d(TAG, "No match for key: " + key);
             }
 
+
+        }
+
+        private void updateUserCredential(String key, String data) {
+            Log.d(TAG, "Update username");
+            if(!UserUtils.isValidEmail(data)){
+                //showErrorOnPrefScreen(key, getString(R.string.err_str_enter_valid_email));
+               // SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+               // SharedPreferences.Editor editor = pref.edit();
+                // wifi setting from database
+               // editor.putString(key, UserUtils.getEmail());
+               // editor.commit();
+            }
+        }
+
+        private void showErrorOnPrefScreen(String key, String msg){
+            //EditTextPreference pref = (EditTextPreference)findPreference(key);
+           // pref.setSummary(msg);
         }
     }
 

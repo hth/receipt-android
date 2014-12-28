@@ -55,14 +55,6 @@
     <string name="settings">Settings</string>
 
 
-    <!--        Error String         -->
-    <string name="err_str_enter_name">Please enter name</string>
-    <string name="err_str_enter_email">Please enter email</string>
-    <string name="err_str_enter_password">Please enter password</string>
-    <string name="err_str_enter_valid_email">Please enter valid email</string>
-    <string name="err_str_bundle_null">Bundle is null</string>
-
-
 
     <!--        Menu String         -->
     <string name="menu_refresh">Refresh</string>
@@ -88,7 +80,12 @@
     <string name="pref_notification_on">App will post on notification bar</string>
     <string name="pref_notification_off">App won\'t post on notification bar</string>
 
-
+    <!--        Error String         -->
+    <string name="err_str_enter_name">Please enter name</string>
+    <string name="err_str_enter_email">Please enter email</string>
+    <string name="err_str_enter_password">Please enter password</string>
+    <string name="err_str_enter_valid_email">Please enter valid email</string>
+    <string name="err_str_bundle_null">Bundle is null</string>
 
     <!--       //////////////////////        -->
     <string name="hello_world">Hello world!</string>
