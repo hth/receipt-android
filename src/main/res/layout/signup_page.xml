@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:inputType="textPersonName"
+        android:maxLength="@integer/name_max_length"
         android:hint="@string/hint_name"/>
 
     <EditText
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:inputType="textEmailAddress"
+        android:maxLength="@integer/email_max_length"
         android:hint="@string/hint_email"/>
 
     <EditText
@@ -23,6 +25,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
+        android:maxLength="@integer/password_max_length"
         android:hint="@string/hint_password" />
 
     <LinearLayout

@@ -119,7 +119,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private boolean areFieldsSet() {
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        return emailStr.length() >= Constants.EMAIL_MIN && passwordStr.length() >= Constants.PASSWORD_MIN;
+        return emailStr.length() >= Constants.EMAIL_MIN_LENGTH && passwordStr.length() >= Constants.PASSWORD_MIN_LENGTH;
     }
 
     private void login() {

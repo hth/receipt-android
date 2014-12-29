@@ -7,18 +7,28 @@
         android:summaryOn="@string/pref_sync_on"
         android:summaryOff="@string/pref_sync_off" />
 
+    <com.receiptofi.checkout.views.UserNamePreference
+        android:id="@+id/pref_username"
+        android:key="@string/key_pref_username"
+        android:title="@string/pref_username"
+        android:inputType="textEmailAddress" />
+
+    <!--
     <EditTextPreference
         android:id="@+id/pref_username"
         android:key="@string/key_pref_username"
         android:title="@string/pref_username"
-        android:inputType="textEmailAddress"/>
+        android:inputType="textEmailAddress" />
+    -->
 
     <EditTextPreference
         android:id="@+id/pref_password"
         android:key="@string/key_pref_password"
         android:title="@string/pref_password"
         android:summary="@string/pref_password_text"
-        android:inputType="textPassword"/>
+        android:inputType="textPassword"
+        android:password="true"
+        />
 
     <SwitchPreference
         android:id="@+id/pref_wifi_notification"
