@@ -46,29 +46,34 @@
             android:name="com.receiptofi.checkout.LogInActivity"
             android:label="@string/label_log_in"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:windowSoftInputMode="stateAlwaysVisible">
+        </activity>
         <activity
             android:name="com.facebook.LoginActivity"
             android:label="@string/label_log_in"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name="com.receiptofi.checkout.SignUpActivity"
             android:label="@string/label_sign_up"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:windowSoftInputMode="stateAlwaysVisible">
+        </activity>
         <activity
             android:name="com.receiptofi.checkout.PasswordRecoveryActivity"
             android:label="@string/label_password_recovery"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:windowSoftInputMode="stateAlwaysVisible">
+        </activity>
         <activity
             android:name=".HomeActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".SettingsActivity"
             android:label="@string/settings"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait">
+        </activity>
 
         <receiver android:name="com.receiptofi.checkout.receivers.NetworkConnectivityReceiver">
             <intent-filter>
