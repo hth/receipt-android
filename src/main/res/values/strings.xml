@@ -86,6 +86,19 @@
     <string name="err_str_enter_valid_password">Password must contain at least 6 letters</string>
     <string name="err_str_bundle_null">Bundle is null</string>
 
+    <string-array name="age_range">
+        <item>Select</item>
+        <item>18-22</item>
+        <item>22-25</item>
+        <item>25-30</item>
+        <item>30-35</item>
+        <item>35-40</item>
+        <item>40-45</item>
+        <item>45-50</item>
+        <item>50-55</item>
+        <item>Above 55</item>
+    </string-array>
+
     <!--       //////////////////////        -->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
