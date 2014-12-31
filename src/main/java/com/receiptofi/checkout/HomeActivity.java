@@ -216,7 +216,7 @@ public class HomeActivity extends Activity {
 
             @Override
             public void run() {
-                //Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
+                Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
             }
 
         });
