@@ -205,7 +205,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
 
         //HTTPUtils.doSocialAuthentication(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
-        HTTPUtils.doPost(postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
+        HTTPUtils.doPost(postData, API.SOCIAL_LOGIN_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers) {
@@ -246,7 +246,9 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         Log.d(TAG, "Parent executing afterSuccessfulLogin");
         if (UserUtils.isValidAppUser()) {
             launchHomeScreen();
-            ReceiptUtils.fetchReceiptsAndSave();
+            finish();
+            // TODO make this call later
+            //ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
         }
@@ -258,9 +260,9 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
             @Override
             public void run() {
-                startActivity(new Intent(ParentActivity.this, HomeActivity.class));
-                //TODO
-                // ParentActivity.this.overridePendingTransition(R.anim.right_slide_in, R.anim.left_slide_out);
+                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
                 finish();
             }
         });

@@ -2,6 +2,7 @@ package com.receiptofi.checkout.services;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
@@ -78,9 +79,13 @@ public class ImageUploaderService {
                 iModel.updateStatus(true);
                 updateProcessStatus(iModel);
                 if (AppUtils.getHomePageContext() != null) {
-                    ((HomeActivity) AppUtils.getHomePageContext()).showErrorMsg(response);
                     Log.i("UNPROCESSED DOCUMENT COUNT", "UNPROCESSED DOCUMENT COUNT" + unprocessedCount);
-                    ((HomeActivity) AppUtils.getHomePageContext()).updateUnprocessedCount(unprocessedCount);
+
+                    Message msg = new Message();
+                    msg.what = HomeActivity.IMAGE_UPLOAD_SUCCESS;
+                    msg.obj = response;
+                    msg.arg1 = unprocessedCount;
+                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
 
                 Log.i("image upload done for ", iModel.imgPath);
@@ -94,6 +99,11 @@ public class ImageUploaderService {
 
                 Log.i("image upload failed due to exception ", exception.getMessage());
                 Log.i("image upload failed due to exception ", iModel.imgPath);
+
+                Message msg = new Message();
+                msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
+                msg.obj = "image upload failed due to exception: " + exception.getMessage();
+                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
             }
 
             @Override
@@ -103,6 +113,10 @@ public class ImageUploaderService {
                 updateProcessStatus(iModel);
 
                 Log.i("image upload failed  ", iModel.imgPath);
+                Message msg = new Message();
+                msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
+                msg.obj = "image upload failed due to error: " + Error;
+                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
             }
         });
         iModel.isTriedForUpload = true;

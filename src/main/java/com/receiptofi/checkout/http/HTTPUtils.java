@@ -45,7 +45,7 @@ public final class HTTPUtils {
     public static String HTTP_METHOD_POST = "POST";
     public static String HTTP_METHOD_GET = "GET";
 
-    //private static final String CONNECTION_URL_LOCAL = "http://192.168.0.150:9090/receipt-mobile";
+    private static final String CONNECTION_URL_LOCAL = "http://192.168.1.12:9090/receipt-mobile";
     private static final String CONNECTION_URL_STAGING = "https://test.receiptofi.com/receipt-mobile";
     //private static final String CONNECTION_URL_STAGING = CONNECTION_URL_LOCAL;
     private static final String CONNECTION_URL_PRODUCTION = "https://live.receiptofi.com/receipt-mobile";
@@ -241,7 +241,8 @@ public final class HTTPUtils {
 
     public static void doPost(
             final JSONObject postData,
-            final String API,
+            final String url,
+            final boolean hasAuthentication,
             final ResponseHandler responseHandler
     ) {
         new Thread() {
@@ -251,18 +252,21 @@ public final class HTTPUtils {
                     HttpPost httpPost;
                     HttpClient client = new DefaultHttpClient();
 
-                    if (API != null) {
-                        httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + API);
+                    if (url != null) {
+                        httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL + url);
                     } else {
                         httpPost = new HttpPost(RECEIPTOFI_MOBILE_URL);
                     }
-                    Log.d(TAG, "making api request to server: " + RECEIPTOFI_MOBILE_URL + API + ", Data: " + postData.toString());
+                    Log.d(TAG, "making api request to server: " + RECEIPTOFI_MOBILE_URL + url + ", Data: " + postData.toString());
 
                     StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
-                    //StringEntity postEntity = new StringEntity(postData.toString());
 
                     httpPost.setEntity(postEntity);
                     httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
+                    if(hasAuthentication){
+                        httpPost.setHeader(API.key.XR_AUTH, UserUtils.getAuth());
+                        httpPost.setHeader(API.key.XR_MAIL, UserUtils.getEmail());
+                    }
                     HttpResponse response;
 
                     response = client.execute(httpPost);

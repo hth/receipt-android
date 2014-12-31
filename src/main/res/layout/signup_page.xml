@@ -8,7 +8,7 @@
         android:id="@+id/name"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:inputType="textPersonName"
+        android:inputType="textCapWords"
         android:maxLength="@integer/name_max_length"
         android:hint="@string/hint_name"/>
 
@@ -31,23 +31,24 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:padding="@dimen/activity_horizontal_margin"
         android:orientation="horizontal" >
+
 
         <TextView
             android:id="@+id/age"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
+            android:layout_weight="1"
             android:text="@string/age"
             android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <Spinner
             android:id="@+id/age_spinner"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/gray_button_selector"
-            android:spinnerMode="dropdown" />
+            android:layout_weight="2"
+            android:entries="@array/age_range" />
 
     </LinearLayout>
 
@@ -55,7 +56,6 @@
         android:id="@+id/sign_up_button"
         android:layout_width="match_parent"
         android:layout_height="@dimen/app_button_height"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center"
         android:background="@drawable/blue_button_selector"
         android:text="@string/sign_up"

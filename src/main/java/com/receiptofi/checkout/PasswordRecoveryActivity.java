@@ -43,7 +43,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
     private ProgressDialog loader;
 
-    private final Handler myHandler = new Handler() {
+    private final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
@@ -148,24 +148,24 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        HTTPUtils.doPost(postData, API.PASSWORD_RECOVER_API, new ResponseHandler() {
+        HTTPUtils.doPost(postData, API.PASSWORD_RECOVER_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers) {
                 Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
-                myHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "executing sendRecoveryInfo: onError" + error);
-                myHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onException(Exception exception) {
                 Log.d(TAG, "executing sendRecoveryInfo: onException" + exception.getMessage());
-                myHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
             }
         });
         //TODO

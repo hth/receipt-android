@@ -1,18 +1,26 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.view.MenuItemCompat;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import android.view.Menu;
 import android.view.MenuInflater;
+
+import android.view.LayoutInflater;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.db.KeyValue;
@@ -25,8 +33,35 @@ public class HomeActivity extends Activity {
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
 
+    public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
+    public static final int IMAGE_ALREADY_QUEUED = 0x2565;
+    public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
+
     protected Handler uiThread = new Handler();
+    private Menu optionMenu;
+    // TODO: fix me
     TextView unprocessedDocumentCount;
+
+    public final Handler updateHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case IMAGE_UPLOAD_SUCCESS:
+                    updateUnprocessedCount(msg.arg1);
+                    showErrorMsg((String)msg.obj);
+                    endAnimation();
+                    break;
+                case IMAGE_UPLOAD_FAILURE:
+                    showErrorMsg((String)msg.obj);
+                    endAnimation();
+                    break;
+                case IMAGE_ALREADY_QUEUED:
+                    showErrorMsg((String)msg.obj);
+                    endAnimation();
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +77,7 @@ public class HomeActivity extends Activity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_home, menu);
+        optionMenu = menu;
         return true;
     }
 
@@ -99,6 +135,7 @@ public class HomeActivity extends Activity {
                 if ((pickerImage.length() / 1048576) >= 10) {
                     showErrorMsg("image size should be upto 10Mb");
                 } else {
+                    startAnimation();
                     ImageUpload.process(this, imageAbsolutePath);
                 }
 
@@ -116,14 +153,37 @@ public class HomeActivity extends Activity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
+                startAnimation();
                 ImageUpload.process(this, capturedImgFile);
             }
         }
 
     }
 
+    private void startAnimation(){
+        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ImageView imageView = (ImageView) inflater.inflate(R.layout.action_refresh, null);
+
+        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+        rotation.setRepeatCount(Animation.INFINITE);
+        imageView.startAnimation(rotation);
+
+        MenuItem item = optionMenu.findItem(R.id.menu_refresh);
+        MenuItemCompat.setActionView(item, imageView);
+    }
+
+    private void endAnimation(){
+        MenuItem item = optionMenu.findItem(R.id.menu_refresh);
+         if(item.getActionView()!=null)
+        {
+            // Remove the animation.
+            item.getActionView().clearAnimation();
+            item.setActionView(null);
+        }
+    }
+
     // TODO: fix at start
-    public void updateUnprocessedCount(final int count) {
+    private void updateUnprocessedCount(final int count) {
         uiThread.post(new Runnable() {
 
             @Override
@@ -136,10 +196,9 @@ public class HomeActivity extends Activity {
 
     private void launchSettings(){
         startActivity(new Intent(this, SettingsActivity.class));
-        finish();
     }
 
-    public void logout() {
+    private void logout() {
         KeyValue.clearKeyValues();
         KeyValue.clearReceiptsDB();
         startActivity(new Intent(this, LaunchActivity.class));
@@ -152,7 +211,7 @@ public class HomeActivity extends Activity {
         AppUtils.setHomePageContext(null);
     }
 
-    public void showErrorMsg(final String msg) {
+    private void showErrorMsg(final String msg) {
         uiThread.post(new Runnable() {
 
             @Override

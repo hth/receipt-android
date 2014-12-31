@@ -7,8 +7,10 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,10 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+import android.view.LayoutInflater;
+import android.content.Context;
+import android.app.AlertDialog;
+
 /**
  * Created by PT on 12/8/14.
  */
@@ -38,11 +44,12 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     private EditText name;
     private EditText email;
     private EditText password;
-    private EditText age;
+    private Spinner ageSpinner;
 
     private String nameStr;
     private String emailStr;
     private String passwordStr;
+    private String ageRange;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,6 +84,25 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
         password = (EditText) findViewById(R.id.password);
         password.addTextChangedListener(textWatcher);
+
+        ageSpinner = (Spinner) findViewById(R.id.age_spinner);
+        ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+                if(position == 0){
+                    ageRange = null;
+                    Log.d(TAG, "Selected range is: " +ageRange);
+                    return;
+                }
+                ageRange = (String)adapterView.getItemAtPosition(position);
+                Log.d(TAG, "Selected range is: " +ageRange);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+
+            }
+        });
 
         LinearLayout facebooklogin = (LinearLayout) findViewById(R.id.facebook_login);
         facebooklogin.setOnClickListener(this);
@@ -178,7 +204,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        HTTPUtils.doPost(postData, API.SIGNUP_API, new ResponseHandler() {
+        HTTPUtils.doPost(postData, API.SIGNUP_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers) {
@@ -188,6 +214,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
                 saveAuthKey(SignUpActivity.this, headerData);
                 hideLoader();
                 afterSuccessfulLogin();
+                finish();
             }
 
             @Override

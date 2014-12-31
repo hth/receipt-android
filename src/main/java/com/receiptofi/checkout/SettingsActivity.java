@@ -1,15 +1,31 @@
 package com.receiptofi.checkout;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-//import android.preference.EditTextPreference;
+import android.os.Handler;
+import android.os.Message;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
+import android.widget.Toast;
 
-import com.receiptofi.checkout.views.UserNamePreference;
+import com.receiptofi.checkout.db.KeyValue;
+import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.views.LoginIdPreference;
 import com.receiptofi.checkout.utils.UserUtils;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class SettingsActivity extends PreferenceActivity {
 
@@ -28,6 +44,20 @@ public class SettingsActivity extends PreferenceActivity {
      * This fragment shows the preferences for the first header.
      */
     public static class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+
+        protected static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
+
+        private final Handler updateHandler = new Handler() {
+            public void handleMessage(Message msg) {
+                final int what = msg.what;
+                switch (what) {
+                    case LOGIN_ID_UPDATE_SUCCESS:
+                        updatePrefs();
+                        break;
+                }
+            }
+        };
+
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
@@ -37,7 +67,7 @@ public class SettingsActivity extends PreferenceActivity {
             // Load the preferences from an XML resource
             addPreferencesFromResource(R.xml.preferences);
             // set fields in the view
-            setPrefs();
+            updatePrefs();
 
         }
 
@@ -50,10 +80,10 @@ public class SettingsActivity extends PreferenceActivity {
             editor.commit();
         }
 
-        private void setPrefs(){
-            // userlogin
+        private void updatePrefs(){
+            // login id
             String username = UserUtils.getEmail();
-            UserNamePreference usernamePref = (UserNamePreference)findPreference(getString(R.string.key_pref_username));
+            LoginIdPreference usernamePref = (LoginIdPreference)findPreference(getString(R.string.key_pref_login_id));
             usernamePref.setSummary(username);
         }
 
@@ -73,18 +103,21 @@ public class SettingsActivity extends PreferenceActivity {
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
             Log.d(TAG, "onSharedPreferenceChanged - key is: " + key);
             if (key.equals(getString(R.string.key_pref_sync))) {
-                Log.d(TAG, "wifi setting changed");
+                Log.d(TAG, "wifi setting changed- new value: " + sharedPreferences.getBoolean(key, false));
                 boolean wifiSync = sharedPreferences.getBoolean(key, false);
                 UserUtils.UserSettings.setWifiSync(getActivity().getApplicationContext(), wifiSync);
-            } else if(key.equals(getString(R.string.key_pref_username))) {
-                Log.d(TAG, "Username changed");
-                String username = sharedPreferences.getString(key, null);
-                updateUserCredential(key, username);
+            } else if(key.equals(getString(R.string.key_pref_login_id))) {
+                Log.d(TAG, "Username changed- new value: " + sharedPreferences.getString(key, null));
+                String loginId = sharedPreferences.getString(key, null);
+                updateLoginId(key, loginId);
             } else if(key.equals(getString(R.string.key_pref_password))) {
-                Log.d(TAG, "password changed");
-
+                Log.d(TAG, "password changed- new value: " + sharedPreferences.getString(key, null));
+                String password = sharedPreferences.getString(key, null);
+                updatePassword(key, password);
             } else if(key.equals(getString(R.string.key_pref_notification))) {
-                Log.d(TAG, "notification setting changed");
+                Log.d(TAG, "notification setting changed- new value: " + sharedPreferences.getBoolean(key, false));
+                //TODO add this
+
             } else {
                 Log.d(TAG, "No match for key: " + key);
             }
@@ -92,21 +125,108 @@ public class SettingsActivity extends PreferenceActivity {
 
         }
 
-        private void updateUserCredential(String key, String data) {
-            Log.d(TAG, "Update username");
+        private void updateLoginId(String key, String data) {
+            Log.d(TAG, "executing updateLoginId");
             if(!UserUtils.isValidEmail(data)){
-                //showErrorOnPrefScreen(key, getString(R.string.err_str_enter_valid_email));
-               // SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-               // SharedPreferences.Editor editor = pref.edit();
-                // wifi setting from database
-               // editor.putString(key, UserUtils.getEmail());
-               // editor.commit();
+                showErrorMsg(getString(R.string.err_str_enter_valid_email));
+                resetLoginId();
+            } else {
+                JSONObject postData = new JSONObject();
+
+                try {
+                    postData.put(API.key.SETTING_UPDATE_LOGIN_ID, data);
+                } catch (JSONException e) {
+                    Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
+                }
+
+                HTTPUtils.doPost(postData, API.SETTINGS_UPDATE_LOGIN_ID_API, true, new ResponseHandler() {
+
+                    @Override
+                    public void onSuccess(org.apache.http.Header[] headers) {
+                        Log.d(TAG, "executing updateLoginId: onSuccess");
+                        Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                        Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                        saveAuthKey(getActivity().getApplicationContext(), headerData);
+                        updateHandler.sendEmptyMessage(LOGIN_ID_UPDATE_SUCCESS);
+                    }
+
+                    @Override
+                    public void onError(int statusCode, String error) {
+                        Log.d(TAG, "executing updateLoginId: onError" + error);
+                        resetLoginId();
+                    }
+
+                    @Override
+                    public void onException(Exception exception) {
+                        Log.d(TAG, "executing updateLoginId: onException" + exception.getMessage());
+                        resetLoginId();
+                    }
+                });
             }
         }
 
-        private void showErrorOnPrefScreen(String key, String msg){
-            //EditTextPreference pref = (EditTextPreference)findPreference(key);
-           // pref.setSummary(msg);
+        private void updatePassword(String key, String data) {
+            Log.d(TAG, "executing updatePassword");
+            if(TextUtils.isEmpty(data)){
+                showErrorMsg(getString(R.string.err_str_enter_valid_password));
+            } else {
+                JSONObject postData = new JSONObject();
+
+                try {
+                    postData.put(API.key.SETTING_UPDATE_PASSWORD, data);
+                } catch (JSONException e) {
+                    Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
+                }
+
+                HTTPUtils.doPost(postData, API.SETTINGS_UPDATE_PASSWORD_API, true, new ResponseHandler() {
+
+                    @Override
+                    public void onSuccess(org.apache.http.Header[] headers) {
+                        Log.d(TAG, "executing updatePassword: onSuccess");
+                        Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                        Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                        saveAuthKey(getActivity().getApplicationContext(), headerData);
+                    }
+
+                    @Override
+                    public void onError(int statusCode, String error) {
+                        Log.d(TAG, "executing updatePassword: onError" + error);
+                    }
+
+                    @Override
+                    public void onException(Exception exception) {
+                        Log.d(TAG, "executing updatePassword: onException" + exception.getMessage());
+                    }
+                });
+            }
+        }
+
+        private void resetLoginId(){
+            SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
+            SharedPreferences.Editor editor = pref.edit();
+            // us old email
+            editor.putString(getString(R.string.pref_login_id), UserUtils.getEmail());
+            editor.commit();
+        }
+
+        protected void saveAuthKey(Context context, Map<String, String> map) {
+            for (Map.Entry<String, String> entry : map.entrySet()) {
+                boolean success = KeyValue.insertKeyValue(context, entry.getKey(), entry.getValue());
+                if (!success) {
+                    Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
+                }
+            }
+        }
+
+        public void showErrorMsg(final String msg) {
+            new Handler().post(new Runnable() {
+
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                }
+
+            });
         }
     }
 

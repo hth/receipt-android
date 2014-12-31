@@ -2,12 +2,14 @@ package com.receiptofi.checkout.adapters;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
+import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ParentActivity;
 import com.receiptofi.checkout.models.ImageModel;
 import com.receiptofi.checkout.services.ImageUploaderService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
 import java.util.ArrayList;
@@ -45,7 +47,10 @@ public class ImageUpload {
                 ImageUploaderService.start(context);
             }
         } catch (SQLiteConstraintException e) {
-            ((HomeActivity) context).showErrorMsg("This image already exists in upload queue.");
+            Message msg = new Message();
+            msg.what = HomeActivity.IMAGE_ALREADY_QUEUED;
+            msg.obj = "This image already exists in upload queue.";
+            ((HomeActivity) context).updateHandler.sendMessage(msg);
         }
     }
 }
