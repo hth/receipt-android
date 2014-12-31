@@ -47,7 +47,8 @@ public class PasswordPreference extends EditTextPreference {
         };
 
         EditText text = (EditText) dialog.findViewById(android.R.id.edit);
-        text.setHint(R.string.hint_email);
+        text.setText("");
+        text.setHint(R.string.hint_password);
         text.addTextChangedListener(textWatcher);
 
     }

@@ -71,7 +71,7 @@
                 android:label="@string/settings"
                 android:screenOrientation="portrait">
         </activity>
-        
+
         <receiver android:name="com.receiptofi.checkout.receivers.NetworkConnectivityReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>

@@ -180,6 +180,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                     saveAuthKey(LogInActivity.this, headerData);
                     hideLoader();
                     afterSuccessfulLogin();
+                    finish();
                 } catch (Exception e) {
                     hideLoader();
                     if (e instanceof IOException) {

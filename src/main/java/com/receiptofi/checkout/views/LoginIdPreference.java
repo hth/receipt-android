@@ -15,9 +15,9 @@ import com.receiptofi.checkout.utils.UserUtils;
 /**
  * Created by PT on 12/26/14.
  */
-public class UserNamePreference extends EditTextPreference {
+public class LoginIdPreference extends EditTextPreference {
 
-    public UserNamePreference(Context context, AttributeSet attrs) {
+    public LoginIdPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -47,6 +47,7 @@ public class UserNamePreference extends EditTextPreference {
         };
 
         EditText text = (EditText) dialog.findViewById(android.R.id.edit);
+        text.setText("");
         text.setHint(R.string.hint_email);
         text.addTextChangedListener(textWatcher);
 

@@ -136,7 +136,6 @@ public class HomeActivity extends Activity {
 
     private void launchSettings(){
         startActivity(new Intent(this, SettingsActivity.class));
-        finish();
     }
 
     public void logout() {

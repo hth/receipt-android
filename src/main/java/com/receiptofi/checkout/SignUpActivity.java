@@ -178,7 +178,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        HTTPUtils.doPost(postData, API.SIGNUP_API, new ResponseHandler() {
+        HTTPUtils.doPost(postData, API.SIGNUP_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers) {
@@ -188,6 +188,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
                 saveAuthKey(SignUpActivity.this, headerData);
                 hideLoader();
                 afterSuccessfulLogin();
+                finish();
             }
 
             @Override
