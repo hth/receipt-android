@@ -34,7 +34,7 @@ public class ReceiptModel {
         values.put(ReceiptDB.Receipt.R_ID, rid);
         values.put(ReceiptDB.Receipt.TOTAL, total);
 
-        ReceiptofiApplication.rdh.getWritableDatabase().insert(ReceiptDB.Receipt.TABLE_NAME, null, values);
+        ReceiptofiApplication.RDH.getWritableDatabase().insert(ReceiptDB.Receipt.TABLE_NAME, null, values);
         return false;
     }
 }

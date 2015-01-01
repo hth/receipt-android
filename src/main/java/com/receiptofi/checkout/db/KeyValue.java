@@ -7,6 +7,8 @@ import android.database.Cursor;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.models.ReceiptDB;
 
+import static com.receiptofi.checkout.ReceiptofiApplication.*;
+
 public class KeyValue {
 
     public static class key {
@@ -22,13 +24,13 @@ public class KeyValue {
         values.put(ReceiptDB.KeyVal.KEY, key);
         values.put(ReceiptDB.KeyVal.VALUE, value);
 
-        if (ReceiptofiApplication.rdh.getWritableDatabase().update(
+        if (RDH.getWritableDatabase().update(
                 ReceiptDB.KeyVal.TABLE_NAME,
                 values,
                 ReceiptDB.KeyVal.KEY + "= ?",
                 new String[]{key}
         ) <= 0) {
-            long code = ReceiptofiApplication.rdh.getWritableDatabase().insert(
+            long code = RDH.getWritableDatabase().insert(
                     ReceiptDB.KeyVal.TABLE_NAME,
                     null,
                     values
@@ -40,8 +42,24 @@ public class KeyValue {
         }
     }
 
+    public static void deleteKey(String key) {
+        RDH.getReadableDatabase().delete(
+                ReceiptDB.KeyVal.TABLE_NAME,
+                ReceiptDB.KeyVal.KEY + " = ?",
+                new String[]{key}
+        );
+    }
+
+    public static void removeValue(String key) {
+        RDH.getReadableDatabase().insert(
+                ReceiptDB.KeyVal.TABLE_NAME,
+                key,
+                null
+        );
+    }
+
     public static String getValue(String key) {
-        Cursor c = ReceiptofiApplication.rdh.getReadableDatabase().rawQuery(
+        Cursor c = RDH.getReadableDatabase().rawQuery(
                 "select * from " + ReceiptDB.KeyVal.TABLE_NAME + " where " + ReceiptDB.KeyVal.KEY + "=" + "'" + key + "'",
                 null
         );
@@ -54,12 +72,12 @@ public class KeyValue {
         }
     }
 
-    public static void logout(){
+    public static void logout() {
 
     }
 
     public static void clearKeyValues() {
-        ReceiptofiApplication.rdh.getReadableDatabase().delete(
+        RDH.getReadableDatabase().delete(
                 ReceiptDB.KeyVal.TABLE_NAME,
                 null,
                 null
@@ -67,10 +85,11 @@ public class KeyValue {
     }
 
     public static void clearReceiptsDB() {
-        ReceiptofiApplication.rdh.getReadableDatabase().delete(
+        RDH.getReadableDatabase().delete(
                 ReceiptDB.Receipt.TABLE_NAME,
                 null,
                 null
         );
     }
 }
+
