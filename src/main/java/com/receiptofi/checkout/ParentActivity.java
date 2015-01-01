@@ -25,7 +25,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
-import com.receiptofi.checkout.dbutils.KeyValue;
+import com.receiptofi.checkout.dbutils.KeyValueUtils;
 import com.receiptofi.checkout.dbutils.ReceiptUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
@@ -231,14 +231,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
     protected void checkIfUserExist(String email) {
         if (!UserUtils.userExist(email)) {
-            KeyValue.clearKeyValues();
-            KeyValue.clearReceiptsDB();
+            KeyValueUtils.clearKeyValues();
+            KeyValueUtils.clearReceiptsDB();
         }
     }
 
     protected void saveAuthKey(Context context, Map<String, String> map) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            boolean success = KeyValue.insertKeyValue(context, entry.getKey(), entry.getValue());
+            boolean success = KeyValueUtils.insertKeyValue(context, entry.getKey(), entry.getValue());
             if (!success) {
                 Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
             }
@@ -398,7 +398,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         String token = null;
         //String scope = Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME;
-        //String scopes = "audience:server:client_id:" + API.key.SERVER_CLIENT_ID;
+        //String scopes = "audience:server:client_id:" + API.KEYS.SERVER_CLIENT_ID;
 
         @Override
         protected Void doInBackground(Void... params) {

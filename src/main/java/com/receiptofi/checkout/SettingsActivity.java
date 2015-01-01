@@ -12,7 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.receiptofi.checkout.dbutils.KeyValue;
+import com.receiptofi.checkout.dbutils.KeyValueUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -69,7 +69,6 @@ public class SettingsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
             // set fields in the view
             updatePrefs();
-
         }
 
         private void initializePref() {
@@ -212,7 +211,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         protected void saveAuthKey(Context context, Map<String, String> map) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                boolean success = KeyValue.insertKeyValue(context, entry.getKey(), entry.getValue());
+                boolean success = KeyValueUtils.insertKeyValue(context, entry.getKey(), entry.getValue());
                 if (!success) {
                     Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
                 }

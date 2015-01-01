@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.receiptofi.checkout.dbutils.KeyValue;
+import com.receiptofi.checkout.dbutils.KeyValueUtils;
 
 public class UserUtils {
 
@@ -19,11 +19,11 @@ public class UserUtils {
     }
 
     public static String getEmail() {
-        return KeyValue.getValue(KeyValue.key.XR_MAIL);
+        return KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_MAIL);
     }
 
     public static String getAuth() {
-        return KeyValue.getValue(KeyValue.key.XR_AUTH);
+        return KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_AUTH);
     }
 
     public static boolean userExist(String email) {
@@ -44,7 +44,7 @@ public class UserUtils {
     public static class UserSettings {
 
         public static boolean isWifiSyncOnly() {
-            String s = KeyValue.getValue(KeyValue.key.WIFI_SYNC);
+            String s = KeyValueUtils.getValue(KeyValueUtils.KEYS.WIFI_SYNC);
             if (s == null || s.equalsIgnoreCase("true")) {
                 return true;
             } else {
@@ -54,7 +54,7 @@ public class UserUtils {
 
         public static void setWifiSync(Context context, boolean value) {
             Log.d(TAG, "saving wifi sync only to: " + value);
-            KeyValue.insertKeyValue(context, KeyValue.key.WIFI_SYNC, String.valueOf(value));
+            KeyValueUtils.insertKeyValue(context, KeyValueUtils.KEYS.WIFI_SYNC, String.valueOf(value));
         }
 
         public static boolean isStartImageUploadProcess(Context context) {

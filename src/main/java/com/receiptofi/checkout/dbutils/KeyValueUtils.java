@@ -9,7 +9,7 @@ import com.receiptofi.checkout.models.ReceiptDB;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
-public class KeyValue {
+public class KeyValueUtils {
 
     ReceiptofiApplication application;
 
@@ -44,15 +44,15 @@ public class KeyValue {
         ) > 0;
     }
 
-    public static boolean updateKeyWithBlank(String key) {
+    public static boolean updateValuesForKeyWithBlank(String key) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(ReceiptDB.KeyVal.VALUE, "");
 
         return RDH.getWritableDatabase().update(
                 ReceiptDB.KeyVal.TABLE_NAME,
                 contentValues,
-                key + "=?",
-                new String[]{""}
+                ReceiptDB.KeyVal.KEY + "=?",
+                new String[]{key}
         ) > 0;
     }
 
@@ -86,7 +86,7 @@ public class KeyValue {
         );
     }
 
-    public static class key {
+    public static class KEYS {
         public static String XR_MAIL = "X-R-MAIL";
         public static String XR_AUTH = "X-R-AUTH";
         public static String WIFI_SYNC = "wifi_sync";
