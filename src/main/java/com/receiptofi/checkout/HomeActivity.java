@@ -23,7 +23,8 @@ import android.view.MenuInflater;
 import android.view.LayoutInflater;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
-import com.receiptofi.checkout.db.KeyValue;
+import com.receiptofi.checkout.dbutils.KeyValue;
+import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
 
 import java.io.File;
@@ -88,7 +89,9 @@ public class HomeActivity extends Activity {
     protected void onPause() {
         super.onPause();
         ReceiptofiApplication.homeActivityPaused();
-        endAnimation();
+        if(optionMenu != null) {
+            endAnimation();
+        }
     }
 
     @Override
@@ -210,8 +213,7 @@ public class HomeActivity extends Activity {
     }
 
     private void logout() {
-       // TODO: delete Auth
-       // KeyValue.
+        //KeyValue.removeValue(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
     }

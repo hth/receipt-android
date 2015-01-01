@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.utils;
+package com.receiptofi.checkout.dbutils;
 
 import android.database.Cursor;
 
@@ -9,6 +9,7 @@ import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.models.ReceiptDB;
 import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
@@ -17,28 +18,6 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 
 public class ReceiptUtils {
-
-    public static void getUnprocessCount(){
-
-        HTTPUtils.doGet(API.UNPROCESS_COUNT_API, new ResponseHandler() {
-            @Override
-            public void onSuccess(Header[] headers) {
-
-            }
-
-            @Override
-            public void onError(int statusCode, String error) {
-
-            }
-
-            @Override
-            public void onException(Exception exception) {
-
-            }
-        });
-
-
-    }
 
     public static void fetchReceiptsAndSave() {
 

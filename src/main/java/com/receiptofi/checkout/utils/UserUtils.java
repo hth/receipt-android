@@ -4,7 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.receiptofi.checkout.db.KeyValue;
+import com.receiptofi.checkout.dbutils.KeyValue;
 
 public class UserUtils {
 
@@ -34,14 +34,10 @@ public class UserUtils {
     }
 
     public static boolean isValidAppUser() {
-        String mail = UserUtils.getEmail();
-        String auth = UserUtils.getAuth();
-        Log.d(TAG, "mail is:  " + mail + "  auth is:  " + auth);
-
-        if (mail != null && mail.trim().length() > 0 && auth != null && auth.trim().length() > 0) {
-            return true;
-        } else {
+        if (TextUtils.isEmpty(UserUtils.getEmail()) || TextUtils.isEmpty(UserUtils.getAuth())) {
             return false;
+        } else {
+            return true;
         }
     }
 
