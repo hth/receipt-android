@@ -142,6 +142,51 @@ public final class HTTPUtils {
         }.start();
     }
 
+    //TODO(hth) header may require encoding
+    public static void doGet(
+            final Map<String, String> headers,
+            final String api,
+            final ResponseHandler responseHandler
+    ) {
+        new Thread() {
+            public void run() {
+                try {
+                    HttpGet httpGet;
+                    HttpClient client = new DefaultHttpClient();
+                    if (!TextUtils.isEmpty(api)) {
+                        httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + api);
+                    } else {
+                        httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+                    }
+
+                    httpGet.addHeader(API.key.SIGNIN_EMAIL, headers.get(API.key.SIGNIN_EMAIL));
+                    httpGet.addHeader(API.key.XR_AUTH, headers.get(API.key.XR_AUTH));
+
+                    HttpResponse response = client.execute(httpGet);
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    Log.i(TAG, "statusCode is:  " + statusCode);
+                    String body = EntityUtils.toString(response.getEntity());
+                    Log.i(TAG, "body is:  " + body);
+                    if (statusCode != 200) {
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
+                        responseHandler.onError(statusCode, null);
+                        return;
+                    }
+                    if (!bodyContainsError(body)) {
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
+                        responseHandler.onSuccess(response.getAllHeaders());
+                        return;
+                    } else {
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
+                        responseHandler.onError(statusCode, body);
+                        return;
+                    }
+                } catch (Exception e) {
+                    responseHandler.onException(e);
+                }
+            }
+        }.start();
+    }
 
     public static String getPostResponse(ArrayList<NameValuePair> params, String API)
             throws Exception {
