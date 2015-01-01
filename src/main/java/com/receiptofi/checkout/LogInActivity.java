@@ -166,7 +166,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             errors.delete(0, errors.length());
             return;
         }
-        final ArrayList<NameValuePair> pairs = new ArrayList<NameValuePair>();
+        final ArrayList<NameValuePair> pairs = new ArrayList<>();
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
