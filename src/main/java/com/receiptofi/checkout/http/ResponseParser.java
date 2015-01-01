@@ -112,7 +112,7 @@ public class ResponseParser {
 
     public static ArrayList<ReceiptElement> getReceiptDetails(String response) {
 
-        ArrayList<ReceiptElement> elemets = new ArrayList<ReceiptElement>();
+        ArrayList<ReceiptElement> elements = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++) {
@@ -126,13 +126,13 @@ public class ResponseParser {
                 receiptElement.sequence = receiptElementJson.getString("seq");
                 receiptElement.tax = receiptElementJson.getString("tax");
 
-                elemets.add(receiptElement);
+                elements.add(receiptElement);
             }
         } catch (JSONException e) {
             return null;
         }
 
-        return elemets;
+        return elements;
     }
 
 }

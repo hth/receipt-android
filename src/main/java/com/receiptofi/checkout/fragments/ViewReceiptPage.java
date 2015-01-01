@@ -54,7 +54,7 @@ public class ViewReceiptPage extends Fragment {
         ((HomePageActivity_OLD) context).showLoader("Fetching receipt details");
         final File imageFile = new File(AppUtils.getImageDir() + File.separator + blobId + ".png");
 
-        ArrayList<NameValuePair> headerData = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> headerData = new ArrayList<>();
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 

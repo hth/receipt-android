@@ -43,7 +43,7 @@ public class ReceiptUtils {
 
     public static void fetchReceiptsAndSave() {
 
-        ArrayList<NameValuePair> headerData = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> headerData = new ArrayList<>();
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
@@ -79,7 +79,7 @@ public class ReceiptUtils {
         String[] coloumns = new String[]{ReceiptDB.Receipt.BIZ_NAME, ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX, ReceiptDB.Receipt.TOTAL, ReceiptDB.Receipt.ID, ReceiptDB.Receipt.FILES_BLOB};
         Cursor recieptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(ReceiptDB.Receipt.TABLE_NAME, coloumns, null, null, null, null, null);
 
-        ArrayList<ReceiptModel> rModels = new ArrayList<ReceiptModel>();
+        ArrayList<ReceiptModel> rModels = new ArrayList<>();
         if (recieptsRecords != null && recieptsRecords.getCount() > 0) {
             for (recieptsRecords.moveToFirst(); !recieptsRecords.isAfterLast(); recieptsRecords.moveToNext()) {
                 ReceiptModel model = new ReceiptModel();
