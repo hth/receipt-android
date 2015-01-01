@@ -4,15 +4,18 @@ public class API {
     // Launch api
     public static final String LOGIN_API = "/j_spring_security_check";
     public static final String SIGNUP_API = "/registration.json";
+    public static final String SOCIAL_LOGIN_API = "/authenticate.json";
     public static final String PASSWORD_RECOVER_API = "/recover.json";
 
-    //Settings api
+    // Settings api
     public static final String SETTINGS_UPDATE_LOGIN_ID_API = "/api/updateMail.json";
     public static final String SETTINGS_UPDATE_PASSWORD_API = "/api/updatePassword.json";
 
+    // Home page api
+    public static final String UNPROCESS_COUNT_API = "/api/unprocessed.json";
+
     public static final String UPLOAD_IMAGE_API = "/api/upload.json";
     public static final String GET_ALL_RECEIPTS = "/api/allReceipts.json";
-    public static final String SOCIAL_LOGIN_API = "/authenticate.json";
     public static final String VIEW_RECEIPT_DETAIL = "/api/receiptDetail/";
     public static final String DOWNLOAD_IMAGE = "/api/image/";
 
