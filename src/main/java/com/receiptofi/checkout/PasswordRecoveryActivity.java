@@ -58,19 +58,6 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             }
         }
     }
-    private final Handler updateHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            final int what = msg.what;
-            switch (what) {
-                case PASSWORD_RECOVERY_SUCCESS:
-                    passwordChanged(true);
-                    break;
-                case PASSWORD_RECOVERY_FAILURE:
-                    passwordChanged(false);
-                    break;
-            }
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

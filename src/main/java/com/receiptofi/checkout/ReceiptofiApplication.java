@@ -11,6 +11,7 @@ import com.receiptofi.checkout.utils.AppUtils;
 public class ReceiptofiApplication extends Application {
 
     public static ReceiptofiDatabaseHandler rdh;
+    private static boolean homeActivityVisible;
 
     @Override
     public void onCreate() {
@@ -22,6 +23,16 @@ public class ReceiptofiApplication extends Application {
         AppUtils.createImageDir();
     }
 
+    public static boolean isHomeActivityVisible() {
+        return homeActivityVisible;
+    }
 
+    public static void homeActivityResumed() {
+        homeActivityVisible = true;
+    }
+
+    public static void homeActivityPaused() {
+        homeActivityVisible = false;
+    }
 
 }

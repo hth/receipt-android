@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.HomePageActivity_OLD;
+import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
@@ -85,7 +86,9 @@ public class ImageUploaderService {
                     msg.what = HomeActivity.IMAGE_UPLOAD_SUCCESS;
                     msg.obj = response;
                     msg.arg1 = unprocessedCount;
-                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    if(ReceiptofiApplication.isHomeActivityVisible()) {
+                        ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    }
                 }
 
                 Log.i("image upload done for ", iModel.imgPath);
@@ -103,7 +106,9 @@ public class ImageUploaderService {
                 Message msg = new Message();
                 msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "image upload failed due to exception: " + exception.getMessage();
-                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                if(ReceiptofiApplication.isHomeActivityVisible()) {
+                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                }
             }
 
             @Override
@@ -116,7 +121,9 @@ public class ImageUploaderService {
                 Message msg = new Message();
                 msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "image upload failed due to error: " + Error;
-                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                if(ReceiptofiApplication.isHomeActivityVisible()) {
+                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                }
             }
         });
         iModel.isTriedForUpload = true;

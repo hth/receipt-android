@@ -7,6 +7,7 @@ import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ParentActivity;
+import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.models.ImageModel;
 import com.receiptofi.checkout.services.ImageUploaderService;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -50,7 +51,9 @@ public class ImageUpload {
             Message msg = new Message();
             msg.what = HomeActivity.IMAGE_ALREADY_QUEUED;
             msg.obj = "This image already exists in upload queue.";
-            ((HomeActivity) context).updateHandler.sendMessage(msg);
+            if(ReceiptofiApplication.isHomeActivityVisible()){
+                ((HomeActivity) context).updateHandler.sendMessage(msg);
+            }
         }
     }
 }
