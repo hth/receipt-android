@@ -16,8 +16,8 @@ import com.receiptofi.checkout.db.KeyValue;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.views.LoginIdPreference;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.views.LoginIdPreference;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,7 +43,7 @@ public class SettingsActivity extends PreferenceActivity {
     /**
      * This fragment shows the preferences for the first header.
      */
-    public static class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+    public static class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
         protected static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
 
@@ -71,7 +71,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         }
 
-        private void initializePref(){
+        private void initializePref() {
             boolean wifiSync = UserUtils.UserSettings.isWifiSyncOnly();
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             SharedPreferences.Editor editor = pref.edit();
@@ -80,10 +80,10 @@ public class SettingsActivity extends PreferenceActivity {
             editor.commit();
         }
 
-        private void updatePrefs(){
+        private void updatePrefs() {
             // login id
             String username = UserUtils.getEmail();
-            LoginIdPreference usernamePref = (LoginIdPreference)findPreference(getString(R.string.key_pref_login_id));
+            LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
             usernamePref.setSummary(username);
         }
 
@@ -106,15 +106,15 @@ public class SettingsActivity extends PreferenceActivity {
                 Log.d(TAG, "wifi setting changed- new value: " + sharedPreferences.getBoolean(key, false));
                 boolean wifiSync = sharedPreferences.getBoolean(key, false);
                 UserUtils.UserSettings.setWifiSync(getActivity().getApplicationContext(), wifiSync);
-            } else if(key.equals(getString(R.string.key_pref_login_id))) {
+            } else if (key.equals(getString(R.string.key_pref_login_id))) {
                 Log.d(TAG, "Username changed- new value: " + sharedPreferences.getString(key, null));
                 String loginId = sharedPreferences.getString(key, null);
                 updateLoginId(key, loginId);
-            } else if(key.equals(getString(R.string.key_pref_password))) {
+            } else if (key.equals(getString(R.string.key_pref_password))) {
                 Log.d(TAG, "password changed- new value: " + sharedPreferences.getString(key, null));
                 String password = sharedPreferences.getString(key, null);
                 updatePassword(key, password);
-            } else if(key.equals(getString(R.string.key_pref_notification))) {
+            } else if (key.equals(getString(R.string.key_pref_notification))) {
                 Log.d(TAG, "notification setting changed- new value: " + sharedPreferences.getBoolean(key, false));
                 //TODO add this
 
@@ -127,7 +127,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         private void updateLoginId(String key, String data) {
             Log.d(TAG, "executing updateLoginId");
-            if(!UserUtils.isValidEmail(data)){
+            if (!UserUtils.isValidEmail(data)) {
                 showErrorMsg(getString(R.string.err_str_enter_valid_email));
                 resetLoginId();
             } else {
@@ -167,7 +167,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         private void updatePassword(String key, String data) {
             Log.d(TAG, "executing updatePassword");
-            if(TextUtils.isEmpty(data)){
+            if (TextUtils.isEmpty(data)) {
                 showErrorMsg(getString(R.string.err_str_enter_valid_password));
             } else {
                 JSONObject postData = new JSONObject();
@@ -201,7 +201,7 @@ public class SettingsActivity extends PreferenceActivity {
             }
         }
 
-        private void resetLoginId(){
+        private void resetLoginId() {
             SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
             SharedPreferences.Editor editor = pref.edit();
             // us old email

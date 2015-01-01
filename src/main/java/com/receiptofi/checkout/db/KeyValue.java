@@ -7,7 +7,7 @@ import android.database.Cursor;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.models.ReceiptDB;
 
-import static com.receiptofi.checkout.ReceiptofiApplication.*;
+import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
 public class KeyValue {
 
@@ -50,7 +50,8 @@ public class KeyValue {
         );
     }
 
-    public static void removeValue(String key) {
+    //TODO(hth) not working
+    public static void insertValue(String key) {
         RDH.getReadableDatabase().insert(
                 ReceiptDB.KeyVal.TABLE_NAME,
                 key,
