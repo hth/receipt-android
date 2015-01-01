@@ -7,7 +7,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/activity_horizontal_margin" >
 
         <RelativeLayout
             android:id="@+id/action_layout"
@@ -15,8 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:background="@drawable/receipt_bg"
-            android:orientation="vertical"
-            android:padding="@dimen/activity_horizontal_margin">
+            android:orientation="vertical" >
 
 
             <LinearLayout
@@ -148,35 +148,18 @@
         <View
             android:id="@+id/month_amount"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignBottom="@+id/month"
-            android:layout_marginLeft="80dp"
-            android:layout_marginStart="80dp"
+            android:layout_height="@dimen/app_button_height"
+            android:layout_alignTop="@+id/current_amount"
             android:background="@drawable/action_text_bg" />
 
         <TextView
-            android:id="@+id/month"
+            android:id="@+id/current_amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/action_layout"
-            android:layout_marginLeft="103dp"
-            android:layout_marginStart="103dp"
-            android:layout_marginTop="38dp"
-            android:padding="10dp"
-            android:text="@string/month"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@drawable/action_button_text_color_invert" />
-
-        <TextView
-            android:id="@+id/amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/month"
-            android:layout_toEndOf="@+id/month"
-            android:layout_toRightOf="@+id/month"
-            android:padding="10dp"
+            android:layout_marginTop="@dimen/activity_horizontal_margin_wide"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:text="@string/amount"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@drawable/action_button_text_color"

@@ -26,6 +26,13 @@ public class UserUtils {
         return KeyValue.getValue(KeyValue.key.XR_AUTH);
     }
 
+    public static boolean userExist(String email){
+        if(TextUtils.isEmpty(email)){
+            return false;
+        }
+        return email.equalsIgnoreCase(getEmail());
+    }
+
     public static boolean isValidAppUser() {
         String mail = UserUtils.getEmail();
         String auth = UserUtils.getAuth();

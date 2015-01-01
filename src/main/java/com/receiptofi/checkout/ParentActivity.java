@@ -204,7 +204,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
 
-        //HTTPUtils.doSocialAuthentication(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, new ResponseHandler() {
         HTTPUtils.doPost(postData, API.SOCIAL_LOGIN_API, false, new ResponseHandler() {
 
             @Override
@@ -212,6 +211,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                checkIfUserExist(headerData.get(API.key.XR_MAIL));
                 saveAuthKey(ParentActivity.this, headerData);
                 hideLoader();
                 afterSuccessfulLogin();
@@ -233,6 +233,13 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
+    protected void checkIfUserExist(String email){
+        if(!UserUtils.userExist(email)){
+            KeyValue.clearKeyValues();
+            KeyValue.clearReceiptsDB();
+        }
+    }
+
     protected void saveAuthKey(Context context, Map<String, String> map) {
         for (Map.Entry<String, String> entry : map.entrySet()) {
             boolean success = KeyValue.insertKeyValue(context, entry.getKey(), entry.getValue());
@@ -248,7 +255,9 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             launchHomeScreen();
             finish();
             // TODO make this call later
-            //ReceiptUtils.fetchReceiptsAndSave();
+            ReceiptUtils.updateAmountAndCount();
+
+            ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
         }

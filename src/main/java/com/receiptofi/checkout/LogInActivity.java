@@ -15,6 +15,8 @@ import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 
@@ -168,31 +170,35 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
-        new Thread() {
+        HTTPUtils.doPost(pairs, API.LOGIN_API, new ResponseHandler() {
+
             @Override
-            public void run() {
-                super.run();
-                Header[] headers = null;
-                try {
-                    headers = HTTPUtils.getHTTPHeaders(pairs, API.LOGIN_API);
-                    Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                    Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
-                    saveAuthKey(LogInActivity.this, headerData);
-                    hideLoader();
-                    afterSuccessfulLogin();
-                    finish();
-                } catch (Exception e) {
-                    hideLoader();
-                    if (e instanceof IOException) {
-                        Log.d(TAG, "executing authenticateLogIn: Got IOException:  " + e.getMessage());
-                        showErrorMsg("Please check your network connection");
-                        return;
-                    }
-                    Log.d(TAG, "executing authenticateLogIn: Got exception:  " + e.getMessage());
-                    showErrorMsg("Got Exception:  " + e.getMessage());
-                }
+            public void onSuccess(Header[] headers) {
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
+                Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                checkIfUserExist(headerData.get(API.key.XR_MAIL));
+                saveAuthKey(LogInActivity.this, headerData);
+                hideLoader();
+                afterSuccessfulLogin();
+                finish();
             }
-        }.start();
+
+            @Override
+            public void onException(Exception exception) {
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onException");
+                hideLoader();
+                showErrorMsg("Please check your network connection");
+
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onError");
+                hideLoader();
+                showErrorMsg(error);
+            }
+        });
     }
 
     private void addErrorMsg(String msg) {
