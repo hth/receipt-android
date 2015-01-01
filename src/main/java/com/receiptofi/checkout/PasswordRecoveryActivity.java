@@ -19,7 +19,7 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -63,7 +63,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable editable) {
 
-                passwordRecovery.setEnabled(editable.length() >= Constants.EMAIL_MIN_LENGTH
+                passwordRecovery.setEnabled(editable.length() >= Validation.EMAIL_MIN_LENGTH
                 );
             }
         };

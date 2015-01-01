@@ -16,7 +16,7 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -119,7 +119,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private boolean areFieldsSet() {
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        return emailStr.length() >= Constants.EMAIL_MIN_LENGTH && passwordStr.length() >= Constants.PASSWORD_MIN_LENGTH;
+        return emailStr.length() >= Validation.EMAIL_MIN_LENGTH && passwordStr.length() >= Validation.PASSWORD_MIN_LENGTH;
     }
 
     private void login() {

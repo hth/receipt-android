@@ -3,7 +3,7 @@ package com.receiptofi.checkout.utils;
 /**
  * Created by PT on 12/12/14.
  */
-public class Constants {
+public class Validation {
 
     // String length min-max
     public static final int NAME_MIN_LENGTH = 2;

@@ -10,7 +10,7 @@ import android.util.AttributeSet;
 import android.widget.EditText;
 
 import com.receiptofi.checkout.R;
-import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.Validation;
 
 /**
  * Created by PT on 12/26/14.
@@ -42,7 +42,7 @@ public class PasswordPreference extends EditTextPreference {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(editable.length() >= Constants.PASSWORD_MIN_LENGTH);
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(editable.length() >= Validation.PASSWORD_MIN_LENGTH);
             }
         };
 
