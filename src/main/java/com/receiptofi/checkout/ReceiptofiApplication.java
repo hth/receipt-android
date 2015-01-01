@@ -2,6 +2,7 @@ package com.receiptofi.checkout;
 
 import android.app.Application;
 
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.db.ReceiptofiDatabaseHandler;
 import com.receiptofi.checkout.models.ReceiptDB;
@@ -10,6 +11,7 @@ import com.receiptofi.checkout.utils.AppUtils;
 public class ReceiptofiApplication extends Application {
 
     public static ReceiptofiDatabaseHandler RDH;
+    private static boolean homeActivityVisible;
 
     @Override
     public void onCreate() {
@@ -20,5 +22,17 @@ public class ReceiptofiApplication extends Application {
         AppUtils.setHomePageContext(null);
         AppUtils.createImageDir();
     }
-}
 
+    public static boolean isHomeActivityVisible() {
+        return homeActivityVisible;
+    }
+
+    public static void homeActivityResumed() {
+        homeActivityVisible = true;
+    }
+
+    public static void homeActivityPaused() {
+        homeActivityVisible = false;
+    }
+
+}

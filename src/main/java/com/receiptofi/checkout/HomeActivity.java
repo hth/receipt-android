@@ -43,6 +43,7 @@ public class HomeActivity extends Activity {
     TextView unprocessedDocumentCount;
     TextView currentAmount;
 
+
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
@@ -75,6 +76,19 @@ public class HomeActivity extends Activity {
         currentAmount = (TextView) findViewById(R.id.current_amount);
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ReceiptofiApplication.homeActivityResumed();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        ReceiptofiApplication.homeActivityPaused();
+        endAnimation();
     }
 
     @Override
@@ -196,7 +210,8 @@ public class HomeActivity extends Activity {
     }
 
     private void logout() {
-        KeyValue.clearKeyValues();
+       // TODO: delete Auth
+       // KeyValue.
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
     }
@@ -208,13 +223,6 @@ public class HomeActivity extends Activity {
     }
 
     private void showErrorMsg(final String msg) {
-        uiThread.post(new Runnable() {
-
-            @Override
-            public void run() {
-                Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
-            }
-
-        });
+         Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }
