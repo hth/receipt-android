@@ -251,8 +251,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             launchHomeScreen();
             finish();
             // TODO make this call later
-            //ReceiptUtils.getUnprocessCount();
-
+            ReceiptUtils.getUnprocessCount();
             ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");

@@ -1,7 +1,9 @@
 package com.receiptofi.checkout.dbutils;
 
 import android.database.Cursor;
+import android.os.Message;
 
+import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPEndpoints;
@@ -9,6 +11,7 @@ import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -24,7 +27,13 @@ public class ReceiptUtils {
         HTTPUtils.doGet(API.UNPROCESS_COUNT_API, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers) {
+                Message msg = new Message();
+                msg.what = HomeActivity.UPDATE;
+                //msg.arg1 =
 
+                if (ReceiptofiApplication.isHomeActivityVisible()) {
+                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                }
             }
 
             @Override

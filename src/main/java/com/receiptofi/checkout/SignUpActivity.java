@@ -17,7 +17,7 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -135,8 +135,8 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         nameStr = name.getText().toString();
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        return nameStr.length() >= Constants.NAME_MIN_LENGTH && emailStr.length() >= Constants.EMAIL_MIN_LENGTH
-                && passwordStr.length() >= Constants.PASSWORD_MIN_LENGTH;
+        return nameStr.length() >= Validation.NAME_MIN_LENGTH && emailStr.length() >= Validation.EMAIL_MIN_LENGTH
+                && passwordStr.length() >= Validation.PASSWORD_MIN_LENGTH;
     }
 
     private void signUp() {
