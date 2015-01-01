@@ -144,7 +144,6 @@ public final class HTTPUtils {
 
     //TODO(hth) header may require encoding
     public static void doGet(
-            final Map<String, String> headers,
             final String api,
             final ResponseHandler responseHandler
     ) {
@@ -159,8 +158,8 @@ public final class HTTPUtils {
                         httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
 
-                    httpGet.addHeader(API.key.SIGNIN_EMAIL, headers.get(API.key.SIGNIN_EMAIL));
-                    httpGet.addHeader(API.key.XR_AUTH, headers.get(API.key.XR_AUTH));
+                    httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+                    httpGet.addHeader(API.key.SIGNIN_EMAIL, UserUtils.getEmail());
 
                     HttpResponse response = client.execute(httpGet);
                     int statusCode = response.getStatusLine().getStatusCode();
