@@ -36,21 +36,24 @@ public class KeyValue {
         }
     }
 
-    public static void deleteKey(String key) {
-        RDH.getReadableDatabase().delete(
+    public static boolean deleteKey(String key) {
+        return RDH.getWritableDatabase().delete(
                 ReceiptDB.KeyVal.TABLE_NAME,
                 ReceiptDB.KeyVal.KEY + " = ?",
                 new String[]{key}
-        );
+        ) > 0;
     }
 
-    //TODO(hth) not working
-    public static void insertValue(String key) {
-        RDH.getReadableDatabase().insert(
+    public static boolean updateKeyWithBlank(String key) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(ReceiptDB.KeyVal.VALUE, "");
+
+        return RDH.getWritableDatabase().update(
                 ReceiptDB.KeyVal.TABLE_NAME,
-                key,
-                null
-        );
+                contentValues,
+                key + "=?",
+                new String[]{""}
+        ) > 0;
     }
 
     public static String getValue(String key) {
