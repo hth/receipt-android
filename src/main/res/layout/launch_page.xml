@@ -1,93 +1,99 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/parent_container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/app_light_bg">
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/scrollview"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/app_light_bg">
 
     <RelativeLayout
+        android:id="@+id/parent_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
             android:id="@+id/app_info_container"
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:layout_alignParentTop="true"
-            android:orientation="vertical"
-            android:contentDescription="@string/app_info_cnt_dscp">
+            android:contentDescription="@string/app_info_cnt_dscp"
+            android:orientation="vertical">
 
-        <ImageView
+            <ImageView
                 android:id="@+id/logo_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
                 android:background="@drawable/r_logo"
-                android:contentDescription="@string/app_info_cnt_dscp"/>
-    </RelativeLayout>
+                android:contentDescription="@string/app_info_cnt_dscp" />
+        </RelativeLayout>
 
-    <RelativeLayout
+        <RelativeLayout
             android:id="@+id/login_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/app_info_container"
-            android:padding="@dimen/activity_horizontal_margin"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
 
-        <LinearLayout
+            <LinearLayout
                 android:id="@+id/facebook_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:background="@drawable/facebook_bg_selector"
-                android:orientation="horizontal"
-                android:contentDescription="@string/facebook_login_cnt_dscp">
+                android:contentDescription="@string/facebook_login_cnt_dscp"
+                android:orientation="horizontal">
 
-            <ImageView
+                <ImageView
                     android:id="@+id/facebook_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/facebook"
-                    android:contentDescription="@string/facebook_login_cnt_dscp"/>
+                    android:contentDescription="@string/facebook_login_cnt_dscp" />
 
-            <TextView
+                <TextView
                     android:id="@+id/facebook_login_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/login_with_facebook"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/white"/>
-        </LinearLayout>
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
 
-        <LinearLayout
+            <LinearLayout
                 android:id="@+id/google_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/facebook_login"
                 android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:background="@drawable/google_bg_selector"
-                android:orientation="horizontal"
-                android:contentDescription="@string/google_login_cnt_dscp">
+                android:contentDescription="@string/google_login_cnt_dscp"
+                android:orientation="horizontal">
 
 
-            <ImageView
+                <ImageView
                     android:id="@+id/google_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/google"
-                    android:contentDescription="@string/google_login_cnt_dscp"/>
+                    android:contentDescription="@string/google_login_cnt_dscp" />
 
-            <TextView
+                <TextView
                     android:id="@+id/google_login_text"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:gravity="center"
                     android:layout_weight="1"
+                    android:gravity="center"
                     android:text="@string/login_with_google"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/white"/>
-        </LinearLayout>
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
 
-        <TextView
+            <TextView
                 android:id="@+id/email_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -97,41 +103,43 @@
                 android:gravity="center_horizontal"
                 android:text="@string/use_email"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/darker_gray"/>
+                android:textColor="@android:color/darker_gray" />
 
-        <LinearLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/email_text"
                 android:orientation="horizontal">
 
-            <TextView
+                <TextView
                     android:id="@+id/sign_up_button"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/app_button_height"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:background="@drawable/blue_button_selector"
+                    android:gravity="center"
                     android:text="@string/sign_up"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white"/>
-            <View
+                    android:textColor="@android:color/white" />
+
+                <View
                     android:layout_width="@dimen/activity_horizontal_margin"
                     android:layout_height="match_parent"
-                    android:background="@color/transparent"/>
+                    android:background="@color/transparent" />
 
-            <TextView
+                <TextView
                     android:id="@+id/sign_in_button"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/app_button_height"
                     android:layout_weight="1"
-                    android:gravity="center"
                     android:background="@drawable/blue_button_selector"
+                    android:gravity="center"
                     android:text="@string/log_in"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white"/>
-        </LinearLayout>
+                    android:textColor="@android:color/white" />
+            </LinearLayout>
 
 
+        </RelativeLayout>
     </RelativeLayout>
-</RelativeLayout>
+</ScrollView>
