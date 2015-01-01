@@ -19,6 +19,28 @@ import java.util.ArrayList;
 
 public class ReceiptUtils {
 
+    public static void getUnprocessCount(){
+
+        HTTPUtils.doGet(API.UNPROCESS_COUNT_API, new ResponseHandler() {
+            @Override
+            public void onSuccess(Header[] headers) {
+
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+
+            }
+
+            @Override
+            public void onException(Exception exception) {
+
+            }
+        });
+
+
+    }
+
     public static void fetchReceiptsAndSave() {
 
         ArrayList<NameValuePair> headerData = new ArrayList<NameValuePair>();
