@@ -19,7 +19,7 @@ import java.util.ArrayList;
 
 public class ReceiptUtils {
 
-    public static void getUnprocessCount(){
+    public static void getUnprocessCount() {
 
         HTTPUtils.doGet(API.UNPROCESS_COUNT_API, new ResponseHandler() {
             @Override

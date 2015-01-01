@@ -26,11 +26,11 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.receiptofi.checkout.dbutils.KeyValue;
+import com.receiptofi.checkout.dbutils.ReceiptUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
-import com.receiptofi.checkout.dbutils.ReceiptUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -47,21 +47,17 @@ import java.util.Set;
 
 public class ParentActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 
-    private static final String TAG = ParentActivity.class.getSimpleName();
-
     protected static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     protected static final int FACEBOOK_SIGN_IN = 0x2566;
-
+    private static final String TAG = ParentActivity.class.getSimpleName();
+    private static ArrayList<Activity> backStack;
     protected boolean isFbLoginClicked = false;
     protected boolean isGPlusLoginClicked = false;
-
+    protected Handler uiThread = new Handler();
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
     private boolean mIntentInProgress;
-
-    protected Handler uiThread = new Handler();
     private ProgressDialog loader;
-    private static ArrayList<Activity> backStack;
 
     private static Session openActiveSession(Activity activity, boolean allowLoginUI, List permissions, Session.StatusCallback callback) {
         Log.d(TAG, "Parent executing openActiveSession");
@@ -233,8 +229,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
-    protected void checkIfUserExist(String email){
-        if(!UserUtils.userExist(email)){
+    protected void checkIfUserExist(String email) {
+        if (!UserUtils.userExist(email)) {
             KeyValue.clearKeyValues();
             KeyValue.clearReceiptsDB();
         }

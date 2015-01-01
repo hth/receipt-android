@@ -13,8 +13,8 @@ import android.widget.ListView;
 import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter;
-import com.receiptofi.checkout.models.ReceiptModel;
 import com.receiptofi.checkout.dbutils.ReceiptUtils;
+import com.receiptofi.checkout.models.ReceiptModel;
 
 public class ReceiptListFragment extends Fragment {
 
@@ -22,6 +22,13 @@ public class ReceiptListFragment extends Fragment {
     View screen;
     ListView receiptList;
     ReceiptListAdapter adapter;
+    OnItemClickListener receiptListener = new OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
+            ReceiptModel model = (ReceiptModel) view.getTag();
+            ((HomePageActivity_OLD) context).invokeDetailReceiptView(view, model);
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -42,12 +49,4 @@ public class ReceiptListFragment extends Fragment {
         receiptList.setAdapter(adapter);
         receiptList.setOnItemClickListener(receiptListener);
     }
-
-    OnItemClickListener receiptListener = new OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-            ReceiptModel model = (ReceiptModel) view.getTag();
-            ((HomePageActivity_OLD) context).invokeDetailReceiptView(view, model);
-        }
-    };
 }

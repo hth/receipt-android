@@ -11,12 +11,6 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
 public class KeyValue {
 
-    public static class key {
-        public static String XR_MAIL = "X-R-MAIL";
-        public static String XR_AUTH = "X-R-AUTH";
-        public static String WIFI_SYNC = "wifi_sync";
-    }
-
     ReceiptofiApplication application;
 
     public static boolean insertKeyValue(Context context, String key, String value) {
@@ -87,6 +81,12 @@ public class KeyValue {
                 null,
                 null
         );
+    }
+
+    public static class key {
+        public static String XR_MAIL = "X-R-MAIL";
+        public static String XR_AUTH = "X-R-AUTH";
+        public static String WIFI_SYNC = "wifi_sync";
     }
 }
 

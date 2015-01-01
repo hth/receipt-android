@@ -64,7 +64,7 @@ public final class HTTPUtils {
 
                     httpPost.setEntity(postEntity);
                     httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
-                    if(hasAuthentication){
+                    if (hasAuthentication) {
                         httpPost.setHeader(API.key.XR_AUTH, UserUtils.getAuth());
                         httpPost.setHeader(API.key.XR_MAIL, UserUtils.getEmail());
                     }
@@ -103,35 +103,35 @@ public final class HTTPUtils {
         new Thread() {
             public void run() {
                 try {
-        HttpPost httpPost;
-        HttpClient client = new DefaultHttpClient();
-        if (!TextUtils.isEmpty(API)) {
-            httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + API);
-        } else {
-            httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
-        }
+                    HttpPost httpPost;
+                    HttpClient client = new DefaultHttpClient();
+                    if (!TextUtils.isEmpty(API)) {
+                        httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + API);
+                    } else {
+                        httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+                    }
 
-            httpPost.setEntity(new UrlEncodedFormEntity(params));
+                    httpPost.setEntity(new UrlEncodedFormEntity(params));
 
-        HttpResponse response = client.execute(httpPost);
-            int statusCode = response.getStatusLine().getStatusCode();
-            Log.i(TAG, "statusCode is:  " + statusCode);
-            String body = EntityUtils.toString(response.getEntity());
-            Log.i(TAG, "body is:  " + body);
-            if (statusCode != 200) {
-                Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
-                responseHandler.onError(statusCode, null);
-                return;
-            }
-            if (!bodyContainsError(body)) {
-                Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
-                responseHandler.onSuccess(response.getAllHeaders());
-                return;
-            } else {
-                Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
-                responseHandler.onError(statusCode, body);
-                return;
-            }
+                    HttpResponse response = client.execute(httpPost);
+                    int statusCode = response.getStatusLine().getStatusCode();
+                    Log.i(TAG, "statusCode is:  " + statusCode);
+                    String body = EntityUtils.toString(response.getEntity());
+                    Log.i(TAG, "body is:  " + body);
+                    if (statusCode != 200) {
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
+                        responseHandler.onError(statusCode, null);
+                        return;
+                    }
+                    if (!bodyContainsError(body)) {
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
+                        responseHandler.onSuccess(response.getAllHeaders());
+                        return;
+                    } else {
+                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
+                        responseHandler.onError(statusCode, body);
+                        return;
+                    }
                 } catch (Exception e) {
                     responseHandler.onException(e);
                 }

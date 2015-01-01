@@ -19,9 +19,24 @@ public class ImageModel {
     public int noOfTimesTried = 1;
     public Thread uploaderThread;
 
-    public static final class STATUS {
-        public static final String PROCESSED = "P";
-        public static final String UNPROCESSED = "U";
+    public static ArrayList<ImageModel> getAllUnprocessedImages() {
+        ArrayList<ImageModel> models = new ArrayList<ImageModel>();
+        Cursor c = ReceiptofiApplication.RDH.getReadableDatabase().query
+                (ReceiptDB.UploadQueue.TABLE_NAME,
+                        new String[]{ReceiptDB.UploadQueue.IMAGE_PATH},
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
+                );
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+            ImageModel model = new ImageModel();
+            model.imgPath = c.getString(0);
+            models.add(model);
+        }
+        return models;
     }
 
     public boolean addToQueue() throws SQLiteConstraintException {
@@ -86,23 +101,8 @@ public class ImageModel {
         return true;
     }
 
-    public static ArrayList<ImageModel> getAllUnprocessedImages() {
-        ArrayList<ImageModel> models = new ArrayList<ImageModel>();
-        Cursor c = ReceiptofiApplication.RDH.getReadableDatabase().query
-                (ReceiptDB.UploadQueue.TABLE_NAME,
-                        new String[]{ReceiptDB.UploadQueue.IMAGE_PATH},
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                );
-        if (c != null && c.getCount() > 0) {
-            c.moveToFirst();
-            ImageModel model = new ImageModel();
-            model.imgPath = c.getString(0);
-            models.add(model);
-        }
-        return models;
+    public static final class STATUS {
+        public static final String PROCESSED = "P";
+        public static final String UNPROCESSED = "U";
     }
 }

@@ -6,7 +6,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
-import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
@@ -86,7 +85,7 @@ public class ImageUploaderService {
                     msg.what = HomeActivity.IMAGE_UPLOAD_SUCCESS;
                     msg.obj = response;
                     msg.arg1 = unprocessedCount;
-                    if(ReceiptofiApplication.isHomeActivityVisible()) {
+                    if (ReceiptofiApplication.isHomeActivityVisible()) {
                         ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                     }
                 }
@@ -106,7 +105,7 @@ public class ImageUploaderService {
                 Message msg = new Message();
                 msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "image upload failed due to exception: " + exception.getMessage();
-                if(ReceiptofiApplication.isHomeActivityVisible()) {
+                if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
             }
@@ -121,7 +120,7 @@ public class ImageUploaderService {
                 Message msg = new Message();
                 msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "image upload failed due to error: " + Error;
-                if(ReceiptofiApplication.isHomeActivityVisible()) {
+                if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
             }

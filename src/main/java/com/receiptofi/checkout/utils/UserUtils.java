@@ -26,8 +26,8 @@ public class UserUtils {
         return KeyValue.getValue(KeyValue.key.XR_AUTH);
     }
 
-    public static boolean userExist(String email){
-        if(TextUtils.isEmpty(email)){
+    public static boolean userExist(String email) {
+        if (TextUtils.isEmpty(email)) {
             return false;
         }
         return email.equalsIgnoreCase(getEmail());
