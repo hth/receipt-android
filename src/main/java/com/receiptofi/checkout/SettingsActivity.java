@@ -12,6 +12,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.receiptofi.checkout.dbutils.DBUtils;
 import com.receiptofi.checkout.dbutils.KeyValueUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
@@ -69,6 +70,9 @@ public class SettingsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
             // set fields in the view
             updatePrefs();
+            // Initial DB Setup
+            DBUtils.dbInitialize();
+
         }
 
         private void initializePref() {

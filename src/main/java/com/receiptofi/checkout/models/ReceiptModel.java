@@ -3,6 +3,7 @@ package com.receiptofi.checkout.models;
 import android.content.ContentValues;
 
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.db.ReceiptDB;
 
 public class ReceiptModel {
     public String bizName;

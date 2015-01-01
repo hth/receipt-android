@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.db.ReceiptDB;
 
 import java.util.ArrayList;
 

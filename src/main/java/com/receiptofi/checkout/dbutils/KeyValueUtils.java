@@ -5,7 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 
 import com.receiptofi.checkout.ReceiptofiApplication;
-import com.receiptofi.checkout.models.ReceiptDB;
+import com.receiptofi.checkout.db.ReceiptDB;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
