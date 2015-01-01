@@ -4,6 +4,7 @@ import android.database.Cursor;
 
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.HTTPEndpoints;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.models.ReceiptDB;
@@ -17,6 +18,11 @@ import java.util.ArrayList;
 
 public class ReceiptUtils {
 
+    public static void updateAmountAndCount(){
+
+
+    }
+
     public static void fetchReceiptsAndSave() {
 
         ArrayList<NameValuePair> headerData = new ArrayList<NameValuePair>();
@@ -24,7 +30,7 @@ public class ReceiptUtils {
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
         HTTPUtils.AsyncRequest(headerData, API.GET_ALL_RECEIPTS,
-                HTTPUtils.HTTP_METHOD_GET, new ResponseHandler() {
+                HTTPEndpoints.HTTP_METHOD_GET, new ResponseHandler() {
 
                     @Override
                     public void onSuccess(Header[] arr) {

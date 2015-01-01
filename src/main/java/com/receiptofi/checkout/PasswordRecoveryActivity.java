@@ -43,6 +43,21 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
     private ProgressDialog loader;
 
+    class PasswordRecoveryHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case PASSWORD_RECOVERY_SUCCESS:
+                    passwordChanged(true);
+                    break;
+                case PASSWORD_RECOVERY_FAILURE:
+                    passwordChanged(false);
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
+    }
     private final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
@@ -148,24 +163,25 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
+        final PasswordRecoveryHandler handler = new PasswordRecoveryHandler();
         HTTPUtils.doPost(postData, API.PASSWORD_RECOVER_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers) {
                 Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
-                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                handler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "executing sendRecoveryInfo: onError" + error);
-                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                handler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onException(Exception exception) {
                 Log.d(TAG, "executing sendRecoveryInfo: onException" + exception.getMessage());
-                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+                handler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
             }
         });
         //TODO

@@ -54,6 +54,10 @@ public class KeyValue {
         }
     }
 
+    public static void logout(){
+
+    }
+
     public static void clearKeyValues() {
         ReceiptofiApplication.rdh.getReadableDatabase().delete(
                 ReceiptDB.KeyVal.TABLE_NAME,

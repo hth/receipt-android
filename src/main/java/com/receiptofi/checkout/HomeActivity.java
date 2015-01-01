@@ -41,6 +41,7 @@ public class HomeActivity extends Activity {
     private Menu optionMenu;
     // TODO: fix me
     TextView unprocessedDocumentCount;
+    TextView currentAmount;
 
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -71,6 +72,9 @@ public class HomeActivity extends Activity {
         //TODO needed for ImageUploaderService
         AppUtils.setHomePageContext(this);
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
+        currentAmount = (TextView) findViewById(R.id.current_amount);
+
+
     }
 
     @Override
@@ -184,14 +188,7 @@ public class HomeActivity extends Activity {
 
     // TODO: fix at start
     private void updateUnprocessedCount(final int count) {
-        uiThread.post(new Runnable() {
-
-            @Override
-            public void run() {
-                unprocessedDocumentCount.setText(String.format(getString(R.string.processing_info), count));
-            }
-
-        });
+        unprocessedDocumentCount.setText(String.format(getString(R.string.processing_info), count));
     }
 
     private void launchSettings(){
@@ -200,7 +197,6 @@ public class HomeActivity extends Activity {
 
     private void logout() {
         KeyValue.clearKeyValues();
-        KeyValue.clearReceiptsDB();
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
     }

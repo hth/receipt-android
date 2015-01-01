@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.HTTPEndpoints;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.models.ReceiptElement;
@@ -57,7 +58,7 @@ public class ViewReceiptPage extends Fragment {
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
-        HTTPUtils.AsyncRequest(headerData, API.VIEW_RECEIPT_DETAIL + receiptId + ".json", HTTPUtils.HTTP_METHOD_GET, new ResponseHandler() {
+        HTTPUtils.AsyncRequest(headerData, API.VIEW_RECEIPT_DETAIL + receiptId + ".json", HTTPEndpoints.HTTP_METHOD_GET, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] arr) {

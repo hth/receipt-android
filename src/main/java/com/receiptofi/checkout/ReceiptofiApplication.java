@@ -11,7 +11,6 @@ import com.receiptofi.checkout.utils.AppUtils;
 public class ReceiptofiApplication extends Application {
 
     public static ReceiptofiDatabaseHandler rdh;
-    GoogleApiClient googleApiClient;
 
     @Override
     public void onCreate() {
@@ -23,12 +22,6 @@ public class ReceiptofiApplication extends Application {
         AppUtils.createImageDir();
     }
 
-    public void setGoogleApiClient(GoogleApiClient googleApiClient) {
-        this.googleApiClient = googleApiClient;
-    }
 
-    public GoogleApiClient getGoogleApiClient(GoogleApiClient googleApiClient) {
-        return this.googleApiClient;
-    }
 
 }
