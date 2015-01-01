@@ -10,14 +10,14 @@ import com.receiptofi.checkout.utils.AppUtils;
 
 public class ReceiptofiApplication extends Application {
 
-    public static ReceiptofiDatabaseHandler rdh;
+    public static ReceiptofiDatabaseHandler RDH;
     private static boolean homeActivityVisible;
 
     @Override
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
-        rdh = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
+        RDH = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
         ImageUpload.initializeQueue();
         AppUtils.setHomePageContext(null);
         AppUtils.createImageDir();

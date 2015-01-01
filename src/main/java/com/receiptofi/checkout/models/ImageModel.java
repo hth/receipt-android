@@ -32,7 +32,7 @@ public class ImageModel {
         values.put(ReceiptDB.UploadQueue.IMAGE_PATH, imgPath);
         values.put(ReceiptDB.UploadQueue.STATUS, STATUS.UNPROCESSED);
 
-        responseCode = ReceiptofiApplication.rdh.getWritableDatabase().insertOrThrow(ReceiptDB.UploadQueue.TABLE_NAME, null, values);
+        responseCode = ReceiptofiApplication.RDH.getWritableDatabase().insertOrThrow(ReceiptDB.UploadQueue.TABLE_NAME, null, values);
 
         if (responseCode != -1) {
             return true;
@@ -43,7 +43,7 @@ public class ImageModel {
     }
 
     public void deleteFromQueue() {
-        ReceiptofiApplication.rdh.getWritableDatabase().delete(ReceiptDB.UploadQueue.TABLE_NAME, ReceiptDB.UploadQueue.IMAGE_PATH + "=?", new String[]{imgPath});
+        ReceiptofiApplication.RDH.getWritableDatabase().delete(ReceiptDB.UploadQueue.TABLE_NAME, ReceiptDB.UploadQueue.IMAGE_PATH + "=?", new String[]{imgPath});
     }
 
     public synchronized boolean updateStatus(boolean isProcessed) {
@@ -66,7 +66,7 @@ public class ImageModel {
             uploadValues.put(ReceiptDB.UploadQueue.STATUS, STATUS.UNPROCESSED);
         }
 
-        ReceiptofiApplication.rdh.getWritableDatabase().update(
+        ReceiptofiApplication.RDH.getWritableDatabase().update(
                 ReceiptDB.UploadQueue.TABLE_NAME,
                 uploadValues,
                 ReceiptDB.UploadQueue.IMAGE_PATH + "=?",
@@ -77,7 +77,7 @@ public class ImageModel {
         imageIndexValue.put(ReceiptDB.ImageIndex.IMAGE_PATH, imgPath);
         imageIndexValue.put(ReceiptDB.ImageIndex.BLOB_ID, blobId);
 
-        ReceiptofiApplication.rdh.getWritableDatabase().insert(ReceiptDB.ImageIndex.TABLE_NAME, null, imageIndexValue);
+        ReceiptofiApplication.RDH.getWritableDatabase().insert(ReceiptDB.ImageIndex.TABLE_NAME, null, imageIndexValue);
 
         if (isProcessed) {
             deleteFromQueue();
@@ -88,7 +88,7 @@ public class ImageModel {
 
     public static ArrayList<ImageModel> getAllUnprocessedImages() {
         ArrayList<ImageModel> models = new ArrayList<ImageModel>();
-        Cursor c = ReceiptofiApplication.rdh.getReadableDatabase().query
+        Cursor c = ReceiptofiApplication.RDH.getReadableDatabase().query
                 (ReceiptDB.UploadQueue.TABLE_NAME,
                         new String[]{ReceiptDB.UploadQueue.IMAGE_PATH},
                         null,
