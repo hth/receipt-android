@@ -6,7 +6,7 @@ public class ReceiptDB {
 
     public static class Receipt {
 
-        public static final String TABLE_NAME = "Receipts";
+        public static final String TABLE_NAME = "RECEIPT";
         public static final String BIZ_NAME = "bizName";
         public static final String BIZ_STORE_ADDRESS = "bizStoreAddress";
         public static final String BIZ_STORE_PHONE = "bizStorePhone";
@@ -23,21 +23,21 @@ public class ReceiptDB {
     }
 
     public static class ImageIndex {
-        public static final String TABLE_NAME = "ImageIndex";
+        public static final String TABLE_NAME = "IMAGE_INDEX";
         public static final String BLOB_ID = "blobId";
         public static final String IMAGE_PATH = "imagePath";
 
     }
 
     public static class UploadQueue {
-        public static final String TABLE_NAME = "UploadQueue";
+        public static final String TABLE_NAME = "UPLOAD_QUEUE";
         public static final String IMAGE_DATE = "imageDate";
         public static final String IMAGE_PATH = "imagePath";
         public static final String STATUS = "status";
     }
 
     public static class KeyVal {
-        public static final String TABLE_NAME = "keyvalues";
+        public static final String TABLE_NAME = "KEY_VALUE";
         public static final String KEY = "key";
         public static final String VALUE = "value";
     }
