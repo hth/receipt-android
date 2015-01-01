@@ -25,12 +25,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
-import com.receiptofi.checkout.db.KeyValue;
+import com.receiptofi.checkout.dbutils.KeyValue;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
-import com.receiptofi.checkout.utils.ReceiptUtils;
+import com.receiptofi.checkout.dbutils.ReceiptUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -255,7 +255,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             launchHomeScreen();
             finish();
             // TODO make this call later
-            ReceiptUtils.updateAmountAndCount();
+            //ReceiptUtils.getUnprocessCount();
 
             ReceiptUtils.fetchReceiptsAndSave();
         } else {

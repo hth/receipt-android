@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.db;
+package com.receiptofi.checkout.dbutils;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -71,10 +71,6 @@ public class KeyValue {
         } else {
             return null;
         }
-    }
-
-    public static void logout() {
-
     }
 
     public static void clearKeyValues() {

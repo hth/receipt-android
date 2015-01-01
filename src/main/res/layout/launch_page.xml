@@ -13,8 +13,9 @@
         <RelativeLayout
             android:id="@+id/app_info_container"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="330dp"
             android:layout_alignParentTop="true"
+            android:padding="20dp"
             android:contentDescription="@string/app_info_cnt_dscp"
             android:orientation="vertical">
 
@@ -23,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:background="@drawable/r_logo"
+                android:src="@drawable/picture"
                 android:contentDescription="@string/app_info_cnt_dscp" />
         </RelativeLayout>
 

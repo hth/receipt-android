@@ -5,7 +5,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.receiptofi.checkout.db.KeyValue;
 import com.receiptofi.checkout.models.ImageModel;
 import com.receiptofi.checkout.utils.UserUtils;
 
@@ -30,9 +29,7 @@ import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
