@@ -9,6 +9,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
@@ -17,14 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import android.view.Menu;
-import android.view.MenuInflater;
-
-import android.view.LayoutInflater;
-
 import com.receiptofi.checkout.adapters.ImageUpload;
-import com.receiptofi.checkout.dbutils.KeyValue;
-import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
 
 import java.io.File;

@@ -6,11 +6,9 @@ import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
-import com.receiptofi.checkout.ParentActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.models.ImageModel;
 import com.receiptofi.checkout.services.ImageUploaderService;
-import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
 import java.util.ArrayList;

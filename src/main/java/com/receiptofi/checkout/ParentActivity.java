@@ -26,11 +26,11 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.receiptofi.checkout.dbutils.KeyValue;
+import com.receiptofi.checkout.dbutils.ReceiptUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
-import com.receiptofi.checkout.dbutils.ReceiptUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;

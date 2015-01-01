@@ -6,7 +6,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
-import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
