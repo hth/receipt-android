@@ -12,16 +12,6 @@ public class ReceiptofiApplication extends Application {
     public static ReceiptofiDatabaseHandler RDH;
     private static boolean homeActivityVisible;
 
-    @Override
-    public void onCreate() {
-        // TODO Auto-generated method stub
-        super.onCreate();
-        RDH = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
-        ImageUpload.initializeQueue();
-        AppUtils.setHomePageContext(null);
-        AppUtils.createImageDir();
-    }
-
     public static boolean isHomeActivityVisible() {
         return homeActivityVisible;
     }
@@ -32,6 +22,16 @@ public class ReceiptofiApplication extends Application {
 
     public static void homeActivityPaused() {
         homeActivityVisible = false;
+    }
+
+    @Override
+    public void onCreate() {
+        // TODO Auto-generated method stub
+        super.onCreate();
+        RDH = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
+        ImageUpload.initializeQueue();
+        AppUtils.setHomePageContext(null);
+        AppUtils.createImageDir();
     }
 
 }

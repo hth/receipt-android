@@ -15,8 +15,8 @@ import java.util.Date;
 public class AppUtils {
 
     static File image;
-    private static Context homePageContext;
     static File receiptofiImgDir;
+    private static Context homePageContext;
 
     public static String getImageFileFromURI(Context context, Uri uri) {
         String[] filePathColumn = {MediaStore.Images.Media.DATA};

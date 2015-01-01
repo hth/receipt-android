@@ -85,13 +85,13 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         ageSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-                if(position == 0){
+                if (position == 0) {
                     ageRange = null;
-                    Log.d(TAG, "Selected range is: " +ageRange);
+                    Log.d(TAG, "Selected range is: " + ageRange);
                     return;
                 }
-                ageRange = (String)adapterView.getItemAtPosition(position);
-                Log.d(TAG, "Selected range is: " +ageRange);
+                ageRange = (String) adapterView.getItemAtPosition(position);
+                Log.d(TAG, "Selected range is: " + ageRange);
             }
 
             @Override

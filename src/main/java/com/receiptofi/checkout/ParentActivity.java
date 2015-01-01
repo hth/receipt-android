@@ -47,21 +47,17 @@ import java.util.Set;
 
 public class ParentActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
 
-    private static final String TAG = ParentActivity.class.getSimpleName();
-
     protected static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     protected static final int FACEBOOK_SIGN_IN = 0x2566;
-
+    private static final String TAG = ParentActivity.class.getSimpleName();
+    private static ArrayList<Activity> backStack;
     protected boolean isFbLoginClicked = false;
     protected boolean isGPlusLoginClicked = false;
-
+    protected Handler uiThread = new Handler();
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
     private boolean mIntentInProgress;
-
-    protected Handler uiThread = new Handler();
     private ProgressDialog loader;
-    private static ArrayList<Activity> backStack;
 
     private static Session openActiveSession(Activity activity, boolean allowLoginUI, List permissions, Session.StatusCallback callback) {
         Log.d(TAG, "Parent executing openActiveSession");
@@ -233,8 +229,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
-    protected void checkIfUserExist(String email){
-        if(!UserUtils.userExist(email)){
+    protected void checkIfUserExist(String email) {
+        if (!UserUtils.userExist(email)) {
             KeyValue.clearKeyValues();
             KeyValue.clearReceiptsDB();
         }

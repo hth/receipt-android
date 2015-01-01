@@ -28,8 +28,8 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
-           // startActivity(new Intent(this, HomeActivity.class));
-           // finish();
+            // startActivity(new Intent(this, HomeActivity.class));
+            // finish();
         }
         Log.d(TAG, "executing onCreate");
         setContentView(R.layout.launch_page);

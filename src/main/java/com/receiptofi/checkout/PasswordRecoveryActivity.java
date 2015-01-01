@@ -32,32 +32,14 @@ import org.json.JSONObject;
  */
 public class PasswordRecoveryActivity extends Activity implements View.OnClickListener {
 
-    private static final String TAG = PasswordRecoveryActivity.class.getSimpleName();
-
     protected static final int PASSWORD_RECOVERY_SUCCESS = 0x2565;
     protected static final int PASSWORD_RECOVERY_FAILURE = 0x2566;
-
+    private static final String TAG = PasswordRecoveryActivity.class.getSimpleName();
     private StringBuilder errors = new StringBuilder();
     private EditText email;
     private String emailStr;
 
     private ProgressDialog loader;
-
-    class PasswordRecoveryHandler extends Handler {
-        @Override
-        public void handleMessage(Message msg) {
-            switch (msg.what) {
-                case PASSWORD_RECOVERY_SUCCESS:
-                    passwordChanged(true);
-                    break;
-                case PASSWORD_RECOVERY_FAILURE:
-                    passwordChanged(false);
-                    break;
-                default:
-                    super.handleMessage(msg);
-            }
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -212,5 +194,21 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             passwordRecovery.setEnabled(true);
         }
         recoveryStatus.setVisibility(View.VISIBLE);
+    }
+
+    class PasswordRecoveryHandler extends Handler {
+        @Override
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case PASSWORD_RECOVERY_SUCCESS:
+                    passwordChanged(true);
+                    break;
+                case PASSWORD_RECOVERY_FAILURE:
+                    passwordChanged(false);
+                    break;
+                default:
+                    super.handleMessage(msg);
+            }
+        }
     }
 }

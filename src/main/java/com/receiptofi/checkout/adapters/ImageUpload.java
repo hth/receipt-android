@@ -49,7 +49,7 @@ public class ImageUpload {
             Message msg = new Message();
             msg.what = HomeActivity.IMAGE_ALREADY_QUEUED;
             msg.obj = "This image already exists in upload queue.";
-            if(ReceiptofiApplication.isHomeActivityVisible()){
+            if (ReceiptofiApplication.isHomeActivityVisible()) {
                 ((HomeActivity) context).updateHandler.sendMessage(msg);
             }
         }

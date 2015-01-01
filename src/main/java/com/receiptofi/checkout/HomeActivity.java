@@ -27,40 +27,36 @@ import java.io.File;
 
 public class HomeActivity extends Activity {
 
-    private static final int RESULT_IMAGE_GALLERY = 0x4c5;
-    private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
-
     public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
-
-    protected Handler uiThread = new Handler();
-    private Menu optionMenu;
-    // TODO: fix me
-    TextView unprocessedDocumentCount;
-    TextView currentAmount;
-
-
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case IMAGE_UPLOAD_SUCCESS:
                     updateUnprocessedCount(msg.arg1);
-                    showErrorMsg((String)msg.obj);
+                    showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
                 case IMAGE_UPLOAD_FAILURE:
-                    showErrorMsg((String)msg.obj);
+                    showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
                 case IMAGE_ALREADY_QUEUED:
-                    showErrorMsg((String)msg.obj);
+                    showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
             }
         }
     };
+    private static final int RESULT_IMAGE_GALLERY = 0x4c5;
+    private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
+    protected Handler uiThread = new Handler();
+    // TODO: fix me
+    TextView unprocessedDocumentCount;
+    TextView currentAmount;
+    private Menu optionMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,7 +81,7 @@ public class HomeActivity extends Activity {
     protected void onPause() {
         super.onPause();
         ReceiptofiApplication.homeActivityPaused();
-        if(optionMenu != null) {
+        if (optionMenu != null) {
             endAnimation();
         }
     }
@@ -177,7 +173,7 @@ public class HomeActivity extends Activity {
 
     }
 
-    private void startAnimation(){
+    private void startAnimation() {
         LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         ImageView imageView = (ImageView) inflater.inflate(R.layout.action_refresh, null);
 
@@ -189,10 +185,9 @@ public class HomeActivity extends Activity {
         MenuItemCompat.setActionView(item, imageView);
     }
 
-    private void endAnimation(){
+    private void endAnimation() {
         MenuItem item = optionMenu.findItem(R.id.menu_refresh);
-         if(item.getActionView()!=null)
-        {
+        if (item.getActionView() != null) {
             // Remove the animation.
             item.getActionView().clearAnimation();
             item.setActionView(null);
@@ -204,7 +199,7 @@ public class HomeActivity extends Activity {
         unprocessedDocumentCount.setText(String.format(getString(R.string.processing_info), count));
     }
 
-    private void launchSettings(){
+    private void launchSettings() {
         startActivity(new Intent(this, SettingsActivity.class));
     }
 
@@ -221,6 +216,6 @@ public class HomeActivity extends Activity {
     }
 
     private void showErrorMsg(final String msg) {
-         Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
+        Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

@@ -85,7 +85,7 @@ public class ImageUploaderService {
                     msg.what = HomeActivity.IMAGE_UPLOAD_SUCCESS;
                     msg.obj = response;
                     msg.arg1 = unprocessedCount;
-                    if(ReceiptofiApplication.isHomeActivityVisible()) {
+                    if (ReceiptofiApplication.isHomeActivityVisible()) {
                         ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                     }
                 }
@@ -105,7 +105,7 @@ public class ImageUploaderService {
                 Message msg = new Message();
                 msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "image upload failed due to exception: " + exception.getMessage();
-                if(ReceiptofiApplication.isHomeActivityVisible()) {
+                if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
             }
@@ -120,7 +120,7 @@ public class ImageUploaderService {
                 Message msg = new Message();
                 msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "image upload failed due to error: " + Error;
-                if(ReceiptofiApplication.isHomeActivityVisible()) {
+                if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
             }
