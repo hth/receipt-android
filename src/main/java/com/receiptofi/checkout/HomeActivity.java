@@ -204,7 +204,7 @@ public class HomeActivity extends Activity {
     }
 
     private void logout() {
-        //KeyValue.removeValue(API.key.XR_AUTH);
+        //KeyValueUtils.removeValue(API.KEYS.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
     }
