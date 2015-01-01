@@ -2,7 +2,7 @@ package com.receiptofi.checkout.http;
 
 import android.os.Bundle;
 
-import com.receiptofi.checkout.models.ReceiptDB;
+import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.models.ReceiptElement;
 import com.receiptofi.checkout.models.ReceiptModel;
 

@@ -4,8 +4,6 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.receiptofi.checkout.models.ReceiptDB;
-
 public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
 
     private static int DB_VERSION = 1;

@@ -7,7 +7,7 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPEndpoints;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.models.ReceiptDB;
+import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.models.ReceiptModel;
 import com.receiptofi.checkout.utils.UserUtils;
 
