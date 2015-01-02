@@ -14,7 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
@@ -168,13 +168,13 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
-        HTTPUtils.doPost(pairs, API.LOGIN_API, new ResponseHandler() {
+        ExternalCall.doPost(pairs, API.LOGIN_API, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
                 saveAuthKey(LogInActivity.this, headerData);
                 hideLoader();
                 afterSuccessfulLogin();

@@ -9,7 +9,7 @@ import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ImageResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.models.ImageModel;
@@ -67,7 +67,7 @@ public class ImageUploaderService {
     private static Thread getUploaderThread(Context context, ImageModel iModel) {
         iModel.LOCK = true;
 
-        Thread imageUploaderThread = HTTPUtils.uploadImage(context, API.UPLOAD_IMAGE_API, iModel, new ImageResponseHandler() {
+        Thread imageUploaderThread = ExternalCall.uploadImage(context, API.UPLOAD_IMAGE_API, iModel, new ImageResponseHandler() {
 
             @Override
             public void onSuccess(ImageModel iModel, String response) {

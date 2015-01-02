@@ -15,9 +15,8 @@ import android.widget.TextView;
 import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPEndpoints;
-import com.receiptofi.checkout.http.HTTPProtocol;
-import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.Protocol;
+import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.models.ReceiptElement;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -59,10 +58,10 @@ public class ViewReceiptPage extends Fragment {
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
-        HTTPUtils.AsyncRequest(
+        ExternalCall.AsyncRequest(
                 headerData,
                 API.VIEW_RECEIPT_DETAIL + receiptId + ".json",
-                HTTPProtocol.GET.name(),
+                Protocol.GET.name(),
                 new ResponseHandler() {
 
                     @Override
@@ -92,7 +91,7 @@ public class ViewReceiptPage extends Fragment {
 
 
         if (!imageFile.exists()) {
-            HTTPUtils.downloadImage(context, imageFile, API.DOWNLOAD_IMAGE + blobId + ".json", new ResponseHandler() {
+            ExternalCall.downloadImage(context, imageFile, API.DOWNLOAD_IMAGE + blobId + ".json", new ResponseHandler() {
 
                 @Override
                 public void onSuccess(Header[] arr, String body) {

@@ -140,7 +140,7 @@ public class HomePageActivity_OLD extends ParentActivity {
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-                // HTTPUtils.uploadImage(this,API.UPLOAD_IMAGE_API,captiredImgFile);
+                // ExternalCall.uploadImage(this,API.UPLOAD_IMAGE_API,captiredImgFile);
                 ImageUpload.process(this, capturedImgFile);
             }
         }

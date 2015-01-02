@@ -12,10 +12,10 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
@@ -143,13 +143,13 @@ public class SettingsActivity extends PreferenceActivity {
                     Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
                 }
 
-                HTTPUtils.doPost(postData, API.SETTINGS_UPDATE_LOGIN_ID_API, true, new ResponseHandler() {
+                ExternalCall.doPost(postData, API.SETTINGS_UPDATE_LOGIN_ID_API, true, new ResponseHandler() {
 
                     @Override
                     public void onSuccess(org.apache.http.Header[] headers, String body) {
                         Log.d(TAG, "executing updateLoginId: onSuccess");
                         Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                        Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                        Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
                         saveAuthKey(getActivity().getApplicationContext(), headerData);
                         updateHandler.sendEmptyMessage(LOGIN_ID_UPDATE_SUCCESS);
                     }
@@ -182,13 +182,13 @@ public class SettingsActivity extends PreferenceActivity {
                     Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
                 }
 
-                HTTPUtils.doPost(postData, API.SETTINGS_UPDATE_PASSWORD_API, true, new ResponseHandler() {
+                ExternalCall.doPost(postData, API.SETTINGS_UPDATE_PASSWORD_API, true, new ResponseHandler() {
 
                     @Override
                     public void onSuccess(org.apache.http.Header[] headers, String body) {
                         Log.d(TAG, "executing updatePassword: onSuccess");
                         Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                        Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                        Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
                         saveAuthKey(getActivity().getApplicationContext(), headerData);
                     }
 
