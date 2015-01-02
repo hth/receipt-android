@@ -17,7 +17,7 @@ import com.receiptofi.checkout.utils.UserUtils;
  * 2. Google Account
  * 3. Sign up
  * 4. Sign in
- * <p/>
+ * 
  * This activity won't generated any error message or notifications
  */
 public class LaunchActivity extends ParentActivity implements View.OnClickListener {
