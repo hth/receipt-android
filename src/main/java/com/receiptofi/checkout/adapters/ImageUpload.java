@@ -20,7 +20,7 @@ public class ImageUpload {
     public static void initializeQueue() {
 
         if (imageQueue == null) {
-            imageQueue = new ArrayList<ImageModel>();
+            imageQueue = new ArrayList<>();
         }
 
         imageQueue.clear();
