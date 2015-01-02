@@ -41,4 +41,12 @@ public class ReceiptDB {
         public static final String KEY = "key";
         public static final String VALUE = "value";
     }
+
+    public static class MonthlyReport {
+        public static final String TABLE_NAME = "MONTHLY_REPORT";
+        public static final String MONTH = "month";
+        public static final String YEAR = "year";
+        public static final String MONTHLY_TOTAL = "monthly_total";
+        public static final String MONTHLY_COUNT = "monthly_count";
+    }
 }

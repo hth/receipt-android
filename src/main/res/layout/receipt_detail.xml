@@ -86,7 +86,7 @@
                         android:layout_height="45dp"
                         android:layout_alignParentRight="true"
                         android:layout_alignParentTop="true"
-                        android:src="@drawable/vrp_detail"/>
+                        android:src="@drawable/camera_icon"/>
             </RelativeLayout>
 
             <ImageView
@@ -102,6 +102,6 @@
             android:layout_width="fill_parent"
             android:layout_height="18sp"
             android:layout_below="@+id/body"
-            android:background="@drawable/saw"/>
+            android:background="@drawable/camera_icon"/>
 
 </RelativeLayout>
