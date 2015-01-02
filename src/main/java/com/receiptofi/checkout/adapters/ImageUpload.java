@@ -18,7 +18,6 @@ public class ImageUpload {
     public static ArrayList<ImageModel> imageQueue = null;
 
     public static void initializeQueue() {
-
         if (imageQueue == null) {
             imageQueue = new ArrayList<>();
         }

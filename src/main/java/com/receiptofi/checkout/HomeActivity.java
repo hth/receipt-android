@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
-import com.receiptofi.checkout.dbutils.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
 

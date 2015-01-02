@@ -4,8 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.receiptofi.checkout.dbutils.KeyValueUtils;
-import com.receiptofi.checkout.http.HTTPEndpoints;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.dbutils;
+package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
 import android.content.Context;

@@ -6,7 +6,7 @@ import android.util.Log;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.db.ReceiptofiDatabaseHandler;
 import com.receiptofi.checkout.db.ReceiptDB;
-import com.receiptofi.checkout.dbutils.DBUtils;
+import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.AppUtils;
 
 public class ReceiptofiApplication extends Application {
