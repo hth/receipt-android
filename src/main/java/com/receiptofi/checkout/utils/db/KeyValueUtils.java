@@ -95,4 +95,3 @@ public class KeyValueUtils {
         public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
     }
 }
-

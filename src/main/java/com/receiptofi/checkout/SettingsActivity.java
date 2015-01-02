@@ -81,7 +81,7 @@ public class SettingsActivity extends PreferenceActivity {
             SharedPreferences.Editor editor = pref.edit();
             // wifi setting from database
             editor.putBoolean(getString(R.string.key_pref_sync), wifiSync);
-            editor.commit();
+            editor.apply();
         }
 
         private void updatePrefs() {
