@@ -134,7 +134,6 @@ public final class ExternalCall {
         }.start();
     }
 
-    //TODO(hth) header may require encoding
     public static void doGet(
             final String api,
             final ResponseHandler responseHandler
