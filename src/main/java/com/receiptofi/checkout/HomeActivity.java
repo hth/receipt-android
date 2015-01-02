@@ -21,6 +21,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
+import com.receiptofi.checkout.dbutils.KeyValueUtils;
+import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
 
 import java.io.File;
@@ -209,7 +211,7 @@ public class HomeActivity extends Activity {
     }
 
     private void logout() {
-        //KeyValueUtils.removeValue(API.KEYS.XR_AUTH);
+        KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
     }

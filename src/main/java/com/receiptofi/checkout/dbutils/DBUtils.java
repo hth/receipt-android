@@ -16,7 +16,7 @@ public class DBUtils {
     /**
      * Delete all tables and re-create all tables with default settings.
      */
-    public static void dbInitialize() {
+    public static void dbReInitialize() {
         /** Delete all tables. */
         RDH.getWritableDatabase().execSQL("Drop table if exists " + ReceiptDB.Receipt.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + ReceiptDB.KeyVal.TABLE_NAME);

@@ -18,6 +18,10 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
         super(context, name, null, DB_VERSION);
     }
 
+    /**
+     * Do not initialize db here.
+     * @param db
+     */
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "executing onCreate");
@@ -27,7 +31,6 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
             createTableImageIndex();
             createTableUploadQueue();
             createTableKeyValue();
-            DBUtils.initializeDefaults();
         }
     }
 
