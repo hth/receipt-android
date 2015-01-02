@@ -15,7 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
@@ -200,13 +200,13 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        HTTPUtils.doPost(postData, API.SIGNUP_API, false, new ResponseHandler() {
+        ExternalCall.doPost(postData, API.SIGNUP_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "executing authenticateSignUp: onSuccess");
                 Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
                 saveAuthKey(SignUpActivity.this, headerData);
                 hideLoader();
                 afterSuccessfulLogin();

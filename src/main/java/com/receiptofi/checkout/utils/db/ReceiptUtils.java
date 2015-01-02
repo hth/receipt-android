@@ -6,9 +6,8 @@ import android.os.Message;
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPEndpoints;
-import com.receiptofi.checkout.http.HTTPProtocol;
-import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.Protocol;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.models.ReceiptModel;
@@ -27,7 +26,7 @@ public class ReceiptUtils {
 
     public static void getUnprocessedCount() {
 
-        HTTPUtils.doGet(API.UNPROCESSED_COUNT_API, new ResponseHandler() {
+        ExternalCall.doGet(API.UNPROCESSED_COUNT_API, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
@@ -63,10 +62,10 @@ public class ReceiptUtils {
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
-        HTTPUtils.AsyncRequest(
+        ExternalCall.AsyncRequest(
                 headerData,
                 API.GET_ALL_RECEIPTS,
-                HTTPProtocol.GET.name(),
+                Protocol.GET.name(),
                 new ResponseHandler() {
                     @Override
                     public void onSuccess(Header[] arr, String body) {

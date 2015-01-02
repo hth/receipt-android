@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
@@ -133,7 +133,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         }
 
         final PasswordRecoveryHandler handler = new PasswordRecoveryHandler();
-        HTTPUtils.doPost(postData, API.PASSWORD_RECOVER_API, false, new ResponseHandler() {
+        ExternalCall.doPost(postData, API.PASSWORD_RECOVER_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {

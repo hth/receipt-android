@@ -30,7 +30,7 @@ import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.HTTPUtils;
+import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.utils.UserUtils;
@@ -202,13 +202,13 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
 
-        HTTPUtils.doPost(postData, API.SOCIAL_LOGIN_API, false, new ResponseHandler() {
+        ExternalCall.doPost(postData, API.SOCIAL_LOGIN_API, false, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
+                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
                 saveAuthKey(ParentActivity.this, headerData);
                 hideLoader();
                 afterSuccessfulLogin();

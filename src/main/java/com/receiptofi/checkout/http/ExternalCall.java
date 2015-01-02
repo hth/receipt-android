@@ -35,9 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-public final class HTTPUtils {
+public final class ExternalCall {
 
-    private static final String TAG = HTTPUtils.class.getSimpleName();
+    private static final String TAG = ExternalCall.class.getSimpleName();
 
     public static void doPost(
             final JSONObject postData,
@@ -53,11 +53,11 @@ public final class HTTPUtils {
                     HttpClient client = new DefaultHttpClient();
 
                     if (!TextUtils.isEmpty(url)) {
-                        httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + url);
+                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + url);
                     } else {
-                        httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
-                    Log.d(TAG, "making api request to server: " + HTTPEndpoints.RECEIPTOFI_MOBILE_URL + url + ", Data: " + postData.toString());
+                    Log.d(TAG, "making api request to server: " + MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + url + ", Data: " + postData.toString());
 
                     StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
 
@@ -83,11 +83,9 @@ public final class HTTPUtils {
                     if (!bodyContainsError(body)) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
                         responseHandler.onSuccess(response.getAllHeaders(), body);
-                        return;
                     } else {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
                         responseHandler.onError(statusCode, body);
-                        return;
                     }
                 } catch (Exception e) {
                     responseHandler.onException(e);
@@ -105,9 +103,9 @@ public final class HTTPUtils {
                     HttpPost httpPost;
                     HttpClient client = new DefaultHttpClient();
                     if (!TextUtils.isEmpty(API)) {
-                        httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + API);
+                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + API);
                     } else {
-                        httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
 
                     httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -125,11 +123,9 @@ public final class HTTPUtils {
                     if (!bodyContainsError(body)) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
                         responseHandler.onSuccess(response.getAllHeaders(), body);
-                        return;
                     } else {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
                         responseHandler.onError(statusCode, body);
-                        return;
                     }
                 } catch (Exception e) {
                     responseHandler.onException(e);
@@ -149,9 +145,9 @@ public final class HTTPUtils {
                     HttpGet httpGet;
                     HttpClient client = new DefaultHttpClient();
                     if (!TextUtils.isEmpty(api)) {
-                        httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + api);
+                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
                     } else {
-                        httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
 
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
@@ -170,11 +166,9 @@ public final class HTTPUtils {
                     if (!bodyContainsError(body)) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
                         responseHandler.onSuccess(response.getAllHeaders(), body);
-                        return;
                     } else {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
                         responseHandler.onError(statusCode, body);
-                        return;
                     }
                 } catch (Exception e) {
                     responseHandler.onException(e);
@@ -190,9 +184,9 @@ public final class HTTPUtils {
         HttpPost httpPost;
 
         if (API != null) {
-            httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + API);
+            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + API);
         } else {
-            httpPost = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
         }
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -217,9 +211,9 @@ public final class HTTPUtils {
         HttpGet httpGet;
 
         if (API != null) {
-            httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + API);
+            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + API);
         } else {
-            httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
         }
         if (params != null) {
             for (NameValuePair pair : params) {
@@ -252,9 +246,9 @@ public final class HTTPUtils {
                 super.run();
                 String response = null;
                 try {
-                    if (httpMethod.equalsIgnoreCase(HTTPProtocol.POST.name())) {
+                    if (httpMethod.equalsIgnoreCase(Protocol.POST.name())) {
                         response = getPostResponse(params, api);
-                    } else if (httpMethod.equalsIgnoreCase(HTTPProtocol.GET.name())) {
+                    } else if (httpMethod.equalsIgnoreCase(Protocol.GET.name())) {
                         response = getResponse(params, api);
                     }
                     handler.onSuccess(null, null);
@@ -281,9 +275,9 @@ public final class HTTPUtils {
                     HttpGet httpGet;
 
                     if (api != null) {
-                        httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + api);
+                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
                     } else {
-                        httpGet = new HttpGet(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
 
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
@@ -322,9 +316,9 @@ public final class HTTPUtils {
 
                     HttpClient client = new DefaultHttpClient();
                     if (api != null) {
-                        post = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL + api);
+                        post = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
                     } else {
-                        post = new HttpPost(HTTPEndpoints.RECEIPTOFI_MOBILE_URL);
+                        post = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
 
                     File imageFile = new File(imageModel.imgPath);
