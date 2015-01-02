@@ -37,7 +37,7 @@ import java.util.Set;
 
 public final class HTTPUtils {
 
-    private static final String TAG = "SUMAN"; //HTTPUtils.class.getSimpleName();
+    private static final String TAG = HTTPUtils.class.getSimpleName();
 
     public static void doPost(
             final JSONObject postData,
@@ -370,7 +370,7 @@ public final class HTTPUtils {
         Log.d(TAG, "executing parseHeader");
         if (headers != null && headers.length > 0
                 && keys != null && keys.size() > 0) {
-            Map<String, String> headerData = new HashMap<String, String>();
+            Map<String, String> headerData = new HashMap<>();
 
             for (Header header : headers) {
                 String key = header.getName();
