@@ -8,11 +8,13 @@ import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.db.ReceiptofiDatabaseHandler;
 import com.receiptofi.checkout.utils.AppUtils;
 
-
 public class DBUtils {
 
     private static final String TAG = DBUtils.class.getSimpleName();
 
+    /**
+     * Delete all tables and create all tables with default settings.
+     */
     public static void dbInitialize(){
         //Delete all tables
         Log.d(TAG, "Executing Drop Table : "+ReceiptDB.Receipt.TABLE_NAME);
@@ -44,7 +46,6 @@ public class DBUtils {
         Log.d(TAG, "Created Table : " + ReceiptDB.UploadQueue.TABLE_NAME);
 
         //Set Default for Wi-Fi
-
         KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.WIFI_SYNC,"true");
     }
 }

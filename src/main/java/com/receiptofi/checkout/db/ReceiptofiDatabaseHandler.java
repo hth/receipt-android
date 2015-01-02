@@ -25,6 +25,7 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
             createTableImageIndex();
             createTableUploadQueue();
             createTableKeyValue();
+            //Initialize
         }
     }
 

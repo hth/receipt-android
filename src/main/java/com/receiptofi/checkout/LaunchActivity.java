@@ -11,12 +11,13 @@ import android.widget.TextView;
 import com.receiptofi.checkout.utils.UserUtils;
 
 /**
- * Launch activity facilities user to login using either of 4 ways:
+ * Launch activity facilities.
+ * User logs in using either of the four ways listed below:
  * 1. Facebook Account
  * 2. Google Account
  * 3. Sign up
  * 4. Sign in
- * <p/>
+ *
  * This activity won't generated any error message or notifications
  */
 public class LaunchActivity extends ParentActivity implements View.OnClickListener {
