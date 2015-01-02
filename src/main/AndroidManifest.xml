@@ -24,7 +24,7 @@
     <application
         android:name="com.receiptofi.checkout.ReceiptofiApplication"
         android:allowBackup="true"
-        android:icon="@drawable/r"
+        android:icon="@drawable/app_logo"
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme">
         <meta-data
