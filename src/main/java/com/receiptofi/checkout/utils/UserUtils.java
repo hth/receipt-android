@@ -5,6 +5,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.dbutils.KeyValueUtils;
+import com.receiptofi.checkout.http.HTTPEndpoints;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 
 public class UserUtils {
 
@@ -24,6 +28,32 @@ public class UserUtils {
 
     public static String getAuth() {
         return KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_AUTH);
+    }
+
+    /**
+     * Supports UTF-8 Encoding.
+     * @return
+     */
+    public static String getEmailEncoded() {
+        try {
+            return URLEncoder.encode(getEmail(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "email encoding : " + e.getLocalizedMessage(), e);
+            return getEmail();
+        }
+    }
+
+    /**
+     * Supports UTF-8 Encoding.
+     * @return
+     */
+    public static String getAuthEncoded() {
+        try {
+            return URLEncoder.encode(getAuth(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            Log.d(TAG, "auth encoding : " + e.getLocalizedMessage(), e);
+            return getAuth();
+        }
     }
 
     public static boolean userExist(String email) {

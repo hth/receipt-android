@@ -39,7 +39,6 @@ public final class HTTPUtils {
 
     private static final String TAG = "SUMAN"; //HTTPUtils.class.getSimpleName();
 
-
     public static void doPost(
             final JSONObject postData,
             final String url,
@@ -83,7 +82,7 @@ public final class HTTPUtils {
                     }
                     if (!bodyContainsError(body)) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
-                        responseHandler.onSuccess(response.getAllHeaders());
+                        responseHandler.onSuccess(response.getAllHeaders(), body);
                         return;
                     } else {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
@@ -125,7 +124,7 @@ public final class HTTPUtils {
                     }
                     if (!bodyContainsError(body)) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
-                        responseHandler.onSuccess(response.getAllHeaders());
+                        responseHandler.onSuccess(response.getAllHeaders(), body);
                         return;
                     } else {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
@@ -156,7 +155,7 @@ public final class HTTPUtils {
                     }
 
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
-                    httpGet.addHeader(API.key.SIGNIN_EMAIL, UserUtils.getEmail());
+                    httpGet.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
 
                     HttpResponse response = client.execute(httpGet);
                     int statusCode = response.getStatusLine().getStatusCode();
@@ -170,7 +169,7 @@ public final class HTTPUtils {
                     }
                     if (!bodyContainsError(body)) {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
-                        responseHandler.onSuccess(response.getAllHeaders());
+                        responseHandler.onSuccess(response.getAllHeaders(), body);
                         return;
                     } else {
                         Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
@@ -258,7 +257,7 @@ public final class HTTPUtils {
                     } else if (httpMethod.equalsIgnoreCase(HTTPEndpoints.HTTP_METHOD_GET)) {
                         response = getResponse(params, api);
                     }
-                    handler.onSuccess(null);
+                    handler.onSuccess(null, null);
                 } catch (Exception e) {
                     handler.onException(e);
                 }
@@ -300,7 +299,7 @@ public final class HTTPUtils {
                     bis.close();
                     bos.close();
 
-                    responseHandler.onSuccess(null);
+                    responseHandler.onSuccess(null, null);
                 } catch (Exception e) {
                     responseHandler.onException(e);
                 }

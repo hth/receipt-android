@@ -136,7 +136,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         HTTPUtils.doPost(postData, API.PASSWORD_RECOVER_API, false, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers) {
+            public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
                 handler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }

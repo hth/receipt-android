@@ -4,7 +4,7 @@ import org.apache.http.Header;
 
 public interface ResponseHandler {
 
-    public void onSuccess(Header[] headers);
+    public void onSuccess(Header[] headers, String body);
 
     public void onError(int statusCode, String error);
 

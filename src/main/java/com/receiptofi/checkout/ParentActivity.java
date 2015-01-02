@@ -203,7 +203,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         HTTPUtils.doPost(postData, API.SOCIAL_LOGIN_API, false, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers) {
+            public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
@@ -251,7 +251,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             launchHomeScreen();
             finish();
             // TODO make this call later
-            ReceiptUtils.getUnprocessCount();
+            ReceiptUtils.getUnprocessedCount();
             ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
