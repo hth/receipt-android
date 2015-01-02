@@ -71,7 +71,7 @@ public class SettingsActivity extends PreferenceActivity {
             // set fields in the view
             updatePrefs();
             // Initial DB Setup
-            DBUtils.dbInitialize();
+            DBUtils.dbReInitialize();
 
         }
 

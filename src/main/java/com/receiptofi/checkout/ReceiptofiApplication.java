@@ -6,6 +6,7 @@ import android.util.Log;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.db.ReceiptofiDatabaseHandler;
 import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.dbutils.DBUtils;
 import com.receiptofi.checkout.utils.AppUtils;
 
 public class ReceiptofiApplication extends Application {
@@ -29,10 +30,11 @@ public class ReceiptofiApplication extends Application {
 
     @Override
     public void onCreate() {
-        Log.d(TAG, "executing onCreate");
         // TODO Auto-generated method stub
         super.onCreate();
+        Log.d(TAG, "executing onCreate");
         RDH = new ReceiptofiDatabaseHandler(this, ReceiptDB.DB_NAME);
+        DBUtils.initializeDefaults();
         ImageUpload.initializeQueue();
         AppUtils.setHomePageContext(null);
         AppUtils.createImageDir();

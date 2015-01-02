@@ -10,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
+import com.receiptofi.checkout.dbutils.DBUtils;
 import com.receiptofi.checkout.dbutils.KeyValueUtils;
 import com.receiptofi.checkout.dbutils.ReceiptUtils;
 import com.receiptofi.checkout.http.API;
@@ -205,9 +207,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
-                Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
-                checkIfUserExist(headerData.get(API.key.XR_MAIL));
                 saveAuthKey(ParentActivity.this, headerData);
                 hideLoader();
                 afterSuccessfulLogin();
@@ -229,14 +230,17 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
-    protected void checkIfUserExist(String email) {
-        if (!UserUtils.userExist(email)) {
-            KeyValueUtils.clearKeyValues();
-            KeyValueUtils.clearReceiptsDB();
-        }
-    }
-
     protected void saveAuthKey(Context context, Map<String, String> map) {
+        String mail = KeyValueUtils.getValue(API.key.XR_MAIL);
+
+        /*
+         * If mail has length greater than zero and mail is not equal to X-R-MAIL then
+         * re-initialize db.
+         */
+        if (!TextUtils.isEmpty(mail) && !mail.equals(map.get(API.key.XR_MAIL))) {
+            DBUtils.dbReInitialize();
+        }
+
         for (Map.Entry<String, String> entry : map.entrySet()) {
             boolean success = KeyValueUtils.insertKeyValue(context, entry.getKey(), entry.getValue());
             if (!success) {
