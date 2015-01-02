@@ -15,7 +15,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/r"/>
+                android:src="@drawable/app_logo"/>
 
         <ImageView
                 android:id="@+id/menu"
@@ -23,14 +23,14 @@
                 android:layout_height="30dp"
                 android:layout_alignParentLeft="true"
                 android:onClick="invokeMenu"
-                android:src="@drawable/menu"/>
+                android:src="@drawable/camera_icon"/>
 
         <View
                 android:id="@+id/back"
                 android:layout_width="23dp"
                 android:layout_height="34dp"
                 android:layout_alignParentLeft="true"
-                android:background="@drawable/back_navigation"
+                android:background="@drawable/camera_icon"
                 android:onClick="onBackPressed"/>
 
         <ImageView
@@ -38,7 +38,7 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/sync"/>
+                android:src="@drawable/camera_icon"/>
     </RelativeLayout>
 
     <View
