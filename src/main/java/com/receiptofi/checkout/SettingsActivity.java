@@ -12,8 +12,8 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.receiptofi.checkout.dbutils.DBUtils;
-import com.receiptofi.checkout.dbutils.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.DBUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;

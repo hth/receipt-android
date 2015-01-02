@@ -1,13 +1,9 @@
-package com.receiptofi.checkout.dbutils;
-
-import android.util.Log;
+package com.receiptofi.checkout.utils.db;
 
 import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.utils.AppUtils;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
-import static com.receiptofi.checkout.dbutils.KeyValueUtils.KEYS;
-import static com.receiptofi.checkout.dbutils.KeyValueUtils.*;
 
 public class DBUtils {
 
@@ -33,10 +29,10 @@ public class DBUtils {
     }
 
     public static void initializeDefaults() {
-        insertKeyValue(AppUtils.getHomePageContext(), KEYS.XR_MAIL, "");
-        insertKeyValue(AppUtils.getHomePageContext(), KEYS.XR_AUTH, "");
-        insertKeyValue(AppUtils.getHomePageContext(), KEYS.WIFI_SYNC, Boolean.toString(true));
-        insertKeyValue(AppUtils.getHomePageContext(), KEYS.UNPROCESSED_DOCUMENT, "0");
-        insertKeyValue(AppUtils.getHomePageContext(), KEYS.SOCIAL_LOGIN, Boolean.toString(false));
+        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.XR_MAIL, "");
+        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.XR_AUTH, "");
+        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
+        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
+        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
     }
 }

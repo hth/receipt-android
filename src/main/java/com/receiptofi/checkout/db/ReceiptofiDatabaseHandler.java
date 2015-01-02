@@ -5,8 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.receiptofi.checkout.dbutils.DBUtils;
-
 public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TAG = ReceiptofiDatabaseHandler.class.getSimpleName();
