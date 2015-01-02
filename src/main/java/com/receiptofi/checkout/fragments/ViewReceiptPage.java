@@ -16,6 +16,7 @@ import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPEndpoints;
+import com.receiptofi.checkout.http.HTTPProtocol;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.models.ReceiptElement;
@@ -58,32 +59,36 @@ public class ViewReceiptPage extends Fragment {
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
-        HTTPUtils.AsyncRequest(headerData, API.VIEW_RECEIPT_DETAIL + receiptId + ".json", HTTPEndpoints.HTTP_METHOD_GET, new ResponseHandler() {
+        HTTPUtils.AsyncRequest(
+                headerData,
+                API.VIEW_RECEIPT_DETAIL + receiptId + ".json",
+                HTTPProtocol.GET.name(),
+                new ResponseHandler() {
 
-            @Override
-            public void onSuccess(Header[] arr, String body) {
-                // TODO Auto-generated method stub
-                ((HomePageActivity_OLD) context).hideLoader();
-                ArrayList<ReceiptElement> elements = null; //ResponseParser.getReceiptDetails(response);
-                displayElements(elements);
-                if (imageFile.exists()) {
-                    disaplayImage(imageFile.getAbsolutePath());
-                }
-            }
+                    @Override
+                    public void onSuccess(Header[] arr, String body) {
+                        // TODO Auto-generated method stub
+                        ((HomePageActivity_OLD) context).hideLoader();
+                        ArrayList<ReceiptElement> elements = null; //ResponseParser.getReceiptDetails(response);
+                        displayElements(elements);
+                        if (imageFile.exists()) {
+                            disaplayImage(imageFile.getAbsolutePath());
+                        }
+                    }
 
 
-            @Override
-            public void onException(Exception exception) {
-                // TODO Auto-generated method stub
-                ((HomePageActivity_OLD) context).hideLoader();
-            }
+                    @Override
+                    public void onException(Exception exception) {
+                        // TODO Auto-generated method stub
+                        ((HomePageActivity_OLD) context).hideLoader();
+                    }
 
-            @Override
-            public void onError(int statusCode, String error) {
-                // TODO Auto-generated method stub
-                ((HomePageActivity_OLD) context).hideLoader();
-            }
-        });
+                    @Override
+                    public void onError(int statusCode, String error) {
+                        // TODO Auto-generated method stub
+                        ((HomePageActivity_OLD) context).hideLoader();
+                    }
+                });
 
 
         if (!imageFile.exists()) {

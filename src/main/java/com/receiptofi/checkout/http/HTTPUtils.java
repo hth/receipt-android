@@ -252,9 +252,9 @@ public final class HTTPUtils {
                 super.run();
                 String response = null;
                 try {
-                    if (httpMethod.equalsIgnoreCase(HTTPEndpoints.HTTP_METHOD_POST)) {
+                    if (httpMethod.equalsIgnoreCase(HTTPProtocol.POST.name())) {
                         response = getPostResponse(params, api);
-                    } else if (httpMethod.equalsIgnoreCase(HTTPEndpoints.HTTP_METHOD_GET)) {
+                    } else if (httpMethod.equalsIgnoreCase(HTTPProtocol.GET.name())) {
                         response = getResponse(params, api);
                     }
                     handler.onSuccess(null, null);
