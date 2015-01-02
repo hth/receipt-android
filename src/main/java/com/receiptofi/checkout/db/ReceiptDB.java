@@ -5,7 +5,6 @@ public class ReceiptDB {
     public static String DB_NAME = "receiptofi";
 
     public static class Receipt {
-
         public static final String TABLE_NAME = "RECEIPT";
         public static final String BIZ_NAME = "bizName";
         public static final String BIZ_STORE_ADDRESS = "bizStoreAddress";

@@ -92,6 +92,7 @@ public class KeyValueUtils {
         public static String XR_AUTH = API.key.XR_MAIL;
         public static String WIFI_SYNC = "WIFI_SYNC";
         public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
+        public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
     }
 }
 
