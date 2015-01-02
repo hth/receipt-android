@@ -21,7 +21,6 @@ public class ImageUpload {
         if (imageQueue == null) {
             imageQueue = new ArrayList<>();
         }
-
         imageQueue.clear();
         imageQueue.addAll(ImageModel.getAllUnprocessedImages());
     }
@@ -47,6 +46,7 @@ public class ImageUpload {
         } catch (SQLiteConstraintException e) {
             Message msg = new Message();
             msg.what = HomeActivity.IMAGE_ALREADY_QUEUED;
+            //TODO(hth) move this to XML file
             msg.obj = "This image already exists in upload queue.";
             if (ReceiptofiApplication.isHomeActivityVisible()) {
                 ((HomeActivity) context).updateHandler.sendMessage(msg);

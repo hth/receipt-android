@@ -7,6 +7,7 @@ import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.HTTPEndpoints;
+import com.receiptofi.checkout.http.HTTPProtocol;
 import com.receiptofi.checkout.http.HTTPUtils;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.db.ReceiptDB;
@@ -62,9 +63,11 @@ public class ReceiptUtils {
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
-        HTTPUtils.AsyncRequest(headerData, API.GET_ALL_RECEIPTS,
-                HTTPEndpoints.HTTP_METHOD_GET, new ResponseHandler() {
-
+        HTTPUtils.AsyncRequest(
+                headerData,
+                API.GET_ALL_RECEIPTS,
+                HTTPProtocol.GET.name(),
+                new ResponseHandler() {
                     @Override
                     public void onSuccess(Header[] arr, String body) {
                         ArrayList<ReceiptModel> models = null; //ResponseParser.getReceipts(response);
