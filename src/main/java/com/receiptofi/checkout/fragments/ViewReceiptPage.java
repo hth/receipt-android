@@ -61,7 +61,7 @@ public class ViewReceiptPage extends Fragment {
         HTTPUtils.AsyncRequest(headerData, API.VIEW_RECEIPT_DETAIL + receiptId + ".json", HTTPEndpoints.HTTP_METHOD_GET, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] arr) {
+            public void onSuccess(Header[] arr, String body) {
                 // TODO Auto-generated method stub
                 ((HomePageActivity_OLD) context).hideLoader();
                 ArrayList<ReceiptElement> elements = null; //ResponseParser.getReceiptDetails(response);
@@ -90,7 +90,7 @@ public class ViewReceiptPage extends Fragment {
             HTTPUtils.downloadImage(context, imageFile, API.DOWNLOAD_IMAGE + blobId + ".json", new ResponseHandler() {
 
                 @Override
-                public void onSuccess(Header[] arr) {
+                public void onSuccess(Header[] arr, String body) {
                     // TODO Auto-generated method stub
                     disaplayImage(imageFile.getAbsolutePath());
                 }

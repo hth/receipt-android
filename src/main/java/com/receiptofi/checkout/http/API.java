@@ -12,7 +12,7 @@ public class API {
     public static final String SETTINGS_UPDATE_PASSWORD_API = "/api/updatePassword.json";
 
     // Home page api
-    public static final String UNPROCESS_COUNT_API = "/api/unprocessed.json";
+    public static final String UNPROCESSED_COUNT_API = "/api/unprocessed.json";
 
     public static final String UPLOAD_IMAGE_API = "/api/upload.json";
     public static final String GET_ALL_RECEIPTS = "/api/allReceipts.json";

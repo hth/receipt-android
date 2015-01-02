@@ -12,6 +12,7 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.models.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -19,16 +20,21 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class ReceiptUtils {
 
     public static void getUnprocessedCount() {
 
-        HTTPUtils.doGet(API.UNPROCESS_COUNT_API, new ResponseHandler() {
+        HTTPUtils.doGet(API.UNPROCESSED_COUNT_API, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers) {
+            public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
                 msg.what = HomeActivity.UPDATE;
+
+                Map<String, String> map = JsonParseUtils.parseUnprocessedCount(body);
+
+
                 //msg.arg1 =
 
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
@@ -60,7 +66,7 @@ public class ReceiptUtils {
                 HTTPEndpoints.HTTP_METHOD_GET, new ResponseHandler() {
 
                     @Override
-                    public void onSuccess(Header[] arr) {
+                    public void onSuccess(Header[] arr, String body) {
                         ArrayList<ReceiptModel> models = null; //ResponseParser.getReceipts(response);
                         for (ReceiptModel model : models) {
                             model.save();

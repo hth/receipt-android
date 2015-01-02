@@ -6,6 +6,7 @@ import android.database.Cursor;
 
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.http.API;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
@@ -87,9 +88,10 @@ public class KeyValueUtils {
     }
 
     public static class KEYS {
-        public static String XR_MAIL = "X-R-MAIL";
-        public static String XR_AUTH = "X-R-AUTH";
-        public static String WIFI_SYNC = "wifi_sync";
+        public static String XR_MAIL = API.key.XR_MAIL;
+        public static String XR_AUTH = API.key.XR_MAIL;
+        public static String WIFI_SYNC = "WIFI_SYNC";
+        public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
     }
 }
 

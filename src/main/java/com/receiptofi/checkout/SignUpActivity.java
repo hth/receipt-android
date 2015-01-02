@@ -203,7 +203,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         HTTPUtils.doPost(postData, API.SIGNUP_API, false, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers) {
+            public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "executing authenticateSignUp: onSuccess");
                 Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);

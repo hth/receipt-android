@@ -164,16 +164,16 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             errors.delete(0, errors.length());
             return;
         }
-        final ArrayList<NameValuePair> pairs = new ArrayList<>();
+        ArrayList<NameValuePair> pairs = new ArrayList<>();
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
         pairs.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
         HTTPUtils.doPost(pairs, API.LOGIN_API, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers) {
+            public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
-                Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
                 checkIfUserExist(headerData.get(API.key.XR_MAIL));
                 saveAuthKey(LogInActivity.this, headerData);

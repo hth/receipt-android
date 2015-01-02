@@ -146,7 +146,7 @@ public class SettingsActivity extends PreferenceActivity {
                 HTTPUtils.doPost(postData, API.SETTINGS_UPDATE_LOGIN_ID_API, true, new ResponseHandler() {
 
                     @Override
-                    public void onSuccess(org.apache.http.Header[] headers) {
+                    public void onSuccess(org.apache.http.Header[] headers, String body) {
                         Log.d(TAG, "executing updateLoginId: onSuccess");
                         Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                         Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
@@ -185,9 +185,9 @@ public class SettingsActivity extends PreferenceActivity {
                 HTTPUtils.doPost(postData, API.SETTINGS_UPDATE_PASSWORD_API, true, new ResponseHandler() {
 
                     @Override
-                    public void onSuccess(org.apache.http.Header[] headers) {
+                    public void onSuccess(org.apache.http.Header[] headers, String body) {
                         Log.d(TAG, "executing updatePassword: onSuccess");
-                        Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                        Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                         Map<String, String> headerData = HTTPUtils.parseHeader(headers, keys);
                         saveAuthKey(getActivity().getApplicationContext(), headerData);
                     }
