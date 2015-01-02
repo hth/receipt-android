@@ -33,8 +33,8 @@ import java.util.Date;
 
 public class ViewReceiptPage extends Fragment {
 
-    View screen;
-    Context context;
+    private View screen;
+    private Context context;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
