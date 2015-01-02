@@ -70,9 +70,6 @@ public class SettingsActivity extends PreferenceActivity {
             addPreferencesFromResource(R.xml.preferences);
             // set fields in the view
             updatePrefs();
-            // Initial DB Setup
-            DBUtils.dbReInitialize();
-
         }
 
         private void initializePref() {
