@@ -22,9 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import java.io.File;
 
@@ -34,6 +34,7 @@ public class HomeActivity extends Activity {
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
     public static final int UPDATE = 0x2567;
+    public static final int GET_ALL_RECEIPTS = 0x2568;
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
@@ -55,6 +56,10 @@ public class HomeActivity extends Activity {
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
+                case GET_ALL_RECEIPTS:
+                    showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
             }
         }
     };
@@ -70,7 +75,7 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
-        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
         //TODO needed for ImageUploaderService

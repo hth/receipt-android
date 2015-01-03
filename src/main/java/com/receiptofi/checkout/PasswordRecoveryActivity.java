@@ -19,8 +19,8 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.Validation;
 
 import org.apache.http.Header;
 import org.json.JSONException;

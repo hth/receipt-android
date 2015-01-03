@@ -8,12 +8,12 @@ import android.util.Log;
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.adapters.ImageUpload;
+import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ImageResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.models.ImageModel;
-import com.receiptofi.checkout.db.ReceiptDB;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
@@ -73,7 +73,7 @@ public class ImageUploaderService {
             public void onSuccess(ImageModel iModel, String response) {
                 // TODO Auto-generated method stub
                 Bundle responseBundle = ResponseParser.getImageUploadResponse(response);
-                iModel.blobId = responseBundle.getString(ReceiptDB.ImageIndex.BLOB_ID);
+                iModel.blobId = responseBundle.getString(DatabaseTable.ImageIndex.BLOB_ID);
                 int unprocessedCount = responseBundle.getInt("unprocessedCount");
 
                 iModel.updateStatus(true);

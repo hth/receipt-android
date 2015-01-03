@@ -5,11 +5,12 @@ import android.os.Message;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.Protocol;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.models.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
@@ -22,7 +23,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.Map;
 
-import static com.receiptofi.checkout.utils.db.KeyValueUtils.*;
+import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
+import static com.receiptofi.checkout.utils.db.KeyValueUtils.insertKeyValue;
 
 public class ReceiptUtils {
 
@@ -51,9 +53,32 @@ public class ReceiptUtils {
 
             }
         });
-
-
     }
+
+    public static void getAllReceipts() {
+        ExternalCall.doGet(API.GET_ALL_RECEIPTS, new ResponseHandler() {
+            @Override
+            public void onSuccess(Header[] headers, String body) {
+                Message msg = new Message();
+                msg.what = HomeActivity.GET_ALL_RECEIPTS;
+                insertReceipts(JsonParseUtils.parseReceipt(body));
+                if (ReceiptofiApplication.isHomeActivityVisible()) {
+                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                }
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+
+            }
+
+            @Override
+            public void onException(Exception exception) {
+
+            }
+        });
+    }
+
 
     public static void fetchReceiptsAndSave() {
 
@@ -68,7 +93,7 @@ public class ReceiptUtils {
                 new ResponseHandler() {
                     @Override
                     public void onSuccess(Header[] arr, String body) {
-                        ArrayList<ReceiptModel> models = null; //ResponseParser.getReceipts(response);
+                        ArrayList<ReceiptModel> models = ResponseParser.getReceipts(body);
                         for (ReceiptModel model : models) {
                             model.save();
                         }
@@ -87,13 +112,13 @@ public class ReceiptUtils {
     }
 
     public static void clearReceipts() {
-        ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + ReceiptDB.Receipt.TABLE_NAME + ";", null);
+        ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + DatabaseTable.Receipt.TABLE_NAME + ";", null);
     }
 
-    public static ArrayList<ReceiptModel> getAllReceipts() {
+    public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
-        String[] columns = new String[]{ReceiptDB.Receipt.BIZ_NAME, ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX, ReceiptDB.Receipt.TOTAL, ReceiptDB.Receipt.ID, ReceiptDB.Receipt.FILES_BLOB};
-        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(ReceiptDB.Receipt.TABLE_NAME, columns, null, null, null, null, null);
+        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE_R, DatabaseTable.Receipt.P_TAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.FILES_BLOB};
+        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
         if (receiptsRecords != null && receiptsRecords.getCount() > 0) {
@@ -109,11 +134,21 @@ public class ReceiptUtils {
             }
 
         }
-        if(null != receiptsRecords) {
+        if (null != receiptsRecords) {
             receiptsRecords.close();
         }
         return rModels;
 
     }
 
+    /**
+     * Insert receipt in table.
+     * @param receipts
+     */
+    private static void insertReceipts(Map<String, Map<String, String>> receipts) {
+        for(String id : receipts.keySet()) {
+            Map<String, String> receipt = receipts.get(id);
+            //For each key get value and insert a record in db
+        }
+    }
 }

@@ -26,14 +26,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
-import com.receiptofi.checkout.utils.db.DBUtils;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.utils.db.ReceiptUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.db.DBUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -208,8 +208,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                saveAuthKey(ParentActivity.this, headerData);
+                saveAuthKey(ExternalCall.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
             }
@@ -230,7 +229,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
-    protected void saveAuthKey(Context context, Map<String, String> map) {
+    protected void saveAuthKey(Map<String, String> map) {
         String mail = KeyValueUtils.getValue(API.key.XR_MAIL);
 
         /*
@@ -256,7 +255,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             finish();
             // TODO make this call later
             ReceiptUtils.getUnprocessedCount();
-            ReceiptUtils.fetchReceiptsAndSave();
+            ReceiptUtils.getAllReceipts();
+            //ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
         }

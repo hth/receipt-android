@@ -1,6 +1,6 @@
 package com.receiptofi.checkout.db;
 
-public class ReceiptDB {
+public class DatabaseTable {
 
     public static String DB_NAME = "receiptofi";
 
@@ -35,7 +35,7 @@ public class ReceiptDB {
         public static final String STATUS = "status";
     }
 
-    public static class KeyVal {
+    public static class KeyValue {
         public static final String TABLE_NAME = "KEY_VALUE";
         public static final String KEY = "key";
         public static final String VALUE = "value";

@@ -17,8 +17,8 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.Validation;
 
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
@@ -48,7 +48,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
-        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
         final TextView logIn = (TextView) findViewById(R.id.login_button);
@@ -87,11 +87,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             }
         });
 
-        LinearLayout facebooklogin = (LinearLayout) findViewById(R.id.facebook_login);
-        facebooklogin.setOnClickListener(this);
+        LinearLayout facebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
+        facebookLogin.setOnClickListener(this);
 
-        LinearLayout googlelogin = (LinearLayout) findViewById(R.id.google_login);
-        googlelogin.setOnClickListener(this);
+        LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
+        googleLogin.setOnClickListener(this);
 
     }
 
@@ -177,8 +177,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                saveAuthKey(LogInActivity.this, headerData);
+                saveAuthKey(ExternalCall.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
                 finish();

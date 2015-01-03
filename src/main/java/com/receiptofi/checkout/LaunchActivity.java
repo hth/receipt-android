@@ -18,7 +18,7 @@ import com.receiptofi.checkout.utils.UserUtils;
  * 2. Google Account
  * 3. Sign up
  * 4. Sign in
- *
+ * <p/>
  * This activity won't generated any error message or notifications
  */
 public class LaunchActivity extends ParentActivity implements View.OnClickListener {
@@ -30,12 +30,14 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
-             startActivity(new Intent(this, HomeActivity.class));
-             finish();
+            startActivity(new Intent(this, HomeActivity.class));
+            finish();
         }
         Log.d(TAG, "executing onCreate");
         setContentView(R.layout.launch_page);
         getActionBar().hide();
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
+        scrollView.setVerticalScrollBarEnabled(false);
 
         //login via Facebook
         LinearLayout mFacebookLogin = (LinearLayout) findViewById(R.id.facebook_login);

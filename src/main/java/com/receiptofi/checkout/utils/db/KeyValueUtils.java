@@ -1,32 +1,29 @@
 package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
 
 import com.receiptofi.checkout.ReceiptofiApplication;
-import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.http.API;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
 public class KeyValueUtils {
 
-    ReceiptofiApplication application;
-
     public static boolean insertKeyValue(String key, String value) {
         ContentValues values = new ContentValues();
-        values.put(ReceiptDB.KeyVal.KEY, key);
-        values.put(ReceiptDB.KeyVal.VALUE, value);
+        values.put(DatabaseTable.KeyValue.KEY, key);
+        values.put(DatabaseTable.KeyValue.VALUE, value);
 
         if (RDH.getWritableDatabase().update(
-                ReceiptDB.KeyVal.TABLE_NAME,
+                DatabaseTable.KeyValue.TABLE_NAME,
                 values,
-                ReceiptDB.KeyVal.KEY + "= ?",
+                DatabaseTable.KeyValue.KEY + "= ?",
                 new String[]{key}
         ) <= 0) {
             long code = RDH.getWritableDatabase().insert(
-                    ReceiptDB.KeyVal.TABLE_NAME,
+                    DatabaseTable.KeyValue.TABLE_NAME,
                     null,
                     values
             );
@@ -39,33 +36,33 @@ public class KeyValueUtils {
 
     public static boolean deleteKey(String key) {
         return RDH.getWritableDatabase().delete(
-                ReceiptDB.KeyVal.TABLE_NAME,
-                ReceiptDB.KeyVal.KEY + " = ?",
+                DatabaseTable.KeyValue.TABLE_NAME,
+                DatabaseTable.KeyValue.KEY + " = ?",
                 new String[]{key}
         ) > 0;
     }
 
     public static boolean updateValuesForKeyWithBlank(String key) {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(ReceiptDB.KeyVal.VALUE, "");
+        contentValues.put(DatabaseTable.KeyValue.VALUE, "");
 
         return RDH.getWritableDatabase().update(
-                ReceiptDB.KeyVal.TABLE_NAME,
+                DatabaseTable.KeyValue.TABLE_NAME,
                 contentValues,
-                ReceiptDB.KeyVal.KEY + "=?",
+                DatabaseTable.KeyValue.KEY + "=?",
                 new String[]{key}
         ) > 0;
     }
 
     public static String getValue(String key) {
         Cursor c = RDH.getReadableDatabase().rawQuery(
-                "select * from " + ReceiptDB.KeyVal.TABLE_NAME + " where " + ReceiptDB.KeyVal.KEY + "=" + "'" + key + "'",
+                "select * from " + DatabaseTable.KeyValue.TABLE_NAME + " where " + DatabaseTable.KeyValue.KEY + "=" + "'" + key + "'",
                 null
         );
 
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
-            return c.getString(c.getColumnIndex(ReceiptDB.KeyVal.VALUE));
+            return c.getString(c.getColumnIndex(DatabaseTable.KeyValue.VALUE));
         } else {
             return null;
         }
@@ -73,7 +70,7 @@ public class KeyValueUtils {
 
     public static void clearKeyValues() {
         RDH.getReadableDatabase().delete(
-                ReceiptDB.KeyVal.TABLE_NAME,
+                DatabaseTable.KeyValue.TABLE_NAME,
                 null,
                 null
         );
@@ -81,7 +78,7 @@ public class KeyValueUtils {
 
     public static void clearReceiptsDB() {
         RDH.getReadableDatabase().delete(
-                ReceiptDB.Receipt.TABLE_NAME,
+                DatabaseTable.Receipt.TABLE_NAME,
                 null,
                 null
         );
@@ -93,5 +90,6 @@ public class KeyValueUtils {
         public static String WIFI_SYNC = "WIFI_SYNC";
         public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
         public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
+        public static String DID = "DID";
     }
 }

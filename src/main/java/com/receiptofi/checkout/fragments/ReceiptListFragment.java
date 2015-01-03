@@ -14,7 +14,7 @@ import com.receiptofi.checkout.adapters.ReceiptListAdapter;
 /**
  * Created by PT on 1/1/15.
  */
- public class ReceiptListFragment extends Fragment {
+public class ReceiptListFragment extends Fragment {
 
     View rootView;
     ExpandableListView explv;
