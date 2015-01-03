@@ -14,12 +14,17 @@ public class MonthlyReportUtils {
 
     private static final String TAG = MonthlyReportUtils.class.getSimpleName();
 
-    public static void dropAndCreateTableMonthlyReport() {
+    public static void computeMonthlyReceiptReport() {
+        dropAndCreateTableMonthlyReport();
+        groupByMonthlyReceiptStat();
+    }
+
+    private static void dropAndCreateTableMonthlyReport() {
         RDH.getWritableDatabase().execSQL("Drop table if exists " + MonthlyReport.TABLE_NAME);
         RDH.createTableMonthlyReport();
     }
 
-    public static void groupByMonthlyReceiptStat() {
+    private static void groupByMonthlyReceiptStat() {
         Log.d(TAG, "Starting to calculate Monthly Facts");
 
         Cursor receiptsMonthlyCursor = RDH.getReadableDatabase().rawQuery(

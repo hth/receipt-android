@@ -70,8 +70,7 @@ public class ReceiptUtils {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
 
-                MonthlyReportUtils.dropAndCreateTableMonthlyReport();
-                MonthlyReportUtils.groupByMonthlyReceiptStat();
+                MonthlyReportUtils.computeMonthlyReceiptReport();
             }
 
             @Override
