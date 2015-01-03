@@ -21,7 +21,7 @@ public class ImageModel {
     public Thread uploaderThread;
 
     public static ArrayList<ImageModel> getAllUnprocessedImages() {
-        ArrayList<ImageModel> models = new ArrayList<ImageModel>();
+        ArrayList<ImageModel> models = new ArrayList<>();
         Cursor c = ReceiptofiApplication.RDH.getReadableDatabase().query
                 (DatabaseTable.UploadQueue.TABLE_NAME,
                         new String[]{DatabaseTable.UploadQueue.IMAGE_PATH},
