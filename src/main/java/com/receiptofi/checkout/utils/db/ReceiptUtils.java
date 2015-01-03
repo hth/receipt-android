@@ -146,10 +146,11 @@ public class ReceiptUtils {
 
     /**
      * Insert receipt in table.
+     *
      * @param receipts
      */
     private static void insertReceipts(Map<String, Map<String, String>> receipts) {
-        for(String id : receipts.keySet()) {
+        for (String id : receipts.keySet()) {
             Map<String, String> receipt = receipts.get(id);
 
             ContentValues values = new ContentValues();
@@ -165,6 +166,11 @@ public class ReceiptUtils {
             values.put(DatabaseTable.Receipt.R_ID, receipt.get("rid"));
             values.put(DatabaseTable.Receipt.TOTAL, receipt.get("total"));
 
+            ReceiptofiApplication.RDH.getWritableDatabase().delete(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    "id = ?",
+                    new String[]{receipt.get("id")}
+            );
             ReceiptofiApplication.RDH.getWritableDatabase().insert(
                     DatabaseTable.Receipt.TABLE_NAME,
                     null,

@@ -50,7 +50,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + DatabaseTable.Receipt.EXPENSE_REPORT + " TEXT ,"
                 + DatabaseTable.Receipt.FILES_BLOB + " TEXT ,"
                 + DatabaseTable.Receipt.FILES_ORIENTATION + " TEXT ,"
-                + DatabaseTable.Receipt.ID + " TEXT ,"
+                + DatabaseTable.Receipt.ID + " TEXT UNIQUE ,"
                 + DatabaseTable.Receipt.NOTES + " TEXT ,"
                 + DatabaseTable.Receipt.P_TAX + " TEXT ,"
                 + DatabaseTable.Receipt.R_ID + " TEXT ,"
