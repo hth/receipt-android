@@ -90,5 +90,6 @@ public class KeyValueUtils {
         public static String WIFI_SYNC = "WIFI_SYNC";
         public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
         public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
+        public static String DID = "DID";
     }
 }
