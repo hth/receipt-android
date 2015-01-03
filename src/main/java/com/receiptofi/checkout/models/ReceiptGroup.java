@@ -8,8 +8,8 @@ import java.util.List;
  */
 public class ReceiptGroup {
 
-    List<ReceiptGroupDetail> receiptGroupDetails = new LinkedList<>();
-    List<List<ReceiptGroupHeader>> receiptGroupHeader = new LinkedList<>();
+    private List<ReceiptGroupDetail> receiptGroupDetails = new LinkedList<>();
+    private List<List<ReceiptGroupHeader>> receiptGroupHeader = new LinkedList<>();
 
     public List<ReceiptGroupDetail> getReceiptGroupDetails() {
         return receiptGroupDetails;
