@@ -12,21 +12,6 @@ public class ReceiptGroup {
     private List<List<ReceiptGroupDetail>> receiptGroupDetails = new LinkedList<>();
     private List<ReceiptGroupHeader> receiptGroupHeaders = new LinkedList<>();
 
-    public ReceiptGroup() {
-        ReceiptGroupDetail receiptGroupDetail = new ReceiptGroupDetail("1234");
-        receiptGroupDetail.setBusinessName("Costco");
-        receiptGroupDetail.setReceiptId("xys");
-        receiptGroupDetail.setTotal(12.00);
-        List<ReceiptGroupDetail> receiptGroupDetailList = new ArrayList<>();
-        receiptGroupDetailList.add(receiptGroupDetail);
-        addReceiptGroupDetails(receiptGroupDetailList);
-
-        ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader("Jan", "2015");
-        receiptGroupHeader.increaseCount();
-        receiptGroupHeader.addTotal(12.00);
-        addReceiptGroupHeaders(receiptGroupHeader);
-    }
-
     public List<List<ReceiptGroupDetail>> getReceiptGroupDetails() {
         return receiptGroupDetails;
     }
