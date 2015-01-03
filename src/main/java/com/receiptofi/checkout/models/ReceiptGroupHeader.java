@@ -27,8 +27,8 @@ public class ReceiptGroupHeader {
         return gross;
     }
 
-    public void updateGross(double gross) {
-        this.gross = +gross;
+    public void addTotal(double total) {
+        this.gross = +total;
     }
 
     public int getCount() {
