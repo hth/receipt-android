@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter_old;
-import com.receiptofi.checkout.dbutils.ReceiptUtils;
+import com.receiptofi.checkout.utils.db.ReceiptUtils;
 import com.receiptofi.checkout.models.ReceiptModel;
 
 public class ReceiptListFragment_old extends Fragment {
@@ -45,7 +45,7 @@ public class ReceiptListFragment_old extends Fragment {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
-        adapter = new ReceiptListAdapter_old(context, ReceiptUtils.getAllReciepts());
+        adapter = new ReceiptListAdapter_old(context, ReceiptUtils.getAllReceipts());
         receiptList.setAdapter(adapter);
         receiptList.setOnItemClickListener(receiptListener);
     }
