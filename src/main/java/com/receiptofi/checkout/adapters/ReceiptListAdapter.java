@@ -4,64 +4,102 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
-import com.receiptofi.checkout.models.ReceiptModel;
 
-import java.util.ArrayList;
+public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
-public class ReceiptListAdapter extends ArrayAdapter<ReceiptModel> {
+    private final LayoutInflater inflater;
+    private String[] groups;
+    private String[][] children;
 
-    private Context context;
-    private ArrayList<ReceiptModel> models;
-
-    public ReceiptListAdapter(Context context, ArrayList<ReceiptModel> models) {
-        super(context, android.R.layout.simple_expandable_list_item_1);
-        this.context = context;
-        this.models = models;
+    public ReceiptListAdapter(Context context, String[] groups, String[][] children) {
+        this.groups = groups;
+        this.children = children;
+        inflater = LayoutInflater.from(context);
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
+    public int getGroupCount() {
+        return groups.length;
+    }
 
+    @Override
+    public int getChildrenCount(int groupPosition) {
+        return children[groupPosition].length;
+    }
+
+    @Override
+    public Object getGroup(int groupPosition) {
+        return groups[groupPosition];
+    }
+
+    @Override
+    public Object getChild(int groupPosition, int childPosition) {
+        return children[groupPosition][childPosition];
+    }
+
+    @Override
+    public long getGroupId(int groupPosition) {
+        return groupPosition;
+    }
+
+    @Override
+    public long getChildId(int groupPosition, int childPosition) {
+        return childPosition;
+    }
+
+    @Override
+    public boolean hasStableIds() {
+        return true;
+    }
+
+    @Override
+    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
+
+        ViewHolder holder;
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.receipt_list_row, null);
+            convertView = inflater.inflate(R.layout.receipt_list_child, parent, false);
+            holder = new ViewHolder();
+
+            holder.text = (TextView) convertView.findViewById(R.id.exp_list_item);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
         }
 
-        ReceiptModel receipt = models.get(position);
-        if (receipt.bizName != null) {
-            ((TextView) convertView.findViewById(R.id.bizNameText)).setText(receipt.bizName);
-        }
+        holder.text.setText(getChild(groupPosition, childPosition).toString());
 
-        if (receipt.ptax != 0.0f) {
-            ((TextView) convertView.findViewById(R.id.ptaxText)).setText(String.valueOf(receipt.ptax));
-        }
-
-        if (receipt.total != 0.0f) {
-            ((TextView) convertView.findViewById(R.id.totalText)).setText(String.valueOf(receipt.total));
-        }
-
-        if (receipt.date != null) {
-            ((TextView) convertView.findViewById(R.id.dateText)).setText(receipt.date);
-        }
-
-        convertView.setTag(receipt);
         return convertView;
     }
 
     @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return models.size();
+    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
+        ViewHolder holder;
+
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.receipt_list_parent, parent, false);
+
+            holder = new ViewHolder();
+            holder.text = (TextView) convertView.findViewById(R.id.exp_list_header);
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        holder.text.setText(getGroup(groupPosition).toString());
+
+        return convertView;
     }
 
     @Override
-    public ReceiptModel getItem(int position) {
-        // TODO Auto-generated method stub
-        return models.get(position);
+    public boolean isChildSelectable(int groupPosition, int childPosition) {
+        return true;
+    }
+
+    private class ViewHolder {
+        TextView text;
     }
 }

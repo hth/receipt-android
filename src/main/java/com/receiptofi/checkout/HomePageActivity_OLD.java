@@ -10,7 +10,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
-import com.receiptofi.checkout.fragments.ReceiptListFragment;
+import com.receiptofi.checkout.fragments.ReceiptListFragment_old;
 import com.receiptofi.checkout.fragments.ViewReceiptPage;
 import com.receiptofi.checkout.models.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -73,7 +73,7 @@ public class HomePageActivity_OLD extends ParentActivity {
 
     public void invokeReceiptList(View view) {
         View container = findViewById(R.id.leftSidePane);
-        startFragment(new ReceiptListFragment(), true, container.getId());
+        startFragment(new ReceiptListFragment_old(), true, container.getId());
     }
 
     public void invokeDetailReceiptView(View view, ReceiptModel model) {

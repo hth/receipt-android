@@ -8,8 +8,9 @@
 
     <RelativeLayout
         android:id="@+id/parent_container"
-        android:layout_width="match_parent"
+        android:layout_width="@dimen/view_with_paddings_on_side"
         android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal"
         android:background="@color/app_light_bg">
 
         <RelativeLayout
@@ -146,4 +147,4 @@
 
         </RelativeLayout>
     </RelativeLayout>
-    </ScrollView>
+</ScrollView>

@@ -1,0 +1,17 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/exp_list_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
+        android:paddingRight="0dp"
+        android:paddingEnd="0dp"
+        android:textSize="16sp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp" />
+
+</LinearLayout>
