@@ -97,10 +97,7 @@ public class ReceiptUtils {
                 new ResponseHandler() {
                     @Override
                     public void onSuccess(Header[] arr, String body) {
-                        ArrayList<ReceiptModel> models = ResponseParser.getReceipts(body);
-                        for (ReceiptModel model : models) {
-                            model.save();
-                        }
+                        insertReceipts(ResponseParser.getReceipts(body));
                     }
 
                     @Override
@@ -146,36 +143,44 @@ public class ReceiptUtils {
     }
 
     /**
-     * Insert receipt in table.
+     * Insert receipts in table.
      *
      * @param receipts
      */
     private static void insertReceipts(List<ReceiptModel> receipts) {
         for (ReceiptModel receipt : receipts) {
-
-            ContentValues values = new ContentValues();
-            values.put(DatabaseTable.Receipt.BIZ_NAME, receipt.getBizName());
-            values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, receipt.getAddress());
-            values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, receipt.getPhone());
-            values.put(DatabaseTable.Receipt.DATE, receipt.getDate());
-            values.put(DatabaseTable.Receipt.EXPENSE_REPORT, receipt.getExpenseReport());
-            values.put(DatabaseTable.Receipt.BLOB_IDS, receipt.getBlobIds());
-            values.put(DatabaseTable.Receipt.ID, receipt.getId());
-            values.put(DatabaseTable.Receipt.NOTES, receipt.getNotes());
-            values.put(DatabaseTable.Receipt.PTAX, receipt.getPtax());
-            values.put(DatabaseTable.Receipt.RID, receipt.getRid());
-            values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
-
-            ReceiptofiApplication.RDH.getWritableDatabase().delete(
-                    DatabaseTable.Receipt.TABLE_NAME,
-                    "id = ?",
-                    new String[]{receipt.getId()}
-            );
-            ReceiptofiApplication.RDH.getWritableDatabase().insert(
-                    DatabaseTable.Receipt.TABLE_NAME,
-                    null,
-                    values
-            );
+            insertReceipt(receipt);
         }
+    }
+
+    /**
+     * Insert receipt in table.
+     *
+     * @param receipt
+     */
+    private static void insertReceipt(ReceiptModel receipt) {
+        ContentValues values = new ContentValues();
+        values.put(DatabaseTable.Receipt.BIZ_NAME, receipt.getBizName());
+        values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, receipt.getAddress());
+        values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, receipt.getPhone());
+        values.put(DatabaseTable.Receipt.DATE, receipt.getDate());
+        values.put(DatabaseTable.Receipt.EXPENSE_REPORT, receipt.getExpenseReport());
+        values.put(DatabaseTable.Receipt.BLOB_IDS, receipt.getBlobIds());
+        values.put(DatabaseTable.Receipt.ID, receipt.getId());
+        values.put(DatabaseTable.Receipt.NOTES, receipt.getNotes());
+        values.put(DatabaseTable.Receipt.PTAX, receipt.getPtax());
+        values.put(DatabaseTable.Receipt.RID, receipt.getRid());
+        values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
+
+        ReceiptofiApplication.RDH.getWritableDatabase().delete(
+                DatabaseTable.Receipt.TABLE_NAME,
+                "id = ?",
+                new String[]{receipt.getId()}
+        );
+        ReceiptofiApplication.RDH.getWritableDatabase().insert(
+                DatabaseTable.Receipt.TABLE_NAME,
+                null,
+                values
+        );
     }
 }
