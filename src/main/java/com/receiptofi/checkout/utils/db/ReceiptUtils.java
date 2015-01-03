@@ -22,6 +22,8 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.Map;
 
+import static com.receiptofi.checkout.utils.db.KeyValueUtils.*;
+
 public class ReceiptUtils {
 
     public static void getUnprocessedCount() {
@@ -31,12 +33,9 @@ public class ReceiptUtils {
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
                 msg.what = HomeActivity.UPDATE;
-
                 Map<String, String> map = JsonParseUtils.parseUnprocessedCount(body);
-
-
-                //msg.arg1 =
-
+                msg.obj = map.get("unprocessedCount");
+                insertKeyValue(KEYS.UNPROCESSED_DOCUMENT, map.get("unprocessedCount"));
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }

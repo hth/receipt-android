@@ -14,7 +14,7 @@ public class KeyValueUtils {
 
     ReceiptofiApplication application;
 
-    public static boolean insertKeyValue(Context context, String key, String value) {
+    public static boolean insertKeyValue(String key, String value) {
         ContentValues values = new ContentValues();
         values.put(ReceiptDB.KeyVal.KEY, key);
         values.put(ReceiptDB.KeyVal.VALUE, value);
@@ -89,7 +89,7 @@ public class KeyValueUtils {
 
     public static class KEYS {
         public static String XR_MAIL = API.key.XR_MAIL;
-        public static String XR_AUTH = API.key.XR_MAIL;
+        public static String XR_AUTH = API.key.XR_AUTH;
         public static String WIFI_SYNC = "WIFI_SYNC";
         public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
         public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";

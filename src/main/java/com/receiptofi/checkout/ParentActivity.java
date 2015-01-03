@@ -242,7 +242,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         }
 
         for (Map.Entry<String, String> entry : map.entrySet()) {
-            boolean success = KeyValueUtils.insertKeyValue(context, entry.getKey(), entry.getValue());
+            boolean success = KeyValueUtils.insertKeyValue(entry.getKey(), entry.getValue());
             if (!success) {
                 Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
             }
