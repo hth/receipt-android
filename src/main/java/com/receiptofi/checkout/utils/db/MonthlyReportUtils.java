@@ -28,7 +28,7 @@ public class MonthlyReportUtils {
                         "substr(date, 1, 4) yr, " +
                         "count(*) count, " +
                         "total(total) total, " +
-                        "from " + DatabaseTable.Receipt.TABLE_NAME + " group by yr, mon", null);
+                        "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
 
 
         if (receiptsMonthlyCursor != null && receiptsMonthlyCursor.getCount() > 0) {
