@@ -208,8 +208,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                saveAuthKey(ParentActivity.this, headerData);
+                saveAuthKey(ExternalCall.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
             }
@@ -230,7 +229,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
-    protected void saveAuthKey(Context context, Map<String, String> map) {
+    protected void saveAuthKey(Map<String, String> map) {
         String mail = KeyValueUtils.getValue(API.key.XR_MAIL);
 
         /*
