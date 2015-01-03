@@ -90,7 +90,7 @@ public class ReceiptUtils {
         ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + ReceiptDB.Receipt.TABLE_NAME + ";", null);
     }
 
-    public static ArrayList<ReceiptModel> getAllReciepts() {
+    public static ArrayList<ReceiptModel> getAllReceipts() {
 
         String[] columns = new String[]{ReceiptDB.Receipt.BIZ_NAME, ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX, ReceiptDB.Receipt.TOTAL, ReceiptDB.Receipt.ID, ReceiptDB.Receipt.FILES_BLOB};
         Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(ReceiptDB.Receipt.TABLE_NAME, columns, null, null, null, null, null);
