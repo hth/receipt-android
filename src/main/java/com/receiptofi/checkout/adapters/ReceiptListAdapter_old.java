@@ -8,7 +8,7 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
-import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.model.ReceiptModel;
 
 import java.util.ArrayList;
 

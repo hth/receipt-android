@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.models;
+package com.receiptofi.checkout.model;
 
 import android.content.ContentValues;
 

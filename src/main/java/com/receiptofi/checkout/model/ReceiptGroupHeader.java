@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.models;
+package com.receiptofi.checkout.model;
 
 /**
  * Created by hitender on 1/2/15.

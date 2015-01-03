@@ -13,7 +13,7 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ImageResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
-import com.receiptofi.checkout.models.ImageModel;
+import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 

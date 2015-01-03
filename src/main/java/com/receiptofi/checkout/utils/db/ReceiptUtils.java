@@ -12,7 +12,7 @@ import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.Protocol;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
-import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;

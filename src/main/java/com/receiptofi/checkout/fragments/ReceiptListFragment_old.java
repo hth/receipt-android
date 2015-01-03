@@ -13,7 +13,7 @@ import android.widget.ListView;
 import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter_old;
-import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 public class ReceiptListFragment_old extends Fragment {
