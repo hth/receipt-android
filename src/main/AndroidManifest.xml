@@ -35,7 +35,8 @@
             android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name="com.receiptofi.checkout.LaunchActivity" >
+            android:name="com.receiptofi.checkout.LaunchActivity"
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
