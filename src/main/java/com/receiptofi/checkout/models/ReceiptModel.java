@@ -25,7 +25,7 @@ public class ReceiptModel {
         values.put(DatabaseTable.Receipt.BIZ_NAME, bizName);
         values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, bizStoreAddress);
         values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, bizStorePhone);
-        values.put(DatabaseTable.Receipt.DATE_R, date);
+        values.put(DatabaseTable.Receipt.DATE, date);
         values.put(DatabaseTable.Receipt.EXPENSE_REPORT, expenseReport);
         values.put(DatabaseTable.Receipt.FILES_BLOB, filesBlobId);
         values.put(DatabaseTable.Receipt.FILES_ORIENTATION, filesOrientation);

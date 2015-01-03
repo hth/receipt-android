@@ -1,8 +1,8 @@
 package com.receiptofi.checkout.utils.db;
 
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Message;
-import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
@@ -120,7 +120,7 @@ public class ReceiptUtils {
 
     public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
-        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE_R, DatabaseTable.Receipt.P_TAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.FILES_BLOB};
+        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE, DatabaseTable.Receipt.P_TAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.FILES_BLOB};
         Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
@@ -151,12 +151,25 @@ public class ReceiptUtils {
     private static void insertReceipts(Map<String, Map<String, String>> receipts) {
         for(String id : receipts.keySet()) {
             Map<String, String> receipt = receipts.get(id);
-            //For each key get value and insert a record in db
-            String receiptId = receipt.get("id");
-            String bizName = receipt.get("bizName");
 
-            Log.d(TAG,"Before Insertig into REceipt Table");
-            ReceiptofiApplication.RDH.getWritableDatabase().execSQL("Insert into receipt(bizName,id) values('"+bizName+"','"+receiptId+"'");
+            ContentValues values = new ContentValues();
+            values.put(DatabaseTable.Receipt.BIZ_NAME, receipt.get("bizName"));
+            values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, receipt.get("address"));
+            values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, receipt.get("phone"));
+            values.put(DatabaseTable.Receipt.DATE, receipt.get("date"));
+            values.put(DatabaseTable.Receipt.EXPENSE_REPORT, receipt.get("expenseReport"));
+            values.put(DatabaseTable.Receipt.FILES_BLOB, receipt.get("blobIds"));
+            values.put(DatabaseTable.Receipt.ID, receipt.get("id"));
+            values.put(DatabaseTable.Receipt.NOTES, receipt.get("notes"));
+            values.put(DatabaseTable.Receipt.P_TAX, receipt.get("ptax"));
+            values.put(DatabaseTable.Receipt.R_ID, receipt.get("rid"));
+            values.put(DatabaseTable.Receipt.TOTAL, receipt.get("total"));
+
+            ReceiptofiApplication.RDH.getWritableDatabase().insert(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    null,
+                    values
+            );
         }
     }
 }

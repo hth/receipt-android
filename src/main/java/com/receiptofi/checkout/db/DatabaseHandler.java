@@ -46,7 +46,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + DatabaseTable.Receipt.BIZ_NAME + " TEXT ,"
                 + DatabaseTable.Receipt.BIZ_STORE_ADDRESS + " TEXT ,"
                 + DatabaseTable.Receipt.BIZ_STORE_PHONE + " TEXT ,"
-                + DatabaseTable.Receipt.DATE_R + " TEXT ,"
+                + DatabaseTable.Receipt.DATE + " TEXT ,"
                 + DatabaseTable.Receipt.EXPENSE_REPORT + " TEXT ,"
                 + DatabaseTable.Receipt.FILES_BLOB + " TEXT ,"
                 + DatabaseTable.Receipt.FILES_ORIENTATION + " TEXT ,"
