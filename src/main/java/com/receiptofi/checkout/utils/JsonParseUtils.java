@@ -23,7 +23,7 @@ public class JsonParseUtils {
             JSONObject jsonObject = new JSONObject(jsonResponse);
             map.put(API.key.UNPROCESSEDCOUNT, jsonObject.getString(API.key.UNPROCESSEDCOUNT));
         } catch (JSONException e) {
-            Log.d(TAG, "Fail parsing "+ API.key.UNPROCESSEDCOUNT + " response=" + jsonResponse, e);
+            Log.d(TAG, "Fail parsing " + API.key.UNPROCESSEDCOUNT + " response=" + jsonResponse, e);
             map.put("unprocessedCount", "0");
         }
         return map;

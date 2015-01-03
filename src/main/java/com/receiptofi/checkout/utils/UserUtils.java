@@ -31,6 +31,7 @@ public class UserUtils {
 
     /**
      * Supports UTF-8 Encoding.
+     *
      * @return
      */
     public static String getEmailEncoded() {
@@ -44,6 +45,7 @@ public class UserUtils {
 
     /**
      * Supports UTF-8 Encoding.
+     *
      * @return
      */
     public static String getAuthEncoded() {

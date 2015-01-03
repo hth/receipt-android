@@ -1,7 +1,6 @@
 package com.receiptofi.checkout.utils.db;
 
 import com.receiptofi.checkout.db.ReceiptDB;
-import com.receiptofi.checkout.utils.AppUtils;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 

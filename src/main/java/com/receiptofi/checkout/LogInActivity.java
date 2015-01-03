@@ -17,8 +17,8 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.Validation;
 
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
@@ -48,7 +48,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
-        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
         final TextView logIn = (TextView) findViewById(R.id.login_button);

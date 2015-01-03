@@ -18,6 +18,7 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
 
     /**
      * Do not initialize db here.
+     *
      * @param db
      */
     @Override
