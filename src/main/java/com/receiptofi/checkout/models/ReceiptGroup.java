@@ -7,7 +7,7 @@ import java.util.List;
  * Created by hitender on 1/2/15.
  */
 public class ReceiptGroup {
-    
+
     List<ReceiptGroupDetail> receiptGroupDetails = new LinkedList<>();
     List<List<ReceiptGroupHeader>> receiptGroupHeader = new LinkedList<>();
 

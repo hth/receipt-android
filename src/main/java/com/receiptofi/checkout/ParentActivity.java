@@ -26,14 +26,14 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
-import com.receiptofi.checkout.utils.db.DBUtils;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.utils.db.ReceiptUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.db.DBUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import org.apache.http.Header;
 import org.json.JSONException;

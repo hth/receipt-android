@@ -18,8 +18,8 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.Validation;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -52,7 +52,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_page);
-        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
         final TextView signUp = (TextView) findViewById(R.id.sign_up_button);

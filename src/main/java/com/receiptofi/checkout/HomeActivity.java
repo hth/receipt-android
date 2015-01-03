@@ -22,9 +22,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import java.io.File;
 
@@ -70,7 +70,7 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
-        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
         //TODO needed for ImageUploaderService

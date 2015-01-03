@@ -4,8 +4,8 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.util.Log;
 
-import static com.receiptofi.checkout.ReceiptofiApplication.*;
-import static com.receiptofi.checkout.db.ReceiptDB.*;
+import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
+import static com.receiptofi.checkout.db.ReceiptDB.MonthlyReport;
 
 public class MonthlyReportUtils {
 
