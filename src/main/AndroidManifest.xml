@@ -68,6 +68,9 @@
             android:name=".SettingsActivity"
             android:label="@string/settings">
         </activity>
+        <activity
+            android:name=".ReceiptListActivity">
+        </activity>
 
         <receiver android:name="com.receiptofi.checkout.receivers.NetworkConnectivityReceiver">
             <intent-filter>

@@ -56,10 +56,10 @@ public class HomeActivity extends Activity {
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
-                case GET_ALL_RECEIPTS:
-                    showErrorMsg((String) msg.obj);
-                    endAnimation();
-                    break;
+               // case GET_ALL_RECEIPTS:
+               //     showErrorMsg((String) msg.obj);
+               //     endAnimation();
+               //     break;
             }
         }
     };
@@ -145,7 +145,7 @@ public class HomeActivity extends Activity {
     }
 
     public void invokeReceiptList(View view) {
-        View container = findViewById(R.id.leftSidePane);
+        startActivity(new Intent(this, ReceiptListActivity.class));
     }
 
     @Override
