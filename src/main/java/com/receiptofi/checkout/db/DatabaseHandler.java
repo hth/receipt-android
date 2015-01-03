@@ -24,7 +24,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         Log.d(TAG, "executing onCreate");
-        if (db != null) {
+        if (null != db) {
             this.db = db;
             createTableReceipts();
             createTableImageIndex();
