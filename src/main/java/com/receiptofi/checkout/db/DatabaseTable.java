@@ -7,16 +7,18 @@ public class DatabaseTable {
     public static class Receipt {
         public static final String TABLE_NAME = "RECEIPT";
         public static final String BIZ_NAME = "bizName";
-        public static final String BIZ_STORE_ADDRESS = "bizStoreAddress";
-        public static final String BIZ_STORE_PHONE = "bizStorePhone";
-        public static final String DATE_R = "dateR";
+        public static final String BIZ_STORE_ADDRESS = "address";
+        public static final String BIZ_STORE_PHONE = "phone";
+        public static final String DATE = "date";
         public static final String EXPENSE_REPORT = "expenseReport";
-        public static final String FILES_BLOB = "filesBlob";
+        public static final String FILES_BLOB = "blobIds";
+        //TODO remove
         public static final String FILES_ORIENTATION = "filesOrientation";
-        public static final String ID = "iD";
+        public static final String ID = "documentId";
         public static final String NOTES = "notes";
         public static final String P_TAX = "ptax";
         public static final String R_ID = "rid";
+        //TODO remove
         public static final String SEQUENCE = "sequence";
         public static final String TOTAL = "total";
     }
