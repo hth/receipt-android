@@ -33,20 +33,20 @@ public class ReceiptListAdapter_old extends ArrayAdapter<ReceiptModel> {
         }
 
         ReceiptModel receipt = models.get(position);
-        if (receipt.bizName != null) {
-            ((TextView) convertView.findViewById(R.id.bizNameText)).setText(receipt.bizName);
+        if (receipt.getBizName() != null) {
+            ((TextView) convertView.findViewById(R.id.bizNameText)).setText(receipt.getBizName());
         }
 
-        if (receipt.ptax != 0.0f) {
-            ((TextView) convertView.findViewById(R.id.ptaxText)).setText(String.valueOf(receipt.ptax));
+        if (receipt.getPtax() != 0.0f) {
+            ((TextView) convertView.findViewById(R.id.ptaxText)).setText(String.valueOf(receipt.getPtax()));
         }
 
-        if (receipt.total != 0.0f) {
-            ((TextView) convertView.findViewById(R.id.totalText)).setText(String.valueOf(receipt.total));
+        if (receipt.getTotal() != 0.0f) {
+            ((TextView) convertView.findViewById(R.id.totalText)).setText(String.valueOf(receipt.getTotal()));
         }
 
-        if (receipt.date != null) {
-            ((TextView) convertView.findViewById(R.id.dateText)).setText(receipt.date);
+        if (receipt.getDate() != null) {
+            ((TextView) convertView.findViewById(R.id.dateText)).setText(receipt.getDate());
         }
 
         convertView.setTag(receipt);

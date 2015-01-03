@@ -57,7 +57,7 @@ public class ResponseParser {
 
     public static ArrayList<ReceiptModel> getReceipts(String response) {
 
-        ArrayList<ReceiptModel> models = new ArrayList<ReceiptModel>();
+        ArrayList<ReceiptModel> models = new ArrayList<>();
         // ArrayList<Rec>
         try {
             JSONArray array = new JSONArray(response);
@@ -67,38 +67,33 @@ public class ResponseParser {
                 // ReceiptModel.bizName.class;
 
                 JSONObject bizNameJson = json.getJSONObject("bizName");
-                model.bizName = bizNameJson.getString("name");
+                model.setBizName(bizNameJson.getString("name"));
 
                 JSONObject bizStoreJson = json.getJSONObject("bizStore");
-                model.bizStoreAddress = bizStoreJson.getString("address");
-                model.bizStorePhone = bizStoreJson.getString("phone");
+                model.setAddress(bizStoreJson.getString("address"));
+                model.setPhone(bizStoreJson.getString("phone"));
 
-                model.date = json.getString("date");
-                model.expenseReport = json.getString("expenseReport");
+                model.setDate(json.getString("date"));
+                model.setExpenseReport(json.getString("expenseReport"));
 
                 JSONArray jsonArray = json.getJSONArray("files");
 
                 JSONObject filesJson = (JSONObject) jsonArray.get(0);
-                model.filesBlobId = filesJson.getString("blobId");
-                model.filesOrientation = filesJson.getString("orientation");
-                model.filesSequence = filesJson.getString("sequence");
+                model.setBlobIds(filesJson.getString("blobId")); //ERROR
 
-                model.id = json.getString("id");
+                model.setId(json.getString("id"));
 
                 JSONObject notesJson = json.getJSONObject("notes");
-                model.notesText = notesJson.getString("text");
+                model.setNotes(notesJson.getString("text"));
 
                 String ptaxStr = json.getString("ptax");
                 if (ptaxStr != null) {
-                    model.ptax = Double.valueOf(ptaxStr);
+                    model.setPtax(Double.valueOf(ptaxStr));
                 }
-                String ridStr = json.getString("rid");
-                if (ridStr != null) {
-                    model.rid = Long.valueOf(ridStr);
-                }
+                model.setRid(json.getString("rid"));
                 Double totalStr = json.getDouble("total");
                 if (totalStr != null) {
-                    model.total = totalStr.doubleValue();
+                    model.setTotal(totalStr.doubleValue());
                 }
                 models.add(model);
             }

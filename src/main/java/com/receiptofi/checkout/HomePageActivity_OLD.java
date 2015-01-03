@@ -80,12 +80,12 @@ public class HomePageActivity_OLD extends ParentActivity {
         View container = findViewById(R.id.leftSidePane);
 
         Bundle blobData = new Bundle();
-        blobData.putString("date", model.date);
-        blobData.putString("blobId", model.filesBlobId);
-        blobData.putString("receiptId", model.id);
-        blobData.putDouble("totalPrice", model.total);
-        blobData.putString("receiptName", model.bizName);
-        blobData.putDouble("ptax", model.ptax);
+        blobData.putString("date", model.getDate());
+        blobData.putString("blobId", model.getBlobIds());
+        blobData.putString("receiptId", model.getId());
+        blobData.putDouble("totalPrice", model.getTotal());
+        blobData.putString("receiptName", model.getBizName());
+        blobData.putDouble("ptax", model.getPtax());
 
         ViewReceiptPage detailPage = new ViewReceiptPage();
         detailPage.setArguments(blobData);

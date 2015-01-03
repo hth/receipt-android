@@ -3,12 +3,15 @@ package com.receiptofi.checkout.utils;
 import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.models.ReceiptModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -30,13 +33,13 @@ public class JsonParseUtils {
         return map;
     }
 
-    public static Map<String, Map<String, String>> parseReceipt(String jsonResponse) {
-        Map<String, Map<String, String>> allReceipts = new HashMap<>();
+    public static List<ReceiptModel> parseReceipt(String jsonResponse) {
+        List<ReceiptModel> allReceipts = new LinkedList<>();
         try {
             JSONArray receipts = new JSONArray(jsonResponse);
             for (int i = 0; i < receipts.length(); ++i) {
                 JSONObject receipt = receipts.getJSONObject(i);
-                allReceipts.put(receipt.getString("id"), parseReceiptToMap(receipt));
+                allReceipts.add(parseReceiptToMap(receipt));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -44,13 +47,14 @@ public class JsonParseUtils {
         return allReceipts;
     }
 
-    private static Map<String, String> parseReceiptToMap(JSONObject receipt) throws JSONException {
-        Map<String, String> receiptMap = new HashMap<>();
-        receiptMap.put("bizName", receipt.getJSONObject("bizName").getString("name"));
-        receiptMap.put("address", receipt.getJSONObject("bizStore").getString("address"));
-        receiptMap.put("phone", receipt.getJSONObject("bizStore").getString("phone"));
-        receiptMap.put("date", receipt.getString("date"));
-        receiptMap.put("expenseReport", receipt.getString("expenseReport"));
+    private static ReceiptModel parseReceiptToMap(JSONObject receipt) throws JSONException {
+        ReceiptModel receiptModel = new ReceiptModel();
+
+        receiptModel.setBizName(receipt.getJSONObject("bizName").getString("name"));
+        receiptModel.setAddress(receipt.getJSONObject("bizStore").getString("address"));
+        receiptModel.setPhone(receipt.getJSONObject("bizStore").getString("phone"));
+        receiptModel.setDate(receipt.getString("date"));
+        receiptModel.setExpenseReport(receipt.getString("expenseReport"));
         JSONArray files = receipt.getJSONArray("files");
         StringBuilder blobIds = new StringBuilder();
         for (int i = 0; i < files.length(); ++i) {
@@ -60,12 +64,12 @@ public class JsonParseUtils {
                 blobIds.append(",").append(files.getJSONObject(i).getString("blobId"));
             }
         }
-        receiptMap.put("blobIds", blobIds.toString());
-        receiptMap.put("id", receipt.getString("id"));
-        receiptMap.put("notes", receipt.getJSONObject("notes").getString("text"));
-        receiptMap.put("ptax", receipt.getString("ptax"));
-        receiptMap.put("rid", receipt.getString("rid"));
-        receiptMap.put("total", receipt.getString("total"));
-        return receiptMap;
+        receiptModel.setBlobIds(blobIds.toString());
+        receiptModel.setId(receipt.getString("id"));
+        receiptModel.setNotes(receipt.getJSONObject("notes").getString("text"));
+        receiptModel.setPtax(receipt.getDouble("ptax"));
+        receiptModel.setRid(receipt.getString("rid"));
+        receiptModel.setTotal(receipt.getDouble("total"));
+        return receiptModel;
     }
 }
