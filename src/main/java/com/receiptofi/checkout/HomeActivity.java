@@ -51,10 +51,10 @@ public class HomeActivity extends Activity {
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
-              //  case UPDATE:
-              //      showErrorMsg((String) msg.obj);
-              //      endAnimation();
-              //      break;
+                case UPDATE:
+                    showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
             }
         }
     };
