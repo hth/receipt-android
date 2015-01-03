@@ -87,11 +87,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             }
         });
 
-        LinearLayout facebooklogin = (LinearLayout) findViewById(R.id.facebook_login);
-        facebooklogin.setOnClickListener(this);
+        LinearLayout facebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
+        facebookLogin.setOnClickListener(this);
 
-        LinearLayout googlelogin = (LinearLayout) findViewById(R.id.google_login);
-        googlelogin.setOnClickListener(this);
+        LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
+        googleLogin.setOnClickListener(this);
 
     }
 
