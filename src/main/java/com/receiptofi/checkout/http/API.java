@@ -53,5 +53,8 @@ public class API {
         public static final String SETTING_UPDATE_LOGIN_ID = "UID";
         public static final String SETTING_UPDATE_PASSWORD = "PA";
 
+        // Unprocessed
+        public static final String UNPROCESSEDCOUNT = "unprocessedCount";
+
     }
 }
