@@ -144,9 +144,9 @@ public class SettingsActivity extends PreferenceActivity {
                     @Override
                     public void onSuccess(org.apache.http.Header[] headers, String body) {
                         Log.d(TAG, "executing updateLoginId: onSuccess");
-                        Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                        Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                         Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                        saveAuthKey(getActivity().getApplicationContext(), headerData);
+                        saveAuthKey(headerData);
                         updateHandler.sendEmptyMessage(LOGIN_ID_UPDATE_SUCCESS);
                     }
 
@@ -185,7 +185,7 @@ public class SettingsActivity extends PreferenceActivity {
                         Log.d(TAG, "executing updatePassword: onSuccess");
                         Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                         Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                        saveAuthKey(getActivity().getApplicationContext(), headerData);
+                        saveAuthKey(headerData);
                     }
 
                     @Override
@@ -209,7 +209,7 @@ public class SettingsActivity extends PreferenceActivity {
             editor.commit();
         }
 
-        protected void saveAuthKey(Context context, Map<String, String> map) {
+        protected void saveAuthKey(Map<String, String> map) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
                 boolean success = KeyValueUtils.insertKeyValue(entry.getKey(), entry.getValue());
                 if (!success) {

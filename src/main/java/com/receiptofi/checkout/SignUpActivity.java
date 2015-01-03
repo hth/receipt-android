@@ -100,12 +100,11 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             }
         });
 
-        LinearLayout facebooklogin = (LinearLayout) findViewById(R.id.facebook_login);
-        facebooklogin.setOnClickListener(this);
+        LinearLayout facebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
+        facebookLogin.setOnClickListener(this);
 
-        LinearLayout googlelogin = (LinearLayout) findViewById(R.id.google_login);
-        googlelogin.setOnClickListener(this);
-
+        LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
+        googleLogin.setOnClickListener(this);
     }
 
     @Override
@@ -135,8 +134,9 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         nameStr = name.getText().toString();
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        return nameStr.length() >= Validation.NAME_MIN_LENGTH && emailStr.length() >= Validation.EMAIL_MIN_LENGTH
-                && passwordStr.length() >= Validation.PASSWORD_MIN_LENGTH;
+        return nameStr.length() >= Validation.NAME_MIN_LENGTH &&
+                emailStr.length() >= Validation.EMAIL_MIN_LENGTH &&
+                passwordStr.length() >= Validation.PASSWORD_MIN_LENGTH;
     }
 
     private void signUp() {
@@ -205,7 +205,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "executing authenticateSignUp: onSuccess");
-                Set<String> keys = new HashSet<String>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
+                Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
                 saveAuthKey(SignUpActivity.this, headerData);
                 hideLoader();
