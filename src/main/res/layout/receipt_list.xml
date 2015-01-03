@@ -7,7 +7,7 @@
     <include
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            layout="@layout/header"/>
+            layout="@layout/action_refresh"/>
 
     <ListView
             android:id="@+id/reciptListView"

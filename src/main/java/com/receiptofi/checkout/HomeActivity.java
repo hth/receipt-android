@@ -38,6 +38,7 @@ public class HomeActivity extends Activity {
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
     public static final int UPDATE_UNPROCESSED_COUNT = 0x2567;
     public static final int GET_ALL_RECEIPTS = 0x2568;
+
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
