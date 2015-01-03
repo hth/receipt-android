@@ -84,6 +84,28 @@ public class HomeActivity extends Activity {
         AppUtils.setHomePageContext(this);
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
         currentAmount = (TextView) findViewById(R.id.current_amount);
+        currentAmount.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // show graph page
+                Log.d(TAG, "executing showGraph");
+                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
+                startActivity(i);
+            }
+        });
+
+        TextView notification = (TextView)findViewById(R.id.processing_info);
+        notification.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // show graph page
+                Log.d(TAG, "executing showGraph");
+                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
+                startActivity(i);
+            }
+        });
 
         updateUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
 
