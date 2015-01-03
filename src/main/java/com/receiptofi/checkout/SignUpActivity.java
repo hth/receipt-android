@@ -209,8 +209,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "executing authenticateSignUp: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                saveAuthKey(SignUpActivity.this, headerData);
+                saveAuthKey(ExternalCall.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
                 finish();

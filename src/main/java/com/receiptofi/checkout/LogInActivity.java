@@ -177,8 +177,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                saveAuthKey(LogInActivity.this, headerData);
+                saveAuthKey(ExternalCall.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
                 finish();
