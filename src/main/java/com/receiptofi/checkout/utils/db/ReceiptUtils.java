@@ -61,7 +61,7 @@ public class ReceiptUtils {
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
                 msg.what = HomeActivity.GET_ALL_RECEIPTS;
-                Map<String, Map<String, String>> map = JsonParseUtils.parseReceipt(body);
+                insertReceipts(JsonParseUtils.parseReceipt(body));
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
@@ -141,4 +141,14 @@ public class ReceiptUtils {
 
     }
 
+    /**
+     * Insert receipt in table.
+     * @param receipts
+     */
+    private static void insertReceipts(Map<String, Map<String, String>> receipts) {
+        for(String id : receipts.keySet()) {
+            Map<String, String> receipt = receipts.get(id);
+            //For each key get value and insert a record in db
+        }
+    }
 }
