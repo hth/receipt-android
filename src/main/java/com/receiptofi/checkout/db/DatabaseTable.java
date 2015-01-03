@@ -14,7 +14,7 @@ public class DatabaseTable {
         public static final String FILES_BLOB = "blobIds";
         //TODO remove
         public static final String FILES_ORIENTATION = "filesOrientation";
-        public static final String ID = "documentId";
+        public static final String ID = "id";
         public static final String NOTES = "notes";
         public static final String P_TAX = "ptax";
         public static final String R_ID = "rid";
