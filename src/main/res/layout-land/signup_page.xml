@@ -28,6 +28,15 @@
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:id="@+id/name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_name"
+            android:inputType="textCapWords"
+            android:maxLength="@integer/name_max_length" />
+
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
@@ -44,32 +53,44 @@
             android:inputType="textPassword"
             android:maxLength="@integer/password_max_length" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="@dimen/activity_horizontal_margin">
+
+
+            <TextView
+                android:id="@+id/age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/age"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Spinner
+                android:id="@+id/age_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:entries="@array/age_range" />
+
+        </LinearLayout>
+
         <TextView
-            android:id="@+id/login_button"
+            android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_button_height"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/blue_button_selector"
             android:enabled="false"
             android:gravity="center"
-            android:text="@string/log_in"
+            android:text="@string/sign_up"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@android:color/white" />
-
-        <TextView
-            android:id="@+id/forgot_password_button"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/app_button_height"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@drawable/gray_button_selector"
-            android:gravity="center"
-            android:text="@string/forgot_password"
-            android:textAppearance="?android:attr/textAppearanceMedium" />
+            android:textColor="@color/white" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin_wide"
             android:gravity="center"
             android:text="@string/use_social"
@@ -80,9 +101,8 @@
             android:id="@+id/facebook_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/activity_vertical_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/facebook_bg_selector"
-            android:contentDescription="@string/facebook_login_cnt_dscp"
             android:orientation="horizontal">
 
             <ImageView
@@ -101,15 +121,15 @@
                 android:gravity="center"
                 android:text="@string/login_with_facebook"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/google_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@drawable/google_bg_selector"
-            android:contentDescription="@string/google_login_cnt_dscp"
             android:orientation="horizontal">
 
             <ImageView
@@ -128,7 +148,7 @@
                 android:gravity="center"
                 android:text="@string/login_with_google"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@android:color/white" />
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </LinearLayout>
@@ -141,7 +161,6 @@
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:background="@color/gray_light"/>
-
-    </RelativeLayout>
-
+        
+</RelativeLayout>
 </ScrollView>
