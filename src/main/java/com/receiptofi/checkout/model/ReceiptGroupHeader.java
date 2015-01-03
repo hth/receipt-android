@@ -7,12 +7,14 @@ public class ReceiptGroupHeader {
 
     private String month;
     private String year;
-    private double gross;
+    private double total;
     private int count;
 
-    public ReceiptGroupHeader(String month, String year) {
+    public ReceiptGroupHeader(String month, String year, double total, int count) {
         this.month = month;
         this.year = year;
+        this.total = total;
+        this.count = count;
     }
 
     public String getMonth() {
@@ -23,23 +25,21 @@ public class ReceiptGroupHeader {
         return year;
     }
 
-    public double getGross() {
-        return gross;
-    }
-
-    public void addTotal(double total) {
-        this.gross = +total;
+    public double getTotal() {
+        return total;
     }
 
     public int getCount() {
         return count;
     }
 
-    public void increaseCount() {
-        this.count = +1;
-    }
-
-    public void decreaseCount() {
-        this.count = +1;
+    @Override
+    public String toString() {
+        return "ReceiptGroupHeader{" +
+                "month='" + month + '\'' +
+                ", year='" + year + '\'' +
+                ", total=" + total +
+                ", count=" + count +
+                '}';
     }
 }

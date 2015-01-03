@@ -69,6 +69,9 @@ public class ReceiptUtils {
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
+
+                MonthlyReportUtils.dropAndCreateTableMonthlyReport();
+                MonthlyReportUtils.calculateMonthlyFacts();
             }
 
             @Override
