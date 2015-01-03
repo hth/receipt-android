@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,6 +48,8 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_page);
+        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        scrollView.setVerticalScrollBarEnabled(false);
 
         final TextView logIn = (TextView) findViewById(R.id.login_button);
         logIn.setOnClickListener(this);

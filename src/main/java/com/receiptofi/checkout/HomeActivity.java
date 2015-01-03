@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -69,6 +70,8 @@ public class HomeActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.home_page);
+        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        scrollView.setVerticalScrollBarEnabled(false);
 
         //TODO needed for ImageUploaderService
         AppUtils.setHomePageContext(this);

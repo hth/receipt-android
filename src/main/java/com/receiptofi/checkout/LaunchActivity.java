@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.utils.UserUtils;
@@ -29,12 +30,14 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
-            // startActivity(new Intent(this, HomeActivity.class));
-            // finish();
+             startActivity(new Intent(this, HomeActivity.class));
+             finish();
         }
         Log.d(TAG, "executing onCreate");
         setContentView(R.layout.launch_page);
         getActionBar().hide();
+        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        scrollView.setVerticalScrollBarEnabled(false);
 
         //login via Facebook
         LinearLayout mFacebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
