@@ -2,7 +2,7 @@ package com.receiptofi.checkout.http;
 
 import android.os.Bundle;
 
-import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.models.ReceiptElement;
 import com.receiptofi.checkout.models.ReceiptModel;
 
@@ -44,7 +44,7 @@ public class ResponseParser {
         Bundle bundle = new Bundle();
         try {
             JSONObject imageResponse = new JSONObject(response);
-            bundle.putString(ReceiptDB.ImageIndex.BLOB_ID, imageResponse.getString("blobId"));
+            bundle.putString(DatabaseTable.ImageIndex.BLOB_ID, imageResponse.getString("blobId"));
 
             JSONObject unprocessedDocuments = imageResponse.getJSONObject("unprocessedDocuments");
             bundle.putInt("unprocessedCount", unprocessedDocuments.getInt("unprocessedCount"));

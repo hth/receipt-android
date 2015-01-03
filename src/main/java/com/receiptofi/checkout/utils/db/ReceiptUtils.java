@@ -5,7 +5,7 @@ import android.os.Message;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
-import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.Protocol;
@@ -88,13 +88,13 @@ public class ReceiptUtils {
     }
 
     public static void clearReceipts() {
-        ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + ReceiptDB.Receipt.TABLE_NAME + ";", null);
+        ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + DatabaseTable.Receipt.TABLE_NAME + ";", null);
     }
 
     public static ArrayList<ReceiptModel> getAllReceipts() {
 
-        String[] columns = new String[]{ReceiptDB.Receipt.BIZ_NAME, ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX, ReceiptDB.Receipt.TOTAL, ReceiptDB.Receipt.ID, ReceiptDB.Receipt.FILES_BLOB};
-        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(ReceiptDB.Receipt.TABLE_NAME, columns, null, null, null, null, null);
+        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE_R, DatabaseTable.Receipt.P_TAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.FILES_BLOB};
+        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
         if (receiptsRecords != null && receiptsRecords.getCount() > 0) {

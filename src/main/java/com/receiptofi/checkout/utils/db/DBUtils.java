@@ -1,6 +1,6 @@
 package com.receiptofi.checkout.utils.db;
 
-import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.db.DatabaseTable;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
@@ -13,11 +13,11 @@ public class DBUtils {
      */
     public static void dbReInitialize() {
         /** Delete all tables. */
-        RDH.getWritableDatabase().execSQL("Drop table if exists " + ReceiptDB.Receipt.TABLE_NAME);
-        RDH.getWritableDatabase().execSQL("Drop table if exists " + ReceiptDB.KeyVal.TABLE_NAME);
-        RDH.getWritableDatabase().execSQL("Drop table if exists " + ReceiptDB.ImageIndex.TABLE_NAME);
-        RDH.getWritableDatabase().execSQL("Drop table if exists " + ReceiptDB.UploadQueue.TABLE_NAME);
-        RDH.getWritableDatabase().execSQL("Drop table if exists " + ReceiptDB.MonthlyReport.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Receipt.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.KeyValue.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ImageIndex.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.UploadQueue.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.MonthlyReport.TABLE_NAME);
 
         /** Create tables. */
         RDH.createTableReceipts();
