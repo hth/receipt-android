@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,17 +31,19 @@ import java.io.File;
 
 public class HomeActivity extends Activity {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
+
     public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
-    public static final int UPDATE = 0x2567;
+    public static final int UPDATE_UNPROCESSED_COUNT = 0x2567;
     public static final int GET_ALL_RECEIPTS = 0x2568;
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case IMAGE_UPLOAD_SUCCESS:
-                    updateUnprocessedCount(msg.arg1);
+                    updateUnprocessedCount(Integer.toString(msg.arg1));
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
@@ -52,14 +55,13 @@ public class HomeActivity extends Activity {
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
-                case UPDATE:
+                case UPDATE_UNPROCESSED_COUNT:
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
-               // case GET_ALL_RECEIPTS:
-               //     showErrorMsg((String) msg.obj);
-               //     endAnimation();
-               //     break;
+                case GET_ALL_RECEIPTS:
+                    updateUnprocessedCount((String)msg.obj);
+                    break;
             }
         }
     };
@@ -83,6 +85,7 @@ public class HomeActivity extends Activity {
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
         currentAmount = (TextView) findViewById(R.id.current_amount);
 
+        updateUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
 
     }
 
@@ -209,8 +212,8 @@ public class HomeActivity extends Activity {
         }
     }
 
-    // TODO: fix at start
-    private void updateUnprocessedCount(final int count) {
+    private void updateUnprocessedCount(final String count) {
+        Log.d(TAG, "executing updateUnprocessedCount");
         unprocessedDocumentCount.setText(String.format(getString(R.string.processing_info), count));
     }
 
