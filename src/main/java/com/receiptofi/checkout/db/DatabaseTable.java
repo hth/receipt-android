@@ -43,7 +43,7 @@ public class DatabaseTable {
         public static final String TABLE_NAME = "MONTHLY_REPORT";
         public static final String MONTH = "month";
         public static final String YEAR = "year";
-        public static final String TOTAL_AMT = "totalAmt";
-        public static final String RECEIPT_COUNT = "receiptCount";
+        public static final String TOTAL = "total";
+        public static final String COUNT = "count";
     }
 }
