@@ -31,6 +31,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             createTableUploadQueue();
             createTableKeyValue();
             createTableMonthlyReport();
+            //populateAllTablesWithDummyData();
         }
     }
 
@@ -95,5 +96,25 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + DatabaseTable.MonthlyReport.TOTAL_AMT + " TEXT ,"
                 + DatabaseTable.MonthlyReport.RECEIPT_COUNT + " TEXT " +
                 ");");
+    }
+
+    public void populateAllTablesWithDummyData(){
+        Log.d(TAG,"populating table with Dummy Data");
+        db.execSQL("insert into monthly_report values('JAN','2014','250.00',40)");
+        db.execSQL("insert into monthly_report values('FEB','2014','150.00',15)");
+        db.execSQL("insert into monthly_report values('MAR','2014','255.00',43)");
+        db.execSQL("insert into monthly_report values('APR','2014','260.00',48)");
+        db.execSQL("insert into monthly_report values('MAY','2014','280.00',50)");
+        db.execSQL("insert into monthly_report values('JUN','2014','290.00',52)");
+        db.execSQL("insert into monthly_report values('JUL','2014','300.00',45)");
+        db.execSQL("insert into monthly_report values('AUG','2014','320.00',51)");
+        db.execSQL("insert into monthly_report values('SEP','2014','345.00',34)");
+        db.execSQL("insert into monthly_report values('OCT','2014','350.00',60)");
+        db.execSQL("insert into monthly_report values('NOV','2014','370.00',49)");
+        db.execSQL("insert into monthly_report values('DEC','2014','400.00',55)");
+
+       // db.execSQL("insert into receipt values('Costco','212 Arques Sunnyvale CA 94089','408 555 1234','12/12/2014'," +
+       //         "                              null, null, null,1, null,8.25,1234,)");
+
     }
 }

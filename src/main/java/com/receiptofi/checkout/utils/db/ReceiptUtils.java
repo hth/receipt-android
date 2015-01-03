@@ -2,6 +2,7 @@ package com.receiptofi.checkout.utils.db;
 
 import android.database.Cursor;
 import android.os.Message;
+import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
@@ -27,6 +28,8 @@ import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.insertKeyValue;
 
 public class ReceiptUtils {
+
+    private static final String TAG = ReceiptUtils.class.getSimpleName();
 
     public static void getUnprocessedCount() {
 
@@ -149,6 +152,11 @@ public class ReceiptUtils {
         for(String id : receipts.keySet()) {
             Map<String, String> receipt = receipts.get(id);
             //For each key get value and insert a record in db
+            String receiptId = receipt.get("id");
+            String bizName = receipt.get("bizName");
+
+            Log.d(TAG,"Before Insertig into REceipt Table");
+            ReceiptofiApplication.RDH.getWritableDatabase().execSQL("Insert into receipt(bizName,id) values('"+bizName+"','"+receiptId+"'");
         }
     }
 }
