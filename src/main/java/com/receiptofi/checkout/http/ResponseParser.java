@@ -57,7 +57,7 @@ public class ResponseParser {
 
     public static ArrayList<ReceiptModel> getReceipts(String response) {
 
-        ArrayList<ReceiptModel> models = new ArrayList<ReceiptModel>();
+        ArrayList<ReceiptModel> models = new ArrayList<>();
         // ArrayList<Rec>
         try {
             JSONArray array = new JSONArray(response);
