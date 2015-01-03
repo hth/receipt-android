@@ -3,8 +3,8 @@ package com.receiptofi.checkout.http;
 import android.os.Bundle;
 
 import com.receiptofi.checkout.db.DatabaseTable;
-import com.receiptofi.checkout.models.ReceiptElement;
-import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.model.ReceiptElement;
+import com.receiptofi.checkout.model.ReceiptModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

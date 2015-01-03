@@ -3,7 +3,7 @@ package com.receiptofi.checkout.utils;
 import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.model.ReceiptModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;

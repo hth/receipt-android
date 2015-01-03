@@ -1,9 +1,4 @@
-package com.receiptofi.checkout.models;
-
-import android.content.ContentValues;
-
-import com.receiptofi.checkout.ReceiptofiApplication;
-import com.receiptofi.checkout.db.DatabaseTable;
+package com.receiptofi.checkout.model;
 
 public class ReceiptModel {
     public static final String NULL = "null";
@@ -19,24 +14,6 @@ public class ReceiptModel {
     private double ptax;
     private String rid;
     private double total;
-
-    public boolean save() {
-        ContentValues values = new ContentValues();
-        values.put(DatabaseTable.Receipt.BIZ_NAME, bizName);
-        values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, address);
-        values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, phone);
-        values.put(DatabaseTable.Receipt.DATE, date);
-        values.put(DatabaseTable.Receipt.EXPENSE_REPORT, expenseReport);
-        values.put(DatabaseTable.Receipt.BLOB_IDS, blobIds);
-        values.put(DatabaseTable.Receipt.ID, id);
-        values.put(DatabaseTable.Receipt.NOTES, notes);
-        values.put(DatabaseTable.Receipt.PTAX, ptax);
-        values.put(DatabaseTable.Receipt.RID, rid);
-        values.put(DatabaseTable.Receipt.TOTAL, total);
-
-        ReceiptofiApplication.RDH.getWritableDatabase().insert(DatabaseTable.Receipt.TABLE_NAME, null, values);
-        return false;
-    }
 
     public String getBizName() {
         return bizName;

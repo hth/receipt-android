@@ -5,7 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.receiptofi.checkout.models.ImageModel;
+import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;

@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.fragments.ReceiptListFragment_old;
 import com.receiptofi.checkout.fragments.ViewReceiptPage;
-import com.receiptofi.checkout.models.ReceiptModel;
+import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 
 import java.io.File;

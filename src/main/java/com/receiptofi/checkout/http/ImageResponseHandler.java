@@ -1,6 +1,6 @@
 package com.receiptofi.checkout.http;
 
-import com.receiptofi.checkout.models.ImageModel;
+import com.receiptofi.checkout.model.ImageModel;
 
 public interface ImageResponseHandler {
 
