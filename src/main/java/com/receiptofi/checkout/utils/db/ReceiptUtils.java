@@ -71,7 +71,7 @@ public class ReceiptUtils {
                 }
 
                 MonthlyReportUtils.dropAndCreateTableMonthlyReport();
-                MonthlyReportUtils.calculateMonthlyFacts();
+                MonthlyReportUtils.groupByMonthlyReceiptStat();
             }
 
             @Override

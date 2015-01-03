@@ -19,7 +19,7 @@ public class MonthlyReportUtils {
         RDH.createTableMonthlyReport();
     }
 
-    public static void calculateMonthlyFacts() {
+    public static void groupByMonthlyReceiptStat() {
         Log.d(TAG, "Starting to calculate Monthly Facts");
 
         Cursor receiptsMonthlyCursor = RDH.getReadableDatabase().rawQuery(
@@ -40,7 +40,7 @@ public class MonthlyReportUtils {
                         receiptsMonthlyCursor.getDouble(2),
                         receiptsMonthlyCursor.getInt(3));
 
-                if (insertMonthlyFacts(receiptGroupHeader)) {
+                if (insertMonthlyReceiptStat(receiptGroupHeader)) {
                     Log.d(TAG, "Record Inserted Successfully " + receiptGroupHeader);
                 } else {
                     Log.d(TAG, "Record Insert Failed " + receiptGroupHeader);
@@ -49,7 +49,7 @@ public class MonthlyReportUtils {
         }
     }
 
-    private static boolean insertMonthlyFacts(ReceiptGroupHeader receiptGroupHeader) {
+    private static boolean insertMonthlyReceiptStat(ReceiptGroupHeader receiptGroupHeader) {
         Log.d(TAG, "Setting Data for MonthlyReport Table");
 
         ContentValues values = new ContentValues();
