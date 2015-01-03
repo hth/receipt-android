@@ -1,52 +1,56 @@
 package com.receiptofi.checkout.fragments;
 
+
 import android.app.Fragment;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ListView;
+import android.widget.ExpandableListView;
 
-import com.receiptofi.checkout.HomePageActivity_OLD;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter;
-import com.receiptofi.checkout.dbutils.ReceiptUtils;
-import com.receiptofi.checkout.models.ReceiptModel;
 
-public class ReceiptListFragment extends Fragment {
+/**
+ * Created by PT on 1/1/15.
+ */
+ public class ReceiptListFragment extends Fragment {
 
-    Context context;
-    View screen;
-    ListView receiptList;
-    ReceiptListAdapter adapter;
-    OnItemClickListener receiptListener = new OnItemClickListener() {
-        @Override
-        public void onItemClick(AdapterView<?> adapter, View view, int position, long id) {
-            ReceiptModel model = (ReceiptModel) view.getTag();
-            ((HomePageActivity_OLD) context).invokeDetailReceiptView(view, model);
-        }
-    };
+    View rootView;
+    ExpandableListView explv;
+    private String[] groups;
+    private String[][] children;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        View view = inflater.inflate(R.layout.receipt_list, null);
-        receiptList = (ListView) view.findViewById(R.id.reciptListView);
-        view.findViewById(R.id.back).setVisibility(View.VISIBLE);
-        view.findViewById(R.id.menu).setVisibility(View.GONE);
-        return view;
+
+    public ReceiptListFragment() {
+
+    }
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        groups = new String[]{"Test Header 1", "Test Header 2", "Test Header 3", "Test Header 4"};
+
+        children = new String[][]{
+                {"s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum."},
+                {"Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of comes from a line in section 1.10.32."},
+                {"It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout. The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using 'Content here, content here', making it look like readable English. Many desktop publishing packages and web page editors now use Lorem Ipsum as their default model text, and a search for 'lorem ipsum' will uncover many web sites still in their infancy. Various versions have evolved over the years, sometimes by accident, sometimes on purpose (injected humour and the like)."},
+                {"There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text. All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet. It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated Lorem Ipsum is therefore always free from repetition, injected humour, or non-characteristic words etc."}
+        };
     }
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onActivityCreated(savedInstanceState);
-        context = getActivity();
-        adapter = new ReceiptListAdapter(context, ReceiptUtils.getAllReciepts());
-        receiptList.setAdapter(adapter);
-        receiptList.setOnItemClickListener(receiptListener);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
+        return rootView;
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        explv = (ExpandableListView) view.findViewById(R.id.exp_list_view);
+        explv.setAdapter(new ReceiptListAdapter(getActivity(), groups, children));
+        explv.setGroupIndicator(null);
     }
 }

@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -51,6 +52,8 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.signup_page);
+        ScrollView scrollView = (ScrollView)findViewById(R.id.scroll_view);
+        scrollView.setVerticalScrollBarEnabled(false);
 
         final TextView signUp = (TextView) findViewById(R.id.sign_up_button);
         signUp.setOnClickListener(this);
