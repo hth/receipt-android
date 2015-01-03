@@ -28,7 +28,7 @@
                 android:layout_centerInParent="true"
                 android:contentDescription="@string/app_info_cnt_dscp"
                 android:padding="@dimen/image_info_padding"
-                android:src="@drawable/app_logo" />
+                android:src="@drawable/app_info_1" />
         </RelativeLayout>
 
         <RelativeLayout
