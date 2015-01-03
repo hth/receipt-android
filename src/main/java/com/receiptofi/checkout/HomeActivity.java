@@ -56,8 +56,7 @@ public class HomeActivity extends Activity {
                     endAnimation();
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
-                    showErrorMsg((String) msg.obj);
-                    endAnimation();
+                    updateUnprocessedCount((String) msg.obj);
                     break;
                 case GET_ALL_RECEIPTS:
                     updateUnprocessedCount((String)msg.obj);
@@ -68,7 +67,7 @@ public class HomeActivity extends Activity {
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
     protected Handler uiThread = new Handler();
-    // TODO: fix me
+
     TextView unprocessedDocumentCount;
     TextView currentAmount;
     private Menu optionMenu;

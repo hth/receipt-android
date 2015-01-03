@@ -34,7 +34,7 @@ public class ReceiptUtils {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
-                msg.what = HomeActivity.UPDATE;
+                msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
                 Map<String, String> map = JsonParseUtils.parseUnprocessedCount(body);
                 msg.obj = map.get(API.key.UNPROCESSEDCOUNT);
                 insertKeyValue(KEYS.UNPROCESSED_DOCUMENT, map.get(API.key.UNPROCESSEDCOUNT));
