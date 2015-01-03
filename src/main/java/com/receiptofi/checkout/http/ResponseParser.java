@@ -104,29 +104,4 @@ public class ResponseParser {
     }
 
 
-    public static ArrayList<ReceiptElement> getReceiptDetails(String response) {
-
-        ArrayList<ReceiptElement> elements = new ArrayList<>();
-        try {
-            JSONArray array = new JSONArray(response);
-            for (int i = 0; i < array.length(); i++) {
-                ReceiptElement receiptElement = new ReceiptElement();
-                JSONObject receiptElementJson = array.getJSONObject(i);
-                receiptElement.quantity = receiptElementJson.getString("quant");
-                receiptElement.id = receiptElementJson.getString("id");
-                receiptElement.name = receiptElementJson.getString("name");
-                receiptElement.price = receiptElementJson.getString("price");
-                receiptElement.receipt_id = receiptElementJson.getString("receiptId");
-                receiptElement.sequence = receiptElementJson.getString("seq");
-                receiptElement.tax = receiptElementJson.getString("tax");
-
-                elements.add(receiptElement);
-            }
-        } catch (JSONException e) {
-            return null;
-        }
-
-        return elements;
-    }
-
 }
