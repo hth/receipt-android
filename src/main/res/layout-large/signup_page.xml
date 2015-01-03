@@ -22,7 +22,7 @@
             android:background="@color/gray_light"/>
 
     <LinearLayout
-        android:id="@+id/login_container"
+        android:id="@+id/signup_container"
         android:layout_width="@dimen/view_with_paddings_on_side"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

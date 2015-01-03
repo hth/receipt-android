@@ -79,6 +79,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.password_recovery_button:
                 Log.d(TAG, "password_recovery_button clicked");
+                email.setEnabled(false);
                 final TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
                 passwordRecovery.setEnabled(false);
                 recoverPassword();
