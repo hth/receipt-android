@@ -10,6 +10,7 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.Protocol;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.models.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
@@ -52,9 +53,32 @@ public class ReceiptUtils {
 
             }
         });
-
-
     }
+
+    public static void getAllReceipts() {
+        ExternalCall.doGet(API.GET_ALL_RECEIPTS, new ResponseHandler() {
+            @Override
+            public void onSuccess(Header[] headers, String body) {
+                Message msg = new Message();
+                msg.what = HomeActivity.GET_ALL_RECEIPTS;
+                Map<String, Map<String, String>> map = JsonParseUtils.parseReceipt(body);
+                if (ReceiptofiApplication.isHomeActivityVisible()) {
+                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                }
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+
+            }
+
+            @Override
+            public void onException(Exception exception) {
+
+            }
+        });
+    }
+
 
     public static void fetchReceiptsAndSave() {
 
@@ -69,7 +93,7 @@ public class ReceiptUtils {
                 new ResponseHandler() {
                     @Override
                     public void onSuccess(Header[] arr, String body) {
-                        ArrayList<ReceiptModel> models = null; //ResponseParser.getReceipts(response);
+                        ArrayList<ReceiptModel> models = ResponseParser.getReceipts(body);
                         for (ReceiptModel model : models) {
                             model.save();
                         }
@@ -91,7 +115,7 @@ public class ReceiptUtils {
         ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + DatabaseTable.Receipt.TABLE_NAME + ";", null);
     }
 
-    public static ArrayList<ReceiptModel> getAllReceipts() {
+    public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
         String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE_R, DatabaseTable.Receipt.P_TAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.FILES_BLOB};
         Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
