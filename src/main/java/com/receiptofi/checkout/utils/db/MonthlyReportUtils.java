@@ -1,11 +1,10 @@
 package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.util.Log;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
-import static com.receiptofi.checkout.db.ReceiptDB.MonthlyReport;
+import static com.receiptofi.checkout.db.DatabaseTable.MonthlyReport;
 
 public class MonthlyReportUtils {
 

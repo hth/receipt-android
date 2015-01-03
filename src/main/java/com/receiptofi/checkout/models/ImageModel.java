@@ -5,7 +5,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
 
 import com.receiptofi.checkout.ReceiptofiApplication;
-import com.receiptofi.checkout.db.ReceiptDB;
+import com.receiptofi.checkout.db.DatabaseTable;
 
 import java.util.ArrayList;
 
@@ -23,8 +23,8 @@ public class ImageModel {
     public static ArrayList<ImageModel> getAllUnprocessedImages() {
         ArrayList<ImageModel> models = new ArrayList<ImageModel>();
         Cursor c = ReceiptofiApplication.RDH.getReadableDatabase().query
-                (ReceiptDB.UploadQueue.TABLE_NAME,
-                        new String[]{ReceiptDB.UploadQueue.IMAGE_PATH},
+                (DatabaseTable.UploadQueue.TABLE_NAME,
+                        new String[]{DatabaseTable.UploadQueue.IMAGE_PATH},
                         null,
                         null,
                         null,
@@ -44,11 +44,11 @@ public class ImageModel {
         long responseCode = -1;
 
         ContentValues values = new ContentValues();
-        values.put(ReceiptDB.UploadQueue.IMAGE_DATE, imgDate);
-        values.put(ReceiptDB.UploadQueue.IMAGE_PATH, imgPath);
-        values.put(ReceiptDB.UploadQueue.STATUS, STATUS.UNPROCESSED);
+        values.put(DatabaseTable.UploadQueue.IMAGE_DATE, imgDate);
+        values.put(DatabaseTable.UploadQueue.IMAGE_PATH, imgPath);
+        values.put(DatabaseTable.UploadQueue.STATUS, STATUS.UNPROCESSED);
 
-        responseCode = ReceiptofiApplication.RDH.getWritableDatabase().insertOrThrow(ReceiptDB.UploadQueue.TABLE_NAME, null, values);
+        responseCode = ReceiptofiApplication.RDH.getWritableDatabase().insertOrThrow(DatabaseTable.UploadQueue.TABLE_NAME, null, values);
 
         if (responseCode != -1) {
             return true;
@@ -59,7 +59,7 @@ public class ImageModel {
     }
 
     public void deleteFromQueue() {
-        ReceiptofiApplication.RDH.getWritableDatabase().delete(ReceiptDB.UploadQueue.TABLE_NAME, ReceiptDB.UploadQueue.IMAGE_PATH + "=?", new String[]{imgPath});
+        ReceiptofiApplication.RDH.getWritableDatabase().delete(DatabaseTable.UploadQueue.TABLE_NAME, DatabaseTable.UploadQueue.IMAGE_PATH + "=?", new String[]{imgPath});
     }
 
     public synchronized boolean updateStatus(boolean isProcessed) {
@@ -71,29 +71,29 @@ public class ImageModel {
         }
 
         ContentValues uploadValues = new ContentValues();
-        uploadValues.put(ReceiptDB.UploadQueue.IMAGE_DATE, imgDate);
-        uploadValues.put(ReceiptDB.UploadQueue.IMAGE_PATH, imgPath);
+        uploadValues.put(DatabaseTable.UploadQueue.IMAGE_DATE, imgDate);
+        uploadValues.put(DatabaseTable.UploadQueue.IMAGE_PATH, imgPath);
 
         if (isProcessed) {
             imgStatus = STATUS.PROCESSED;
-            uploadValues.put(ReceiptDB.UploadQueue.STATUS, STATUS.PROCESSED);
+            uploadValues.put(DatabaseTable.UploadQueue.STATUS, STATUS.PROCESSED);
         } else {
             imgStatus = STATUS.UNPROCESSED;
-            uploadValues.put(ReceiptDB.UploadQueue.STATUS, STATUS.UNPROCESSED);
+            uploadValues.put(DatabaseTable.UploadQueue.STATUS, STATUS.UNPROCESSED);
         }
 
         ReceiptofiApplication.RDH.getWritableDatabase().update(
-                ReceiptDB.UploadQueue.TABLE_NAME,
+                DatabaseTable.UploadQueue.TABLE_NAME,
                 uploadValues,
-                ReceiptDB.UploadQueue.IMAGE_PATH + "=?",
+                DatabaseTable.UploadQueue.IMAGE_PATH + "=?",
                 new String[]{imgPath});
 
         ContentValues imageIndexValue = new ContentValues();
 
-        imageIndexValue.put(ReceiptDB.ImageIndex.IMAGE_PATH, imgPath);
-        imageIndexValue.put(ReceiptDB.ImageIndex.BLOB_ID, blobId);
+        imageIndexValue.put(DatabaseTable.ImageIndex.IMAGE_PATH, imgPath);
+        imageIndexValue.put(DatabaseTable.ImageIndex.BLOB_ID, blobId);
 
-        ReceiptofiApplication.RDH.getWritableDatabase().insert(ReceiptDB.ImageIndex.TABLE_NAME, null, imageIndexValue);
+        ReceiptofiApplication.RDH.getWritableDatabase().insert(DatabaseTable.ImageIndex.TABLE_NAME, null, imageIndexValue);
 
         if (isProcessed) {
             deleteFromQueue();
