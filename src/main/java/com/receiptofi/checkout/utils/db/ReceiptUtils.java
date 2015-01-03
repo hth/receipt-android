@@ -22,6 +22,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
@@ -120,19 +121,19 @@ public class ReceiptUtils {
 
     public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
-        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE, DatabaseTable.Receipt.P_TAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.FILES_BLOB};
+        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
         Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
         if (receiptsRecords != null && receiptsRecords.getCount() > 0) {
             for (receiptsRecords.moveToFirst(); !receiptsRecords.isAfterLast(); receiptsRecords.moveToNext()) {
                 ReceiptModel model = new ReceiptModel();
-                model.bizName = receiptsRecords.getString(0);
-                model.date = receiptsRecords.getString(1);
-                model.ptax = receiptsRecords.getDouble(2);
-                model.total = receiptsRecords.getDouble(3);
-                model.id = receiptsRecords.getString(4);
-                model.filesBlobId = receiptsRecords.getString(5);
+                model.setBizName(receiptsRecords.getString(0));
+                model.setDate(receiptsRecords.getString(1));
+                model.setPtax(receiptsRecords.getDouble(2));
+                model.setTotal(receiptsRecords.getDouble(3));
+                model.setId(receiptsRecords.getString(4));
+                model.setBlobIds(receiptsRecords.getString(5));
                 rModels.add(model);
             }
 
@@ -149,27 +150,26 @@ public class ReceiptUtils {
      *
      * @param receipts
      */
-    private static void insertReceipts(Map<String, Map<String, String>> receipts) {
-        for (String id : receipts.keySet()) {
-            Map<String, String> receipt = receipts.get(id);
+    private static void insertReceipts(List<ReceiptModel> receipts) {
+        for (ReceiptModel receipt : receipts) {
 
             ContentValues values = new ContentValues();
-            values.put(DatabaseTable.Receipt.BIZ_NAME, receipt.get("bizName"));
-            values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, receipt.get("address"));
-            values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, receipt.get("phone"));
-            values.put(DatabaseTable.Receipt.DATE, receipt.get("date"));
-            values.put(DatabaseTable.Receipt.EXPENSE_REPORT, receipt.get("expenseReport"));
-            values.put(DatabaseTable.Receipt.FILES_BLOB, receipt.get("blobIds"));
-            values.put(DatabaseTable.Receipt.ID, receipt.get("id"));
-            values.put(DatabaseTable.Receipt.NOTES, receipt.get("notes"));
-            values.put(DatabaseTable.Receipt.P_TAX, receipt.get("ptax"));
-            values.put(DatabaseTable.Receipt.R_ID, receipt.get("rid"));
-            values.put(DatabaseTable.Receipt.TOTAL, receipt.get("total"));
+            values.put(DatabaseTable.Receipt.BIZ_NAME, receipt.getBizName());
+            values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, receipt.getAddress());
+            values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, receipt.getPhone());
+            values.put(DatabaseTable.Receipt.DATE, receipt.getDate());
+            values.put(DatabaseTable.Receipt.EXPENSE_REPORT, receipt.getExpenseReport());
+            values.put(DatabaseTable.Receipt.BLOB_IDS, receipt.getBlobIds());
+            values.put(DatabaseTable.Receipt.ID, receipt.getId());
+            values.put(DatabaseTable.Receipt.NOTES, receipt.getNotes());
+            values.put(DatabaseTable.Receipt.PTAX, receipt.getPtax());
+            values.put(DatabaseTable.Receipt.RID, receipt.getRid());
+            values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
 
             ReceiptofiApplication.RDH.getWritableDatabase().delete(
                     DatabaseTable.Receipt.TABLE_NAME,
                     "id = ?",
-                    new String[]{receipt.get("id")}
+                    new String[]{receipt.getId()}
             );
             ReceiptofiApplication.RDH.getWritableDatabase().insert(
                     DatabaseTable.Receipt.TABLE_NAME,

@@ -11,15 +11,11 @@ public class DatabaseTable {
         public static final String BIZ_STORE_PHONE = "phone";
         public static final String DATE = "date";
         public static final String EXPENSE_REPORT = "expenseReport";
-        public static final String FILES_BLOB = "blobIds";
-        //TODO remove
-        public static final String FILES_ORIENTATION = "filesOrientation";
+        public static final String BLOB_IDS = "blobIds";
         public static final String ID = "id";
         public static final String NOTES = "notes";
-        public static final String P_TAX = "ptax";
-        public static final String R_ID = "rid";
-        //TODO remove
-        public static final String SEQUENCE = "sequence";
+        public static final String PTAX = "ptax";
+        public static final String RID = "rid";
         public static final String TOTAL = "total";
     }
 
