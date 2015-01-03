@@ -119,7 +119,7 @@ public class ReceiptUtils {
     public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
         String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
-        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
+            Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
         if (receiptsRecords != null && receiptsRecords.getCount() > 0) {

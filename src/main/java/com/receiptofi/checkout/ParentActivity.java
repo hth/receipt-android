@@ -33,6 +33,7 @@ import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import org.apache.http.Header;
@@ -256,6 +257,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             // TODO make this call later
             ReceiptUtils.getUnprocessedCount();
             ReceiptUtils.getAllReceipts();
+            MonthlyReportUtils.dropAndCreateTableMonthlyReport();
+            MonthlyReportUtils.calculateMonthlyFacts();
             //ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
