@@ -211,7 +211,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         protected void saveAuthKey(Context context, Map<String, String> map) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                boolean success = KeyValueUtils.insertKeyValue(context, entry.getKey(), entry.getValue());
+                boolean success = KeyValueUtils.insertKeyValue(entry.getKey(), entry.getValue());
                 if (!success) {
                     Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
                 }

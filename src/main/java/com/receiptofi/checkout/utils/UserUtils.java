@@ -83,7 +83,7 @@ public class UserUtils {
 
         public static void setWifiSync(Context context, boolean value) {
             Log.d(TAG, "saving wifi sync only to: " + value);
-            KeyValueUtils.insertKeyValue(context, KeyValueUtils.KEYS.WIFI_SYNC, String.valueOf(value));
+            KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.WIFI_SYNC, String.valueOf(value));
         }
 
         public static boolean isStartImageUploadProcess(Context context) {

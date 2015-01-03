@@ -29,10 +29,10 @@ public class DBUtils {
     }
 
     public static void initializeDefaults() {
-        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.XR_MAIL, "");
-        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.XR_AUTH, "");
-        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
-        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
-        KeyValueUtils.insertKeyValue(AppUtils.getHomePageContext(), KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_MAIL, "");
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_AUTH, "");
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
     }
 }
