@@ -45,7 +45,7 @@ public class ReceiptListFragment extends Fragment {
         // TODO Auto-generated method stub
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
-        adapter = new ReceiptListAdapter(context, ReceiptUtils.getAllReciepts());
+        adapter = new ReceiptListAdapter(context, ReceiptUtils.getAllReceipts());
         receiptList.setAdapter(adapter);
         receiptList.setOnItemClickListener(receiptListener);
     }

@@ -90,27 +90,28 @@ public class ReceiptUtils {
         ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + ReceiptDB.Receipt.TABLE_NAME + ";", null);
     }
 
-    public static ArrayList<ReceiptModel> getAllReciepts() {
+    public static ArrayList<ReceiptModel> getAllReceipts() {
 
-        String[] coloumns = new String[]{ReceiptDB.Receipt.BIZ_NAME, ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX, ReceiptDB.Receipt.TOTAL, ReceiptDB.Receipt.ID, ReceiptDB.Receipt.FILES_BLOB};
-        Cursor recieptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(ReceiptDB.Receipt.TABLE_NAME, coloumns, null, null, null, null, null);
+        String[] columns = new String[]{ReceiptDB.Receipt.BIZ_NAME, ReceiptDB.Receipt.DATE_R, ReceiptDB.Receipt.P_TAX, ReceiptDB.Receipt.TOTAL, ReceiptDB.Receipt.ID, ReceiptDB.Receipt.FILES_BLOB};
+        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(ReceiptDB.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
-        if (recieptsRecords != null && recieptsRecords.getCount() > 0) {
-            for (recieptsRecords.moveToFirst(); !recieptsRecords.isAfterLast(); recieptsRecords.moveToNext()) {
+        if (receiptsRecords != null && receiptsRecords.getCount() > 0) {
+            for (receiptsRecords.moveToFirst(); !receiptsRecords.isAfterLast(); receiptsRecords.moveToNext()) {
                 ReceiptModel model = new ReceiptModel();
-                model.bizName = recieptsRecords.getString(0);
-                model.date = recieptsRecords.getString(1);
-                model.ptax = recieptsRecords.getDouble(2);
-                model.total = recieptsRecords.getDouble(3);
-                model.id = recieptsRecords.getString(4);
-                model.filesBlobId = recieptsRecords.getString(5);
+                model.bizName = receiptsRecords.getString(0);
+                model.date = receiptsRecords.getString(1);
+                model.ptax = receiptsRecords.getDouble(2);
+                model.total = receiptsRecords.getDouble(3);
+                model.id = receiptsRecords.getString(4);
+                model.filesBlobId = receiptsRecords.getString(5);
                 rModels.add(model);
             }
 
         }
-        recieptsRecords.close();
-        recieptsRecords = null;
+        if(null != receiptsRecords) {
+            receiptsRecords.close();
+        }
         return rModels;
 
     }
