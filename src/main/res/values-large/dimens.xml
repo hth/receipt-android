@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin_wide">100dp</dimen>
+    <dimen name="activity_vertical_margin_wide">100dp</dimen>
+
+
+    <dimen name="image_info_margin_side">40dp</dimen>
+</resources>
