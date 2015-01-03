@@ -34,8 +34,8 @@ public class ReceiptUtils {
                 Message msg = new Message();
                 msg.what = HomeActivity.UPDATE;
                 Map<String, String> map = JsonParseUtils.parseUnprocessedCount(body);
-                msg.obj = map.get("unprocessedCount");
-                insertKeyValue(KEYS.UNPROCESSED_DOCUMENT, map.get("unprocessedCount"));
+                msg.obj = map.get(API.key.UNPROCESSEDCOUNT);
+                insertKeyValue(KEYS.UNPROCESSED_DOCUMENT, map.get(API.key.UNPROCESSEDCOUNT));
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }

@@ -2,6 +2,8 @@ package com.receiptofi.checkout.utils;
 
 import android.util.Log;
 
+import com.receiptofi.checkout.http.API;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -19,9 +21,9 @@ public class JsonParseUtils {
         Map<String, String> map = new HashMap<>();
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            map.put("unprocessedCount", jsonObject.getString("unprocessedCount"));
+            map.put(API.key.UNPROCESSEDCOUNT, jsonObject.getString(API.key.UNPROCESSEDCOUNT));
         } catch (JSONException e) {
-            Log.d(TAG, "Fail parsing unprocessedCount response=" + jsonResponse, e);
+            Log.d(TAG, "Fail parsing "+ API.key.UNPROCESSEDCOUNT + " response=" + jsonResponse, e);
             map.put("unprocessedCount", "0");
         }
         return map;
