@@ -29,6 +29,7 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
             createTableImageIndex();
             createTableUploadQueue();
             createTableKeyValue();
+            createTableMonthlyReport();
         }
     }
 
@@ -82,6 +83,16 @@ public class ReceiptofiDatabaseHandler extends SQLiteOpenHelper {
                 + ReceiptDB.KeyVal.KEY + " TEXT ,"
                 + ReceiptDB.KeyVal.VALUE + " TEXT " +
 
+                ");");
+    }
+
+    public void createTableMonthlyReport() {
+        Log.d(TAG, "executing createTableMonthlyReports");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ReceiptDB.MonthlyReport.TABLE_NAME + "("
+                + ReceiptDB.MonthlyReport.MONTH + " TEXT ,"
+                + ReceiptDB.MonthlyReport.YEAR + " TEXT ,"
+                + ReceiptDB.MonthlyReport.TOTAL_AMT + " TEXT ,"
+                + ReceiptDB.MonthlyReport.RECEIPT_COUNT + " TEXT " +
                 ");");
     }
 }
