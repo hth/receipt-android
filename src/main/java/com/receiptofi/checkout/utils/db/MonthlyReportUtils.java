@@ -35,7 +35,7 @@ public class MonthlyReportUtils {
 
     }
 
-    public static void dropAndCreateTableMonthlyReport(Context context, String tableName) {
+    public static void dropAndCreateTableMonthlyReport() {
         RDH.getWritableDatabase().execSQL("Drop table if exists " + MonthlyReport.TABLE_NAME);
         RDH.createTableMonthlyReport();
     }
