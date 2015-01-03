@@ -255,7 +255,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             finish();
             // TODO make this call later
             ReceiptUtils.getUnprocessedCount();
-            ReceiptUtils.fetchReceiptsAndSave();
+            ReceiptUtils.getAllReceipts();
+            //ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
         }

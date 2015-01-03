@@ -34,6 +34,7 @@ public class HomeActivity extends Activity {
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
     public static final int UPDATE = 0x2567;
+    public static final int GET_ALL_RECEIPTS = 0x2568;
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
@@ -52,6 +53,10 @@ public class HomeActivity extends Activity {
                     endAnimation();
                     break;
                 case UPDATE:
+                    showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
+                case GET_ALL_RECEIPTS:
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
