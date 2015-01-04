@@ -32,8 +32,8 @@ public class MonthlyReportUtils {
                 "select " +
                         "SUBSTR(date, 6, 2) mon," +
                         "SUBSTR(date, 1, 4) yr, " +
-                        "count(*) count, " +
                         "total(total) total " +
+                        "count(*) count, " +
                         "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
 
 
@@ -43,8 +43,8 @@ public class MonthlyReportUtils {
                 ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
                         receiptsMonthlyCursor.getString(0),
                         receiptsMonthlyCursor.getString(1),
-                        receiptsMonthlyCursor.getDouble(3),
-                        receiptsMonthlyCursor.getInt(2));
+                        receiptsMonthlyCursor.getDouble(2),
+                        receiptsMonthlyCursor.getInt(3));
 
                 if (insertMonthlyReceiptStat(receiptGroupHeader)) {
                     Log.d(TAG, "Monthly Record Inserted Successfully " + receiptGroupHeader);
