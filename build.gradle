@@ -19,6 +19,8 @@ repositories {
 }
 
 dependencies {
+    compile files('libs/mpandroidchartlibrary-1-7-4.jar')
+
     compile 'org.apache.httpcomponents:httpcore:4.3.3'
     compile 'org.apache.httpcomponents:httpmime:4.3.6'
     compile 'org.apache.httpcomponents:httpclient:4.3.6'
