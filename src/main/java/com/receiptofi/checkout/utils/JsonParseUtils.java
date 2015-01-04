@@ -3,6 +3,7 @@ package com.receiptofi.checkout.utils;
 import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 
 import org.json.JSONArray;
@@ -58,7 +59,7 @@ public class JsonParseUtils {
         JSONArray files = receipt.getJSONArray("files");
         StringBuilder blobIds = new StringBuilder();
         for (int i = 0; i < files.length(); ++i) {
-            if (0 == blobIds.length() ) {
+            if (0 == blobIds.length()) {
                 blobIds.append(files.getJSONObject(i).getString("blobId"));
             } else {
                 blobIds.append(",").append(files.getJSONObject(i).getString("blobId"));
@@ -71,5 +72,17 @@ public class JsonParseUtils {
         receiptModel.setRid(receipt.getString("rid"));
         receiptModel.setTotal(receipt.getDouble("total"));
         return receiptModel;
+    }
+
+    private static ReceiptItemModel parseReceiptItemToMap(JSONObject receipt) throws JSONException {
+        return new ReceiptItemModel(
+                receipt.getJSONObject("id").getString("id"),
+                receipt.getJSONObject("name").getString("name"),
+                receipt.getJSONObject("price").getString("price"),
+                receipt.getJSONObject("quantity").getString("quantity"),
+                receipt.getJSONObject("receiptId").getString("receiptId"),
+                receipt.getJSONObject("sequence").getString("sequence"),
+                receipt.getJSONObject("tax").getString("tax")
+        );
     }
 }

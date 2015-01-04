@@ -46,4 +46,16 @@ public class DatabaseTable {
         public static final String TOTAL = "total";
         public static final String COUNT = "count";
     }
+
+    public static class Item {
+        public static final String TABLE_NAME = "ITEM";
+        public static final String ID = "id";
+        public static final String NAME = "name";
+        public static final String PRICE = "price";
+        public static final String QUANTITY = "quantity";
+        public static final String RECEIPTID = "receiptId";
+        public static final String SEQUENCE = "sequence";
+        public static final String TAX = "tax";
+
+    }
 }
