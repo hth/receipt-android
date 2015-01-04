@@ -97,5 +97,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + MonthlyReport.COUNT + " INT " +
 
                 ");");
+        Log.d(TAG, "Finished executing createTableMonthlyReports");
     }
 }
