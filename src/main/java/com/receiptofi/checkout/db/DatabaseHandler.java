@@ -33,6 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             createTableUploadQueue();
             createTableKeyValue();
             createTableMonthlyReport();
+            createTableItem();
             //populateAllTablesWithDummyData();
         }
     }
@@ -98,5 +99,19 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
                 ");");
         Log.d(TAG, "Finished executing createTableMonthlyReports");
+    }
+
+    public void createTableItem() {
+        Log.d(TAG, "executing createTableItem");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Item.TABLE_NAME + "("
+                + Item.ID + " TEXT ,"
+                + Item.NAME + " TEXT ,"
+                + Item.PRICE + " TEXT ,"
+                + Item.QUANTITY + " TEXT ,"
+                + Item.RECEIPTID + " TEXT ,"
+                + Item.SEQUENCE + " TEXT ,"
+                + Item.TAX + " TEXT ," +
+                ");");
+        Log.d(TAG, "Finished executing createTableItem");
     }
 }

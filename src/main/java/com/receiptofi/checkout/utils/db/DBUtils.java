@@ -19,6 +19,8 @@ public class DBUtils {
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ImageIndex.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.UploadQueue.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.MonthlyReport.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Item.TABLE_NAME);
+
 
         /** Create tables. */
         RDH.createTableReceipts();
@@ -26,6 +28,7 @@ public class DBUtils {
         RDH.createTableKeyValue();
         RDH.createTableUploadQueue();
         RDH.createTableMonthlyReport();
+        RDH.createTableItem();
 
         initializeDefaults();
     }
