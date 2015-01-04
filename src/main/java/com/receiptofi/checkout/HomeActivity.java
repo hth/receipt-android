@@ -60,7 +60,7 @@ public class HomeActivity extends Activity {
                     updateUnprocessedCount((String) msg.obj);
                     break;
                 case GET_ALL_RECEIPTS:
-                    updateUnprocessedCount((String)msg.obj);
+                    //updateUnprocessedCount((String) msg.obj);
                     break;
             }
         }
@@ -95,7 +95,7 @@ public class HomeActivity extends Activity {
             }
         });
 
-        TextView notification = (TextView)findViewById(R.id.processing_info);
+        TextView notification = (TextView) findViewById(R.id.processing_info);
         notification.setOnClickListener(new View.OnClickListener() {
 
             @Override
