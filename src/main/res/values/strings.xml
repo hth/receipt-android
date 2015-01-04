@@ -64,6 +64,10 @@
     <string name="pref_notification_on">App will post on notification bar</string>
     <string name="pref_notification_off">App won\'t post on notification bar</string>
 
+    <!-- Receipt list String-->
+    <string name="no_receipt_selected">No receipt selected</string>
+
+
     <!--Menu String-->
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Settings</string>

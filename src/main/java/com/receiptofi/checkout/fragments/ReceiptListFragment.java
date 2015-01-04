@@ -62,18 +62,6 @@ public class ReceiptListFragment extends Fragment {
         explv.setAdapter(new ReceiptListAdapter(getActivity(), groups, children));
         explv.setGroupIndicator(null);
 
-        /*
-        explv.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long id) {
-                ((ReceiptListActivity)getActivity()).onReceiptSelected(groupPosition, 0);
-                return false;
-            }
-        });
-         */
-
-
-
         explv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
