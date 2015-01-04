@@ -8,22 +8,22 @@ import java.util.List;
  */
 public class ReceiptGroup {
 
-    private List<List<ReceiptModel>> receiptGroup = new LinkedList<>();
+    private List<List<ReceiptModel>> receiptModels = new LinkedList<>();
     private List<ReceiptGroupHeader> receiptGroupHeaders = new LinkedList<>();
 
-    public List<List<ReceiptModel>> getReceiptGroup() {
-        return receiptGroup;
+    public List<List<ReceiptModel>> getReceiptModels() {
+        return receiptModels;
     }
 
     public void addReceiptGroup(List<ReceiptModel> receiptModel) {
-        this.receiptGroup.add(receiptModel);
+        this.receiptModels.add(receiptModel);
     }
 
     public List<ReceiptGroupHeader> getReceiptGroupHeaders() {
         return receiptGroupHeaders;
     }
 
-    public void addReceiptGroupHeaders(ReceiptGroupHeader receiptGroupHeader) {
+    public void addReceiptGroupHeader(ReceiptGroupHeader receiptGroupHeader) {
         this.receiptGroupHeaders.add(receiptGroupHeader);
     }
 }
