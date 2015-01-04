@@ -117,7 +117,7 @@ public class MonthlyReportUtils {
         return list;
     }
 
-    private static ReceiptGroup fetchMonthly(){
+    public static ReceiptGroup fetchMonthly(){
 
         Log.d(TAG, "Fetching Receipt Monthly Fact Data from MonthlyReport Table");
 

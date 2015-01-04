@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,14 +9,25 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.model.ReceiptGroupHeader;
+import com.receiptofi.checkout.model.ReceiptModel;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
-    private final LayoutInflater inflater;
-    private String[] groups;
-    private String[][] children;
+    private static final String TAG = ReceiptListAdapter.class.getSimpleName();
 
-    public ReceiptListAdapter(Context context, String[] groups, String[][] children) {
+    private final LayoutInflater inflater;
+    private Context context;
+    List<ReceiptGroupHeader> groups;
+    List<List<ReceiptModel>> children;
+
+    public ReceiptListAdapter(Context context, List<ReceiptGroupHeader> groups, List<List<ReceiptModel>> children) {
+        this.context = context;
         this.groups = groups;
         this.children = children;
         inflater = LayoutInflater.from(context);
@@ -23,22 +35,22 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return groups.length;
+        return groups.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return children[groupPosition].length;
+        return children.get(groupPosition).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return groups[groupPosition];
+        return groups.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return children[groupPosition][childPosition];
+        return children.get(groupPosition).get(childPosition);
     }
 
     @Override
@@ -59,39 +71,82 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
 
-        ViewHolder holder;
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.receipt_list_child, parent, false);
-            holder = new ViewHolder();
+        try {
+            ChildViewHolder holder;
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.receipt_list_child, parent, false);
+                holder = new ChildViewHolder();
 
-            holder.text = (TextView) convertView.findViewById(R.id.exp_list_item);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+                holder.bizName = (TextView) convertView.findViewById(R.id.exp_list_child_buz_name);
+                holder.date = (TextView) convertView.findViewById(R.id.exp_list_child_date);
+                holder.amount = (TextView) convertView.findViewById(R.id.exp_list_child_amount);
+                convertView.setTag(holder);
+            } else {
+                holder = (ChildViewHolder) convertView.getTag();
+            }
+
+            ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
+            String iso8601string = receiptData.getDate();
+            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy 'at' HH:mm a");
+            String formattedDate = outputDF.format(inputDF.parse(receiptData.getDate()));
+
+            String s = iso8601string.replace("Z", "+00:00");
+            s = s.substring(0, 22) + s.substring(23);
+
+            holder.bizName.setText(receiptData.getBizName());
+            holder.date.setText(formattedDate);
+            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
+
+            return convertView;
+        }catch (IndexOutOfBoundsException e) {
+            Log.d(TAG, "IndexOutOfBoundsException " + e.getMessage());
+            e.printStackTrace();
+        } catch (ParseException e){
+            Log.d(TAG, "ParseException " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e){
+            Log.d(TAG, "Exception " + e.getMessage());
+            e.printStackTrace();
         }
-
-        holder.text.setText(getChild(groupPosition, childPosition).toString());
-
-        return convertView;
+        return null;
     }
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        ViewHolder holder;
+        ParentViewHolder holder;
 
-        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.receipt_list_parent, parent, false);
+        try {
+            if (convertView == null) {
+                convertView = inflater.inflate(R.layout.receipt_list_parent, parent, false);
 
-            holder = new ViewHolder();
-            holder.text = (TextView) convertView.findViewById(R.id.exp_list_header);
-            convertView.setTag(holder);
-        } else {
-            holder = (ViewHolder) convertView.getTag();
+                holder = new ParentViewHolder();
+                holder.month = (TextView) convertView.findViewById(R.id.exp_list_header_month);
+                holder.amount = (TextView) convertView.findViewById(R.id.exp_list_header_amount);
+                convertView.setTag(holder);
+            } else {
+                holder = (ParentViewHolder) convertView.getTag();
+            }
+
+            ReceiptGroupHeader headerData = (ReceiptGroupHeader) getGroup(groupPosition);
+            String year = headerData.getYear();
+            String month = headerData.getMonth();
+            DateFormat inputDF = new SimpleDateFormat("M yyyy");
+            DateFormat outputDF = new SimpleDateFormat("MMM yyyy");
+            String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
+
+            holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));
+            holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
+            return convertView;
+
+        } catch (ParseException e){
+            Log.d(TAG, "ParseException " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e){
+            Log.d(TAG, "Exception " + e.getMessage());
+            e.printStackTrace();
         }
-
-        holder.text.setText(getGroup(groupPosition).toString());
-
-        return convertView;
+        return null;
     }
 
     @Override
@@ -99,7 +154,14 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
         return true;
     }
 
-    private class ViewHolder {
-        TextView text;
+    private class ParentViewHolder {
+        TextView month;
+        TextView amount;
+    }
+
+    private class ChildViewHolder {
+        TextView bizName;
+        TextView date;
+        TextView amount;
     }
 }
