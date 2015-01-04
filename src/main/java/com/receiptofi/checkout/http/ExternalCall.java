@@ -7,6 +7,7 @@ import android.webkit.MimeTypeMap;
 
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -21,6 +22,7 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
@@ -32,6 +34,7 @@ import java.io.FileOutputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -95,7 +98,7 @@ public final class ExternalCall {
     }
 
     public static void doPost(
-            final ArrayList<NameValuePair> headers,
+            final List<NameValuePair> params,
             final String api,
             final ResponseHandler responseHandler
     ) {
@@ -110,7 +113,7 @@ public final class ExternalCall {
                         httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
 
-                    httpPost.setEntity(new UrlEncodedFormEntity(headers));
+                    httpPost.setEntity(new UrlEncodedFormEntity(params));
 
                     HttpResponse response = client.execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
@@ -130,13 +133,19 @@ public final class ExternalCall {
                         responseHandler.onError(statusCode, body);
                     }
                 } catch (Exception e) {
+                    Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(e);
                 }
             }
         }.start();
     }
 
+    public static void doGet(String api, ResponseHandler responseHandler) {
+        doGet(false, api, responseHandler);
+    }
+
     public static void doGet(
+            final boolean withDeviceId,
             final String api,
             final ResponseHandler responseHandler
     ) {
@@ -153,6 +162,9 @@ public final class ExternalCall {
 
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
                     httpGet.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
+                    if(withDeviceId) {
+                        httpGet.addHeader(API.key.XR_DID, UserUtils.getDeviceId());
+                    }
 
                     HttpResponse response = client.execute(httpGet);
                     int statusCode = response.getStatusLine().getStatusCode();
@@ -172,6 +184,7 @@ public final class ExternalCall {
                         responseHandler.onError(statusCode, body);
                     }
                 } catch (Exception e) {
+                    Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(e);
                 }
             }
@@ -179,7 +192,7 @@ public final class ExternalCall {
     }
 
     public static String getPostResponse(
-            ArrayList<NameValuePair> headers,
+            List<NameValuePair> params,
             String API
     ) throws Exception {
 
@@ -192,7 +205,7 @@ public final class ExternalCall {
             httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
         }
 
-        httpPost.setEntity(new UrlEncodedFormEntity(headers));
+        httpPost.setEntity(new UrlEncodedFormEntity(params));
         HttpResponse response = client.execute(httpPost);
 
         BufferedReader reader = new BufferedReader(
@@ -209,7 +222,7 @@ public final class ExternalCall {
         return responseBuffer.toString();
     }
 
-    public static String getResponse(ArrayList<NameValuePair> params, String API) throws Exception {
+    public static String getResponse(List<NameValuePair> params, String API) throws Exception {
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet;
 
@@ -237,7 +250,7 @@ public final class ExternalCall {
     }
 
     public static void AsyncRequest(
-            final ArrayList<NameValuePair> params,
+            final List<NameValuePair> params,
             final String api,
             final String httpMethod,
             final ResponseHandler handler

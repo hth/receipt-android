@@ -59,7 +59,7 @@ public class KeyValueUtils {
         Cursor c = RDH.getReadableDatabase().query(
                 DatabaseTable.KeyValue.TABLE_NAME,
                 new String[]{DatabaseTable.KeyValue.VALUE},
-                "=?",
+                DatabaseTable.KeyValue.KEY + "=?",
                 new String[]{key},
                 null,
                 null,
@@ -101,6 +101,6 @@ public class KeyValueUtils {
         public static String WIFI_SYNC = "WIFI_SYNC";
         public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
         public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
-        public static String DID = "DID";
+        public static String XR_DID = API.key.XR_DID;
     }
 }

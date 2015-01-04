@@ -29,6 +29,10 @@ public class UserUtils {
         return KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_AUTH);
     }
 
+    public static String getDeviceId() {
+        return KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
+    }
+
     /**
      * Supports UTF-8 Encoding.
      *
