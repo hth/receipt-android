@@ -67,7 +67,7 @@ public class ReceiptDetailFragment extends Fragment {
 
     public void updateReceiptDetailView(int index, int position) {
         Log.d(TAG, "executing updateReceiptDetailView");
-        receiptDetail.setText(ReceiptListFragment.children[index][position]);
+        receiptDetail.setText(ReceiptListFragment.childListGroup.get(index).get(position).getBizName());
         mCurrentIndex = index;
         mCurrentPosition = position;
     }

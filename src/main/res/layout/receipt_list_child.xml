@@ -1,17 +1,42 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical" >
 
     <TextView
-        android:id="@+id/exp_list_item"
-        android:layout_width="fill_parent"
+        android:id="@+id/exp_list_child_buz_name"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
         android:paddingRight="0dp"
         android:paddingEnd="0dp"
         android:textSize="16sp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp" />
+        android:text="Costco"/>
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/exp_list_child_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/exp_list_child_buz_name"
+        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:paddingRight="0dp"
+        android:paddingEnd="0dp"
+        android:textSize="16sp"
+        android:text="08/02/2014"/>
+
+
+    <TextView
+        android:id="@+id/exp_list_child_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/exp_list_child_buz_name"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:gravity="right"
+        android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
+        android:textSize="16sp"
+        android:text="$25.06"/>
+
+
+
+</RelativeLayout>
