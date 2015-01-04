@@ -87,8 +87,8 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
             String iso8601string = receiptData.getDate();
-            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy 'at' HH:mm a");
+            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
             String formattedDate = outputDF.format(inputDF.parse(receiptData.getDate()));
 
             String s = iso8601string.replace("Z", "+00:00");

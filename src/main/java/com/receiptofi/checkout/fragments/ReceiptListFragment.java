@@ -39,17 +39,20 @@ public class ReceiptListFragment extends Fragment {
 
     public ReceiptListFragment() {
 
+        // Get data for master/detail views
+        ReceiptGroup receiptGroup = MonthlyReportUtils.fetchMonthly();
+        if(receiptGroup != null) {
+            headerList = receiptGroup.getReceiptGroupHeaders();
+            childListGroup = receiptGroup.getReceiptGroup();
+        }
+
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Get data for master/detail views
-        ReceiptGroup receiptGroup = MonthlyReportUtils.fetchMonthly();
-        if(receiptGroup != null) {
-            List<ReceiptGroupHeader> headerList = receiptGroup.getReceiptGroupHeaders();
-            List<List<ReceiptModel>> childListGroup = receiptGroup.getReceiptGroup();
-        }
+
+
     }
 
     @Override
