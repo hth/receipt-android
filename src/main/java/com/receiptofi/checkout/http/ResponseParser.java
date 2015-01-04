@@ -85,14 +85,14 @@ public class ResponseParser {
                 JSONObject notesJson = json.getJSONObject("notes");
                 model.setNotes(notesJson.getString("text"));
 
-                String ptaxStr = json.getString("ptax");
-                if (ptaxStr != null) {
-                    model.setPtax(Double.valueOf(ptaxStr));
+                String ptax = json.getString("ptax");
+                if (ptax != null) {
+                    model.setPtax(Double.valueOf(ptax));
                 }
                 model.setRid(json.getString("rid"));
-                Double totalStr = json.getDouble("total");
-                if (totalStr != null) {
-                    model.setTotal(totalStr.doubleValue());
+                Double total = json.getDouble("total");
+                if (total != null) {
+                    model.setTotal(total.doubleValue());
                 }
                 models.add(model);
             }

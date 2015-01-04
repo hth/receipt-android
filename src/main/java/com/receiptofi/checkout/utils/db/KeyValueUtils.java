@@ -19,7 +19,7 @@ public class KeyValueUtils {
         if (RDH.getWritableDatabase().update(
                 DatabaseTable.KeyValue.TABLE_NAME,
                 values,
-                DatabaseTable.KeyValue.KEY + "= ?",
+                DatabaseTable.KeyValue.KEY + "=?",
                 new String[]{key}
         ) <= 0) {
             long code = RDH.getWritableDatabase().insert(
@@ -37,7 +37,7 @@ public class KeyValueUtils {
     public static boolean deleteKey(String key) {
         return RDH.getWritableDatabase().delete(
                 DatabaseTable.KeyValue.TABLE_NAME,
-                DatabaseTable.KeyValue.KEY + " = ?",
+                DatabaseTable.KeyValue.KEY + "=?",
                 new String[]{key}
         ) > 0;
     }
@@ -54,11 +54,22 @@ public class KeyValueUtils {
         ) > 0;
     }
 
+    //http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
     public static String getValue(String key) {
-        Cursor c = RDH.getReadableDatabase().rawQuery(
-                "select * from " + DatabaseTable.KeyValue.TABLE_NAME + " where " + DatabaseTable.KeyValue.KEY + "=" + "'" + key + "'",
+        Cursor c = RDH.getReadableDatabase().query(
+                DatabaseTable.KeyValue.TABLE_NAME,
+                new String[]{DatabaseTable.KeyValue.VALUE},
+                DatabaseTable.KeyValue.KEY + "=?",
+                new String[]{key},
+                null,
+                null,
                 null
         );
+
+//        Cursor c = RDH.getReadableDatabase().rawQuery(
+//                "select * from " + DatabaseTable.KeyValue.TABLE_NAME + " where " + DatabaseTable.KeyValue.KEY + "=" + "'" + key + "'",
+//                null
+//        );
 
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
@@ -90,6 +101,6 @@ public class KeyValueUtils {
         public static String WIFI_SYNC = "WIFI_SYNC";
         public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
         public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
-        public static String DID = "DID";
+        public static String XR_DID = API.key.XR_DID;
     }
 }

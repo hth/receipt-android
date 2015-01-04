@@ -34,7 +34,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             createTableKeyValue();
             createTableMonthlyReport();
             createTableItem();
-            //populateAllTablesWithDummyData();
         }
     }
 
@@ -110,7 +109,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + Item.QUANTITY + " TEXT ,"
                 + Item.RECEIPTID + " TEXT ,"
                 + Item.SEQUENCE + " TEXT ,"
-                + Item.TAX + " TEXT ," +
+                + Item.TAX + " TEXT " +
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
     }

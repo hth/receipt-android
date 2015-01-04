@@ -32,6 +32,7 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
+import com.receiptofi.checkout.utils.db.DeviceUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
@@ -255,6 +256,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             launchHomeScreen();
             finish();
             // TODO make this call later
+            DeviceUtils.getAllUpdates();
             ReceiptUtils.getUnprocessedCount();
             ReceiptUtils.getAllReceipts();
             //ReceiptUtils.fetchReceiptsAndSave();

@@ -40,15 +40,15 @@ public class JsonParseUtils {
             JSONArray receipts = new JSONArray(jsonResponse);
             for (int i = 0; i < receipts.length(); ++i) {
                 JSONObject receipt = receipts.getJSONObject(i);
-                allReceipts.add(parseReceiptToMap(receipt));
+                allReceipts.add(parseReceipt(receipt));
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Fail parsing receipt response=" + jsonResponse, e);
         }
         return allReceipts;
     }
 
-    private static ReceiptModel parseReceiptToMap(JSONObject receipt) throws JSONException {
+    private static ReceiptModel parseReceipt(JSONObject receipt) throws JSONException {
         ReceiptModel receiptModel = new ReceiptModel();
 
         receiptModel.setBizName(receipt.getJSONObject("bizName").getString("name"));
@@ -71,18 +71,35 @@ public class JsonParseUtils {
         receiptModel.setPtax(receipt.getDouble("ptax"));
         receiptModel.setRid(receipt.getString("rid"));
         receiptModel.setTotal(receipt.getDouble("total"));
+
         return receiptModel;
     }
 
-    private static ReceiptItemModel parseReceiptItemToMap(JSONObject receipt) throws JSONException {
-        return new ReceiptItemModel(
-                receipt.getJSONObject("id").getString("id"),
-                receipt.getJSONObject("name").getString("name"),
-                receipt.getJSONObject("price").getString("price"),
-                receipt.getJSONObject("quantity").getString("quantity"),
-                receipt.getJSONObject("receiptId").getString("receiptId"),
-                receipt.getJSONObject("sequence").getString("sequence"),
-                receipt.getJSONObject("tax").getString("tax")
-        );
+    public static ReceiptItemModel parseReceiptItem(String jsonResponse) {
+        try {
+            JSONObject item = new JSONObject(jsonResponse);
+            return new ReceiptItemModel(
+                    item.getString("id"),
+                    item.getString("name"),
+                    item.getString("price"),
+                    item.getString("quantity"),
+                    item.getString("receiptId"),
+                    item.getString("sequence"),
+                    item.getString("tax")
+            );
+        } catch(JSONException e) {
+            Log.e(TAG, "Fail parsing receiptItem response=" + jsonResponse, e);
+            return null;
+        }
+    }
+
+    public static boolean parseDeviceRegistration(String jsonResponse) {
+        try {
+            JSONObject json = new JSONObject(jsonResponse);
+            return json.getBoolean("registered");
+        } catch(JSONException e) {
+            Log.e(TAG, "Fail parsing deviceRegistration response=" + jsonResponse, e);
+            return false;
+        }
     }
 }
