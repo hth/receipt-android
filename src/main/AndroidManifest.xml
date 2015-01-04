@@ -71,6 +71,9 @@
         <activity
             android:name=".ReceiptListActivity">
         </activity>
+        <activity
+            android:name=".GraphActivity">
+        </activity>
 
         <receiver android:name="com.receiptofi.checkout.receivers.NetworkConnectivityReceiver">
             <intent-filter>
