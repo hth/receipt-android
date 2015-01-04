@@ -32,8 +32,8 @@ public class MonthlyReportUtils {
                 "select " +
                         "SUBSTR(date, 6, 2) mon," +
                         "SUBSTR(date, 1, 4) yr, " +
-                        "total(total) total " +
-                        "count(*) count, " +
+                        "total(total) total, " +
+                        "count(*) count " +
                         "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
 
 
