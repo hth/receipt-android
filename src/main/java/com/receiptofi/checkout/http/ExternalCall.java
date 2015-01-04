@@ -70,10 +70,7 @@ public final class ExternalCall {
                         httpPost.setHeader(API.key.XR_AUTH, UserUtils.getAuth());
                         httpPost.setHeader(API.key.XR_MAIL, UserUtils.getEmail());
                     }
-                    HttpResponse response;
-
-                    response = client.execute(httpPost);
-
+                    HttpResponse response = client.execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
                     Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
@@ -91,6 +88,7 @@ public final class ExternalCall {
                         responseHandler.onError(statusCode, body);
                     }
                 } catch (Exception e) {
+                    Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(e);
                 }
             }
