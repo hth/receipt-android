@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 
@@ -29,10 +30,10 @@ public class MonthlyReportUtils {
 
         Cursor receiptsMonthlyCursor = RDH.getReadableDatabase().rawQuery(
                 "select " +
-                        "substr(date, 6, 2) mon " +
-                        "substr(date, 1, 4) yr, " +
+                        "SUBSTR(date, 6, 2) mon," +
+                        "SUBSTR(date, 1, 4) yr, " +
                         "count(*) count, " +
-                        "total(total) total, " +
+                        "total(total) total " +
                         "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
 
 
@@ -42,13 +43,13 @@ public class MonthlyReportUtils {
                 ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
                         receiptsMonthlyCursor.getString(0),
                         receiptsMonthlyCursor.getString(1),
-                        receiptsMonthlyCursor.getDouble(2),
-                        receiptsMonthlyCursor.getInt(3));
+                        receiptsMonthlyCursor.getDouble(3),
+                        receiptsMonthlyCursor.getInt(2));
 
                 if (insertMonthlyReceiptStat(receiptGroupHeader)) {
-                    Log.d(TAG, "Record Inserted Successfully " + receiptGroupHeader);
+                    Log.d(TAG, "Monthly Record Inserted Successfully " + receiptGroupHeader);
                 } else {
-                    Log.d(TAG, "Record Insert Failed " + receiptGroupHeader);
+                    Log.d(TAG, "Monthly Record Insert Failed " + receiptGroupHeader);
                 }
             }
         }
@@ -68,5 +69,19 @@ public class MonthlyReportUtils {
                 null,
                 values
         ) > 0;
+    }
+
+    public static String fetchMonthlyTotal(String year, String month){
+        String monthlyTotal = null;
+        Log.d(TAG,"Starting Fetch Monthly Total");
+        Cursor monthlyTotalCursor = RDH.getReadableDatabase().rawQuery(
+                                    " select total from " + MonthlyReport.TABLE_NAME +
+                                    " where year = '"+year+"' and month = '"+month+"'",null);
+
+        if (monthlyTotalCursor != null && monthlyTotalCursor.getCount() > 0)
+            for (monthlyTotalCursor.moveToFirst(); !monthlyTotalCursor.isAfterLast(); monthlyTotalCursor.moveToNext()) {
+                return monthlyTotal = monthlyTotalCursor.getString(0);
+            }
+                return "0.0";
     }
 }
