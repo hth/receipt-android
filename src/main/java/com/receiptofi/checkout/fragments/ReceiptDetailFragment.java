@@ -36,8 +36,6 @@ public class ReceiptDetailFragment extends Fragment {
             mCurrentIndex = savedInstanceState.getInt(ARG_INDEX);
             mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
         }
-        if(mCurrentIndex == -1) mCurrentIndex = 0;
-        if(mCurrentPosition == -1) mCurrentPosition = 0;
 
         // Inflate the layout for this fragment
         View receiptDetailView = inflater.inflate(R.layout.receipt_detail_view, container, false);
