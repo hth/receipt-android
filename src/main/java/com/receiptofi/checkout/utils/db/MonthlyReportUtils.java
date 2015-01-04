@@ -100,7 +100,7 @@ public class MonthlyReportUtils {
 
         Cursor receiptCursor = RDH.getReadableDatabase().rawQuery(
                 " select * from " + DatabaseTable.Receipt.TABLE_NAME +
-                " where SUBSTR(date, 6, 2)  = '"+month+"' and SUBSTR(date, 1, 4) = '"+year+"' +" +
+                " where SUBSTR(date, 6, 2)  = '"+month+"' and SUBSTR(date, 1, 4) = '"+year+"' " +
                 " order by date desc ",null);
 
         if (receiptCursor != null && receiptCursor.getCount() > 0) {
@@ -117,7 +117,7 @@ public class MonthlyReportUtils {
         return list;
     }
 
-    private static ReceiptGroup fetchMonthly(){
+    public static ReceiptGroup fetchMonthly(){
 
         Log.d(TAG, "Fetching Receipt Monthly Fact Data from MonthlyReport Table");
 
@@ -128,7 +128,7 @@ public class MonthlyReportUtils {
 
         Cursor monthlyCursor = RDH.getReadableDatabase().rawQuery(
                 " select * from " + MonthlyReport.TABLE_NAME +
-                        " order by year, mon desc", null);
+                        " order by year, month desc", null);
 
         if  (monthlyCursor != null && monthlyCursor.getCount() > 0) {
             for (monthlyCursor.moveToFirst(); !monthlyCursor.isAfterLast(); monthlyCursor.moveToNext()) {

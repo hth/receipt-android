@@ -12,6 +12,12 @@ import android.widget.ExpandableListView;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter;
+import com.receiptofi.checkout.model.ReceiptGroup;
+import com.receiptofi.checkout.model.ReceiptGroupHeader;
+import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
+
+import java.util.List;
 
 /**
  * Created by PT on 1/1/15.
@@ -20,8 +26,8 @@ public class ReceiptListFragment extends Fragment {
 
     View rootView;
     ExpandableListView explv;
-    private String[] groups;
-    public static String[][] children;
+    List<ReceiptGroupHeader> headerList;
+    public static List<List<ReceiptModel>> childListGroup;
 
     OnReceiptSelectedListener mCallback;
 
@@ -33,19 +39,20 @@ public class ReceiptListFragment extends Fragment {
 
     public ReceiptListFragment() {
 
+        // Get data for master/detail views
+        ReceiptGroup receiptGroup = MonthlyReportUtils.fetchMonthly();
+        if(receiptGroup != null) {
+            headerList = receiptGroup.getReceiptGroupHeaders();
+            childListGroup = receiptGroup.getReceiptGroup();
+        }
+
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        groups = new String[]{"Test Header 1", "Test Header 2", "Test Header 3", "Test Header 4"};
 
-        children = new String[][]{
-                {"s simply dummy text of the printing and..."},
-                {"Contrary to popular belief, Lorem Ipsum is...", "\"Lorem ipsum\" pseudo-latin is also used as placeholder text"},
-                {"It is a long established fact that a reader..."},
-                {"There are many variations of passages of..."}
-        };
+
     }
 
     @Override
@@ -59,7 +66,7 @@ public class ReceiptListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         explv = (ExpandableListView) view.findViewById(R.id.exp_list_view);
-        explv.setAdapter(new ReceiptListAdapter(getActivity(), groups, children));
+        explv.setAdapter(new ReceiptListAdapter(getActivity(), headerList, childListGroup));
         explv.setGroupIndicator(null);
 
         explv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
