@@ -1,6 +1,5 @@
 package com.receiptofi.checkout.model;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -9,15 +8,15 @@ import java.util.List;
  */
 public class ReceiptGroup {
 
-    private List<List<ReceiptGroupDetail>> receiptGroupDetails = new LinkedList<>();
+    private List<List<ReceiptModel>> receiptGroup = new LinkedList<>();
     private List<ReceiptGroupHeader> receiptGroupHeaders = new LinkedList<>();
 
-    public List<List<ReceiptGroupDetail>> getReceiptGroupDetails() {
-        return receiptGroupDetails;
+    public List<List<ReceiptModel>> getReceiptGroup() {
+        return receiptGroup;
     }
 
-    public void addReceiptGroupDetails(List<ReceiptGroupDetail> receiptGroupDetails) {
-        this.receiptGroupDetails.add(receiptGroupDetails);
+    public void addReceiptGroup(List<ReceiptModel> receiptModel) {
+        this.receiptGroup.add(receiptModel);
     }
 
     public List<ReceiptGroupHeader> getReceiptGroupHeaders() {
