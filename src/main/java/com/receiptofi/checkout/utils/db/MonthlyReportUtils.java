@@ -4,13 +4,11 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
-import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -34,7 +32,7 @@ public class MonthlyReportUtils {
     private static void groupByMonthlyReceiptStat() {
         Log.d(TAG, "Starting to calculate Monthly Facts");
 
-        Cursor receiptsMonthlyCursor = RDH.getReadableDatabase().rawQuery(
+        Cursor cursor = RDH.getReadableDatabase().rawQuery(
                 "select " +
                         "SUBSTR(date, 6, 2) mon," +
                         "SUBSTR(date, 1, 4) yr, " +
@@ -43,14 +41,14 @@ public class MonthlyReportUtils {
                         "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
 
 
-        if (receiptsMonthlyCursor != null && receiptsMonthlyCursor.getCount() > 0) {
-            for (receiptsMonthlyCursor.moveToFirst(); !receiptsMonthlyCursor.isAfterLast(); receiptsMonthlyCursor.moveToNext()) {
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
                 ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
-                        receiptsMonthlyCursor.getString(0),
-                        receiptsMonthlyCursor.getString(1),
-                        receiptsMonthlyCursor.getDouble(2),
-                        receiptsMonthlyCursor.getInt(3));
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getDouble(2),
+                        cursor.getInt(3));
 
                 if (insertMonthlyReceiptStat(receiptGroupHeader)) {
                     Log.d(TAG, "Monthly Record Inserted Successfully " + receiptGroupHeader);
@@ -77,39 +75,41 @@ public class MonthlyReportUtils {
         ) > 0;
     }
 
-    public static String fetchMonthlyTotal(String year, String month){
-        String monthlyTotal = null;
-        Log.d(TAG,"Starting Fetch Monthly Total");
-        Cursor monthlyTotalCursor = RDH.getReadableDatabase().rawQuery(
-                                    " select total from " + MonthlyReport.TABLE_NAME +
-                                    " where year = '"+year+"' and month = '"+month+"'",null);
+    public static String fetchMonthlyTotal(String year, String month) {
+        Log.d(TAG, "Starting Fetch Monthly Total");
+        Cursor cursor = RDH.getReadableDatabase().rawQuery(
+                " select " +
+                        "total from " + MonthlyReport.TABLE_NAME + " " +
+                        "where year = '" + year + "' " +
+                        "and month = '" + month + "'", null);
 
-        if (monthlyTotalCursor != null && monthlyTotalCursor.getCount() > 0)
-            for (monthlyTotalCursor.moveToFirst(); !monthlyTotalCursor.isAfterLast(); monthlyTotalCursor.moveToNext()) {
-                return monthlyTotal = monthlyTotalCursor.getString(0);
-            }
-                return "0.0";
+        if (cursor != null && cursor.getCount() > 0) {
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "0.0";
     }
 
-    private static List<ReceiptModel> fetchReceipts(String year, String month){
-
+    private static List<ReceiptModel> fetchReceipts(String year, String month) {
         Log.d(TAG, "Fetching Receipt Data for a given Month & Year from Receipt Table");
 
-        List<ReceiptModel> list = new LinkedList<ReceiptModel>();
+        List<ReceiptModel> list = new LinkedList<>();
         ReceiptModel receiptModel = new ReceiptModel();
 
-        Cursor receiptCursor = RDH.getReadableDatabase().rawQuery(
-                " select * from " + DatabaseTable.Receipt.TABLE_NAME +
-                " where SUBSTR(date, 6, 2)  = '"+month+"' and SUBSTR(date, 1, 4) = '"+year+"' " +
-                " order by date desc ",null);
+        Cursor cursor = RDH.getReadableDatabase().rawQuery(
+                " select " +
+                        "* from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                        "where SUBSTR(date, 6, 2) = '" + month + "' " +
+                        "and SUBSTR(date, 1, 4) = '" + year + "' " +
+                        "order by date desc ", null);
 
-        if (receiptCursor != null && receiptCursor.getCount() > 0) {
-            for (receiptCursor.moveToFirst(); !receiptCursor.isAfterLast(); receiptCursor.moveToNext()) {
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
-                receiptModel.setBizName(receiptCursor.getString(0));
-                receiptModel.setAddress(receiptCursor.getString(1));
-                receiptModel.setPhone(receiptCursor.getString(2));
-                receiptModel.setDate(receiptCursor.getString(3));
+                receiptModel.setBizName(cursor.getString(0));
+                receiptModel.setAddress(cursor.getString(1));
+                receiptModel.setPhone(cursor.getString(2));
+                receiptModel.setDate(cursor.getString(3));
 
                 list.add(receiptModel);
             }
@@ -117,34 +117,37 @@ public class MonthlyReportUtils {
         return list;
     }
 
-    public static ReceiptGroup fetchMonthly(){
+    public static ReceiptGroup fetchMonthly() {
 
         Log.d(TAG, "Fetching Receipt Monthly Fact Data from MonthlyReport Table");
 
-        ReceiptGroup rg = new ReceiptGroup();
+        ReceiptGroup receiptGroup = new ReceiptGroup();
 
         //For Receipt List Headers
         ReceiptGroupHeader receiptGroupHeader;
 
-        Cursor monthlyCursor = RDH.getReadableDatabase().rawQuery(
-                " select * from " + MonthlyReport.TABLE_NAME +
-                        " order by year, month desc", null);
+        Cursor cursor = RDH.getReadableDatabase().rawQuery(
+                " select " +
+                        "* from " + MonthlyReport.TABLE_NAME + " " +
+                        "order by year, month desc", null);
 
-        if  (monthlyCursor != null && monthlyCursor.getCount() > 0) {
-            for (monthlyCursor.moveToFirst(); !monthlyCursor.isAfterLast(); monthlyCursor.moveToNext()) {
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
-                String month = monthlyCursor.getString(0);
-                String year = monthlyCursor.getString(1);
-                receiptGroupHeader = new ReceiptGroupHeader(month, year, Double.parseDouble(monthlyCursor.getString(3)), Integer.parseInt(monthlyCursor.getString(3)));
-                rg.addReceiptGroupHeaders(receiptGroupHeader);
+                String month = cursor.getString(0);
+                String year = cursor.getString(1);
+                receiptGroupHeader = new ReceiptGroupHeader(
+                        month,
+                        year,
+                        Double.parseDouble(cursor.getString(2)),
+                        Integer.parseInt(cursor.getString(3))
+                );
+                receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
 
                 //Get Receipts for current month
-                rg.addReceiptGroup(fetchReceipts(year, month));
+                receiptGroup.addReceiptGroup(fetchReceipts(year, month));
             }
         }
-        return rg;
-
+        return receiptGroup;
     }
-
-
 }

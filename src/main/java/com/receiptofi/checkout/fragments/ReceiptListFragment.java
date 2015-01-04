@@ -43,7 +43,7 @@ public class ReceiptListFragment extends Fragment {
         ReceiptGroup receiptGroup = MonthlyReportUtils.fetchMonthly();
         if(receiptGroup != null) {
             headerList = receiptGroup.getReceiptGroupHeaders();
-            childListGroup = receiptGroup.getReceiptGroup();
+            childListGroup = receiptGroup.getReceiptModels();
         }
 
     }

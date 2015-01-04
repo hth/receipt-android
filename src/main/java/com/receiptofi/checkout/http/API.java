@@ -18,6 +18,8 @@ public class API {
     public static final String GET_ALL_RECEIPTS = "/api/allReceipts.json";
     public static final String VIEW_RECEIPT_DETAIL = "/api/receiptDetail/";
     public static final String DOWNLOAD_IMAGE = "/api/image/";
+    public static final String REGISTER_DEVICE = "/api/register";
+    public static final String ALL_DEVICE_UPDATE = "/api/update";
 
     public static class key {
         // Header

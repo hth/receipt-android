@@ -41,7 +41,7 @@ public final class ExternalCall {
 
     public static void doPost(
             final JSONObject postData,
-            final String url,
+            final String api,
             final boolean hasAuthentication,
             final ResponseHandler responseHandler
     ) {
@@ -52,12 +52,12 @@ public final class ExternalCall {
                     HttpPost httpPost;
                     HttpClient client = new DefaultHttpClient();
 
-                    if (!TextUtils.isEmpty(url)) {
-                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + url);
+                    if (!TextUtils.isEmpty(api)) {
+                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
                     } else {
                         httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
-                    Log.d(TAG, "making api request to server: " + MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + url + ", Data: " + postData.toString());
+                    Log.d(TAG, "making api request to server: " + MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api + ", Data: " + postData.toString());
 
                     StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
 
@@ -94,21 +94,23 @@ public final class ExternalCall {
         }.start();
     }
 
-    public static void doPost(final ArrayList<NameValuePair> params,
-                              final String API, final ResponseHandler responseHandler
+    public static void doPost(
+            final ArrayList<NameValuePair> headers,
+            final String api,
+            final ResponseHandler responseHandler
     ) {
         new Thread() {
             public void run() {
                 try {
                     HttpPost httpPost;
                     HttpClient client = new DefaultHttpClient();
-                    if (!TextUtils.isEmpty(API)) {
-                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + API);
+                    if (!TextUtils.isEmpty(api)) {
+                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
                     } else {
                         httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
                     }
 
-                    httpPost.setEntity(new UrlEncodedFormEntity(params));
+                    httpPost.setEntity(new UrlEncodedFormEntity(headers));
 
                     HttpResponse response = client.execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
@@ -176,8 +178,10 @@ public final class ExternalCall {
         }.start();
     }
 
-    public static String getPostResponse(ArrayList<NameValuePair> params, String API)
-            throws Exception {
+    public static String getPostResponse(
+            ArrayList<NameValuePair> headers,
+            String API
+    ) throws Exception {
 
         HttpClient client = new DefaultHttpClient();
         HttpPost httpPost;
@@ -188,7 +192,7 @@ public final class ExternalCall {
             httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
         }
 
-        httpPost.setEntity(new UrlEncodedFormEntity(params));
+        httpPost.setEntity(new UrlEncodedFormEntity(headers));
         HttpResponse response = client.execute(httpPost);
 
         BufferedReader reader = new BufferedReader(
