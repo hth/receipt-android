@@ -6,6 +6,7 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.receiptofi.checkout.model.ImageModel;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -42,32 +43,27 @@ public final class ExternalCall {
     public static void doPost(
             final JSONObject postData,
             final String api,
-            final boolean hasAuthentication,
+            final IncludeAuthentication includeAuthentication,
             final ResponseHandler responseHandler
     ) {
         new Thread() {
             public void run() {
                 try {
-                    Log.d(TAG, "doPost making api request to server: " +
-                            MobileServerEndpoints.RECEIPTOFI_MOBILE_URL
-                            + api
-                            + ", Data: "
-                            + postData.toString());
-
                     HttpPost httpPost = getHttpPost(api);
                     StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
 
                     httpPost.setEntity(postEntity);
+                    Log.i(TAG, "post=" + httpPost.getURI() + ", data=" + postData.toString());
+
                     httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
-                    if (hasAuthentication) {
+                    if (includeAuthentication == IncludeAuthentication.YES) {
                         httpPost.setHeader(API.key.XR_AUTH, UserUtils.getAuth());
                         httpPost.setHeader(API.key.XR_MAIL, UserUtils.getEmail());
                     }
                     HttpResponse response = new DefaultHttpClient().execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
-                    Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
-                    Log.i(TAG, "body is:  " + body);
+                    Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
                     updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
@@ -77,22 +73,26 @@ public final class ExternalCall {
         }.start();
     }
 
-    public static void doPost(
+    /**
+     * Authenticate user.
+     * @param params credential
+     * @param responseHandler
+     */
+    public static void authenticate(
             final List<NameValuePair> params,
-            final String api,
             final ResponseHandler responseHandler
     ) {
         new Thread() {
             public void run() {
                 try {
-                    HttpPost httpPost = getHttpPost(api);
+                    HttpPost httpPost = getHttpPost(API.LOGIN_API);
                     httpPost.setEntity(new UrlEncodedFormEntity(params));
+                    Log.i(TAG, "post=" + httpPost.getURI() + ", login params=*****");
                     HttpResponse response = new DefaultHttpClient().execute(httpPost);
 
                     int statusCode = response.getStatusLine().getStatusCode();
-                    Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
-                    Log.i(TAG, "body is:  " + body);
+                    Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
                     updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);

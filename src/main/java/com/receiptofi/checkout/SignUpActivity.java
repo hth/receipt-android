@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 
@@ -27,7 +28,6 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -203,7 +203,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        ExternalCall.doPost(postData, API.SIGNUP_API, false, new ResponseHandler() {
+        ExternalCall.doPost(postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
