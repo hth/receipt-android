@@ -3,7 +3,6 @@ package com.receiptofi.checkout;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.drawable.ColorDrawable;
@@ -30,11 +29,11 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.DeviceUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import org.apache.http.Header;
@@ -204,8 +203,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
 
-        ExternalCall.doPost(postData, API.SOCIAL_LOGIN_API, false, new ResponseHandler() {
-
+        ExternalCall.doPost(postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");

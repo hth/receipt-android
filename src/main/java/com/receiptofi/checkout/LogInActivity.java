@@ -27,7 +27,7 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 
@@ -167,11 +167,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             errors.delete(0, errors.length());
             return;
         }
-        ArrayList<NameValuePair> pairs = new ArrayList<>();
-        pairs.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
-        pairs.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
+        List<NameValuePair> credentials = new ArrayList<>();
+        credentials.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
+        credentials.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
-        ExternalCall.doPost(pairs, API.LOGIN_API, new ResponseHandler() {
+        ExternalCall.authenticate(credentials, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
