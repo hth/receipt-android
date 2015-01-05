@@ -7,6 +7,7 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
@@ -26,7 +27,7 @@ public class DeviceUtils {
      * This method does the registration of the device when its not registered.
      */
     public static void getAllUpdates() {
-        ExternalCall.doGet(true, API.ALL_DEVICE_UPDATE, new ResponseHandler() {
+        ExternalCall.doGet(IncludeDevice.YES, API.ALL_DEVICE_UPDATE, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();

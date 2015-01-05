@@ -7,6 +7,7 @@ import android.webkit.MimeTypeMap;
 
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -103,11 +104,11 @@ public final class ExternalCall {
     }
 
     public static void doGet(String api, ResponseHandler responseHandler) {
-        doGet(false, api, responseHandler);
+        doGet(IncludeDevice.NO, api, responseHandler);
     }
 
     public static void doGet(
-            final boolean withDeviceId,
+            final IncludeDevice includeDevice,
             final String api,
             final ResponseHandler responseHandler
     ) {
@@ -117,7 +118,7 @@ public final class ExternalCall {
                     HttpGet httpGet = getHttpGet(api);
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
                     httpGet.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-                    if (withDeviceId) {
+                    if (includeDevice == IncludeDevice.YES) {
                         httpGet.addHeader(API.key.XR_DID, UserUtils.getDeviceId());
                     }
 
