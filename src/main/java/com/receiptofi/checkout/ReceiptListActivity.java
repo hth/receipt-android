@@ -1,8 +1,8 @@
 package com.receiptofi.checkout;
 
 import android.os.Bundle;
-import android.app.Activity;
-import android.app.FragmentTransaction;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
@@ -11,7 +11,7 @@ import com.receiptofi.checkout.fragments.ReceiptListFragment;
 /**
  * Created by PT on 1/3/15.
  */
-public class ReceiptListActivity extends Activity implements ReceiptListFragment.OnReceiptSelectedListener {
+public class ReceiptListActivity extends FragmentActivity implements ReceiptListFragment.OnReceiptSelectedListener {
 
     private static final String TAG = ReceiptListActivity.class.getSimpleName();
 
@@ -40,7 +40,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             firstFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, firstFragment).commit();
         }
 
@@ -53,7 +53,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
         // Capture the article fragment from the activity layout
         ReceiptDetailFragment receiptDetailFragment = (ReceiptDetailFragment)
-                getFragmentManager().findFragmentById(R.id.rdetail_fragment);
+                getSupportFragmentManager().findFragmentById(R.id.rdetail_fragment);
 
         if (receiptDetailFragment != null) {
             Log.d(TAG, "detail fragment already instantiated");
@@ -72,7 +72,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             args.putInt(ReceiptDetailFragment.ARG_INDEX, index);
             args.putInt(ReceiptDetailFragment.ARG_POSITION, position);
             newFragment.setArguments(args);
-            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
 
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack so the user can navigate back
