@@ -7,7 +7,6 @@ import android.webkit.MimeTypeMap;
 
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.UserUtils;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -22,7 +21,6 @@ import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 import org.json.JSONObject;
 
@@ -32,7 +30,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,17 +48,13 @@ public final class ExternalCall {
         new Thread() {
             public void run() {
                 try {
-                    Log.d(TAG, "executing doPost");
-                    HttpPost httpPost;
-                    HttpClient client = new DefaultHttpClient();
+                    Log.d(TAG, "doPost making api request to server: " +
+                            MobileServerEndpoints.RECEIPTOFI_MOBILE_URL
+                            + api
+                            + ", Data: "
+                            + postData.toString());
 
-                    if (!TextUtils.isEmpty(api)) {
-                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
-                    } else {
-                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
-                    }
-                    Log.d(TAG, "making api request to server: " + MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api + ", Data: " + postData.toString());
-
+                    HttpPost httpPost = getHttpPost(api);
                     StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
 
                     httpPost.setEntity(postEntity);
@@ -70,23 +63,12 @@ public final class ExternalCall {
                         httpPost.setHeader(API.key.XR_AUTH, UserUtils.getAuth());
                         httpPost.setHeader(API.key.XR_MAIL, UserUtils.getEmail());
                     }
-                    HttpResponse response = client.execute(httpPost);
+                    HttpResponse response = new DefaultHttpClient().execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
                     Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
                     Log.i(TAG, "body is:  " + body);
-                    if (statusCode != 200) {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
-                        responseHandler.onError(statusCode, null);
-                        return;
-                    }
-                    if (!bodyContainsError(body)) {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
-                        responseHandler.onSuccess(response.getAllHeaders(), body);
-                    } else {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
-                        responseHandler.onError(statusCode, body);
-                    }
+                    updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(e);
@@ -103,33 +85,15 @@ public final class ExternalCall {
         new Thread() {
             public void run() {
                 try {
-                    HttpPost httpPost;
-                    HttpClient client = new DefaultHttpClient();
-                    if (!TextUtils.isEmpty(api)) {
-                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
-                    } else {
-                        httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
-                    }
-
+                    HttpPost httpPost = getHttpPost(api);
                     httpPost.setEntity(new UrlEncodedFormEntity(params));
+                    HttpResponse response = new DefaultHttpClient().execute(httpPost);
 
-                    HttpResponse response = client.execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
                     Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
                     Log.i(TAG, "body is:  " + body);
-                    if (statusCode != 200) {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
-                        responseHandler.onError(statusCode, null);
-                        return;
-                    }
-                    if (!bodyContainsError(body)) {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
-                        responseHandler.onSuccess(response.getAllHeaders(), body);
-                    } else {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
-                        responseHandler.onError(statusCode, body);
-                    }
+                    updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(e);
@@ -150,37 +114,19 @@ public final class ExternalCall {
         new Thread() {
             public void run() {
                 try {
-                    HttpGet httpGet;
-                    HttpClient client = new DefaultHttpClient();
-                    if (!TextUtils.isEmpty(api)) {
-                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
-                    } else {
-                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
-                    }
-
+                    HttpGet httpGet = getHttpGet(api);
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
                     httpGet.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-                    if(withDeviceId) {
+                    if (withDeviceId) {
                         httpGet.addHeader(API.key.XR_DID, UserUtils.getDeviceId());
                     }
 
-                    HttpResponse response = client.execute(httpGet);
+                    HttpResponse response = new DefaultHttpClient().execute(httpGet);
                     int statusCode = response.getStatusLine().getStatusCode();
                     Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
                     Log.i(TAG, "body is:  " + body);
-                    if (statusCode != 200) {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
-                        responseHandler.onError(statusCode, null);
-                        return;
-                    }
-                    if (!bodyContainsError(body)) {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
-                        responseHandler.onSuccess(response.getAllHeaders(), body);
-                    } else {
-                        Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
-                        responseHandler.onError(statusCode, body);
-                    }
+                    updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(e);
@@ -189,14 +135,52 @@ public final class ExternalCall {
         }.start();
     }
 
+    private static void updateResponseHandler(
+            int statusCode,
+            HttpResponse response,
+            String body,
+            ResponseHandler responseHandler
+    ) {
+        if (statusCode != 200) {
+            Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
+            responseHandler.onError(statusCode, null);
+        } else {
+            if (!bodyContainsError(body)) {
+                Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
+                responseHandler.onSuccess(response.getAllHeaders(), body);
+            } else {
+                Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
+                responseHandler.onError(statusCode, body);
+            }
+        }
+    }
+
+    private static HttpGet getHttpGet(String api) {
+        HttpGet httpGet;
+        if (!TextUtils.isEmpty(api)) {
+            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+        } else {
+            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+        }
+        return httpGet;
+    }
+
+    private static HttpPost getHttpPost(String api) {
+        HttpPost httpPost;
+        if (!TextUtils.isEmpty(api)) {
+            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+        } else {
+            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+        }
+        return httpPost;
+    }
+
     public static String getPostResponse(
             List<NameValuePair> params,
             String API
     ) throws Exception {
 
-        HttpClient client = new DefaultHttpClient();
         HttpPost httpPost;
-
         if (API != null) {
             httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + API);
         } else {
@@ -204,7 +188,7 @@ public final class ExternalCall {
         }
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
-        HttpResponse response = client.execute(httpPost);
+        HttpResponse response = new DefaultHttpClient().execute(httpPost);
 
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(
