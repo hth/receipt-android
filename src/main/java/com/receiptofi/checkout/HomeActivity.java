@@ -26,8 +26,14 @@ import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 
 import java.io.File;
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 public class HomeActivity extends Activity {
 
@@ -37,14 +43,15 @@ public class HomeActivity extends Activity {
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
     public static final int UPDATE_UNPROCESSED_COUNT = 0x2567;
-    public static final int GET_ALL_RECEIPTS = 0x2568;
+    public static final int UPDATE_MONTHLY_EXPENSE = 0x2568;
+    public static final int GET_ALL_RECEIPTS = 0x2569;
 
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case IMAGE_UPLOAD_SUCCESS:
-                    updateUnprocessedCount(Integer.toString(msg.arg1));
+                    setUnprocessedCount(Integer.toString(msg.arg1));
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
@@ -57,10 +64,10 @@ public class HomeActivity extends Activity {
                     endAnimation();
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
-                    updateUnprocessedCount((String) msg.obj);
+                    setUnprocessedCount((String) msg.obj);
                     break;
-                case GET_ALL_RECEIPTS:
-                    //updateUnprocessedCount((String) msg.obj);
+                case UPDATE_MONTHLY_EXPENSE:
+                    setMonthlyExpense((String) msg.obj);
                     break;
             }
         }
@@ -70,7 +77,7 @@ public class HomeActivity extends Activity {
     protected Handler uiThread = new Handler();
 
     TextView unprocessedDocumentCount;
-    TextView currentAmount;
+    TextView currentMonthExp;
     private Menu optionMenu;
 
     @Override
@@ -83,8 +90,8 @@ public class HomeActivity extends Activity {
         //TODO needed for ImageUploaderService
         AppUtils.setHomePageContext(this);
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
-        currentAmount = (TextView) findViewById(R.id.current_amount);
-        currentAmount.setOnClickListener(new View.OnClickListener() {
+        currentMonthExp = (TextView) findViewById(R.id.current_amount);
+        currentMonthExp.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -107,7 +114,15 @@ public class HomeActivity extends Activity {
             }
         });
 
-        updateUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
+        setUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
+
+        try {
+            setMonthlyExpense(MonthlyReportUtils.fetchMonthlyTotal(Integer.toString(Calendar.getInstance().get(Calendar.MONTH)),
+                    Integer.toString(Calendar.getInstance().get(Calendar.YEAR) - 1)));
+        }catch(Exception e){
+            Log.d(TAG, "Exception" + e.getMessage());
+            e.printStackTrace();
+        }
 
     }
 
@@ -214,15 +229,17 @@ public class HomeActivity extends Activity {
     }
 
     private void startAnimation() {
-        LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ImageView imageView = (ImageView) inflater.inflate(R.layout.action_refresh, null);
+        if(optionMenu != null) {
+            LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            ImageView imageView = (ImageView) inflater.inflate(R.layout.action_refresh, null);
 
-        Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
-        rotation.setRepeatCount(Animation.INFINITE);
-        imageView.startAnimation(rotation);
+            Animation rotation = AnimationUtils.loadAnimation(this, R.anim.rotate);
+            rotation.setRepeatCount(Animation.INFINITE);
+            imageView.startAnimation(rotation);
 
-        MenuItem item = optionMenu.findItem(R.id.menu_refresh);
-        MenuItemCompat.setActionView(item, imageView);
+            MenuItem item = optionMenu.findItem(R.id.menu_refresh);
+            MenuItemCompat.setActionView(item, imageView);
+        }
     }
 
     private void endAnimation() {
@@ -234,9 +251,15 @@ public class HomeActivity extends Activity {
         }
     }
 
-    private void updateUnprocessedCount(final String count) {
-        Log.d(TAG, "executing updateUnprocessedCount");
-        unprocessedDocumentCount.setText(String.format(getString(R.string.processing_info), count));
+    private void setUnprocessedCount(final String count) {
+        Log.d(TAG, "executing setUnprocessedCount");
+        unprocessedDocumentCount.setText(getString(R.string.processing_info, count));
+    }
+
+    private void setMonthlyExpense(final String amount) {
+        Log.d(TAG, "executing setMonthlyExpense");
+        DateFormat df = new SimpleDateFormat("MMM yyyy");
+        currentMonthExp.setText(getString(R.string.monthly_amount, df.format(new Date()), amount));
     }
 
     private void launchSettings() {

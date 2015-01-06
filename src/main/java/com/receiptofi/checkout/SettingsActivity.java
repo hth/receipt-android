@@ -36,12 +36,6 @@ public class SettingsActivity extends PreferenceActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Test for Prakash
-        String year = "2014";
-        String month = "11";
-        String amount = MonthlyReportUtils.fetchMonthlyTotal(year, month);
-        Log.d(TAG, "Monthly Amount for " +  year + " and "+ month + " is : " + amount);
-
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new PrefFragment())
                 .commit();
