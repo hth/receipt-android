@@ -66,11 +66,6 @@ public class KeyValueUtils {
                 null
         );
 
-//        Cursor c = RDH.getReadableDatabase().rawQuery(
-//                "select * from " + DatabaseTable.KeyValue.TABLE_NAME + " where " + DatabaseTable.KeyValue.KEY + "=" + "'" + key + "'",
-//                null
-//        );
-
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
             return c.getString(c.getColumnIndex(DatabaseTable.KeyValue.VALUE));
