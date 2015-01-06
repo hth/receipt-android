@@ -41,6 +41,9 @@ public final class ExternalCall {
 
     private static final String TAG = ExternalCall.class.getSimpleName();
 
+    private ExternalCall() {
+    }
+
     public static void doPost(
             final JSONObject postData,
             final String api,
@@ -76,7 +79,8 @@ public final class ExternalCall {
 
     /**
      * Authenticate user.
-     * @param params credential
+     *
+     * @param params          credential
      * @param responseHandler
      */
     public static void authenticate(
@@ -157,23 +161,19 @@ public final class ExternalCall {
     }
 
     private static HttpGet getHttpGet(String api) {
-        HttpGet httpGet;
         if (!TextUtils.isEmpty(api)) {
-            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+            return new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
         } else {
-            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+            return new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
         }
-        return httpGet;
     }
 
     private static HttpPost getHttpPost(String api) {
-        HttpPost httpPost;
         if (!TextUtils.isEmpty(api)) {
-            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+            return new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
         } else {
-            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+            return new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
         }
-        return httpPost;
     }
 
     public static String getPostResponse(
