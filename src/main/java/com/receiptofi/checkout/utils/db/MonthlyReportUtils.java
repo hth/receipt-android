@@ -2,13 +2,18 @@ package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.os.Message;
 import android.util.Log;
 
+import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.AppUtils;
 
+import java.util.Calendar;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +27,15 @@ public class MonthlyReportUtils {
     public static void computeMonthlyReceiptReport() {
         dropAndCreateTableMonthlyReport();
         groupByMonthlyReceiptStat();
+        // home-screen notification for updated montly amount
+        String expense = fetchMonthlyTotal(Integer.toString(Calendar.getInstance().get(Calendar.YEAR)),
+                Integer.toString(Calendar.getInstance().get(Calendar.MONTH)+1));
+        Message msg = new Message();
+        msg.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
+        msg.obj = expense;
+        if (ReceiptofiApplication.isHomeActivityVisible()) {
+            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+        }
     }
 
     private static void dropAndCreateTableMonthlyReport() {

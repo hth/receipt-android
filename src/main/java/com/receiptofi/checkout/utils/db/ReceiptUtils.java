@@ -70,7 +70,7 @@ public class ReceiptUtils {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
 
-                MonthlyReportUtils.computeMonthlyReceiptReport();
+                //MonthlyReportUtils.computeMonthlyReceiptReport();
             }
 
             @Override

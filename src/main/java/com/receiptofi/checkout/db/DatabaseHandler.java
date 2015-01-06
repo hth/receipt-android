@@ -32,7 +32,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             createTableImageIndex();
             createTableUploadQueue();
             createTableKeyValue();
-            createTableMonthlyReport();
+            //createTableMonthlyReport();
             createTableItem();
         }
     }
