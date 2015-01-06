@@ -77,11 +77,10 @@ API call <code>POST</code> path <code>/receipt-mobile/registration.json</code> t
 
 JSON body should contain
 
-- EM - Email          - Valid email (example t@t.c) and at least five characters length.
 - FN - First Name     - Two characters length minimum. "John Doe would be treated as FN John and LN Doe"
-- LN - Last Name      - Optional
+- EM - Email          - Valid email (example t@t.c) and at least five characters length.
 - PW - Password       - Six characters length
-- DB - Date of Birth  - Optional       - Number (Range 18 - 99+)
+- BD - Birth day      - Optional       - Number (Range 18 - 99+)
 
 Below are responses for various input with respective Error Code. On success, response header with be same as Social
 login with X-R-AUTH and X-R-MAIL code.
@@ -126,6 +125,74 @@ System Error Code 500
       }
     }
 
+## User Password recover ##
+___________________________
+
+API call <code>POST</code> path <code>/receipt-mobile/recover.json</code> to recover password.
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '{"EM": "test@receiptofi.com"}' http://localhost:9090/receipt-mobile/recover.json
+
+When bad request
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '' http://localhost:9090/receipt-mobile/recover.json
+    HTTP/1.1 400 Bad Request
+
+Empty Json data
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '{}' http://localhost:9090/receipt-mobile/recover.json
+    HTTP/1.1 200 OK
+    {"error":{"systemErrorCode":"100","systemError":"USER_INPUT","EM":"Empty","reason":"failed data validation"}}
+
+Bad Json format
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '{123}' http://localhost:9090/receipt-mobile/recover.json
+    HTTP/1.1 200 OK
+    {"error":{"systemErrorCode":"210","systemError":"MOBILE_JSON","reason":"could not parse JSON"}}
+
+Invalid Key with valid email or empty value
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '{"XX": ""}' http://localhost:9090/receipt-mobile/recover.json
+    HTTP/1.1 200 OK
+    {
+      "error": {
+        "systemErrorCode": "210",
+        "systemError": "MOBILE_JSON",
+        "reason": "could not parse [XX]"
+      }
+    }
+
+Value empty
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '{"EM": ""}' http://localhost:9090/receipt-mobile/recover.json
+    HTTP/1.1 200 OK
+    {
+      "error": {
+        "systemErrorCode": "100",
+        "systemError": "USER_INPUT",
+        "EM": "Empty",
+        "reason": "failed data validation"
+      }
+    }
+
+When user does not exists:
+    Note: In this scenario: Still show success response and not the error below.
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '{"EM": "some@receiptofi.com"}' http://localhost:9090/receipt-mobile/recover.json
+    HTTP/1.1 200 OK
+    {
+      "error": {
+        "systemErrorCode": "412",
+        "systemError": "USER_NOT_FOUND",
+        "EM": "some@receiptofi.com",
+        "reason": "user does not exists"
+      }
+    }
+
+When success, empty body
+
+    curl -i  -X POST -H "Content-Type: application/json" -d '{"EM": "test@receiptofi.com"}' http://localhost:9090/receipt-mobile/recover.json
+    HTTP/1.1 200 OK
+    
 ##Social Authentication and Signup##
 ____________________________________
 
@@ -263,20 +330,21 @@ API call <code>GET</code> path <code>curl -ik -X GET -H "X-R-MAIL: test@receipto
 Different types of updates supported are:
 
 	RECEIPT,
+	ITEM
 	MILEAGE,
 	PROFILE,
 	UPLOAD_DOCUMENT
 
 ***Success***
 
-When there are no updates avaliable, response will contain empty receipts list
+When there are no updates available, response will contain empty receipts list
 
 	{
 	  "profile": null,
 	  "receipts": []
 	}
 	
-When there are updates avaliable, response will contain receipts list ordered by Receipt Date
+When there are updates available, response will contain receipts list ordered by Receipt Date
 
 	{
     "profile": {
