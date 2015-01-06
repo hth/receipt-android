@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:background="@drawable/receipt_bg"
+            android:background="@color/app_theme_bg"
             android:orientation="vertical" >
 
 
@@ -124,6 +124,11 @@
                     android:layout_gravity="center_vertical"
                     android:background="@drawable/action_icon_list_bg" />
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:orientation="vertical">
                 <TextView
                     android:id="@+id/textView3"
                     android:layout_width="wrap_content"
@@ -134,6 +139,18 @@
                     android:text="@string/view_receipt"
                     android:textColor="@drawable/action_button_text_color"
                     android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/processing_info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="50dp"
+                        android:layout_marginStart="50dp"
+                        android:textColor="@color/common_signin_btn_dark_text_disabled"
+                        android:text="@string/processing_info" />
+                </LinearLayout>
+
             </LinearLayout>
 
             <View
@@ -151,27 +168,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/action_layout"
-            android:layout_marginTop="@dimen/activity_vertical_margin_wide"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:padding="@dimen/activity_touch_padding"
-            android:text="@string/amount"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@drawable/action_button_text_color"
-            android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/processing_info"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/current_amount"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:padding="@dimen/activity_touch_padding"
-            android:text="@string/processing_info"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@drawable/action_button_text_color_invert" />
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@drawable/action_button_text_color"
+            android:textStyle="bold" />
+
+
 
     </RelativeLayout>
 </ScrollView>
