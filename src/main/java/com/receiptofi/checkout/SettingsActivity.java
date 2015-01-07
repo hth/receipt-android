@@ -17,7 +17,6 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
 
 import org.json.JSONException;
