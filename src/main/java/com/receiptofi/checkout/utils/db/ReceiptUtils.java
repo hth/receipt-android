@@ -26,7 +26,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
-import static com.receiptofi.checkout.utils.db.KeyValueUtils.insertKeyValue;
+import static com.receiptofi.checkout.utils.db.KeyValueUtils.updateInsert;
 
 public class ReceiptUtils {
 
@@ -41,7 +41,7 @@ public class ReceiptUtils {
                 msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
                 Map<String, String> map = JsonParseUtils.parseUnprocessedCount(body);
                 msg.obj = map.get(API.key.UNPROCESSEDCOUNT);
-                insertKeyValue(KEYS.UNPROCESSED_DOCUMENT, map.get(API.key.UNPROCESSEDCOUNT));
+                updateInsert(KEYS.UNPROCESSED_DOCUMENT, map.get(API.key.UNPROCESSEDCOUNT));
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
@@ -70,7 +70,8 @@ public class ReceiptUtils {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
 
-                MonthlyReportUtils.computeMonthlyReceiptReport();
+                //Remove this method call
+                //MonthlyReportUtils.computeMonthlyReceiptReport();
             }
 
             @Override

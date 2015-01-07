@@ -17,7 +17,6 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
 
 import org.json.JSONException;
@@ -212,7 +211,7 @@ public class SettingsActivity extends PreferenceActivity {
 
         protected void saveAuthKey(Map<String, String> map) {
             for (Map.Entry<String, String> entry : map.entrySet()) {
-                boolean success = KeyValueUtils.insertKeyValue(entry.getKey(), entry.getValue());
+                boolean success = KeyValueUtils.updateInsert(entry.getKey(), entry.getValue());
                 if (!success) {
                     Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
                 }

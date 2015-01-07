@@ -45,25 +45,59 @@ public final class ExternalCall {
     }
 
     public static void doPost(
+            String api,
+            IncludeAuthentication includeAuthentication,
+            ResponseHandler responseHandler
+    ) {
+        doPost(null, api, includeAuthentication, IncludeDevice.NO, responseHandler);
+    }
+
+    public static void doPost(
+            JSONObject postData,
+            String api,
+            IncludeAuthentication includeAuthentication,
+            ResponseHandler responseHandler
+    ) {
+        doPost(postData, api, includeAuthentication, IncludeDevice.NO, responseHandler);
+    }
+
+    public static void doPost(
+            String api,
+            IncludeAuthentication includeAuthentication,
+            IncludeDevice includeDevice,
+            ResponseHandler responseHandler
+    ) {
+        doPost(null, api, includeAuthentication, includeDevice, responseHandler);
+    }
+
+    public static void doPost(
             final JSONObject postData,
             final String api,
             final IncludeAuthentication includeAuthentication,
+            final IncludeDevice includeDevice,
             final ResponseHandler responseHandler
     ) {
         new Thread() {
             public void run() {
                 try {
                     HttpPost httpPost = getHttpPost(api);
-                    StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
 
-                    httpPost.setEntity(postEntity);
-                    Log.i(TAG, "post=" + httpPost.getURI() + ", data=" + postData.toString());
+                    Log.i(TAG, "post=" + httpPost.getURI());
+                    if(null != postData) {
+                        Log.i(TAG, "data=" + postData.toString());
+                        StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
+                        httpPost.setEntity(postEntity);
+                    }
 
                     httpPost.setHeader("Content-Type", "application/json;charset=UTF-8");
                     if (includeAuthentication == IncludeAuthentication.YES) {
-                        httpPost.setHeader(API.key.XR_AUTH, UserUtils.getAuth());
-                        httpPost.setHeader(API.key.XR_MAIL, UserUtils.getEmail());
+                        httpPost.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
+                        httpPost.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
                     }
+                    if (includeDevice == IncludeDevice.YES) {
+                        httpPost.addHeader(API.key.XR_DID, UserUtils.getDeviceId());
+                    }
+
                     HttpResponse response = new DefaultHttpClient().execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
                     String body = EntityUtils.toString(response.getEntity());
