@@ -1,6 +1,7 @@
 package com.receiptofi.checkout;
 
 import android.app.Application;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.receiptofi.checkout.adapters.ImageUpload;
@@ -13,7 +14,7 @@ public class ReceiptofiApplication extends Application {
 
     private static final String TAG = ReceiptofiApplication.class.getSimpleName();
 
-    public static DatabaseHandler RDH;
+    public static SQLiteOpenHelper RDH;
     private static boolean homeActivityVisible;
 
     public static boolean isHomeActivityVisible() {
@@ -33,7 +34,7 @@ public class ReceiptofiApplication extends Application {
         // TODO Auto-generated method stub
         super.onCreate();
         Log.d(TAG, "ReceiptofiApplication onCreate");
-        RDH = new DatabaseHandler(this, DatabaseTable.DB_NAME);
+        RDH = new DatabaseHandler(this);
         DBUtils.initializeDefaults();
         ImageUpload.initializeQueue();
         AppUtils.setHomePageContext(null);
