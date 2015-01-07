@@ -97,5 +97,7 @@ public class KeyValueUtils {
         public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
         public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
         public static String XR_DID = API.key.XR_DID;
+        public static String LAST_FETCHED = "LAST_FETCHED";
+        //TODO(hht) Should we manage interval time for app from server
     }
 }
