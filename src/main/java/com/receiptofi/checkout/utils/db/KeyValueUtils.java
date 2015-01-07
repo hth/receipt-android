@@ -16,12 +16,14 @@ public class KeyValueUtils {
         values.put(DatabaseTable.KeyValue.KEY, key);
         values.put(DatabaseTable.KeyValue.VALUE, value);
 
-        if (RDH.getWritableDatabase().update(
+        int update = RDH.getWritableDatabase().update(
                 DatabaseTable.KeyValue.TABLE_NAME,
                 values,
                 DatabaseTable.KeyValue.KEY + "=?",
                 new String[]{key}
-        ) <= 0) {
+        );
+        boolean updateSuccess = update <= 0;
+        if (updateSuccess) {
             long code = RDH.getWritableDatabase().insert(
                     DatabaseTable.KeyValue.TABLE_NAME,
                     null,
@@ -46,12 +48,14 @@ public class KeyValueUtils {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseTable.KeyValue.VALUE, "");
 
-        return RDH.getWritableDatabase().update(
+        boolean success = RDH.getWritableDatabase().update(
                 DatabaseTable.KeyValue.TABLE_NAME,
                 contentValues,
                 DatabaseTable.KeyValue.KEY + "=?",
                 new String[]{key}
         ) > 0;
+
+        return success;
     }
 
     //http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
@@ -66,12 +70,13 @@ public class KeyValueUtils {
                 null
         );
 
+        String value = null;
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
-            return c.getString(c.getColumnIndex(DatabaseTable.KeyValue.VALUE));
-        } else {
-            return null;
+            value = c.getString(c.getColumnIndex(DatabaseTable.KeyValue.VALUE));
         }
+
+        return value;
     }
 
     public static void clearKeyValues() {

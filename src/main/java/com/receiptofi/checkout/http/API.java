@@ -20,6 +20,7 @@ public class API {
     public static final String DOWNLOAD_IMAGE = "/api/image/";
     public static final String NEW_UPDATE_FOR_DEVICE = "/api/update.json";
     public static final String ALL_FROM_BEGINNING = "/api/all.json";
+    public static final String REGISTER_DEVICE = "/api/register.json";
 
     public static class key {
         // Header

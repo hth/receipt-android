@@ -62,7 +62,7 @@ public class DeviceUtils {
     public static void registerDevice() {
         boolean didAdded = KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
-        ExternalCall.doPost(API.ALL_FROM_BEGINNING, IncludeAuthentication.YES, new ResponseHandler() {
+        ExternalCall.doPost(null, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
