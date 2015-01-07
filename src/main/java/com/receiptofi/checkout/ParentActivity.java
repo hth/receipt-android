@@ -131,7 +131,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
      */
     protected void addToBackStack(Activity activity) {
         if (backStack == null) {
-            backStack = new ArrayList<Activity>();
+            backStack = new ArrayList<>();
         }
 
         backStack.add(activity);
@@ -245,7 +245,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
             }
 
-            //TODO(hth) remove confirming is the value was added
+            //TODO(hth) remove code below that confirms if the value was added
             String updatedValue = KeyValueUtils.getValue(entry.getKey());
             Log.d(TAG, "updated with value=" + updatedValue);
         }

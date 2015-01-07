@@ -59,10 +59,14 @@ public class DeviceUtils {
         });
     }
 
+    /**
+     * Create new device identity and insert to database. Then register the device id. In case of failure, remove the
+     * the device id.
+     */
     public static void registerDevice() {
-        boolean didAdded = KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
-        ExternalCall.doPost(null, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
+        ExternalCall.doPost(API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {

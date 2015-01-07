@@ -62,6 +62,15 @@ public final class ExternalCall {
     }
 
     public static void doPost(
+            String api,
+            IncludeAuthentication includeAuthentication,
+            IncludeDevice includeDevice,
+            ResponseHandler responseHandler
+    ) {
+        doPost(null, api, includeAuthentication, includeDevice, responseHandler);
+    }
+
+    public static void doPost(
             final JSONObject postData,
             final String api,
             final IncludeAuthentication includeAuthentication,
