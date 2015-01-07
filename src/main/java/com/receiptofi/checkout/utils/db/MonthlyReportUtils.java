@@ -96,12 +96,22 @@ public class MonthlyReportUtils {
         List<ReceiptModel> list = new LinkedList<>();
         ReceiptModel receiptModel = new ReceiptModel();
 
-        Cursor cursor = RDH.getReadableDatabase().rawQuery(
-                " select " +
-                        "* from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                        "where SUBSTR(date, 6, 2) = '" + month + "' " +
-                        "and SUBSTR(date, 1, 4) = '" + year + "' " +
-                        "order by date desc ", null);
+        Cursor cursor = RDH.getReadableDatabase().query(
+                DatabaseTable.Receipt.TABLE_NAME,
+                null,
+                "where SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? ",
+                new String[]{month,year},
+                null,
+                null,
+                "date desc"
+        );
+
+//        Cursor cursor = RDH.getReadableDatabase().rawQuery(
+//                " select " +
+//                        "* from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+//                        "where SUBSTR(date, 6, 2) = '" + month + "' " +
+//                        "and SUBSTR(date, 1, 4) = '" + year + "' " +
+//                        "order by date desc ", null);
 
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {

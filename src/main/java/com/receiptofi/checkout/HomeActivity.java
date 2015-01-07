@@ -29,7 +29,6 @@ import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 
 import java.io.File;
-import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -38,7 +37,7 @@ import java.util.Date;
 public class HomeActivity extends Activity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final DateFormat df = new SimpleDateFormat("MMM yyyy");
+    private static final DateFormat DF = new SimpleDateFormat("MMM yyyy");
 
     public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
@@ -259,7 +258,7 @@ public class HomeActivity extends Activity {
 
     private void setMonthlyExpense(String amount) {
         Log.d(TAG, "executing setMonthlyExpense");
-        currentMonthExp.setText(getString(R.string.monthly_amount, df.format(new Date()), amount));
+        currentMonthExp.setText(getString(R.string.monthly_amount, DF.format(new Date()), amount));
     }
 
     private void launchSettings() {
