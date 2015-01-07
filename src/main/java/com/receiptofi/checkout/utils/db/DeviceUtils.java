@@ -64,7 +64,7 @@ public class DeviceUtils {
      * the device id.
      */
     public static void registerDevice() {
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
         ExternalCall.doPost(API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
 

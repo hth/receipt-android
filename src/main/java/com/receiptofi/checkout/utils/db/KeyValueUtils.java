@@ -11,7 +11,7 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
 public class KeyValueUtils {
 
-    public static boolean insertKeyValue(String key, String value) {
+    public static boolean updateInsert(String key, String value) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.KeyValue.KEY, key);
         values.put(DatabaseTable.KeyValue.VALUE, value);

@@ -33,12 +33,12 @@ public class DBUtils {
     }
 
     public static void initializeDefaults() {
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_MAIL, "");
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_AUTH, "");
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.LAST_FETCHED, "");
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_DID, "");
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_MAIL, "");
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_AUTH, "");
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LAST_FETCHED, "");
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, "");
     }
 }
