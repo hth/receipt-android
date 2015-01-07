@@ -1,7 +1,6 @@
 package com.receiptofi.checkout.utils.db;
 
 import com.receiptofi.checkout.db.DatabaseTable;
-import java.util.UUID;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
@@ -39,6 +38,7 @@ public class DBUtils {
         KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
         KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
         KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
-        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.LAST_FETCHED, "");
+        KeyValueUtils.insertKeyValue(KeyValueUtils.KEYS.XR_DID, "");
     }
 }

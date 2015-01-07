@@ -34,7 +34,6 @@ import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.DeviceUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -245,6 +244,10 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             if (!success) {
                 Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
             }
+
+            //TODO(hth) remove confirming is the value was added
+            String updatedValue = KeyValueUtils.getValue(entry.getKey());
+            Log.d(TAG, "updated with value=" + updatedValue);
         }
     }
 
@@ -254,9 +257,15 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             launchHomeScreen();
             finish();
             // TODO make this call later
-            DeviceUtils.getAllUpdates();
-            ReceiptUtils.getUnprocessedCount();
-            ReceiptUtils.getAllReceipts();
+            String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
+            if (TextUtils.isEmpty(did)) {
+                DeviceUtils.registerDevice();
+                DeviceUtils.getAll();
+            } else {
+                DeviceUtils.getNewUpdates();
+            }
+            //ReceiptUtils.getUnprocessedCount();
+            //ReceiptUtils.getAllReceipts();
             //ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
