@@ -2,7 +2,7 @@ package com.receiptofi.checkout.db;
 
 public class DatabaseTable {
 
-    public static String DB_NAME = "receiptofi";
+    public static String DB_NAME = "receiptofi.db";
 
     public static class Receipt {
         public static final String TABLE_NAME = "RECEIPT";

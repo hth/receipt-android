@@ -14,8 +14,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static int DB_VERSION = 1;
     private SQLiteDatabase db = null;
 
-    public DatabaseHandler(Context context, String name) {
-        super(context, name, null, DB_VERSION);
+    public DatabaseHandler(Context context, String databaseName) {
+        super(context, databaseName, null, DB_VERSION);
     }
 
     /**

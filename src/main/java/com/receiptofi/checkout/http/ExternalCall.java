@@ -188,10 +188,10 @@ public final class ExternalCall {
             responseHandler.onError(statusCode, null);
         } else {
             if (!bodyContainsError(body)) {
-                Log.i(TAG, "statusCode=" + statusCode + "body=" + body + " onSuccess");
+                Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onSuccess");
                 responseHandler.onSuccess(response.getAllHeaders(), body);
             } else {
-                Log.i(TAG, "statusCode=" + statusCode + " body=" + body + " onError");
+                Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onError");
                 responseHandler.onError(statusCode, body);
             }
         }
@@ -310,7 +310,7 @@ public final class ExternalCall {
 
                     HttpGet httpGet;
 
-                    if (api != null) {
+                    if (null != api) {
                         httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
                     } else {
                         httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
@@ -325,7 +325,9 @@ public final class ExternalCall {
                     BufferedInputStream bis = new BufferedInputStream(entity.getContent());
                     BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(imageFile));
                     int inByte;
-                    while ((inByte = bis.read()) != -1) bos.write(inByte);
+                    while ((inByte = bis.read()) != -1) {
+                        bos.write(inByte);
+                    }
                     bis.close();
                     bos.close();
 
