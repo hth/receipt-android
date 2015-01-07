@@ -38,6 +38,7 @@ import java.util.Date;
 public class HomeActivity extends Activity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final DateFormat df = new SimpleDateFormat("MMM yyyy");
 
     public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
@@ -251,14 +252,13 @@ public class HomeActivity extends Activity {
         }
     }
 
-    private void setUnprocessedCount(final String count) {
+    private void setUnprocessedCount(String count) {
         Log.d(TAG, "executing setUnprocessedCount");
         unprocessedDocumentCount.setText(getString(R.string.processing_info, count));
     }
 
-    private void setMonthlyExpense(final String amount) {
+    private void setMonthlyExpense(String amount) {
         Log.d(TAG, "executing setMonthlyExpense");
-        DateFormat df = new SimpleDateFormat("MMM yyyy");
         currentMonthExp.setText(getString(R.string.monthly_amount, df.format(new Date()), amount));
     }
 
@@ -278,7 +278,7 @@ public class HomeActivity extends Activity {
         AppUtils.setHomePageContext(null);
     }
 
-    private void showErrorMsg(final String msg) {
+    private void showErrorMsg(String msg) {
         Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }
