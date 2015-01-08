@@ -7,6 +7,7 @@ import android.util.Log;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
+import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 
 import java.util.LinkedList;
@@ -96,10 +97,11 @@ public class MonthlyReportUtils {
     private static List<ReceiptModel> fetchReceipts(String year, String month) {
         Log.d(TAG, "Fetching Receipt Data for a given Month & Year from Receipt Table");
 
+
         List<ReceiptModel> list = new LinkedList<>();
         ReceiptModel receiptModel = new ReceiptModel();
 
-        Cursor cursor = RDH.getReadableDatabase().query(
+/*        Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
                 "where SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? ",
@@ -108,23 +110,50 @@ public class MonthlyReportUtils {
                 null,
                 "date desc"
         );
+*/
 
-//        Cursor cursor = RDH.getReadableDatabase().rawQuery(
-//                " select " +
-//                        "* from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-//                        "where SUBSTR(date, 6, 2) = '" + month + "' " +
-//                        "and SUBSTR(date, 1, 4) = '" + year + "' " +
-//                        "order by date desc ", null);
+        String queryStr = " select " +
+                " * from " + DatabaseTable.Receipt.TABLE_NAME + ", " + DatabaseTable.Item.TABLE_NAME +
+                " where id = receiptId " +
+                " and SUBSTR(date, 6, 2) = '" + month + "' " +
+                " and SUBSTR(date, 1, 4) = '" + year + "' " +
+                " order by date desc ";
+
+        Log.d(TAG," Join Query String - "+ queryStr);
+
+        Cursor cursor = RDH.getReadableDatabase().rawQuery(
+                " select " +
+                " * from " + DatabaseTable.Receipt.TABLE_NAME + ", " + DatabaseTable.Item.TABLE_NAME +
+                " where id = receiptId " +
+                " and SUBSTR(date, 6, 2) = '" + month + "' " +
+                " and SUBSTR(date, 1, 4) = '" + year + "' " +
+                " order by date desc ", null);
+
 
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
 
-                receiptModel.setBizName(cursor.getString(0));
-                receiptModel.setAddress(cursor.getString(1));
-                receiptModel.setPhone(cursor.getString(2));
-                receiptModel.setDate(cursor.getString(3));
+                    receiptModel.setBizName(cursor.getString(0));
+                    receiptModel.setAddress(cursor.getString(1));
+                    receiptModel.setPhone(cursor.getString(2));
+                    receiptModel.setDate(cursor.getString(3));
+                    receiptModel.setExpenseReport(cursor.getString(4));
+                    receiptModel.setBlobIds(cursor.getString(5));
+                    receiptModel.setId(cursor.getString(6));
+                    receiptModel.setNotes(cursor.getString(7));
+                    receiptModel.setPtax(cursor.getDouble(8));
+                    receiptModel.setRid(cursor.getString(9));
+                    receiptModel.setTotal(cursor.getDouble(10));
 
-                list.add(receiptModel);
+                    ReceiptItemModel rim = new ReceiptItemModel(cursor.getString(11),
+                                                                cursor.getString(12),
+                                                                cursor.getString(13),
+                                                                cursor.getString(14),
+                                                                cursor.getString(15),
+                                                                cursor.getString(16),
+                                                                cursor.getString(17));
+                    receiptModel.addReceiptItem(rim);
+                    list.add(receiptModel);
             }
         }
         return list;
