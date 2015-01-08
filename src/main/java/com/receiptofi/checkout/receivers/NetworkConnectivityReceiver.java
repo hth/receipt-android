@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.receiptofi.checkout.services.ImageUploaderService;
+import com.receiptofi.checkout.service.ImageUploaderService;
 import com.receiptofi.checkout.utils.UserUtils;
 
 public class NetworkConnectivityReceiver extends BroadcastReceiver {

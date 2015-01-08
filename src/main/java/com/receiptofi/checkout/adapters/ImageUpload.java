@@ -8,7 +8,7 @@ import android.util.Log;
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.model.ImageModel;
-import com.receiptofi.checkout.services.ImageUploaderService;
+import com.receiptofi.checkout.service.ImageUploaderService;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
 import java.util.ArrayList;

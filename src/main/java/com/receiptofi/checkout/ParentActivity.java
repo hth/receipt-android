@@ -30,6 +30,7 @@ import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.DeviceUtils;
@@ -259,10 +260,10 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             // TODO make this call later
             String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
             if (TextUtils.isEmpty(did)) {
-                DeviceUtils.registerDevice();
-                DeviceUtils.getAll();
+                DeviceService.registerDevice();
+                DeviceService.getAll();
             } else {
-                DeviceUtils.getNewUpdates();
+                DeviceService.getNewUpdates();
             }
             //ReceiptUtils.getUnprocessedCount();
             //ReceiptUtils.getAllReceipts();
