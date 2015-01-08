@@ -65,7 +65,7 @@ public class ReceiptUtils {
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
                 msg.what = HomeActivity.GET_ALL_RECEIPTS;
-                insertReceipts(JsonParseUtils.parseReceipt(body));
+                insertReceipts(JsonParseUtils.parseReceipts(body));
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }

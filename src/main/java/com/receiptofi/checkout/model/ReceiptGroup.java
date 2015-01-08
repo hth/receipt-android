@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by hitender on 1/2/15.
+ * User: hitender
+ * Date: 1/2/15 6:44 AM
  */
 public class ReceiptGroup {
 
