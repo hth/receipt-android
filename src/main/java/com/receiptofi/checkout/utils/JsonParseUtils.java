@@ -3,6 +3,7 @@ package com.receiptofi.checkout.utils;
 import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 
@@ -10,6 +11,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,16 +36,51 @@ public class JsonParseUtils {
         return map;
     }
 
-    public static List<ReceiptModel> parseReceipt(String jsonResponse) {
+    public static ProfileModel parseProfile(JSONObject profile) {
+        ProfileModel profileModel = null;
+        try {
+            profileModel = new ProfileModel(
+                    profile.getString("firstName"),
+                    profile.getString("mail"),
+                    profile.getString("rid"));
+
+            profileModel.setLastName(profile.getString("lastName"));
+            profileModel.setName(profile.getString("name"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return profileModel;
+    }
+
+    public static boolean parseDeviceRegistration(String jsonResponse) {
+        try {
+            JSONObject json = new JSONObject(jsonResponse);
+            return json.getBoolean("registered");
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing deviceRegistration response=" + jsonResponse, e);
+            return false;
+        }
+    }
+
+    public static List<ReceiptModel> parseReceipts(String jsonResponse) {
         List<ReceiptModel> allReceipts = new LinkedList<>();
         try {
-            JSONArray receipts = new JSONArray(jsonResponse);
+            allReceipts = parseReceipts(new JSONArray(jsonResponse));
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing receipt response=" + jsonResponse, e);
+        }
+        return allReceipts;
+    }
+
+    public static List<ReceiptModel> parseReceipts(JSONArray receipts) {
+        List<ReceiptModel> allReceipts = new LinkedList<>();
+        try {
             for (int i = 0; i < receipts.length(); ++i) {
                 JSONObject receipt = receipts.getJSONObject(i);
                 allReceipts.add(parseReceipt(receipt));
             }
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing receipt response=" + jsonResponse, e);
+            Log.e(TAG, "Fail parsing receipt response=" + receipts, e);
         }
         return allReceipts;
     }
@@ -75,9 +112,30 @@ public class JsonParseUtils {
         return receiptModel;
     }
 
-    public static ReceiptItemModel parseReceiptItem(String jsonResponse) {
+    public static List<ReceiptItemModel> parseItems(String jsonResponse) {
+        List<ReceiptItemModel> receiptItemModels = new ArrayList<>();
         try {
-            JSONObject item = new JSONObject(jsonResponse);
+            receiptItemModels = parseItems(new JSONArray(jsonResponse));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return receiptItemModels;
+    }
+
+    public static List<ReceiptItemModel> parseItems(JSONArray jsonArray) {
+        List<ReceiptItemModel> receiptItemModels = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                receiptItemModels.add(parseItem(jsonArray.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return receiptItemModels;
+    }
+
+    public static ReceiptItemModel parseItem(JSONObject item) {
+        try {
             return new ReceiptItemModel(
                     item.getString("id"),
                     item.getString("name"),
@@ -87,19 +145,20 @@ public class JsonParseUtils {
                     item.getString("sequence"),
                     item.getString("tax")
             );
-        } catch(JSONException e) {
-            Log.e(TAG, "Fail parsing receiptItem response=" + jsonResponse, e);
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing receiptItem response=" + item, e);
             return null;
         }
     }
 
-    public static boolean parseDeviceRegistration(String jsonResponse) {
+    public static void parseData(String jsonResponse) {
         try {
-            JSONObject json = new JSONObject(jsonResponse);
-            return json.getBoolean("registered");
-        } catch(JSONException e) {
-            Log.e(TAG, "Fail parsing deviceRegistration response=" + jsonResponse, e);
-            return false;
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            ProfileModel profileModel = parseProfile(jsonObject.getJSONObject("profile"));
+            List<ReceiptItemModel> receiptItemModels = parseItems(jsonObject.getJSONArray("items"));
+            List<ReceiptModel> receiptModels = parseReceipts(jsonObject.getJSONArray("receipts"));
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
     }
 }
