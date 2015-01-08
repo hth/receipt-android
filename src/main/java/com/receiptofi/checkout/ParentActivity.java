@@ -33,7 +33,6 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
-import com.receiptofi.checkout.utils.db.DeviceUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import org.apache.http.Header;
