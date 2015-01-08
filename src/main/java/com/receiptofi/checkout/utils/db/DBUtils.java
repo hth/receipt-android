@@ -1,5 +1,7 @@
 package com.receiptofi.checkout.utils.db;
 
+import android.util.Log;
+
 import com.receiptofi.checkout.db.DatabaseTable;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
@@ -12,6 +14,7 @@ public class DBUtils {
      * Delete all tables and re-create all tables with default settings.
      */
     public static void dbReInitialize() {
+        Log.d(TAG, "initialize database");
         /** Delete all tables. */
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Receipt.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.KeyValue.TABLE_NAME);

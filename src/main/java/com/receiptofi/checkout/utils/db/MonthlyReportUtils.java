@@ -20,12 +20,15 @@ public class MonthlyReportUtils {
     private static final String TAG = MonthlyReportUtils.class.getSimpleName();
 
     public static void computeMonthlyReceiptReport() {
+        Log.d(TAG, "Compute monthly receipt report");
         dropAndCreateTableMonthlyReport();
         groupByMonthlyReceiptStat();
     }
 
     private static void dropAndCreateTableMonthlyReport() {
+        Log.d(TAG, "Drop monthly receipt report");
         RDH.getWritableDatabase().execSQL("Drop table if exists " + MonthlyReport.TABLE_NAME);
+        Log.d(TAG, "Create monthly receipt report");
         RDH.createTableMonthlyReport();
     }
 

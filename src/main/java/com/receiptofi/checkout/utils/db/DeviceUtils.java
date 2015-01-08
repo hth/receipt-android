@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.utils.db;
 
 import android.os.Message;
+import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
@@ -17,11 +18,14 @@ import org.apache.http.Header;
 import java.util.UUID;
 
 /**
- * Created by hitender on 1/4/15.
+ * User: hitender
+ * Date: 1/4/15 6:44 AM
  */
 public class DeviceUtils {
+    private static final String TAG = DeviceUtils.class.getSimpleName();
 
     public static void getNewUpdates() {
+        Log.d(TAG, "get new update for device");
         ExternalCall.doGet(IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
@@ -41,6 +45,7 @@ public class DeviceUtils {
     }
 
     public static void getAll() {
+        Log.d(TAG, "get all data for new device");
         ExternalCall.doGet(IncludeDevice.NO, API.ALL_FROM_BEGINNING, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
@@ -64,6 +69,7 @@ public class DeviceUtils {
      * the device id.
      */
     public static void registerDevice() {
+        Log.d(TAG, "register device");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
         ExternalCall.doPost(API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
@@ -72,6 +78,7 @@ public class DeviceUtils {
             public void onSuccess(Header[] headers, String body) {
                 boolean registration = JsonParseUtils.parseDeviceRegistration(body);
                 if (!registration) {
+                    Log.d(TAG, "register device failed");
                     KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 }
             }

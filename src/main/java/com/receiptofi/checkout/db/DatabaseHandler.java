@@ -14,8 +14,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static int DB_VERSION = 1;
     private SQLiteDatabase db = null;
 
-    public DatabaseHandler(Context context, String name) {
-        super(context, name, null, DB_VERSION);
+    public DatabaseHandler(Context context) {
+        super(context, DatabaseTable.DB_NAME, null, DB_VERSION);
     }
 
     /**
@@ -25,9 +25,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.d(TAG, "executing onCreate");
+        Log.d(TAG, "DatabaseHandler onCreate");
         if (null != db) {
             this.db = db;
+            Log.d(TAG, "creating all tables");
             createTableReceipts();
             createTableImageIndex();
             createTableUploadQueue();

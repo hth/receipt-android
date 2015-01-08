@@ -45,14 +45,6 @@ public final class ExternalCall {
     }
 
     public static void doPost(
-            String api,
-            IncludeAuthentication includeAuthentication,
-            ResponseHandler responseHandler
-    ) {
-        doPost(null, api, includeAuthentication, IncludeDevice.NO, responseHandler);
-    }
-
-    public static void doPost(
             JSONObject postData,
             String api,
             IncludeAuthentication includeAuthentication,
@@ -101,7 +93,11 @@ public final class ExternalCall {
                     HttpResponse response = new DefaultHttpClient().execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
                     String body = EntityUtils.toString(response.getEntity());
-                    Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
+                    if(body.isEmpty()) {
+                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=EMPTY");
+                    } else {
+                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
+                    }
                     updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
@@ -131,7 +127,11 @@ public final class ExternalCall {
 
                     int statusCode = response.getStatusLine().getStatusCode();
                     String body = EntityUtils.toString(response.getEntity());
-                    Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
+                    if(body.isEmpty()) {
+                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=EMPTY");
+                    } else {
+                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
+                    }
                     updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
@@ -162,9 +162,12 @@ public final class ExternalCall {
 
                     HttpResponse response = new DefaultHttpClient().execute(httpGet);
                     int statusCode = response.getStatusLine().getStatusCode();
-                    Log.i(TAG, "statusCode is:  " + statusCode);
                     String body = EntityUtils.toString(response.getEntity());
-                    Log.i(TAG, "body is:  " + body);
+                    if(body.isEmpty()) {
+                        Log.i(TAG, "get, statusCode=" + statusCode + ", body=EMPTY");
+                    } else {
+                        Log.i(TAG, "get, statusCode=" + statusCode + ", body=" + body);
+                    }
                     updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (Exception e) {
                     Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
@@ -181,14 +184,14 @@ public final class ExternalCall {
             ResponseHandler responseHandler
     ) {
         if (statusCode != 200) {
-            Log.i(TAG, "statusCode is:  " + statusCode + "  calling onError");
+            Log.i(TAG, "statusCode=" + statusCode + " onError");
             responseHandler.onError(statusCode, null);
         } else {
             if (!bodyContainsError(body)) {
-                Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onSuccess");
+                Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onSuccess");
                 responseHandler.onSuccess(response.getAllHeaders(), body);
             } else {
-                Log.i(TAG, "statusCode is:  " + statusCode + "  body is:  " + body + "  calling onError");
+                Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onError");
                 responseHandler.onError(statusCode, body);
             }
         }
@@ -307,7 +310,7 @@ public final class ExternalCall {
 
                     HttpGet httpGet;
 
-                    if (api != null) {
+                    if (null != api) {
                         httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
                     } else {
                         httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
@@ -322,7 +325,9 @@ public final class ExternalCall {
                     BufferedInputStream bis = new BufferedInputStream(entity.getContent());
                     BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(imageFile));
                     int inByte;
-                    while ((inByte = bis.read()) != -1) bos.write(inByte);
+                    while ((inByte = bis.read()) != -1) {
+                        bos.write(inByte);
+                    }
                     bis.close();
                     bos.close();
 
