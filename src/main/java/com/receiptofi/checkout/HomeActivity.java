@@ -3,6 +3,8 @@ package com.receiptofi.checkout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +24,13 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.Legend;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -31,10 +40,12 @@ import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-public class HomeActivity extends Activity {
+public class HomeActivity extends Activity implements OnChartValueSelectedListener{
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
@@ -80,6 +91,7 @@ public class HomeActivity extends Activity {
     TextView unprocessedDocumentCount;
     TextView currentMonthExp;
     private Menu optionMenu;
+    private PieChart mChart;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,28 +104,9 @@ public class HomeActivity extends Activity {
         AppUtils.setHomePageContext(this);
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
         currentMonthExp = (TextView) findViewById(R.id.current_amount);
-        currentMonthExp.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // show graph page
-                Log.d(TAG, "executing showGraph");
-                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivity(i);
-            }
-        });
-
-        TextView notification = (TextView) findViewById(R.id.processing_info);
-        notification.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // show graph page
-                Log.d(TAG, "executing showGraph");
-                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivity(i);
-            }
-        });
+        mChart = (PieChart) findViewById(R.id.pie_chart);
+        setUpChart();
+        prepareChartData();
 
         setUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
 
@@ -166,6 +159,135 @@ public class HomeActivity extends Activity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void setUpChart(){
+        // change the color of the center-hole
+        mChart.setHoleColor(R.color.hole_color);
+
+        // Causing java.lang.RuntimeException: native typeface cannot be made
+        mChart.setValueTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Regular.ttf"));
+        mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
+
+        mChart.setHoleRadius(55f);
+
+        mChart.setDescription(getString(R.string.chart_desc));
+        mChart.setDescriptionTextSize(16f);
+
+        mChart.setDrawYValues(true);
+        mChart.setDrawCenterText(true);
+
+        mChart.setDrawHoleEnabled(true);
+
+        mChart.setRotationAngle(0);
+
+        // draws the corresponding description value into the slice
+        mChart.setDrawXValues(true);
+
+        // enable rotation of the chart by touch
+        mChart.setRotationEnabled(true);
+
+        // display percentage values
+        mChart.setUsePercentValues(true);
+
+        // add a selection listener
+        mChart.setOnChartValueSelectedListener(this);
+        // mChart.setTouchEnabled(false);
+
+        mChart.setCenterText(getString(R.string.chart_desc_short));
+        mChart.setCenterTextSize(12f);
+
+        // TODO
+        //setData(3, 100);
+
+        mChart.animateXY(1500, 1500);
+        // mChart.spin(2000, 0, 360);
+
+
+        /*Legend l = mChart.getLegend();
+        if(l != null){
+            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+            l.setXEntrySpace(7f);
+            l.setYEntrySpace(5f);
+        }
+        */
+    }
+
+    protected String[] mParties = new String[] {
+            "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
+            "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
+            "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
+            "Party Y", "Party Z"
+    };
+
+    private void prepareChartData(){
+        // TODO
+        float mult = 100;
+        int count = 3;
+
+        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
+
+        // IMPORTANT: In a PieChart, no values (Entry) should have the same
+        // xIndex (even if from different DataSets), since no values can be
+        // drawn above each other.
+        for (int i = 0; i < count + 1; i++) {
+            yVals1.add(new Entry((float) (Math.random() * mult) + mult / 5, i));
+        }
+
+        ArrayList<String> xVals = new ArrayList<String>();
+
+        for (int i = 0; i < count + 1; i++)
+            xVals.add(mParties[i % mParties.length]);
+
+        PieDataSet set1 = new PieDataSet(yVals1, "Exp/Business");
+        set1.setSliceSpace(3f);
+
+        // add a lot of colors
+
+        ArrayList<Integer> colors = new ArrayList<Integer>();
+
+        for (int c : ColorTemplate.COLORFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.JOYFUL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.VORDIPLOM_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.PASTEL_COLORS)
+            colors.add(c);
+
+        for (int c : ColorTemplate.LIBERTY_COLORS)
+            colors.add(c);
+
+
+
+        colors.add(ColorTemplate.getHoloBlue());
+
+        set1.setColors(colors);
+
+        PieData data = new PieData(xVals, set1);
+        mChart.setData(data);
+
+        // undo all highlights
+        mChart.highlightValues(null);
+
+        mChart.invalidate();
+
+
+
+    }
+
+    @Override
+    public void onValueSelected(Entry entry, int i) {
+        showErrorMsg("VAL SELECTED" +
+                "Value: " + entry.getVal() + ", xIndex: " + entry.getXIndex());
+    }
+
+    @Override
+    public void onNothingSelected() {
+
     }
 
     public void takePhoto(View view) {
