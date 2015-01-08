@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.services;
+package com.receiptofi.checkout.service;
 
 import android.content.Context;
 import android.os.Bundle;

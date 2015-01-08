@@ -3,6 +3,7 @@ package com.receiptofi.checkout.utils;
 import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
@@ -151,14 +152,30 @@ public class JsonParseUtils {
         }
     }
 
-    public static void parseData(String jsonResponse) {
+    public static DataWrapper parseData(String jsonResponse) {
+        DataWrapper dataWrapper = new DataWrapper();
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
             ProfileModel profileModel = parseProfile(jsonObject.getJSONObject("profile"));
+            if (profileModel != null) {
+                dataWrapper.setProfileModel(profileModel);
+            }
+
             List<ReceiptItemModel> receiptItemModels = parseItems(jsonObject.getJSONArray("items"));
+            if (!receiptItemModels.isEmpty()) {
+                dataWrapper.setReceiptItemModels(receiptItemModels);
+            }
+
             List<ReceiptModel> receiptModels = parseReceipts(jsonObject.getJSONArray("receipts"));
+            if (!receiptModels.isEmpty()) {
+                dataWrapper.setReceiptModels(receiptModels);
+            }
+
+            Log.d(TAG, "parsed all data");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        return dataWrapper;
     }
 }

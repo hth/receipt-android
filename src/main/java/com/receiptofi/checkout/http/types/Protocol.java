@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.http;
+package com.receiptofi.checkout.http.types;
 
 /**
  * Created by hitender on 1/2/15.
