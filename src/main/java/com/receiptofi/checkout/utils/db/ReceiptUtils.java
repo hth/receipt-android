@@ -150,7 +150,7 @@ public class ReceiptUtils {
      *
      * @param receipts
      */
-    private static void insertReceipts(List<ReceiptModel> receipts) {
+    public static void insertReceipts(List<ReceiptModel> receipts) {
         for (ReceiptModel receipt : receipts) {
             insertReceipt(receipt);
         }

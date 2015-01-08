@@ -15,6 +15,8 @@ import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
+import com.receiptofi.checkout.utils.db.ReceiptItemUtils;
+import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import org.apache.http.Header;
 
@@ -101,6 +103,9 @@ public class DeviceService {
     private static void onSuccess(Header[] headers, String body) {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
         MonthlyReportUtils.computeMonthlyReceiptReport();
+
+        ReceiptUtils.insertReceipts(dataWrapper.getReceiptModels());
+        ReceiptItemUtils.insertItems(dataWrapper.getReceiptItemModels());
 
         Message msg = new Message();
         msg.obj = "1";
