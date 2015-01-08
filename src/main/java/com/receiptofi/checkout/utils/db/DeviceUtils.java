@@ -102,7 +102,7 @@ public class DeviceUtils {
     private static void onSuccess(Header[] headers, String body) {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
         MonthlyReportUtils.computeMonthlyReceiptReport();
-        
+
         Message msg = new Message();
         msg.obj = "1";
         msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
