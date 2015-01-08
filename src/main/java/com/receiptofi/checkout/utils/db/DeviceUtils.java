@@ -105,10 +105,12 @@ public class DeviceUtils {
 
         MonthlyReportUtils.computeMonthlyReceiptReport();
 
+        /*
         msg.obj = "1";
         msg.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
             ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
         }
+        */
     }
 }

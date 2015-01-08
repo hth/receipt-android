@@ -6,19 +6,24 @@
     android:fillViewport="true"
     android:background="@color/app_light_bg">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin" >
+        android:padding="@dimen/activity_horizontal_margin"
+        android:orientation="horizontal">
 
         <RelativeLayout
             android:id="@+id/action_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:background="@color/app_theme_bg"
-            android:orientation="vertical" >
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:background="@color/app_theme_bg" >
 
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical" >
 
             <LinearLayout
                 android:id="@+id/camera_action_layout"
@@ -161,29 +166,39 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="5dp" />
 
+            <TextView
+                android:id="@+id/current_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/list_action_layout_view"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true"
+                android:padding="@dimen/activity_touch_padding"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:textColor="@drawable/action_button_text_color"
+                android:textStyle="bold"/>
         </RelativeLayout>
 
-        <TextView
-            android:id="@+id/current_amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/action_layout"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:padding="@dimen/activity_touch_padding"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColor="@drawable/action_button_text_color"
-            android:textStyle="bold" />
 
+        </RelativeLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_gravity="center_vertical">
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart"
-            android:layout_width="match_parent"
-            android:layout_height="400dp"
-            android:layout_below="@+id/current_amount"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_centerHorizontal="true" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/current_amount" />
 
-    </RelativeLayout>
+    </LinearLayout>
+
+    </LinearLayout>
 </ScrollView>
