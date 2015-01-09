@@ -24,7 +24,7 @@ public class ReceiptModel {
     }
 
     public void setBizName(String bizName) {
-        if (!bizName.equalsIgnoreCase(NULL)) {
+        if (null != bizName && !bizName.equalsIgnoreCase(NULL)) {
             this.bizName = bizName;
         }
     }
@@ -34,7 +34,7 @@ public class ReceiptModel {
     }
 
     public void setAddress(String address) {
-        if (!address.equalsIgnoreCase(NULL)) {
+        if (null != address && !address.equalsIgnoreCase(NULL)) {
             this.address = address;
         }
     }
@@ -44,7 +44,7 @@ public class ReceiptModel {
     }
 
     public void setPhone(String phone) {
-        if (!phone.equalsIgnoreCase(NULL)) {
+        if (null != phone && !phone.equalsIgnoreCase(NULL)) {
             this.phone = phone;
         }
     }
@@ -54,7 +54,7 @@ public class ReceiptModel {
     }
 
     public void setDate(String date) {
-        if (!date.equalsIgnoreCase(NULL)) {
+        if (null != date && !date.equalsIgnoreCase(NULL)) {
             this.date = date;
         }
     }
@@ -64,7 +64,7 @@ public class ReceiptModel {
     }
 
     public void setExpenseReport(String expenseReport) {
-        if (!expenseReport.equalsIgnoreCase(NULL)) {
+        if (null != expenseReport && !expenseReport.equalsIgnoreCase(NULL)) {
             this.expenseReport = expenseReport;
         }
     }
@@ -74,7 +74,7 @@ public class ReceiptModel {
     }
 
     public void setBlobIds(String blobIds) {
-        if (!blobIds.equalsIgnoreCase(NULL)) {
+        if (null != blobIds && !blobIds.equalsIgnoreCase(NULL)) {
             this.blobIds = blobIds;
         }
     }
@@ -84,7 +84,7 @@ public class ReceiptModel {
     }
 
     public void setId(String id) {
-        if (!id.equalsIgnoreCase(NULL)) {
+        if (null != id && !id.equalsIgnoreCase(NULL)) {
             this.id = id;
         }
     }
@@ -94,7 +94,7 @@ public class ReceiptModel {
     }
 
     public void setNotes(String notes) {
-        if (!notes.equalsIgnoreCase(NULL)) {
+        if (null != notes && !notes.equalsIgnoreCase(NULL)) {
             this.notes = notes;
         }
     }
@@ -112,7 +112,7 @@ public class ReceiptModel {
     }
 
     public void setRid(String rid) {
-        if (!rid.equalsIgnoreCase(NULL)) {
+        if (null != rid && !rid.equalsIgnoreCase(NULL)) {
             this.rid = rid;
         }
     }
@@ -132,5 +132,4 @@ public class ReceiptModel {
     public void addReceiptItem(ReceiptItemModel receiptItem){
         this.receiptItems.add(receiptItem);
     }
-
 }
