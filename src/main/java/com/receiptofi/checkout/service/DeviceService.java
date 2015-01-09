@@ -102,20 +102,18 @@ public class DeviceService {
 
     private static void onSuccess(Header[] headers, String body) {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
-        MonthlyReportUtils.computeMonthlyReceiptReport();
-
         ReceiptUtils.insertReceipts(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insertItems(dataWrapper.getReceiptItemModels());
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, dataWrapper.getUnprocessedDocumentModel().getCount());
 
         Message msg = new Message();
-        msg.obj = "1";
+        msg.obj = dataWrapper.getUnprocessedDocumentModel().getCount();        ;
         msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
             ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
         }
 
         MonthlyReportUtils.computeMonthlyReceiptReport();
-
         msg.obj = "1";
         msg.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
         if (ReceiptofiApplication.isHomeActivityVisible()) {

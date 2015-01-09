@@ -56,6 +56,6 @@ public class DatabaseTable {
         public static final String RECEIPTID = "receiptId";
         public static final String SEQUENCE = "sequence";
         public static final String TAX = "tax";
-
+        public static final String EXPENSE_TAG = "expenseTag";
     }
 }

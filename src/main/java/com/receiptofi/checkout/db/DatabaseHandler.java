@@ -110,7 +110,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + Item.QUANTITY + " TEXT ,"
                 + Item.RECEIPTID + " TEXT ,"
                 + Item.SEQUENCE + " TEXT ,"
-                + Item.TAX + " TEXT " +
+                + Item.TAX + " TEXT ,"
+                + Item.EXPENSE_TAG + " TEXT " +
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
     }
