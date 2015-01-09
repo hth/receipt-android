@@ -161,7 +161,6 @@ public class MonthlyReportUtils {
     }
 
     public static ReceiptGroup fetchMonthly() {
-
         Log.d(TAG, "Fetching Receipt Monthly Fact Data from MonthlyReport Table");
 
         ReceiptGroup receiptGroup = new ReceiptGroup();
@@ -176,7 +175,6 @@ public class MonthlyReportUtils {
 
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-
                 String month = cursor.getString(0);
                 String year = cursor.getString(1);
                 receiptGroupHeader = new ReceiptGroupHeader(

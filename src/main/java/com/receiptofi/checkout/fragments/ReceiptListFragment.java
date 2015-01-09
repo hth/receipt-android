@@ -44,7 +44,6 @@ public class ReceiptListFragment extends Fragment {
             headerList = receiptGroup.getReceiptGroupHeaders();
             childListGroup = receiptGroup.getReceiptModels();
         }
-
     }
 
     public void onCreate(Bundle savedInstanceState) {
