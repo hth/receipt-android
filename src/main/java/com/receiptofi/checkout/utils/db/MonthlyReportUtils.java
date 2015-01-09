@@ -105,7 +105,7 @@ public class MonthlyReportUtils {
                 null,
                 null,
                 null,
-                MonthlyReport.YEAR + ", " + MonthlyReport.MONTH + " desc"
+                MonthlyReport.MONTH + ", " + MonthlyReport.YEAR + " desc"
         );
 
         if (cursor != null && cursor.getCount() > 0) {
