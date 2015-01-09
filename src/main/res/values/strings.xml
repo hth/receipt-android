@@ -67,8 +67,8 @@
     <!-- Receipt list String-->
     <string name="no_receipt_selected">No receipt selected</string>
     <string name="receipt_list_header_month" formatted="false">%s (%d)</string>
-    <string name="receipt_list_header_amount" formatted="false">$%f</string>
-    <string name="receipt_list_child_amount" formatted="false">$%f</string>
+    <string name="receipt_list_header_amount" formatted="false">$%.2f</string>
+    <string name="receipt_list_child_amount" formatted="false">$%.2f</string>
 
 
     <!--Menu String-->
