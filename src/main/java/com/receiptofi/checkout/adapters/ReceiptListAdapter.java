@@ -99,13 +99,13 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
 
             return convertView;
-        }catch (IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             Log.d(TAG, "IndexOutOfBoundsException " + e.getMessage());
             e.printStackTrace();
-        } catch (ParseException e){
+        } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, "Exception " + e.getMessage());
             e.printStackTrace();
         }
@@ -139,10 +139,10 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
             return convertView;
 
-        } catch (ParseException e){
+        } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());
             e.printStackTrace();
-        } catch (Exception e){
+        } catch (Exception e) {
             Log.d(TAG, "Exception " + e.getMessage());
             e.printStackTrace();
         }

@@ -129,6 +129,10 @@ public class ReceiptModel {
         return receiptItems;
     }
 
+    public void setReceiptItems(List<ReceiptItemModel> receiptItems) {
+        this.receiptItems = receiptItems;
+    }
+
     public void addReceiptItem(ReceiptItemModel receiptItem){
         this.receiptItems.add(receiptItem);
     }
