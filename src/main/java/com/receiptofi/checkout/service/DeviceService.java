@@ -20,6 +20,7 @@ import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import org.apache.http.Header;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -107,14 +108,17 @@ public class DeviceService {
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, dataWrapper.getUnprocessedDocumentModel().getCount());
 
         Message msg = new Message();
-        msg.obj = dataWrapper.getUnprocessedDocumentModel().getCount();        ;
+        msg.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
         msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
             ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
         }
 
         MonthlyReportUtils.computeMonthlyReceiptReport();
-        msg.obj = "1";
+
+        //TODO not updating why
+        String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
+        msg.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
         msg.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
             ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
