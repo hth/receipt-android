@@ -9,10 +9,11 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
-import com.receiptofi.checkout.http.types.Protocol;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
+import com.receiptofi.checkout.http.types.Protocol;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
@@ -39,9 +40,9 @@ public class ReceiptUtils {
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
                 msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
-                Map<String, String> map = JsonParseUtils.parseUnprocessedCount(body);
-                msg.obj = map.get(API.key.UNPROCESSEDCOUNT);
-                updateInsert(KEYS.UNPROCESSED_DOCUMENT, map.get(API.key.UNPROCESSEDCOUNT));
+                UnprocessedDocumentModel unprocessedDocumentModel = JsonParseUtils.parseUnprocessedDocument(body);
+                msg.obj = unprocessedDocumentModel.getCount();
+                updateInsert(KEYS.UNPROCESSED_DOCUMENT, unprocessedDocumentModel.getCount());
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
@@ -122,7 +123,7 @@ public class ReceiptUtils {
     public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
         String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
-            Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
+        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
         if (receiptsRecords != null && receiptsRecords.getCount() > 0) {
@@ -180,6 +181,13 @@ public class ReceiptUtils {
                 "id = ?",
                 new String[]{receipt.getId()}
         );
+
+        ReceiptofiApplication.RDH.getWritableDatabase().delete(
+                DatabaseTable.Item.TABLE_NAME,
+                DatabaseTable.Item.RECEIPTID + " = ?",
+                new String[]{receipt.getId()}
+        );
+
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,

@@ -7,11 +7,13 @@ import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -25,16 +27,24 @@ public class JsonParseUtils {
 
     private static final String TAG = JsonParseUtils.class.getSimpleName();
 
-    public static Map<String, String> parseUnprocessedCount(String jsonResponse) {
-        Map<String, String> map = new HashMap<>();
+    public static UnprocessedDocumentModel parseUnprocessedDocument(String jsonResponse) {
+        UnprocessedDocumentModel unprocessedDocumentModel = new UnprocessedDocumentModel(String.valueOf(BigInteger.ZERO));
         try {
-            JSONObject jsonObject = new JSONObject(jsonResponse);
-            map.put(API.key.UNPROCESSEDCOUNT, jsonObject.getString(API.key.UNPROCESSEDCOUNT));
+            unprocessedDocumentModel = parseUnprocessedDocument(new JSONObject(jsonResponse));
         } catch (JSONException e) {
             Log.d(TAG, "Fail parsing " + API.key.UNPROCESSEDCOUNT + " response=" + jsonResponse, e);
-            map.put("unprocessedCount", "0");
         }
-        return map;
+        return unprocessedDocumentModel;
+    }
+
+    public static UnprocessedDocumentModel parseUnprocessedDocument(JSONObject unprocessedDocument) {
+        UnprocessedDocumentModel unprocessedDocumentModel = new UnprocessedDocumentModel(String.valueOf(BigInteger.ZERO));
+        try {
+            unprocessedDocumentModel = new UnprocessedDocumentModel(unprocessedDocument.getString(API.key.UNPROCESSEDCOUNT));
+        } catch (JSONException e) {
+            Log.d(TAG, "Fail parsing " + API.key.UNPROCESSEDCOUNT + " response=" + unprocessedDocument, e);
+        }
+        return unprocessedDocumentModel;
     }
 
     public static ProfileModel parseProfile(JSONObject profile) {
@@ -141,10 +151,11 @@ public class JsonParseUtils {
                     item.getString("id"),
                     item.getString("name"),
                     item.getString("price"),
-                    item.getString("quantity"),
+                    item.getString("quant"),
                     item.getString("receiptId"),
-                    item.getString("sequence"),
-                    item.getString("tax")
+                    item.getString("seq"),
+                    item.getString("tax"),
+                    item.getString("expenseTag")
             );
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing receiptItem response=" + item, e);
@@ -170,6 +181,9 @@ public class JsonParseUtils {
             if (!receiptModels.isEmpty()) {
                 dataWrapper.setReceiptModels(receiptModels);
             }
+
+            UnprocessedDocumentModel unprocessedDocumentModel = parseUnprocessedDocument(jsonObject.getJSONObject("unprocessedDocuments"));
+            dataWrapper.setUnprocessedDocumentModel(unprocessedDocumentModel);
 
             Log.d(TAG, "parsed all data");
         } catch (JSONException e) {
