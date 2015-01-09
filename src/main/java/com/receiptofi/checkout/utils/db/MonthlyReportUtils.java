@@ -112,20 +112,20 @@ public class MonthlyReportUtils {
 
         String queryStr = " select " +
                 " * from " + DatabaseTable.Receipt.TABLE_NAME + ", " + DatabaseTable.Item.TABLE_NAME +
-                " where id = receiptId " +
-                " and SUBSTR(date, 6, 2) = '" + month + "' " +
-                " and SUBSTR(date, 1, 4) = '" + year + "' " +
-                " order by date desc ";
+                " where " + DatabaseTable.Receipt.TABLE_NAME + ".id = " + DatabaseTable.Item.TABLE_NAME + ".receiptId " +
+                " and SUBSTR(" + DatabaseTable.Receipt.TABLE_NAME + ".date, 6, 2) = '" + month + "' " +
+                " and SUBSTR("+ DatabaseTable.Receipt.TABLE_NAME+ ".date, 1, 4) = '" + year + "' " +
+                " order by " + DatabaseTable.Receipt.TABLE_NAME + ".date desc ";
 
         Log.d(TAG, " Join Query String - " + queryStr);
 
         Cursor cursor = RDH.getReadableDatabase().rawQuery(
                 " select " +
                         " * from " + DatabaseTable.Receipt.TABLE_NAME + ", " + DatabaseTable.Item.TABLE_NAME +
-                        " where id = receiptId " +
-                        " and SUBSTR(date, 6, 2) = '" + month + "' " +
-                        " and SUBSTR(date, 1, 4) = '" + year + "' " +
-                        " order by date desc ", null);
+                        " where " + DatabaseTable.Receipt.TABLE_NAME + ".id = " + DatabaseTable.Item.TABLE_NAME + ".receiptId " +
+                        " and SUBSTR(" + DatabaseTable.Receipt.TABLE_NAME + ".date, 6, 2) = '" + month + "' " +
+                        " and SUBSTR("+ DatabaseTable.Receipt.TABLE_NAME+ ".date, 1, 4) = '" + year + "' " +
+                        " order by " + DatabaseTable.Receipt.TABLE_NAME + ".date desc ", null);
 
 
         if (cursor != null && cursor.getCount() > 0) {
