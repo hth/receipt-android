@@ -97,7 +97,6 @@ public class MonthlyReportUtils {
     private static List<ReceiptModel> fetchReceipts(String year, String month) {
         Log.d(TAG, "Fetching Receipt Data for a given Month & Year from Receipt Table");
 
-
         List<ReceiptModel> list = new LinkedList<>();
         ReceiptModel receiptModel = new ReceiptModel();
 

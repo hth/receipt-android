@@ -1,6 +1,5 @@
 package com.receiptofi.checkout.fragments;
 
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -50,9 +49,6 @@ public class ReceiptListFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-
-
     }
 
     @Override
