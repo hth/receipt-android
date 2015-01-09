@@ -97,7 +97,6 @@ public class MonthlyReportUtils {
     private static List<ReceiptModel> fetchReceipts(String year, String month) {
         Log.d(TAG, "Fetching Receipt Data for a given Month & Year from Receipt Table");
 
-
         List<ReceiptModel> list = new LinkedList<>();
         ReceiptModel receiptModel = new ReceiptModel();
 
@@ -113,20 +112,20 @@ public class MonthlyReportUtils {
 
         String queryStr = " select " +
                 " * from " + DatabaseTable.Receipt.TABLE_NAME + ", " + DatabaseTable.Item.TABLE_NAME +
-                " where id = receiptId " +
-                " and SUBSTR(date, 6, 2) = '" + month + "' " +
-                " and SUBSTR(date, 1, 4) = '" + year + "' " +
-                " order by date desc ";
+                " where " + DatabaseTable.Receipt.TABLE_NAME + ".id = " + DatabaseTable.Item.TABLE_NAME + ".receiptId " +
+                " and SUBSTR(" + DatabaseTable.Receipt.TABLE_NAME + ".date, 6, 2) = '" + month + "' " +
+                " and SUBSTR("+ DatabaseTable.Receipt.TABLE_NAME+ ".date, 1, 4) = '" + year + "' " +
+                " order by " + DatabaseTable.Receipt.TABLE_NAME + ".date desc ";
 
         Log.d(TAG, " Join Query String - " + queryStr);
 
         Cursor cursor = RDH.getReadableDatabase().rawQuery(
                 " select " +
                         " * from " + DatabaseTable.Receipt.TABLE_NAME + ", " + DatabaseTable.Item.TABLE_NAME +
-                        " where id = receiptId " +
-                        " and SUBSTR(date, 6, 2) = '" + month + "' " +
-                        " and SUBSTR(date, 1, 4) = '" + year + "' " +
-                        " order by date desc ", null);
+                        " where " + DatabaseTable.Receipt.TABLE_NAME + ".id = " + DatabaseTable.Item.TABLE_NAME + ".receiptId " +
+                        " and SUBSTR(" + DatabaseTable.Receipt.TABLE_NAME + ".date, 6, 2) = '" + month + "' " +
+                        " and SUBSTR("+ DatabaseTable.Receipt.TABLE_NAME+ ".date, 1, 4) = '" + year + "' " +
+                        " order by " + DatabaseTable.Receipt.TABLE_NAME + ".date desc ", null);
 
 
         if (cursor != null && cursor.getCount() > 0) {
@@ -162,7 +161,6 @@ public class MonthlyReportUtils {
     }
 
     public static ReceiptGroup fetchMonthly() {
-
         Log.d(TAG, "Fetching Receipt Monthly Fact Data from MonthlyReport Table");
 
         ReceiptGroup receiptGroup = new ReceiptGroup();
@@ -177,7 +175,6 @@ public class MonthlyReportUtils {
 
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-
                 String month = cursor.getString(0);
                 String year = cursor.getString(1);
                 receiptGroupHeader = new ReceiptGroupHeader(
