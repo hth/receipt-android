@@ -94,40 +94,39 @@ public class MonthlyReportUtils {
         return "0.0";
     }
 
-    private static List<ReceiptItemModel> getItems(String receiptId) {
+    public static ReceiptGroup fetchMonthly() {
+        Log.d(TAG, "All receipt grouped MonthlyReport");
+
+        ReceiptGroup receiptGroup = new ReceiptGroup();
         Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Item.TABLE_NAME,
-                null,
-                DatabaseTable.Item.RECEIPTID + " = ?",
-                new String[]{receiptId},
+                DatabaseTable.MonthlyReport.TABLE_NAME,
                 null,
                 null,
-                DatabaseTable.Item.SEQUENCE + " desc"
+                null,
+                null,
+                null,
+                MonthlyReport.YEAR + ", " + MonthlyReport.MONTH + " desc"
         );
 
-        List<ReceiptItemModel> list = new LinkedList<>();
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                ReceiptItemModel receiptItemModel = new ReceiptItemModel(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getString(7)
+                String month = cursor.getString(0);
+                String year = cursor.getString(1);
+                ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
+                        month,
+                        year,
+                        Double.parseDouble(cursor.getString(2)),
+                        Integer.parseInt(cursor.getString(3))
                 );
-
-                list.add(receiptItemModel);
+                receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
+                receiptGroup.addReceiptGroup(fetchReceipts(year, month));
             }
         }
-
-        return list;
+        return receiptGroup;
     }
 
     private static List<ReceiptModel> fetchReceipts(String year, String month) {
-        Log.d(TAG, "Fetching Receipt Data for a given Month & Year from Receipt Table");
+        Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month);
 
         List<ReceiptModel> list = new LinkedList<>();
         Cursor cursor = RDH.getReadableDatabase().query(
@@ -162,34 +161,36 @@ public class MonthlyReportUtils {
         return list;
     }
 
-    public static ReceiptGroup fetchMonthly() {
-        Log.d(TAG, "Fetching Receipt Monthly Fact Data from MonthlyReport Table");
-
-        ReceiptGroup receiptGroup = new ReceiptGroup();
+    private static List<ReceiptItemModel> getItems(String receiptId) {
+        Log.d(TAG, "Fetching items for receiptId=" + receiptId);
         Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.MonthlyReport.TABLE_NAME,
+                DatabaseTable.Item.TABLE_NAME,
+                null,
+                DatabaseTable.Item.RECEIPTID + " = ?",
+                new String[]{receiptId},
                 null,
                 null,
-                null,
-                null,
-                null,
-                MonthlyReport.YEAR + ", " + MonthlyReport.MONTH + " desc"
+                DatabaseTable.Item.SEQUENCE + " desc"
         );
 
+        List<ReceiptItemModel> list = new LinkedList<>();
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                String month = cursor.getString(0);
-                String year = cursor.getString(1);
-                ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
-                        month,
-                        year,
-                        Double.parseDouble(cursor.getString(2)),
-                        Integer.parseInt(cursor.getString(3))
+                ReceiptItemModel receiptItemModel = new ReceiptItemModel(
+                        cursor.getString(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7)
                 );
-                receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
-                receiptGroup.addReceiptGroup(fetchReceipts(year, month));
+
+                list.add(receiptItemModel);
             }
         }
-        return receiptGroup;
+
+        return list;
     }
 }
