@@ -1,5 +1,8 @@
 package com.receiptofi.checkout.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class ReceiptModel {
     public static final String NULL = "null";
 
@@ -14,6 +17,7 @@ public class ReceiptModel {
     private double ptax;
     private String rid;
     private double total;
+    private List<ReceiptItemModel> receiptItems = new LinkedList<>();
 
     public String getBizName() {
         return bizName;
@@ -120,4 +124,13 @@ public class ReceiptModel {
     public void setTotal(double total) {
         this.total = total;
     }
+
+    public List<ReceiptItemModel> getReceiptItems(){
+        return receiptItems;
+    }
+
+    public void addReceiptItem(ReceiptItemModel receiptItem){
+        this.receiptItems.add(receiptItem);
+    }
+
 }
