@@ -31,14 +31,14 @@ import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
 public class HomeActivity extends Activity {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final DateFormat DF = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
+    private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
+    public static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy MM", Locale.ENGLISH);
 
     public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
@@ -118,9 +118,9 @@ public class HomeActivity extends Activity {
         setUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
 
         try {
-            setMonthlyExpense(MonthlyReportUtils.fetchMonthlyTotal(Integer.toString(Calendar.getInstance().get(Calendar.MONTH)),
-                    Integer.toString(Calendar.getInstance().get(Calendar.YEAR) - 1)));
-        }catch(Exception e){
+            String[] monthDay = DF_YYYY_MM.format(new Date()).split(" ");
+            setMonthlyExpense(MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]));
+        } catch (Exception e) {
             Log.d(TAG, "Exception" + e.getMessage());
             e.printStackTrace();
         }
@@ -230,7 +230,7 @@ public class HomeActivity extends Activity {
     }
 
     private void startAnimation() {
-        if(optionMenu != null) {
+        if (optionMenu != null) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ImageView imageView = (ImageView) inflater.inflate(R.layout.action_refresh, null);
 
@@ -259,7 +259,7 @@ public class HomeActivity extends Activity {
 
     private void setMonthlyExpense(String amount) {
         Log.d(TAG, "executing setMonthlyExpense");
-        currentMonthExp.setText(getString(R.string.monthly_amount, DF.format(new Date()), amount));
+        currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), amount));
     }
 
     private void launchSettings() {
