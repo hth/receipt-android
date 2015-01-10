@@ -3,6 +3,7 @@ package com.receiptofi.checkout.utils.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Message;
+import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
@@ -23,9 +24,11 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.updateInsert;
 
@@ -193,5 +196,41 @@ public class ReceiptUtils {
                 null,
                 values
         );
+    }
+
+    public static List<ReceiptModel> fetchReceipts(String year, String month) {
+        Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month);
+
+        List<ReceiptModel> list = new LinkedList<>();
+        Cursor cursor = RDH.getReadableDatabase().query(
+                DatabaseTable.Receipt.TABLE_NAME,
+                null,
+                "SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? ",
+                new String[]{month, year},
+                null,
+                null,
+                DatabaseTable.Receipt.DATE + " desc"
+        );
+
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                ReceiptModel receiptModel = new ReceiptModel();
+                receiptModel.setBizName(cursor.getString(0));
+                receiptModel.setAddress(cursor.getString(1));
+                receiptModel.setPhone(cursor.getString(2));
+                receiptModel.setDate(cursor.getString(3));
+                receiptModel.setExpenseReport(cursor.getString(4));
+                receiptModel.setBlobIds(cursor.getString(5));
+                receiptModel.setId(cursor.getString(6));
+                receiptModel.setNotes(cursor.getString(7));
+                receiptModel.setPtax(cursor.getDouble(8));
+                receiptModel.setRid(cursor.getString(9));
+                receiptModel.setTotal(cursor.getDouble(10));
+
+                receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getId()));
+                list.add(receiptModel);
+            }
+        }
+        return list;
     }
 }

@@ -119,78 +119,9 @@ public class MonthlyReportUtils {
                         Integer.parseInt(cursor.getString(3))
                 );
                 receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
-                receiptGroup.addReceiptGroup(fetchReceipts(year, month));
+                receiptGroup.addReceiptGroup(ReceiptUtils.fetchReceipts(year, month));
             }
         }
         return receiptGroup;
-    }
-
-    private static List<ReceiptModel> fetchReceipts(String year, String month) {
-        Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month);
-
-        List<ReceiptModel> list = new LinkedList<>();
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                "SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? ",
-                new String[]{month, year},
-                null,
-                null,
-                DatabaseTable.Receipt.DATE + " desc"
-        );
-
-        if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                ReceiptModel receiptModel = new ReceiptModel();
-                receiptModel.setBizName(cursor.getString(0));
-                receiptModel.setAddress(cursor.getString(1));
-                receiptModel.setPhone(cursor.getString(2));
-                receiptModel.setDate(cursor.getString(3));
-                receiptModel.setExpenseReport(cursor.getString(4));
-                receiptModel.setBlobIds(cursor.getString(5));
-                receiptModel.setId(cursor.getString(6));
-                receiptModel.setNotes(cursor.getString(7));
-                receiptModel.setPtax(cursor.getDouble(8));
-                receiptModel.setRid(cursor.getString(9));
-                receiptModel.setTotal(cursor.getDouble(10));
-
-                receiptModel.setReceiptItems(getItems(receiptModel.getId()));
-                list.add(receiptModel);
-            }
-        }
-        return list;
-    }
-
-    private static List<ReceiptItemModel> getItems(String receiptId) {
-        Log.d(TAG, "Fetching items for receiptId=" + receiptId);
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Item.TABLE_NAME,
-                null,
-                DatabaseTable.Item.RECEIPTID + " = ?",
-                new String[]{receiptId},
-                null,
-                null,
-                DatabaseTable.Item.SEQUENCE + " desc"
-        );
-
-        List<ReceiptItemModel> list = new LinkedList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
-                ReceiptItemModel receiptItemModel = new ReceiptItemModel(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getString(7)
-                );
-
-                list.add(receiptItemModel);
-            }
-        }
-
-        return list;
     }
 }
