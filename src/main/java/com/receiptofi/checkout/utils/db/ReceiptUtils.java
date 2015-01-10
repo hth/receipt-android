@@ -13,6 +13,7 @@ import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.http.types.Protocol;
+import com.receiptofi.checkout.model.ChartModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -196,6 +197,31 @@ public class ReceiptUtils {
                 null,
                 values
         );
+    }
+
+    public static ChartModel getReceiptsByBizName() {
+        Cursor cursor = RDH.getReadableDatabase().rawQuery(
+                "select " +
+                        "bizName," +
+                        "total(total) total " +
+                        "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                        "where date between " +
+                        "datetime('now', 'start of month') AND " +
+                        "datetime('now', 'start of month','+1 month','-1 day') " +
+                        " group by bizName", null);
+
+        ChartModel chartModel = new ChartModel();
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                ReceiptModel receiptModel = new ReceiptModel();
+                receiptModel.setBizName(cursor.getString(0));
+                receiptModel.setTotal(cursor.getDouble(1));
+
+                chartModel.addReceiptModel(receiptModel);
+                chartModel.addTotal(receiptModel.getTotal());
+            }
+        }
+        return chartModel;
     }
 
     public static List<ReceiptModel> fetchReceipts(String year, String month) {
