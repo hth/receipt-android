@@ -1,5 +1,6 @@
 package com.receiptofi.checkout;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -93,6 +95,10 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
 
+        // TODO: DELETE ME
+        email.setText("s@r.com");
+        password.setText("testtest");
+
     }
 
     @Override
@@ -126,6 +132,10 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     }
 
     private void login() {
+        // Hide soft keyboard
+        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
         // getting username and password
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();

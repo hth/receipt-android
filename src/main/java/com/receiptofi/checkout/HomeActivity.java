@@ -3,7 +3,7 @@ package com.receiptofi.checkout;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
+import android.content.res.Configuration;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,10 +28,7 @@ import android.widget.Toast;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
-import com.github.mikephil.charting.utils.Legend;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.ChartService;
@@ -55,14 +53,16 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
     public static final int UPDATE_UNPROCESSED_COUNT = 0x2567;
     public static final int UPDATE_MONTHLY_EXPENSE = 0x2568;
-    public static final int GET_ALL_RECEIPTS = 0x2569;
+    public static final int UPDATE_EXP_BY_BIZ_CHART = 0x2569;
+    public static final int GET_ALL_RECEIPTS = 0x2570;
 
     public final Handler updateHandler = new Handler() {
         public void handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case IMAGE_UPLOAD_SUCCESS:
-                    setUnprocessedCount(Integer.toString(msg.arg1));
+                    unprocessedValue = Integer.toString(msg.arg1);
+                    setUnprocessedCount();
                     showErrorMsg((String) msg.obj);
                     endAnimation();
                     break;
@@ -75,10 +75,16 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     endAnimation();
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
-                    setUnprocessedCount((String) msg.obj);
+                    unprocessedValue = (String) msg.obj;
+                    setUnprocessedCount();
                     break;
                 case UPDATE_MONTHLY_EXPENSE:
-                    setMonthlyExpense((String) msg.obj);
+                    currentMonthExpValue = (String) msg.obj;
+                    setMonthlyExpense();
+                    break;
+                case UPDATE_EXP_BY_BIZ_CHART:
+                    expByBizAnimate = true;
+                    setUpChartData();
                     break;
             }
         }
@@ -87,77 +93,77 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
     protected Handler uiThread = new Handler();
 
-    TextView unprocessedDocumentCount;
-    TextView currentMonthExp;
+    private TextView unprocessedDocumentCount;
+    private String unprocessedValue;
+    private TextView currentMonthExp;
+    private String currentMonthExpValue;
     private Menu optionMenu;
     private PieChart mChart;
+    private PieData expByBizData;
+    private boolean expByBizAnimate = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "executing onCreate");
         setContentView(R.layout.home_page);
         ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
         //TODO needed for ImageUploaderService
         AppUtils.setHomePageContext(this);
-        unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
-        currentMonthExp = (TextView) findViewById(R.id.current_amount);
-        mChart = (PieChart) findViewById(R.id.pie_chart);
-        setUpChart();
-        prepareChartData();
-        
-        /*
-        currentMonthExp.setOnClickListener(new View.OnClickListener() {
+        instantiateViews();
 
-            @Override
-            public void onClick(View v) {
-                // show graph page
-                Log.d(TAG, "executing showGraph");
-                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivity(i);
-            }
-        });
+       // setUpChartView();
+       // setUpChartData();
 
-        TextView notification = (TextView) findViewById(R.id.processing_info);
-        notification.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // show graph page
-                Log.d(TAG, "executing showGraph");
-                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
-                startActivity(i);
-            }
-        });
-         */
-
-
-        setUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
-
+        // OnCreate we need to set values from Database and these will be updated later once
+        // update from server is received.
+        unprocessedValue = KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT);
+        setUnprocessedCount();
         try {
             String[] monthDay = DF_YYYY_MM.format(new Date()).split(" ");
-            setMonthlyExpense(MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]));
+            currentMonthExpValue = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
+            setMonthlyExpense();
         } catch (Exception e) {
             Log.d(TAG, "Exception" + e.getMessage());
             e.printStackTrace();
         }
-
+        Log.d(TAG, "Done onCreate!!");
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d(TAG, "executing onResume");
         ReceiptofiApplication.homeActivityResumed();
+        Log.d(TAG, "Done onResume!!");
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        Log.d(TAG, "executing onPause");
         ReceiptofiApplication.homeActivityPaused();
         if (optionMenu != null) {
             endAnimation();
         }
+        Log.d(TAG, "Done onPause!!");
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        setContentView(R.layout.home_page);
+        instantiateViews();
+        bindValuestoViews();
+        /*
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+
+        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+
+        }
+    */
     }
 
     @Override
@@ -186,7 +192,25 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         }
     }
 
-    private void setUpChart(){
+    private void instantiateViews(){
+        unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
+        currentMonthExp = (TextView) findViewById(R.id.current_amount);
+        mChart = (PieChart) findViewById(R.id.pie_chart);
+        setUpChartView();
+    }
+    private void bindValuestoViews(){
+        if(!TextUtils.isEmpty(unprocessedValue)) {
+            setUnprocessedCount();
+        }
+        if(!TextUtils.isEmpty(currentMonthExpValue)) {
+            setMonthlyExpense();
+        }
+        if(expByBizData != null) {
+            setUpChartData();
+        }
+    }
+
+    private void setUpChartView(){
         // change the color of the center-hole
         mChart.setHoleColor(R.color.hole_color);
 
@@ -222,13 +246,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.setCenterText(getString(R.string.chart_desc_short));
         mChart.setCenterTextSize(12f);
 
-        // TODO
-        //setData(3, 100);
-
-        mChart.animateXY(1500, 1500);
-        // mChart.spin(2000, 0, 360);
-
-
         /*Legend l = mChart.getLegend();
         if(l != null){
             l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
@@ -238,17 +255,20 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         */
     }
 
-    private void prepareChartData(){
-        PieData data = ChartService.getPieData();
-        mChart.setData(data);
+    private void setUpChartData(){
+        if(expByBizAnimate) {
+            mChart.animateXY(1500, 1500);
+            // mChart.spin(2000, 0, 360);
+            expByBizAnimate = false;
+        }
+
+        expByBizData = ChartService.getPieData();
+        mChart.setData(expByBizData);
 
         // undo all highlights
         mChart.highlightValues(null);
 
         mChart.invalidate();
-
-
-
     }
 
     @Override
@@ -346,14 +366,14 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         }
     }
 
-    private void setUnprocessedCount(String count) {
+    private void setUnprocessedCount() {
         Log.d(TAG, "executing setUnprocessedCount");
-        unprocessedDocumentCount.setText(getString(R.string.processing_info, count));
+        unprocessedDocumentCount.setText(getString(R.string.processing_info, unprocessedValue));
     }
 
-    private void setMonthlyExpense(String amount) {
+    private void setMonthlyExpense() {
         Log.d(TAG, "executing setMonthlyExpense");
-        currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), amount));
+        currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), currentMonthExpValue));
     }
 
     private void launchSettings() {
