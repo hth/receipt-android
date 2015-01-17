@@ -27,10 +27,11 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@+id/logo_view_text"
                 android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/image_info_margin_side"
                 android:layout_marginRight="@dimen/image_info_margin_side"
                 android:contentDescription="@string/app_info_cnt_dscp"
-                android:src="@drawable/app_info_1" />
+                android:src="@drawable/app_logo" />
 
             <TextView
                 android:id="@+id/logo_view_text"
