@@ -154,16 +154,15 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        setContentView(R.layout.home_page);
-        instantiateViews();
-        bindValuestoViews();
-        /*
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
-
+            setContentView(R.layout.home_page);
+            instantiateViews();
+            bindValuestoViews();
         } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
-
+            setContentView(R.layout.home_page);
+            instantiateViews();
+            bindValuestoViews();
         }
-    */
     }
 
     @Override
