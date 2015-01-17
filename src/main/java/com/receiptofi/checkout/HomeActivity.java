@@ -33,6 +33,7 @@ import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.Legend;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.service.ChartService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
@@ -40,8 +41,6 @@ import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -107,6 +106,32 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart = (PieChart) findViewById(R.id.pie_chart);
         setUpChart();
         prepareChartData();
+        
+        /*
+        currentMonthExp.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // show graph page
+                Log.d(TAG, "executing showGraph");
+                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
+                startActivity(i);
+            }
+        });
+
+        TextView notification = (TextView) findViewById(R.id.processing_info);
+        notification.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                // show graph page
+                Log.d(TAG, "executing showGraph");
+                Intent i = new Intent(getApplicationContext(), GraphActivity.class);
+                startActivity(i);
+            }
+        });
+         */
+
 
         setUnprocessedCount(KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT));
 
@@ -213,61 +238,8 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         */
     }
 
-    protected String[] mParties = new String[] {
-            "Party A", "Party B", "Party C", "Party D", "Party E", "Party F", "Party G", "Party H",
-            "Party I", "Party J", "Party K", "Party L", "Party M", "Party N", "Party O", "Party P",
-            "Party Q", "Party R", "Party S", "Party T", "Party U", "Party V", "Party W", "Party X",
-            "Party Y", "Party Z"
-    };
-
     private void prepareChartData(){
-        // TODO
-        float mult = 100;
-        int count = 3;
-
-        ArrayList<Entry> yVals1 = new ArrayList<Entry>();
-
-        // IMPORTANT: In a PieChart, no values (Entry) should have the same
-        // xIndex (even if from different DataSets), since no values can be
-        // drawn above each other.
-        for (int i = 0; i < count + 1; i++) {
-            yVals1.add(new Entry((float) (Math.random() * mult) + mult / 5, i));
-        }
-
-        ArrayList<String> xVals = new ArrayList<String>();
-
-        for (int i = 0; i < count + 1; i++)
-            xVals.add(mParties[i % mParties.length]);
-
-        PieDataSet set1 = new PieDataSet(yVals1, "Exp/Business");
-        set1.setSliceSpace(3f);
-
-        // add a lot of colors
-
-        ArrayList<Integer> colors = new ArrayList<Integer>();
-
-        for (int c : ColorTemplate.COLORFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.JOYFUL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.VORDIPLOM_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.PASTEL_COLORS)
-            colors.add(c);
-
-        for (int c : ColorTemplate.LIBERTY_COLORS)
-            colors.add(c);
-
-
-
-        colors.add(ColorTemplate.getHoloBlue());
-
-        set1.setColors(colors);
-
-        PieData data = new PieData(xVals, set1);
+        PieData data = ChartService.getPieData();
         mChart.setData(data);
 
         // undo all highlights
