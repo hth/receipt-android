@@ -175,7 +175,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
             @Override
             public void onSuccess(Header[] headers, String body) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
+                Log.d(TAG, "Executing authenticateLogIn: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 saveAuthKey(ExternalCall.parseHeader(headers, keys));
                 hideLoader();
@@ -185,7 +185,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onException");
+                Log.d(TAG, "Executing authenticateLogIn: onException");
                 hideLoader();
                 showErrorMsg("Please check your network connection");
 
@@ -193,7 +193,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onError");
+                Log.d(TAG, "Executing authenticateLogIn: onError");
                 hideLoader();
                 showErrorMsg(error);
             }

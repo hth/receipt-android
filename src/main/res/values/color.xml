@@ -25,6 +25,8 @@
     <color name="google_bg_light">#EA4E42</color>
 
 
+    <!--       Chart      -->
+    <color name="hole_color">#EFFBFB</color>
 
 
     <color name="screen_background">#F8F8F8</color>
