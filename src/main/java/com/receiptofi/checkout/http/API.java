@@ -1,11 +1,20 @@
 package com.receiptofi.checkout.http;
 
 public class API {
-    // Launch api
+    // Account api
     public static final String LOGIN_API = "/j_spring_security_check";
     public static final String SIGNUP_API = "/registration.json";
     public static final String SOCIAL_LOGIN_API = "/authenticate.json";
     public static final String PASSWORD_RECOVER_API = "/recover.json";
+
+    // Launch HomeActivity api
+    // On successful login check if XR-mail is same and DID exist skip device registration
+    // otherwise register device and call ALL_FROM_BEGINNING
+    public static final String REGISTER_DEVICE = "/api/register.json";
+    public static final String ALL_FROM_BEGINNING = "/api/all.json";
+    // if re-login call NEW_UPDATE_FOR_DEVICE
+    public static final String NEW_UPDATE_FOR_DEVICE = "/api/update.json";
+
 
     // Settings api
     public static final String SETTINGS_UPDATE_LOGIN_ID_API = "/api/updateMail.json";
@@ -18,9 +27,7 @@ public class API {
     public static final String GET_ALL_RECEIPTS = "/api/allReceipts.json";
     public static final String VIEW_RECEIPT_DETAIL = "/api/receiptDetail/";
     public static final String DOWNLOAD_IMAGE = "/api/image/";
-    public static final String NEW_UPDATE_FOR_DEVICE = "/api/update.json";
-    public static final String ALL_FROM_BEGINNING = "/api/all.json";
-    public static final String REGISTER_DEVICE = "/api/register.json";
+
 
     public static class key {
         // Header

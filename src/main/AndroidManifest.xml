@@ -62,7 +62,8 @@
             android:windowSoftInputMode="stateAlwaysVisible">
         </activity>
         <activity
-            android:name=".HomeActivity">
+            android:name=".HomeActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".SettingsActivity"

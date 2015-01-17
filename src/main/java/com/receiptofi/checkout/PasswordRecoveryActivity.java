@@ -2,6 +2,7 @@ package com.receiptofi.checkout;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,6 +13,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -92,6 +94,10 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     }
 
     private void recoverPassword() {
+        // Hide soft keyboard
+        InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
+
         // getting username and password
         emailStr = email.getText().toString();
 

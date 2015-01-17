@@ -107,21 +107,22 @@ public class DeviceService {
         ReceiptItemUtils.insertItems(dataWrapper.getReceiptItemModels());
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, dataWrapper.getUnprocessedDocumentModel().getCount());
 
-        Message msg = new Message();
-        msg.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
-        msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
+        Message countMessage = new Message();
+        countMessage.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
+        countMessage.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
-            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
         }
 
         MonthlyReportUtils.computeMonthlyReceiptReport();
 
-        //TODO not updating why
         String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
-        msg.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
-        msg.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
+        Message amountMessage = new Message();
+        amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
+        amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
-            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
+            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
         }
     }
 }
