@@ -62,7 +62,6 @@ public class ReceiptListFragment extends Fragment {
 
         explv = (ExpandableListView) view.findViewById(R.id.exp_list_view);
         explv.setAdapter(new ReceiptListAdapter(getActivity(), headerList, childListGroup));
-        explv.setGroupIndicator(null);
 
         explv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
