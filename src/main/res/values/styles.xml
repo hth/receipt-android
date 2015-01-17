@@ -9,6 +9,16 @@
     </style>
 
 
+    <style name="exp_list_parent_text_left_style" parent="@android:style/TextAppearance.Medium">
+        <item name="android:typeface">sans</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="exp_list_parent_text_right_style" parent="@style/exp_list_parent_text_left_style">
+        <item name="android:textStyle">bold|italic</item>
+    </style>
+
+
 <!--  /////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
