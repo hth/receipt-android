@@ -8,7 +8,7 @@
         <item name="android:textSize">30sp</item>
     </style>
 
-
+    <!--    Expandable List view    -->
     <style name="exp_list_parent_text_left_style" parent="@android:style/TextAppearance.Medium">
         <item name="android:textStyle">bold</item>
     </style>
@@ -33,6 +33,43 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--    RD view    -->
+    <style name="rd_text_large" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+    <style name="rd_text_larger" parent="@style/rd_text_large">
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="rd_text_medium" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textColor">@color/gray_darker</item>
+    </style>
+
+    <style name="rd_text_small" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/gray_dark</item>
+    </style>
+
+    <style name="rd_text_smaller" parent="@style/rd_text_small">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="rd_list_item_text_left_primary_style" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/app_theme_txt_color</item>
+        <item name="android:paddingTop">@dimen/expandable_list_child_vertical_padding</item>
+    </style>
+
+    <style name="rd_list_item_text_left_secondary_style" parent="@android:style/TextAppearance.Small">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:paddingBottom">@dimen/expandable_list_child_vertical_padding</item>
+    </style>
+
+    <style name="rd_list_item_text_right_style" parent="@android:style/TextAppearance.Small">
+        <item name="android:textColor">@color/gray_darker</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 
 <!--  /////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- Application theme. -->
