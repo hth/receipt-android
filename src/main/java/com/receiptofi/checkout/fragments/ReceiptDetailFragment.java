@@ -10,7 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
-import com.receiptofi.checkout.adapters.ReceiptItemAdapter;
+import com.receiptofi.checkout.adapters.ReceiptItemListAdapter;
 import com.receiptofi.checkout.model.ReceiptModel;
 
 import java.text.DateFormat;
@@ -41,7 +41,7 @@ public class ReceiptDetailFragment extends Fragment {
     private TextView rdDate;
 
     // Receipt detail list item
-    private ListView reItemsList;
+    private ListView rdItemsList;
 
 
     @Override
@@ -67,7 +67,7 @@ public class ReceiptDetailFragment extends Fragment {
 
         rdDate = (TextView)receiptDetailView.findViewById(R.id.rd_date);
 
-        reItemsList = (ListView)receiptDetailView.findViewById(R.id.rd_items_list);
+        rdItemsList = (ListView)receiptDetailView.findViewById(R.id.rd_items_list);
 
         return receiptDetailView;
 
@@ -127,9 +127,24 @@ public class ReceiptDetailFragment extends Fragment {
         String formattedDate = outputDF.format(inputDF.parse(rdModel.getDate()));
         rdDate.setText(formattedDate);
 
+            // Add list header
+            View header = View.inflate(getActivity(), R.layout.rd_list_item_header, null);
+        rdItemsList.addHeaderView(header);
+            View taxFooter = View.inflate(getActivity(), R.layout.rd_list_item_footer_tax, null);
+
+            // Add tax footer
+            TextView taxDscpView = (TextView)taxFooter.findViewById(R.id.rd_list_item_header_tax_dscp);
+            TextView taxAmountView = (TextView)taxFooter.findViewById(R.id.rd_list_item_header_tax_amount);
+            taxDscpView.setText(Double.toString(rdModel.getPtax()));
+           // taxAmountView.setText(rdModel.);
+            rdItemsList.addFooterView(taxFooter);
+
+            // Add tax footer
+            View totalFooter = View.inflate(getActivity(), R.layout.rd_list_item_footer_total, null);
+            rdItemsList.addFooterView(totalFooter);
 
             // Set Adaptor on items list
-        reItemsList.setAdapter(new ReceiptItemAdapter(getActivity(), rdModel.getReceiptItems()));
+        rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));
 
         // Update trackers
         mCurrentIndex = index;
