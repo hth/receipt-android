@@ -60,8 +60,8 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
                 holder = new ViewHolder();
                 holder.title = (TextView) convertView.findViewById(R.id.rd_list_item_title);
-                holder.dscp = (TextView) convertView.findViewById(R.id.rd_list_item_title_dscp);
-                holder.amount = (TextView) convertView.findViewById(R.id.rd_list_item_amount);
+                holder.quantity = (TextView) convertView.findViewById(R.id.rd_list_item_quantity);
+                holder.price = (TextView) convertView.findViewById(R.id.rd_list_item_price);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -69,8 +69,14 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
             ReceiptItemModel itemModel = getItem(position);
             holder.title.setText(itemModel.getName());
-            holder.dscp.setText(itemModel.getQuantity());
-            holder.amount.setText(context.getString(R.string.rd_item_amount, itemModel.getPrice()));
+            if(Double.parseDouble(itemModel.getQuantity()) > 1){
+                holder.quantity.setText(context.getString(R.string.rd_item_quantity, Double.parseDouble(itemModel.getQuantity()), Double.parseDouble(itemModel.getPrice())));
+                holder.price.setText(context.getString(R.string.rd_item_price, (Double.parseDouble(itemModel.getPrice()) * Double.parseDouble(itemModel.getQuantity()))));
+            } else {
+                holder.quantity.setVisibility(View.GONE);
+                holder.price.setText(context.getString(R.string.rd_item_price, Double.parseDouble(itemModel.getPrice())));
+            }
+
 
             return convertView;
         } catch (Exception e) {
@@ -82,7 +88,7 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
     private class ViewHolder {
         TextView title;
-        TextView dscp;
-        TextView amount;
+        TextView quantity;
+        TextView price;
     }
 }

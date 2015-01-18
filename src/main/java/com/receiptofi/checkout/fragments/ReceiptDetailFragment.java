@@ -117,6 +117,7 @@ public class ReceiptDetailFragment extends Fragment {
         ReceiptModel rdModel = ReceiptListFragment.childListGroup.get(index).get(position);
         rdBizName.setText(rdModel.getBizName());
 
+            // Address and phone block
         StringTokenizer tokenizer = new StringTokenizer(rdModel.getAddress(), ",");
         if(tokenizer.countTokens() <= 4){
             rdBizAddLine1.setText((tokenizer.nextToken()).trim());
@@ -140,12 +141,14 @@ public class ReceiptDetailFragment extends Fragment {
         }
             rdBizPhone.setText(rdModel.getPhone());
 
+            // Date block
         DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
         String formattedDate = outputDF.format(inputDF.parse(rdModel.getDate()));
         rdDate.setText(formattedDate);
 
 
+            //Receipt item list Block
             // Add tax footer
             taxDscpView.setText(Double.toString(rdModel.getPtax()));
             // TODO fix me
