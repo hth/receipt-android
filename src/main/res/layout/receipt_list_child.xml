@@ -1,16 +1,15 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/expandable_list_child_selector">
 
     <TextView
         android:id="@+id/exp_list_child_buz_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:paddingRight="0dp"
-        android:paddingEnd="0dp"
-        android:textSize="16sp"
+        android:paddingLeft="@dimen/expandable_list_child_padding_left"
+        style="@style/exp_list_child_text_left_primary_style"
         android:text="Costco"/>
 
     <TextView
@@ -18,10 +17,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/exp_list_child_buz_name"
-        android:paddingLeft="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:paddingRight="0dp"
-        android:paddingEnd="0dp"
-        android:textSize="16sp"
+        android:paddingLeft="@dimen/expandable_list_child_padding_left"
+        style="@style/exp_list_child_text_left_secondary_style"
         android:text="08/02/2014"/>
 
 
@@ -33,8 +30,8 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:gravity="right"
-        android:paddingRight="?android:attr/expandableListPreferredChildPaddingLeft"
-        android:textSize="16sp"
+        android:paddingRight="@dimen/expandable_list_child_padding_right"
+        style="@style/exp_list_child_text_right_style"
         android:text="$25.06"/>
 
 
