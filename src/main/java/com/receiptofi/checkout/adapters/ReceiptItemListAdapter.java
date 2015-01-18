@@ -10,22 +10,21 @@ import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.ReceiptItemModel;
-import com.receiptofi.checkout.model.ReceiptModel;
 
 import java.util.List;
 
 /**
  * Created by PT on 1/18/15.
  */
-public class ReceiptItemAdapter extends ArrayAdapter<ReceiptItemModel> {
+public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
-    private static final String TAG = ReceiptItemAdapter.class.getSimpleName();
+    private static final String TAG = ReceiptItemListAdapter.class.getSimpleName();
 
     private Context context;
     private final LayoutInflater inflater;
     private List<ReceiptItemModel> rdItems;
 
-    public ReceiptItemAdapter(Context context, List<ReceiptItemModel> items) {
+    public ReceiptItemListAdapter(Context context, List<ReceiptItemModel> items) {
         super(context, R.layout.rd_list_item, items);
         this.context = context;
         this.rdItems = items;
@@ -71,7 +70,7 @@ public class ReceiptItemAdapter extends ArrayAdapter<ReceiptItemModel> {
             ReceiptItemModel itemModel = getItem(position);
             holder.title.setText(itemModel.getName());
             holder.dscp.setText(itemModel.getQuantity());
-            holder.amount.setText(context.getString(R.string.receipt_list_item_amount, itemModel.getPrice()));
+            holder.amount.setText(context.getString(R.string.rd_item_amount, itemModel.getPrice()));
 
             return convertView;
         } catch (Exception e) {

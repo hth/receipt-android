@@ -33,15 +33,15 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             }
 
             // Create an instance of ExampleFragment
-            ReceiptListFragment firstFragment = new ReceiptListFragment();
+            ReceiptListFragment receiptListFragment = new ReceiptListFragment();
 
             // In case this activity was started with special instructions from an Intent,
             // pass the Intent's extras to the fragment as arguments
-            firstFragment.setArguments(getIntent().getExtras());
+            receiptListFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, firstFragment).commit();
+                    .add(R.id.fragment_container, receiptListFragment).commit();
         }
 
     }

@@ -45,6 +45,7 @@
 
     <style name="rd_text_medium" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/gray_darker</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <style name="rd_text_small" parent="@android:style/TextAppearance.Small">
