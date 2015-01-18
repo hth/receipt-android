@@ -11,6 +11,8 @@
   <item 
     android:state_selected="true" 
     android:state_focused="false"
-    android:drawable="@drawable/list_blue_bg" /> 
+    android:drawable="@drawable/list_blue_bg" />
+
+    <item android:drawable="@color/transparent" />
 
 </selector> 

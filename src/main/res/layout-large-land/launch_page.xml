@@ -13,6 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:gravity="center_vertical"
             android:contentDescription="@string/app_info_cnt_dscp"
             android:orientation="vertical">
 
@@ -20,20 +21,18 @@
                 android:id="@+id/logo_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_above="@+id/logo_view_text"
-                android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/image_info_margin_side"
                 android:layout_marginRight="@dimen/image_info_margin_side"
                 android:contentDescription="@string/app_info_cnt_dscp"
-                android:src="@drawable/app_info_1" />
+                android:src="@drawable/app_logo" />
 
             <TextView
                 android:id="@+id/logo_view_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_marginBottom="@dimen/activity_vertical_margin_wide"
+                android:layout_below="@id/logo_view"
                 android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
                 style="@style/logo_text_style"
                 android:text="@string/app_name" />
 
