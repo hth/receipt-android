@@ -84,7 +84,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     break;
                 case UPDATE_EXP_BY_BIZ_CHART:
                     expByBizAnimate = true;
-                    setUpChartData();
+                    updateChartData();
                     break;
             }
         }
@@ -115,9 +115,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         AppUtils.setHomePageContext(this);
         instantiateViews();
 
-       // setUpChartView();
-       // setUpChartData();
-
         // OnCreate we need to set values from Database and these will be updated later once
         // update from server is received.
         unprocessedValue = KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT);
@@ -130,6 +127,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             Log.d(TAG, "Exception" + e.getMessage());
             e.printStackTrace();
         }
+        updateChartData();
         Log.d(TAG, "Done onCreate!!");
     }
 
@@ -253,7 +251,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         */
     }
 
-    private void setUpChartData(){
+    private void updateChartData(){
         if(expByBizAnimate) {
             mChart.animateXY(1500, 1500);
             // mChart.spin(2000, 0, 360);
@@ -261,6 +259,15 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         }
 
         expByBizData = ChartService.getPieData();
+        mChart.setData(expByBizData);
+
+        // undo all highlights
+        mChart.highlightValues(null);
+
+        mChart.invalidate();
+    }
+
+    private void setUpChartData(){
         mChart.setData(expByBizData);
 
         // undo all highlights
@@ -387,8 +394,10 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        Log.d(TAG, "executing onDestroy");
         ReceiptofiApplication.homeActivityPaused();
         AppUtils.setHomePageContext(null);
+        Log.d(TAG, "Done onDestroy!!");
     }
 
     private void showErrorMsg(String msg) {
