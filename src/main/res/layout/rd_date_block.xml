@@ -1,0 +1,11 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:id="@+id/rd_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        style="@style/rd_text_small"
+        android:textStyle="bold"/>
+
+    </merge>

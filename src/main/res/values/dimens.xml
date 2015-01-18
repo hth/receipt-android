@@ -21,6 +21,12 @@
     <dimen name="expandable_list_child_padding_right">20dp</dimen>
     <dimen name="expandable_list_child_vertical_padding">2dp</dimen>
 
+    <!--    RD view  - view is divided in blocks and each block contains multiple elements -->
+    <dimen name="rd_elements_vertical_padding">2dp</dimen>
+    <dimen name="rd_block_vertical_padding">16dp</dimen>
+
+
+
     <dimen name="image_info_margin_side">70dp</dimen>
 
     <!--    Large screen spec    -->
