@@ -73,6 +73,7 @@
     <string name="receipt_list_header_month" formatted="false">%s (%d)</string>
     <string name="receipt_list_header_amount" formatted="false">$%.2f</string>
     <string name="receipt_list_child_amount" formatted="false">$%.2f</string>
+    <string name="receipt_list_item_amount" formatted="false">$%s</string>
 
 
     <!--Menu String-->

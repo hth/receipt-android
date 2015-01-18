@@ -10,6 +10,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.adapters.ReceiptItemAdapter;
 import com.receiptofi.checkout.model.ReceiptModel;
 
 import java.text.DateFormat;
@@ -119,6 +120,7 @@ public class ReceiptDetailFragment extends Fragment {
             rdBizAddLine3.setText(addressLine3.trim());
             rdBizAddLine3.setVisibility(View.VISIBLE);
         }
+            rdBizPhone.setText(rdModel.getPhone());
 
         DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
@@ -126,9 +128,13 @@ public class ReceiptDetailFragment extends Fragment {
         rdDate.setText(formattedDate);
 
 
+            // Set Adaptor on items list
+        reItemsList.setAdapter(new ReceiptItemAdapter(getActivity(), rdModel.getReceiptItems()));
+
         // Update trackers
         mCurrentIndex = index;
         mCurrentPosition = position;
+
         } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());
             e.printStackTrace();

@@ -86,13 +86,9 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
-            String iso8601string = receiptData.getDate();
             DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
             DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
             String formattedDate = outputDF.format(inputDF.parse(receiptData.getDate()));
-
-            String s = iso8601string.replace("Z", "+00:00");
-            s = s.substring(0, 22) + s.substring(23);
 
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(formattedDate);
