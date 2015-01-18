@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
+import com.receiptofi.checkout.db.CreateTable;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
@@ -30,7 +31,7 @@ public class MonthlyReportUtils {
         Log.d(TAG, "Drop monthly receipt report");
         RDH.getWritableDatabase().execSQL("Drop table if exists " + MonthlyReport.TABLE_NAME);
         Log.d(TAG, "Create monthly receipt report");
-        RDH.createTableMonthlyReport();
+        CreateTable.createTableMonthlyReport(RDH.getDb());
     }
 
     private static void groupByMonthlyReceiptStat() {

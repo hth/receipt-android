@@ -2,6 +2,7 @@ package com.receiptofi.checkout.utils.db;
 
 import android.util.Log;
 
+import com.receiptofi.checkout.db.CreateTable;
 import com.receiptofi.checkout.db.DatabaseTable;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
@@ -25,12 +26,12 @@ public class DBUtils {
 
 
         /** Create tables. */
-        RDH.createTableReceipts();
-        RDH.createTableImageIndex();
-        RDH.createTableKeyValue();
-        RDH.createTableUploadQueue();
-        RDH.createTableMonthlyReport();
-        RDH.createTableItem();
+        CreateTable.createTableReceipts(RDH.getDb());
+        CreateTable.createTableImageIndex(RDH.getDb());
+        CreateTable.createTableKeyValue(RDH.getDb());
+        CreateTable.createTableUploadQueue(RDH.getDb());
+        CreateTable.createTableMonthlyReport(RDH.getDb());
+        CreateTable.createTableItem(RDH.getDb());
 
         initializeDefaults();
     }

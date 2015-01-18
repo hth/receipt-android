@@ -32,7 +32,7 @@ public class ReceiptofiApplication extends Application {
         // TODO Auto-generated method stub
         super.onCreate();
         Log.d(TAG, "ReceiptofiApplication onCreate");
-        RDH = new DatabaseHandler(this);
+        RDH = DatabaseHandler.getsInstance(this);
         DBUtils.initializeDefaults();
         ImageUpload.initializeQueue();
         AppUtils.setHomePageContext(null);
