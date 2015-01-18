@@ -1,0 +1,51 @@
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+    android:paddingTop="@dimen/rd_block_vertical_padding"
+    android:paddingBottom="@dimen/rd_block_vertical_padding">
+
+    <TextView
+            android:id="@+id/rd_biz_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/rd_elements_vertical_padding"
+            android:layout_gravity="center_horizontal"
+            style="@style/rd_text_larger"
+            android:text="@string/no_receipt_selected"/>
+
+    <TextView
+        android:id="@+id/rd_biz_add_line1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/rd_elements_vertical_padding"
+        android:layout_gravity="center_horizontal"
+        style="@style/rd_text_smaller"/>
+
+    <TextView
+        android:id="@+id/rd_biz_add_line2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/rd_elements_vertical_padding"
+        android:layout_gravity="center_horizontal"
+        style="@style/rd_text_smaller"/>
+
+    <TextView
+        android:id="@+id/rd_biz_add_line3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/rd_elements_vertical_padding"
+        android:layout_gravity="center_horizontal"
+        style="@style/rd_text_smaller"/>
+
+    <TextView
+        android:id="@+id/rd_biz_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingBottom="@dimen/rd_elements_vertical_padding"
+        android:layout_gravity="center_horizontal"
+        style="@style/rd_text_medium"/>
+
+    </LinearLayout>
+    </merge>

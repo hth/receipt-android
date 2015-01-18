@@ -13,7 +13,8 @@
     <!--       App gray      -->
     <color name="gray_light">#CCCCCC</color>
     <color name="gray">#B2B2B2</color>
-    <color name="gray_dark">#8A8A8A</color>
+    <color name="gray_dark">#6C6C6C</color>
+    <color name="gray_darker">#444444</color>
 
 
     <!--       Facebook blue      -->
