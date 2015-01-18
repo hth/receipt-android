@@ -106,6 +106,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "executing onCreate");
+        ReceiptofiApplication.homeActivityResumed();
         setContentView(R.layout.home_page);
         ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
@@ -136,7 +137,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "executing onResume");
-        ReceiptofiApplication.homeActivityResumed();
         Log.d(TAG, "Done onResume!!");
     }
 
@@ -144,7 +144,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     protected void onPause() {
         super.onPause();
         Log.d(TAG, "executing onPause");
-        ReceiptofiApplication.homeActivityPaused();
         if (optionMenu != null) {
             endAnimation();
         }
@@ -388,6 +387,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ReceiptofiApplication.homeActivityPaused();
         AppUtils.setHomePageContext(null);
     }
 
