@@ -9,8 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/expandable_list_child_padding_left"
-        style="@style/exp_list_child_text_left_primary_style"
-        android:text="Costco"/>
+        style="@style/exp_list_child_text_left_primary_style" />
 
     <TextView
         android:id="@+id/exp_list_child_date"
@@ -18,8 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/exp_list_child_buz_name"
         android:paddingLeft="@dimen/expandable_list_child_padding_left"
-        style="@style/exp_list_child_text_left_secondary_style"
-        android:text="08/02/2014"/>
+        style="@style/exp_list_child_text_left_secondary_style" />
 
 
     <TextView
@@ -31,8 +29,7 @@
         android:layout_centerVertical="true"
         android:gravity="right"
         android:paddingRight="@dimen/expandable_list_child_padding_right"
-        style="@style/exp_list_child_text_right_style"
-        android:text="$25.06"/>
+        style="@style/exp_list_child_text_right_style" />
 
 
 
