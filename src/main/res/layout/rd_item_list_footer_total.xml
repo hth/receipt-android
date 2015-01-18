@@ -9,20 +9,19 @@
     android:background="@drawable/rd_item_selector">
 
     <TextView
-        android:id="@+id/rd_list_item_header_total_title"
+        android:id="@+id/rd_item_list_footer_total_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/rd_list_item_text_right_style"
         android:text="@string/rd_item_header_total_title"/>
 
     <TextView
-        android:id="@+id/rd_list_item_header_total_amount"
+        android:id="@+id/rd_item_list_footer_total_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:gravity="right"
         style="@style/rd_list_item_text_right_style"
-        android:textColor="@color/app_theme_txt_color"
-        android:text="$29.99"/>
+        android:textColor="@color/app_theme_txt_color"/>
 
 </RelativeLayout>
