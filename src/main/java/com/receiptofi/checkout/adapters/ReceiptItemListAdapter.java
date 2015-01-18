@@ -25,7 +25,7 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
     private List<ReceiptItemModel> rdItems;
 
     public ReceiptItemListAdapter(Context context, List<ReceiptItemModel> items) {
-        super(context, R.layout.rd_list_item, items);
+        super(context, R.layout.rd_item_list, items);
         this.context = context;
         this.rdItems = items;
         inflater = LayoutInflater.from(context);
@@ -56,7 +56,7 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
         try {
             ViewHolder holder;
             if(convertView == null){
-                convertView = inflater.inflate(R.layout.rd_list_item, parent, false);
+                convertView = inflater.inflate(R.layout.rd_item_list, parent, false);
 
                 holder = new ViewHolder();
                 holder.title = (TextView) convertView.findViewById(R.id.rd_list_item_title);

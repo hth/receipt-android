@@ -42,6 +42,9 @@ public class ReceiptDetailFragment extends Fragment {
 
     // Receipt detail list item
     private ListView rdItemsList;
+    private TextView taxDscpView;
+    private TextView taxAmountView;
+    private TextView totalAmountView;
 
 
     @Override
@@ -68,6 +71,21 @@ public class ReceiptDetailFragment extends Fragment {
         rdDate = (TextView)receiptDetailView.findViewById(R.id.rd_date);
 
         rdItemsList = (ListView)receiptDetailView.findViewById(R.id.rd_items_list);
+
+        // Add list header
+        View header = View.inflate(getActivity(), R.layout.rd_item_list_header, null);
+        //header.setTag(TAG_HEADER);
+        rdItemsList.addHeaderView(header);
+
+        // Add tax footer
+        View taxFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_tax, null);
+        taxDscpView = (TextView)taxFooter.findViewById(R.id.rd_item_list_footer_tax_dscp);
+        taxAmountView = (TextView)taxFooter.findViewById(R.id.rd_item_list_footer_tax_amount);
+        rdItemsList.addFooterView(taxFooter);
+
+        View totalFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_total, null);
+        totalAmountView = (TextView)totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
+        rdItemsList.addFooterView(totalFooter);
 
         return receiptDetailView;
 
@@ -127,21 +145,14 @@ public class ReceiptDetailFragment extends Fragment {
         String formattedDate = outputDF.format(inputDF.parse(rdModel.getDate()));
         rdDate.setText(formattedDate);
 
-            // Add list header
-            View header = View.inflate(getActivity(), R.layout.rd_list_item_header, null);
-        rdItemsList.addHeaderView(header);
-            View taxFooter = View.inflate(getActivity(), R.layout.rd_list_item_footer_tax, null);
 
             // Add tax footer
-            TextView taxDscpView = (TextView)taxFooter.findViewById(R.id.rd_list_item_header_tax_dscp);
-            TextView taxAmountView = (TextView)taxFooter.findViewById(R.id.rd_list_item_header_tax_amount);
             taxDscpView.setText(Double.toString(rdModel.getPtax()));
-           // taxAmountView.setText(rdModel.);
-            rdItemsList.addFooterView(taxFooter);
+            // TODO fix me
+            taxAmountView.setText(Double.toString(rdModel.getPtax()));
 
-            // Add tax footer
-            View totalFooter = View.inflate(getActivity(), R.layout.rd_list_item_footer_total, null);
-            rdItemsList.addFooterView(totalFooter);
+            // Add total footer
+            totalAmountView.setText(Double.toString(rdModel.getTotal()));
 
             // Set Adaptor on items list
         rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));
