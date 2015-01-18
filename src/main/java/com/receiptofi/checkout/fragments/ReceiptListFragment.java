@@ -23,12 +23,13 @@ import java.util.List;
  */
 public class ReceiptListFragment extends Fragment {
 
-    View rootView;
-    ExpandableListView explv;
-    List<ReceiptGroupHeader> headerList;
+    private View rootView;
+    private ExpandableListView explv;
+    private List<ReceiptGroupHeader> headerList;
     public static List<List<ReceiptModel>> childListGroup;
 
-    OnReceiptSelectedListener mCallback;
+    private OnReceiptSelectedListener mCallback;
+    public static ReceiptGroup receiptGroup;
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnReceiptSelectedListener {
@@ -37,9 +38,6 @@ public class ReceiptListFragment extends Fragment {
     }
 
     public ReceiptListFragment() {
-
-        // Get data for master/detail views
-        ReceiptGroup receiptGroup = MonthlyReportUtils.fetchMonthly();
         if(receiptGroup != null) {
             headerList = receiptGroup.getReceiptGroupHeaders();
             childListGroup = receiptGroup.getReceiptModels();

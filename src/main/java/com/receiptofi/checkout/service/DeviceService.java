@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -114,15 +115,20 @@ public class DeviceService {
             ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
         }
 
-        MonthlyReportUtils.computeMonthlyReceiptReport();
+        if (!dataWrapper.getReceiptModels().isEmpty()) {
+            MonthlyReportUtils.computeMonthlyReceiptReport();
 
-        String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
-        Message amountMessage = new Message();
-        amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
-        amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
-        if (ReceiptofiApplication.isHomeActivityVisible()) {
-            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
-            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
+            String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
+            Message amountMessage = new Message();
+            amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
+            amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
+            if (ReceiptofiApplication.isHomeActivityVisible()) {
+                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
+                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
+            }
+
+            /** Populate data in advance for master/detail views */
+            ReceiptListFragment.receiptGroup = MonthlyReportUtils.fetchMonthly();
         }
     }
 }
