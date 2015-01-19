@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
+import com.receiptofi.checkout.BuildConfig;
 import com.receiptofi.checkout.http.types.Protocol;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
@@ -200,17 +201,17 @@ public final class ExternalCall {
 
     private static HttpGet getHttpGet(String api) {
         if (!TextUtils.isEmpty(api)) {
-            return new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+            return new HttpGet(BuildConfig.RECEIPTOFI_MOBILE + api);
         } else {
-            return new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+            return new HttpGet(BuildConfig.RECEIPTOFI_MOBILE);
         }
     }
 
     private static HttpPost getHttpPost(String api) {
         if (!TextUtils.isEmpty(api)) {
-            return new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+            return new HttpPost(BuildConfig.RECEIPTOFI_MOBILE + api);
         } else {
-            return new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+            return new HttpPost(BuildConfig.RECEIPTOFI_MOBILE);
         }
     }
 
@@ -221,9 +222,9 @@ public final class ExternalCall {
 
         HttpPost httpPost;
         if (API != null) {
-            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + API);
+            httpPost = new HttpPost(BuildConfig.RECEIPTOFI_MOBILE + API);
         } else {
-            httpPost = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+            httpPost = new HttpPost(BuildConfig.RECEIPTOFI_MOBILE);
         }
 
         httpPost.setEntity(new UrlEncodedFormEntity(params));
@@ -248,9 +249,9 @@ public final class ExternalCall {
         HttpGet httpGet;
 
         if (API != null) {
-            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + API);
+            httpGet = new HttpGet(BuildConfig.RECEIPTOFI_MOBILE + API);
         } else {
-            httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+            httpGet = new HttpGet(BuildConfig.RECEIPTOFI_MOBILE);
         }
         if (params != null) {
             for (NameValuePair pair : params) {
@@ -312,9 +313,9 @@ public final class ExternalCall {
                     HttpGet httpGet;
 
                     if (null != api) {
-                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+                        httpGet = new HttpGet(BuildConfig.RECEIPTOFI_MOBILE + api);
                     } else {
-                        httpGet = new HttpGet(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+                        httpGet = new HttpGet(BuildConfig.RECEIPTOFI_MOBILE);
                     }
 
                     httpGet.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
@@ -355,9 +356,9 @@ public final class ExternalCall {
 
                     HttpClient client = new DefaultHttpClient();
                     if (api != null) {
-                        post = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL + api);
+                        post = new HttpPost(BuildConfig.RECEIPTOFI_MOBILE + api);
                     } else {
-                        post = new HttpPost(MobileServerEndpoints.RECEIPTOFI_MOBILE_URL);
+                        post = new HttpPost(BuildConfig.RECEIPTOFI_MOBILE);
                     }
 
                     File imageFile = new File(imageModel.imgPath);
