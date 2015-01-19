@@ -13,7 +13,7 @@ if (!hasProperty('env')) {
 }
 
 if (env == 'debug' || env == 'release') {
-    ext.apkName = "$env-" + System.getenv().BUILD_NUMBER?.toInteger() + ".apk"
+    ext.apkName = "-" + System.getenv().BUILD_NUMBER?.toInteger() + ".apk"
 }
 
 def manifestVersionName() {
