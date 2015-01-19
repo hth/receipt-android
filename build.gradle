@@ -24,11 +24,16 @@ def manifestVersionName() {
 }
 
 ext.versionName = manifestVersionName()
-println "Building Receiptofi Checkout for environment: $env app-version: $versionName apkName: $apkName"
+println "Building Receiptofi Checkout for " +
+        "environment: $env " +
+        "app-version: $versionName " +
+        "apkName ends with : $apkName"
 
 apply plugin: 'com.android.application'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
+
+apply from: 'config/quality.gradle'
 
 repositories {
     mavenCentral()
