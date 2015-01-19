@@ -208,7 +208,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
     private void setUpChartView(){
         // change the color of the center-hole
-        mChart.setHoleColor(R.color.hole_color);
+        mChart.setHoleColor(getResources().getColor(R.color.hole_color));
 
         // Causing java.lang.RuntimeException: native typeface cannot be made
         mChart.setValueTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Regular.ttf"));
