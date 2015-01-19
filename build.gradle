@@ -160,8 +160,8 @@ android {
             buildConfigField BOOLEAN, ENABLE_SHARING, TRUE
             buildConfigField BOOLEAN, DEBUG_IMAGES, TRUE
 
-            buildConfigField STRING, "PROVIDER_AUTHORITY", "\"com.receiptofi.checkout.debug\""
-            buildConfigField STRING, "API_ENDPOINT", localDebugEndpoint
+            buildConfigField STRING, "PROVIDER_AUTHORITY", localProviderAuthority
+            buildConfigField STRING, "API_ENDPOINT", localEndpoint
         }
 
         staging {
@@ -186,8 +186,8 @@ android {
             buildConfigField BOOLEAN, ENABLE_SHARING, FALSE
             buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
 
-            buildConfigField STRING, "PROVIDER_AUTHORITY", "\"com.receiptofi.checkout.test\""
-            buildConfigField STRING, "API_ENDPOINT", "\"https://test.receiptofi.com/receipt-mobile\""
+            buildConfigField STRING, "PROVIDER_AUTHORITY", stagingProviderAuthority
+            buildConfigField STRING, "API_ENDPOINT", stagingEndpoint
         }
 
         release {
@@ -212,8 +212,8 @@ android {
             buildConfigField BOOLEAN, ENABLE_SHARING, FALSE
             buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
 
-            buildConfigField STRING, "PROVIDER_AUTHORITY", "\"com.receiptofi.checkout\""
-            buildConfigField STRING, "API_ENDPOINT", "\"https://live.receiptofi.com/receipt-mobile\""
+            buildConfigField STRING, "PROVIDER_AUTHORITY", liveProviderAuthority
+            buildConfigField STRING, "API_ENDPOINT", liveEndpoint
         }
     }
 
