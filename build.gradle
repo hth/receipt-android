@@ -12,8 +12,8 @@ if (!hasProperty('env')) {
     ext.env = System.env['GRADLE_ENV']
 }
 
-if (env == 'test' || env == 'prod') {
-    ext.apkName = "-" + System.getenv().BUILD_NUMBER?.toInteger() + ".apk"
+if (env == 'debug' || env == 'release') {
+    ext.apkName = "$env-" + System.getenv().BUILD_NUMBER?.toInteger() + ".apk"
 }
 
 def manifestVersionName() {
