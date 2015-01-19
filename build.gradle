@@ -161,7 +161,7 @@ android {
             buildConfigField BOOLEAN, DEBUG_IMAGES, TRUE
 
             buildConfigField STRING, "PROVIDER_AUTHORITY", localProviderAuthority
-            buildConfigField STRING, "API_ENDPOINT", localEndpoint
+            buildConfigField STRING, "RECEIPTOFI_MOBILE", localEndpoint
         }
 
         staging {
@@ -187,7 +187,7 @@ android {
             buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
 
             buildConfigField STRING, "PROVIDER_AUTHORITY", stagingProviderAuthority
-            buildConfigField STRING, "API_ENDPOINT", stagingEndpoint
+            buildConfigField STRING, "RECEIPTOFI_MOBILE", stagingEndpoint
         }
 
         release {
@@ -213,7 +213,7 @@ android {
             buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
 
             buildConfigField STRING, "PROVIDER_AUTHORITY", liveProviderAuthority
-            buildConfigField STRING, "API_ENDPOINT", liveEndpoint
+            buildConfigField STRING, "RECEIPTOFI_MOBILE", liveEndpoint
         }
     }
 
