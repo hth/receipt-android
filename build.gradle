@@ -13,7 +13,7 @@ if (!hasProperty('env')) {
 }
 
 def buildNumber = System.getenv("BUILD_NUMBER") ?: "0"
-if (env == 'debug' || env == 'release') {
+if (env == 'debug' || env == 'release' || env == 'staging') {
     ext.apkName = "-$buildNumber.apk"
 }
 
