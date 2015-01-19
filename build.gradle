@@ -12,8 +12,9 @@ if (!hasProperty('env')) {
     ext.env = System.env['GRADLE_ENV']
 }
 
-if (env == 'debug' || env == 'release') {
-    ext.apkName = "-" + System.getenv().BUILD_NUMBER?.toInteger() + ".apk"
+def buildNumber = System.getenv("BUILD_NUMBER") ?: "0"
+if (env == 'debug' || env == 'release' || env == 'staging') {
+    ext.apkName = "-$buildNumber.apk"
 }
 
 def manifestVersionName() {
@@ -77,6 +78,7 @@ android {
 
         // For now we enable strict mode for all the configs
         buildConfigField 'boolean', 'STRICT_MODE', 'true'
+        buildConfigField "String", "BUILD", "\"$buildNumber\""
 
         applicationVariants.all { variant ->
             variant.outputs.each { output ->
@@ -125,14 +127,16 @@ android {
 //    }
 
     buildTypes {
-//        def BOOLEAN = "boolean"
-//        def TRUE = "true"
-//        def FALSE = "false"
-//        def LOG_HTTP_REQUESTS = "LOG_HTTP_REQUESTS"
-//        def REPORT_CRASHES = "REPORT_CRASHES"
-//        def ENABLE_VIEW_SERVER = "ENABLE_VIEW_SERVER"
-//        def ENABLE_SHARING = "ENABLE_SHARING"
-//        def DEBUG_IMAGES = "DEBUG_IMAGES"
+        def BOOLEAN = "boolean"
+        def STRING = "String"
+        def TRUE = "true"
+        def FALSE = "false"
+        def LOG_HTTP_REQUESTS = "LOG_HTTP_REQUESTS"
+        def REPORT_CRASHES = "REPORT_CRASHES"
+        def ENABLE_VIEW_SERVER = "ENABLE_VIEW_SERVER"
+        def ENABLE_SHARING = "ENABLE_SHARING"
+        def DEBUG_IMAGES = "DEBUG_IMAGES"
+        def BUILD_NUMBER =
 
         debug {
             debuggable true
@@ -150,11 +154,40 @@ android {
 
 //            signingConfig signingConfigs.debug
 
-//            buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, TRUE
-//            buildConfigField BOOLEAN, REPORT_CRASHES, FALSE
-//            buildConfigField BOOLEAN, ENABLE_VIEW_SERVER, TRUE
-//            buildConfigField BOOLEAN, ENABLE_SHARING, TRUE
-//            buildConfigField BOOLEAN, DEBUG_IMAGES, TRUE
+            buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, TRUE
+            buildConfigField BOOLEAN, REPORT_CRASHES, FALSE
+            buildConfigField BOOLEAN, ENABLE_VIEW_SERVER, TRUE
+            buildConfigField BOOLEAN, ENABLE_SHARING, TRUE
+            buildConfigField BOOLEAN, DEBUG_IMAGES, TRUE
+
+            buildConfigField STRING, "PROVIDER_AUTHORITY", "\"com.receiptofi.checkout.debug\""
+            buildConfigField STRING, "API_ENDPOINT", localDebugEndpoint
+        }
+
+        staging {
+            debuggable true
+            minifyEnabled true
+
+            proguardFile 'library-proguard/proguard-crashlytics.pro'
+            proguardFile 'library-proguard/proguard-facebook.pro'
+            proguardFile 'library-proguard/proguard-facebook-conceal.pro'
+            proguardFile 'library-proguard/proguard-google-analytics.pro'
+            proguardFile 'library-proguard/proguard-google-play-services.pro'
+            proguardFile 'library-proguard/proguard-gson.pro'
+
+            proguardFile 'project-debug-proguard.config'
+            proguardFile getDefaultProguardFile('proguard-android.txt')
+
+//            signingConfig signingConfigs.debug
+
+            buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, TRUE
+            buildConfigField BOOLEAN, REPORT_CRASHES, TRUE
+            buildConfigField BOOLEAN, ENABLE_VIEW_SERVER, FALSE
+            buildConfigField BOOLEAN, ENABLE_SHARING, FALSE
+            buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
+
+            buildConfigField STRING, "PROVIDER_AUTHORITY", "\"com.receiptofi.checkout.test\""
+            buildConfigField STRING, "API_ENDPOINT", "\"https://test.receiptofi.com/receipt-mobile\""
         }
 
         release {
@@ -173,11 +206,14 @@ android {
 
 //            signingConfig signingConfigs.release
 
-//            buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, FALSE
-//            buildConfigField BOOLEAN, REPORT_CRASHES, TRUE
-//            buildConfigField BOOLEAN, ENABLE_VIEW_SERVER, FALSE
-//            buildConfigField BOOLEAN, ENABLE_SHARING, FALSE
-//            buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
+            buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, FALSE
+            buildConfigField BOOLEAN, REPORT_CRASHES, TRUE
+            buildConfigField BOOLEAN, ENABLE_VIEW_SERVER, FALSE
+            buildConfigField BOOLEAN, ENABLE_SHARING, FALSE
+            buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
+
+            buildConfigField STRING, "PROVIDER_AUTHORITY", "\"com.receiptofi.checkout\""
+            buildConfigField STRING, "API_ENDPOINT", "\"https://live.receiptofi.com/receipt-mobile\""
         }
     }
 
