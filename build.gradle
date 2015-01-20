@@ -136,7 +136,6 @@ android {
         def ENABLE_VIEW_SERVER = "ENABLE_VIEW_SERVER"
         def ENABLE_SHARING = "ENABLE_SHARING"
         def DEBUG_IMAGES = "DEBUG_IMAGES"
-        def BUILD_NUMBER =
 
         debug {
             debuggable true
