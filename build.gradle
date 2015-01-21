@@ -149,6 +149,7 @@ android {
             proguardFile 'library-proguard/proguard-google-analytics.pro'
             proguardFile 'library-proguard/proguard-google-play-services.pro'
             proguardFile 'library-proguard/proguard-gson.pro'
+            proguardFile 'library-proguard/proguard-mikephil-charting.pro'
 
             proguardFile 'project-debug-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
@@ -175,6 +176,7 @@ android {
             proguardFile 'library-proguard/proguard-google-analytics.pro'
             proguardFile 'library-proguard/proguard-google-play-services.pro'
             proguardFile 'library-proguard/proguard-gson.pro'
+            proguardFile 'library-proguard/proguard-mikephil-charting.pro'
 
             proguardFile 'project-debug-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
@@ -201,6 +203,7 @@ android {
             proguardFile 'library-proguard/proguard-google-analytics.pro'
             proguardFile 'library-proguard/proguard-google-play-services.pro'
             proguardFile 'library-proguard/proguard-gson.pro'
+            proguardFile 'library-proguard/proguard-mikephil-charting.pro'
 
             proguardFile 'project-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
