@@ -18,6 +18,6 @@ Use [apktool] (https://code.google.com/p/android-apktool/) to unpack apk file
 
 ### Copy and Install proguard apk to device
 
-    adb push -p checkout-debug.apk /data/local/tmp/com.receiptofi.checkout
+    adb push -p checkout-debug.apk /data/local/tmp/com.receiptofi.checkout &&
     adb shell pm install -r "/data/local/tmp/com.receiptofi.checkout"
 
