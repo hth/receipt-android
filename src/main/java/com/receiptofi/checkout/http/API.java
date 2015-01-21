@@ -42,10 +42,10 @@ public class API {
         public static final String PID_GOOGLE = "GOOGLE";
 
         // Server client id
-        public static final String SERVER_CLIENT_ID_LOCAL = "917069462497-aa1hduf9dh69niv19aq57hp422vqc5p1.apps.googleusercontent.com";
-        public static final String SERVER_CLIENT_ID_TEST = "917069462497-8adldf383r8d5g5cdj867dpuus444i49.apps.googleusercontent.com";
-        public static final String SERVER_CLIENT_ID_LIVE = "917069462497-62ejpasmc8ptjpujgi207fqsldh2lma3.apps.googleusercontent.com";
-        public static final String SERVER_CLIENT_ID = SERVER_CLIENT_ID_LOCAL;
+//        public static final String SERVER_CLIENT_ID_LOCAL = "917069462497-aa1hduf9dh69niv19aq57hp422vqc5p1.apps.googleusercontent.com";
+//        public static final String SERVER_CLIENT_ID_TEST = "917069462497-8adldf383r8d5g5cdj867dpuus444i49.apps.googleusercontent.com";
+//        public static final String SERVER_CLIENT_ID_LIVE = "917069462497-62ejpasmc8ptjpujgi207fqsldh2lma3.apps.googleusercontent.com";
+//        public static final String SERVER_CLIENT_ID = SERVER_CLIENT_ID_LOCAL;
 
         // Sign in
         public static final String SIGNIN_EMAIL = "mail";
