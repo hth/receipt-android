@@ -411,7 +411,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         String token = null;
         //String scope = Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME;
-        //String scopes = "audience:server:client_id:" + API.KEYS.SERVER_CLIENT_ID;
+        //String scopes = "audience:server:client_id:" + API.key.SERVER_CLIENT_ID;
 
         @Override
         protected Void doInBackground(Void... params) {
@@ -425,7 +425,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 Bundle appActivities = new Bundle();
                 appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES, "");
                 String scope = Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME;
-                String scopes = "oauth2:server:client_id:" + API.key.SERVER_CLIENT_ID + ":api_scope:" + scope;
+                String scopes = "oauth2:server:client_id:" + BuildConfig.GOOGLE_CLIENT_ID + ":api_scope:" + scope;
                 //String scopes = "oauth2:server:client_id:<SERVER-CLIENT-ID>:api_scope:<SCOPE1> <SCOPE2>";
 
                 token = GoogleAuthUtil.getToken(

@@ -164,6 +164,7 @@ android {
 
             buildConfigField STRING, "PROVIDER_AUTHORITY", localProviderAuthority
             buildConfigField STRING, "RECEIPTOFI_MOBILE", localEndpoint
+            buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLocal
         }
 
         staging {
@@ -191,6 +192,7 @@ android {
 
             buildConfigField STRING, "PROVIDER_AUTHORITY", stagingProviderAuthority
             buildConfigField STRING, "RECEIPTOFI_MOBILE", stagingEndpoint
+            buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdStaging
         }
 
         release {
@@ -218,6 +220,7 @@ android {
 
             buildConfigField STRING, "PROVIDER_AUTHORITY", liveProviderAuthority
             buildConfigField STRING, "RECEIPTOFI_MOBILE", liveEndpoint
+            buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLive
         }
     }
 
