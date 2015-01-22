@@ -35,6 +35,7 @@ if (env == 'release') {
                 props.containsKey('KEY_ALIAS') &&
                 props.containsKey('KEY_PASSWORD')
         ) {
+            println props['STORE_FILE']
             android.signingConfigs.staging.storeFile = file(props['STORE_FILE'])
             android.signingConfigs.staging.storePassword = props['STORE_PASSWORD']
             android.signingConfigs.staging.keyAlias = props['KEY_ALIAS']
