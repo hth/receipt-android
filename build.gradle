@@ -113,7 +113,6 @@ android {
     }
 
     signingConfigs {
-        debug
         staging
         release
     }
@@ -145,8 +144,6 @@ android {
 
             proguardFile 'project-debug-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
-
-            signingConfig signingConfigs.debug
 
             buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, TRUE
             buildConfigField BOOLEAN, REPORT_CRASHES, FALSE
@@ -277,4 +274,4 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.2.1'
 }
 
-defaultTasks 'clean', 'build', 'assemble'
+defaultTasks 'clean', 'assembleDebug'

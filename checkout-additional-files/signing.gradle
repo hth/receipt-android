@@ -48,29 +48,7 @@ if (env == 'release') {
         android.buildTypes.staging.signingConfig = null
     }
 } else if (env == 'debug') {
-    def propFile = new File(checkoutFileLocation + debugProperties)
-
-    if (propFile.canRead()) {
-        props.load(new FileInputStream(propFile))
-
-        if (props != null &&
-                props.containsKey('STORE_FILE') &&
-                props.containsKey('STORE_PASSWORD') &&
-                props.containsKey('KEY_ALIAS') &
-                props.containsKey('KEY_PASSWORD')
-        ) {
-            android.signingConfigs.debug.storeFile = file(props['STORE_FILE'])
-            android.signingConfigs.debug.storePassword = props['STORE_PASSWORD']
-            android.signingConfigs.debug.keyAlias = props['KEY_ALIAS']
-            android.signingConfigs.debug.keyPassword = props['KEY_PASSWORD']
-        } else {
-            println 'debug.signing.properties found but some entries are missing'
-            android.buildTypes.debug.signingConfig = null
-        }
-    } else {
-        println 'debug.signing.properties not found'
-        android.buildTypes.debug.signingConfig = null
-    }
+    println 'Found debug environment'
 } else {
     println 'No such environment condition reached'
 }
