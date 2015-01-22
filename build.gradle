@@ -151,8 +151,8 @@ android {
             buildConfigField BOOLEAN, ENABLE_SHARING, TRUE
             buildConfigField BOOLEAN, DEBUG_IMAGES, TRUE
 
-            buildConfigField STRING, "PROVIDER_AUTHORITY", localProviderAuthority
-            buildConfigField STRING, "RECEIPTOFI_MOBILE", localEndpoint
+            buildConfigField STRING, "PROVIDER_AUTHORITY", debugProviderAuthority
+            buildConfigField STRING, "RECEIPTOFI_MOBILE", debugEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLocal
         }
 
@@ -211,8 +211,8 @@ android {
             buildConfigField BOOLEAN, ENABLE_SHARING, FALSE
             buildConfigField BOOLEAN, DEBUG_IMAGES, FALSE
 
-            buildConfigField STRING, "PROVIDER_AUTHORITY", liveProviderAuthority
-            buildConfigField STRING, "RECEIPTOFI_MOBILE", liveEndpoint
+            buildConfigField STRING, "PROVIDER_AUTHORITY", releaseProviderAuthority
+            buildConfigField STRING, "RECEIPTOFI_MOBILE", releaseEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLive
         }
     }
