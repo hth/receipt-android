@@ -26,7 +26,7 @@ Use [apktool] (https://code.google.com/p/android-apktool/) to unpack apk file
 
 ### Signing APK
 
-    keytool -genkey -v -keystore checkout-debug.keystore -alias checkout.debug -keyalg RSA -keysize 2048 -validity 90
+    keytool -genkey -v -keystore checkout-staging.keystore -alias staging.checkout -keyalg RSA -keysize 2048 -validity 90
 
     Enter keystore password:
     Re-enter new password:
