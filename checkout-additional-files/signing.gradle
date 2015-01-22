@@ -1,0 +1,76 @@
+def Properties props = new Properties()
+if (env == 'release') {
+    def propFile = new File(checkoutFileLocation + releaseProperties)
+
+    if (propFile.canRead()) {
+        props.load(new FileInputStream(propFile))
+
+        if (props != null &&
+                props.containsKey('STORE_FILE') &&
+                props.containsKey('STORE_PASSWORD') &&
+                props.containsKey('KEY_ALIAS') &&
+                props.containsKey('KEY_PASSWORD')
+        ) {
+            android.signingConfigs.release.storeFile = file(props['STORE_FILE'])
+            android.signingConfigs.release.storePassword = props['STORE_PASSWORD']
+            android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
+            android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
+        } else {
+            println 'release.signing.properties found but some entries are missing'
+            android.buildTypes.release.signingConfig = null
+        }
+    } else {
+        println 'release.signing.properties not found'
+        android.buildTypes.release.signingConfig = null
+    }
+} else if (env == 'staging') {
+    def propFile = new File(checkoutFileLocation + stagingProperties)
+
+    if (propFile.canRead()) {
+        props.load(new FileInputStream(propFile))
+
+        if (props != null &&
+                props.containsKey('STORE_FILE') &&
+                props.containsKey('STORE_PASSWORD') &&
+                props.containsKey('KEY_ALIAS') &&
+                props.containsKey('KEY_PASSWORD')
+        ) {
+            android.signingConfigs.staging.storeFile = file(props['STORE_FILE'])
+            android.signingConfigs.staging.storePassword = props['STORE_PASSWORD']
+            android.signingConfigs.staging.keyAlias = props['KEY_ALIAS']
+            android.signingConfigs.staging.keyPassword = props['KEY_PASSWORD']
+        } else {
+            println 'staging.signing.properties found but some entries are missing'
+            android.buildTypes.staging.signingConfig = null
+        }
+    } else {
+        println 'staging.signing.properties not found'
+        android.buildTypes.staging.signingConfig = null
+    }
+} else if (env == 'debug') {
+    def propFile = new File(checkoutFileLocation + debugProperties)
+
+    if (propFile.canRead()) {
+        props.load(new FileInputStream(propFile))
+
+        if (props != null &&
+                props.containsKey('STORE_FILE') &&
+                props.containsKey('STORE_PASSWORD') &&
+                props.containsKey('KEY_ALIAS') &
+                props.containsKey('KEY_PASSWORD')
+        ) {
+            android.signingConfigs.debug.storeFile = file(props['STORE_FILE'])
+            android.signingConfigs.debug.storePassword = props['STORE_PASSWORD']
+            android.signingConfigs.debug.keyAlias = props['KEY_ALIAS']
+            android.signingConfigs.debug.keyPassword = props['KEY_PASSWORD']
+        } else {
+            println 'debug.signing.properties found but some entries are missing'
+            android.buildTypes.debug.signingConfig = null
+        }
+    } else {
+        println 'debug.signing.properties not found'
+        android.buildTypes.debug.signingConfig = null
+    }
+} else {
+    println 'No such environment condition reached'
+}

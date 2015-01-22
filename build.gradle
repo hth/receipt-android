@@ -112,21 +112,12 @@ android {
         exclude 'LICENSE.txt'
     }
 
-//    signingConfigs {
-//        debug {
-//            storeFile file('keys/debug.keystore')
-//            storePassword 'android'
-//            keyAlias 'AndroidDebugKey'
-//            keyPassword 'android'
-//        }
-//
-//        release {
-//            storeFile file('keys/release.keystore')
-//            storePassword 'android'
-//            keyAlias 'AndroidReleaseKey'
-//            keyPassword 'android'
-//        }
-//    }
+    signingConfigs {
+        debug
+        staging
+        release
+    }
+    apply from: 'checkout-additional-files/signing.gradle'
 
     buildTypes {
         def BOOLEAN = "boolean"
@@ -155,7 +146,7 @@ android {
             proguardFile 'project-debug-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
 
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.debug
 
             buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, TRUE
             buildConfigField BOOLEAN, REPORT_CRASHES, FALSE
@@ -171,6 +162,7 @@ android {
         staging {
             debuggable true
             minifyEnabled true
+            zipAlignEnabled true
 
             proguardFile 'library-proguard/proguard-crashlytics.pro'
             proguardFile 'library-proguard/proguard-facebook.pro'
@@ -184,7 +176,7 @@ android {
             proguardFile 'project-debug-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
 
-//            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.staging
 
             buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, TRUE
             buildConfigField BOOLEAN, REPORT_CRASHES, TRUE
@@ -200,6 +192,7 @@ android {
         release {
             debuggable false
             minifyEnabled true
+            zipAlignEnabled true
 
             proguardFile 'library-proguard/proguard-crashlytics.pro'
             proguardFile 'library-proguard/proguard-facebook.pro'
@@ -213,7 +206,7 @@ android {
             proguardFile 'project-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
 
-//            signingConfig signingConfigs.release
+            signingConfig signingConfigs.release
 
             buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, FALSE
             buildConfigField BOOLEAN, REPORT_CRASHES, TRUE

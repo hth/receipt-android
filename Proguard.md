@@ -1,4 +1,6 @@
 
+## Proguard Decompile And Signing APK
+
 ### Proguard Decompile
 
 - Rename apk file to zip
@@ -21,3 +23,31 @@ Use [apktool] (https://code.google.com/p/android-apktool/) to unpack apk file
     adb push -p checkout-debug.apk /data/local/tmp/com.receiptofi.checkout &&
     adb shell pm install -r "/data/local/tmp/com.receiptofi.checkout"
 
+
+### Signing APK
+
+    keytool -genkey -v -keystore checkout-debug.keystore -alias checkout.debug -keyalg RSA -keysize 2048 -validity 90
+
+    Enter keystore password:
+    Re-enter new password:
+    What is your first and last name?
+      [Unknown]:  receiptofi.com
+    What is the name of your organizational unit?
+      [Unknown]:  Checkout
+    What is the name of your organization?
+      [Unknown]:  Receiptofi Inc
+    What is the name of your City or Locality?
+      [Unknown]:  Sunnyvale
+    What is the name of your State or Province?
+      [Unknown]:  California
+    What is the two-letter country code for this unit?
+      [Unknown]:  US
+    Is CN=receiptofi.com, OU=Checkout, O=Receiptofi Inc, L=Sunnyvale, ST=California, C=US correct?
+      [no]:  yes
+
+    Generating 2,048 bit RSA key pair and self-signed certificate (SHA256withRSA) with a validity of 90 days
+    	for: CN=receiptofi.com, OU=Checkout, O=Receiptofi Inc, L=Sunnyvale, ST=California, C=US
+    Enter key password for <checkout.staging>
+    	(RETURN if same as keystore password):
+    Re-enter new password:
+    [Storing checkout-staging.keystore]
