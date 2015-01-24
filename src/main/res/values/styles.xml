@@ -34,26 +34,34 @@
     </style>
 
     <!--    RD view    -->
-    <style name="rd_text_large" parent="@android:style/TextAppearance.Large">
+    <style name="text_large" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@color/black</item>
 
     </style>
 
-    <style name="rd_text_larger" parent="@style/rd_text_large">
+    <style name="text_larger" parent="@style/text_large">
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="rd_text_medium" parent="@android:style/TextAppearance.Medium">
+    <style name="text_medium" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/gray_darker</item>
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="rd_text_small" parent="@android:style/TextAppearance.Small">
+    <style name="action_text_medium" parent="@style/text_medium">
+        <item name="android:textColor">@drawable/action_text_gray_darker_color</item>
+    </style>
+
+    <style name="text_small" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/gray_dark</item>
     </style>
 
-    <style name="rd_text_smaller" parent="@style/rd_text_small">
+    <style name="text_smaller" parent="@style/text_small">
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="action_text_smaller" parent="@style/text_smaller">
+        <item name="android:textColor">@drawable/action_text_gray_dark_color</item>
     </style>
 
     <style name="rd_list_item_text_left_primary_style" parent="@android:style/TextAppearance.Small">
