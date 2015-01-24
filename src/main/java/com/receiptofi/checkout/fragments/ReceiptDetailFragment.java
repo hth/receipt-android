@@ -1,11 +1,14 @@
 package com.receiptofi.checkout.fragments;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -32,6 +35,7 @@ public class ReceiptDetailFragment extends Fragment {
 
     // Receipt detail biz info
     private TextView rdBizName;
+    private LinearLayout rdBizAddress;
     private TextView rdBizAddLine1;
     private TextView rdBizAddLine2;
     private TextView rdBizAddLine3;
@@ -63,6 +67,7 @@ public class ReceiptDetailFragment extends Fragment {
         // Inflate the layout for this fragment
         View receiptDetailView = inflater.inflate(R.layout.receipt_detail_view, container, false);
         rdBizName = (TextView)receiptDetailView.findViewById(R.id.rd_biz_name);
+        rdBizAddress = (LinearLayout)receiptDetailView.findViewById(R.id.rd_biz_address);
         rdBizAddLine1 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line1);
         rdBizAddLine2 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line2);
         rdBizAddLine3 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line3);
@@ -115,10 +120,15 @@ public class ReceiptDetailFragment extends Fragment {
         Log.d(TAG, "executing updateReceiptDetailView");
         try {
         ReceiptModel rdModel = ReceiptListFragment.childListGroup.get(index).get(position);
-        rdBizName.setText(rdModel.getBizName());
+
+            // Biz address
+            final String bizName = rdModel.getBizName();
+            rdBizName.setText(bizName);
 
             // Address and phone block
-        StringTokenizer tokenizer = new StringTokenizer(rdModel.getAddress(), ",");
+           final String address = rdModel.getAddress();
+
+        StringTokenizer tokenizer = new StringTokenizer(address, ",");
         if(tokenizer.countTokens() <= 4){
             rdBizAddLine1.setText((tokenizer.nextToken()).trim());
             String addressLine2 = "";
@@ -139,7 +149,32 @@ public class ReceiptDetailFragment extends Fragment {
             rdBizAddLine3.setText(addressLine3.trim());
             rdBizAddLine3.setVisibility(View.VISIBLE);
         }
-            rdBizPhone.setText(rdModel.getPhone());
+            // Address action
+            rdBizAddress.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    String uriBegin = "geo:" + address;
+                    String query = address + "(" + bizName + ")";
+                    String encodedQuery = Uri.encode(query);
+                    String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
+                    Uri uri = Uri.parse(uriString);
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+                    startActivity(mapIntent);
+                }
+            });
+
+            //Phone action
+            final String phoneNumber = rdModel.getPhone().trim();
+            rdBizPhone.setText(phoneNumber);
+            rdBizPhone.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                    dialIntent.setData(Uri.parse("tel:" + phoneNumber));
+                    startActivity(dialIntent);
+                }
+            });
 
             // Date block
         DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");

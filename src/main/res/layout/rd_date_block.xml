@@ -5,7 +5,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
-        style="@style/rd_text_small"
+        style="@style/text_small"
         android:textStyle="bold"/>
 
     </merge>

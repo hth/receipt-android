@@ -214,7 +214,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.setValueTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Regular.ttf"));
         mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
 
-        mChart.setHoleRadius(55f);
+        mChart.setHoleRadius(45f);
 
         mChart.setDescription(getString(R.string.chart_desc));
         mChart.setDescriptionTextSize(16f);
