@@ -19,7 +19,8 @@ import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import java.util.List;
 
 /**
- * Created by PT on 1/1/15.
+ * User: PT
+ * Date: 1/1/15 12:44 PM
  */
 public class ReceiptListFragment extends Fragment {
 

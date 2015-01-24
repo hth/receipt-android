@@ -1,7 +1,8 @@
 package com.receiptofi.checkout.http.types;
 
 /**
- * Created by hitender on 1/2/15.
+ * User: hitender
+ * Date: 1/2/15 12:43 PM
  */
 public enum Protocol {
     POST, GET
