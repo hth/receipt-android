@@ -28,7 +28,7 @@ public class ExpenseTagUtils {
     }
 
     /**
-     * Insert item in table.
+     * Insert expense tags in table.
      *
      * @param expenseTag
      */
