@@ -1,7 +1,8 @@
 package com.receiptofi.checkout.model;
 
 /**
- * Created by hitender on 1/2/15.
+ * User: hitender
+ * Date: 1/2/15 12:45 PM
  */
 public class ReceiptGroupHeader {
 

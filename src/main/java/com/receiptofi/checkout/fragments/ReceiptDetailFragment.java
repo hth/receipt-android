@@ -22,7 +22,8 @@ import java.text.SimpleDateFormat;
 import java.util.StringTokenizer;
 
 /**
- * Created by PT on 1/1/15.
+ * User: PT
+ * Date: 1/1/15 12:44 PM
  */
 public class ReceiptDetailFragment extends Fragment {
 
