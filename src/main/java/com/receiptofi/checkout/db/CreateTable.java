@@ -83,4 +83,15 @@ public class CreateTable {
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
     }
+
+    public static void createTableExpenseTag(SQLiteDatabase db) {
+        Log.d(TAG, "executing createExpenseTag");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ExpenseTag.TABLE_NAME + "("
+                + DatabaseTable.ExpenseTag.ID + " TEXT ,"
+                + DatabaseTable.ExpenseTag.TAG + " TEXT ,"
+                + DatabaseTable.ExpenseTag.COLOR + " TEXT " +
+
+                ");");
+        Log.d(TAG, "Finished executing createTableItem");
+    }
 }
