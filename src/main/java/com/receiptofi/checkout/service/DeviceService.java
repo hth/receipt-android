@@ -14,6 +14,7 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
+import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.utils.db.ReceiptItemUtils;
@@ -106,6 +107,8 @@ public class DeviceService {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
         ReceiptUtils.insertReceipts(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insertItems(dataWrapper.getReceiptItemModels());
+        ExpenseTagUtils.insertExpenseTag(dataWrapper.getExpenseTagModels());
+
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, dataWrapper.getUnprocessedDocumentModel().getCount());
 
         Message countMessage = new Message();

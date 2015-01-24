@@ -49,6 +49,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             CreateTable.createTableKeyValue(db);
             CreateTable.createTableMonthlyReport(db);
             CreateTable.createTableItem(db);
+            CreateTable.createTableExpenseTag(db);
         }
     }
 

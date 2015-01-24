@@ -14,7 +14,8 @@ import com.receiptofi.checkout.model.ReceiptItemModel;
 import java.util.List;
 
 /**
- * Created by PT on 1/18/15.
+ * User: PT
+ * Date: 1/18/15 11:11 PM
  */
 public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 

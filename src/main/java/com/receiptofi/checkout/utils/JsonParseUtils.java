@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.DataWrapper;
+import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
@@ -15,13 +16,12 @@ import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
- * Created by hitender on 1/1/15.
+ * User: hitender
+ * Date: 1/1/15 11:11 PM
  */
 public class JsonParseUtils {
 
@@ -165,6 +165,31 @@ public class JsonParseUtils {
         }
     }
 
+    public static List<ExpenseTagModel> parseExpenses(JSONArray jsonArray) {
+        List<ExpenseTagModel> expenseTagModels = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                expenseTagModels.add(parseExpense(jsonArray.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return expenseTagModels;
+    }
+
+    public static ExpenseTagModel parseExpense(JSONObject expense) {
+        try {
+            return new ExpenseTagModel(
+                    expense.getString("id"),
+                    expense.getString("tag"),
+                    expense.getString("color")
+            );
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing expense response=" + expense, e);
+            return null;
+        }
+    }
+
     public static DataWrapper parseData(String jsonResponse) {
         DataWrapper dataWrapper = new DataWrapper();
         try {
@@ -182,6 +207,11 @@ public class JsonParseUtils {
             List<ReceiptModel> receiptModels = parseReceipts(jsonObject.getJSONArray("receipts"));
             if (!receiptModels.isEmpty()) {
                 dataWrapper.setReceiptModels(receiptModels);
+            }
+
+            List<ExpenseTagModel> expenseTagModels = parseExpenses(jsonObject.getJSONArray("expenseTags"));
+            if (!expenseTagModels.isEmpty()) {
+                dataWrapper.setExpenseTagModels(expenseTagModels);
             }
 
             UnprocessedDocumentModel unprocessedDocumentModel = parseUnprocessedDocument(jsonObject.getJSONObject("unprocessedDocuments"));
