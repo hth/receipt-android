@@ -117,8 +117,10 @@ public class JsonParseUtils {
         receiptModel.setId(receipt.getString("id"));
         receiptModel.setNotes(receipt.getJSONObject("notes").getString("text"));
         receiptModel.setPtax(receipt.getDouble("ptax"));
+        receiptModel.setTax(receipt.getDouble("tax"));
         receiptModel.setRid(receipt.getString("rid"));
         receiptModel.setTotal(receipt.getDouble("total"));
+        receiptModel.setExpenseTagId(receipt.getString("tagId"));
 
         return receiptModel;
     }
