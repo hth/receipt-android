@@ -15,9 +15,11 @@ public class ReceiptModel {
     private String id;
     private String notes;
     private double ptax;
+    private double tax;
     private String rid;
     private double total;
     private List<ReceiptItemModel> receiptItems = new LinkedList<>();
+    private String expenseTagId;
 
     public String getBizName() {
         return bizName;
@@ -107,6 +109,14 @@ public class ReceiptModel {
         this.ptax = ptax;
     }
 
+    public double getTax() {
+        return tax;
+    }
+
+    public void setTax(double tax) {
+        this.tax = tax;
+    }
+
     public String getRid() {
         return rid;
     }
@@ -135,5 +145,13 @@ public class ReceiptModel {
 
     public void addReceiptItem(ReceiptItemModel receiptItem){
         this.receiptItems.add(receiptItem);
+    }
+
+    public String getExpenseTagId() {
+        return expenseTagId;
+    }
+
+    public void setExpenseTagId(String expenseTagId) {
+        this.expenseTagId = expenseTagId;
     }
 }
