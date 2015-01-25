@@ -72,7 +72,7 @@ android {
     defaultConfig {
         applicationId "com.receiptofi.checkout"
         minSdkVersion 14
-        targetSdkVersion 16
+        targetSdkVersion 19
         testHandleProfiling true
         testFunctionalTest true
         versionCode 1

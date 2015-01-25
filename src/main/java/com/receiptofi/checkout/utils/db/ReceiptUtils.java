@@ -256,7 +256,26 @@ public class ReceiptUtils {
     }
 
     public static List<ReceiptModel> fetchReceipts(List<String> ids) {
-        return null;
+        Log.d(TAG, "Get receipts for ids");
+
+        StringBuilder selection = new StringBuilder();
+        String or = "";
+        for (String id : ids) {
+            selection.append(or).append(DatabaseTable.Receipt.ID + " = ?");
+            or = " OR ";
+        }
+
+        Cursor cursor = RDH.getReadableDatabase().query(
+                DatabaseTable.Receipt.TABLE_NAME,
+                null,
+                selection.toString(),
+                ids.toArray(new String[ids.size()]),
+                null,
+                null,
+                DatabaseTable.Receipt.DATE + " desc"
+        );
+
+        return retrieveReceiptModelFromCursor(cursor);
     }
 
     private static List<ReceiptModel> retrieveReceiptModelFromCursor(Cursor cursor) {
