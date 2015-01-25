@@ -8,6 +8,7 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -76,6 +77,36 @@ public class ReceiptItemUtils {
                 );
 
                 list.add(receiptItemModel);
+            }
+        }
+
+        return list;
+    }
+
+    /**
+     * Finds receipt id for matching item name search.
+     *
+     * @param name
+     * @return
+     */
+    public static List<String> searchReceiptWithItemName(String name) {
+        Log.d(TAG, "Fetching items matching name=" + name);
+        Cursor cursor = RDH.getReadableDatabase().query(
+                true,
+                DatabaseTable.Item.TABLE_NAME,
+                new String[]{DatabaseTable.Item.RECEIPTID},
+                DatabaseTable.Item.NAME + " LIKE '?'",
+                new String[]{"%" + name + "%"},
+                null,
+                null,
+                null,
+                null
+        );
+
+        List<String> list = new ArrayList<>();
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                list.add(cursor.getString(0));
             }
         }
 
