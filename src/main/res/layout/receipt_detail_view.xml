@@ -37,7 +37,7 @@
             android:id="@+id/rd_items_list"
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:listSelector="@drawable/list_selector">
+            android:listSelector="@drawable/list_selector_app_theme">
         </ListView>
 
     </LinearLayout>

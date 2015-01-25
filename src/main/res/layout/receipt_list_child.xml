@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/expandable_list_child_selector">
+    android:background="@drawable/list_selector_light_gray">
 
     <TextView
         android:id="@+id/exp_list_child_buz_name"
