@@ -239,6 +239,14 @@ public class ReceiptUtils {
         return retrieveReceiptModelFromCursor(cursor);
     }
 
+    /**
+     * Used for map drill down when bizName is provided
+     *
+     * @param year
+     * @param month
+     * @param bizName not null
+     * @return
+     */
     public static List<ReceiptModel> fetchReceiptsForBizName(String year, String month, String bizName) {
         Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month + " bizName=" + bizName);
 
@@ -255,6 +263,12 @@ public class ReceiptUtils {
         return retrieveReceiptModelFromCursor(cursor);
     }
 
+    /**
+     * Fetch receipts based on receipt ids.
+     *
+     * @param ids
+     * @return
+     */
     public static List<ReceiptModel> fetchReceipts(List<String> ids) {
         Log.d(TAG, "Get receipts for ids");
 
