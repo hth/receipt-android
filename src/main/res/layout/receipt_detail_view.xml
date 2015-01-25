@@ -14,6 +14,16 @@
         android:paddingBottom="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/empty_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            style="@style/text_larger"
+            android:text="@string/notify_empty_detail"
+            />
+
         <include layout="@layout/rd_address_block"/>
 
         <include layout="@layout/rd_date_block"/>

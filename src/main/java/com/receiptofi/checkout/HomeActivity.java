@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
@@ -56,7 +57,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     public static final int UPDATE_EXP_BY_BIZ_CHART = 0x2569;
     public static final int GET_ALL_RECEIPTS = 0x2570;
 
-    public final Handler updateHandler = new Handler() {
+    public final Handler updateHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {

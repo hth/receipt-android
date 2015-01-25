@@ -72,10 +72,12 @@ public class ReceiptDetailFragment extends Fragment {
         rdBizAddLine2 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line2);
         rdBizAddLine3 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line3);
         rdBizPhone = (TextView)receiptDetailView.findViewById(R.id.rd_biz_phone);
+        rdBizPhone.setVisibility(View.GONE);
 
         rdDate = (TextView)receiptDetailView.findViewById(R.id.rd_date);
 
         rdItemsList = (ListView)receiptDetailView.findViewById(R.id.rd_items_list);
+        rdItemsList.setEmptyView(receiptDetailView.findViewById(R.id.empty_view));
 
         // Add list header
         View header = View.inflate(getActivity(), R.layout.rd_item_list_header, null);
@@ -119,7 +121,7 @@ public class ReceiptDetailFragment extends Fragment {
     public void updateReceiptDetailView(int index, int position) {
         Log.d(TAG, "executing updateReceiptDetailView");
         try {
-        ReceiptModel rdModel = ReceiptListFragment.childListGroup.get(index).get(position);
+        ReceiptModel rdModel = ReceiptListFragment.children.get(index).get(position);
 
             // Biz address
             final String bizName = rdModel.getBizName();
@@ -167,6 +169,7 @@ public class ReceiptDetailFragment extends Fragment {
             //Phone action
             final String phoneNumber = rdModel.getPhone().trim();
             rdBizPhone.setText(phoneNumber);
+            rdBizPhone.setVisibility(View.VISIBLE);
             rdBizPhone.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
