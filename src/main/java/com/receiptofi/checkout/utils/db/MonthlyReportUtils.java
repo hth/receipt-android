@@ -98,7 +98,7 @@ public class MonthlyReportUtils {
     public static ReceiptGroup fetchMonthly() {
         Log.d(TAG, "All receipt grouped MonthlyReport");
 
-        ReceiptGroup receiptGroup = new ReceiptGroup();
+        ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.MonthlyReport.TABLE_NAME,
                 null,

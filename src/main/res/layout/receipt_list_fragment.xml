@@ -10,4 +10,14 @@
         android:groupIndicator="@drawable/group_indicator"
         android:listSelector="@drawable/list_selector"/>
 
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center"
+        android:gravity="center"
+        style="@style/text_larger"
+        android:text="@string/notify_empty_list"
+        />
+
 </LinearLayout>
