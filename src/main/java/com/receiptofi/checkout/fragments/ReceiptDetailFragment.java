@@ -122,6 +122,9 @@ public class ReceiptDetailFragment extends Fragment {
     public void updateReceiptDetailView(int index, int position) {
         Log.d(TAG, "executing updateReceiptDetailView");
         try {
+            if(index == -1 || position == -1){
+                return;
+            }
         ReceiptModel rdModel = ReceiptListFragment.children.get(index).get(position);
 
             // Biz address

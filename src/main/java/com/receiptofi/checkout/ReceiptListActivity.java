@@ -15,6 +15,9 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
     private static final String TAG = ReceiptListActivity.class.getSimpleName();
 
+    private int groupIndex = -1;
+    private int childIndex = -1;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,7 +53,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         // The user selected the headline of an article from the HeadlinesFragment
         Log.d(TAG, "executing onReceiptSelected: index is: " + index + " position is: " + position);
 
-
+        groupIndex = index;
+        childIndex = position;
         // Capture the article fragment from the activity layout
         ReceiptDetailFragment receiptDetailFragment = (ReceiptDetailFragment)
                 getSupportFragmentManager().findFragmentById(R.id.rdetail_fragment);
@@ -82,5 +86,13 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             // Commit the transaction
             transaction.commit();
         }
+    }
+
+    public int getGroupIndex(){
+        return groupIndex;
+    }
+
+    public int getChildIndex(){
+        return childIndex;
     }
 }
