@@ -27,7 +27,6 @@ import org.apache.http.message.BasicNameValuePair;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
@@ -227,7 +226,6 @@ public class ReceiptUtils {
     public static List<ReceiptModel> fetchReceipts(String year, String month) {
         Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month);
 
-        List<ReceiptModel> list = new LinkedList<>();
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
@@ -237,6 +235,32 @@ public class ReceiptUtils {
                 null,
                 DatabaseTable.Receipt.DATE + " desc"
         );
+
+        return retrieveReceiptModelFromCursor(cursor);
+    }
+
+    public static List<ReceiptModel> fetchReceiptsForBizName(String year, String month, String bizName) {
+        Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month + " bizName=" + bizName);
+
+        Cursor cursor = RDH.getReadableDatabase().query(
+                DatabaseTable.Receipt.TABLE_NAME,
+                null,
+                "SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? and bizName = ? ",
+                new String[]{month, year, bizName},
+                null,
+                null,
+                DatabaseTable.Receipt.DATE + " desc"
+        );
+
+        return retrieveReceiptModelFromCursor(cursor);
+    }
+
+    public static List<ReceiptModel> fetchReceipts(List<String> ids) {
+        return null;
+    }
+
+    private static List<ReceiptModel> retrieveReceiptModelFromCursor(Cursor cursor) {
+        List<ReceiptModel> list = new LinkedList<>();
 
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
@@ -257,6 +281,7 @@ public class ReceiptUtils {
                 list.add(receiptModel);
             }
         }
+
         return list;
     }
 }
