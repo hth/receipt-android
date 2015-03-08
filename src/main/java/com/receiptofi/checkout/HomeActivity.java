@@ -125,8 +125,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             currentMonthExpValue = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
             setMonthlyExpense();
         } catch (Exception e) {
-            Log.d(TAG, "Exception" + e.getMessage());
-            e.printStackTrace();
+            Log.e(TAG, "Exception" + e.getMessage(), e);
         }
         updateChartData();
         Log.d(TAG, "Done onCreate!!");
@@ -322,7 +321,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             if (imageAbsolutePath != null) {
                 File pickerImage = new File(imageAbsolutePath);
                 if ((pickerImage.length() / 1048576) >= 10) {
-                    showErrorMsg("image size should be upto 10Mb");
+                    showErrorMsg("Image size of more than 10MB not supported.");
                 } else {
                     startAnimation();
                     ImageUpload.process(this, imageAbsolutePath);

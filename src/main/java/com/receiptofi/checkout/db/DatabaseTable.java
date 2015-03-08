@@ -16,6 +16,7 @@ public class DatabaseTable {
         public static final String NOTES = "notes";
         public static final String PTAX = "ptax";
         public static final String RID = "rid";
+        public static final String TAX = "tax";
         public static final String TOTAL = "total";
     }
 

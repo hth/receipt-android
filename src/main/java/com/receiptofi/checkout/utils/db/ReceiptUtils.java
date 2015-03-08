@@ -177,6 +177,7 @@ public class ReceiptUtils {
         values.put(DatabaseTable.Receipt.NOTES, receipt.getNotes());
         values.put(DatabaseTable.Receipt.PTAX, receipt.getPtax());
         values.put(DatabaseTable.Receipt.RID, receipt.getRid());
+        values.put(DatabaseTable.Receipt.TAX, receipt.getTax());
         values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
 
         ReceiptofiApplication.RDH.getWritableDatabase().delete(
@@ -308,7 +309,8 @@ public class ReceiptUtils {
                 receiptModel.setNotes(cursor.getString(7));
                 receiptModel.setPtax(cursor.getDouble(8));
                 receiptModel.setRid(cursor.getString(9));
-                receiptModel.setTotal(cursor.getDouble(10));
+                receiptModel.setTax(cursor.getDouble(10));
+                receiptModel.setTotal(cursor.getDouble(11));
 
                 receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getId()));
                 list.add(receiptModel);
