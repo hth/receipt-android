@@ -241,7 +241,7 @@ public class ReceiptUtils {
     }
 
     /**
-     * Used for map drill down when bizName is provided
+     * Used for map drill down when bizName is provided.
      *
      * @param year
      * @param month
