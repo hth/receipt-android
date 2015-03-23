@@ -23,6 +23,7 @@ public class CreateTable {
                 + DatabaseTable.Receipt.NOTES + " TEXT ,"
                 + DatabaseTable.Receipt.PTAX + " DOUBLE ,"
                 + DatabaseTable.Receipt.RID + " TEXT ,"
+                + DatabaseTable.Receipt.TAX + " DOUBLE ,"
                 + DatabaseTable.Receipt.TOTAL + " DOUBLE " +
 
                 ");");
