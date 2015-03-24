@@ -20,6 +20,7 @@ public class ReceiptModel {
     private double total;
     private List<ReceiptItemModel> receiptItems = new LinkedList<>();
     private String expenseTagId;
+    private String billStatus;
 
     public String getBizName() {
         return bizName;
@@ -153,5 +154,13 @@ public class ReceiptModel {
 
     public void setExpenseTagId(String expenseTagId) {
         this.expenseTagId = expenseTagId;
+    }
+
+    public String getBillStatus() {
+        return billStatus;
+    }
+
+    public void setBillStatus(String billStatus) {
+        this.billStatus = billStatus;
     }
 }
