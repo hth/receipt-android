@@ -18,13 +18,13 @@ public class DatabaseTable {
         public static final String RID = "rid";
         public static final String TAX = "tax";
         public static final String TOTAL = "total";
+        public static final String BILL_STATUS = "bs";
     }
 
     public static class ImageIndex {
         public static final String TABLE_NAME = "IMAGE_INDEX";
         public static final String BLOB_ID = "blobId";
         public static final String IMAGE_PATH = "imagePath";
-
     }
 
     public static class UploadQueue {

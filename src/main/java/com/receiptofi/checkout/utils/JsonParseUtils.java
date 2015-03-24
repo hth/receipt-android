@@ -121,6 +121,7 @@ public class JsonParseUtils {
         receiptModel.setRid(receipt.getString("rid"));
         receiptModel.setTotal(receipt.getDouble("total"));
         receiptModel.setExpenseTagId(receipt.getString("tagId"));
+        receiptModel.setBillStatus(receipt.getString("bs"));
 
         return receiptModel;
     }

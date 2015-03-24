@@ -24,7 +24,8 @@ public class CreateTable {
                 + DatabaseTable.Receipt.PTAX + " DOUBLE ,"
                 + DatabaseTable.Receipt.RID + " TEXT ,"
                 + DatabaseTable.Receipt.TAX + " DOUBLE ,"
-                + DatabaseTable.Receipt.TOTAL + " DOUBLE " +
+                + DatabaseTable.Receipt.TOTAL + " DOUBLE , "
+                + DatabaseTable.Receipt.BILL_STATUS + " TEXT " +
 
                 ");");
     }
