@@ -180,6 +180,7 @@ public class ReceiptUtils {
         values.put(DatabaseTable.Receipt.TAX, receipt.getTax());
         values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
         values.put(DatabaseTable.Receipt.BILL_STATUS, receipt.getBillStatus());
+        values.put(DatabaseTable.Receipt.EXPENSE_TAG_ID, receipt.getExpenseTagId());
 
         ReceiptofiApplication.RDH.getWritableDatabase().delete(
                 DatabaseTable.Receipt.TABLE_NAME,

@@ -12,9 +12,9 @@ public class ReceiptItemModel {
     private String receiptId;
     private String sequence;
     private String tax;
-    private String expenseTag;
+    private String expenseTagId;
 
-    public ReceiptItemModel(String id, String name, String price, String quantity, String receiptId, String sequence, String tax, String expenseTag) {
+    public ReceiptItemModel(String id, String name, String price, String quantity, String receiptId, String sequence, String tax, String expenseTagId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -22,7 +22,7 @@ public class ReceiptItemModel {
         this.receiptId = receiptId;
         this.sequence = sequence;
         this.tax = tax;
-        this.expenseTag = expenseTag;
+        this.expenseTagId = expenseTagId;
     }
 
     public String getId() {
@@ -53,8 +53,8 @@ public class ReceiptItemModel {
         return tax;
     }
 
-    public String getExpenseTag() {
-        return expenseTag;
+    public String getExpenseTagId() {
+        return expenseTagId;
     }
 
     @Override
@@ -67,7 +67,7 @@ public class ReceiptItemModel {
                 ", receiptId='" + receiptId + '\'' +
                 ", sequence='" + sequence + '\'' +
                 ", tax='" + tax + '\'' +
-                ", expenseTag='" + expenseTag + '\'' +
+                ", expenseTagId='" + expenseTagId + '\'' +
                 '}';
     }
 }

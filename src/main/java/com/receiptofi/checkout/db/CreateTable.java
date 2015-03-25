@@ -25,7 +25,8 @@ public class CreateTable {
                 + DatabaseTable.Receipt.RID + " TEXT ,"
                 + DatabaseTable.Receipt.TAX + " DOUBLE ,"
                 + DatabaseTable.Receipt.TOTAL + " DOUBLE , "
-                + DatabaseTable.Receipt.BILL_STATUS + " TEXT " +
+                + DatabaseTable.Receipt.BILL_STATUS + " TEXT, "
+                + DatabaseTable.Receipt.EXPENSE_TAG_ID + " TEXT " +
 
                 ");");
     }
@@ -80,7 +81,7 @@ public class CreateTable {
                 + DatabaseTable.Item.RECEIPTID + " TEXT ,"
                 + DatabaseTable.Item.SEQUENCE + " TEXT ,"
                 + DatabaseTable.Item.TAX + " TEXT ,"
-                + DatabaseTable.Item.EXPENSE_TAG + " TEXT " +
+                + DatabaseTable.Item.EXPENSE_TAG_ID + " TEXT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
