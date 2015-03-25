@@ -120,7 +120,7 @@ public class JsonParseUtils {
         receiptModel.setTax(receipt.getDouble("tax"));
         receiptModel.setRid(receipt.getString("rid"));
         receiptModel.setTotal(receipt.getDouble("total"));
-        receiptModel.setExpenseTagId(receipt.getString("tagId"));
+        receiptModel.setExpenseTagId(receipt.getString("expenseTagId"));
         receiptModel.setBillStatus(receipt.getString("bs"));
 
         return receiptModel;
@@ -158,7 +158,7 @@ public class JsonParseUtils {
                     item.getString("receiptId"),
                     item.getString("seq"),
                     item.getString("tax"),
-                    item.getString("expenseTag")
+                    item.getString("expenseTagId")
             );
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing receiptItem response=" + item, e);

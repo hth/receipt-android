@@ -41,7 +41,7 @@ public class ReceiptItemUtils {
         values.put(DatabaseTable.Item.RECEIPTID, item.getReceiptId());
         values.put(DatabaseTable.Item.SEQUENCE, item.getSequence());
         values.put(DatabaseTable.Item.TAX, item.getTax());
-        values.put(DatabaseTable.Item.EXPENSE_TAG, item.getExpenseTag());
+        values.put(DatabaseTable.Item.EXPENSE_TAG_ID, item.getExpenseTagId());
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
                 DatabaseTable.Item.TABLE_NAME,
