@@ -103,7 +103,7 @@ public class JsonParseUtils {
         receiptModel.setBizName(receipt.getJSONObject("bizName").getString("name"));
         receiptModel.setAddress(receipt.getJSONObject("bizStore").getString("address"));
         receiptModel.setPhone(receipt.getJSONObject("bizStore").getString("phone"));
-        receiptModel.setDate(receipt.getString("date"));
+        receiptModel.setReceiptDate(receipt.getString("receiptDate"));
         receiptModel.setExpenseReport(receipt.getString("expenseReport"));
         JSONArray files = receipt.getJSONArray("files");
         StringBuilder blobIds = new StringBuilder();

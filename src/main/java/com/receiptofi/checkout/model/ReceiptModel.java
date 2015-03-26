@@ -9,7 +9,7 @@ public class ReceiptModel {
     private String bizName;
     private String address;
     private String phone;
-    private String date;
+    private String receiptDate;
     private String expenseReport;
     private String blobIds;
     private String id;
@@ -52,13 +52,13 @@ public class ReceiptModel {
         }
     }
 
-    public String getDate() {
-        return date;
+    public String getReceiptDate() {
+        return receiptDate;
     }
 
-    public void setDate(String date) {
-        if (null != date && !date.equalsIgnoreCase(NULL)) {
-            this.date = date;
+    public void setReceiptDate(String receiptDate) {
+        if (null != receiptDate && !receiptDate.equalsIgnoreCase(NULL)) {
+            this.receiptDate = receiptDate;
         }
     }
 
