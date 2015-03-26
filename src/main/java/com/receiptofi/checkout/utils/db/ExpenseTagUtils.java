@@ -21,9 +21,9 @@ public class ExpenseTagUtils {
 
     private static final String TAG = ExpenseTagUtils.class.getSimpleName();
 
-    public static void insertExpenseTag(List<ExpenseTagModel> expensesTags) {
+    public static void insert(List<ExpenseTagModel> expensesTags) {
         for (ExpenseTagModel expenseTag : expensesTags) {
-            insertExpenseTag(expenseTag);
+            insert(expenseTag);
         }
     }
 
@@ -32,7 +32,7 @@ public class ExpenseTagUtils {
      *
      * @param expenseTag
      */
-    private static void insertExpenseTag(ExpenseTagModel expenseTag) {
+    private static void insert(ExpenseTagModel expenseTag) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.ExpenseTag.ID, expenseTag.getId());
         values.put(DatabaseTable.ExpenseTag.TAG, expenseTag.getTag());

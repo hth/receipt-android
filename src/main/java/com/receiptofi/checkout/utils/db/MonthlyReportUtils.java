@@ -8,11 +8,6 @@ import com.receiptofi.checkout.db.CreateTable;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
-import com.receiptofi.checkout.model.ReceiptItemModel;
-import com.receiptofi.checkout.model.ReceiptModel;
-
-import java.util.LinkedList;
-import java.util.List;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 import static com.receiptofi.checkout.db.DatabaseTable.MonthlyReport;
@@ -55,7 +50,7 @@ public class MonthlyReportUtils {
                         cursor.getDouble(2),
                         cursor.getInt(3));
 
-                if (insertMonthlyReceiptStat(receiptGroupHeader)) {
+                if (insert(receiptGroupHeader)) {
                     Log.d(TAG, "Monthly Record Inserted Successfully " + receiptGroupHeader);
                 } else {
                     Log.d(TAG, "Monthly Record Insert Failed " + receiptGroupHeader);
@@ -64,7 +59,13 @@ public class MonthlyReportUtils {
         }
     }
 
-    private static boolean insertMonthlyReceiptStat(ReceiptGroupHeader receiptGroupHeader) {
+    /**
+     * Inserts monthly receipt stats.
+     *
+     * @param receiptGroupHeader
+     * @return
+     */
+    private static boolean insert(ReceiptGroupHeader receiptGroupHeader) {
         Log.d(TAG, "Setting Data for MonthlyReport Table");
 
         ContentValues values = new ContentValues();

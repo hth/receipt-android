@@ -106,9 +106,9 @@ public class DeviceService {
 
     private static void onSuccess(Header[] headers, String body) {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
-        ReceiptUtils.insertReceipts(dataWrapper.getReceiptModels());
-        ReceiptItemUtils.insertItems(dataWrapper.getReceiptItemModels());
-        ExpenseTagUtils.insertExpenseTag(dataWrapper.getExpenseTagModels());
+        ReceiptUtils.insert(dataWrapper.getReceiptModels());
+        ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
+        ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
         NotificationUtils.insert(dataWrapper.getNotificationModels());
 
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, dataWrapper.getUnprocessedDocumentModel().getCount());
