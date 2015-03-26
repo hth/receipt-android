@@ -207,7 +207,7 @@ public class ReceiptUtils {
                         "bizName," +
                         "total(total) total " +
                         "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                        "where date between " +
+                        "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
                         "datetime('now', 'start of month') AND " +
                         "datetime('now', 'start of month','+1 month','-1 day') " +
                         " group by bizName", null);
@@ -232,7 +232,7 @@ public class ReceiptUtils {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
-                "SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? ",
+                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
                 new String[]{month, year},
                 null,
                 null,
@@ -256,7 +256,7 @@ public class ReceiptUtils {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
-                "SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? and bizName = ? ",
+                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? and bizName = ? ",
                 new String[]{month, year, bizName},
                 null,
                 null,
