@@ -69,7 +69,7 @@ public class ReceiptUtils {
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
                 msg.what = HomeActivity.GET_ALL_RECEIPTS;
-                insertReceipts(JsonParseUtils.parseReceipts(body));
+                insert(JsonParseUtils.parseReceipts(body));
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                 }
@@ -104,7 +104,7 @@ public class ReceiptUtils {
                 new ResponseHandler() {
                     @Override
                     public void onSuccess(Header[] arr, String body) {
-                        insertReceipts(ResponseParser.getReceipts(body));
+                        insert(ResponseParser.getReceipts(body));
                     }
 
                     @Override
@@ -154,9 +154,9 @@ public class ReceiptUtils {
      *
      * @param receipts
      */
-    public static void insertReceipts(List<ReceiptModel> receipts) {
+    public static void insert(List<ReceiptModel> receipts) {
         for (ReceiptModel receipt : receipts) {
-            insertReceipt(receipt);
+            insert(receipt);
         }
     }
 
@@ -165,7 +165,7 @@ public class ReceiptUtils {
      *
      * @param receipt
      */
-    private static void insertReceipt(ReceiptModel receipt) {
+    private static void insert(ReceiptModel receipt) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.Receipt.BIZ_NAME, receipt.getBizName());
         values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, receipt.getAddress());

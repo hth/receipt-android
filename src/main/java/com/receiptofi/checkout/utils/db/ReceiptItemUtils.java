@@ -21,9 +21,9 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class ReceiptItemUtils {
     private static final String TAG = ReceiptItemUtils.class.getSimpleName();
 
-    public static void insertItems(List<ReceiptItemModel> items) {
+    public static void insert(List<ReceiptItemModel> items) {
         for(ReceiptItemModel item : items) {
-            insertItem(item);
+            insert(item);
         }
     }
 
@@ -32,7 +32,7 @@ public class ReceiptItemUtils {
      *
      * @param item
      */
-    private static void insertItem(ReceiptItemModel item) {
+    private static void insert(ReceiptItemModel item) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.Item.ID, item.getId());
         values.put(DatabaseTable.Item.NAME, item.getName());
