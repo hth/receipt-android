@@ -125,7 +125,7 @@ public class ReceiptUtils {
 
     public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
-        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
+        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.RECEIPT_DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
         Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
@@ -133,7 +133,7 @@ public class ReceiptUtils {
             for (receiptsRecords.moveToFirst(); !receiptsRecords.isAfterLast(); receiptsRecords.moveToNext()) {
                 ReceiptModel model = new ReceiptModel();
                 model.setBizName(receiptsRecords.getString(0));
-                model.setDate(receiptsRecords.getString(1));
+                model.setReceiptDate(receiptsRecords.getString(1));
                 model.setPtax(receiptsRecords.getDouble(2));
                 model.setTotal(receiptsRecords.getDouble(3));
                 model.setId(receiptsRecords.getString(4));
@@ -170,7 +170,7 @@ public class ReceiptUtils {
         values.put(DatabaseTable.Receipt.BIZ_NAME, receipt.getBizName());
         values.put(DatabaseTable.Receipt.BIZ_STORE_ADDRESS, receipt.getAddress());
         values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, receipt.getPhone());
-        values.put(DatabaseTable.Receipt.DATE, receipt.getDate());
+        values.put(DatabaseTable.Receipt.RECEIPT_DATE, receipt.getReceiptDate());
         values.put(DatabaseTable.Receipt.EXPENSE_REPORT, receipt.getExpenseReport());
         values.put(DatabaseTable.Receipt.BLOB_IDS, receipt.getBlobIds());
         values.put(DatabaseTable.Receipt.ID, receipt.getId());
@@ -207,7 +207,7 @@ public class ReceiptUtils {
                         "bizName," +
                         "total(total) total " +
                         "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                        "where date between " +
+                        "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
                         "datetime('now', 'start of month') AND " +
                         "datetime('now', 'start of month','+1 month','-1 day') " +
                         " group by bizName", null);
@@ -232,11 +232,11 @@ public class ReceiptUtils {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
-                "SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? ",
+                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
                 new String[]{month, year},
                 null,
                 null,
-                DatabaseTable.Receipt.DATE + " desc"
+                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
         );
 
         return retrieveReceiptModelFromCursor(cursor);
@@ -256,11 +256,11 @@ public class ReceiptUtils {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
-                "SUBSTR(date, 6, 2) = ? and SUBSTR(date, 1, 4) = ? and bizName = ? ",
+                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? and bizName = ? ",
                 new String[]{month, year, bizName},
                 null,
                 null,
-                DatabaseTable.Receipt.DATE + " desc"
+                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
         );
 
         return retrieveReceiptModelFromCursor(cursor);
@@ -289,7 +289,7 @@ public class ReceiptUtils {
                 ids.toArray(new String[ids.size()]),
                 null,
                 null,
-                DatabaseTable.Receipt.DATE + " desc"
+                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
         );
 
         return retrieveReceiptModelFromCursor(cursor);
@@ -304,7 +304,7 @@ public class ReceiptUtils {
                 receiptModel.setBizName(cursor.getString(0));
                 receiptModel.setAddress(cursor.getString(1));
                 receiptModel.setPhone(cursor.getString(2));
-                receiptModel.setDate(cursor.getString(3));
+                receiptModel.setReceiptDate(cursor.getString(3));
                 receiptModel.setExpenseReport(cursor.getString(4));
                 receiptModel.setBlobIds(cursor.getString(5));
                 receiptModel.setId(cursor.getString(6));

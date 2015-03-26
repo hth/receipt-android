@@ -9,7 +9,7 @@ public class DatabaseTable {
         public static final String BIZ_NAME = "bizName";
         public static final String BIZ_STORE_ADDRESS = "address";
         public static final String BIZ_STORE_PHONE = "phone";
-        public static final String DATE = "date";
+        public static final String RECEIPT_DATE = "receiptDate";
         public static final String EXPENSE_REPORT = "expenseReport";
         public static final String BLOB_IDS = "blobIds";
         public static final String ID = "id";

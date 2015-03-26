@@ -16,7 +16,7 @@ public class CreateTable {
                 + DatabaseTable.Receipt.BIZ_NAME + " TEXT ,"
                 + DatabaseTable.Receipt.BIZ_STORE_ADDRESS + " TEXT ,"
                 + DatabaseTable.Receipt.BIZ_STORE_PHONE + " TEXT ,"
-                + DatabaseTable.Receipt.DATE + " TEXT ,"
+                + DatabaseTable.Receipt.RECEIPT_DATE + " TEXT ,"
                 + DatabaseTable.Receipt.EXPENSE_REPORT + " TEXT ,"
                 + DatabaseTable.Receipt.BLOB_IDS + " TEXT ,"
                 + DatabaseTable.Receipt.ID + " TEXT UNIQUE ,"

@@ -72,7 +72,7 @@ public class ResponseParser {
                 model.setAddress(bizStoreJson.getString("address"));
                 model.setPhone(bizStoreJson.getString("phone"));
 
-                model.setDate(json.getString("date"));
+                model.setReceiptDate(json.getString("receiptDate"));
                 model.setExpenseReport(json.getString("expenseReport"));
 
                 JSONArray jsonArray = json.getJSONArray("files");
