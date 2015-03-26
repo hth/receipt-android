@@ -105,7 +105,9 @@ public class CreateTable {
                 + DatabaseTable.Notification.MESSAGE + " TEXT ,"
                 + DatabaseTable.Notification.VISIBLE + " BOOLEAN ,"
                 + DatabaseTable.Notification.NOTIFICATION_TYPE + " TEXT ,"
-                + DatabaseTable.Notification.REFERENCE_ID + " TEXT " +
+                + DatabaseTable.Notification.REFERENCE_ID + " TEXT, "
+                + DatabaseTable.Notification.CREATED + " TEXT, "
+                + DatabaseTable.Notification.UPDATED + " TEXT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableNotification");
