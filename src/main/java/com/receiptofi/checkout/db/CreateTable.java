@@ -97,4 +97,17 @@ public class CreateTable {
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
     }
+
+    public static void createTableNotification(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableNotification");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Notification.TABLE_NAME + "("
+                + DatabaseTable.Notification.ID + " TEXT ,"
+                + DatabaseTable.Notification.MESSAGE + " TEXT ,"
+                + DatabaseTable.Notification.VISIBLE + " BOOLEAN ,"
+                + DatabaseTable.Notification.NOTIFICATION_TYPE + " TEXT ,"
+                + DatabaseTable.Notification.REFERENCE_ID + " TEXT " +
+
+                ");");
+        Log.d(TAG, "Finished executing createTableNotification");
+    }
 }

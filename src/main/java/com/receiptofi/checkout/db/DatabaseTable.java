@@ -66,6 +66,14 @@ public class DatabaseTable {
         public static final String ID = "id";
         public static final String TAG = "tag";
         public static final String COLOR = "color";
+    }
 
+    public static class Notification {
+        public static final String TABLE_NAME = "NOTIFICATION";
+        public static final String ID = "id";
+        public static final String MESSAGE = "message";
+        public static final String VISIBLE = "visible";
+        public static final String NOTIFICATION_TYPE = "notificationType";
+        public static final String REFERENCE_ID = "referenceId";
     }
 }

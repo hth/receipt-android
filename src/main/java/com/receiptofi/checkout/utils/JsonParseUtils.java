@@ -5,6 +5,7 @@ import android.util.Log;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.ExpenseTagModel;
+import com.receiptofi.checkout.model.NotificationModel;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
@@ -173,20 +174,47 @@ public class JsonParseUtils {
                 expenseTagModels.add(parseExpense(jsonArray.getJSONObject(i)));
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Fail parsing expenses reason=" + e.getLocalizedMessage(), e);
         }
         return expenseTagModels;
     }
 
-    public static ExpenseTagModel parseExpense(JSONObject expense) {
+    public static ExpenseTagModel parseExpense(JSONObject jsonObject) {
         try {
             return new ExpenseTagModel(
-                    expense.getString("id"),
-                    expense.getString("tag"),
-                    expense.getString("color")
+                    jsonObject.getString("id"),
+                    jsonObject.getString("tag"),
+                    jsonObject.getString("color")
             );
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing expense response=" + expense, e);
+            Log.e(TAG, "Fail parsing expense response=" + jsonObject, e);
+            return null;
+        }
+    }
+
+    public static List<NotificationModel> parseNotifications(JSONArray jsonArray) {
+        List<NotificationModel> notificationModels = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                notificationModels.add(parseNotification(jsonArray.getJSONObject(i)));
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing notification reason=" + e.getLocalizedMessage(), e);
+        }
+        return notificationModels;
+    }
+
+    public static NotificationModel parseNotification(JSONObject jsonObject) {
+        try {
+            return new NotificationModel(
+                    jsonObject.getString("id"),
+                    jsonObject.getString("m"),
+                    jsonObject.getBoolean("n"),
+                    jsonObject.getString("nt"),
+                    jsonObject.getString("ri")
+            );
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing notification response=" + jsonObject, e);
             return null;
         }
     }
@@ -217,6 +245,11 @@ public class JsonParseUtils {
 
             UnprocessedDocumentModel unprocessedDocumentModel = parseUnprocessedDocument(jsonObject.getJSONObject("unprocessedDocuments"));
             dataWrapper.setUnprocessedDocumentModel(unprocessedDocumentModel);
+
+            List<NotificationModel> notificationModels = parseNotifications(jsonObject.getJSONArray("notifications"));
+            if (!notificationModels.isEmpty()) {
+                dataWrapper.setNotificationModels(notificationModels);
+            }
 
             Log.d(TAG, "parsed all data");
         } catch (JSONException e) {

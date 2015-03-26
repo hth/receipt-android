@@ -14,6 +14,7 @@ public class DataWrapper {
     private List<ReceiptModel> receiptModels = new ArrayList<>();
     private List<ExpenseTagModel> expenseTagModels = new ArrayList<>();
     private UnprocessedDocumentModel unprocessedDocumentModel;
+    private List<NotificationModel> notificationModels = new ArrayList<>();
 
     public ProfileModel getProfileModel() {
         return profileModel;
@@ -53,5 +54,13 @@ public class DataWrapper {
 
     public void setUnprocessedDocumentModel(UnprocessedDocumentModel unprocessedDocumentModel) {
         this.unprocessedDocumentModel = unprocessedDocumentModel;
+    }
+
+    public List<NotificationModel> getNotificationModels() {
+        return notificationModels;
+    }
+
+    public void setNotificationModels(List<NotificationModel> notificationModels) {
+        this.notificationModels = notificationModels;
     }
 }
