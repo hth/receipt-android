@@ -10,13 +10,17 @@ public class NotificationModel {
     private boolean visible;
     private String notificationType;
     private String referenceId;
+    private String created;
+    private String updated;
 
-    public NotificationModel(String id, String message, boolean visible, String notificationType, String referenceId) {
+    public NotificationModel(String id, String message, boolean visible, String notificationType, String referenceId, String created, String updated) {
         this.id = id;
         this.message = message;
         this.visible = visible;
         this.notificationType = notificationType;
         this.referenceId = referenceId;
+        this.created = created;
+        this.updated = updated;
     }
 
     public String getId() {
@@ -37,5 +41,13 @@ public class NotificationModel {
 
     public String getReferenceId() {
         return referenceId;
+    }
+
+    public String getCreated() {
+        return created;
+    }
+
+    public String getUpdated() {
+        return updated;
     }
 }

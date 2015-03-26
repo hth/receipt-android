@@ -211,7 +211,9 @@ public class JsonParseUtils {
                     jsonObject.getString("m"),
                     jsonObject.getBoolean("n"),
                     jsonObject.getString("nt"),
-                    jsonObject.getString("ri")
+                    jsonObject.getString("ri"),
+                    jsonObject.getString("c"),
+                    jsonObject.getString("u")
             );
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing notification response=" + jsonObject, e);
