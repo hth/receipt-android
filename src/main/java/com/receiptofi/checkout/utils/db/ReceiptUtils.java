@@ -295,6 +295,27 @@ public class ReceiptUtils {
         return retrieveReceiptModelFromCursor(cursor);
     }
 
+    /**
+     * select * from RECEIPT where bizName = 'Costco' and receiptDate LIKE '2015-01-%'
+     *
+     * @param bizName
+     * @param monthYear
+     * @return
+     */
+    public static List<ReceiptModel> filterByBizByMonth(String bizName, String monthYear) {
+        Cursor cursor = RDH.getReadableDatabase().query(
+                DatabaseTable.Receipt.TABLE_NAME,
+                null,
+                "bizName = ? and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE = ?",
+                new String[]{bizName, monthYear},
+                null,
+                null,
+                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+        );
+
+        return retrieveReceiptModelFromCursor(cursor);
+    }
+
     private static List<ReceiptModel> retrieveReceiptModelFromCursor(Cursor cursor) {
         List<ReceiptModel> list = new LinkedList<>();
 
