@@ -24,7 +24,9 @@ import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -302,12 +304,13 @@ public class ReceiptUtils {
      * @param monthYear
      * @return
      */
-    public static List<ReceiptModel> filterByBizByMonth(String bizName, String monthYear) {
+    public static List<ReceiptModel> filterByBizByMonth(String bizName, Date monthYear) {
+        SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-");
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
                 "bizName = ? and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE = ?",
-                new String[]{bizName, monthYear},
+                new String[]{bizName, SDF_YM.format(monthYear) + "%"},
                 null,
                 null,
                 DatabaseTable.Receipt.RECEIPT_DATE + " desc"
