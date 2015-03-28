@@ -14,6 +14,8 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.http.types.Protocol;
 import com.receiptofi.checkout.model.ChartModel;
+import com.receiptofi.checkout.model.ReceiptGroup;
+import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -29,6 +31,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
@@ -37,6 +40,7 @@ import static com.receiptofi.checkout.utils.db.KeyValueUtils.updateInsert;
 public class ReceiptUtils {
 
     private static final String TAG = ReceiptUtils.class.getSimpleName();
+    private static final SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-");
 
     public static void getUnprocessedCount() {
 
@@ -304,19 +308,42 @@ public class ReceiptUtils {
      * @param monthYear
      * @return
      */
-    public static List<ReceiptModel> filterByBizByMonth(String bizName, Date monthYear) {
-        SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-");
+    public static ReceiptGroup filterByBizByMonth(String bizName, Date monthYear) {
+        String yearMonth = SDF_YM.format(monthYear);
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
-                "bizName = ? and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE = ?",
-                new String[]{bizName, SDF_YM.format(monthYear) + "%"},
+                DatabaseTable.Receipt.BIZ_NAME + " = ? and " +
+                        DatabaseTable.Receipt.RECEIPT_DATE + " LIKE ?",
+                new String[]{bizName, yearMonth + "%"},
                 null,
                 null,
                 DatabaseTable.Receipt.RECEIPT_DATE + " desc"
         );
 
-        return retrieveReceiptModelFromCursor(cursor);
+        ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
+        receiptGroup.addReceiptGroup(retrieveReceiptModelFromCursor(cursor));
+
+        cursor = RDH.getReadableDatabase().rawQuery(
+                "select " +
+                        "total(total) total " +
+                        "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                        "where " + DatabaseTable.Receipt.BIZ_NAME + " = " + bizName + " " +
+                        "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE ? " + SDF_YM.format(monthYear) + "%", null);
+
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                String[] yearMonthSplit = yearMonth.split("-");
+                ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
+                        yearMonthSplit[1],
+                        yearMonthSplit[0],
+                        cursor.getDouble(0),
+                        receiptGroup.getReceiptModels().get(0).size());
+                receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
+            }
+        }
+
+        return receiptGroup;
     }
 
     private static List<ReceiptModel> retrieveReceiptModelFromCursor(Cursor cursor) {
