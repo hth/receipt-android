@@ -136,7 +136,7 @@ public class ReceiptModel {
         this.total = total;
     }
 
-    public List<ReceiptItemModel> getReceiptItems(){
+    public List<ReceiptItemModel> getReceiptItems() {
         return receiptItems;
     }
 
@@ -144,7 +144,7 @@ public class ReceiptModel {
         this.receiptItems = receiptItems;
     }
 
-    public void addReceiptItem(ReceiptItemModel receiptItem){
+    public void addReceiptItem(ReceiptItemModel receiptItem) {
         this.receiptItems.add(receiptItem);
     }
 
@@ -162,5 +162,9 @@ public class ReceiptModel {
 
     public void setBillStatus(String billStatus) {
         this.billStatus = billStatus;
+    }
+
+    public String getReceiptYearMonth() {
+        return receiptDate.substring(0, 7);
     }
 }

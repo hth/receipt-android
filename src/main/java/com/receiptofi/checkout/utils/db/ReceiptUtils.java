@@ -29,9 +29,10 @@ import org.apache.http.message.BasicNameValuePair;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
@@ -134,13 +135,13 @@ public class ReceiptUtils {
         String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.RECEIPT_DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
         Cursor receiptsRecords =
                 ReceiptofiApplication.RDH.getReadableDatabase().query(
-                    DatabaseTable.Receipt.TABLE_NAME,
-                    columns,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null
+                        DatabaseTable.Receipt.TABLE_NAME,
+                        columns,
+                        null,
+                        null,
+                        null,
+                        null,
+                        null
                 );
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
@@ -271,7 +272,9 @@ public class ReceiptUtils {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
-                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? and bizName = ? ",
+                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? " +
+                        "and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? " +
+                        "and " + DatabaseTable.Receipt.BIZ_NAME + " = ? ",
                 new String[]{month, year, bizName},
                 null,
                 null,
@@ -364,7 +367,7 @@ public class ReceiptUtils {
     public static ReceiptGroup searchByName(String name) {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Item.TABLE_NAME,
-                new String[] {DatabaseTable.Item.RECEIPTID},
+                new String[]{DatabaseTable.Item.RECEIPTID},
                 DatabaseTable.Item.NAME + " LIKE ?",
                 new String[]{"%" + name + "%"},
                 null,
@@ -381,7 +384,7 @@ public class ReceiptUtils {
 
         cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
-                new String[] {DatabaseTable.Receipt.ID},
+                new String[]{DatabaseTable.Receipt.ID},
                 DatabaseTable.Receipt.BIZ_NAME + " LIKE ?",
                 new String[]{"%" + name + "%"},
                 null,
@@ -396,21 +399,52 @@ public class ReceiptUtils {
         }
 
         String ids = "";
-        for(String id : receiptIds) {
+        for (String id : receiptIds) {
             ids += "'" + id + "',";
         }
 
-        if(ids.length() > 0) {
+        ReceiptGroup receiptGroup = null;
+        if (ids.length() > 0) {
             cursor = RDH.getReadableDatabase().rawQuery(
                     "select " +
                             "* " +
                             "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
                             "where " + DatabaseTable.Receipt.ID + " IN (" + ids.substring(0, ids.length() - 1) + ")", null);
 
-            List<ReceiptModel> receiptModels = retrieveReceiptModelFromCursor(cursor);
+            receiptGroup = convertToReceiptGroup(retrieveReceiptModelFromCursor(cursor));
+
         }
 
-        return filterByBizByMonth("Costco", new Date());
+        return receiptGroup;
+    }
+
+    private static ReceiptGroup convertToReceiptGroup(List<ReceiptModel> receiptModels) {
+        ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
+
+        Map<String, List<ReceiptModel>> map = new HashMap<>();
+        for (ReceiptModel receiptModel : receiptModels) {
+            String yearMonth = receiptModel.getReceiptYearMonth();
+            if (map.get(yearMonth) == null) {
+                List<ReceiptModel> receipts = new LinkedList<>();
+                receipts.add(receiptModel);
+                map.put(yearMonth, receipts);
+            } else {
+                List<ReceiptModel> receipts = map.get(yearMonth);
+                receipts.add(receiptModel);
+            }
+        }
+
+        for (String key : map.keySet()) {
+            receiptGroup.addReceiptGroup(map.get(key));
+            ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
+                    key.split("-")[1],
+                    key.split("-")[0],
+                    null,
+                    map.get(key).size());
+            receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
+        }
+
+        return receiptGroup;
     }
 
     private static List<ReceiptModel> retrieveReceiptModelFromCursor(Cursor cursor) {
