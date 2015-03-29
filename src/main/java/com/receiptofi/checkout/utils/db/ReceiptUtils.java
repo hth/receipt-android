@@ -132,7 +132,16 @@ public class ReceiptUtils {
     public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
         String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.RECEIPT_DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
-        Cursor receiptsRecords = ReceiptofiApplication.RDH.getReadableDatabase().query(DatabaseTable.Receipt.TABLE_NAME, columns, null, null, null, null, null);
+        Cursor receiptsRecords =
+                ReceiptofiApplication.RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    columns,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null
+                );
 
         ArrayList<ReceiptModel> rModels = new ArrayList<>();
         if (receiptsRecords != null && receiptsRecords.getCount() > 0) {
@@ -216,7 +225,7 @@ public class ReceiptUtils {
                         "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
                         "datetime('now', 'start of month') AND " +
                         "datetime('now', 'start of month','+1 month','-1 day') " +
-                        " group by bizName", null);
+                        "group by bizName", null);
 
         ChartModel chartModel = new ChartModel();
         if (cursor != null && cursor.getCount() > 0) {
@@ -344,6 +353,64 @@ public class ReceiptUtils {
         }
 
         return receiptGroup;
+    }
+
+    /**
+     * Search receipts and items with name.
+     *
+     * @param name
+     * @return
+     */
+    public static ReceiptGroup searchByName(String name) {
+        Cursor cursor = RDH.getReadableDatabase().query(
+                DatabaseTable.Item.TABLE_NAME,
+                new String[] {DatabaseTable.Item.RECEIPTID},
+                DatabaseTable.Item.NAME + " LIKE ?",
+                new String[]{"%" + name + "%"},
+                null,
+                null,
+                null
+        );
+
+        List<String> receiptIds = new ArrayList<>();
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                receiptIds.add(cursor.getString(0));
+            }
+        }
+
+        cursor = RDH.getReadableDatabase().query(
+                DatabaseTable.Receipt.TABLE_NAME,
+                new String[] {DatabaseTable.Receipt.ID},
+                DatabaseTable.Receipt.BIZ_NAME + " LIKE ?",
+                new String[]{"%" + name + "%"},
+                null,
+                null,
+                null
+        );
+
+        if (cursor != null && cursor.getCount() > 0) {
+            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+                receiptIds.add(cursor.getString(0));
+            }
+        }
+
+        String ids = "";
+        for(String id : receiptIds) {
+            ids += "'" + id + "',";
+        }
+
+        if(ids.length() > 0) {
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "select " +
+                            "* " +
+                            "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                            "where " + DatabaseTable.Receipt.ID + " IN (" + ids.substring(0, ids.length() - 1) + ")", null);
+
+            List<ReceiptModel> receiptModels = retrieveReceiptModelFromCursor(cursor);
+        }
+
+        return filterByBizByMonth("Costco", new Date());
     }
 
     private static List<ReceiptModel> retrieveReceiptModelFromCursor(Cursor cursor) {
