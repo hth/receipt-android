@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
@@ -138,6 +139,11 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
 
             holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));
             holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
+
+            // Set the group to be always expanded
+            ExpandableListView explv = (ExpandableListView) parent;
+            explv.expandGroup(groupPosition);
+
             return convertView;
 
         } catch (ParseException e) {
