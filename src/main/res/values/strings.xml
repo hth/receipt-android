@@ -79,8 +79,11 @@
     <string name="rd_item_header_tax_title">Tax</string>
     <string name="rd_item_header_total_title">Total</string>
 
+    <!-- Filter list String-->
+    <string name="search_hint">Search by biz/item</string>
 
     <!--Menu String-->
+    <string name="menu_search">Search</string>
     <string name="menu_refresh">Refresh</string>
     <string name="menu_settings">Settings</string>
     <string name="menu_logout">Logout</string>

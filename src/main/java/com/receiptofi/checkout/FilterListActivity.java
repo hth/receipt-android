@@ -1,16 +1,24 @@
 package com.receiptofi.checkout;
 
 import android.app.ProgressDialog;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.widget.SearchView;
 
-import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.FilterListFragment;
+import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.Constants.FilterActionBarType;
+import com.receiptofi.checkout.utils.Constants.ReceiptFilter;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import java.util.Date;
@@ -25,6 +33,7 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
     private int groupIndex = -1;
     private int childIndex = -1;
 
+    private FilterActionBarType actionBarType;
     private ProgressDialog loader;
     private ReceiptGroup receiptGroup;
 
@@ -37,17 +46,28 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         if(getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)){
             showLoader("Please wait...");
             String filterType = getIntent().getStringExtra(Constants.INTENT_EXTRA_FILTER_TYPE);
-            if(Constants.ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)){
+            if(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)){
                 receiptGroup = ReceiptUtils.filterByBizByMonth(getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME), new Date());
-            } else if(Constants.ReceiptFilter.FIlter_BY_KEYWORD.getValue().equalsIgnoreCase(filterType)){
-
-            } else if(Constants.ReceiptFilter.FIlter_BY_KEYWORD_AND_DATE.getValue().equalsIgnoreCase(filterType)){
+                actionBarType = FilterActionBarType.MENU_MAIN;
+                setContentView(R.layout.filter_list_page);
+                addFragments(savedInstanceState);
+            } else if(ReceiptFilter.FIlter_BY_KEYWORD.getValue().equalsIgnoreCase(filterType)){
+                actionBarType = FilterActionBarType.MENU_FILTER;
+            } else if(ReceiptFilter.FIlter_BY_KEYWORD_AND_DATE.getValue().equalsIgnoreCase(filterType)){
 
             }
             hideLoader();
         }
-        setContentView(R.layout.filter_list_page);
+    }
 
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "executing onNewIntent");
+        handleIntent(intent);
+    }
+
+    private void addFragments(Bundle savedInstanceState){
         // Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment
         if (findViewById(R.id.fragment_container) != null) {
@@ -70,7 +90,6 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, filterListFragment).commit();
         }
-
     }
 
     public void onReceiptSelected(int index, int position) {
@@ -122,6 +141,40 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
 
     public int getChildIndex(){
         return childIndex;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        if(actionBarType == FilterActionBarType.MENU_MAIN){
+            inflater.inflate(R.menu.menu_main, menu);
+        } else {
+            inflater.inflate(R.menu.menu_filter, menu);
+
+            // Associate searchable configuration with the SearchView
+            SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+            SearchView searchView =
+                (SearchView) menu.findItem(R.id.menu_search).getActionView();
+            searchView.setIconifiedByDefault(false);
+            searchView.requestFocusFromTouch();
+            searchView.setSearchableInfo(
+                    searchManager.getSearchableInfo(getComponentName()));
+        }
+        return true;
+    }
+
+    private void handleIntent(Intent intent) {
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.d(TAG, "Search query is: " + query);
+            //use the query to search your data somehow
+
+            receiptGroup = ReceiptUtils.filterByBizByMonth(query, new Date());
+            setContentView(R.layout.filter_list_page);
+            addFragments(null);
+        }
     }
 
     public void showLoader(String msg) {
