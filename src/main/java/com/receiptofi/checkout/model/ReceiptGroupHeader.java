@@ -8,10 +8,10 @@ public class ReceiptGroupHeader {
 
     private String month;
     private String year;
-    private double total;
+    private Double total;
     private int count;
 
-    public ReceiptGroupHeader(String month, String year, double total, int count) {
+    public ReceiptGroupHeader(String month, String year, Double total, int count) {
         this.month = month;
         this.year = year;
         this.total = total;
@@ -26,7 +26,7 @@ public class ReceiptGroupHeader {
         return year;
     }
 
-    public double getTotal() {
+    public Double getTotal() {
         return total;
     }
 
