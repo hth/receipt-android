@@ -73,7 +73,7 @@
             android:name=".ReceiptListActivity">
         </activity>
         <activity
-            android:name=".GraphActivity">
+            android:name=".FilterListActivity">
         </activity>
 
         <receiver android:name="com.receiptofi.checkout.receivers.NetworkConnectivityReceiver">

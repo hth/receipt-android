@@ -120,12 +120,18 @@ public class ReceiptDetailFragment extends Fragment {
     }
 
     public void updateReceiptDetailView(int index, int position) {
+        updateReceiptDetailView(index, position, null);
+    }
+    public void updateReceiptDetailView(int index, int position, ReceiptModel rdModel) {
         Log.d(TAG, "executing updateReceiptDetailView");
         try {
             if(index == -1 || position == -1){
                 return;
             }
-        ReceiptModel rdModel = ReceiptListFragment.children.get(index).get(position);
+
+            if(rdModel == null){
+                rdModel = ReceiptListFragment.children.get(index).get(position);
+            }
 
             // Biz address
             final String bizName = rdModel.getBizName();

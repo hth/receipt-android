@@ -34,6 +34,7 @@ import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.ChartService;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 
@@ -41,6 +42,7 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class HomeActivity extends Activity implements OnChartValueSelectedListener{
@@ -277,7 +279,14 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
 
     @Override
-    public void onValueSelected(Entry entry, int i) {
+    public void onValueSelected(Entry entry, int index) {
+        String bizName = expByBizData.getXVals().get(index);
+        Log.d(TAG, "selected biz is: " + bizName);
+
+        Intent intent = new Intent(this, FilterListActivity.class);
+        intent.putExtra(Constants.INTENT_EXTRA_FILTER_TYPE, Constants.ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue());
+        intent.putExtra(Constants.INTENT_EXTRA_BIZ_NAME, "Costco");
+        startActivity(intent);
         showErrorMsg("VAL SELECTED" +
                 "Value: " + entry.getVal() + ", xIndex: " + entry.getXIndex());
     }

@@ -328,8 +328,8 @@ public class ReceiptUtils {
                 "select " +
                         "total(total) total " +
                         "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                        "where " + DatabaseTable.Receipt.BIZ_NAME + " = " + bizName + " " +
-                        "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE ? " + SDF_YM.format(monthYear) + "%", null);
+                        "where " + DatabaseTable.Receipt.BIZ_NAME + " = '" + bizName + "' " +
+                        "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE  '" + SDF_YM.format(monthYear) + "%'", null);
 
         if (cursor != null && cursor.getCount() > 0) {
             for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
