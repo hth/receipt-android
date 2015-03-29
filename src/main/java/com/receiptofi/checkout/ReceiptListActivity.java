@@ -1,12 +1,16 @@
 package com.receiptofi.checkout;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.MenuItem;
 
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
+import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 /**
  * Created by PT on 1/3/15.
@@ -94,5 +98,37 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
     public int getChildIndex(){
         return childIndex;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_search:
+                // TODO call search
+                return true;
+            case R.id.menu_refresh:
+                // TODO call getUpdate
+                return true;
+            case R.id.menu_settings:
+                launchSettings();
+                return true;
+            case R.id.menu_logout:
+                logout();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void launchSettings() {
+        startActivity(new Intent(this, SettingsActivity.class));
+    }
+
+    private void logout() {
+        KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
+        startActivity(new Intent(this, LaunchActivity.class));
+        finish();
     }
 }

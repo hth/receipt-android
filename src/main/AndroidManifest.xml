@@ -73,7 +73,14 @@
             android:name=".ReceiptListActivity">
         </activity>
         <activity
-            android:name=".FilterListActivity">
+            android:name=".FilterListActivity"
+            android:launchMode="singleTop"
+            android:windowSoftInputMode="stateAlwaysVisible">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
         </activity>
 
         <receiver android:name="com.receiptofi.checkout.receivers.NetworkConnectivityReceiver">

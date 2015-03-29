@@ -42,7 +42,6 @@ import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
 
 public class HomeActivity extends Activity implements OnChartValueSelectedListener{
@@ -167,7 +166,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_home, menu);
+        inflater.inflate(R.menu.menu_main, menu);
         optionMenu = menu;
         return true;
     }
@@ -176,6 +175,11 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
+            case R.id.menu_search:
+                Intent intent = new Intent(this, FilterListActivity.class);
+                intent.putExtra(Constants.INTENT_EXTRA_FILTER_TYPE, Constants.ReceiptFilter.FIlter_BY_KEYWORD.getValue());
+                startActivity(intent);
+                return true;
             case R.id.menu_refresh:
                 // TODO call getUpdate
                 return true;
@@ -185,6 +189,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             case R.id.menu_logout:
                 logout();
                 return true;
+
             default:
                 return super.onOptionsItemSelected(item);
         }

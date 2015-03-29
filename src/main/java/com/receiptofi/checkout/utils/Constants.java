@@ -34,4 +34,9 @@ public class Constants {
             return filterType;
         }
     }
+
+    public enum FilterActionBarType {
+        MENU_MAIN,
+        MENU_FILTER
+    }
 }
