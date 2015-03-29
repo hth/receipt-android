@@ -271,7 +271,9 @@ public class ReceiptUtils {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
-                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? and bizName = ? ",
+                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? " +
+                        "and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? " +
+                        "and " + DatabaseTable.Receipt.BIZ_NAME + " = ? ",
                 new String[]{month, year, bizName},
                 null,
                 null,
