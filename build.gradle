@@ -1,10 +1,12 @@
+import groovy.xml.Namespace
+
 buildscript {
     repositories {
         mavenCentral()
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
+        classpath 'com.android.tools.build:gradle:1.1.0'
     }
 }
 
@@ -19,7 +21,7 @@ if (env == 'debug' || env == 'release' || env == 'staging') {
 
 def manifestVersionName() {
     def manifestFile = file(project.projectDir.absolutePath + '/src/main/AndroidManifest.xml')
-    def ns = new groovy.xml.Namespace("http://schemas.android.com/apk/res/android", "android")
+    def ns = new Namespace("http://schemas.android.com/apk/res/android", "android")
     def xml = new XmlParser().parse(manifestFile)
     return xml.attributes()[ns.versionName].toString()
 }
@@ -49,7 +51,7 @@ dependencies {
     compile 'org.apache.httpcomponents:httpmime:4.3.6'
     compile 'org.apache.httpcomponents:httpclient:4.3.6'
 
-    compile 'com.google.android.gms:play-services:6.5.87'
+    compile 'com.google.android.gms:play-services:7.0.0'
     compile 'com.facebook.android:facebook-android-sdk:3.20.0'
 
     androidTestCompile 'junit:junit:4.10'
