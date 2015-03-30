@@ -236,6 +236,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
          * re-initialize db.
          */
         if (!TextUtils.isEmpty(mail) && !mail.equals(map.get(API.key.XR_MAIL))) {
+            Log.d(TAG, "new user..about to initialize db");
             DBUtils.dbReInitialize();
         }
 
