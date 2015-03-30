@@ -64,6 +64,9 @@
         <activity
             android:name=".HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".FilterListActivity" />
         </activity>
         <activity
             android:name=".SettingsActivity"
@@ -74,10 +77,10 @@
         </activity>
         <activity
             android:name=".FilterListActivity"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
             <meta-data android:name="android.app.searchable"
                 android:resource="@xml/searchable" />

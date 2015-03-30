@@ -8,6 +8,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,12 +37,14 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
     private FilterActionBarType actionBarType;
     private ProgressDialog loader;
     private ReceiptGroup receiptGroup;
+    private SearchView searchView;
 
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        Log.d(TAG, "executing onCreate");
         // Run query to fetch data
         if(getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)){
             showLoader("Please wait...");
@@ -57,6 +60,9 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
 
             }
             hideLoader();
+        } else if(Intent.ACTION_SEARCH.equals(getIntent().getAction())){
+            actionBarType = FilterActionBarType.MENU_FILTER;
+            handleIntent(getIntent());
         }
     }
 
@@ -145,33 +151,40 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        Log.d(TAG, "executing onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
         if(actionBarType == FilterActionBarType.MENU_MAIN){
             inflater.inflate(R.menu.menu_main, menu);
         } else {
+            Log.d(TAG, "Inflating menu for FilterActionBarType.MENU_FILTER");
             inflater.inflate(R.menu.menu_filter, menu);
 
             // Associate searchable configuration with the SearchView
             SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            SearchView searchView =
+            searchView =
                 (SearchView) menu.findItem(R.id.menu_search).getActionView();
             searchView.setIconifiedByDefault(false);
             searchView.requestFocusFromTouch();
             searchView.setSearchableInfo(
                     searchManager.getSearchableInfo(getComponentName()));
+
+            if(getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())){
+                searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
+            }
+
         }
         return true;
     }
 
     private void handleIntent(Intent intent) {
+        Log.d(TAG, "executing handleIntent");
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String query = intent.getStringExtra(SearchManager.QUERY);
             Log.d(TAG, "Search query is: " + query);
             //use the query to search your data somehow
-
-            receiptGroup = ReceiptUtils.filterByBizByMonth(query, new Date());
+            receiptGroup = ReceiptUtils.searchByName(query);
             setContentView(R.layout.filter_list_page);
             addFragments(null);
         }

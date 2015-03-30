@@ -1,6 +1,7 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
@@ -23,6 +24,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.ScrollView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +59,8 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     public static final int UPDATE_MONTHLY_EXPENSE = 0x2568;
     public static final int UPDATE_EXP_BY_BIZ_CHART = 0x2569;
     public static final int GET_ALL_RECEIPTS = 0x2570;
+
+    private SearchView searchView;
 
     public final Handler updateHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
@@ -168,6 +172,14 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
         optionMenu = menu;
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView =
+                (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
         return true;
     }
 
@@ -175,11 +187,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_search:
-                Intent intent = new Intent(this, FilterListActivity.class);
-                intent.putExtra(Constants.INTENT_EXTRA_FILTER_TYPE, Constants.ReceiptFilter.FIlter_BY_KEYWORD.getValue());
-                startActivity(intent);
-                return true;
             case R.id.menu_refresh:
                 // TODO call getUpdate
                 return true;
@@ -286,6 +293,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     @Override
     public void onValueSelected(Entry entry, int index) {
         String bizName = expByBizData.getXVals().get(index);
+        Log.d(TAG, "bizName is: " + bizName);
         Intent intent = new Intent(this, FilterListActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_FILTER_TYPE, Constants.ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue());
         intent.putExtra(Constants.INTENT_EXTRA_BIZ_NAME, bizName);
