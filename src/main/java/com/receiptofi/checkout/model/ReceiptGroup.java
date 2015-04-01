@@ -40,6 +40,13 @@ public class ReceiptGroup extends DataSetObservable{
         Log.d(TAG, "observer registered. Total number of observers: " + mObservers.size());
     }
 
+    @Override
+    public void unregisterObserver(DataSetObserver observer) {
+        Log.d(TAG, "unregister observer");
+        observerList.remove(observer);
+        Log.d(TAG, "unregister observer DONE. Total number of observers: " + mObservers.size());
+    }
+
     public void addReceiptGroup(List<ReceiptModel> receiptModel) {
         this.receiptModels.add(receiptModel);
         Log.d(TAG, " ReceiptGroup has changed");
