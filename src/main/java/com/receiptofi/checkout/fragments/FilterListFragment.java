@@ -3,6 +3,7 @@ package com.receiptofi.checkout.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -27,8 +29,8 @@ public class FilterListFragment extends Fragment {
 
     private View rootView;
     private ExpandableListView explv;
-    public static List<ReceiptGroupHeader> groups;
-    public static List<List<ReceiptModel>> children;
+    public static List<ReceiptGroupHeader> groups = new LinkedList<>();
+    public static List<List<ReceiptModel>> children = new LinkedList<>();
 
     private OnReceiptSelectedListener mCallback;
 
@@ -49,11 +51,6 @@ public class FilterListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
-        ReceiptGroup receiptGroup = ((FilterListActivity)getActivity()).getReceiptGroup();
-        if(receiptGroup != null) {
-            groups = receiptGroup.getReceiptGroupHeaders();
-            children = receiptGroup.getReceiptModels();
-        }
         return rootView;
     }
 
@@ -66,7 +63,7 @@ public class FilterListFragment extends Fragment {
         explv.setEmptyView(view.findViewById(R.id.empty_view));
         explv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
-        final FilterListAdapter adapter = new FilterListAdapter(getActivity(), groups, children);
+        final FilterListAdapter adapter = new FilterListAdapter(getActivity());
         explv.setAdapter(adapter);
         explv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -92,5 +89,11 @@ public class FilterListFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnReceiptSelectedListener");
         }
+    }
+
+    public void notifyDataChanged(ReceiptGroup receiptGroup){
+        groups = receiptGroup.getReceiptGroupHeaders();
+        children = receiptGroup.getReceiptModels();
+        ((FilterListAdapter)explv.getExpandableListAdapter()).notifyDataSetChanged();
     }
 }

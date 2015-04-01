@@ -34,8 +34,8 @@ public class ReceiptListFragment extends Fragment {
 
     private View rootView;
     private ExpandableListView explv;
-    public static List<ReceiptGroupHeader> groups;
-    public static List<List<ReceiptModel>> children;
+    public static List<ReceiptGroupHeader> groups = new LinkedList<>();
+    public static List<List<ReceiptModel>> children = new LinkedList<>();
 
     private OnReceiptSelectedListener mCallback;
     public static ReceiptGroup receiptGroup = ReceiptGroup.getInstance();

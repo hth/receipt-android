@@ -106,7 +106,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private Menu optionMenu;
     private PieChart mChart;
     private PieData expByBizData;
-    private boolean expByBizAnimate = true;
+    private boolean expByBizAnimate = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,6 +140,10 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "executing onResume");
+        if(searchView != null){
+            searchView.setQuery("", false);
+            searchView.setIconified(true);
+        }
         Log.d(TAG, "Done onResume!!");
     }
 
