@@ -226,7 +226,7 @@ public class ReceiptUtils {
                         "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
                         "datetime('now', 'start of month') AND " +
                         "datetime('now', 'start of month','+1 month','-1 day') " +
-                        "group by bizName", null);
+                        "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
 
         ChartModel chartModel = new ChartModel();
         if (cursor != null && cursor.getCount() > 0) {
