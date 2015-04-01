@@ -338,12 +338,12 @@ public class ReceiptUtils {
     }
 
     /**
-     * Search receipts and items with name.
+     * Search receipts and items by keyword.
      *
      * @param name
      * @return
      */
-    public static ReceiptGroup searchByName(String name) {
+    public static ReceiptGroup searchByKeyword(String name) {
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Item.TABLE_NAME,
                 new String[]{DatabaseTable.Item.RECEIPTID},
@@ -382,7 +382,7 @@ public class ReceiptUtils {
             ids += "'" + id + "',";
         }
 
-        ReceiptGroup receiptGroup = null;
+        ReceiptGroup receiptGroup;
         if (ids.length() > 0) {
             cursor = RDH.getReadableDatabase().rawQuery(
                     "select " +
@@ -392,6 +392,8 @@ public class ReceiptUtils {
 
             receiptGroup = convertToReceiptGroup(retrieveReceiptModelFromCursor(cursor));
 
+        } else {
+            receiptGroup = ReceiptGroup.getInstance();
         }
 
         return receiptGroup;

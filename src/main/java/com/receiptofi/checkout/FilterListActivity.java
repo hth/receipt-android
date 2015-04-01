@@ -27,7 +27,7 @@ import java.util.Date;
 /**
  * Created by PT on 3/28/15.
  */
-public class FilterListActivity  extends FragmentActivity implements FilterListFragment.OnReceiptSelectedListener {
+public class FilterListActivity extends FragmentActivity implements FilterListFragment.OnReceiptSelectedListener {
 
     private static final String TAG = FilterListActivity.class.getSimpleName();
 
@@ -39,7 +39,9 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
     private FilterActionBarType actionBarType;
     private ProgressDialog loader;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,14 +49,14 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         Log.d(TAG, "executing onCreate");
         setContentView(R.layout.filter_list_page);
         // Run query to fetch data
-        if(getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)){
+        if (getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)) {
             String filterType = getIntent().getStringExtra(Constants.INTENT_EXTRA_FILTER_TYPE);
-            if(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)){
+            if (ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)) {
                 new FilterDataTask().execute(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue(), getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME));
                 actionBarType = FilterActionBarType.MENU_MAIN;
                 addFragments(savedInstanceState);
             }
-        } else if(Intent.ACTION_SEARCH.equals(getIntent().getAction())){
+        } else if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
             actionBarType = FilterActionBarType.MENU_FILTER;
             handleIntent(getIntent());
         }
@@ -77,7 +79,7 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         }
     }
 
-    private void addFragments(Bundle savedInstanceState){
+    private void addFragments(Bundle savedInstanceState) {
         // Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment
         if (findViewById(R.id.fragment_container) != null) {
@@ -100,7 +102,7 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, filterListFragment).commit();
         } else {
-            filterListFragment = (FilterListFragment)getSupportFragmentManager().findFragmentById(R.id.flist_fragment);
+            filterListFragment = (FilterListFragment) getSupportFragmentManager().findFragmentById(R.id.flist_fragment);
         }
     }
 
@@ -143,11 +145,11 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         }
     }
 
-    public int getGroupIndex(){
+    public int getGroupIndex() {
         return groupIndex;
     }
 
-    public int getChildIndex(){
+    public int getChildIndex() {
         return childIndex;
     }
 
@@ -155,22 +157,22 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(TAG, "executing onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
-        if(actionBarType == FilterActionBarType.MENU_MAIN){
+        if (actionBarType == FilterActionBarType.MENU_MAIN) {
             inflater.inflate(R.menu.menu_main, menu);
             setSearchConfig(menu);
         } else {
             Log.d(TAG, "Inflating menu for FilterActionBarType.MENU_FILTER");
             inflater.inflate(R.menu.menu_filter, menu);
-            SearchView searchView =setSearchConfig(menu);
+            SearchView searchView = setSearchConfig(menu);
 
-            if(getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())){
+            if (getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
                 searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
             }
         }
         return true;
     }
 
-    private SearchView setSearchConfig(Menu menu){
+    private SearchView setSearchConfig(Menu menu) {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -186,17 +188,17 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
      *  arg[0] -> Filtertype
      *  arg[1] -> searchQuery
      */
-    private class FilterDataTask extends AsyncTask<String, Integer, ReceiptGroup>{
+    private class FilterDataTask extends AsyncTask<String, Integer, ReceiptGroup> {
 
         @Override
         protected ReceiptGroup doInBackground(String... args) {
             ReceiptGroup receiptGroup = null;
-            if(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue() == args[0]){
+            if (ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue() == args[0]) {
                 Log.d(TAG, "!!!!! search query is: " + args[1]);
                 receiptGroup = ReceiptUtils.filterByBizByMonth(args[1], new Date());
-            } else if(ReceiptFilter.FIlter_BY_KEYWORD.getValue() == args[0]){
+            } else if (ReceiptFilter.FIlter_BY_KEYWORD.getValue() == args[0]) {
                 Log.d(TAG, "!!!!! search query is: " + args[1]);
-                receiptGroup = ReceiptUtils.searchByName(args[1]);
+                receiptGroup = ReceiptUtils.searchByKeyword(args[1]);
             }
             return receiptGroup;
         }
