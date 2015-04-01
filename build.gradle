@@ -173,7 +173,7 @@ android {
             proguardFile 'library-proguard/proguard-mikephil-charting.pro'
             proguardFile 'library-proguard/proguard-org-apache.pro'
 
-            proguardFile 'project-debug-proguard.config'
+            proguardFile 'project-staging-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
 
             signingConfig signingConfigs.staging
