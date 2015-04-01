@@ -64,7 +64,7 @@ public class ReceiptItemUtils {
 
         List<ReceiptItemModel> list = new LinkedList<>();
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 ReceiptItemModel receiptItemModel = new ReceiptItemModel(
                         cursor.getString(0),
                         cursor.getString(1),
@@ -105,7 +105,7 @@ public class ReceiptItemUtils {
 
         List<String> list = new ArrayList<>();
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 list.add(cursor.getString(0));
             }
         }
