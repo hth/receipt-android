@@ -3,7 +3,6 @@ package com.receiptofi.checkout.utils.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 
-import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.http.API;
 
