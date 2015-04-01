@@ -41,6 +41,12 @@ public class DBUtils {
         initializeDefaults();
     }
 
+    /**
+     * Invoked in three different scenarios.
+     * Once called during onCreate() when app is installed
+     * And when X-R-MAIL does not exists
+     * And when new user logs in.
+     */
     public static void initializeDefaults() {
         Log.d(TAG, "Initialize defaults");
 
