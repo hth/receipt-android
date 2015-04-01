@@ -42,7 +42,7 @@ public class MonthlyReportUtils {
 
 
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
 
                 ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
                         cursor.getString(0),
@@ -86,9 +86,10 @@ public class MonthlyReportUtils {
         Cursor cursor = RDH.getReadableDatabase().rawQuery(
                 " select " +
                         "total from " + MonthlyReport.TABLE_NAME + " " +
-                        "where year = '" + year + "' " +
-                        "and month = '" + month + "'", null);
+                        "where " + MonthlyReport.YEAR + " = '" + year + "' " +
+                        "and " + MonthlyReport.MONTH + " = '" + month + "'", null);
 
+        //TODO try changing to while(cursor.moveToNext()) from if
         if (cursor != null && cursor.getCount() > 0) {
             cursor.moveToFirst();
             return cursor.getString(0);
@@ -111,7 +112,7 @@ public class MonthlyReportUtils {
         );
 
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 String month = cursor.getString(0);
                 String year = cursor.getString(1);
                 ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(

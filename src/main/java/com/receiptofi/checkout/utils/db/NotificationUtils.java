@@ -62,7 +62,7 @@ public class NotificationUtils {
 
         List<NotificationModel> list = new LinkedList<>();
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 NotificationModel notificationModel = new NotificationModel(
                         cursor.getString(0),
                         cursor.getString(1),

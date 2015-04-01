@@ -230,7 +230,7 @@ public class ReceiptUtils {
 
         ChartModel chartModel = new ChartModel();
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 ReceiptModel receiptModel = new ReceiptModel();
                 receiptModel.setBizName(cursor.getString(0));
                 receiptModel.setTotal(cursor.getDouble(1));
@@ -323,7 +323,7 @@ public class ReceiptUtils {
                         "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE  '" + SDF_YM.format(monthYear) + "%'", null);
 
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 String[] yearMonthSplit = yearMonth.split("-");
                 ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
                         yearMonthSplit[1],
@@ -356,7 +356,7 @@ public class ReceiptUtils {
 
         List<String> receiptIds = new ArrayList<>();
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 receiptIds.add(cursor.getString(0));
             }
         }
@@ -372,7 +372,7 @@ public class ReceiptUtils {
         );
 
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 receiptIds.add(cursor.getString(0));
             }
         }
@@ -430,7 +430,7 @@ public class ReceiptUtils {
         List<ReceiptModel> list = new LinkedList<>();
 
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 ReceiptModel receiptModel = new ReceiptModel();
                 receiptModel.setBizName(cursor.getString(0));
                 receiptModel.setAddress(cursor.getString(1));

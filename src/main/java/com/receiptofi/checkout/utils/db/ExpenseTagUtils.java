@@ -59,7 +59,7 @@ public class ExpenseTagUtils {
 
         List<ExpenseTagModel> list = new LinkedList<>();
         if (cursor != null && cursor.getCount() > 0) {
-            for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor.moveToNext()) {
+            while (cursor.moveToNext()) {
                 ExpenseTagModel expenseTagModel = new ExpenseTagModel(
                         cursor.getString(0),
                         cursor.getString(1),
