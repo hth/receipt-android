@@ -38,6 +38,7 @@ public class ReceiptListFragment extends Fragment {
     public static List<List<ReceiptModel>> children = new LinkedList<>();
 
     private OnReceiptSelectedListener mCallback;
+    private DataSetObserver receiptGroupObserver;
     public static ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
 
     public static final int RECEIPT_MODEL_UPDATED = 0x2436;
@@ -87,6 +88,24 @@ public class ReceiptListFragment extends Fragment {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        receiptGroupObserver = new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                updateHandler.sendEmptyMessage(RECEIPT_MODEL_UPDATED);
+            }
+        };
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        receiptGroup.registerObserver(receiptGroupObserver);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        receiptGroup.unregisterObserver(receiptGroupObserver);
     }
 
     @Override
@@ -104,13 +123,6 @@ public class ReceiptListFragment extends Fragment {
         explv.setEmptyView(view.findViewById(R.id.empty_view));
         explv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
-        DataSetObserver receiptGroupObserver = new DataSetObserver() {
-            @Override
-            public void onChanged() {
-                updateHandler.sendEmptyMessage(RECEIPT_MODEL_UPDATED);
-            }
-        };
-        receiptGroup.registerObserver(receiptGroupObserver);
         Log.d(TAG, "****************************        receiptGroupObserver registered");
 
 
@@ -126,8 +138,6 @@ public class ReceiptListFragment extends Fragment {
                 return false;
             }
         });
-        // TODO for testing only
-        //updateHandler.postDelayed(r, 12000);
     }
 
     @Override
@@ -143,34 +153,4 @@ public class ReceiptListFragment extends Fragment {
                     + " must implement OnReceiptSelectedListener");
         }
     }
-
-    // TODO for testing only
-    final Runnable r = new Runnable()
-    {
-        public void run()
-        {
-            Log.d(TAG, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \n %%%%%%%%%%%%%%%%%%%");
-            Log.d(TAG, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \n %%%%%%%%%%%%%%%%%%%");
-            Log.d(TAG, "%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% \n %%%%%%%%%%%%%%%%%%%");
-            int numHeaders = receiptGroup.getReceiptGroupHeaders().size();
-            int numChildGroup = receiptGroup.getReceiptModels().size();
-
-            receiptGroup.getReceiptModels().get(0).remove(0);
-           // receiptGroup.getReceiptGroupHeaders().remove(numHeaders-1);
-           // receiptGroup.getReceiptModels().remove(numChildGroup-1);
-            /*
-            for (int index = numHeaders -1; index > -1; index--){
-                Log.d(TAG, "numHeaders is: " + numHeaders  + "index is: " + index);
-                receiptGroup.getReceiptGroupHeaders().remove(index);
-            }
-            */
-            /*
-            for (int index =numChildGroup-1; index > -1; index--){
-                Log.d(TAG, "numChildGroup is: " + numChildGroup  + "index is: " + index);
-                receiptGroup.getReceiptModels().remove(index);
-            }
-            */
-            updateHandler.sendEmptyMessage(RECEIPT_MODEL_UPDATED);
-        }
-    };
 }
