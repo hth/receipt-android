@@ -10,6 +10,7 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
 
@@ -28,35 +29,30 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private final LayoutInflater inflater;
 
-    private List<ReceiptGroupHeader> groups;
-    private List<List<ReceiptModel>> children;
-
-    public FilterListAdapter(Context context, List<ReceiptGroupHeader> groups, List<List<ReceiptModel>> children) {
+    public FilterListAdapter(Context context) {
         super();
         this.context = context;
         inflater = LayoutInflater.from(context);
-        this.groups = groups;
-        this.children = children;
     }
 
     @Override
     public int getGroupCount() {
-        return groups.size();
+        return FilterListFragment.groups.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return children.get(groupPosition).size();
+        return FilterListFragment.children.get(groupPosition).size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return groups.get(groupPosition);
+        return FilterListFragment.groups.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return children.get(groupPosition).get(childPosition);
+        return FilterListFragment.children.get(groupPosition).get(childPosition);
     }
 
     @Override

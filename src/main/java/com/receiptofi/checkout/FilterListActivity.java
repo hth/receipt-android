@@ -4,7 +4,7 @@ import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -34,10 +34,10 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
     private int groupIndex = -1;
     private int childIndex = -1;
 
+    private FilterListFragment filterListFragment = null;
+    private ReceiptGroup receiptData;
     private FilterActionBarType actionBarType;
     private ProgressDialog loader;
-    private ReceiptGroup receiptGroup;
-    private SearchView searchView;
 
     /** Called when the activity is first created. */
     @Override
@@ -45,21 +45,15 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         super.onCreate(savedInstanceState);
 
         Log.d(TAG, "executing onCreate");
+        setContentView(R.layout.filter_list_page);
         // Run query to fetch data
         if(getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)){
-            showLoader("Please wait...");
             String filterType = getIntent().getStringExtra(Constants.INTENT_EXTRA_FILTER_TYPE);
             if(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)){
-                receiptGroup = ReceiptUtils.filterByBizByMonth(getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME), new Date());
+                new FilterDataTask().execute(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue(), getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME));
                 actionBarType = FilterActionBarType.MENU_MAIN;
-                setContentView(R.layout.filter_list_page);
                 addFragments(savedInstanceState);
-            } else if(ReceiptFilter.FIlter_BY_KEYWORD.getValue().equalsIgnoreCase(filterType)){
-                actionBarType = FilterActionBarType.MENU_FILTER;
-            } else if(ReceiptFilter.FIlter_BY_KEYWORD_AND_DATE.getValue().equalsIgnoreCase(filterType)){
-
             }
-            hideLoader();
         } else if(Intent.ACTION_SEARCH.equals(getIntent().getAction())){
             actionBarType = FilterActionBarType.MENU_FILTER;
             handleIntent(getIntent());
@@ -71,6 +65,16 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         super.onNewIntent(intent);
         Log.d(TAG, "executing onNewIntent");
         handleIntent(intent);
+    }
+
+    private void handleIntent(Intent intent) {
+        Log.d(TAG, "executing handleIntent");
+
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            //use the query to search your data somehow
+            new FilterDataTask().execute(ReceiptFilter.FIlter_BY_KEYWORD.getValue(), intent.getStringExtra(SearchManager.QUERY));
+            addFragments(null);
+        }
     }
 
     private void addFragments(Bundle savedInstanceState){
@@ -85,8 +89,8 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
                 return;
             }
 
-            // Create an instance of ExampleFragment
-            FilterListFragment filterListFragment = new FilterListFragment();
+            // Create an instance of FilterListFragment
+            filterListFragment = new FilterListFragment();
 
             // In case this activity was started with special instructions from an Intent,
             // pass the Intent's extras to the fragment as arguments
@@ -95,6 +99,8 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
             // Add the fragment to the 'fragment_container' FrameLayout
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, filterListFragment).commit();
+        } else {
+            filterListFragment = (FilterListFragment)getSupportFragmentManager().findFragmentById(R.id.flist_fragment);
         }
     }
 
@@ -106,14 +112,14 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         childIndex = position;
         // Capture the article fragment from the activity layout
         ReceiptDetailFragment receiptDetailFragment = (ReceiptDetailFragment)
-                getSupportFragmentManager().findFragmentById(R.id.rdetail_fragment);
+                getSupportFragmentManager().findFragmentById(R.id.fdetail_fragment);
 
         if (receiptDetailFragment != null) {
             Log.d(TAG, "detail fragment already instantiated");
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            receiptDetailFragment.updateReceiptDetailView(index, position, receiptGroup.getReceiptModels().get(index).get(position));
+            receiptDetailFragment.updateReceiptDetailView(index, position, receiptData.getReceiptModels().get(index).get(position));
 
         } else {
             Log.d(TAG, "Instantiating new detail fragment");
@@ -137,10 +143,6 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         }
     }
 
-    public ReceiptGroup getReceiptGroup(){
-        return receiptGroup;
-    }
-
     public int getGroupIndex(){
         return groupIndex;
     }
@@ -155,55 +157,55 @@ public class FilterListActivity  extends FragmentActivity implements FilterListF
         MenuInflater inflater = getMenuInflater();
         if(actionBarType == FilterActionBarType.MENU_MAIN){
             inflater.inflate(R.menu.menu_main, menu);
+            setSearchConfig(menu);
         } else {
             Log.d(TAG, "Inflating menu for FilterActionBarType.MENU_FILTER");
             inflater.inflate(R.menu.menu_filter, menu);
-
-            // Associate searchable configuration with the SearchView
-            SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-            searchView =
-                (SearchView) menu.findItem(R.id.menu_search).getActionView();
-            searchView.setIconifiedByDefault(false);
-            searchView.requestFocusFromTouch();
-            searchView.setSearchableInfo(
-                    searchManager.getSearchableInfo(getComponentName()));
+            SearchView searchView =setSearchConfig(menu);
 
             if(getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())){
                 searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
             }
-
         }
         return true;
     }
 
-    private void handleIntent(Intent intent) {
-        Log.d(TAG, "executing handleIntent");
-
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.d(TAG, "Search query is: " + query);
-            //use the query to search your data somehow
-            receiptGroup = ReceiptUtils.searchByName(query);
-            setContentView(R.layout.filter_list_page);
-            addFragments(null);
-        }
+    private SearchView setSearchConfig(Menu menu){
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setIconifiedByDefault(false);
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+        return searchView;
     }
 
-    public void showLoader(String msg) {
-        loader = new ProgressDialog(this);
-        loader.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loader.setCancelable(false);
-        loader.setIndeterminate(true);
-        loader.setMessage(msg);
-        loader.show();
-    }
+    /*
+     *  arg[0] -> Filtertype
+     *  arg[1] -> searchQuery
+     */
+    private class FilterDataTask extends AsyncTask<String, Integer, ReceiptGroup>{
 
-    public void hideLoader() {
-        if (loader != null) {
-            loader.dismiss();
+        @Override
+        protected ReceiptGroup doInBackground(String... args) {
+            ReceiptGroup receiptGroup = null;
+            if(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue() == args[0]){
+                Log.d(TAG, "!!!!! search query is: " + args[1]);
+                receiptGroup = ReceiptUtils.filterByBizByMonth(args[1], new Date());
+            } else if(ReceiptFilter.FIlter_BY_KEYWORD.getValue() == args[0]){
+                Log.d(TAG, "!!!!! search query is: " + args[1]);
+                receiptGroup = ReceiptUtils.searchByName(args[1]);
+            }
+            return receiptGroup;
         }
-        loader = null;
+
+        @Override
+        protected void onPostExecute(ReceiptGroup receiptGroup) {
+            receiptData = receiptGroup;
+            Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
+            filterListFragment.notifyDataChanged(receiptGroup);
+        }
     }
 }
