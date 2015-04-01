@@ -231,19 +231,22 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     protected void saveAuthKey(Map<String, String> map) {
         String mail = KeyValueUtils.getValue(API.key.XR_MAIL);
 
-        /*
-         * If mail has length greater than zero and mail is not equal to X-R-MAIL then
-         * re-initialize db.
+        /**
+         * If mail has length greater than zero and mail is not equal to X-R-MAIL then re-initialize db.
+         * Also, if mail length is zero but number of tables are not zero then re-initialize db.
          */
         if (!TextUtils.isEmpty(mail) && !mail.equals(map.get(API.key.XR_MAIL))) {
             Log.d(TAG, "Changed user from " + mail + " to " + map.get(API.key.XR_MAIL));
+            DBUtils.dbReInitialize();
+        } else if (TextUtils.isEmpty(mail) && DBUtils.countTables() > 0) {
+            Log.d(TAG, "No user in db but changing user to " + map.get(API.key.XR_MAIL) + " as table count greater than 0");
             DBUtils.dbReInitialize();
         }
 
         for (Map.Entry<String, String> entry : map.entrySet()) {
             boolean success = KeyValueUtils.updateInsert(entry.getKey(), entry.getValue());
             if (!success) {
-                Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
+                Log.e(TAG, "Error while saving Auth data: key is: " + entry.getKey() + " value is:  " + entry.getValue());
             }
 
             //TODO(hth) remove code below that confirms if the value was added

@@ -1,5 +1,6 @@
 package com.receiptofi.checkout.utils.db;
 
+import android.database.Cursor;
 import android.util.Log;
 
 import com.receiptofi.checkout.db.CreateTable;
@@ -15,7 +16,8 @@ public class DBUtils {
      * Delete all tables and re-create all tables with default settings.
      */
     public static void dbReInitialize() {
-        Log.d(TAG, "initialize database");
+        Log.d(TAG, "Initialize database");
+
         /** Delete all tables. */
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Receipt.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.KeyValue.TABLE_NAME);
@@ -25,7 +27,6 @@ public class DBUtils {
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Item.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ExpenseTag.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Notification.TABLE_NAME);
-
 
         /** Create tables. */
         CreateTable.createTableReceipts(RDH.getDb());
@@ -41,6 +42,8 @@ public class DBUtils {
     }
 
     public static void initializeDefaults() {
+        Log.d(TAG, "Initialize defaults");
+
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_MAIL, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_AUTH, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
@@ -48,5 +51,24 @@ public class DBUtils {
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LAST_FETCHED, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, "");
+    }
+
+    /**
+     * Counts tables in SQLite.
+     *
+     * @return
+     */
+    public static int countTables() {
+        int count = 0;
+        Cursor cursor = RDH.getReadableDatabase().rawQuery("SELECT count(*) FROM sqlite_master WHERE " +
+                "type = 'table' AND " +
+                "name != 'android_metadata' AND " +
+                "name != 'sqlite_sequence'", null);
+
+        if (cursor.moveToNext()) {
+            count = cursor.getInt(0);
+        }
+        Log.d(TAG, "Number of table count in db " + count);
+        return count;
     }
 }
