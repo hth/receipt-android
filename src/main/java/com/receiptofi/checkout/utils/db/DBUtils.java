@@ -66,10 +66,12 @@ public class DBUtils {
      */
     public static int countTables() {
         int count = 0;
-        Cursor cursor = RDH.getReadableDatabase().rawQuery("SELECT count(*) FROM sqlite_master WHERE " +
+        Cursor cursor = RDH.getReadableDatabase().rawQuery(
+                "SELECT count(*) FROM sqlite_master WHERE " +
                 "type = 'table' AND " +
                 "name != 'android_metadata' AND " +
-                "name != 'sqlite_sequence'", null);
+                "name != 'sqlite_sequence'",
+                null);
 
         if (cursor.moveToNext()) {
             count = cursor.getInt(0);
