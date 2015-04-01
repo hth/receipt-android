@@ -259,32 +259,6 @@ public class ReceiptUtils {
     }
 
     /**
-     * Used for map drill down when bizName is provided.
-     *
-     * @param year
-     * @param month
-     * @param bizName not null
-     * @return
-     */
-    public static List<ReceiptModel> fetchReceiptsForBizName(String year, String month, String bizName) {
-        Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month + " bizName=" + bizName);
-
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? " +
-                        "and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? " +
-                        "and " + DatabaseTable.Receipt.BIZ_NAME + " = ? ",
-                new String[]{month, year, bizName},
-                null,
-                null,
-                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
-        );
-
-        return retrieveReceiptModelFromCursor(cursor);
-    }
-
-    /**
      * Fetch receipts based on receipt ids.
      *
      * @param ids
@@ -314,7 +288,8 @@ public class ReceiptUtils {
     }
 
     /**
-     * select * from RECEIPT where bizName = 'Costco' and receiptDate LIKE '2015-01-%'
+     * Fetch receipts for selected business name in pie chart. This is used as filter receipts by business name
+     * for selected month in pie chart.
      *
      * @param bizName
      * @param monthYear
@@ -322,6 +297,10 @@ public class ReceiptUtils {
      */
     public static ReceiptGroup filterByBizByMonth(String bizName, Date monthYear) {
         String yearMonth = SDF_YM.format(monthYear);
+
+        /**
+         * select * from RECEIPT where bizName = 'Costco' and receiptDate LIKE '2015-01-%'
+         */
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Receipt.TABLE_NAME,
                 null,
