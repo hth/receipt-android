@@ -133,7 +133,7 @@ public class DeviceService {
             }
 
             /** Populate data in advance for master/detail views */
-            ReceiptListFragment.receiptGroup = MonthlyReportUtils.fetchMonthly();
+            MonthlyReportUtils.fetchMonthly();
         }
     }
 }
