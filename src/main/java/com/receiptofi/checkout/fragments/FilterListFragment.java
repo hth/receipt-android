@@ -31,6 +31,7 @@ public class FilterListFragment extends Fragment {
     private ExpandableListView explv;
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
+    public static boolean hideTotal;
 
     private OnReceiptSelectedListener mCallback;
 
@@ -94,6 +95,7 @@ public class FilterListFragment extends Fragment {
     public void notifyDataChanged(ReceiptGroup receiptGroup){
         groups = receiptGroup.getReceiptGroupHeaders();
         children = receiptGroup.getReceiptModels();
+        hideTotal = ((FilterListActivity)getActivity()).hideTotal();
         ((FilterListAdapter)explv.getExpandableListAdapter()).notifyDataSetChanged();
     }
 }
