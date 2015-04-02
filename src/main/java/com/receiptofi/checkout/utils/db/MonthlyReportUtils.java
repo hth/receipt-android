@@ -8,6 +8,7 @@ import com.receiptofi.checkout.db.CreateTable;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
+import com.receiptofi.checkout.model.ReceiptGroupObservable;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 import static com.receiptofi.checkout.db.DatabaseTable.MonthlyReport;
@@ -125,6 +126,7 @@ public class MonthlyReportUtils {
                 receiptGroup.addReceiptGroup(ReceiptUtils.fetchReceipts(year, month));
             }
         }
+        ReceiptGroupObservable.setMonthlyReceiptGroup(receiptGroup);
         return receiptGroup;
     }
 }

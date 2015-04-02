@@ -17,8 +17,8 @@ import android.widget.ExpandableListView;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter;
-import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
+import com.receiptofi.checkout.model.ReceiptGroupObservable;
 import com.receiptofi.checkout.model.ReceiptModel;
 
 import java.util.LinkedList;
@@ -39,7 +39,7 @@ public class ReceiptListFragment extends Fragment {
 
     private OnReceiptSelectedListener mCallback;
     private DataSetObserver receiptGroupObserver;
-    public static ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
+    public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
 
     public static final int RECEIPT_MODEL_UPDATED = 0x2436;
 
@@ -49,10 +49,10 @@ public class ReceiptListFragment extends Fragment {
             switch (what) {
                 case RECEIPT_MODEL_UPDATED:
                     // TODO: run enough test to make sure not checking null won't cause any issues
-                    //if(receiptGroup != null) {
+                    //if(receiptGroupObservable != null) {
                     Log.d(TAG, "receiptGroupObserver onChanged");
-                    groups = receiptGroup.getReceiptGroupHeaders();
-                    children = receiptGroup.getReceiptModels();
+                    groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
+                    children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
                     ((ReceiptListAdapter)explv.getExpandableListAdapter()).notifyDataSetChanged();
                     int groupPosition = ((ReceiptListActivity)getActivity()).getGroupIndex();
                     int childPosition = ((ReceiptListActivity)getActivity()).getChildIndex();
@@ -80,9 +80,9 @@ public class ReceiptListFragment extends Fragment {
 
     public ReceiptListFragment() {
         super();
-        if(receiptGroup != null) {
-            groups = receiptGroup.getReceiptGroupHeaders();
-            children = receiptGroup.getReceiptModels();
+        if(receiptGroupObservable != null) {
+            groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
+            children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
         }
     }
 
@@ -99,13 +99,13 @@ public class ReceiptListFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        receiptGroup.registerObserver(receiptGroupObserver);
+        receiptGroupObservable.registerObserver(receiptGroupObserver);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        receiptGroup.unregisterObserver(receiptGroupObserver);
+        receiptGroupObservable.unregisterObserver(receiptGroupObserver);
     }
 
     @Override
