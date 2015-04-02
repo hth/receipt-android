@@ -73,11 +73,13 @@
             android:label="@string/settings">
         </activity>
         <activity
-            android:name=".ReceiptListActivity">
+            android:name=".ReceiptListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
         <activity
             android:name=".FilterListActivity"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation|screenSize">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />

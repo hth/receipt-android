@@ -134,11 +134,18 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
 
             holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));
-            holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
+            if(FilterListFragment.hideTotal){
+                holder.amount.setVisibility(View.GONE);
+            } else {
+                holder.amount.setVisibility(View.VISIBLE);
+                holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
+            }
 
-            // Set the group to be always expanded
-            ExpandableListView explv = (ExpandableListView) parent;
-            explv.expandGroup(groupPosition);
+            // Set the group 0 to be always expanded
+            if(groupPosition == 0){
+                ExpandableListView explv = (ExpandableListView) parent;
+                explv.expandGroup(groupPosition);
+            }
 
             return convertView;
 

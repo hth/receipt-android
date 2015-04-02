@@ -36,8 +36,8 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
 
     private FilterListFragment filterListFragment = null;
     private ReceiptGroup receiptData;
+    private ReceiptFilter receiptFilter;
     private FilterActionBarType actionBarType;
-    private ProgressDialog loader;
 
     /**
      * Called when the activity is first created.
@@ -52,11 +52,13 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
         if (getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)) {
             String filterType = getIntent().getStringExtra(Constants.INTENT_EXTRA_FILTER_TYPE);
             if (ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)) {
+                receiptFilter = ReceiptFilter.FIlter_BY_BIZ_AND_MONTH;
                 new FilterDataTask().execute(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue(), getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME));
                 actionBarType = FilterActionBarType.MENU_MAIN;
                 addFragments(savedInstanceState);
             }
         } else if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
+            receiptFilter = ReceiptFilter.FIlter_BY_KEYWORD;
             actionBarType = FilterActionBarType.MENU_FILTER;
             handleIntent(getIntent());
         }
@@ -151,6 +153,10 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
 
     public int getChildIndex() {
         return childIndex;
+    }
+
+    public boolean hideTotal(){
+        return ReceiptFilter.FIlter_BY_KEYWORD == receiptFilter;
     }
 
     @Override
