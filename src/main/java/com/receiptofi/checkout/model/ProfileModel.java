@@ -44,4 +44,15 @@ public class ProfileModel {
     public String getRid() {
         return rid;
     }
+
+    @Override
+    public String toString() {
+        return "ProfileModel{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", mail='" + mail + '\'' +
+                ", name='" + name + '\'' +
+                ", rid='" + rid + '\'' +
+                '}';
+    }
 }

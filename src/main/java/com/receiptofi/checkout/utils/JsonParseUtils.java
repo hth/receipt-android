@@ -58,8 +58,9 @@ public class JsonParseUtils {
 
             profileModel.setLastName(profile.getString("lastName"));
             profileModel.setName(profile.getString("name"));
+            Log.d(TAG, profileModel.toString());
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.d(TAG, "Fail parsing profile response=" + profile, e);
         }
         return profileModel;
     }
@@ -225,9 +226,14 @@ public class JsonParseUtils {
         DataWrapper dataWrapper = new DataWrapper();
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            ProfileModel profileModel = parseProfile(jsonObject.getJSONObject("profile"));
-            if (profileModel != null) {
-                dataWrapper.setProfileModel(profileModel);
+
+            if (!jsonObject.isNull("profile")) {
+                ProfileModel profileModel = parseProfile(jsonObject.getJSONObject("profile"));
+                if (profileModel != null) {
+                    dataWrapper.setProfileModel(profileModel);
+                }
+            } else {
+                Log.d(TAG, "No profile updates");
             }
 
             List<ReceiptItemModel> receiptItemModels = parseItems(jsonObject.getJSONArray("items"));
@@ -255,6 +261,7 @@ public class JsonParseUtils {
 
             Log.d(TAG, "parsed all data");
         } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse, e);
             e.printStackTrace();
         }
 
