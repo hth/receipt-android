@@ -162,65 +162,115 @@ JSON Response data
           "rid": "10000000004",
           "tax": 0.0,
           "total": 7.99
-        },
-        {
-          "bizName": {
-            "name": "LITTLE INDIA CAFE"
-          },
-          "bizStore": {
-            "address": "415 North Mary Avenue #101, Sunnyvale, CA 94085, USA",
-            "phone": "00003563652"
-          },
-          "bs": "P",
-          "expenseReport": null,
-          "expenseTagId": "",
-          "files": [
-            {
-              "blobId": "547c0f63036405eb90adac1b",
-              "orientation": -270,
-              "sequence": 0
-            }
-          ],
-          "id": "547c1788036405eb90adac72",
-          "notes": {
-            "text": null
-          },
-          "ptax": "0.0000",
-          "receiptDate": "2014-10-18T21:00:00.000-07:00",
-          "rid": "10000000004",
-          "tax": 0.0,
-          "total": 9.23
-        },
-        {
-          "bizName": {
-            "name": "LITTLE INDIA CAFE"
-          },
-          "bizStore": {
-            "address": "415 North Mary Avenue #101, Sunnyvale, CA 94085, USA",
-            "phone": "00003563652"
-          },
-          "bs": "P",
-          "expenseReport": null,
-          "expenseTagId": "",
-          "files": [
-            {
-              "blobId": "547c0f63036405eb90adac29",
-              "orientation": -270,
-              "sequence": 0
-            }
-          ],
-          "id": "547c1808036405eb90adac75",
-          "notes": {
-            "text": null
-          },
-          "ptax": "0.0000",
-          "receiptDate": "2014-09-17T20:59:00.000-07:00",
-          "rid": "10000000004",
-          "tax": 0.0,
-          "total": 9.23
         }
       ],
       "unprocessedDocuments": {
         "unprocessedCount": 1
       }
     }
+    
+### Field References    
+    
+Expense Tag field reference
+    
+    @JsonProperty ("id")
+    private String id;
+
+    @JsonProperty ("tag")
+    private String tag;
+
+    @JsonProperty ("color")
+    private String color;
+    
+Items field reference
+    
+    @JsonProperty ("id")
+    private String id;
+
+    @JsonProperty ("seq")
+    private String seq;
+
+    @JsonProperty ("name")
+    private String name;
+
+    @JsonProperty ("quant")
+    private String quantity;
+
+    @JsonProperty ("price")
+    private String price;
+
+    @JsonProperty ("tax")
+    private String tax;
+
+    @JsonProperty ("receiptId")
+    private String receiptId;
+
+    @JsonProperty ("expenseTagId")
+    private String expenseTagId;
+    
+Notification field names
+    
+    @JsonProperty ("id")
+    private String id;
+
+    @JsonProperty ("m")
+    private String message;
+
+    @JsonProperty ("n")
+    private boolean notified = false;
+
+    @JsonProperty ("nt")
+    private String notificationType;
+
+    /**
+     * Could be a receipt id or Document id
+     */
+    @JsonProperty ("ri")
+    private String referenceId;
+
+    @JsonProperty ("c")
+    private String created;
+
+    @JsonProperty ("u")
+    private String updated;
+    
+Receipt field name
+        
+    @JsonProperty ("id")
+    private String id;
+
+    @JsonProperty ("total")
+    private Double total;
+
+    @JsonProperty ("bizName")
+    private JsonBizName jsonBizName;
+
+    @JsonProperty ("bizStore")
+    private JsonBizStore jsonBizStore;
+
+    @JsonProperty ("notes")
+    private JsonComment jsonNotes;
+
+    @JsonProperty ("files")
+    private Collection<JsonFileSystem> jsonFileSystems = new LinkedList<>();
+
+    @JsonProperty ("receiptDate")
+    private String receiptDate;
+
+    @JsonProperty ("ptax")
+    private String percentTax;
+
+    @JsonProperty ("tax")
+    private Double tax;
+
+    @JsonProperty ("rid")
+    private String receiptUserId;
+
+    @JsonProperty ("expenseReport")
+    private String expenseReportInFS;
+
+    @JsonProperty ("bs")
+    private String billedStatus = BilledStatusEnum.NB.getName();
+
+    @JsonProperty ("expenseTagId")
+    private String expenseTagId;        
