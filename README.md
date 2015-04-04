@@ -10,7 +10,7 @@ There two ways to test through command line
 
 Table of content
 
-01. [Mobile Server Health Check](documentation/api/SiteWorking.md)
+01. [Mobile Server Health Check](documentation/api/SiteWorking.md) -- Not being used
 02. [Signup Social](documentation/api/SignupSocial.md)
 03. [Signup](documentation/api/Signup.md)
 04. [Authentication](documentation/api/UserAuthentication.md)
