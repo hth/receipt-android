@@ -78,8 +78,8 @@ android {
         targetSdkVersion 19
         testHandleProfiling true
         testFunctionalTest true
-        versionCode 1
-        versionName "1.0"
+        versionCode 0
+        versionName "0.8.0"
 
         // For now we enable strict mode for all the configs
         buildConfigField 'boolean', 'STRICT_MODE', 'true'
@@ -160,7 +160,7 @@ android {
         }
 
         staging {
-            debuggable true
+            debuggable false
             minifyEnabled true
             zipAlignEnabled true
 
