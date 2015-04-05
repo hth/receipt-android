@@ -9,37 +9,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingLeft="@dimen/activity_horizontal_margin"
-        android:paddingRight="@dimen/activity_horizontal_margin"
-        android:paddingBottom="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
+        android:paddingTop="@dimen/activity_horizontal_margin_narrow"
+        android:paddingBottom="@dimen/activity_horizontal_margin_narrow"
+        android:paddingLeft="@dimen/activity_horizontal_margin_narrow"
+        android:paddingRight="@dimen/activity_horizontal_margin_narrow"
+        android:orientation="horizontal" >
 
-        <TextView
-            android:id="@+id/empty_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_gravity="center"
-            android:gravity="center"
-            style="@style/text_larger"
-            android:text="@string/notify_empty_detail"
-            />
 
-        <include layout="@layout/rd_address_block"/>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
 
-        <include layout="@layout/rd_date_block"/>
+            <TextView
+                android:id="@+id/empty_view"
+                style="@style/text_larger"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="@string/notify_empty_detail" />
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            <include layout="@layout/rd_address_block" />
 
-        <ListView
-            android:id="@+id/rd_items_list"
+            <include layout="@layout/rd_date_block" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <ListView
+                    android:id="@+id/rd_items_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:listSelector="@drawable/list_selector_app_theme"></ListView>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/rd_drawer_indicator"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent"
-            android:listSelector="@drawable/list_selector_app_theme">
-        </ListView>
-
-    </LinearLayout>
+            android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin_narrow"
+            android:layout_gravity="end|center_vertical"
+            android:src="@drawable/drawer_left_arrow"
+            android:visibility="gone" />
     </LinearLayout>
 </ScrollView>

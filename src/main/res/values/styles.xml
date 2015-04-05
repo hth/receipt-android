@@ -36,7 +36,6 @@
     <!--    RD view    -->
     <style name="text_large" parent="@android:style/TextAppearance.Large">
         <item name="android:textColor">@color/black</item>
-
     </style>
 
     <style name="text_larger" parent="@style/text_large">
@@ -77,6 +76,12 @@
 
     <style name="rd_list_item_text_right_style" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/gray_darker</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--    RD view    -->
+    <style name="text_receipt_action_label" parent="@android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
