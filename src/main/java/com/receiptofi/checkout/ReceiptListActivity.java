@@ -1,16 +1,28 @@
 package com.receiptofi.checkout;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.CheckBox;
+import android.widget.EditText;
+import android.widget.ListView;
 
+import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.model.ExpenseTagModel;
+import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+
+import java.util.List;
 
 /**
  * Created by PT on 1/3/15.
@@ -22,11 +34,16 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
     private int groupIndex = -1;
     private int childIndex = -1;
 
+    private CheckBox recheckBox;
+    private ListView tagList;
+    private EditText notes;
+
     /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receipt_list_page);
+        initDrawerView();
 
         // Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment
@@ -90,6 +107,9 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             // Commit the transaction
             transaction.commit();
         }
+        if(groupIndex >-1 && childIndex >-1){
+            new ReceiptDataTask().execute();
+        }
     }
 
     public int getGroupIndex(){
@@ -122,6 +142,43 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         }
     }
 
+    private void initDrawerView(){
+        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.receipt_drawer_layout);
+        recheckBox = (CheckBox)findViewById(R.id.receipt_action_recheck);
+        tagList = (ListView)findViewById(R.id.receipt_action_expense_tag_list);
+        notes = (EditText)findViewById(R.id.receipt_action_note);
+
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                // Comapare and call update api
+
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+    }
+
+    private void setDrawerView(List<ExpenseTagModel> tagModelList){
+        ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
+        String tagId = rModel.getExpenseTagId();
+        Log.d(TAG, "Current tag is: " + tagId);
+        tagList.setAdapter(new ExpenseTagListAdapter(this, tagModelList, tagId));
+    }
+
     private void launchSettings() {
         startActivity(new Intent(this, SettingsActivity.class));
     }
@@ -130,5 +187,18 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
+    }
+
+    private class ReceiptDataTask extends AsyncTask< Void, Void, List<ExpenseTagModel>>{
+
+        @Override
+        protected List<ExpenseTagModel> doInBackground(Void... voids) {
+            return ExpenseTagUtils.getAll();
+        }
+
+        @Override
+        protected void onPostExecute(List<ExpenseTagModel> expenseTagModels) {
+            setDrawerView(expenseTagModels);
+        }
     }
 }
