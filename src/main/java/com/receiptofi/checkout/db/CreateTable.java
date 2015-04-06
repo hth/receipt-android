@@ -26,7 +26,9 @@ public class CreateTable {
                 + DatabaseTable.Receipt.TAX + " DOUBLE ,"
                 + DatabaseTable.Receipt.TOTAL + " DOUBLE , "
                 + DatabaseTable.Receipt.BILL_STATUS + " TEXT, "
-                + DatabaseTable.Receipt.EXPENSE_TAG_ID + " TEXT " +
+                + DatabaseTable.Receipt.EXPENSE_TAG_ID + " TEXT, "
+                + DatabaseTable.Receipt.ACTIVE + " INT, "
+                + DatabaseTable.Receipt.DELETED + " INT " +
 
                 ");");
     }

@@ -204,6 +204,8 @@ public class ReceiptUtils {
         values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
         values.put(DatabaseTable.Receipt.BILL_STATUS, receipt.getBillStatus());
         values.put(DatabaseTable.Receipt.EXPENSE_TAG_ID, receipt.getExpenseTagId());
+        values.put(DatabaseTable.Receipt.ACTIVE, receipt.isActive());
+        values.put(DatabaseTable.Receipt.DELETED, receipt.isDeleted());
 
         ReceiptofiApplication.RDH.getWritableDatabase().delete(
                 DatabaseTable.Receipt.TABLE_NAME,
@@ -455,6 +457,8 @@ public class ReceiptUtils {
                 receiptModel.setTotal(cursor.getDouble(11));
                 receiptModel.setBillStatus(cursor.getString(12));
                 receiptModel.setExpenseTagId(cursor.getString(13));
+                receiptModel.setActive(cursor.getInt(14) == 1);
+                receiptModel.setDeleted(cursor.getInt(15) == 1);
 
                 receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getId()));
                 list.add(receiptModel);
