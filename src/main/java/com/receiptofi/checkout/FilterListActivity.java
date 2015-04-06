@@ -1,6 +1,5 @@
 package com.receiptofi.checkout;
 
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -155,7 +154,7 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
         return childIndex;
     }
 
-    public boolean hideTotal(){
+    public boolean hideTotal() {
         return ReceiptFilter.FIlter_BY_KEYWORD == receiptFilter;
     }
 
@@ -180,13 +179,10 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
 
     private SearchView setSearchConfig(Menu menu) {
         // Associate searchable configuration with the SearchView
-        SearchManager searchManager =
-                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
-                (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setIconifiedByDefault(false);
-        searchView.setSearchableInfo(
-                searchManager.getSearchableInfo(getComponentName()));
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
         return searchView;
     }
 
