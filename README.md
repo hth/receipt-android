@@ -23,7 +23,8 @@ Table of content
 11. [Unprocessed document count](documentation/api/Unprocessed.md)
 12. [Download document](documentation/api/Download.md)
 13. [Receipts data](documentation/api/Receipts.md)
-14. [Items data](documentation/api/Items.md)
-15. [Password change](documentation/api/PasswordChange.md)
-16. [UserId/Email/Rid change](documentation/api/RidChange.md)
-17. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used
+14. [Receipt Action](documentation/api/ReceiptAction.md)
+15. [Items data](documentation/api/Items.md)
+16. [Password change](documentation/api/PasswordChange.md)
+17. [UserId/Email/Rid change](documentation/api/RidChange.md)
+18. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used
