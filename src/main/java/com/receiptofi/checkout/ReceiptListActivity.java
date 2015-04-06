@@ -19,10 +19,18 @@ import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -175,9 +183,37 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
                 if(!(noteText.getText().toString()).equals(rModel.getNotes())){
                     notes = noteText.getText().toString();
                 }
-                Log.d(TAG, "\n RecheckBox is checked: " + reCheck
-                            + "\n selected tag is: " + tagId
-                            + "\n added notes are: " + notes);
+                Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + "notes: " + notes);
+
+                if(reCheck || null != tagId || null != notes) {
+                    JSONObject postData = new JSONObject();
+                    try {
+                        postData.put("expenseTagId", tagId);
+                        postData.put("notes", notes);
+                        postData.put("recheck", reCheck ? "RECHECK" : "");
+                        postData.put("receiptId", rModel.getId());
+
+                        ExternalCall.doPost(postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
+                            @Override
+                            public void onSuccess(Header[] headers, String body) {
+                                DeviceService.onSuccess(headers, body);
+                            }
+
+                            @Override
+                            public void onError(int statusCode, String error) {
+
+                            }
+
+                            @Override
+                            public void onException(Exception exception) {
+
+                            }
+                        });
+
+                    } catch (JSONException e) {
+                        Log.e(TAG, "Exception while adding data on drawer close: " + e.getMessage(), e);
+                    }
+                }
             }
 
             @Override
@@ -200,6 +236,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         });
         if(!TextUtils.isEmpty(rModel.getNotes())){
             noteText.setText(rModel.getNotes());
+        } else {
+            noteText.setText("");
         }
     }
 

@@ -40,7 +40,6 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     private static final String TAG = PasswordRecoveryActivity.class.getSimpleName();
     private StringBuilder errors = new StringBuilder();
     private EditText email;
-    private String emailStr;
 
     private ProgressDialog loader;
 
@@ -65,9 +64,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
             @Override
             public void afterTextChanged(Editable editable) {
-
-                passwordRecovery.setEnabled(editable.length() >= Validation.EMAIL_MIN_LENGTH
-                );
+                passwordRecovery.setEnabled(editable.length() >= Validation.EMAIL_MIN_LENGTH);
             }
         };
 
@@ -99,7 +96,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
         // getting username and password
-        emailStr = email.getText().toString();
+        String emailStr = email.getText().toString();
 
         if (TextUtils.isEmpty(emailStr)) {
             errors.append(this.getResources().getString(R.string.err_str_enter_email));
@@ -137,7 +134,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         try {
             postData.put(API.key.PASSWORD_RECOVERY_EMAIL, email);
         } catch (JSONException e) {
-            Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
+            Log.e(TAG, "Exception while adding postdata: " + e.getMessage(), e);
         }
 
         final PasswordRecoveryHandler handler = new PasswordRecoveryHandler();

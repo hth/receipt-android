@@ -27,7 +27,7 @@ public class API {
     public static final String GET_ALL_RECEIPTS = "/api/allReceipts.json";
     public static final String VIEW_RECEIPT_DETAIL = "/api/receiptDetail/";
     public static final String DOWNLOAD_IMAGE = "/api/image/";
-
+    public static final String RECEIPT_ACTION = "/api/receiptAction.json";
 
     public static class key {
         // Header
