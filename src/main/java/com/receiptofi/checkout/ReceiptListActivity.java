@@ -232,6 +232,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
     private void setDrawerView(final List<ExpenseTagModel> tagModelList){
         ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
+
+        recheckBox.setChecked(false);
         String tagId = rModel.getExpenseTagId();
         Log.d(TAG, "Current tag is: " + tagId);
         tagList.setAdapter(new ExpenseTagListAdapter(this, tagModelList, tagId));
