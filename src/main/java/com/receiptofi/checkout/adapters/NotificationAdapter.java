@@ -21,9 +21,8 @@ import java.util.List;
 public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
 
     private static final String TAG = NotificationAdapter.class.getSimpleName();
-
-    private Context context;
     private final LayoutInflater inflater;
+    private Context context;
     private List<NotificationModel> notificationList;
 
     public NotificationAdapter(Context context, List<NotificationModel> notificationList) {

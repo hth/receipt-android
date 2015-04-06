@@ -24,9 +24,8 @@ import java.text.SimpleDateFormat;
 public class FilterListAdapter extends BaseExpandableListAdapter {
 
     private static final String TAG = FilterListAdapter.class.getSimpleName();
-
-    private Context context;
     private final LayoutInflater inflater;
+    private Context context;
 
     public FilterListAdapter(Context context) {
         super();

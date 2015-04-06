@@ -20,9 +20,8 @@ import java.util.List;
 public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
     private static final String TAG = ReceiptItemListAdapter.class.getSimpleName();
-
-    private Context context;
     private final LayoutInflater inflater;
+    private Context context;
     private List<ReceiptItemModel> rdItems;
 
     public ReceiptItemListAdapter(Context context, List<ReceiptItemModel> items) {

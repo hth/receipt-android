@@ -23,9 +23,8 @@ import java.util.List;
 public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
 
     private static final String TAG = ExpenseTagListAdapter.class.getSimpleName();
-
-    private Context context;
     private final LayoutInflater inflater;
+    private Context context;
     private List<ExpenseTagModel> tagList;
     private String currTag;
 
