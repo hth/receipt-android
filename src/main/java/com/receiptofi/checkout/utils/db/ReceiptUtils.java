@@ -132,7 +132,14 @@ public class ReceiptUtils {
 
     public static ArrayList<ReceiptModel> getAllReceipts_old() {
 
-        String[] columns = new String[]{DatabaseTable.Receipt.BIZ_NAME, DatabaseTable.Receipt.RECEIPT_DATE, DatabaseTable.Receipt.PTAX, DatabaseTable.Receipt.TOTAL, DatabaseTable.Receipt.ID, DatabaseTable.Receipt.BLOB_IDS};
+        String[] columns = new String[]{
+                DatabaseTable.Receipt.BIZ_NAME,
+                DatabaseTable.Receipt.RECEIPT_DATE,
+                DatabaseTable.Receipt.PTAX,
+                DatabaseTable.Receipt.TOTAL,
+                DatabaseTable.Receipt.ID,
+                DatabaseTable.Receipt.BLOB_IDS
+        };
         Cursor receiptsRecords =
                 ReceiptofiApplication.RDH.getReadableDatabase().query(
                         DatabaseTable.Receipt.TABLE_NAME,

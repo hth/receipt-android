@@ -104,7 +104,7 @@ public class DeviceService {
         });
     }
 
-    private static void onSuccess(Header[] headers, String body) {
+    public static void onSuccess(Header[] headers, String body) {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
         ReceiptUtils.insert(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
