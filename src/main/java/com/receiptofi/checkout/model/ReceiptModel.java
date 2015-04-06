@@ -21,6 +21,8 @@ public class ReceiptModel {
     private List<ReceiptItemModel> receiptItems = new LinkedList<>();
     private String billStatus;
     private String expenseTagId;
+    private boolean active;
+    private boolean deleted;
 
     public String getBizName() {
         return bizName;
@@ -166,5 +168,21 @@ public class ReceiptModel {
 
     public String getReceiptYearMonth() {
         return receiptDate.substring(0, 7);
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }

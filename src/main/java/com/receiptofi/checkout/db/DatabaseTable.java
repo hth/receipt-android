@@ -20,6 +20,8 @@ public class DatabaseTable {
         public static final String TOTAL = "total";
         public static final String BILL_STATUS = "bs";
         public static final String EXPENSE_TAG_ID = "expenseTagId";
+        public static final String ACTIVE = "active";
+        public static final String DELETED = "deleted";
     }
 
     public static class ImageIndex {
