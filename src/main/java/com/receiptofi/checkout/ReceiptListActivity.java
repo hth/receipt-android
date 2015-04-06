@@ -168,10 +168,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
                 boolean reCheck = recheckBox.isChecked();
                 String tagId = null;
-                if(selectedTagModel != null){
+                if(selectedTagModel != null && !selectedTagModel.getId().equals(rModel.getExpenseTagId())) {
                     tagId = selectedTagModel.getId();
-                } else {
-                    tagId = rModel.getExpenseTagId();
                 }
                 String notes = null;
                 if(!(noteText.getText().toString()).equals(rModel.getNotes())){
