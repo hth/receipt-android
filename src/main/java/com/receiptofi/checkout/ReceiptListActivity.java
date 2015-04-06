@@ -85,6 +85,9 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
     public void onReceiptSelected(int index, int position) {
         // The user selected the headline of an article from the HeadlinesFragment
         Log.d(TAG, "executing onReceiptSelected: index is: " + index + " position is: " + position);
+        if(index < 0 || position < 0){
+            return;
+        }
 
         groupIndex = index;
         childIndex = position;
@@ -175,7 +178,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             public void onDrawerClosed(View drawerView) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                
+
                 ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
                 boolean reCheck = recheckBox.isChecked();
