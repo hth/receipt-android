@@ -30,19 +30,10 @@ import java.util.List;
  */
 public class ReceiptListFragment extends Fragment {
 
+    public static final int RECEIPT_MODEL_UPDATED = 0x2436;
     private static final String TAG = ReceiptListFragment.class.getSimpleName();
-
-    private View rootView;
-    private ExpandableListView explv;
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
-
-    private OnReceiptSelectedListener mCallback;
-    private DataSetObserver receiptGroupObserver;
-    public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
-
-    public static final int RECEIPT_MODEL_UPDATED = 0x2436;
-
     public final Handler updateHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             final int what = msg.what;
@@ -71,14 +62,11 @@ public class ReceiptListFragment extends Fragment {
             }
         }
     };
-
-    // The container Activity must implement this interface so the frag can deliver messages
-    public interface OnReceiptSelectedListener {
-        /**
-         * Called by HeadlinesFragment when a list item is selected
-         */
-        public void onReceiptSelected(int index, int position);
-    }
+    public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
+    private View rootView;
+    private ExpandableListView explv;
+    private OnReceiptSelectedListener mCallback;
+    private DataSetObserver receiptGroupObserver;
 
     public ReceiptListFragment() {
         super();
@@ -154,5 +142,13 @@ public class ReceiptListFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement OnReceiptSelectedListener");
         }
+    }
+
+    // The container Activity must implement this interface so the frag can deliver messages
+    public interface OnReceiptSelectedListener {
+        /**
+         * Called by HeadlinesFragment when a list item is selected
+         */
+        public void onReceiptSelected(int index, int position);
     }
 }
