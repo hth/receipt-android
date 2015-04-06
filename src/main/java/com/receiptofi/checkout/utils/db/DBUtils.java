@@ -68,9 +68,9 @@ public class DBUtils {
         int count = 0;
         Cursor cursor = RDH.getReadableDatabase().rawQuery(
                 "SELECT count(*) FROM sqlite_master WHERE " +
-                "type = 'table' AND " +
-                "name != 'android_metadata' AND " +
-                "name != 'sqlite_sequence'",
+                        "type = 'table' AND " +
+                        "name != 'android_metadata' AND " +
+                        "name != 'sqlite_sequence'",
                 null);
 
         if (cursor.moveToNext()) {

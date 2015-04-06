@@ -77,7 +77,7 @@ public final class ExternalCall {
                     HttpPost httpPost = getHttpPost(api);
 
                     Log.i(TAG, "post=" + httpPost.getURI());
-                    if(null != postData) {
+                    if (null != postData) {
                         Log.i(TAG, "data=" + postData.toString());
                         StringEntity postEntity = new StringEntity(postData.toString(), "UTF-8");
                         httpPost.setEntity(postEntity);
@@ -95,7 +95,7 @@ public final class ExternalCall {
                     HttpResponse response = new DefaultHttpClient().execute(httpPost);
                     int statusCode = response.getStatusLine().getStatusCode();
                     String body = EntityUtils.toString(response.getEntity());
-                    if(body.isEmpty()) {
+                    if (body.isEmpty()) {
                         Log.i(TAG, "post, statusCode=" + statusCode + ", body=EMPTY");
                     } else {
                         Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
@@ -129,7 +129,7 @@ public final class ExternalCall {
 
                     int statusCode = response.getStatusLine().getStatusCode();
                     String body = EntityUtils.toString(response.getEntity());
-                    if(body.isEmpty()) {
+                    if (body.isEmpty()) {
                         Log.i(TAG, "post, statusCode=" + statusCode + ", body=EMPTY");
                     } else {
                         Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
@@ -165,7 +165,7 @@ public final class ExternalCall {
                     HttpResponse response = new DefaultHttpClient().execute(httpGet);
                     int statusCode = response.getStatusLine().getStatusCode();
                     String body = EntityUtils.toString(response.getEntity());
-                    if(body.isEmpty()) {
+                    if (body.isEmpty()) {
                         Log.i(TAG, "get, statusCode=" + statusCode + ", body=EMPTY");
                     } else {
                         Log.i(TAG, "get, statusCode=" + statusCode + ", body=" + body);

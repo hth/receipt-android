@@ -56,7 +56,7 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
     public View getView(int position, View convertView, ViewGroup parent) {
         try {
             ViewHolder holder;
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.rd_item_list, parent, false);
 
                 holder = new ViewHolder();
@@ -70,7 +70,7 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
             ReceiptItemModel itemModel = getItem(position);
             holder.title.setText(itemModel.getName());
-            if(Double.parseDouble(itemModel.getQuantity()) > 1){
+            if (Double.parseDouble(itemModel.getQuantity()) > 1) {
                 holder.quantity.setText(context.getString(R.string.rd_item_quantity, Double.parseDouble(itemModel.getQuantity()), Double.parseDouble(itemModel.getPrice())));
                 holder.price.setText(context.getString(R.string.rd_item_price, (Double.parseDouble(itemModel.getPrice()) * Double.parseDouble(itemModel.getQuantity()))));
             } else {

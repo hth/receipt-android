@@ -53,13 +53,13 @@ public class ReceiptListFragment extends Fragment {
                     Log.d(TAG, "receiptGroupObserver onChanged");
                     groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
                     children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
-                    ((ReceiptListAdapter)explv.getExpandableListAdapter()).notifyDataSetChanged();
-                    int groupPosition = ((ReceiptListActivity)getActivity()).getGroupIndex();
-                    int childPosition = ((ReceiptListActivity)getActivity()).getChildIndex();
-                    ((ReceiptListActivity)getActivity()).onReceiptSelected(groupPosition, childPosition);
+                    ((ReceiptListAdapter) explv.getExpandableListAdapter()).notifyDataSetChanged();
+                    int groupPosition = ((ReceiptListActivity) getActivity()).getGroupIndex();
+                    int childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
+                    ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
 
                     //try{
-                       // ReceiptModel receiptModel = children.get(groupPosition).get(childPosition);
+                    // ReceiptModel receiptModel = children.get(groupPosition).get(childPosition);
 
                    /* } catch (Exception e){
                         Log.d(TAG, e.getMessage() + " seems like this receipt is not available");
@@ -74,13 +74,15 @@ public class ReceiptListFragment extends Fragment {
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnReceiptSelectedListener {
-        /** Called by HeadlinesFragment when a list item is selected */
+        /**
+         * Called by HeadlinesFragment when a list item is selected
+         */
         public void onReceiptSelected(int index, int position);
     }
 
     public ReceiptListFragment() {
         super();
-        if(receiptGroupObservable != null) {
+        if (receiptGroupObservable != null) {
             groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
             children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
         }
@@ -134,7 +136,7 @@ public class ReceiptListFragment extends Fragment {
                 int index = expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 expandableListView.setItemChecked(index, true);
 
-                ((ReceiptListActivity)getActivity()).onReceiptSelected(groupPosition, childPosition);
+                ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
                 return false;
             }
         });

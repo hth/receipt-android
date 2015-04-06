@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.NotificationModel;
-import com.receiptofi.checkout.model.ReceiptItemModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -58,7 +57,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
     public View getView(int position, View convertView, ViewGroup parent) {
         try {
             ViewHolder holder;
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.notification_list_item, parent, false);
 
                 holder = new ViewHolder();

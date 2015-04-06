@@ -17,7 +17,6 @@ import com.receiptofi.checkout.model.ReceiptModel;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 /**
  * Created by PT on 3/28/15.
@@ -134,7 +133,7 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
 
             holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));
-            if(FilterListFragment.hideTotal){
+            if (FilterListFragment.hideTotal) {
                 holder.amount.setVisibility(View.GONE);
             } else {
                 holder.amount.setVisibility(View.VISIBLE);
@@ -142,7 +141,7 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             }
 
             // Set the group 0 to be always expanded
-            if(groupPosition == 0){
+            if (groupPosition == 0) {
                 ExpandableListView explv = (ExpandableListView) parent;
                 explv.expandGroup(groupPosition);
             }

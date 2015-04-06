@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.ListView;
-import android.widget.SearchView;
 
 import com.receiptofi.checkout.adapters.NotificationAdapter;
 import com.receiptofi.checkout.model.NotificationModel;
@@ -26,12 +25,12 @@ public class NotificationActivity extends Activity {
         new NotificationDataTask().execute();
     }
 
-    private void setListData(List<NotificationModel> notificationModels){
+    private void setListData(List<NotificationModel> notificationModels) {
         ListView listView = (ListView) findViewById(R.id.notification_list);
         listView.setAdapter(new NotificationAdapter(this, notificationModels));
     }
 
-    private class NotificationDataTask extends AsyncTask<Void, Void, List<NotificationModel>>{
+    private class NotificationDataTask extends AsyncTask<Void, Void, List<NotificationModel>> {
 
         @Override
         protected List<NotificationModel> doInBackground(Void... voids) {

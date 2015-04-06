@@ -5,13 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import static com.receiptofi.checkout.db.DatabaseTable.ImageIndex;
-import static com.receiptofi.checkout.db.DatabaseTable.Item;
-import static com.receiptofi.checkout.db.DatabaseTable.KeyValue;
-import static com.receiptofi.checkout.db.DatabaseTable.MonthlyReport;
-import static com.receiptofi.checkout.db.DatabaseTable.Receipt;
-import static com.receiptofi.checkout.db.DatabaseTable.UploadQueue;
-
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TAG = DatabaseHandler.class.getSimpleName();

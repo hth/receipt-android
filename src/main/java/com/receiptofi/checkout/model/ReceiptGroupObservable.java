@@ -17,14 +17,15 @@ public class ReceiptGroupObservable extends DataSetObservable {
     private static ReceiptGroup monthlyReceiptGroup;
     private static List<DataSetObserver> observerList = new ArrayList<>();
 
-    private ReceiptGroupObservable() {}
+    private ReceiptGroupObservable() {
+    }
 
     public static ReceiptGroupObservable getInstance() {
         return new ReceiptGroupObservable();
     }
 
     public static ReceiptGroup getMonthlyReceiptGroup() {
-        if(monthlyReceiptGroup == null) {
+        if (monthlyReceiptGroup == null) {
             return ReceiptGroup.getInstance();
         }
         return monthlyReceiptGroup;
@@ -35,7 +36,7 @@ public class ReceiptGroupObservable extends DataSetObservable {
             ReceiptGroupObservable.monthlyReceiptGroup = monthlyReceiptGroup;
             Log.d(TAG, "ReceiptGroup has changed");
             Log.d(TAG, "Time to notify. Total number of observers: " + observerList.size());
-            for (DataSetObserver observer : observerList){
+            for (DataSetObserver observer : observerList) {
                 // TODO :fixme by fixing the trigger for update
                 observer.onChanged();
             }

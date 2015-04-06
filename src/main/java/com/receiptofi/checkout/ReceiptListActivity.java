@@ -50,7 +50,9 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
     private EditText noteText;
     private ExpenseTagModel selectedTagModel;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,16 +121,16 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             // Commit the transaction
             transaction.commit();
         }
-        if(groupIndex >-1 && childIndex >-1){
+        if (groupIndex > -1 && childIndex > -1) {
             new ReceiptDataTask().execute();
         }
     }
 
-    public int getGroupIndex(){
+    public int getGroupIndex() {
         return groupIndex;
     }
 
-    public int getChildIndex(){
+    public int getChildIndex() {
         return childIndex;
     }
 
@@ -154,11 +156,11 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         }
     }
 
-    private void initDrawerView(){
-        DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.receipt_drawer_layout);
-        recheckBox = (CheckBox)findViewById(R.id.receipt_action_recheck);
-        tagList = (ListView)findViewById(R.id.receipt_action_expense_tag_list);
-        noteText = (EditText)findViewById(R.id.receipt_action_note);
+    private void initDrawerView() {
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        recheckBox = (CheckBox) findViewById(R.id.receipt_action_recheck);
+        tagList = (ListView) findViewById(R.id.receipt_action_expense_tag_list);
+        noteText = (EditText) findViewById(R.id.receipt_action_note);
 
         drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -175,21 +177,21 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             public void onDrawerClosed(View drawerView) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                
+
                 ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
                 boolean reCheck = recheckBox.isChecked();
                 String tagId = null;
-                if(selectedTagModel != null && !selectedTagModel.getId().equals(rModel.getExpenseTagId())) {
+                if (selectedTagModel != null && !selectedTagModel.getId().equals(rModel.getExpenseTagId())) {
                     tagId = selectedTagModel.getId();
                 }
                 String notes = null;
-                if(!(noteText.getText().toString()).equals(rModel.getNotes())){
+                if (!(noteText.getText().toString()).equals(rModel.getNotes())) {
                     notes = noteText.getText().toString();
                 }
                 Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + "notes: " + notes);
 
-                if(reCheck || null != tagId || null != notes) {
+                if (reCheck || null != tagId || null != notes) {
                     JSONObject postData = new JSONObject();
                     try {
                         postData.put("expenseTagId", tagId);
@@ -227,7 +229,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         });
     }
 
-    private void setDrawerView(final List<ExpenseTagModel> tagModelList){
+    private void setDrawerView(final List<ExpenseTagModel> tagModelList) {
         ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
         String tagId = rModel.getExpenseTagId();
         Log.d(TAG, "Current tag is: " + tagId);
@@ -238,7 +240,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
                 selectedTagModel = tagModelList.get(position);
             }
         });
-        if(!TextUtils.isEmpty(rModel.getNotes())){
+        if (!TextUtils.isEmpty(rModel.getNotes())) {
             noteText.setText(rModel.getNotes());
         } else {
             noteText.setText("");
@@ -255,7 +257,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         finish();
     }
 
-    private class ReceiptDataTask extends AsyncTask< Void, Void, List<ExpenseTagModel>>{
+    private class ReceiptDataTask extends AsyncTask<Void, Void, List<ExpenseTagModel>> {
 
         @Override
         protected List<ExpenseTagModel> doInBackground(Void... voids) {
