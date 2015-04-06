@@ -25,22 +25,12 @@ import java.util.List;
 public class FilterListFragment extends Fragment {
 
     private static final String TAG = FilterListFragment.class.getSimpleName();
-
-    private View rootView;
-    private ExpandableListView explv;
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
     public static boolean hideTotal;
-
+    private View rootView;
+    private ExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
-
-    // The container Activity must implement this interface so the frag can deliver messages
-    public interface OnReceiptSelectedListener {
-        /**
-         * Called by HeadlinesFragment when a list item is selected
-         */
-        public void onReceiptSelected(int index, int position);
-    }
 
     public FilterListFragment() {
         super();
@@ -98,5 +88,13 @@ public class FilterListFragment extends Fragment {
         children = receiptGroup.getReceiptModels();
         hideTotal = ((FilterListActivity) getActivity()).hideTotal();
         ((FilterListAdapter) explv.getExpandableListAdapter()).notifyDataSetChanged();
+    }
+
+    // The container Activity must implement this interface so the frag can deliver messages
+    public interface OnReceiptSelectedListener {
+        /**
+         * Called by HeadlinesFragment when a list item is selected
+         */
+        public void onReceiptSelected(int index, int position);
     }
 }

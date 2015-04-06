@@ -46,14 +46,13 @@ import java.util.TimeZone;
  */
 public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    private static final String TAG = ReceiptDetailFragment.class.getSimpleName();
-
     public final static String ARG_INDEX = "index";
     public final static String ARG_POSITION = "position";
+    private static final String TAG = ReceiptDetailFragment.class.getSimpleName();
+    private static boolean dateSet = false;
     int mCurrentIndex = -1;
     int mCurrentPosition = -1;
     int mCurrItemIndex = -1;
-
     // Receipt detail biz info
     private TextView rdBizName;
     private LinearLayout rdBizAddress;
@@ -61,18 +60,14 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private TextView rdBizAddLine2;
     private TextView rdBizAddLine3;
     private TextView rdBizPhone;
-
     // Receipt detail date
     private TextView rdDate;
-
     // Receipt detail list item
     private ListView rdItemsList;
     private TextView taxDscpView;
     private TextView taxAmountView;
     private TextView totalAmountView;
-
     private List<ReceiptItemModel> itemList;
-    private static boolean dateSet = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
