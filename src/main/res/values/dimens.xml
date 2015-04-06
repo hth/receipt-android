@@ -17,11 +17,11 @@
     <dimen name="action_button_margin_right">30dp</dimen>
 
     <!--    Expandable List View    -->
-    <dimen name="expandable_list_parent_padding_left">40dp</dimen>
-    <dimen name="expandable_list_child_padding_left">50dp</dimen>
+    <dimen name="expandable_list_parent_padding_left">15dp</dimen>
+    <dimen name="expandable_list_child_padding_left">25dp</dimen>
     <dimen name="expandable_list_parent_padding_right">15dp</dimen>
-    <dimen name="expandable_list_child_padding_right">20dp</dimen>
-    <dimen name="expandable_list_child_vertical_padding">2dp</dimen>
+    <dimen name="expandable_list_child_padding_right">15dp</dimen>
+    <dimen name="expandable_list_child_vertical_padding">4dp</dimen>
 
     <!--    RD view  - view is divided in blocks and each block contains multiple elements -->
     <dimen name="rd_elements_vertical_padding">2dp</dimen>
