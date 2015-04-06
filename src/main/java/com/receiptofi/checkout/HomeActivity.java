@@ -296,7 +296,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
     @Override
     public void onValueSelected(Entry entry, int index) {
-        String bizName = expByBizData.getXVals().get(index);
+        String bizName = expByBizData.getXVals().get(entry.getXIndex());
         Log.d(TAG, "bizName is: " + bizName);
         Intent intent = new Intent(this, FilterListActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_FILTER_TYPE, Constants.ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue());
