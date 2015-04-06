@@ -19,8 +19,8 @@ public class ReceiptModel {
     private String rid;
     private double total;
     private List<ReceiptItemModel> receiptItems = new LinkedList<>();
-    private String expenseTagId;
     private String billStatus;
+    private String expenseTagId;
 
     public String getBizName() {
         return bizName;
