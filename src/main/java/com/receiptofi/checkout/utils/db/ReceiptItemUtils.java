@@ -22,7 +22,7 @@ public class ReceiptItemUtils {
     private static final String TAG = ReceiptItemUtils.class.getSimpleName();
 
     public static void insert(List<ReceiptItemModel> items) {
-        for(ReceiptItemModel item : items) {
+        for (ReceiptItemModel item : items) {
             insert(item);
         }
     }

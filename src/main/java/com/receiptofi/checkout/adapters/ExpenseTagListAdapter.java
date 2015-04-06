@@ -13,7 +13,6 @@ import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.ExpenseTagModel;
-import com.receiptofi.checkout.model.ReceiptItemModel;
 
 import java.util.List;
 
@@ -62,7 +61,7 @@ public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
     public View getView(int position, View convertView, ViewGroup parent) {
         try {
             ViewHolder holder;
-            if(convertView == null){
+            if (convertView == null) {
                 convertView = inflater.inflate(R.layout.expense_tag_list_item, parent, false);
 
                 holder = new ViewHolder();
@@ -76,8 +75,8 @@ public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
             ExpenseTagModel tagModel = getItem(position);
             holder.tagLabel.setText(tagModel.getTag());
             holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
-            if(!TextUtils.isEmpty(currTag) && currTag.equals(tagModel.getId())){
-                ((ListView)parent).setItemChecked(position, true);
+            if (!TextUtils.isEmpty(currTag) && currTag.equals(tagModel.getId())) {
+                ((ListView) parent).setItemChecked(position, true);
             }
             return convertView;
         } catch (Exception e) {

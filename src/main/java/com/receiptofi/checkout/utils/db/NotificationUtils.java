@@ -21,7 +21,7 @@ public class NotificationUtils {
     private static final String TAG = NotificationUtils.class.getSimpleName();
 
     public static void insert(List<NotificationModel> notifications) {
-        for(NotificationModel notification : notifications) {
+        for (NotificationModel notification : notifications) {
             insert(notification);
         }
     }

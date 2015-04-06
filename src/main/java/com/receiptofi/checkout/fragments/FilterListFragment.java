@@ -3,15 +3,14 @@ package com.receiptofi.checkout.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 
-import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.FilterListActivity;
+import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.FilterListAdapter;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
@@ -37,7 +36,9 @@ public class FilterListFragment extends Fragment {
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnReceiptSelectedListener {
-        /** Called by HeadlinesFragment when a list item is selected */
+        /**
+         * Called by HeadlinesFragment when a list item is selected
+         */
         public void onReceiptSelected(int index, int position);
     }
 
@@ -72,7 +73,7 @@ public class FilterListFragment extends Fragment {
                 int index = expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 expandableListView.setItemChecked(index, true);
 
-                ((FilterListActivity)getActivity()).onReceiptSelected(groupPosition, childPosition);
+                ((FilterListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
                 return false;
             }
         });
@@ -92,10 +93,10 @@ public class FilterListFragment extends Fragment {
         }
     }
 
-    public void notifyDataChanged(ReceiptGroup receiptGroup){
+    public void notifyDataChanged(ReceiptGroup receiptGroup) {
         groups = receiptGroup.getReceiptGroupHeaders();
         children = receiptGroup.getReceiptModels();
-        hideTotal = ((FilterListActivity)getActivity()).hideTotal();
-        ((FilterListAdapter)explv.getExpandableListAdapter()).notifyDataSetChanged();
+        hideTotal = ((FilterListActivity) getActivity()).hideTotal();
+        ((FilterListAdapter) explv.getExpandableListAdapter()).notifyDataSetChanged();
     }
 }

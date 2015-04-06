@@ -1,10 +1,5 @@
 package com.receiptofi.checkout.model;
 
-import android.database.DataSetObservable;
-import android.database.DataSetObserver;
-import android.util.Log;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -18,7 +13,8 @@ public class ReceiptGroup {
     private List<List<ReceiptModel>> receiptModels = new LinkedList<>();
     private List<ReceiptGroupHeader> receiptGroupHeaders = new LinkedList<>();
 
-    private ReceiptGroup() {}
+    private ReceiptGroup() {
+    }
 
     public static ReceiptGroup getInstance() {
         return new ReceiptGroup();

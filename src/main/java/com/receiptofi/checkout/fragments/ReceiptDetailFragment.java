@@ -8,8 +8,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Calendars;
+import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -89,17 +89,17 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
         // Inflate the layout for this fragment
         View receiptDetailView = inflater.inflate(R.layout.receipt_detail_view, container, false);
-        rdBizName = (TextView)receiptDetailView.findViewById(R.id.rd_biz_name);
-        rdBizAddress = (LinearLayout)receiptDetailView.findViewById(R.id.rd_biz_address);
-        rdBizAddLine1 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line1);
-        rdBizAddLine2 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line2);
-        rdBizAddLine3 = (TextView)receiptDetailView.findViewById(R.id.rd_biz_add_line3);
-        rdBizPhone = (TextView)receiptDetailView.findViewById(R.id.rd_biz_phone);
+        rdBizName = (TextView) receiptDetailView.findViewById(R.id.rd_biz_name);
+        rdBizAddress = (LinearLayout) receiptDetailView.findViewById(R.id.rd_biz_address);
+        rdBizAddLine1 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line1);
+        rdBizAddLine2 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line2);
+        rdBizAddLine3 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line3);
+        rdBizPhone = (TextView) receiptDetailView.findViewById(R.id.rd_biz_phone);
         rdBizPhone.setVisibility(View.GONE);
 
-        rdDate = (TextView)receiptDetailView.findViewById(R.id.rd_date);
+        rdDate = (TextView) receiptDetailView.findViewById(R.id.rd_date);
 
-        rdItemsList = (ListView)receiptDetailView.findViewById(R.id.rd_items_list);
+        rdItemsList = (ListView) receiptDetailView.findViewById(R.id.rd_items_list);
         rdItemsList.setEmptyView(receiptDetailView.findViewById(R.id.empty_view));
 
         // Add list header
@@ -109,12 +109,12 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
         // Add tax footer
         View taxFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_tax, null);
-        taxDscpView = (TextView)taxFooter.findViewById(R.id.rd_item_list_footer_tax_dscp);
-        taxAmountView = (TextView)taxFooter.findViewById(R.id.rd_item_list_footer_tax_amount);
+        taxDscpView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_dscp);
+        taxAmountView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_amount);
         rdItemsList.addFooterView(taxFooter);
 
         View totalFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_total, null);
-        totalAmountView = (TextView)totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
+        totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
         rdItemsList.addFooterView(totalFooter);
 
         return receiptDetailView;
@@ -144,14 +144,15 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     public void updateReceiptDetailView(int index, int position) {
         updateReceiptDetailView(index, position, null);
     }
+
     public void updateReceiptDetailView(int index, int position, ReceiptModel rdModel) {
         Log.d(TAG, "executing updateReceiptDetailView");
         try {
-            if(index == -1 || position == -1){
+            if (index == -1 || position == -1) {
                 return;
             }
 
-            if(rdModel == null){
+            if (rdModel == null) {
                 rdModel = ReceiptListFragment.children.get(index).get(position);
             }
 
@@ -160,29 +161,29 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             rdBizName.setText(bizName);
 
             // Address and phone block
-           final String address = rdModel.getAddress();
+            final String address = rdModel.getAddress();
 
-        StringTokenizer tokenizer = new StringTokenizer(address, ",");
-        if(tokenizer.countTokens() <= 4){
-            rdBizAddLine1.setText((tokenizer.nextToken()).trim());
-            String addressLine2 = "";
-            while (tokenizer.hasMoreTokens()){
-                addressLine2 = addressLine2 + tokenizer.nextToken() + ",";
+            StringTokenizer tokenizer = new StringTokenizer(address, ",");
+            if (tokenizer.countTokens() <= 4) {
+                rdBizAddLine1.setText((tokenizer.nextToken()).trim());
+                String addressLine2 = "";
+                while (tokenizer.hasMoreTokens()) {
+                    addressLine2 = addressLine2 + tokenizer.nextToken() + ",";
+                }
+                addressLine2 = addressLine2.replaceAll(",$", "");
+                rdBizAddLine2.setText(addressLine2.trim());
+                rdBizAddLine3.setVisibility(View.GONE);
+            } else {
+                rdBizAddLine1.setText((tokenizer.nextToken()).trim());
+                rdBizAddLine2.setText((tokenizer.nextToken()).trim());
+                String addressLine3 = "";
+                while (tokenizer.hasMoreTokens()) {
+                    addressLine3 = addressLine3 + tokenizer.nextToken() + ",";
+                }
+                addressLine3 = addressLine3.replaceAll(",$", "");
+                rdBizAddLine3.setText(addressLine3.trim());
+                rdBizAddLine3.setVisibility(View.VISIBLE);
             }
-            addressLine2 = addressLine2.replaceAll(",$", "");
-            rdBizAddLine2.setText(addressLine2.trim());
-            rdBizAddLine3.setVisibility(View.GONE);
-        } else {
-            rdBizAddLine1.setText((tokenizer.nextToken()).trim());
-            rdBizAddLine2.setText((tokenizer.nextToken()).trim());
-            String addressLine3 = "";
-            while (tokenizer.hasMoreTokens()){
-                addressLine3 = addressLine3 + tokenizer.nextToken() + ",";
-            }
-            addressLine3 = addressLine3.replaceAll(",$", "");
-            rdBizAddLine3.setText(addressLine3.trim());
-            rdBizAddLine3.setVisibility(View.VISIBLE);
-        }
             // Address action
             rdBizAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -212,10 +213,10 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             });
 
             // Date block
-        DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-        DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
-        String formattedDate = outputDF.format(inputDF.parse(rdModel.getReceiptDate()));
-        rdDate.setText(formattedDate);
+            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
+            String formattedDate = outputDF.format(inputDF.parse(rdModel.getReceiptDate()));
+            rdDate.setText(formattedDate);
 
 
             //Receipt item list Block
@@ -228,9 +229,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             totalAmountView.setText(Double.toString(rdModel.getTotal()));
 
             // Set Adaptor on items list
-        rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));
+            rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));
             itemList = rdModel.getReceiptItems();
-            if(Constants.SET_RECEIPT_REMINDER) {
+            if (Constants.SET_RECEIPT_REMINDER) {
                 rdItemsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
@@ -262,9 +263,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 });
             }
 
-        // Update trackers
-        mCurrentIndex = index;
-        mCurrentPosition = position;
+            // Update trackers
+            mCurrentIndex = index;
+            mCurrentPosition = position;
 
         } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());
@@ -287,7 +288,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     @Override
     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-        if(!dateSet){
+        if (!dateSet) {
             Log.d(TAG, "Cancelled event received in onDateSet- nothing to do");
             return;
         }
@@ -305,18 +306,18 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         values.put(Events.TITLE, getActivity().getString(R.string.event_title) + " " + itemModel.getName());
         values.put(Events.ORGANIZER, getActivity().getString(R.string.event_organizer));
         values.put(Events.DESCRIPTION, getActivity().getString(R.string.event_description_1) + itemModel.getName()
-                                     + getActivity().getString(R.string.event_description_2) + " " + rdBizName.getText() + " "
-                                     + getActivity().getString(R.string.event_description_3) + " " + rdDate.getText());
+                + getActivity().getString(R.string.event_description_2) + " " + rdBizName.getText() + " "
+                + getActivity().getString(R.string.event_description_3) + " " + rdDate.getText());
         values.put(Events.HAS_ALARM, true);
         values.put(Events.STATUS, Events.STATUS_CONFIRMED);
 
         // TODO: fix me - 1. No calendar
         // TODO:          2. Multiple calendar
         Map<Long, String> calendarMap = getAllCalendars();
-        if(calendarMap != null && calendarMap.size() > 0){
+        if (calendarMap != null && calendarMap.size() > 0) {
             Long calId = -1L;
-            for(Entry entry : calendarMap.entrySet()){
-                calId = (Long)entry.getKey();
+            for (Entry entry : calendarMap.entrySet()) {
+                calId = (Long) entry.getKey();
                 break;
             }
             values.put(Events.CALENDAR_ID, calId);
@@ -341,18 +342,18 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     }
 
-    private Map<Long, String> getAllCalendars(){
+    private Map<Long, String> getAllCalendars() {
         Map<Long, String> calendarMap = new LinkedHashMap<>();
         String[] projection = new String[]{Calendars._ID,
-                                           Calendars.NAME,
-                                           Calendars.ACCOUNT_NAME,
-                                           Calendars.ACCOUNT_TYPE}; // Keeping account name a type in case we want to use later.
+                Calendars.NAME,
+                Calendars.ACCOUNT_NAME,
+                Calendars.ACCOUNT_TYPE}; // Keeping account name a type in case we want to use later.
 
         Cursor calCursor = getActivity().getContentResolver().query(Calendars.CONTENT_URI,
-                                                                    projection,
-                                                                    Calendars.VISIBLE + " = 1",
-                                                                    null,
-                                                                    Calendars._ID + " ASC");
+                projection,
+                Calendars.VISIBLE + " = 1",
+                null,
+                Calendars._ID + " ASC");
         if (calCursor.moveToFirst()) {
             do {
                 calendarMap.put(calCursor.getLong(0), calCursor.getString(1));

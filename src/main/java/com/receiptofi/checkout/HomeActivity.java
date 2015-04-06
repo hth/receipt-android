@@ -46,7 +46,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-public class HomeActivity extends Activity implements OnChartValueSelectedListener{
+public class HomeActivity extends Activity implements OnChartValueSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
     private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
@@ -140,7 +140,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     protected void onResume() {
         super.onResume();
         Log.d(TAG, "executing onResume");
-        if(searchView != null){
+        if (searchView != null) {
             searchView.setQuery("", false);
             searchView.setIconified(true);
         }
@@ -160,11 +160,11 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT){
+        if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setContentView(R.layout.home_page);
             instantiateViews();
             bindValuestoViews();
-        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE){
+        } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.home_page);
             instantiateViews();
             bindValuestoViews();
@@ -208,25 +208,26 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         }
     }
 
-    private void instantiateViews(){
+    private void instantiateViews() {
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
         currentMonthExp = (TextView) findViewById(R.id.current_amount);
         mChart = (PieChart) findViewById(R.id.pie_chart);
         setUpChartView();
     }
-    private void bindValuestoViews(){
-        if(!TextUtils.isEmpty(unprocessedValue)) {
+
+    private void bindValuestoViews() {
+        if (!TextUtils.isEmpty(unprocessedValue)) {
             setUnprocessedCount();
         }
-        if(!TextUtils.isEmpty(currentMonthExpValue)) {
+        if (!TextUtils.isEmpty(currentMonthExpValue)) {
             setMonthlyExpense();
         }
-        if(expByBizData != null) {
+        if (expByBizData != null) {
             setUpChartData();
         }
     }
 
-    private void setUpChartView(){
+    private void setUpChartView() {
         // change the color of the center-hole
         mChart.setHoleColor(getResources().getColor(R.color.hole_color));
 
@@ -271,8 +272,8 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         */
     }
 
-    private void updateChartData(){
-        if(expByBizAnimate) {
+    private void updateChartData() {
+        if (expByBizAnimate) {
             mChart.animateXY(1500, 1500);
             // mChart.spin(2000, 0, 360);
             expByBizAnimate = false;
@@ -287,7 +288,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.invalidate();
     }
 
-    private void setUpChartData(){
+    private void setUpChartData() {
         mChart.setData(expByBizData);
 
         // undo all highlights
