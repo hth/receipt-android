@@ -94,6 +94,17 @@
     <string name="menu_settings">Settings</string>
     <string name="menu_logout">Logout</string>
 
+    <!--Item reminder String-->
+    <string name="reminder_title">Set an alert for return/re-order of </string>
+    <string name="reminder_cancel">Cancel</string>
+    <string name="reminder_set">Set</string>
+    <string name="event_title">Your reminder for </string>
+    <string name="event_organizer">Checkout app - manage your receipt</string>
+    <string name="event_description_1">You bought \"</string>
+    <string name="event_description_2">\" from </string>
+    <string name="event_description_3"> on </string>
+    <string name="reminder_toast">Reminder is set for </string>
+
     <!--Notification String-->
     <string name="notify_empty_list">No receipts</string>
     <string name="notify_empty_detail">Choose month to view receipts</string>

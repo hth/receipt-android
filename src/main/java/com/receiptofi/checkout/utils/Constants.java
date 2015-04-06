@@ -5,8 +5,12 @@ package com.receiptofi.checkout.utils;
  */
 public class Constants {
 
+    public static final boolean SET_RECEIPT_REMINDER = false;
+
     public static final String INTENT_EXTRA_FILTER_TYPE = "filter_type";
     public static final String INTENT_EXTRA_BIZ_NAME = "biz_name";
+
+    public static final int DEFAULT_REMINDER_TIME = 15;
 
     public enum ReceiptFilter {
         FIlter_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),

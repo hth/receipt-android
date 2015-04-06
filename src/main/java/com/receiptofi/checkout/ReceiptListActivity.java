@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -36,7 +38,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
     private CheckBox recheckBox;
     private ListView tagList;
-    private EditText notes;
+    private EditText noteText;
+    private ExpenseTagModel selectedTagModel;
 
     /** Called when the activity is first created. */
     @Override
@@ -146,7 +149,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         DrawerLayout drawerLayout = (DrawerLayout)findViewById(R.id.receipt_drawer_layout);
         recheckBox = (CheckBox)findViewById(R.id.receipt_action_recheck);
         tagList = (ListView)findViewById(R.id.receipt_action_expense_tag_list);
-        notes = (EditText)findViewById(R.id.receipt_action_note);
+        noteText = (EditText)findViewById(R.id.receipt_action_note);
 
         drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -161,8 +164,22 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
             @Override
             public void onDrawerClosed(View drawerView) {
-                // Comapare and call update api
+                ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
+                boolean reCheck = recheckBox.isChecked();
+                String tagId = null;
+                if(selectedTagModel != null){
+                    tagId = selectedTagModel.getId();
+                } else {
+                    tagId = rModel.getExpenseTagId();
+                }
+                String notes = null;
+                if(!(noteText.getText().toString()).equals(rModel.getNotes())){
+                    notes = noteText.getText().toString();
+                }
+                Log.d(TAG, "\n RecheckBox is checked: " + reCheck
+                            + "\n selected tag is: " + tagId
+                            + "\n added notes are: " + notes);
             }
 
             @Override
@@ -172,11 +189,20 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         });
     }
 
-    private void setDrawerView(List<ExpenseTagModel> tagModelList){
+    private void setDrawerView(final List<ExpenseTagModel> tagModelList){
         ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
         String tagId = rModel.getExpenseTagId();
         Log.d(TAG, "Current tag is: " + tagId);
         tagList.setAdapter(new ExpenseTagListAdapter(this, tagModelList, tagId));
+        tagList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                selectedTagModel = tagModelList.get(position);
+            }
+        });
+        if(!TextUtils.isEmpty(rModel.getNotes())){
+            noteText.setText(rModel.getNotes());
+        }
     }
 
     private void launchSettings() {
