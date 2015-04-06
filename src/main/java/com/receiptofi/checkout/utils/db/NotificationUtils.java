@@ -48,7 +48,7 @@ public class NotificationUtils {
         );
     }
 
-    public static List<NotificationModel> findAll() {
+    public static List<NotificationModel> getAll() {
         Log.d(TAG, "Fetching all notifications");
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.Notification.TABLE_NAME,

@@ -194,13 +194,15 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             case R.id.menu_refresh:
                 // TODO call getUpdate
                 return true;
+            case R.id.menu_notofication:
+                launchNotifications();
+                return true;
             case R.id.menu_settings:
                 launchSettings();
                 return true;
             case R.id.menu_logout:
                 logout();
                 return true;
-
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -402,6 +404,10 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private void setMonthlyExpense() {
         Log.d(TAG, "executing setMonthlyExpense");
         currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), currentMonthExpValue));
+    }
+
+    private void launchNotifications() {
+        startActivity(new Intent(this, NotificationActivity.class));
     }
 
     private void launchSettings() {
