@@ -199,10 +199,10 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
         @Override
         protected ReceiptGroup doInBackground(String... args) {
             ReceiptGroup receiptGroup = null;
-            if (ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue() == args[0]) {
+            if (ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equals(args[0])) {
                 Log.d(TAG, "!!!!! search query is: " + args[1]);
                 receiptGroup = ReceiptUtils.filterByBizByMonth(args[1], new Date());
-            } else if (ReceiptFilter.FIlter_BY_KEYWORD.getValue() == args[0]) {
+            } else if (ReceiptFilter.FIlter_BY_KEYWORD.getValue().equals(args[0])) {
                 Log.d(TAG, "!!!!! search query is: " + args[1]);
                 receiptGroup = ReceiptUtils.searchByKeyword(args[1]);
             }
