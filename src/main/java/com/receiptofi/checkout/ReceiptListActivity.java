@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -172,6 +173,9 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
             @Override
             public void onDrawerClosed(View drawerView) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                
                 ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
                 boolean reCheck = recheckBox.isChecked();
