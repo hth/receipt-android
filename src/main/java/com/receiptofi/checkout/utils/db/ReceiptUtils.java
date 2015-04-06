@@ -446,6 +446,8 @@ public class ReceiptUtils {
                 receiptModel.setRid(cursor.getString(9));
                 receiptModel.setTax(cursor.getDouble(10));
                 receiptModel.setTotal(cursor.getDouble(11));
+                receiptModel.setBillStatus(cursor.getString(12));
+                receiptModel.setExpenseTagId(cursor.getString(13));
 
                 receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getId()));
                 list.add(receiptModel);
