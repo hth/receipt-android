@@ -27,6 +27,14 @@ public class ReceiptItemUtils {
         }
     }
 
+    protected static void delete(String receiptId) {
+        RDH.getWritableDatabase().delete(
+                DatabaseTable.Item.TABLE_NAME,
+                DatabaseTable.Item.RECEIPTID + " = '" + receiptId + "'",
+                null
+        );
+    }
+
     /**
      * Insert item in table.
      *

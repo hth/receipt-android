@@ -179,8 +179,22 @@ public class ReceiptUtils {
      */
     public static void insert(List<ReceiptModel> receipts) {
         for (ReceiptModel receipt : receipts) {
-            insert(receipt);
+            if (receipt.isActive()) {
+                insert(receipt);
+            } else {
+                ReceiptItemUtils.delete(receipt.getId());
+                delete(receipt.getId());
+                Log.d(TAG, "Deleted receipts: " + receipt.getId());
+            }
         }
+    }
+
+    private static void delete(String receiptId) {
+        RDH.getWritableDatabase().delete(
+                DatabaseTable.Receipt.TABLE_NAME,
+                DatabaseTable.Receipt.ID + " = '" + receiptId + "'",
+                null
+        );
     }
 
     /**
