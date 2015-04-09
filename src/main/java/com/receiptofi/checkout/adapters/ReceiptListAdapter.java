@@ -94,8 +94,8 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(formattedDate);
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
-            if(!TextUtils.isEmpty(receiptData.getExpenseTagId())){
-                String colorCode = ((ExpenseTagUtils.getExpenseTagModels()).get(receiptData.getExpenseTagId())).getColor();
+            if(!TextUtils.isEmpty(receiptData.getExpenseTagId()) && receiptData.getExpenseTagModel() != null){
+                String colorCode = receiptData.getExpenseTagModel().getColor();
                 holder.expenseTag.setBackgroundColor(Color.parseColor(colorCode));
             } else {
                 holder.expenseTag.setBackgroundColor(Color.TRANSPARENT);
