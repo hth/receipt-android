@@ -50,8 +50,6 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
     private EditText noteText;
     private ExpenseTagModel selectedTagModel;
 
-    private ReceiptDetailFragment receiptDetailFragment;
-
     /**
      * Called when the activity is first created.
      */
@@ -171,6 +169,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
     private void initDrawerView() {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        // set the drawer to remain closed until a receipt is selected
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         recheckBox = (CheckBox) findViewById(R.id.receipt_action_recheck);
         tagList = (ListView) findViewById(R.id.receipt_action_expense_tag_list);
         noteText = (EditText) findViewById(R.id.receipt_action_note);
@@ -243,6 +243,9 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
     }
 
     private void setDrawerView(final List<ExpenseTagModel> tagModelList) {
+        // unlock the drawer
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
         recheckBox.setChecked(false);
