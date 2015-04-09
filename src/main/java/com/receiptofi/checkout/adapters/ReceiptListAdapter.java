@@ -14,7 +14,6 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
-import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -94,7 +93,8 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(formattedDate);
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
-            if(!TextUtils.isEmpty(receiptData.getExpenseTagId()) && receiptData.getExpenseTagModel() != null){
+            /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
+            if (!TextUtils.isEmpty(receiptData.getExpenseTagId()) && null != receiptData.getExpenseTagModel()) {
                 String colorCode = receiptData.getExpenseTagModel().getColor();
                 holder.expenseTag.setBackgroundColor(Color.parseColor(colorCode));
             } else {

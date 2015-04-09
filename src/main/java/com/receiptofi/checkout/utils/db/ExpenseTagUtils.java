@@ -9,6 +9,7 @@ import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class ExpenseTagUtils {
 
     private static final String TAG = ExpenseTagUtils.class.getSimpleName();
-    private static Map<String, ExpenseTagModel> expenseTagModels = new HashMap<>();
+    private static Map<String, ExpenseTagModel> expenseTagModels = new LinkedHashMap<>();
 
     /**
      * Expense Tag is static list available across the app. Anytime expense tag is added, deleted, updated, then
@@ -46,6 +47,7 @@ public class ExpenseTagUtils {
     }
 
     private static void populateExpenseTagModelMap() {
+        expenseTagModels = new LinkedHashMap<>();
         List<ExpenseTagModel> expenseTags = getAll();
         for (ExpenseTagModel expenseTagModel : expenseTags) {
             expenseTagModels.put(expenseTagModel.getId(), expenseTagModel);
@@ -79,7 +81,7 @@ public class ExpenseTagUtils {
                 null,
                 null,
                 null,
-                null
+                DatabaseTable.ExpenseTag.TAG
         );
 
         List<ExpenseTagModel> list = new LinkedList<>();
