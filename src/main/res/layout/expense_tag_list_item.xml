@@ -2,7 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/list_selector_app_theme">
+    android:background="@drawable/expense_tag_list_selector">
 
     <View android:layout_width="match_parent"
         android:layout_height=".25dp"
@@ -16,7 +16,7 @@
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/receipt_action_tag_radio_button_selector"/>
+        android:src="@drawable/expense_tag_radio_button_selector"/>
 
     <TextView
         android:id="@+id/receipt_action_tag_label"
