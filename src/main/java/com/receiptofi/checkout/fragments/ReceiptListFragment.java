@@ -39,26 +39,52 @@ public class ReceiptListFragment extends Fragment {
             final int what = msg.what;
             switch (what) {
                 case RECEIPT_MODEL_UPDATED:
-                    // TODO: run enough test to make sure not checking null won't cause any issues
-                    //if(receiptGroupObservable != null) {
                     Log.d(TAG, "receiptGroupObserver onChanged");
                     groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
                     children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
                     ((ReceiptListAdapter) explv.getExpandableListAdapter()).notifyDataSetChanged();
                     int groupPosition = ((ReceiptListActivity) getActivity()).getGroupIndex();
                     int childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
-                    ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
 
-                    //try{
-                    // ReceiptModel receiptModel = children.get(groupPosition).get(childPosition);
-
-                   /* } catch (Exception e){
-                        Log.d(TAG, e.getMessage() + " seems like this receipt is not available");
-                        e.printStackTrace();
-                    } */
-
-                    //}
-                    break;
+                    // we wouldn't want to run this, if there is nothing selected in list
+                    if(groupPosition != -1 && childPosition != -1) {
+                        Log.d(TAG, "groupPosition at start is: " + groupPosition + " childPosition at start is: " + childPosition);
+                        if (groups.size() > groupPosition) {
+                            if(children.get(groupPosition).size() > childPosition){
+                                // In this case there is current group has a child at same postion
+                                Log.d(TAG, "Keeping group and child position as it is");
+                                Log.d(TAG, "groupPosition line 58 is: " + groupPosition + " childPosition is: " + childPosition);
+                                ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
+                            } else {
+                                // In this case last child was deleted from current group, but the group have more children
+                                ((ReceiptListActivity) getActivity()).setChildIndex(--childPosition);
+                                childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
+                                Log.d(TAG, "Reducing child position");
+                                Log.d(TAG, "groupPosition line 64 is: " + groupPosition + " childPosition is: " + childPosition);
+                                if(explv != null){
+                                    explv.expandGroup(groupPosition);
+                                    int index = explv.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                                    explv.setItemChecked(index, true);
+                                }
+                                ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
+                            }
+                        } else {
+                            // In this case last child was deleted from current group, but the group doesn't has more children
+                            ((ReceiptListActivity) getActivity()).setGroupIndex(--groupPosition);
+                            groupPosition = ((ReceiptListActivity) getActivity()).getGroupIndex();
+                            ((ReceiptListActivity) getActivity()).setChildIndex((children.get(groupPosition).size())-1);
+                            childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
+                            Log.d(TAG, "Reducing group position & setting child position");
+                            Log.d(TAG, "groupPosition line 71 is: " + groupPosition + " childPosition is: " + childPosition);
+                            if(explv != null){
+                                explv.expandGroup(groupPosition);
+                                int index = explv.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
+                                explv.setItemChecked(index, true);
+                            }
+                            ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
+                        }
+                    }
+                break;
             }
         }
     };

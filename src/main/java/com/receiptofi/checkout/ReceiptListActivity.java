@@ -50,6 +50,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
     private EditText noteText;
     private ExpenseTagModel selectedTagModel;
 
+    private ReceiptDetailFragment receiptDetailFragment;
+
     /**
      * Called when the activity is first created.
      */
@@ -135,6 +137,14 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
     public int getChildIndex() {
         return childIndex;
+    }
+
+    public void setGroupIndex(int groupPosition) {
+        groupIndex = groupPosition;
+    }
+
+    public void setChildIndex(int childPosition) {
+        childIndex = childPosition;
     }
 
     @Override
