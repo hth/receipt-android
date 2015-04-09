@@ -73,6 +73,10 @@
             android:label="@string/settings">
         </activity>
         <activity
+            android:name=".PreferencesTabActivity"
+            android:label="@string/settings">
+        </activity>
+        <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
         </activity>
