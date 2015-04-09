@@ -1,6 +1,8 @@
 package com.receiptofi.checkout.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +14,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -76,6 +79,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
                 holder.bizName = (TextView) convertView.findViewById(R.id.exp_list_child_buz_name);
                 holder.date = (TextView) convertView.findViewById(R.id.exp_list_child_date);
+                holder.expenseTag = convertView.findViewById(R.id.exp_list_child_tag_color);
                 holder.amount = (TextView) convertView.findViewById(R.id.exp_list_child_amount);
                 convertView.setTag(holder);
             } else {
@@ -90,6 +94,12 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(formattedDate);
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
+            if(!TextUtils.isEmpty(receiptData.getExpenseTagId()) && receiptData.getExpenseTagModel() != null){
+                String colorCode = receiptData.getExpenseTagModel().getColor();
+                holder.expenseTag.setBackgroundColor(Color.parseColor(colorCode));
+            } else {
+                holder.expenseTag.setBackgroundColor(Color.TRANSPARENT);
+            }
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {
@@ -155,6 +165,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
     private class ChildViewHolder {
         TextView bizName;
         TextView date;
+        View expenseTag;
         TextView amount;
     }
 }

@@ -33,7 +33,10 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by PT on 1/3/15.
@@ -49,8 +52,6 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
     private ListView tagList;
     private EditText noteText;
     private ExpenseTagModel selectedTagModel;
-
-    private ReceiptDetailFragment receiptDetailFragment;
 
     /**
      * Called when the activity is first created.
@@ -127,7 +128,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             transaction.commit();
         }
         if (groupIndex > -1 && childIndex > -1) {
-            new ReceiptDataTask().execute();
+            setDrawerView();
         }
     }
 
@@ -171,6 +172,8 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
 
     private void initDrawerView() {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        // set the drawer to remain closed until a receipt is selected
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         recheckBox = (CheckBox) findViewById(R.id.receipt_action_recheck);
         tagList = (ListView) findViewById(R.id.receipt_action_expense_tag_list);
         noteText = (EditText) findViewById(R.id.receipt_action_note);
@@ -242,7 +245,12 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         });
     }
 
-    private void setDrawerView(final List<ExpenseTagModel> tagModelList) {
+    private void setDrawerView() {
+        // unlock the drawer
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
+        final List<ExpenseTagModel> tagModelList = new LinkedList<>(expTagMap.values());
         ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
         recheckBox.setChecked(false);
@@ -272,16 +280,4 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         finish();
     }
 
-    private class ReceiptDataTask extends AsyncTask<Void, Void, List<ExpenseTagModel>> {
-
-        @Override
-        protected List<ExpenseTagModel> doInBackground(Void... voids) {
-            return ExpenseTagUtils.getAll();
-        }
-
-        @Override
-        protected void onPostExecute(List<ExpenseTagModel> expenseTagModels) {
-            setDrawerView(expenseTagModels);
-        }
-    }
 }
