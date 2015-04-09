@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.DatePickerDialog;
+import android.app.Fragment;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.DialogInterface;
@@ -11,7 +12,6 @@ import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

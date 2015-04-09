@@ -1,10 +1,9 @@
 package com.receiptofi.checkout;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,7 +32,6 @@ import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +39,7 @@ import java.util.Map;
 /**
  * Created by PT on 1/3/15.
  */
-public class ReceiptListActivity extends FragmentActivity implements ReceiptListFragment.OnReceiptSelectedListener {
+public class ReceiptListActivity extends Activity implements ReceiptListFragment.OnReceiptSelectedListener {
 
     private static final String TAG = ReceiptListActivity.class.getSimpleName();
 
@@ -81,7 +79,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             receiptListFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, receiptListFragment).commit();
         }
 
@@ -98,7 +96,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
         childIndex = position;
         // Capture the article fragment from the activity layout
         ReceiptDetailFragment receiptDetailFragment = (ReceiptDetailFragment)
-                getSupportFragmentManager().findFragmentById(R.id.rdetail_fragment);
+                getFragmentManager().findFragmentById(R.id.rdetail_fragment);
 
         if (receiptDetailFragment != null) {
             Log.d(TAG, "detail fragment already instantiated");
@@ -117,7 +115,7 @@ public class ReceiptListActivity extends FragmentActivity implements ReceiptList
             args.putInt(ReceiptDetailFragment.ARG_INDEX, index);
             args.putInt(ReceiptDetailFragment.ARG_POSITION, position);
             newFragment.setArguments(args);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack so the user can navigate back

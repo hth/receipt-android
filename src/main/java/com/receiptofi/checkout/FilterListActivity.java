@@ -1,12 +1,12 @@
 package com.receiptofi.checkout;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -26,7 +26,7 @@ import java.util.Date;
 /**
  * Created by PT on 3/28/15.
  */
-public class FilterListActivity extends FragmentActivity implements FilterListFragment.OnReceiptSelectedListener {
+public class FilterListActivity extends Activity implements FilterListFragment.OnReceiptSelectedListener {
 
     private static final String TAG = FilterListActivity.class.getSimpleName();
 
@@ -100,10 +100,10 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
             filterListFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.fragment_container, filterListFragment).commit();
         } else {
-            filterListFragment = (FilterListFragment) getSupportFragmentManager().findFragmentById(R.id.flist_fragment);
+            filterListFragment = (FilterListFragment) getFragmentManager().findFragmentById(R.id.flist_fragment);
         }
     }
 
@@ -115,7 +115,7 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
         childIndex = position;
         // Capture the article fragment from the activity layout
         ReceiptDetailFragment receiptDetailFragment = (ReceiptDetailFragment)
-                getSupportFragmentManager().findFragmentById(R.id.fdetail_fragment);
+                getFragmentManager().findFragmentById(R.id.fdetail_fragment);
 
         if (receiptDetailFragment != null) {
             Log.d(TAG, "detail fragment already instantiated");
@@ -134,7 +134,7 @@ public class FilterListActivity extends FragmentActivity implements FilterListFr
             args.putInt(ReceiptDetailFragment.ARG_INDEX, index);
             args.putInt(ReceiptDetailFragment.ARG_POSITION, position);
             newFragment.setArguments(args);
-            FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
             // Replace whatever is in the fragment_container view with this fragment,
             // and add the transaction to the back stack so the user can navigate back
