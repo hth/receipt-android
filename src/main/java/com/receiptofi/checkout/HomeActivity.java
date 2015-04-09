@@ -413,7 +413,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
 
     private void launchSettings() {
-        startActivity(new Intent(this, SettingsActivity.class));
+        startActivity(new Intent(this, PreferencesTabActivity.class));
     }
 
     private void logout() {
