@@ -24,6 +24,8 @@ public class ReceiptModel {
     private boolean active;
     private boolean deleted;
 
+    private ExpenseTagModel expenseTagModel;
+
     public String getBizName() {
         return bizName;
     }
@@ -184,5 +186,13 @@ public class ReceiptModel {
 
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
+    }
+
+    public ExpenseTagModel getExpenseTagModel() {
+        return expenseTagModel;
+    }
+
+    public void setExpenseTagModel(ExpenseTagModel expenseTagModel) {
+        this.expenseTagModel = expenseTagModel;
     }
 }

@@ -3,6 +3,7 @@ package com.receiptofi.checkout.utils.db;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
@@ -128,48 +129,6 @@ public class ReceiptUtils {
 
     public static void clearReceipts() {
         ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + DatabaseTable.Receipt.TABLE_NAME + ";", null);
-    }
-
-    public static ArrayList<ReceiptModel> getAllReceipts_old() {
-
-        String[] columns = new String[]{
-                DatabaseTable.Receipt.BIZ_NAME,
-                DatabaseTable.Receipt.RECEIPT_DATE,
-                DatabaseTable.Receipt.PTAX,
-                DatabaseTable.Receipt.TOTAL,
-                DatabaseTable.Receipt.ID,
-                DatabaseTable.Receipt.BLOB_IDS
-        };
-        Cursor receiptsRecords =
-                ReceiptofiApplication.RDH.getReadableDatabase().query(
-                        DatabaseTable.Receipt.TABLE_NAME,
-                        columns,
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                );
-
-        ArrayList<ReceiptModel> rModels = new ArrayList<>();
-        if (receiptsRecords != null && receiptsRecords.getCount() > 0) {
-            for (receiptsRecords.moveToFirst(); !receiptsRecords.isAfterLast(); receiptsRecords.moveToNext()) {
-                ReceiptModel model = new ReceiptModel();
-                model.setBizName(receiptsRecords.getString(0));
-                model.setReceiptDate(receiptsRecords.getString(1));
-                model.setPtax(receiptsRecords.getDouble(2));
-                model.setTotal(receiptsRecords.getDouble(3));
-                model.setId(receiptsRecords.getString(4));
-                model.setBlobIds(receiptsRecords.getString(5));
-                rModels.add(model);
-            }
-
-        }
-        if (null != receiptsRecords) {
-            receiptsRecords.close();
-        }
-        return rModels;
-
     }
 
     /**
@@ -473,6 +432,10 @@ public class ReceiptUtils {
                 receiptModel.setExpenseTagId(cursor.getString(13));
                 receiptModel.setActive(cursor.getInt(14) == 1);
                 receiptModel.setDeleted(cursor.getInt(15) == 1);
+
+                if (!TextUtils.isEmpty(receiptModel.getExpenseTagId())) {
+                    receiptModel.setExpenseTagModel(ExpenseTagUtils.getExpenseTagModels().get(receiptModel.getExpenseTagId()));
+                }
 
                 receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getId()));
                 list.add(receiptModel);

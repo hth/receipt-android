@@ -48,7 +48,10 @@ import java.util.Locale;
 
 public class HomeActivity extends Activity implements OnChartValueSelectedListener {
 
+    private static final String TAG = HomeActivity.class.getSimpleName();
+    private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
     public static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy MM", Locale.ENGLISH);
+
     public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
@@ -56,12 +59,13 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     public static final int UPDATE_MONTHLY_EXPENSE = 0x2568;
     public static final int UPDATE_EXP_BY_BIZ_CHART = 0x2569;
     public static final int GET_ALL_RECEIPTS = 0x2570;
-    private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
+
+    private SearchView searchView;
+
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
     protected Handler uiThread = new Handler();
-    private SearchView searchView;
+
     private TextView unprocessedDocumentCount;
     private String unprocessedValue;
     private TextView currentMonthExp;
@@ -70,6 +74,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private PieChart mChart;
     private PieData expByBizData;
     private boolean expByBizAnimate = false;
+
     public final Handler updateHandler = new Handler(Looper.getMainLooper()) {
         public void handleMessage(Message msg) {
             final int what = msg.what;
