@@ -3,15 +3,24 @@
     android:layout_height="wrap_content"
     android:background="@drawable/list_selector_light_gray"
     android:minHeight="?android:attr/listPreferredItemHeight"
-    android:paddingLeft="@dimen/expandable_list_child_padding_left"
-    android:paddingRight="@dimen/expandable_list_child_padding_right"
     android:orientation="horizontal">
+
+    <View
+        android:id="@+id/exp_list_child_tag_color"
+        android:layout_width="15dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin_narrow"
+        android:layout_marginStart="@dimen/activity_horizontal_margin_narrow"
+        android:layout_gravity="start|left" />
 
     <LinearLayout android:id="@+id/exp_list_child_left_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
+        android:paddingLeft="@dimen/expandable_list_child_padding_left"
         android:orientation="vertical">
 
         <TextView
@@ -28,17 +37,12 @@
             android:layout_marginTop="@dimen/activity_vertical_margin_narrow" />
     </LinearLayout>
 
-    <View
-        android:id="@+id/exp_list_child_tag_color"
-        android:layout_width="80dp"
-        android:layout_height="15dp"
-        android:layout_gravity="end|right|top" />
-
     <TextView
         android:id="@+id/exp_list_child_amount"
         style="@style/exp_list_child_text_right_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|right|center_vertical" />
+        android:layout_gravity="end|right|center_vertical"
+        android:paddingRight="@dimen/expandable_list_child_padding_right" />
 
 </LinearLayout>

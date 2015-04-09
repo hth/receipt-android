@@ -70,7 +70,7 @@ public class ExpenseTagUtils {
         );
     }
 
-    public static List<ExpenseTagModel> getAll() {
+    private static List<ExpenseTagModel> getAll() {
         Log.d(TAG, "Fetching all expense tag");
         Cursor cursor = RDH.getReadableDatabase().query(
                 DatabaseTable.ExpenseTag.TABLE_NAME,
