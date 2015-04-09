@@ -1,12 +1,12 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
