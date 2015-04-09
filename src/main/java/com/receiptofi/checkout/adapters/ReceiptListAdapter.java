@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -76,6 +77,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
                 holder.bizName = (TextView) convertView.findViewById(R.id.exp_list_child_buz_name);
                 holder.date = (TextView) convertView.findViewById(R.id.exp_list_child_date);
+                holder.expenseTag = convertView.findViewById(R.id.exp_list_child_tag_color);
                 holder.amount = (TextView) convertView.findViewById(R.id.exp_list_child_amount);
                 convertView.setTag(holder);
             } else {
@@ -90,6 +92,12 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(formattedDate);
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
+            // TODO: complete this later
+            /*
+            if(){
+                holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
+            }
+            */
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {
@@ -155,6 +163,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
     private class ChildViewHolder {
         TextView bizName;
         TextView date;
+        View expenseTag;
         TextView amount;
     }
 }

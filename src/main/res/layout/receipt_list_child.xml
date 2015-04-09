@@ -28,6 +28,12 @@
             android:layout_marginTop="@dimen/activity_vertical_margin_narrow" />
     </LinearLayout>
 
+    <View
+        android:id="@+id/exp_list_child_tag_color"
+        android:layout_width="80dp"
+        android:layout_height="15dp"
+        android:layout_gravity="end|right|top" />
+
     <TextView
         android:id="@+id/exp_list_child_amount"
         style="@style/exp_list_child_text_right_style"
