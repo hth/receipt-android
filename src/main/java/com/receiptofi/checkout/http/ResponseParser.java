@@ -49,7 +49,7 @@ public class ResponseParser {
             bundle.putInt("unprocessedCount", unprocessedDocuments.getInt("unprocessedCount"));
 
         } catch (JSONException e) {
-
+            //TODO added log message
         }
         return bundle;
     }
@@ -92,7 +92,7 @@ public class ResponseParser {
                 model.setRid(json.getString("rid"));
                 Double total = json.getDouble("total");
                 if (total != null) {
-                    model.setTotal(total.doubleValue());
+                    model.setTotal(total);
                 }
                 models.add(model);
             }

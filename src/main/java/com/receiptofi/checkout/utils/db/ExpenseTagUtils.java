@@ -8,8 +8,10 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
@@ -20,10 +22,33 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class ExpenseTagUtils {
 
     private static final String TAG = ExpenseTagUtils.class.getSimpleName();
+    private static Map<String, ExpenseTagModel> expenseTagModels = new HashMap<>();
+
+    /**
+     * Expense Tag is static list available across the app. Anytime expense tag is added, deleted, updated, then
+     * set new values to expenseTagModels.
+     *
+     * @return
+     */
+    public static synchronized Map<String, ExpenseTagModel> getExpenseTagModels() {
+        if (expenseTagModels.isEmpty()) {
+            populateExpenseTagModelMap();
+        }
+        return expenseTagModels;
+    }
 
     public static void insert(List<ExpenseTagModel> expensesTags) {
         for (ExpenseTagModel expenseTag : expensesTags) {
             insert(expenseTag);
+        }
+
+        populateExpenseTagModelMap();
+    }
+
+    private static void populateExpenseTagModelMap() {
+        List<ExpenseTagModel> expenseTags = getAll();
+        for (ExpenseTagModel expenseTagModel : expenseTags) {
+            expenseTagModels.put(expenseTagModel.getId(), expenseTagModel);
         }
     }
 
