@@ -1,219 +1,171 @@
 package com.receiptofi.checkout.fragments;
 
-import android.content.SharedPreferences;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.preference.PreferenceFragment;
-import android.preference.PreferenceManager;
-import android.text.TextUtils;
+import android.support.v4.app.Fragment;
 import android.util.Log;
-import android.widget.Toast;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
+import android.widget.ListView;
+import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
-import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
-import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.model.types.IncludeAuthentication;
-import com.receiptofi.checkout.utils.UserUtils;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.views.LoginIdPreference;
+import com.receiptofi.checkout.model.ExpenseTagModel;
+import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.util.Arrays;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by PT on 4/9/15.
  */
-public class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class PrefFragment extends Fragment {
 
-    private static final String TAG = PrefFragment.class.getSimpleName();
+    private String TAG = "PrefFragment";
 
-    protected static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
-
-    private final Handler updateHandler = new Handler() {
-        public void handleMessage(Message msg) {
-            final int what = msg.what;
-            switch (what) {
-                case LOGIN_ID_UPDATE_SUCCESS:
-                    updatePrefs();
-                    break;
-            }
-        }
-    };
+    private List<ExpenseTagModel> tagModelList;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // set fields before inflating view from xml
-        initializePref();
-        // Load the preferences from an XML resource
-        addPreferencesFromResource(R.xml.preferences);
-        // set fields in the view
-        updatePrefs();
-    }
-
-    private void initializePref() {
-        boolean wifiSync = UserUtils.UserSettings.isWifiSyncOnly();
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        SharedPreferences.Editor editor = pref.edit();
-        // wifi setting from database
-        editor.putBoolean(getString(R.string.key_pref_sync), wifiSync);
-        editor.apply();
-    }
-
-    private void updatePrefs() {
-        // login id
-        String username = UserUtils.getEmail();
-        LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
-        usernamePref.setSummary(username);
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
-        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.pref_fragment, container, false);
+
+        ListView tagListView = (ListView)rootView.findViewById(R.id.pref_fragment_expense_tag_list);
+        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
+        tagModelList = new LinkedList<>(expTagMap.values());
+        tagListView.setAdapter(new ExpenseTagListAdapter(getActivity(), tagModelList));
+
+        return rootView;
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
-    }
-
-    @Override
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        Log.d(TAG, "onSharedPreferenceChanged - key is: " + key);
-        if (key.equals(getString(R.string.key_pref_sync))) {
-            Log.d(TAG, "wifi setting changed- new value: " + sharedPreferences.getBoolean(key, false));
-            boolean wifiSync = sharedPreferences.getBoolean(key, false);
-            UserUtils.UserSettings.setWifiSync(getActivity().getApplicationContext(), wifiSync);
-        } else if (key.equals(getString(R.string.key_pref_login_id))) {
-            Log.d(TAG, "Username changed- new value: " + sharedPreferences.getString(key, null));
-            String loginId = sharedPreferences.getString(key, null);
-            updateLoginId(key, loginId);
-        } else if (key.equals(getString(R.string.key_pref_password))) {
-            Log.d(TAG, "password changed- new value: " + sharedPreferences.getString(key, null));
-            String password = sharedPreferences.getString(key, null);
-            updatePassword(key, password);
-        } else if (key.equals(getString(R.string.key_pref_notification))) {
-            Log.d(TAG, "notification setting changed- new value: " + sharedPreferences.getBoolean(key, false));
-            //TODO add this
-
-        } else {
-            Log.d(TAG, "No match for key: " + key);
-        }
-
-
-    }
-
-    private void updateLoginId(String key, String data) {
-        Log.d(TAG, "executing updateLoginId");
-        if (!UserUtils.isValidEmail(data)) {
-            showErrorMsg(getString(R.string.err_str_enter_valid_email));
-            resetLoginId();
-        } else {
-            JSONObject postData = new JSONObject();
-
+    View.OnClickListener onEditButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View button) {
+            Object tag = button.getTag();
             try {
-                postData.put(API.key.SETTING_UPDATE_LOGIN_ID, data);
-            } catch (JSONException e) {
-                Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
+                int position = (Integer)tag;
+                ExpenseTagModel tagModel = tagModelList.get(position);
+                Log.d(TAG, "Selected tag label is: " + tagModel.getTag());
             }
-
-            ExternalCall.doPost(postData, API.SETTINGS_UPDATE_LOGIN_ID_API, IncludeAuthentication.YES, new ResponseHandler() {
-
-                @Override
-                public void onSuccess(org.apache.http.Header[] headers, String body) {
-                    Log.d(TAG, "executing updateLoginId: onSuccess");
-                    Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                    Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                    saveAuthKey(headerData);
-                    updateHandler.sendEmptyMessage(LOGIN_ID_UPDATE_SUCCESS);
-                }
-
-                @Override
-                public void onError(int statusCode, String error) {
-                    Log.d(TAG, "executing updateLoginId: onError" + error);
-                    resetLoginId();
-                }
-
-                @Override
-                public void onException(Exception exception) {
-                    Log.d(TAG, "executing updateLoginId: onException" + exception.getMessage());
-                    resetLoginId();
-                }
-            });
+            catch (ClassCastException e) {
+            }
         }
-    }
+    };
 
-    private void updatePassword(String key, String data) {
-        Log.d(TAG, "executing updatePassword");
-        if (TextUtils.isEmpty(data)) {
-            showErrorMsg(getString(R.string.err_str_enter_valid_password));
-        } else {
-            JSONObject postData = new JSONObject();
-
+    View.OnClickListener onDeleteButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View button) {
+            Object tag = button.getTag();
             try {
-                postData.put(API.key.SETTING_UPDATE_PASSWORD, data);
-            } catch (JSONException e) {
-                Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
+                int position = (Integer)tag;
+                final ExpenseTagModel tagModel = tagModelList.get(position);
+                Log.d(TAG, "Selected tag label is: " + tagModel.getTag());
+
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(getString(R.string.expense_tag_dialog_label))
+                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getTag()))
+                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setPositiveButton(getString(R.string.expense_tag_dialog_button_delete), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                //TODO: call api to delete
+                                tagModel.getId();
+                                tagModel.getTag();
+                                tagModel.getColor();
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
+
             }
-
-            ExternalCall.doPost(postData, API.SETTINGS_UPDATE_PASSWORD_API, IncludeAuthentication.YES, new ResponseHandler() {
-
-                @Override
-                public void onSuccess(org.apache.http.Header[] headers, String body) {
-                    Log.d(TAG, "executing updatePassword: onSuccess");
-                    Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                    Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
-                    saveAuthKey(headerData);
-                }
-
-                @Override
-                public void onError(int statusCode, String error) {
-                    Log.d(TAG, "executing updatePassword: onError" + error);
-                }
-
-                @Override
-                public void onException(Exception exception) {
-                    Log.d(TAG, "executing updatePassword: onException" + exception.getMessage());
-                }
-            });
-        }
-    }
-
-    private void resetLoginId() {
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
-        SharedPreferences.Editor editor = pref.edit();
-        // us old email
-        editor.putString(getString(R.string.pref_login_id), UserUtils.getEmail());
-        editor.commit();
-    }
-
-    protected void saveAuthKey(Map<String, String> map) {
-        for (Map.Entry<String, String> entry : map.entrySet()) {
-            boolean success = KeyValueUtils.updateInsert(entry.getKey(), entry.getValue());
-            if (!success) {
-                Log.e(TAG, "Error while saving Auth data: key is:  " + entry.getKey() + "  value is:  " + entry.getValue());
+            catch (ClassCastException e) {
             }
         }
-    }
+    };
 
-    public void showErrorMsg(final String msg) {
-        new Handler().post(new Runnable() {
+    public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
 
-            @Override
-            public void run() {
-                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+        private final String TAG = ExpenseTagListAdapter.class.getSimpleName();
+        private final LayoutInflater inflater;
+        private List<ExpenseTagModel> tagList;
+
+        public ExpenseTagListAdapter(Context context, List<ExpenseTagModel> tags) {
+            super(context, R.layout.pref_fragment_exp_tag_list_item, tags);
+            this.tagList = tags;
+            inflater = LayoutInflater.from(context);
+        }
+
+        @Override
+        public int getCount() {
+            return tagList.size();
+        }
+
+        @Override
+        public ExpenseTagModel getItem(int position) {
+            return tagList.get(position);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return position;
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            try {
+                ViewHolder holder;
+                if (convertView == null) {
+                    convertView = inflater.inflate(R.layout.pref_fragment_exp_tag_list_item, parent, false);
+
+                    holder = new ViewHolder();
+                    holder.tagLabel = (TextView) convertView.findViewById(R.id.exp_list_tag_label);
+                    holder.tagColor = convertView.findViewById(R.id.exp_list_tag_color);
+                    convertView.setTag(holder);
+                } else {
+                    holder = (ViewHolder) convertView.getTag();
+                }
+
+                ImageButton editButton = (ImageButton)convertView.findViewById(R.id.exp_list_tag_edit);
+                editButton.setTag(position);
+                editButton.setOnClickListener(onEditButtonClicked);
+                ImageButton deleteButton = (ImageButton)convertView.findViewById(R.id.exp_list_tag_delete);
+                deleteButton.setTag(position);
+                deleteButton.setOnClickListener(onDeleteButtonClicked);
+
+                ExpenseTagModel tagModel = getItem(position);
+                holder.tagLabel.setText(tagModel.getTag());
+                holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
+
+                return convertView;
+            } catch (Exception e) {
+                Log.d(TAG, "Exception " + e.getMessage());
+                e.printStackTrace();
             }
+            return null;
+        }
 
-        });
+        private class ViewHolder {
+            TextView tagLabel;
+            View tagColor;
+        }
     }
 }

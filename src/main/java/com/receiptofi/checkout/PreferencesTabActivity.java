@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.receiptofi.checkout.fragments.PrefFragment;
+import com.receiptofi.checkout.fragments.ProfileFragment;
+
 /**
  * Created by PT on 4/9/15.
  */
@@ -74,12 +77,17 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
 
         @Override
         public Fragment getItem(int i) {
-            Fragment fragment = new TabFragment();
-            Bundle args = new Bundle();
-            args.putInt(TabFragment.ARG_OBJECT, i);
-            fragment.setArguments(args);
-            return fragment;
-
+            if(i == 0){
+                return new ProfileFragment();
+            } else if(i == 1){
+                return new PrefFragment();
+            } else {
+                Fragment fragment = new TabFragment();
+                Bundle args = new Bundle();
+                args.putInt(TabFragment.ARG_OBJECT, i);
+                fragment.setArguments(args);
+                return fragment;
+            }
         }
 
         @Override
@@ -94,13 +102,13 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
             String tabLabel = null;
             switch (position) {
                 case 0:
-                    tabLabel = "tab1";
+                    tabLabel = getString(R.string.profile);
                     break;
                 case 1:
-                    tabLabel = "tab2";
+                    tabLabel = getString(R.string.preferences);
                     break;
                 case 2:
-                    tabLabel = "tab3";
+                    tabLabel = getString(R.string.billing);
                     break;
 
             }
@@ -121,12 +129,6 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
             int position = args.getInt(ARG_OBJECT);
             int tabLayout = 0;
             switch (position) {
-                case 0:
-                    tabLayout = R.layout.tab1;
-                    break;
-                case 1:
-                    tabLayout = R.layout.tab2;
-                    break;
                 case 2:
                     tabLayout = R.layout.tab3;
                     break;
