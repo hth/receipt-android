@@ -89,7 +89,6 @@ public class ReceiptListFragment extends Fragment {
         }
     };
     public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
-    private View rootView;
     private ExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
     private DataSetObserver receiptGroupObserver;
@@ -126,7 +125,7 @@ public class ReceiptListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
         return rootView;
     }
 
