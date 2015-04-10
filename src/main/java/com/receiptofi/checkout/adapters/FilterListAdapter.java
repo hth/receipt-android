@@ -13,6 +13,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.Constants;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -86,9 +87,7 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
-            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
-            String formattedDate = outputDF.format(inputDF.parse(receiptData.getReceiptDate()));
+            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate()));
 
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(formattedDate);

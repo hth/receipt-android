@@ -14,10 +14,12 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.Constants;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 
 public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
@@ -86,9 +88,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
-            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
-            String formattedDate = outputDF.format(inputDF.parse(receiptData.getReceiptDate()));
+            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate()));
 
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(formattedDate);
@@ -134,8 +134,8 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             ReceiptGroupHeader headerData = (ReceiptGroupHeader) getGroup(groupPosition);
             String year = headerData.getYear();
             String month = headerData.getMonth();
-            DateFormat inputDF = new SimpleDateFormat("M yyyy");
-            DateFormat outputDF = new SimpleDateFormat("MMM yyyy");
+            DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);
+            DateFormat outputDF = new SimpleDateFormat("MMM yyyy", Locale.US);
             String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
 
             holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));

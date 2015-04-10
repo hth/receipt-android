@@ -208,9 +208,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             });
 
             // Date block
-            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
-            String formattedDate = outputDF.format(inputDF.parse(rdModel.getReceiptDate()));
+            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(rdModel.getReceiptDate()));
             rdDate.setText(formattedDate);
 
 
