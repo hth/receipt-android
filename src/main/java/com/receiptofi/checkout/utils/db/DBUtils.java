@@ -66,16 +66,26 @@ public class DBUtils {
      */
     public static int countTables() {
         int count = 0;
-        Cursor cursor = RDH.getReadableDatabase().rawQuery(
-                "SELECT count(*) FROM sqlite_master WHERE " +
-                        "type = 'table' AND " +
-                        "name != 'android_metadata' AND " +
-                        "name != 'sqlite_sequence'",
-                null);
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "SELECT count(*) FROM sqlite_master WHERE " +
+                            "type = 'table' AND " +
+                            "name != 'android_metadata' AND " +
+                            "name != 'sqlite_sequence'",
+                    null);
 
-        if (cursor.moveToNext()) {
-            count = cursor.getInt(0);
+            if (cursor.moveToNext()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error counting tables " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
         }
+
         Log.d(TAG, "Number of table count in db " + count);
         return count;
     }

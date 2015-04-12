@@ -73,26 +73,35 @@ public class ExpenseTagUtils {
 
     private static List<ExpenseTagModel> getAll() {
         Log.d(TAG, "Fetching all expense tag");
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.ExpenseTag.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                DatabaseTable.ExpenseTag.NAME
-        );
-
         List<ExpenseTagModel> list = new LinkedList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                ExpenseTagModel expenseTagModel = new ExpenseTagModel(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2)
-                );
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.ExpenseTag.TABLE_NAME,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DatabaseTable.ExpenseTag.NAME
+            );
 
-                list.add(expenseTagModel);
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ExpenseTagModel expenseTagModel = new ExpenseTagModel(
+                            cursor.getString(0),
+                            cursor.getString(1),
+                            cursor.getString(2)
+                    );
+
+                    list.add(expenseTagModel);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting expense tag " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
 

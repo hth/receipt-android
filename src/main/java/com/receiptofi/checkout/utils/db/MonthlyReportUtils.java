@@ -14,7 +14,6 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 import static com.receiptofi.checkout.db.DatabaseTable.MonthlyReport;
 
 public class MonthlyReportUtils {
-
     private static final String TAG = MonthlyReportUtils.class.getSimpleName();
 
     public static void computeMonthlyReceiptReport() {
@@ -33,29 +32,38 @@ public class MonthlyReportUtils {
     private static void groupByMonthlyReceiptStat() {
         Log.d(TAG, "Starting to calculate Monthly Facts");
 
-        Cursor cursor = RDH.getReadableDatabase().rawQuery(
-                "select " +
-                        "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) mon," +
-                        "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) yr, " +
-                        "total(total) total, " +
-                        "count(*) count " +
-                        "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "select " +
+                            "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) mon," +
+                            "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) yr, " +
+                            "total(total) total, " +
+                            "count(*) count " +
+                            "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
 
 
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
 
-                ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getDouble(2),
-                        cursor.getInt(3));
+                    ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
+                            cursor.getString(0),
+                            cursor.getString(1),
+                            cursor.getDouble(2),
+                            cursor.getInt(3));
 
-                if (insert(receiptGroupHeader)) {
-                    Log.d(TAG, "Monthly Record Inserted Successfully " + receiptGroupHeader);
-                } else {
-                    Log.d(TAG, "Monthly Record Insert Failed " + receiptGroupHeader);
+                    if (insert(receiptGroupHeader)) {
+                        Log.d(TAG, "Monthly Record Inserted Successfully " + receiptGroupHeader);
+                    } else {
+                        Log.d(TAG, "Monthly Record Insert Failed " + receiptGroupHeader);
+                    }
                 }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting receipt group header " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
     }
@@ -84,49 +92,66 @@ public class MonthlyReportUtils {
 
     public static String fetchMonthlyTotal(String year, String month) {
         Log.d(TAG, "Starting Fetch Monthly Total");
-        Cursor cursor = RDH.getReadableDatabase().rawQuery(
-                " select " +
-                        "total from " + MonthlyReport.TABLE_NAME + " " +
-                        "where " + MonthlyReport.YEAR + " = '" + year + "' " +
-                        "and " + MonthlyReport.MONTH + " = '" + month + "'", null);
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    " select " +
+                            "total from " + MonthlyReport.TABLE_NAME + " " +
+                            "where " + MonthlyReport.YEAR + " = '" + year + "' " +
+                            "and " + MonthlyReport.MONTH + " = '" + month + "'", null);
 
-        //TODO try changing to while(cursor.moveToNext()) from if
-        if (cursor != null && cursor.getCount() > 0) {
-            cursor.moveToFirst();
-            return cursor.getString(0);
+            //TODO try changing to while(cursor.moveToNext()) from if
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getString(0);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting monthly total " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
         }
         return "0.0";
     }
 
     public static ReceiptGroup fetchMonthly() {
         Log.d(TAG, "All receipt grouped MonthlyReport");
-
         ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.MonthlyReport.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                MonthlyReport.YEAR + " desc, " + MonthlyReport.MONTH + " desc"
-        );
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.MonthlyReport.TABLE_NAME,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    MonthlyReport.YEAR + " desc, " + MonthlyReport.MONTH + " desc"
+            );
 
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                String month = cursor.getString(0);
-                String year = cursor.getString(1);
-                ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
-                        month,
-                        year,
-                        Double.parseDouble(cursor.getString(2)),
-                        Integer.parseInt(cursor.getString(3))
-                );
-                receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
-                receiptGroup.addReceiptGroup(ReceiptUtils.fetchReceipts(year, month));
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    String month = cursor.getString(0);
+                    String year = cursor.getString(1);
+                    ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
+                            month,
+                            year,
+                            Double.parseDouble(cursor.getString(2)),
+                            Integer.parseInt(cursor.getString(3))
+                    );
+                    receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
+                    receiptGroup.addReceiptGroup(ReceiptUtils.fetchReceipts(year, month));
+                }
+            }
+            ReceiptGroupObservable.setMonthlyReceiptGroup(receiptGroup);
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting monthly total " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
-        ReceiptGroupObservable.setMonthlyReceiptGroup(receiptGroup);
         return receiptGroup;
     }
 }

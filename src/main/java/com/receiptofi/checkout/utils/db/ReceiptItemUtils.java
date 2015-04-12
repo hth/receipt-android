@@ -60,31 +60,41 @@ public class ReceiptItemUtils {
 
     public static List<ReceiptItemModel> getItems(String receiptId) {
         Log.d(TAG, "Fetching items for receiptId=" + receiptId);
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Item.TABLE_NAME,
-                null,
-                DatabaseTable.Item.RECEIPTID + " = ?",
-                new String[]{receiptId},
-                null,
-                null,
-                DatabaseTable.Item.SEQUENCE + " desc"
-        );
 
         List<ReceiptItemModel> list = new LinkedList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                ReceiptItemModel receiptItemModel = new ReceiptItemModel(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getString(7)
-                );
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Item.TABLE_NAME,
+                    null,
+                    DatabaseTable.Item.RECEIPTID + " = ?",
+                    new String[]{receiptId},
+                    null,
+                    null,
+                    DatabaseTable.Item.SEQUENCE + " desc"
+            );
 
-                list.add(receiptItemModel);
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ReceiptItemModel receiptItemModel = new ReceiptItemModel(
+                            cursor.getString(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getString(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            cursor.getString(6),
+                            cursor.getString(7)
+                    );
+
+                    list.add(receiptItemModel);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting items for receipt " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
 
@@ -99,22 +109,32 @@ public class ReceiptItemUtils {
      */
     public static List<String> searchReceiptWithItemName(String name) {
         Log.d(TAG, "Fetching items matching name=" + name);
-        Cursor cursor = RDH.getReadableDatabase().query(
-                true,
-                DatabaseTable.Item.TABLE_NAME,
-                new String[]{DatabaseTable.Item.RECEIPTID},
-                DatabaseTable.Item.NAME + " LIKE '?'",
-                new String[]{"%" + name + "%"},
-                null,
-                null,
-                null,
-                null
-        );
 
         List<String> list = new ArrayList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                list.add(cursor.getString(0));
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    true,
+                    DatabaseTable.Item.TABLE_NAME,
+                    new String[]{DatabaseTable.Item.RECEIPTID},
+                    DatabaseTable.Item.NAME + " LIKE '?'",
+                    new String[]{"%" + name + "%"},
+                    null,
+                    null,
+                    null,
+                    null
+            );
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    list.add(cursor.getString(0));
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error searching items with name " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
 

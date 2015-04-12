@@ -2,6 +2,7 @@ package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.util.Log;
 
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.http.API;
@@ -9,6 +10,7 @@ import com.receiptofi.checkout.http.API;
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
 public class KeyValueUtils {
+    private static final String TAG = KeyValueUtils.class.getSimpleName();
 
     public static boolean updateInsert(String key, String value) {
         ContentValues values = new ContentValues();
@@ -59,20 +61,29 @@ public class KeyValueUtils {
 
     //http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
     public static String getValue(String key) {
-        Cursor c = RDH.getReadableDatabase().query(
-                DatabaseTable.KeyValue.TABLE_NAME,
-                new String[]{DatabaseTable.KeyValue.VALUE},
-                DatabaseTable.KeyValue.KEY + "=?",
-                new String[]{key},
-                null,
-                null,
-                null
-        );
-
         String value = null;
-        if (c != null && c.getCount() > 0) {
-            c.moveToFirst();
-            value = c.getString(c.getColumnIndex(DatabaseTable.KeyValue.VALUE));
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.KeyValue.TABLE_NAME,
+                    new String[]{DatabaseTable.KeyValue.VALUE},
+                    DatabaseTable.KeyValue.KEY + "=?",
+                    new String[]{key},
+                    null,
+                    null,
+                    null
+            );
+
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                value = cursor.getString(cursor.getColumnIndex(DatabaseTable.KeyValue.VALUE));
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting value " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
         }
 
         return value;
