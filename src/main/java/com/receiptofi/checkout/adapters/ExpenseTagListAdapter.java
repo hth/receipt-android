@@ -64,7 +64,7 @@ public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
                 convertView = inflater.inflate(R.layout.expense_tag_list_item, parent, false);
 
                 holder = new ViewHolder();
-                holder.tagLabel = (TextView) convertView.findViewById(R.id.receipt_action_tag_label);
+                holder.tagName = (TextView) convertView.findViewById(R.id.receipt_action_tag_name);
                 holder.tagColor = convertView.findViewById(R.id.receipt_action_tag_color);
                 convertView.setTag(holder);
             } else {
@@ -72,7 +72,7 @@ public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
             }
 
             ExpenseTagModel tagModel = getItem(position);
-            holder.tagLabel.setText(tagModel.getTag());
+            holder.tagName.setText(tagModel.getName());
             holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
             if (!TextUtils.isEmpty(currTag) && currTag.equals(tagModel.getId())) {
                 ((ListView) parent).setItemChecked(position, true);
@@ -86,7 +86,7 @@ public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
     }
 
     private class ViewHolder {
-        TextView tagLabel;
+        TextView tagName;
         View tagColor;
     }
 }

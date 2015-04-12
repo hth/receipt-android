@@ -8,7 +8,6 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -62,7 +61,7 @@ public class ExpenseTagUtils {
     private static void insert(ExpenseTagModel expenseTag) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.ExpenseTag.ID, expenseTag.getId());
-        values.put(DatabaseTable.ExpenseTag.TAG, expenseTag.getTag());
+        values.put(DatabaseTable.ExpenseTag.NAME, expenseTag.getName());
         values.put(DatabaseTable.ExpenseTag.COLOR, expenseTag.getColor());
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
@@ -81,7 +80,7 @@ public class ExpenseTagUtils {
                 null,
                 null,
                 null,
-                DatabaseTable.ExpenseTag.TAG
+                DatabaseTable.ExpenseTag.NAME
         );
 
         List<ExpenseTagModel> list = new LinkedList<>();

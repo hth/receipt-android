@@ -56,7 +56,7 @@ public class PrefFragment extends Fragment {
             try {
                 int position = (Integer)tag;
                 ExpenseTagModel tagModel = tagModelList.get(position);
-                Log.d(TAG, "Selected tag label is: " + tagModel.getTag());
+                Log.d(TAG, "Selected tag name is: " + tagModel.getName());
             }
             catch (ClassCastException e) {
             }
@@ -70,11 +70,11 @@ public class PrefFragment extends Fragment {
             try {
                 int position = (Integer)tag;
                 final ExpenseTagModel tagModel = tagModelList.get(position);
-                Log.d(TAG, "Selected tag label is: " + tagModel.getTag());
+                Log.d(TAG, "Selected tag name is: " + tagModel.getName());
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle(getString(R.string.expense_tag_dialog_label))
-                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getTag()))
+                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // do nothing
@@ -84,7 +84,7 @@ public class PrefFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 //TODO: call api to delete
                                 tagModel.getId();
-                                tagModel.getTag();
+                                tagModel.getName();
                                 tagModel.getColor();
                             }
                         })
@@ -137,7 +137,7 @@ public class PrefFragment extends Fragment {
                     convertView = inflater.inflate(R.layout.pref_fragment_exp_tag_list_item, parent, false);
 
                     holder = new ViewHolder();
-                    holder.tagLabel = (TextView) convertView.findViewById(R.id.exp_list_tag_label);
+                    holder.tagName = (TextView) convertView.findViewById(R.id.exp_list_tag_name);
                     holder.tagColor = convertView.findViewById(R.id.exp_list_tag_color);
                     convertView.setTag(holder);
                 } else {
@@ -152,7 +152,7 @@ public class PrefFragment extends Fragment {
                 deleteButton.setOnClickListener(onDeleteButtonClicked);
 
                 ExpenseTagModel tagModel = getItem(position);
-                holder.tagLabel.setText(tagModel.getTag());
+                holder.tagName.setText(tagModel.getName());
                 holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
 
                 return convertView;
@@ -164,7 +164,7 @@ public class PrefFragment extends Fragment {
         }
 
         private class ViewHolder {
-            TextView tagLabel;
+            TextView tagName;
             View tagColor;
         }
     }
