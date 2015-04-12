@@ -200,25 +200,35 @@ public class ReceiptUtils {
     }
 
     public static ChartModel getReceiptsByBizName() {
-        Cursor cursor = RDH.getReadableDatabase().rawQuery(
-                "select " +
-                        "bizName," +
-                        "total(total) total " +
-                        "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                        "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
-                        "datetime('now', 'start of month') AND " +
-                        "datetime('now', 'start of month','+1 month','-1 day') " +
-                        "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
-
         ChartModel chartModel = new ChartModel();
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                ReceiptModel receiptModel = new ReceiptModel();
-                receiptModel.setBizName(cursor.getString(0));
-                receiptModel.setTotal(cursor.getDouble(1));
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "select " +
+                            "bizName," +
+                            "total(total) total " +
+                            "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                            "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
+                            "datetime('now', 'start of month') AND " +
+                            "datetime('now', 'start of month','+1 month','-1 day') " +
+                            "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
 
-                chartModel.addReceiptModel(receiptModel);
-                chartModel.addTotal(receiptModel.getTotal());
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ReceiptModel receiptModel = new ReceiptModel();
+                    receiptModel.setBizName(cursor.getString(0));
+                    receiptModel.setTotal(cursor.getDouble(1));
+
+                    chartModel.addReceiptModel(receiptModel);
+                    chartModel.addTotal(receiptModel.getTotal());
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error get chart model " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
         return chartModel;
@@ -227,17 +237,29 @@ public class ReceiptUtils {
     public static List<ReceiptModel> fetchReceipts(String year, String month) {
         Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month);
 
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
-                new String[]{month, year},
-                null,
-                null,
-                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
-        );
+        List<ReceiptModel> list = new LinkedList<>();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    null,
+                    "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
+                    new String[]{month, year},
+                    null,
+                    null,
+                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+            );
 
-        return retrieveReceiptModelFromCursor(cursor);
+            list = retrieveReceiptModelFromCursor(cursor);
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting receipts " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return  list;
     }
 
     /**
@@ -256,17 +278,29 @@ public class ReceiptUtils {
             or = " OR ";
         }
 
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                selection.toString(),
-                ids.toArray(new String[ids.size()]),
-                null,
-                null,
-                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
-        );
+        List<ReceiptModel> list = new LinkedList<>();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    null,
+                    selection.toString(),
+                    ids.toArray(new String[ids.size()]),
+                    null,
+                    null,
+                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+            );
 
-        return retrieveReceiptModelFromCursor(cursor);
+            list = retrieveReceiptModelFromCursor(cursor);
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting receipts " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return  list;
     }
 
     /**
@@ -279,40 +313,49 @@ public class ReceiptUtils {
      */
     public static ReceiptGroup filterByBizByMonth(String bizName, Date monthYear) {
         String yearMonth = SDF_YM.format(monthYear);
-
-        /**
-         * select * from RECEIPT where bizName = 'Costco' and receiptDate LIKE '2015-01-%'
-         */
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                DatabaseTable.Receipt.BIZ_NAME + " = ? and " +
-                        DatabaseTable.Receipt.RECEIPT_DATE + " LIKE ?",
-                new String[]{bizName, yearMonth + "%"},
-                null,
-                null,
-                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
-        );
-
         ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
-        receiptGroup.addReceiptGroup(retrieveReceiptModelFromCursor(cursor));
+        Cursor cursor = null;
 
-        cursor = RDH.getReadableDatabase().rawQuery(
-                "select " +
-                        "total(total) total " +
-                        "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                        "where " + DatabaseTable.Receipt.BIZ_NAME + " = '" + bizName + "' " +
-                        "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE  '" + SDF_YM.format(monthYear) + "%'", null);
+        try {
+            /**
+             * select * from RECEIPT where bizName = 'Costco' and receiptDate LIKE '2015-01-%'
+             */
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    null,
+                    DatabaseTable.Receipt.BIZ_NAME + " = ? and " +
+                            DatabaseTable.Receipt.RECEIPT_DATE + " LIKE ?",
+                    new String[]{bizName, yearMonth + "%"},
+                    null,
+                    null,
+                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+            );
 
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                String[] yearMonthSplit = yearMonth.split("-");
-                ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
-                        yearMonthSplit[1],
-                        yearMonthSplit[0],
-                        cursor.getDouble(0),
-                        receiptGroup.getReceiptModels().get(0).size());
-                receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
+            receiptGroup.addReceiptGroup(retrieveReceiptModelFromCursor(cursor));
+
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "select " +
+                            "total(total) total " +
+                            "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                            "where " + DatabaseTable.Receipt.BIZ_NAME + " = '" + bizName + "' " +
+                            "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE  '" + SDF_YM.format(monthYear) + "%'", null);
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    String[] yearMonthSplit = yearMonth.split("-");
+                    ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
+                            yearMonthSplit[1],
+                            yearMonthSplit[0],
+                            cursor.getDouble(0),
+                            receiptGroup.getReceiptModels().get(0).size());
+                    receiptGroup.addReceiptGroupHeader(receiptGroupHeader);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error during filter by Biz by Month " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
 
