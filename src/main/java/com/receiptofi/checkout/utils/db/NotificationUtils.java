@@ -64,35 +64,43 @@ public class NotificationUtils {
 
     public static List<NotificationModel> getAll() {
         Log.d(TAG, "Fetching all notifications");
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Notification.TABLE_NAME,
-                null,
-                null,
-                null,
-                null,
-                null,
-                DatabaseTable.Notification.CREATED + " desc"
-        );
-
+        Cursor cursor = null;
         List<NotificationModel> list = new LinkedList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                NotificationModel notificationModel = new NotificationModel(
-                        cursor.getString(0),
-                        cursor.getString(1),
-                        cursor.getInt(2) == 1,
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getString(6),
-                        cursor.getInt(7) == 1
-                );
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Notification.TABLE_NAME,
+                    null,
+                    null,
+                    null,
+                    null,
+                    null,
+                    DatabaseTable.Notification.CREATED + " desc"
+            );
 
-                list.add(notificationModel);
+            if (null != cursor && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    NotificationModel notificationModel = new NotificationModel(
+                            cursor.getString(0),
+                            cursor.getString(1),
+                            cursor.getInt(2) == 1,
+                            cursor.getString(3),
+                            cursor.getString(4),
+                            cursor.getString(5),
+                            cursor.getString(6),
+                            cursor.getInt(7) == 1
+                    );
+
+                    list.add(notificationModel);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting notification message=" + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
 
         return list;
     }
-
 }

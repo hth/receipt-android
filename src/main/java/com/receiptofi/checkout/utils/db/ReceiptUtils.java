@@ -326,56 +326,63 @@ public class ReceiptUtils {
      * @return
      */
     public static ReceiptGroup searchByKeyword(String name) {
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Item.TABLE_NAME,
-                new String[]{DatabaseTable.Item.RECEIPTID},
-                DatabaseTable.Item.NAME + " LIKE ?",
-                new String[]{"%" + name + "%"},
-                null,
-                null,
-                null
-        );
+        ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Item.TABLE_NAME,
+                    new String[]{DatabaseTable.Item.RECEIPTID},
+                    DatabaseTable.Item.NAME + " LIKE ?",
+                    new String[]{"%" + name + "%"},
+                    null,
+                    null,
+                    null
+            );
 
-        List<String> receiptIds = new ArrayList<>();
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                receiptIds.add(cursor.getString(0));
+            List<String> receiptIds = new ArrayList<>();
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    receiptIds.add(cursor.getString(0));
+                }
             }
-        }
 
-        cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                new String[]{DatabaseTable.Receipt.ID},
-                DatabaseTable.Receipt.BIZ_NAME + " LIKE ?",
-                new String[]{"%" + name + "%"},
-                null,
-                null,
-                null
-        );
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    new String[]{DatabaseTable.Receipt.ID},
+                    DatabaseTable.Receipt.BIZ_NAME + " LIKE ?",
+                    new String[]{"%" + name + "%"},
+                    null,
+                    null,
+                    null
+            );
 
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                receiptIds.add(cursor.getString(0));
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    receiptIds.add(cursor.getString(0));
+                }
             }
-        }
 
-        String ids = "";
-        for (String id : receiptIds) {
-            ids += "'" + id + "',";
-        }
+            String ids = "";
+            for (String id : receiptIds) {
+                ids += "'" + id + "',";
+            }
 
-        ReceiptGroup receiptGroup;
-        if (ids.length() > 0) {
-            cursor = RDH.getReadableDatabase().rawQuery(
-                    "select " +
-                            "* " +
-                            "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                            "where " + DatabaseTable.Receipt.ID + " IN (" + ids.substring(0, ids.length() - 1) + ")", null);
+            if (ids.length() > 0) {
+                cursor = RDH.getReadableDatabase().rawQuery(
+                        "select " +
+                                "* " +
+                                "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                                "where " + DatabaseTable.Receipt.ID + " IN (" + ids.substring(0, ids.length() - 1) + ")", null);
 
-            receiptGroup = convertToReceiptGroup(retrieveReceiptModelFromCursor(cursor));
+                receiptGroup = convertToReceiptGroup(retrieveReceiptModelFromCursor(cursor));
 
-        } else {
-            receiptGroup = ReceiptGroup.getInstance();
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error searching by keyword " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
         }
 
         return receiptGroup;
