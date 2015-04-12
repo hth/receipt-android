@@ -96,7 +96,7 @@ public class NotificationUtils {
         } catch (Exception e) {
             Log.e(TAG, "Error getting notification message=" + e.getLocalizedMessage(), e);
         } finally {
-            if(null != cursor) {
+            if (null != cursor) {
                 cursor.close();
             }
         }
