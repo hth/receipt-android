@@ -7,12 +7,12 @@ package com.receiptofi.checkout.model;
 public class ExpenseTagModel {
 
     private String id;
-    private String tag;
+    private String name;
     private String color;
 
-    public ExpenseTagModel(String id, String tag, String color) {
+    public ExpenseTagModel(String id, String name, String color) {
         this.id = id;
-        this.tag = tag;
+        this.name = name;
         this.color = color;
     }
 
@@ -20,8 +20,8 @@ public class ExpenseTagModel {
         return id;
     }
 
-    public String getTag() {
-        return tag;
+    public String getName() {
+        return name;
     }
 
     public String getColor() {
@@ -32,7 +32,7 @@ public class ExpenseTagModel {
     public String toString() {
         return "ExpenseTagModel{" +
                 "id='" + id + '\'' +
-                ", tag='" + tag + '\'' +
+                ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
                 '}';
     }
