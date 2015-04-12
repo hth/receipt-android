@@ -278,17 +278,29 @@ public class ReceiptUtils {
             or = " OR ";
         }
 
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                selection.toString(),
-                ids.toArray(new String[ids.size()]),
-                null,
-                null,
-                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
-        );
+        List<ReceiptModel> list = new LinkedList<>();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    null,
+                    selection.toString(),
+                    ids.toArray(new String[ids.size()]),
+                    null,
+                    null,
+                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+            );
 
-        return retrieveReceiptModelFromCursor(cursor);
+            list = retrieveReceiptModelFromCursor(cursor);
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting receipts " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return  list;
     }
 
     /**
