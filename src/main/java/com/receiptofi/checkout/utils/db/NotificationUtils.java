@@ -22,8 +22,21 @@ public class NotificationUtils {
 
     public static void insert(List<NotificationModel> notifications) {
         for (NotificationModel notification : notifications) {
-            insert(notification);
+            if (notification.isActive()) {
+                insert(notification);
+            } else {
+                delete(notification.getId());
+                Log.d(TAG, "Deleted notification: " + notification.getId());
+            }
         }
+    }
+
+    private static void delete(String id) {
+        RDH.getWritableDatabase().delete(
+                DatabaseTable.Notification.TABLE_NAME,
+                DatabaseTable.Notification.ID + " = '" + id + "'",
+                null
+        );
     }
 
     /**
@@ -40,6 +53,7 @@ public class NotificationUtils {
         values.put(DatabaseTable.Notification.REFERENCE_ID, notification.getReferenceId());
         values.put(DatabaseTable.Notification.CREATED, notification.getCreated());
         values.put(DatabaseTable.Notification.UPDATED, notification.getUpdated());
+        values.put(DatabaseTable.Notification.ACTIVE, notification.getUpdated());
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
                 DatabaseTable.Notification.TABLE_NAME,
@@ -70,7 +84,8 @@ public class NotificationUtils {
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(5),
-                        cursor.getString(6)
+                        cursor.getString(6),
+                        cursor.getInt(7) == 1
                 );
 
                 list.add(notificationModel);

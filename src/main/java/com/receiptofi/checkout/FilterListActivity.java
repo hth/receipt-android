@@ -50,14 +50,14 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         // Run query to fetch data
         if (getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)) {
             String filterType = getIntent().getStringExtra(Constants.INTENT_EXTRA_FILTER_TYPE);
-            if (ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)) {
-                receiptFilter = ReceiptFilter.FIlter_BY_BIZ_AND_MONTH;
-                new FilterDataTask().execute(ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue(), getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME));
+            if (ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)) {
+                receiptFilter = ReceiptFilter.FILTER_BY_BIZ_AND_MONTH;
+                new FilterDataTask().execute(ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue(), getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME));
                 actionBarType = FilterActionBarType.MENU_MAIN;
                 addFragments(savedInstanceState);
             }
         } else if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
-            receiptFilter = ReceiptFilter.FIlter_BY_KEYWORD;
+            receiptFilter = ReceiptFilter.FILTER_BY_KEYWORD;
             actionBarType = FilterActionBarType.MENU_FILTER;
             handleIntent(getIntent());
         }
@@ -75,7 +75,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             //use the query to search your data somehow
-            new FilterDataTask().execute(ReceiptFilter.FIlter_BY_KEYWORD.getValue(), intent.getStringExtra(SearchManager.QUERY));
+            new FilterDataTask().execute(ReceiptFilter.FILTER_BY_KEYWORD.getValue(), intent.getStringExtra(SearchManager.QUERY));
             addFragments(null);
         }
     }
@@ -155,7 +155,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     }
 
     public boolean hideTotal() {
-        return ReceiptFilter.FIlter_BY_KEYWORD == receiptFilter;
+        return ReceiptFilter.FILTER_BY_KEYWORD == receiptFilter;
     }
 
     @Override
@@ -195,10 +195,10 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         @Override
         protected ReceiptGroup doInBackground(String... args) {
             ReceiptGroup receiptGroup = null;
-            if (ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue().equals(args[0])) {
+            if (ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue().equals(args[0])) {
                 Log.d(TAG, "!!!!! search query is: " + args[1]);
                 receiptGroup = ReceiptUtils.filterByBizByMonth(args[1], new Date());
-            } else if (ReceiptFilter.FIlter_BY_KEYWORD.getValue().equals(args[0])) {
+            } else if (ReceiptFilter.FILTER_BY_KEYWORD.getValue().equals(args[0])) {
                 Log.d(TAG, "!!!!! search query is: " + args[1]);
                 receiptGroup = ReceiptUtils.searchByKeyword(args[1]);
             }

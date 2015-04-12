@@ -303,7 +303,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         String bizName = expByBizData.getXVals().get(entry.getXIndex());
         Log.d(TAG, "bizName is: " + bizName);
         Intent intent = new Intent(this, FilterListActivity.class);
-        intent.putExtra(Constants.INTENT_EXTRA_FILTER_TYPE, Constants.ReceiptFilter.FIlter_BY_BIZ_AND_MONTH.getValue());
+        intent.putExtra(Constants.INTENT_EXTRA_FILTER_TYPE, Constants.ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue());
         intent.putExtra(Constants.INTENT_EXTRA_BIZ_NAME, bizName);
         startActivity(intent);
     }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.NotificationModel;
+import com.receiptofi.checkout.utils.Constants;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -68,9 +69,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
             }
 
             NotificationModel notification = getItem(position);
-            DateFormat inputDF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-            DateFormat outputDF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a");
-            String formattedDate = outputDF.format(inputDF.parse(notification.getUpdated()));
+            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(notification.getUpdated()));
 
             holder.notificationText.setText(notification.getMessage());
             holder.notificationTime.setText(formattedDate);

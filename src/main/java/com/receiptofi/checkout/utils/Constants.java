@@ -1,5 +1,9 @@
 package com.receiptofi.checkout.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 /**
  * Created by PT on 3/28/15.
  */
@@ -12,10 +16,13 @@ public class Constants {
 
     public static final int DEFAULT_REMINDER_TIME = 15;
 
+    public static final DateFormat ISO_DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+    public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a", Locale.US);
+
     public enum ReceiptFilter {
-        FIlter_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),
-        FIlter_BY_KEYWORD("filter_by_keyword"),
-        FIlter_BY_KEYWORD_AND_DATE("filter_by_keyword_and_date");
+        FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),
+        FILTER_BY_KEYWORD("filter_by_keyword"),
+        FILTER_BY_KEYWORD_AND_DATE("filter_by_keyword_and_date");
 
         private final String filterType;
 

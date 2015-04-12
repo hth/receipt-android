@@ -79,5 +79,6 @@ public class DatabaseTable {
         public static final String REFERENCE_ID = "referenceId";
         public static final String CREATED = "created";
         public static final String UPDATED = "updated";
+        public static final String ACTIVE = "active";
     }
 }
