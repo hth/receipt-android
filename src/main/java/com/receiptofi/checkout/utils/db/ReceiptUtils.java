@@ -200,25 +200,35 @@ public class ReceiptUtils {
     }
 
     public static ChartModel getReceiptsByBizName() {
-        Cursor cursor = RDH.getReadableDatabase().rawQuery(
-                "select " +
-                        "bizName," +
-                        "total(total) total " +
-                        "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                        "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
-                        "datetime('now', 'start of month') AND " +
-                        "datetime('now', 'start of month','+1 month','-1 day') " +
-                        "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
-
         ChartModel chartModel = new ChartModel();
-        if (cursor != null && cursor.getCount() > 0) {
-            while (cursor.moveToNext()) {
-                ReceiptModel receiptModel = new ReceiptModel();
-                receiptModel.setBizName(cursor.getString(0));
-                receiptModel.setTotal(cursor.getDouble(1));
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "select " +
+                            "bizName," +
+                            "total(total) total " +
+                            "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
+                            "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
+                            "datetime('now', 'start of month') AND " +
+                            "datetime('now', 'start of month','+1 month','-1 day') " +
+                            "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
 
-                chartModel.addReceiptModel(receiptModel);
-                chartModel.addTotal(receiptModel.getTotal());
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ReceiptModel receiptModel = new ReceiptModel();
+                    receiptModel.setBizName(cursor.getString(0));
+                    receiptModel.setTotal(cursor.getDouble(1));
+
+                    chartModel.addReceiptModel(receiptModel);
+                    chartModel.addTotal(receiptModel.getTotal());
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error get chart model " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
             }
         }
         return chartModel;
@@ -227,17 +237,29 @@ public class ReceiptUtils {
     public static List<ReceiptModel> fetchReceipts(String year, String month) {
         Log.d(TAG, "Fetching receipt for year=" + year + " month=" + month);
 
-        Cursor cursor = RDH.getReadableDatabase().query(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
-                new String[]{month, year},
-                null,
-                null,
-                DatabaseTable.Receipt.RECEIPT_DATE + " desc"
-        );
+        List<ReceiptModel> list = new LinkedList<>();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    null,
+                    "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
+                    new String[]{month, year},
+                    null,
+                    null,
+                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+            );
 
-        return retrieveReceiptModelFromCursor(cursor);
+            list = retrieveReceiptModelFromCursor(cursor);
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting receipts " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return  list;
     }
 
     /**
