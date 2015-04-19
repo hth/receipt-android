@@ -50,4 +50,9 @@ public class Constants {
         MENU_MAIN,
         MENU_FILTER
     }
+
+    public enum DialogMode {
+        MODE_ADD,
+        MODE_EDIT
+    }
 }
