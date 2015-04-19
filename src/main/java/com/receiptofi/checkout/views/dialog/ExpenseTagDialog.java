@@ -4,11 +4,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.DialogFragment;
 import android.os.Bundle;
-import android.support.v4.app.FragmentManager;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -64,7 +62,7 @@ public class ExpenseTagDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         String selectedTagId = getArguments().getString(BUNDLE_EXTRA_TAG_ID);
-        if(selectedTagId == null){
+        if (selectedTagId == null) {
             dialogMode = DialogMode.MODE_ADD;
         } else {
             dialogMode = DialogMode.MODE_EDIT;
@@ -77,28 +75,28 @@ public class ExpenseTagDialog extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialog_edit_tag, null);
-        final ColorPickerView colorPicker = (ColorPickerView)rootView.findViewById(R.id.edit_tag_colorPicker);
-        label = (EditText)rootView.findViewById(R.id.edit_tag_label);
+        final ColorPickerView colorPicker = (ColorPickerView) rootView.findViewById(R.id.edit_tag_colorPicker);
+        label = (EditText) rootView.findViewById(R.id.edit_tag_label);
         label.setSelected(false);
         label.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
-        if(DialogMode.MODE_EDIT == dialogMode){
+        if (DialogMode.MODE_EDIT == dialogMode) {
             tagModel = ExpenseTagUtils.getExpenseTagModels().get(tagId);
             label.setText(tagModel.getName());
             colorPicker.setColor(Color.parseColor(tagModel.getColor()));
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
-                builder.setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel),
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int whichButton) {
-                                dialog.dismiss();
-                            }
-                        }
-                );
+        builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
+        builder.setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel),
+                new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        dialog.dismiss();
+                    }
+                }
+        );
         String positiveButtonText;
-        if(DialogMode.MODE_EDIT == dialogMode){
+        if (DialogMode.MODE_EDIT == dialogMode) {
             positiveButtonText = getString(R.string.expense_tag_dialog_button_update);
         } else {
             positiveButtonText = getString(R.string.expense_tag_dialog_button_add);
@@ -110,9 +108,9 @@ public class ExpenseTagDialog extends DialogFragment {
                         String labelStr = label.getText().toString();
                         int colorCode = colorPicker.getColor();
                         String hexColor = String.format("#%06X", (0xFFFFFF & colorCode));
-                        if(DialogMode.MODE_EDIT == dialogMode){
+                        if (DialogMode.MODE_EDIT == dialogMode) {
                             Log.d("After dialog dismiss: ", hexColor);
-                            if (!(tagModel.getName().equals(labelStr)) || !(tagModel.getColor().equals(hexColor))){
+                            if (!(tagModel.getName().equals(labelStr)) || !(tagModel.getColor().equals(hexColor))) {
                                 String tagId = tagModel.getId();
                                 String tagName = labelStr;
                                 String tagColor = hexColor;
@@ -124,7 +122,7 @@ public class ExpenseTagDialog extends DialogFragment {
                                         postData.put("tagName", tagName);
                                         postData.put("tagColor", tagColor);
 
-                                        ExternalCall.doPost(postData, API.UPDATDE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        ExternalCall.doPost(postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
                                             public void onSuccess(Header[] headers, String body) {
                                                 DeviceService.onSuccess(headers, body);
@@ -148,8 +146,36 @@ public class ExpenseTagDialog extends DialogFragment {
                             }
                         } else {
                             String tagName = labelStr;
-                            String tagcolor = hexColor;
-                            // TODO:  call add tag api
+                            String tagColor = hexColor;
+
+                            if (null != tagName || null != tagColor) {
+                                JSONObject postData = new JSONObject();
+                                try {
+                                    postData.put("tagId", tagId);
+                                    postData.put("tagName", tagName);
+                                    postData.put("tagColor", tagColor);
+
+                                    ExternalCall.doPost(postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        @Override
+                                        public void onSuccess(Header[] headers, String body) {
+                                            DeviceService.onSuccess(headers, body);
+                                        }
+
+                                        @Override
+                                        public void onError(int statusCode, String error) {
+
+                                        }
+
+                                        @Override
+                                        public void onException(Exception exception) {
+
+                                        }
+                                    });
+
+                                } catch (JSONException e) {
+                                    Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                }
+                            }
 
                         }
                     }
@@ -165,8 +191,8 @@ public class ExpenseTagDialog extends DialogFragment {
         super.onStart();
 
         Log.d("!!!!!!!!!!       ", "onStart");
-        final Button positiveButton = ((AlertDialog)getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
-        if(DialogMode.MODE_ADD == dialogMode){
+        final Button positiveButton = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
+        if (DialogMode.MODE_ADD == dialogMode) {
             positiveButton.setEnabled(false);
         }
         final TextWatcher textWatcher = new TextWatcher() {
