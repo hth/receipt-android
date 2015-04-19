@@ -16,9 +16,14 @@ public class API {
     public static final String NEW_UPDATE_FOR_DEVICE = "/api/update.json";
 
 
-    // Settings api
+    // Settings api - Profile
     public static final String SETTINGS_UPDATE_LOGIN_ID_API = "/api/updateMail.json";
     public static final String SETTINGS_UPDATE_PASSWORD_API = "/api/updatePassword.json";
+
+    // Settings api - Preference
+    public static final String ADD_EXPENSE_TAG = "/api/addExpenseTag.json";
+    public static final String UPDATDE_EXPENSE_TAG = "/api/updateExpenseTag.json";
+    public static final String DELETE_EXPENSE_TAG = "/api/deleteExpenseTag.json";
 
     // Home page api
     public static final String UNPROCESSED_COUNT_API = "/api/unprocessed.json";
