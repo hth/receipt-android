@@ -1,11 +1,13 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.AlertDialog;
+import android.support.v4.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
+import com.receiptofi.checkout.views.dialog.EditTagDialog;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -56,6 +59,23 @@ public class PrefFragment extends Fragment {
             try {
                 int position = (Integer)tag;
                 ExpenseTagModel tagModel = tagModelList.get(position);
+                Log.d(TAG, "Selected tag label is: " + tagModel.getTag());
+
+                // DialogFragment.show() will take care of adding the fragment
+                // in a transaction.  We also want to remove any currently showing
+                // dialog, so make our own transaction and take care of that here.
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                DialogFragment editTagDialog = EditTagDialog.newInstance(tagModel.getId());
+                editTagDialog.show(ft, "dialog");
+               // int num = newFragment.show(ft, "dialog");
+
                 Log.d(TAG, "Selected tag name is: " + tagModel.getName());
             }
             catch (ClassCastException e) {
@@ -73,6 +93,8 @@ public class PrefFragment extends Fragment {
                 Log.d(TAG, "Selected tag name is: " + tagModel.getName());
 
                 new AlertDialog.Builder(getActivity())
+                        .setTitle(getString(R.string.expense_tag_dialog_delete_label))
+                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getTag()))
                         .setTitle(getString(R.string.expense_tag_dialog_label))
                         .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
