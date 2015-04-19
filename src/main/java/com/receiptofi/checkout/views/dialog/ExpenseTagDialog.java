@@ -19,15 +19,25 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.Constants.DialogMode;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * Created by PT on 4/9/15.
  */
 public class ExpenseTagDialog extends DialogFragment {
+    private static final String TAG = ExpenseTagDialog.class.getSimpleName();
 
     private static final String BUNDLE_EXTRA_TAG_ID = "tag_id";
     private String tagId;
@@ -87,7 +97,7 @@ public class ExpenseTagDialog extends DialogFragment {
                             }
                         }
                 );
-        String positiveButtonText = null;
+        String positiveButtonText;
         if(DialogMode.MODE_EDIT == dialogMode){
             positiveButtonText = getString(R.string.expense_tag_dialog_button_update);
         } else {
@@ -101,13 +111,40 @@ public class ExpenseTagDialog extends DialogFragment {
                         int colorCode = colorPicker.getColor();
                         String hexColor = String.format("#%06X", (0xFFFFFF & colorCode));
                         if(DialogMode.MODE_EDIT == dialogMode){
-                            Log.d("@@@@@@@@@@@ Color after dialog dismiss: ", hexColor);
+                            Log.d("After dialog dismiss: ", hexColor);
                             if (!(tagModel.getName().equals(labelStr)) || !(tagModel.getColor().equals(hexColor))){
                                 String tagId = tagModel.getId();
                                 String tagName = labelStr;
-                                String tagcolor = hexColor;
-                                // TODO:  call update tag api
+                                String tagColor = hexColor;
 
+                                if (null != tagId || null != tagName || null != tagColor) {
+                                    JSONObject postData = new JSONObject();
+                                    try {
+                                        postData.put("tagId", tagId);
+                                        postData.put("tagName", tagName);
+                                        postData.put("tagColor", tagColor);
+
+                                        ExternalCall.doPost(postData, API.UPDATDE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                            @Override
+                                            public void onSuccess(Header[] headers, String body) {
+                                                DeviceService.onSuccess(headers, body);
+                                            }
+
+                                            @Override
+                                            public void onError(int statusCode, String error) {
+
+                                            }
+
+                                            @Override
+                                            public void onException(Exception exception) {
+
+                                            }
+                                        });
+
+                                    } catch (JSONException e) {
+                                        Log.e(TAG, "Exception while updating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                    }
+                                }
                             }
                         } else {
                             String tagName = labelStr;
