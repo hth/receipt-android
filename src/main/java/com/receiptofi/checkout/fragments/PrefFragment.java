@@ -76,7 +76,6 @@ public class PrefFragment extends Fragment {
                 editTagDialog.show(ft, "dialog");
                // int num = newFragment.show(ft, "dialog");
 
-                Log.d(TAG, "Selected tag name is: " + tagModel.getName());
             }
             catch (ClassCastException e) {
             }
@@ -95,8 +94,6 @@ public class PrefFragment extends Fragment {
                 new AlertDialog.Builder(getActivity())
                         .setTitle(getString(R.string.expense_tag_dialog_delete_label))
                         .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getTag()))
-                        .setTitle(getString(R.string.expense_tag_dialog_label))
-                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // do nothing
