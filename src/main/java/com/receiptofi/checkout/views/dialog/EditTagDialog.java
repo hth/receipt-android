@@ -7,6 +7,8 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -65,7 +67,8 @@ public class EditTagDialog extends DialogFragment {
         final EditText label = (EditText) rootView.findViewById(R.id.edit_tag_label);
         label.setText(tagModel.getName());
         label.setSelected(false);
-        final ColorPickerView colorPicker = (ColorPickerView) rootView.findViewById(R.id.edit_tag_colorPicker);
+        label.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        final ColorPickerView colorPicker = (ColorPickerView)rootView.findViewById(R.id.edit_tag_colorPicker);
         colorPicker.setColor(Color.parseColor(tagModel.getColor()));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

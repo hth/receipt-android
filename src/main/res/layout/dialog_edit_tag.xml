@@ -7,7 +7,8 @@
     <EditText android:id="@+id/edit_tag_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/text_large" />
+        style="@style/text_large"
+        android:singleLine="true"/>
 
     <com.receiptofi.checkout.views.ColorPickerView
         android:id="@+id/edit_tag_colorPicker"
