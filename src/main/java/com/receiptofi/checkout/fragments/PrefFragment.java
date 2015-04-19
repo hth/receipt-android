@@ -18,9 +18,18 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.dialog.EditTagDialog;
+
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -101,17 +110,43 @@ public class PrefFragment extends Fragment {
                         })
                         .setPositiveButton(getString(R.string.expense_tag_dialog_button_delete), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                //TODO: call api to delete
-                                tagModel.getId();
-                                tagModel.getName();
-                                tagModel.getColor();
+                                String tagId = tagModel.getId();
+                                String tagName = tagModel.getName();
+
+                                if (null != tagId || null != tagName) {
+                                    JSONObject postData = new JSONObject();
+                                    try {
+                                        postData.put("tagId", tagId);
+                                        postData.put("tagName", tagName);
+
+                                        ExternalCall.doPost(postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                            @Override
+                                            public void onSuccess(Header[] headers, String body) {
+                                                DeviceService.onSuccess(headers, body);
+                                            }
+
+                                            @Override
+                                            public void onError(int statusCode, String error) {
+
+                                            }
+
+                                            @Override
+                                            public void onException(Exception exception) {
+
+                                            }
+                                        });
+
+                                    } catch (JSONException e) {
+                                        Log.e(TAG, "Exception while deleting expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                    }
+                                }
                             }
                         })
                         .setIcon(android.R.drawable.ic_dialog_alert)
                         .show();
 
-            }
-            catch (ClassCastException e) {
+            } catch (ClassCastException e) {
+                Log.e(TAG, "Error while deleting expense tag reason=" + e.getLocalizedMessage(), e);
             }
         }
     };
