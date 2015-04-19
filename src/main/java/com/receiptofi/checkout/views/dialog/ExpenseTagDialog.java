@@ -146,8 +146,36 @@ public class ExpenseTagDialog extends DialogFragment {
                             }
                         } else {
                             String tagName = labelStr;
-                            String tagcolor = hexColor;
-                            // TODO:  call add tag api
+                            String tagColor = hexColor;
+
+                            if (null != tagName || null != tagColor) {
+                                JSONObject postData = new JSONObject();
+                                try {
+                                    postData.put("tagId", tagId);
+                                    postData.put("tagName", tagName);
+                                    postData.put("tagColor", tagColor);
+
+                                    ExternalCall.doPost(postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        @Override
+                                        public void onSuccess(Header[] headers, String body) {
+                                            DeviceService.onSuccess(headers, body);
+                                        }
+
+                                        @Override
+                                        public void onError(int statusCode, String error) {
+
+                                        }
+
+                                        @Override
+                                        public void onException(Exception exception) {
+
+                                        }
+                                    });
+
+                                } catch (JSONException e) {
+                                    Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                }
+                            }
 
                         }
                     }
