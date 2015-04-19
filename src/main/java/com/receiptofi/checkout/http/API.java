@@ -22,7 +22,7 @@ public class API {
 
     // Settings api - Preference
     public static final String ADD_EXPENSE_TAG = "/api/addExpenseTag.json";
-    public static final String UPDATDE_EXPENSE_TAG = "/api/updateExpenseTag.json";
+    public static final String UPDATE_EXPENSE_TAG = "/api/updateExpenseTag.json";
     public static final String DELETE_EXPENSE_TAG = "/api/deleteExpenseTag.json";
 
     // Home page api

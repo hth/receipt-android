@@ -122,7 +122,7 @@ public class ExpenseTagDialog extends DialogFragment {
                                         postData.put("tagName", tagName);
                                         postData.put("tagColor", tagColor);
 
-                                        ExternalCall.doPost(postData, API.UPDATDE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        ExternalCall.doPost(postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
                                             public void onSuccess(Header[] headers, String body) {
                                                 DeviceService.onSuccess(headers, body);
