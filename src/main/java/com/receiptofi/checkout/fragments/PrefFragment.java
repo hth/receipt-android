@@ -40,8 +40,7 @@ import java.util.Map;
  * Created by PT on 4/9/15.
  */
 public class PrefFragment extends Fragment {
-
-    private String TAG = "PrefFragment";
+    private static final String TAG = PrefFragment.class.getSimpleName();
 
     private List<ExpenseTagModel> tagModelList;
 
