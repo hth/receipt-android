@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
-import com.receiptofi.checkout.views.dialog.EditTagDialog;
+import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -44,6 +45,9 @@ public class PrefFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pref_fragment, container, false);
 
+        Button addButton = (Button)rootView.findViewById(R.id.pref_fragment_add_expense_tag);
+        addButton.setOnClickListener(onAddButtonClicked);
+
         ListView tagListView = (ListView)rootView.findViewById(R.id.pref_fragment_expense_tag_list);
         Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         tagModelList = new LinkedList<>(expTagMap.values());
@@ -51,6 +55,33 @@ public class PrefFragment extends Fragment {
 
         return rootView;
     }
+
+    View.OnClickListener onAddButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View button) {
+            try {
+                Log.d(TAG, "Add new tag");
+
+                // DialogFragment.show() will take care of adding the fragment
+                // in a transaction.  We also want to remove any currently showing
+                // dialog, so make our own transaction and take care of that here.
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                DialogFragment editTagDialog = ExpenseTagDialog.newInstance(null);
+                editTagDialog.show(ft, "dialog");
+                // int num = newFragment.show(ft, "dialog");
+
+            }
+            catch (ClassCastException e) {
+            }
+        }
+    };
 
     View.OnClickListener onEditButtonClicked = new View.OnClickListener() {
         @Override
@@ -72,7 +103,7 @@ public class PrefFragment extends Fragment {
                 ft.addToBackStack(null);
 
                 // Create and show the dialog.
-                DialogFragment editTagDialog = EditTagDialog.newInstance(tagModel.getId());
+                DialogFragment editTagDialog = ExpenseTagDialog.newInstance(tagModel.getId());
                 editTagDialog.show(ft, "dialog");
                // int num = newFragment.show(ft, "dialog");
 
