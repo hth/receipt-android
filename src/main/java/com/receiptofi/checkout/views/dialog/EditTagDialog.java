@@ -56,7 +56,7 @@ public class EditTagDialog extends DialogFragment {
         Log.d("@@@@@@@@@@@ Color at start: ", tagModel.getColor());
         View rootView = getActivity().getLayoutInflater().inflate(R.layout.dialog_edit_tag, null);
         final EditText label = (EditText)rootView.findViewById(R.id.edit_tag_label);
-        label.setText(tagModel.getTag());
+        label.setText(tagModel.getName());
         label.setSelected(false);
         final ColorPickerView colorPicker = (ColorPickerView)rootView.findViewById(R.id.edit_tag_colorPicker);
         colorPicker.setColor(Color.parseColor(tagModel.getColor()));
@@ -77,7 +77,7 @@ public class EditTagDialog extends DialogFragment {
                         int colorCode = colorPicker.getColor();
                         String hexColor = String.format("#%06X", (0xFFFFFF & colorCode));
                         Log.d("@@@@@@@@@@@ Color after dialog dismiss: ", hexColor);
-                        if (!(tagModel.getTag().equals(labelStr)) || !(tagModel.getColor().equals(hexColor))){
+                        if (!(tagModel.getName().equals(labelStr)) || !(tagModel.getColor().equals(hexColor))){
                             String tagId = tagModel.getId();
                             String tagName = labelStr;
                             String tagcolor = hexColor;

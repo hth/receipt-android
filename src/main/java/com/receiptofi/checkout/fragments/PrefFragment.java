@@ -59,7 +59,7 @@ public class PrefFragment extends Fragment {
             try {
                 int position = (Integer)tag;
                 ExpenseTagModel tagModel = tagModelList.get(position);
-                Log.d(TAG, "Selected tag label is: " + tagModel.getTag());
+                Log.d(TAG, "Selected tag label is: " + tagModel.getName());
 
                 // DialogFragment.show() will take care of adding the fragment
                 // in a transaction.  We also want to remove any currently showing
@@ -93,7 +93,7 @@ public class PrefFragment extends Fragment {
 
                 new AlertDialog.Builder(getActivity())
                         .setTitle(getString(R.string.expense_tag_dialog_delete_label))
-                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getTag()))
+                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 // do nothing
