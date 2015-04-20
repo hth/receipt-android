@@ -1,6 +1,5 @@
 package com.receiptofi.checkout.utils.db;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 
@@ -23,25 +22,23 @@ public class BillingAccountUtils {
      *
      * @param billingAccount
      */
-    public static void insert(BillingAccountModel billingAccount) {
-        ContentValues values = new ContentValues();
-        values.put(DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE, billingAccount.getAccountBillingType());
-        values.put(DatabaseTable.BillingAccount.BILLED_ACCOUNT, billingAccount.isBilledAccount());
-
-        ReceiptofiApplication.RDH.getWritableDatabase().insert(
-                DatabaseTable.BillingAccount.TABLE_NAME,
-                null,
-                values
-        );
+    public static void insertOrReplace(BillingAccountModel billingAccount) {
+        ReceiptofiApplication.RDH.getWritableDatabase().execSQL(
+                "INSERT OR REPLACE INTO " + DatabaseTable.BillingAccount.TABLE_NAME + " (" +
+                        DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + ", " +
+                        DatabaseTable.BillingAccount.BILLED_ACCOUNT +
+                        ") VALUES ('" +
+                        billingAccount.getAccountBillingType() + "'," +
+                         + (billingAccount.isBilledAccount() ? 1 : 0) + ")");
 
         if (!billingAccount.getBillingHistories().isEmpty()) {
             for (BillingHistoryModel billingHistoryModel : billingAccount.getBillingHistories()) {
-                BillingHistoryUtils.insert(billingHistoryModel);
+                BillingHistoryUtils.insertOrReplace(billingHistoryModel);
             }
         }
     }
 
-    private static BillingAccountModel getBillingAccount() {
+    public static BillingAccountModel getBillingAccount() {
         Log.d(TAG, "Fetching all billing history");
         BillingAccountModel billingAccountModel = null;
         Cursor cursor = null;

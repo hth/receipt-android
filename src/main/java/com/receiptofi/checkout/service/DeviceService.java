@@ -110,7 +110,7 @@ public class DeviceService {
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
         ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
         NotificationUtils.insert(dataWrapper.getNotificationModels());
-        BillingAccountUtils.insert(dataWrapper.getBillingAccountModel());
+        BillingAccountUtils.insertOrReplace(dataWrapper.getBillingAccountModel());
 
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, dataWrapper.getUnprocessedDocumentModel().getCount());
 
