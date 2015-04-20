@@ -1,5 +1,7 @@
 package com.receiptofi.checkout.model;
 
+import com.receiptofi.checkout.db.DatabaseTable;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,6 +17,7 @@ public class DataWrapper {
     private List<ExpenseTagModel> expenseTagModels = new ArrayList<>();
     private UnprocessedDocumentModel unprocessedDocumentModel;
     private List<NotificationModel> notificationModels = new ArrayList<>();
+    private BillingAccountModel billingAccountModel;
 
     public ProfileModel getProfileModel() {
         return profileModel;
@@ -62,5 +65,13 @@ public class DataWrapper {
 
     public void setNotificationModels(List<NotificationModel> notificationModels) {
         this.notificationModels = notificationModels;
+    }
+
+    public BillingAccountModel getBillingAccountModel() {
+        return billingAccountModel;
+    }
+
+    public void setBillingAccountModel(BillingAccountModel billingAccountModel) {
+        this.billingAccountModel = billingAccountModel;
     }
 }

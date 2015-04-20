@@ -27,6 +27,8 @@ public class DBUtils {
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Item.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ExpenseTag.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Notification.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.BillingAccount.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.BillingHistory.TABLE_NAME);
 
         /** Create tables. */
         CreateTable.createTableReceipts(RDH.getDb());
@@ -37,6 +39,8 @@ public class DBUtils {
         CreateTable.createTableItem(RDH.getDb());
         CreateTable.createTableExpenseTag(RDH.getDb());
         CreateTable.createTableNotification(RDH.getDb());
+        CreateTable.createTableBillingAccount(RDH.getDb());
+        CreateTable.createTableBillingHistory(RDH.getDb());
 
         initializeDefaults();
     }

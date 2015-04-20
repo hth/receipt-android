@@ -115,4 +115,26 @@ public class CreateTable {
                 ");");
         Log.d(TAG, "Finished executing createTableNotification");
     }
+
+    public static void createTableBillingAccount(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableNotification");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.BillingAccount.TABLE_NAME + "("
+                + DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + " TEXT ,"
+                + DatabaseTable.BillingAccount.BILLED_ACCOUNT + " BOOLEAN " +
+
+                ");");
+        Log.d(TAG, "Finished executing createTableBillingAccount");
+    }
+
+    public static void createTableBillingHistory(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableNotification");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.BillingHistory.TABLE_NAME + "("
+                + DatabaseTable.BillingHistory.ID + " TEXT ,"
+                + DatabaseTable.BillingHistory.BILLED_STATUS + " TEXT ,"
+                + DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE + " TEXT ,"
+                + DatabaseTable.BillingHistory.BILLED_MONTH + " TEXT " +
+
+                ");");
+        Log.d(TAG, "Finished executing createTableBillingHistory");
+    }
 }

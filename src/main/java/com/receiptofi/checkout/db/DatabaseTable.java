@@ -81,4 +81,18 @@ public class DatabaseTable {
         public static final String UPDATED = "updated";
         public static final String ACTIVE = "active";
     }
+
+    public static class BillingAccount {
+        public static final String TABLE_NAME = "BILLING_ACCOUNT";
+        public static final String ACCOUNT_BILLING_TYPE = "accountBillingType";
+        public static final String BILLED_ACCOUNT = "billedAccount";
+    }
+
+    public static class BillingHistory {
+        public static final String TABLE_NAME = "BILLING_HISTORY";
+        public static final String ID = "id";
+        public static final String BILLED_MONTH = "billedForMonth";
+        public static final String BILLED_STATUS = "billedStatus";
+        public static final String ACCOUNT_BILLING_TYPE = "accountBillingType";
+    }
 }
