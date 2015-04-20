@@ -63,9 +63,9 @@ public class ExpenseTagDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
         String selectedTagId = getArguments().getString(BUNDLE_EXTRA_TAG_ID);
         if (selectedTagId == null) {
-            dialogMode = DialogMode.MODE_ADD;
+            dialogMode = DialogMode.MODE_CREATE;
         } else {
-            dialogMode = DialogMode.MODE_EDIT;
+            dialogMode = DialogMode.MODE_UPDATE;
             this.tagId = selectedTagId;
         }
     }
@@ -80,7 +80,7 @@ public class ExpenseTagDialog extends DialogFragment {
         label.setSelected(false);
         label.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
-        if (DialogMode.MODE_EDIT == dialogMode) {
+        if (DialogMode.MODE_UPDATE == dialogMode) {
             tagModel = ExpenseTagUtils.getExpenseTagModels().get(tagId);
             label.setText(tagModel.getName());
             colorPicker.setColor(Color.parseColor(tagModel.getColor()));
@@ -96,7 +96,7 @@ public class ExpenseTagDialog extends DialogFragment {
                 }
         );
         String positiveButtonText;
-        if (DialogMode.MODE_EDIT == dialogMode) {
+        if (DialogMode.MODE_UPDATE == dialogMode) {
             positiveButtonText = getString(R.string.expense_tag_dialog_button_update);
         } else {
             positiveButtonText = getString(R.string.expense_tag_dialog_button_add);
@@ -105,24 +105,20 @@ public class ExpenseTagDialog extends DialogFragment {
         builder.setPositiveButton(positiveButtonText,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String labelStr = label.getText().toString();
+                        String tagName = label.getText().toString();
                         int colorCode = colorPicker.getColor();
-                        String hexColor = String.format("#%06X", (0xFFFFFF & colorCode));
-                        if (DialogMode.MODE_EDIT == dialogMode) {
-                            Log.d("After dialog dismiss: ", hexColor);
-                            if (!(tagModel.getName().equals(labelStr)) || !(tagModel.getColor().equals(hexColor))) {
-                                String tagId = tagModel.getId();
-                                String tagName = labelStr;
-                                String tagColor = hexColor;
+                        String tagColor = String.format("#%06X", (0xFFFFFF & colorCode));
 
-                                if (null != tagId || null != tagName || null != tagColor) {
+                        switch (dialogMode) {
+                            case MODE_CREATE:
+                                if (null != tagName || null != tagColor) {
                                     JSONObject postData = new JSONObject();
                                     try {
                                         postData.put("tagId", tagId);
                                         postData.put("tagName", tagName);
                                         postData.put("tagColor", tagColor);
 
-                                        ExternalCall.doPost(postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        ExternalCall.doPost(postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
                                             public void onSuccess(Header[] headers, String body) {
                                                 DeviceService.onSuccess(headers, body);
@@ -140,43 +136,47 @@ public class ExpenseTagDialog extends DialogFragment {
                                         });
 
                                     } catch (JSONException e) {
-                                        Log.e(TAG, "Exception while updating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                        Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
                                     }
                                 }
-                            }
-                        } else {
-                            String tagName = labelStr;
-                            String tagColor = hexColor;
+                                break;
+                            case MODE_UPDATE:
+                                Log.d("After dialog dismiss: ", tagColor);
+                                if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
+                                    String tagId = tagModel.getId();
 
-                            if (null != tagName || null != tagColor) {
-                                JSONObject postData = new JSONObject();
-                                try {
-                                    postData.put("tagId", tagId);
-                                    postData.put("tagName", tagName);
-                                    postData.put("tagColor", tagColor);
+                                    if (null != tagId || null != tagName || null != tagColor) {
+                                        JSONObject postData = new JSONObject();
+                                        try {
+                                            postData.put("tagId", tagId);
+                                            postData.put("tagName", tagName);
+                                            postData.put("tagColor", tagColor);
 
-                                    ExternalCall.doPost(postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-                                        @Override
-                                        public void onSuccess(Header[] headers, String body) {
-                                            DeviceService.onSuccess(headers, body);
+                                            ExternalCall.doPost(postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                                @Override
+                                                public void onSuccess(Header[] headers, String body) {
+                                                    DeviceService.onSuccess(headers, body);
+                                                }
+
+                                                @Override
+                                                public void onError(int statusCode, String error) {
+
+                                                }
+
+                                                @Override
+                                                public void onException(Exception exception) {
+
+                                                }
+                                            });
+
+                                        } catch (JSONException e) {
+                                            Log.e(TAG, "Exception while updating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
                                         }
-
-                                        @Override
-                                        public void onError(int statusCode, String error) {
-
-                                        }
-
-                                        @Override
-                                        public void onException(Exception exception) {
-
-                                        }
-                                    });
-
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                    }
                                 }
-                            }
-
+                                break;
+                            default:
+                                throw new RuntimeException("Reached unreachable condition");
                         }
                     }
                 }
@@ -192,7 +192,7 @@ public class ExpenseTagDialog extends DialogFragment {
 
         Log.d("!!!!!!!!!!       ", "onStart");
         final Button positiveButton = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
-        if (DialogMode.MODE_ADD == dialogMode) {
+        if (DialogMode.MODE_CREATE == dialogMode) {
             positiveButton.setEnabled(false);
         }
         final TextWatcher textWatcher = new TextWatcher() {
