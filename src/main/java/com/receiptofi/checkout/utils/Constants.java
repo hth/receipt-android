@@ -52,7 +52,7 @@ public class Constants {
     }
 
     public enum DialogMode {
-        MODE_ADD,
-        MODE_EDIT
+        MODE_CREATE,
+        MODE_UPDATE
     }
 }
