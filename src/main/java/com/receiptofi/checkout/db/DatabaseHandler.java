@@ -43,6 +43,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             CreateTable.createTableItem(db);
             CreateTable.createTableExpenseTag(db);
             CreateTable.createTableNotification(db);
+            CreateTable.createTableBillingAccount(db);
+            CreateTable.createTableBillingHistory(db);
         }
     }
 

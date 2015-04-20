@@ -3,6 +3,8 @@ package com.receiptofi.checkout.utils;
 import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.model.BillingAccountModel;
+import com.receiptofi.checkout.model.BillingHistoryModel;
 import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.NotificationModel;
@@ -225,6 +227,52 @@ public class JsonParseUtils {
         }
     }
 
+    public static BillingAccountModel parseBilling(JSONObject jsonObject) {
+        try {
+            BillingAccountModel billingAccountModel = new BillingAccountModel(
+                    jsonObject.getString("bt"),
+                    jsonObject.getBoolean("ba")
+            );
+
+            if (jsonObject.has("billingHistories")) {
+                billingAccountModel.setBillingHistories(parseBillingHistories(jsonObject.getJSONArray("billingHistories")));
+            }
+            return billingAccountModel;
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject, e);
+            return null;
+        }
+    }
+
+    public static List<BillingHistoryModel> parseBillingHistories(JSONArray jsonArray) {
+        List<BillingHistoryModel> billingHistoryModels = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                BillingHistoryModel billingHistoryModel = parseBillingHistory(jsonArray.getJSONObject(i));
+                if (null != billingHistoryModel) {
+                    billingHistoryModels.add(billingHistoryModel);
+                }
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing notification reason=" + e.getLocalizedMessage(), e);
+        }
+        return billingHistoryModels;
+    }
+
+    public static BillingHistoryModel parseBillingHistory(JSONObject jsonObject) {
+        try {
+            return new BillingHistoryModel(
+                    jsonObject.getString("id"),
+                    jsonObject.getString("bm"),
+                    jsonObject.getString("bs"),
+                    jsonObject.getString("bt")
+            );
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject, e);
+            return null;
+        }
+    }
+
     public static DataWrapper parseData(String jsonResponse) {
         DataWrapper dataWrapper = new DataWrapper();
         try {
@@ -261,6 +309,9 @@ public class JsonParseUtils {
             if (!notificationModels.isEmpty()) {
                 dataWrapper.setNotificationModels(notificationModels);
             }
+
+            BillingAccountModel billingAccountModel = parseBilling(jsonObject.getJSONObject("billing"));
+            dataWrapper.setBillingAccountModel(billingAccountModel);
 
             Log.d(TAG, "parsed all data");
         } catch (JSONException e) {
