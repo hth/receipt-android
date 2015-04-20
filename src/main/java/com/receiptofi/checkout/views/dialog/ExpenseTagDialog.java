@@ -105,15 +105,13 @@ public class ExpenseTagDialog extends DialogFragment {
         builder.setPositiveButton(positiveButtonText,
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
-                        String labelStr = label.getText().toString();
+                        String tagName = label.getText().toString();
                         int colorCode = colorPicker.getColor();
-                        String hexColor = String.format("#%06X", (0xFFFFFF & colorCode));
+                        String tagColor = String.format("#%06X", (0xFFFFFF & colorCode));
                         if (DialogMode.MODE_EDIT == dialogMode) {
-                            Log.d("After dialog dismiss: ", hexColor);
-                            if (!(tagModel.getName().equals(labelStr)) || !(tagModel.getColor().equals(hexColor))) {
+                            Log.d("After dialog dismiss: ", tagColor);
+                            if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
                                 String tagId = tagModel.getId();
-                                String tagName = labelStr;
-                                String tagColor = hexColor;
 
                                 if (null != tagId || null != tagName || null != tagColor) {
                                     JSONObject postData = new JSONObject();
@@ -145,8 +143,8 @@ public class ExpenseTagDialog extends DialogFragment {
                                 }
                             }
                         } else {
-                            String tagName = labelStr;
-                            String tagColor = hexColor;
+                            String tagName = tagName;
+                            String tagColor = tagColor;
 
                             if (null != tagName || null != tagColor) {
                                 JSONObject postData = new JSONObject();
