@@ -25,17 +25,20 @@ public class BillingHistoryUtils {
      *
      * @param billingHistory
      */
-    public static void insert(BillingHistoryModel billingHistory) {
-        ContentValues values = new ContentValues();
-        values.put(DatabaseTable.BillingHistory.ID, billingHistory.getId());
-        values.put(DatabaseTable.BillingHistory.BILLED_MONTH, billingHistory.getBilledForMonth());
-        values.put(DatabaseTable.BillingHistory.BILLED_STATUS, billingHistory.getBilledStatus());
-        values.put(DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE, billingHistory.getAccountBillingType());
-
-        ReceiptofiApplication.RDH.getWritableDatabase().insert(
-                DatabaseTable.BillingHistory.TABLE_NAME,
-                null,
-                values
+    public static void insertOrReplace(BillingHistoryModel billingHistory) {
+        ReceiptofiApplication.RDH.getWritableDatabase().execSQL(
+                "INSERT OR REPLACE INTO " + DatabaseTable.BillingHistory.TABLE_NAME + " (" +
+                        DatabaseTable.BillingHistory.ID + ", " +
+                        DatabaseTable.BillingHistory.BILLED_MONTH + ", " +
+                        DatabaseTable.BillingHistory.BILLED_STATUS + ", " +
+                        DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE +
+                        ") VALUES (?, ?, ?, ?)",
+                new String[] {
+                        billingHistory.getId(),
+                        billingHistory.getBilledForMonth(),
+                        billingHistory.getBilledStatus(),
+                        billingHistory.getAccountBillingType()
+                }
         );
     }
 
