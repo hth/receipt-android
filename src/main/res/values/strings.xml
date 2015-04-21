@@ -64,6 +64,11 @@
     <string name="expense_tag_dialog_edit_label">Edit Tag label or color</string>
     <string name="expense_tag_dialog_add_text">Add new tag</string>
 
+    <!--Billing fragment-->
+    <string name="billing_plan">Billing plan</string>
+    <string name="billing_date">Next billing date</string>
+    <string name="billing_history">Billing History</string>
+
     <!--Preference String-->
     <string name="key_pref_sync">pref_sync</string>
     <string name="pref_sync">Wi-Fi sync</string>
