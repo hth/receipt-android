@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.receiptofi.checkout.fragments.BillingFragment;
 import com.receiptofi.checkout.fragments.PrefFragment;
 import com.receiptofi.checkout.fragments.ProfileFragment;
 
@@ -82,11 +83,7 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
             } else if(i == 1){
                 return new PrefFragment();
             } else {
-                Fragment fragment = new TabFragment();
-                Bundle args = new Bundle();
-                args.putInt(TabFragment.ARG_OBJECT, i);
-                fragment.setArguments(args);
-                return fragment;
+                return new BillingFragment();
             }
         }
 
@@ -116,29 +113,6 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
             return tabLabel;
 
         }
-    }
-
-    public static class TabFragment extends Fragment {
-        public static final String ARG_OBJECT = "object";
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-
-            Bundle args = getArguments();
-            int position = args.getInt(ARG_OBJECT);
-            int tabLayout = 0;
-            switch (position) {
-                case 2:
-                    tabLayout = R.layout.tab3;
-                    break;
-            }
-
-            View rootView = inflater.inflate(tabLayout, container, false);
-            return rootView;
-
-        }
-
     }
 
 }
