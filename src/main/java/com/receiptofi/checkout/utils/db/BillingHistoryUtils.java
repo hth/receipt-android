@@ -57,7 +57,7 @@ public class BillingHistoryUtils {
                     DatabaseTable.BillingHistory.BILLED_MONTH
             );
 
-            if (cursor != null && cursor.getCount() > 0) {
+            if (null != cursor && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
                     BillingHistoryModel billingHistoryModel = new BillingHistoryModel(
                             cursor.getString(0),
