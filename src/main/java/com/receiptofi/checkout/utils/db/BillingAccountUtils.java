@@ -60,6 +60,8 @@ public class BillingAccountUtils {
                             cursor.getString(0),
                             cursor.getInt(1) == 1
                     );
+
+                    billingAccountModel.setBillingHistories(BillingHistoryUtils.getAll());
                 }
             }
         } catch (Exception e) {
