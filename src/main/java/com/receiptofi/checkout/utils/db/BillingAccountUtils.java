@@ -54,7 +54,7 @@ public class BillingAccountUtils {
             );
 
 
-            if (cursor != null && cursor.getCount() > 0) {
+            if (null != cursor && cursor.getCount() > 0) {
                 if (cursor.moveToNext()) {
                     billingAccountModel = new BillingAccountModel(
                             cursor.getString(0),
