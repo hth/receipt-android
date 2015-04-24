@@ -1,6 +1,5 @@
 package com.receiptofi.checkout.utils.db;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.util.Log;
 

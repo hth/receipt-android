@@ -29,9 +29,7 @@ import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.Constants;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.LinkedHashMap;
 import java.util.List;
