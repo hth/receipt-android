@@ -46,6 +46,8 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private String emailStr;
     private String passwordStr;
 
+    private boolean isLeftButtonClicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,10 +97,12 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
 
-        // TODO: DELETE ME
-        email.setText("s@r.com");
-        password.setText("testtest");
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        isLeftButtonClicked = false;
     }
 
     @Override
@@ -123,6 +127,24 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 Log.d(TAG, "done executing onClick no id match");
                 break;
         }
+    }
+
+    public void leftButtonClick(View view) {
+        Log.d(TAG, "inside leftButtonClick");
+        isLeftButtonClicked = true;
+    }
+
+    public void rightButtonClick(View view) {
+        Log.d(TAG, "inside rightButtonClick");
+        if(isLeftButtonClicked) {
+            setFields();
+        }
+    }
+
+    // TODO: DELETE ME
+    private void setFields(){
+        email.setText("s@r.com");
+        password.setText("testtest");
     }
 
     private boolean areFieldsSet() {
