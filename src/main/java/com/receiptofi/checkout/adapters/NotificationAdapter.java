@@ -12,8 +12,6 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.NotificationModel;
 import com.receiptofi.checkout.utils.Constants;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**

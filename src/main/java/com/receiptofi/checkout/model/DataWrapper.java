@@ -1,7 +1,5 @@
 package com.receiptofi.checkout.model;
 
-import com.receiptofi.checkout.db.DatabaseTable;
-
 import java.util.ArrayList;
 import java.util.List;
 
