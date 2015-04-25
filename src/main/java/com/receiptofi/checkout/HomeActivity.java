@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -29,9 +30,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.interfaces.OnChartValueSelectedListener;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.github.mikephil.charting.utils.Highlight;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.ChartService;
@@ -230,29 +233,23 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
     private void setUpChartView() {
         // change the color of the center-hole
-        mChart.setHoleColor(getResources().getColor(R.color.hole_color));
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColorTransparent(true);
 
         // Causing java.lang.RuntimeException: native typeface cannot be made
-        mChart.setValueTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Regular.ttf"));
+        //Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
         mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
 
-        mChart.setHoleRadius(45f);
 
-        mChart.setDescription(getString(R.string.chart_desc));
-        mChart.setDescriptionTextSize(16f);
+        mChart.setHoleRadius(40f);
+        mChart.setTransparentCircleRadius(42f);
 
-        mChart.setDrawYValues(true);
         mChart.setDrawCenterText(true);
-
-        mChart.setDrawHoleEnabled(true);
-
         mChart.setRotationAngle(0);
-
-        // draws the corresponding description value into the slice
-        mChart.setDrawXValues(true);
-
         // enable rotation of the chart by touch
         mChart.setRotationEnabled(true);
+        mChart.setDescription(getString(R.string.chart_desc));
+        mChart.setDescriptionTextSize(16f);
 
         // display percentage values
         mChart.setUsePercentValues(true);
@@ -263,13 +260,11 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
         mChart.setCenterText(getString(R.string.chart_desc_short));
         mChart.setCenterTextSize(12f);
-
-        /*Legend l = mChart.getLegend();
-        if(l != null){
-            l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-            l.setXEntrySpace(7f);
-            l.setYEntrySpace(5f);
-        }
+/*
+        Legend l = mChart.getLegend();
+        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
+        l.setXEntrySpace(7f);
+        l.setYEntrySpace(5f);
         */
     }
 
@@ -299,7 +294,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
 
     @Override
-    public void onValueSelected(Entry entry, int index) {
+    public void onValueSelected(Entry entry, int index, Highlight h) {
         String bizName = expByBizData.getXVals().get(entry.getXIndex());
         Log.d(TAG, "bizName is: " + bizName);
         Intent intent = new Intent(this, FilterListActivity.class);
@@ -307,7 +302,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         intent.putExtra(Constants.INTENT_EXTRA_BIZ_NAME, bizName);
         startActivity(intent);
     }
-
 
     @Override
     public void onNothingSelected() {
