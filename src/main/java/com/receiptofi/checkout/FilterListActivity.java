@@ -67,6 +67,8 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         Log.d(TAG, "executing onNewIntent");
+        // set filter correctly
+        receiptFilter = ReceiptFilter.FILTER_BY_KEYWORD;
         handleIntent(intent);
     }
 
@@ -74,7 +76,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         Log.d(TAG, "executing handleIntent");
 
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            //use the query to search your data somehow
+            // use the query to search your data somehow
             new FilterDataTask().execute(ReceiptFilter.FILTER_BY_KEYWORD.getValue(), intent.getStringExtra(SearchManager.QUERY));
             addFragments(null);
         }
