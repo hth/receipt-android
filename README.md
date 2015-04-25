@@ -27,4 +27,5 @@ Table of content
 15. [Items data](documentation/api/Items.md)
 16. [Password change](documentation/api/PasswordChange.md)
 17. [UserId/Email/Rid change](documentation/api/RidChange.md)
-18. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used
+18. [Expense Tag actions](documentation/api/ExpenseTag.md)
+19. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used	
