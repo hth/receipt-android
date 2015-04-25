@@ -47,6 +47,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private String passwordStr;
 
     private boolean isLeftButtonClicked = false;
+    private boolean isRightButtonClicked = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,6 +104,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     protected void onPause() {
         super.onPause();
         isLeftButtonClicked = false;
+        isRightButtonClicked = false;
     }
 
     @Override
@@ -132,18 +134,28 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     public void leftButtonClick(View view) {
         Log.d(TAG, "inside leftButtonClick");
         isLeftButtonClicked = true;
+        if(isRightButtonClicked) {
+            setFieldsToR();
+        }
     }
 
     public void rightButtonClick(View view) {
         Log.d(TAG, "inside rightButtonClick");
+        isRightButtonClicked = true;
         if(isLeftButtonClicked) {
-            setFields();
+            setFieldsToS();
         }
     }
 
     // TODO: DELETE ME
-    private void setFields(){
+    private void setFieldsToS(){
         email.setText("s@r.com");
+        password.setText("testtest");
+    }
+
+    // TODO: DELETE ME
+    private void setFieldsToR(){
+        email.setText("test@receiptofi.com");
         password.setText("testtest");
     }
 
