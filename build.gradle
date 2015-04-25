@@ -42,10 +42,11 @@ repositories {
     mavenCentral()
     maven { url "http://repo.spring.io/libs-milestone" }
     maven { url "http://repo1.maven.org/maven2/" }
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
-    compile files('libs/mpandroidchartlibrary-1-7-4.jar')
+    compile 'com.github.PhilJay:MPAndroidChart:v2.0.9'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
 
     compile 'org.apache.httpcomponents:httpcore:4.3.3'
