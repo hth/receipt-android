@@ -4,6 +4,7 @@ import android.os.Bundle;
 
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.Constants;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,8 +46,8 @@ public class ResponseParser {
             JSONObject imageResponse = new JSONObject(response);
             bundle.putString(DatabaseTable.ImageIndex.BLOB_ID, imageResponse.getString("blobId"));
 
-            JSONObject unprocessedDocuments = imageResponse.getJSONObject("unprocessedDocuments");
-            bundle.putInt("unprocessedCount", unprocessedDocuments.getInt("unprocessedCount"));
+            JSONObject unprocessedDocuments = imageResponse.getJSONObject(Constants.UNPROCESSED_DOCUMENTS);
+            bundle.putInt(Constants.UNPROCESSED_COUNT, unprocessedDocuments.getInt(Constants.UNPROCESSED_COUNT));
 
         } catch (JSONException e) {
             //TODO added log message
