@@ -19,6 +19,16 @@ public class Constants {
     public static final DateFormat ISO_DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
     public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a", Locale.US);
 
+    /** JSON fields constants. */
+    public static final String PROFILE = "profile";
+    public static final String ITEMS = "items";
+    public static final String RECEIPTS = "receipts";
+    public static final String EXPENSE_TAGS = "expenseTags";
+    public static final String UNPROCESSED_DOCUMENTS = "unprocessedDocuments";
+    public static final String NOTIFICATIONS = "notifications";
+    public static final String BILLING = "billing";
+    public static final String UNPROCESSED_COUNT = "unprocessedCount";
+
     public enum ReceiptFilter {
         FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),
         FILTER_BY_KEYWORD("filter_by_keyword"),
