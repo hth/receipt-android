@@ -278,40 +278,40 @@ public class JsonParseUtils {
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
 
-            if (!jsonObject.isNull(Constants.PROFILE)) {
-                ProfileModel profileModel = parseProfile(jsonObject.getJSONObject(Constants.PROFILE));
+            if (!jsonObject.isNull(ConstantsJson.PROFILE)) {
+                ProfileModel profileModel = parseProfile(jsonObject.getJSONObject(ConstantsJson.PROFILE));
                 if (null != profileModel) {
                     dataWrapper.setProfileModel(profileModel);
                 }
             } else {
-                Log.d(TAG, "No " + Constants.PROFILE + " updates");
+                Log.d(TAG, "No " + ConstantsJson.PROFILE + " updates");
             }
 
-            List<ReceiptItemModel> receiptItemModels = parseItems(jsonObject.getJSONArray(Constants.ITEMS));
+            List<ReceiptItemModel> receiptItemModels = parseItems(jsonObject.getJSONArray(ConstantsJson.ITEMS));
             if (!receiptItemModels.isEmpty()) {
                 dataWrapper.setReceiptItemModels(receiptItemModels);
             }
 
-            List<ReceiptModel> receiptModels = parseReceipts(jsonObject.getJSONArray(Constants.RECEIPTS));
+            List<ReceiptModel> receiptModels = parseReceipts(jsonObject.getJSONArray(ConstantsJson.RECEIPTS));
             if (!receiptModels.isEmpty()) {
                 dataWrapper.setReceiptModels(receiptModels);
             }
 
-            List<ExpenseTagModel> expenseTagModels = parseExpenses(jsonObject.getJSONArray(Constants.EXPENSE_TAGS));
+            List<ExpenseTagModel> expenseTagModels = parseExpenses(jsonObject.getJSONArray(ConstantsJson.EXPENSE_TAGS));
             if (!expenseTagModels.isEmpty()) {
                 dataWrapper.setExpenseTagModels(expenseTagModels);
             }
 
-            UnprocessedDocumentModel unprocessedDocumentModel = parseUnprocessedDocument(jsonObject.getJSONObject(Constants.UNPROCESSED_DOCUMENTS));
+            UnprocessedDocumentModel unprocessedDocumentModel = parseUnprocessedDocument(jsonObject.getJSONObject(ConstantsJson.UNPROCESSED_DOCUMENTS));
             dataWrapper.setUnprocessedDocumentModel(unprocessedDocumentModel);
 
-            List<NotificationModel> notificationModels = parseNotifications(jsonObject.getJSONArray(Constants.NOTIFICATIONS));
+            List<NotificationModel> notificationModels = parseNotifications(jsonObject.getJSONArray(ConstantsJson.NOTIFICATIONS));
             if (!notificationModels.isEmpty()) {
                 dataWrapper.setNotificationModels(notificationModels);
             }
 
-            if (!jsonObject.isNull(Constants.BILLING)) {
-                BillingAccountModel billingAccountModel = parseBilling(jsonObject.getJSONObject(Constants.BILLING));
+            if (!jsonObject.isNull(ConstantsJson.BILLING)) {
+                BillingAccountModel billingAccountModel = parseBilling(jsonObject.getJSONObject(ConstantsJson.BILLING));
                 dataWrapper.setBillingAccountModel(billingAccountModel);
             }
 
