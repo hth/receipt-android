@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +28,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ReceiptItemListAdapter;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 
 import java.text.ParseException;
@@ -65,6 +67,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private TextView taxDscpView;
     private TextView taxAmountView;
     private TextView totalAmountView;
+    // Receipt action drawer
+    private ImageView drawerIndicator;
     private List<ReceiptItemModel> itemList;
 
     @Override
@@ -109,6 +113,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         View totalFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_total, null);
         totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
         rdItemsList.addFooterView(totalFooter);
+
+        drawerIndicator = (ImageView)receiptDetailView.findViewById(R.id.rd_drawer_indicator);
 
         return receiptDetailView;
 
@@ -193,17 +199,21 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             });
 
             //Phone action
-            final String phoneNumber = rdModel.getPhone().trim();
-            rdBizPhone.setText(phoneNumber);
-            rdBizPhone.setVisibility(View.VISIBLE);
-            rdBizPhone.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent dialIntent = new Intent(Intent.ACTION_DIAL);
-                    dialIntent.setData(Uri.parse("tel:" + phoneNumber));
-                    startActivity(dialIntent);
-                }
-            });
+            if(!AppUtils.isTablet(getActivity())) {
+                final String phoneNumber = rdModel.getPhone().trim();
+                rdBizPhone.setText(phoneNumber);
+                rdBizPhone.setVisibility(View.VISIBLE);
+                rdBizPhone.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent dialIntent = new Intent(Intent.ACTION_DIAL);
+                        dialIntent.setData(Uri.parse("tel:" + phoneNumber));
+                        startActivity(dialIntent);
+                    }
+                });
+            } else {
+                rdBizPhone.setVisibility(View.GONE);
+            }
 
             // Date block
             String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(rdModel.getReceiptDate()));
@@ -218,6 +228,10 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
             // Add total footer
             totalAmountView.setText(Double.toString(rdModel.getTotal()));
+
+            if(drawerIndicator.getVisibility() == View.GONE){
+                drawerIndicator.setVisibility(View.VISIBLE);
+            }
 
             // Set Adaptor on items list
             rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));

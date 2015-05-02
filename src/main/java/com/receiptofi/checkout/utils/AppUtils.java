@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.utils;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -95,5 +96,11 @@ public class AppUtils {
 
     public static File getImageDir() {
         return receiptofiImgDir;
+    }
+
+    public static boolean isTablet(Context context) {
+        return (context.getResources().getConfiguration().screenLayout
+                & Configuration.SCREENLAYOUT_SIZE_MASK)
+                >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }
