@@ -173,16 +173,27 @@
             android:padding="@dimen/activity_touch_padding"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@drawable/action_button_text_color"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+
+            />
 
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart"
             android:layout_width="match_parent"
             android:layout_height="400dp"
-            android:layout_below="@+id/current_amount"
+            android:layout_below="@id/current_amount"
             android:layout_marginTop="@dimen/activity_vertical_margin"
             android:layout_centerHorizontal="true" />
+
+        <com.receiptofi.checkout.views.FlowLayout
+            android:id="@+id/legend_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pie_chart"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:orientation="horizontal" />
 
     </RelativeLayout>
 </ScrollView>

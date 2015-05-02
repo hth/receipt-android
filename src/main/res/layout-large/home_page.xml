@@ -3,201 +3,207 @@
     android:id="@+id/scroll_view"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:fillViewport="true"
-    android:background="@color/app_light_bg">
+    android:background="@color/app_light_bg"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="@dimen/activity_horizontal_margin">
 
         <RelativeLayout
             android:id="@+id/action_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="2" >
+            android:layout_weight="2">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:orientation="vertical" >
-
-            <LinearLayout
-                android:id="@+id/camera_action_layout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/action_button_height"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/action_button_bg"
-                android:onClick="takePhoto"
-                android:orientation="horizontal"
-                android:paddingEnd="30dp"
-                android:paddingLeft="40dp"
-                android:paddingRight="30dp"
-                android:paddingStart="40dp">
-
-                <ImageView
-                    android:id="@+id/camera_image"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/action_icon_camera_bg" />
-
-                <TextView
-                    android:id="@+id/textView1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginStart="60dp"
-                    android:text="@string/take_photo"
-                    android:textColor="@drawable/action_button_text_color"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/camera_action_layout_view"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp" />
-
-            <LinearLayout
-                android:id="@+id/gallery_action_layout"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/camera_action_layout"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/action_button_bg"
-                android:onClick="chooseImage"
-                android:orientation="horizontal"
-                android:paddingEnd="30dp"
-                android:paddingLeft="40dp"
-                android:paddingRight="30dp"
-                android:paddingStart="40dp">
-
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/action_icon_gallery_bg" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginStart="60dp"
-                    android:text="@string/choose_photo"
-                    android:textColor="@drawable/action_button_text_color"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <View
-                android:id="@+id/gallery_action_layout_view"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/camera_action_layout"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp" />
-
-            <LinearLayout
-                android:id="@+id/list_action_layout"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/gallery_action_layout"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp"
-                android:background="@drawable/action_button_bg"
-                android:onClick="invokeReceiptList"
-                android:orientation="horizontal"
-                android:paddingEnd="30dp"
-                android:paddingLeft="50dp"
-                android:paddingRight="30dp"
-                android:paddingStart="50dp">
-
-                <ImageView
-                    android:id="@+id/imageView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:background="@drawable/action_icon_list_bg" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginStart="70dp"
-                    android:text="@string/view_receipt"
-                    android:textColor="@drawable/action_button_text_color"
-                    android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/processing_info"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:layout_marginLeft="50dp"
-                        android:layout_marginStart="50dp"
-                        android:textColor="@color/common_signin_btn_dark_text_disabled"
-                        android:text="@string/processing_info" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/list_action_layout_view"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:layout_below="@id/gallery_action_layout"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:id="@+id/current_amount"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/list_action_layout_view"
-                android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
-                android:padding="@dimen/activity_touch_padding"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@drawable/action_button_text_color"
-                android:textStyle="bold"/>
+                android:layout_centerVertical="true"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/camera_action_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/action_button_height"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/action_button_bg"
+                    android:onClick="takePhoto"
+                    android:orientation="horizontal"
+                    android:paddingEnd="30dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="30dp"
+                    android:paddingStart="40dp">
+
+                    <ImageView
+                        android:id="@+id/camera_image"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/action_icon_camera_bg" />
+
+                    <TextView
+                        android:id="@+id/textView1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginStart="60dp"
+                        android:text="@string/take_photo"
+                        android:textColor="@drawable/action_button_text_color"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/camera_action_layout_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp" />
+
+                <LinearLayout
+                    android:id="@+id/gallery_action_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/camera_action_layout"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/action_button_bg"
+                    android:onClick="chooseImage"
+                    android:orientation="horizontal"
+                    android:paddingEnd="30dp"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="30dp"
+                    android:paddingStart="40dp">
+
+                    <ImageView
+                        android:id="@+id/imageView2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/action_icon_gallery_bg" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="60dp"
+                        android:layout_marginStart="60dp"
+                        android:text="@string/choose_photo"
+                        android:textColor="@drawable/action_button_text_color"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/gallery_action_layout_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/camera_action_layout"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp" />
+
+                <LinearLayout
+                    android:id="@+id/list_action_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/gallery_action_layout"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/action_button_bg"
+                    android:onClick="invokeReceiptList"
+                    android:orientation="horizontal"
+                    android:paddingEnd="30dp"
+                    android:paddingLeft="50dp"
+                    android:paddingRight="30dp"
+                    android:paddingStart="50dp">
+
+                    <ImageView
+                        android:id="@+id/imageView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:background="@drawable/action_icon_list_bg" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/textView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="70dp"
+                            android:layout_marginStart="70dp"
+                            android:text="@string/view_receipt"
+                            android:textColor="@drawable/action_button_text_color"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/processing_info"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="50dp"
+                            android:layout_marginStart="50dp"
+                            android:layout_marginTop="5dp"
+                            android:text="@string/processing_info"
+                            android:textColor="@color/common_signin_btn_dark_text_disabled" />
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/list_action_layout_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_below="@id/gallery_action_layout"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginBottom="5dp" />
+
+                <TextView
+                    android:id="@+id/current_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/list_action_layout_view"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:padding="@dimen/activity_touch_padding"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@drawable/action_button_text_color"
+                    android:textStyle="bold" />
+            </RelativeLayout>
+
         </RelativeLayout>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="3"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:orientation="vertical" >
 
-        </RelativeLayout>
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/pie_chart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/current_amount" />
 
+            <com.receiptofi.checkout.views.FlowLayout
+                android:id="@+id/legend_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal" />
 
-
-    <LinearLayout
-        android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:layout_gravity="center_vertical">
-
-        <com.github.mikephil.charting.charts.PieChart
-            android:id="@+id/pie_chart"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/current_amount" />
+        </LinearLayout>
 
     </LinearLayout>
 
-    </LinearLayout>
 </ScrollView>

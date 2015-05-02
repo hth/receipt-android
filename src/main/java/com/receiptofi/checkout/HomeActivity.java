@@ -21,9 +21,11 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -42,6 +44,7 @@ import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
+import com.receiptofi.checkout.views.FlowLayout;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -236,11 +239,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.setDrawHoleEnabled(true);
         mChart.setHoleColorTransparent(true);
 
-        // Causing java.lang.RuntimeException: native typeface cannot be made
-        //Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
-        mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
-
-
         mChart.setHoleRadius(40f);
         mChart.setTransparentCircleRadius(42f);
 
@@ -259,13 +257,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // mChart.setTouchEnabled(false);
 
         mChart.setCenterText(getString(R.string.chart_desc_short));
-        mChart.setCenterTextSize(12f);
-/*
-        Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(5f);
-        */
+        mChart.setCenterTextSize(14f);
+        mChart.setCenterTextColor(getResources().getColor(R.color.app_theme_txt_color));
+        mChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
     }
 
     private void updateChartData() {
@@ -282,6 +276,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.highlightValues(null);
 
         mChart.invalidate();
+        addLegend();
     }
 
     private void setUpChartData() {
@@ -291,6 +286,45 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.highlightValues(null);
 
         mChart.invalidate();
+        addLegend();
+    }
+
+    private void addLegend(){
+        Legend legend = mChart.getLegend();
+        int colorCodes[] = legend.getColors();
+
+
+        FlowLayout ll = (FlowLayout)findViewById(R.id.legend_layout);
+        ll.removeAllViews();
+        for (int i = 0; i < colorCodes.length; i++){
+            /*
+            LinearLayout legendLayout = (LinearLayout)LayoutInflater.from(this).inflate(R.layout.legend_item, null);
+
+            View legendColor = legendLayout.getChildAt(0);
+            legendColor.setBackgroundColor(colorCodes[i]);
+
+            TextView legendText = (TextView)legendLayout.getChildAt(1);
+            legendText.setText(legend.getLabel(i));
+
+            ll.addView(legendLayout);
+*/
+
+
+            LinearLayout.LayoutParams parms_legen_layout = new LinearLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+            parms_legen_layout.setMargins(0, 0, 40, 0);
+            LinearLayout legend_layout = new LinearLayout(this);
+            legend_layout.setLayoutParams(parms_legen_layout);
+            legend_layout.setOrientation(LinearLayout.HORIZONTAL);
+            legend_layout.setBackgroundColor(colorCodes[i]);
+            ll.addView(legend_layout);
+
+            TextView txt_unit = new TextView(this);
+            txt_unit.setText(legend.getLabel(i));
+            legend_layout.addView(txt_unit);
+            Log.d(TAG, "next label is:" + legend.getLabel(i));
+
+        }
     }
 
     @Override
