@@ -92,7 +92,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdBizAddLine2 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line2);
         rdBizAddLine3 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line3);
         rdBizPhone = (TextView) receiptDetailView.findViewById(R.id.rd_biz_phone);
-        rdBizPhone.setVisibility(View.GONE);
 
         rdDate = (TextView) receiptDetailView.findViewById(R.id.rd_date);
 
@@ -199,10 +198,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             });
 
             //Phone action
+            final String phoneNumber = rdModel.getPhone().trim();
+            rdBizPhone.setText(phoneNumber);
             if(!AppUtils.isTablet(getActivity())) {
-                final String phoneNumber = rdModel.getPhone().trim();
-                rdBizPhone.setText(phoneNumber);
-                rdBizPhone.setVisibility(View.VISIBLE);
                 rdBizPhone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -211,8 +209,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                         startActivity(dialIntent);
                     }
                 });
-            } else {
-                rdBizPhone.setVisibility(View.GONE);
             }
 
             // Date block
