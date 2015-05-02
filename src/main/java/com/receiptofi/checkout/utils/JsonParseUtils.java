@@ -310,8 +310,10 @@ public class JsonParseUtils {
                 dataWrapper.setNotificationModels(notificationModels);
             }
 
-            BillingAccountModel billingAccountModel = parseBilling(jsonObject.getJSONObject("billing"));
-            dataWrapper.setBillingAccountModel(billingAccountModel);
+            if (!jsonObject.isNull("billing")) {
+                BillingAccountModel billingAccountModel = parseBilling(jsonObject.getJSONObject("billing"));
+                dataWrapper.setBillingAccountModel(billingAccountModel);
+            }
 
             Log.d(TAG, "parsed all data");
         } catch (JSONException e) {
