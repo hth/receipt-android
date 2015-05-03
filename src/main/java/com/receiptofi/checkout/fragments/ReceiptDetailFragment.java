@@ -25,6 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.adapters.ReceiptItemListAdapter;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
@@ -140,6 +141,17 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     }
 
     public void updateReceiptDetailView(int index, int position) {
+        // Coming from ReceiptListActivity: we show and activate drawer view
+        if(drawerIndicator.getVisibility() == View.GONE){
+            drawerIndicator.setVisibility(View.VISIBLE);
+        }
+        drawerIndicator.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((ReceiptListActivity)getActivity()).openDrawer();
+            }
+        });
+
         updateReceiptDetailView(index, position, null);
     }
 
@@ -224,10 +236,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
             // Add total footer
             totalAmountView.setText(Double.toString(rdModel.getTotal()));
-
-            if(drawerIndicator.getVisibility() == View.GONE){
-                drawerIndicator.setVisibility(View.VISIBLE);
-            }
 
             // Set Adaptor on items list
             rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));
