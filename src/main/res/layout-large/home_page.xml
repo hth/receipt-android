@@ -197,6 +197,16 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/current_amount" />
 
+        <TextView
+            android:id="@+id/empty_chart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            style="@style/text_larger"
+            android:text="@string/empty_chart_text"
+            android:visibility="gone"/>
+
     </LinearLayout>
 
     </LinearLayout>

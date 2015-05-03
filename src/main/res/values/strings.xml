@@ -46,6 +46,7 @@
     <!--Chart-->
     <string name="chart_desc">Receipt expense by business</string>
     <string name="chart_desc_short">Exp by biz</string>
+    <string name="empty_chart_text">No receipt for current month</string>
 
     <!--Settings page-->
     <string name="settings">Settings</string>
