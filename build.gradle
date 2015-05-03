@@ -46,7 +46,8 @@ repositories {
 }
 
 dependencies {
-    compile 'com.github.PhilJay:MPAndroidChart:v2.0.9'
+//    compile 'com.github.PhilJay:MPAndroidChart:v2.0.9'
+    compile files('./lib/MPChartLib.jar')
     compile 'com.github.machinarius:preferencefragment:0.1.1'
 
     compile 'org.apache.httpcomponents:httpcore:4.3.3'
