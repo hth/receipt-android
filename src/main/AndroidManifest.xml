@@ -80,6 +80,9 @@
         <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".FilterListActivity" />
         </activity>
         <activity
             android:name=".FilterListActivity"

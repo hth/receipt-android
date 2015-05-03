@@ -38,6 +38,7 @@ import com.github.mikephil.charting.utils.Highlight;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.ChartService;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -193,7 +194,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                // TODO call getUpdate
+                DeviceService.getNewUpdates();
                 return true;
             case R.id.menu_notofication:
                 launchNotifications();
