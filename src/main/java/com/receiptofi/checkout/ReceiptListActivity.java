@@ -2,12 +2,16 @@ package com.receiptofi.checkout;
 
 import android.app.Activity;
 import android.app.FragmentTransaction;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -15,6 +19,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
@@ -52,6 +57,8 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     private EditText noteText;
     private ExpenseTagModel selectedTagModel;
 
+    private SearchView searchView;
+
     /**
      * Called when the activity is first created.
      */
@@ -84,6 +91,50 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                     .add(R.id.fragment_container, receiptListFragment).commit();
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "executing onResume");
+        if (searchView != null) {
+            searchView.setQuery("", false);
+            searchView.setIconified(true);
+        }
+        Log.d(TAG, "Done onResume!!");
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                DeviceService.getNewUpdates();
+                return true;
+            case R.id.menu_notofication:
+                launchNotifications();
+                return true;
+            case R.id.menu_settings:
+                launchSettings();
+                return true;
+            case R.id.menu_logout:
+                logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     public void onReceiptSelected(int index, int position) {
@@ -145,28 +196,6 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
     public void setChildIndex(int childPosition) {
         childIndex = childPosition;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menu_search:
-                // TODO call search
-                return true;
-            case R.id.menu_refresh:
-                // TODO call getUpdate
-                return true;
-            case R.id.menu_settings:
-                launchSettings();
-                return true;
-            case R.id.menu_logout:
-                logout();
-                return true;
-
-            default:
-                return super.onOptionsItemSelected(item);
-        }
     }
 
     private void initDrawerView() {
@@ -272,6 +301,10 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     public void openDrawer(){
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
         drawerLayout.openDrawer(Gravity.END);
+    }
+
+    private void launchNotifications() {
+        startActivity(new Intent(this, NotificationActivity.class));
     }
 
     private void launchSettings() {

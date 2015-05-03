@@ -34,6 +34,6 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:gravity="right"
-        style="@style/rd_list_item_text_right_style"/>
+        style="@style/rd_list_item_price_text"/>
 
 </RelativeLayout>
