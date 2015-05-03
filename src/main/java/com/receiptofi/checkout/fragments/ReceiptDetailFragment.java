@@ -231,8 +231,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             //Receipt item list Block
             // Add tax footer
             taxDscpView.setText(Double.toString(rdModel.getPtax()));
-            // TODO fix me
-            taxAmountView.setText(Double.toString(rdModel.getPtax()));
+            taxAmountView.setText(Double.toString(rdModel.getTax()));
 
             // Add total footer
             totalAmountView.setText(Double.toString(rdModel.getTotal()));
