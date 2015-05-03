@@ -76,6 +76,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private String currentMonthExpValue;
     private Menu optionMenu;
     private PieChart mChart;
+    private TextView emptyChart;
     private PieData expByBizData;
     private boolean expByBizAnimate = false;
 
@@ -214,6 +215,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
         currentMonthExp = (TextView) findViewById(R.id.current_amount);
         mChart = (PieChart) findViewById(R.id.pie_chart);
+        emptyChart = (TextView)findViewById(R.id.empty_chart);
         setUpChartView();
     }
 
@@ -235,19 +237,18 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.setHoleColorTransparent(true);
 
         // Causing java.lang.RuntimeException: native typeface cannot be made
-        //Typeface tf = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
         mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
 
 
-        mChart.setHoleRadius(40f);
-        mChart.setTransparentCircleRadius(42f);
+        mChart.setHoleRadius(45f);
 
         mChart.setDrawCenterText(true);
         mChart.setRotationAngle(0);
         // enable rotation of the chart by touch
         mChart.setRotationEnabled(true);
-        mChart.setDescription(getString(R.string.chart_desc));
-        mChart.setDescriptionTextSize(16f);
+        //mChart.setDescription(getString(R.string.chart_desc));
+        //mChart.setDescriptionTextSize(16f);
+        mChart.setDescription("");
 
         // display percentage values
         mChart.setUsePercentValues(true);
@@ -266,6 +267,49 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         */
     }
 
+    private void updateChartData() {
+        expByBizData = ChartService.getPieData();
+        if(expByBizData.getXVals().size() > 0) {
+            if(mChart.getVisibility() == View.GONE){
+                mChart.setVisibility(View.VISIBLE);
+                emptyChart.setVisibility(View.GONE);
+            }
+            if (expByBizAnimate) {
+                mChart.animateXY(1500, 1500);
+                // mChart.spin(2000, 0, 360);
+                expByBizAnimate = false;
+            }
+            mChart.setData(expByBizData);
+
+            // undo all highlights
+            mChart.highlightValues(null);
+
+            mChart.invalidate();
+        } else {
+            mChart.setVisibility(View.GONE);
+            emptyChart.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void setUpChartData() {
+        if(expByBizData.getXVals().size() > 0) {
+            if(mChart.getVisibility() == View.GONE){
+                mChart.setVisibility(View.VISIBLE);
+                emptyChart.setVisibility(View.GONE);
+            }
+            mChart.setData(expByBizData);
+
+            // undo all highlights
+            mChart.highlightValues(null);
+
+            mChart.invalidate();
+        } else {
+            mChart.setVisibility(View.GONE);
+            emptyChart.setVisibility(View.VISIBLE);
+        }
+    }
+
+    /*
     private void updateChartData() {
         if (expByBizAnimate) {
             mChart.animateXY(1500, 1500);
@@ -290,6 +334,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
         mChart.invalidate();
     }
+    */
 
     @Override
     public void onValueSelected(Entry entry, int index, Highlight h) {
