@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -266,6 +267,11 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         } else {
             noteText.setText("");
         }
+    }
+
+    public void openDrawer(){
+        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        drawerLayout.openDrawer(Gravity.END);
     }
 
     private void launchSettings() {
