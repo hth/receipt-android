@@ -12,7 +12,7 @@
         android:id="@+id/rd_item_list_footer_tax_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/rd_list_item_text_right_style"
+        style="@style/rd_list_item_tax_footer_text"
         android:text="@string/rd_item_header_tax_title"/>
 
     <TextView
@@ -30,7 +30,7 @@
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:gravity="right"
-        style="@style/rd_list_item_text_right_style"
+        style="@style/rd_list_item_tax_footer_text"
         android:textColor="@color/app_theme_txt_color"/>
 
 </RelativeLayout>

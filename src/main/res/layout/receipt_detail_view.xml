@@ -14,8 +14,7 @@
         android:paddingLeft="@dimen/activity_horizontal_margin_narrow"
         android:paddingRight="@dimen/activity_horizontal_margin_narrow"
         android:orientation="horizontal" >
-
-
+        
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"

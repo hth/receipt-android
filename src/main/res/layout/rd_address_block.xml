@@ -28,19 +28,19 @@
         android:id="@+id/rd_biz_add_line1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/action_text_smaller"/>
+        style="@style/action_text_small"/>
 
     <TextView
         android:id="@+id/rd_biz_add_line2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/action_text_smaller"/>
+        style="@style/action_text_small"/>
 
     <TextView
         android:id="@+id/rd_biz_add_line3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/action_text_smaller"/>
+        style="@style/action_text_small"/>
 
     </LinearLayout>
 
@@ -49,7 +49,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:drawableLeft="@drawable/call_contact"
-        style="@style/action_text_medium"/>
+        style="@style/action_text_small"/>
 
     </LinearLayout>
 

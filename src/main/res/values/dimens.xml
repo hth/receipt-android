@@ -23,6 +23,9 @@
     <dimen name="expandable_list_child_padding_right">15dp</dimen>
     <dimen name="expandable_list_child_vertical_padding">4dp</dimen>
 
+    <!--    Receipt detail List View    -->
+    <dimen name="rd_list_item_vertical_padding">4dp</dimen>
+
     <!--    RD view  - view is divided in blocks and each block contains multiple elements -->
     <dimen name="rd_elements_vertical_padding">2dp</dimen>
     <dimen name="rd_block_vertical_padding">16dp</dimen>

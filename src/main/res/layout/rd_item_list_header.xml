@@ -12,7 +12,7 @@
         android:id="@+id/rd_list_item_header_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/rd_list_item_text_right_style"
+        style="@style/rd_list_item_header_text"
         android:text="@string/rd_item_header_title"/>
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:gravity="right"
-        style="@style/rd_list_item_text_right_style"
+        style="@style/rd_list_item_header_text"
         android:text="@string/rd_item_header_amount"/>
 
 </RelativeLayout>
