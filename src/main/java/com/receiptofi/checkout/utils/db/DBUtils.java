@@ -12,6 +12,9 @@ public class DBUtils {
 
     private static final String TAG = DBUtils.class.getSimpleName();
 
+    private DBUtils() {
+    }
+
     /**
      * Delete all tables and re-create all tables with default settings.
      */

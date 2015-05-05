@@ -17,6 +17,9 @@ import java.util.ArrayList;
 public class ChartService {
     private static final String TAG = ChartService.class.getSimpleName();
 
+    private ChartService() {
+    }
+
     public static PieData getPieData() {
         ChartModel chartModel = ReceiptUtils.getReceiptsByBizName();
 

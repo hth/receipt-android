@@ -19,6 +19,9 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class BillingHistoryUtils {
     private static final String TAG = BillingHistoryUtils.class.getSimpleName();
 
+    private BillingHistoryUtils() {
+    }
+
     /**
      * Insert billing history in table.
      *

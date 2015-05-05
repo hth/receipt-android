@@ -28,6 +28,9 @@ public class ImageUploaderService {
     private static int MAX_RETRY_UPLOAD = 5;
     private static Context context;
 
+    private ImageUploaderService() {
+    }
+
     public static void start(Context context) {
         // TODO Auto-generated method stub
         ImageUploaderService.context = context;

@@ -17,6 +17,9 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class BillingAccountUtils {
     private static final String TAG = BillingAccountUtils.class.getSimpleName();
 
+    private BillingAccountUtils() {
+    }
+
     /**
      * Insert billing account in table.
      *

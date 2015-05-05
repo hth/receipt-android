@@ -33,6 +33,9 @@ import java.util.UUID;
 public class DeviceService {
     private static final String TAG = DeviceService.class.getSimpleName();
 
+    private DeviceService() {
+    }
+
     public static void getNewUpdates() {
         Log.d(TAG, "get new update for device");
         ExternalCall.doGet(IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
