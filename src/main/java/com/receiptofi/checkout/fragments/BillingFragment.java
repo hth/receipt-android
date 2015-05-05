@@ -39,11 +39,11 @@ public class BillingFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.billing_fragment, container, false);
 
-        billingPlan = (TextView)rootView.findViewById(R.id.billing_plan_value);
-        billingDate = (TextView)rootView.findViewById(R.id.billing_date_value);
+        billingPlan = (TextView) rootView.findViewById(R.id.billing_plan_value);
+        billingDate = (TextView) rootView.findViewById(R.id.billing_date_value);
 
 
-        billingHistoryList = (ListView)rootView.findViewById(R.id.billing_history_list);
+        billingHistoryList = (ListView) rootView.findViewById(R.id.billing_history_list);
         billingHistoryList.setAdapter(new BillingListAdapter(getActivity()));
 
         new BillingDataTask().execute();
@@ -53,7 +53,7 @@ public class BillingFragment extends Fragment {
     private void showData() {
         billingPlan.setText(billingAccountData.getAccountBillingType());
         billingDate.setText(billingAccountData.isBilledAccount() + "");
-        ((BillingListAdapter)billingHistoryList.getAdapter()).notifyDataSetChanged();
+        ((BillingListAdapter) billingHistoryList.getAdapter()).notifyDataSetChanged();
     }
 
     public class BillingListAdapter extends ArrayAdapter<BillingHistoryModel> {

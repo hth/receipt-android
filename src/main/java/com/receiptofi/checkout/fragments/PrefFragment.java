@@ -53,10 +53,10 @@ public class PrefFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.pref_fragment, container, false);
 
-        Button addButton = (Button)rootView.findViewById(R.id.pref_fragment_add_expense_tag);
+        Button addButton = (Button) rootView.findViewById(R.id.pref_fragment_add_expense_tag);
         addButton.setOnClickListener(onAddButtonClicked);
 
-        ListView tagListView = (ListView)rootView.findViewById(R.id.pref_fragment_expense_tag_list);
+        ListView tagListView = (ListView) rootView.findViewById(R.id.pref_fragment_expense_tag_list);
         Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         tagModelList = new LinkedList<>(expTagMap.values());
         tagListView.setAdapter(new ExpenseTagListAdapter(getActivity(), tagModelList));
@@ -85,8 +85,7 @@ public class PrefFragment extends Fragment {
                 editTagDialog.show(ft, "dialog");
                 // int num = newFragment.show(ft, "dialog");
 
-            }
-            catch (ClassCastException e) {
+            } catch (ClassCastException e) {
             }
         }
     };
@@ -96,7 +95,7 @@ public class PrefFragment extends Fragment {
         public void onClick(View button) {
             Object tag = button.getTag();
             try {
-                int position = (Integer)tag;
+                int position = (Integer) tag;
                 ExpenseTagModel tagModel = tagModelList.get(position);
                 Log.d(TAG, "Selected tag label is: " + tagModel.getName());
 
@@ -113,10 +112,9 @@ public class PrefFragment extends Fragment {
                 // Create and show the dialog.
                 DialogFragment editTagDialog = ExpenseTagDialog.newInstance(tagModel.getId());
                 editTagDialog.show(ft, "dialog");
-               // int num = newFragment.show(ft, "dialog");
+                // int num = newFragment.show(ft, "dialog");
 
-            }
-            catch (ClassCastException e) {
+            } catch (ClassCastException e) {
             }
         }
     };
@@ -126,7 +124,7 @@ public class PrefFragment extends Fragment {
         public void onClick(View button) {
             Object tag = button.getTag();
             try {
-                int position = (Integer)tag;
+                int position = (Integer) tag;
                 final ExpenseTagModel tagModel = tagModelList.get(position);
                 Log.d(TAG, "Selected tag name is: " + tagModel.getName());
 
@@ -228,10 +226,10 @@ public class PrefFragment extends Fragment {
                     holder = (ViewHolder) convertView.getTag();
                 }
 
-                ImageButton editButton = (ImageButton)convertView.findViewById(R.id.exp_list_tag_edit);
+                ImageButton editButton = (ImageButton) convertView.findViewById(R.id.exp_list_tag_edit);
                 editButton.setTag(position);
                 editButton.setOnClickListener(onEditButtonClicked);
-                ImageButton deleteButton = (ImageButton)convertView.findViewById(R.id.exp_list_tag_delete);
+                ImageButton deleteButton = (ImageButton) convertView.findViewById(R.id.exp_list_tag_delete);
                 deleteButton.setTag(position);
                 deleteButton.setOnClickListener(onDeleteButtonClicked);
 

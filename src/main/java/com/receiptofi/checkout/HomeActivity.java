@@ -5,7 +5,6 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -30,7 +29,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -167,11 +165,11 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
             setContentView(R.layout.home_page);
             instantiateViews();
-            bindValuestoViews();
+            bindValuesToViews();
         } else if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
             setContentView(R.layout.home_page);
             instantiateViews();
-            bindValuestoViews();
+            bindValuesToViews();
         }
     }
 
@@ -216,7 +214,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         setUpChartView();
     }
 
-    private void bindValuestoViews() {
+    private void bindValuesToViews() {
         if (!TextUtils.isEmpty(unprocessedValue)) {
             setUnprocessedCount();
         }
@@ -309,7 +307,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = AppUtils.createImageFile();
         // Continue only if the File was successfully created
-        if (photoFile != null) {
+        if (null != photoFile) {
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
@@ -336,7 +334,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             Uri imageGallery = data.getData();
             String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallery);
 
-            if (imageAbsolutePath != null) {
+            if (null != imageAbsolutePath) {
                 File pickerImage = new File(imageAbsolutePath);
                 if ((pickerImage.length() / 1048576) >= 10) {
                     showErrorMsg("Image size of more than 10MB not supported.");
@@ -367,7 +365,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
 
     private void startAnimation() {
-        if (optionMenu != null) {
+        if (null != optionMenu) {
             LayoutInflater inflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             ImageView imageView = (ImageView) inflater.inflate(R.layout.action_refresh, null);
 

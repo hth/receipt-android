@@ -259,7 +259,7 @@ public class ReceiptUtils {
             }
         }
 
-        return  list;
+        return list;
     }
 
     /**
@@ -300,7 +300,7 @@ public class ReceiptUtils {
             }
         }
 
-        return  list;
+        return list;
     }
 
     /**

@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptModel;
-import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
 
 import org.json.JSONArray;

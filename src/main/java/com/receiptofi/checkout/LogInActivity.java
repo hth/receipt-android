@@ -134,7 +134,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     public void leftButtonClick(View view) {
         Log.d(TAG, "inside leftButtonClick");
         isLeftButtonClicked = true;
-        if(isRightButtonClicked) {
+        if (isRightButtonClicked) {
             setFieldsToR();
         }
     }
@@ -142,19 +142,19 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     public void rightButtonClick(View view) {
         Log.d(TAG, "inside rightButtonClick");
         isRightButtonClicked = true;
-        if(isLeftButtonClicked) {
+        if (isLeftButtonClicked) {
             setFieldsToS();
         }
     }
 
     // TODO: DELETE ME
-    private void setFieldsToS(){
+    private void setFieldsToS() {
         email.setText("s@r.com");
         password.setText("testtest");
     }
 
     // TODO: DELETE ME
-    private void setFieldsToR(){
+    private void setFieldsToR() {
         email.setText("test@receiptofi.com");
         password.setText("testtest");
     }
