@@ -31,6 +31,7 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
@@ -238,10 +239,10 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                 if (reCheck || null != tagId || !TextUtils.isEmpty(notes)) {
                     JSONObject postData = new JSONObject();
                     try {
-                        postData.put("expenseTagId", tagId);
-                        postData.put("notes", notes);
-                        postData.put("recheck", reCheck ? "RECHECK" : "");
-                        postData.put("receiptId", rModel.getId());
+                        postData.put(ConstantsJson.EXPENSE_TAG_ID, tagId);
+                        postData.put(ConstantsJson.NOTES, notes);
+                        postData.put(ConstantsJson.RECHECK, reCheck ? "RECHECK" : "");
+                        postData.put(ConstantsJson.RECEIPT_ID, rModel.getId());
 
                         ExternalCall.doPost(postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
                             @Override
