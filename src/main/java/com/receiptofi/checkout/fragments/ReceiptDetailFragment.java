@@ -323,7 +323,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         // TODO: fix me - 1. No calendar
         // TODO:          2. Multiple calendar
         Map<Long, String> calendarMap = getAllCalendars();
-        if (calendarMap != null && calendarMap.size() > 0) {
+        if (null != calendarMap && !calendarMap.isEmpty()) {
             Long calId = -1L;
             for (Entry entry : calendarMap.entrySet()) {
                 calId = (Long) entry.getKey();

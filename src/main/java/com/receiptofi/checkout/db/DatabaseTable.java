@@ -22,12 +22,18 @@ public class DatabaseTable {
         public static final String EXPENSE_TAG_ID = "expenseTagId";
         public static final String ACTIVE = "active";
         public static final String DELETED = "deleted";
+
+        private Receipt() {
+        }
     }
 
     public static class ImageIndex {
         public static final String TABLE_NAME = "IMAGE_INDEX";
         public static final String BLOB_ID = "blobId";
         public static final String IMAGE_PATH = "imagePath";
+
+        private ImageIndex() {
+        }
     }
 
     public static class UploadQueue {
@@ -35,12 +41,18 @@ public class DatabaseTable {
         public static final String IMAGE_DATE = "imageDate";
         public static final String IMAGE_PATH = "imagePath";
         public static final String STATUS = "status";
+
+        private UploadQueue() {
+        }
     }
 
     public static class KeyValue {
         public static final String TABLE_NAME = "KEY_VALUE";
         public static final String KEY = "key";
         public static final String VALUE = "value";
+
+        private KeyValue() {
+        }
     }
 
     public static class MonthlyReport {
@@ -49,6 +61,9 @@ public class DatabaseTable {
         public static final String YEAR = "year";
         public static final String TOTAL = "total";
         public static final String COUNT = "count";
+
+        private MonthlyReport() {
+        }
     }
 
     public static class Item {
@@ -61,6 +76,9 @@ public class DatabaseTable {
         public static final String SEQUENCE = "sequence";
         public static final String TAX = "tax";
         public static final String EXPENSE_TAG_ID = "expenseTagId";
+
+        private Item() {
+        }
     }
 
     public static class ExpenseTag {
@@ -68,6 +86,9 @@ public class DatabaseTable {
         public static final String ID = "id";
         public static final String NAME = "name";
         public static final String COLOR = "color";
+
+        private ExpenseTag() {
+        }
     }
 
     public static class Notification {
@@ -80,12 +101,18 @@ public class DatabaseTable {
         public static final String CREATED = "created";
         public static final String UPDATED = "updated";
         public static final String ACTIVE = "active";
+
+        private Notification() {
+        }
     }
 
     public static class BillingAccount {
         public static final String TABLE_NAME = "BILLING_ACCOUNT";
         public static final String ACCOUNT_BILLING_TYPE = "accountBillingType";
         public static final String BILLED_ACCOUNT = "billedAccount";
+
+        private BillingAccount() {
+        }
     }
 
     public static class BillingHistory {
@@ -94,5 +121,8 @@ public class DatabaseTable {
         public static final String BILLED_MONTH = "billedForMonth";
         public static final String BILLED_STATUS = "billedStatus";
         public static final String ACCOUNT_BILLING_TYPE = "accountBillingType";
+
+        private BillingHistory() {
+        }
     }
 }

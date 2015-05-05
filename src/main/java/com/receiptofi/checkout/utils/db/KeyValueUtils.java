@@ -12,6 +12,9 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class KeyValueUtils {
     private static final String TAG = KeyValueUtils.class.getSimpleName();
 
+    private KeyValueUtils() {
+    }
+
     public static boolean updateInsert(String key, String value) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.KeyValue.KEY, key);
@@ -106,13 +109,16 @@ public class KeyValueUtils {
     }
 
     public static class KEYS {
-        public static String XR_MAIL = API.key.XR_MAIL;
-        public static String XR_AUTH = API.key.XR_AUTH;
-        public static String WIFI_SYNC = "WIFI_SYNC";
-        public static String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
-        public static String SOCIAL_LOGIN = "SOCIAL_LOGIN";
-        public static String XR_DID = API.key.XR_DID;
-        public static String LAST_FETCHED = "LAST_FETCHED";
+        public static final String XR_MAIL = API.key.XR_MAIL;
+        public static final String XR_AUTH = API.key.XR_AUTH;
+        public static final String WIFI_SYNC = "WIFI_SYNC";
+        public static final String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
+        public static final String SOCIAL_LOGIN = "SOCIAL_LOGIN";
+        public static final String XR_DID = API.key.XR_DID;
+        public static final String LAST_FETCHED = "LAST_FETCHED";
         //TODO(hht) Should we manage interval time for app from server
+
+        private KEYS() {
+        }
     }
 }

@@ -106,6 +106,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     expByBizAnimate = true;
                     updateChartData();
                     break;
+                default:
+                    Log.e(TAG, "Update handler not defined " + what);
+                    throw new IllegalStateException("Update handler not defined");
             }
         }
     };
@@ -329,7 +332,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == RESULT_IMAGE_GALLERY && resultCode == RESULT_OK && data != null) {
+        if (requestCode == RESULT_IMAGE_GALLERY && resultCode == RESULT_OK && null != data) {
 
             Uri imageGallery = data.getData();
             String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallery);
@@ -342,7 +345,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     startAnimation();
                     ImageUpload.process(this, imageAbsolutePath);
                 }
-
             }
 
         } else if (requestCode == RESULT_IMAGE_CAPTURE && resultCode == RESULT_OK) {
@@ -350,7 +352,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
 
             String capturedImgFile = AppUtils.getImageFilePath();
-            if (capturedImgFile != null) {
+            if (null != capturedImgFile) {
 
                 File capturedFile = new File(capturedImgFile);
                 Uri contentUri = Uri.fromFile(capturedFile);
@@ -380,7 +382,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
     private void endAnimation() {
         MenuItem item = optionMenu.findItem(R.id.menu_refresh);
-        if (item.getActionView() != null) {
+        if (null != item.getActionView()) {
             // Remove the animation.
             item.getActionView().clearAnimation();
             item.setActionView(null);

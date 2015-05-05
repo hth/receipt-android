@@ -10,6 +10,9 @@ import android.util.Log;
 public class CreateTable {
     private static final String TAG = CreateTable.class.getSimpleName();
 
+    private CreateTable() {
+    }
+
     public static void createTableReceipts(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableReceipts");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Receipt.TABLE_NAME + "("
