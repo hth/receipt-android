@@ -138,12 +138,12 @@ public class ReceiptUtils {
      */
     public static void insert(List<ReceiptModel> receipts) {
         for (ReceiptModel receipt : receipts) {
-            if (receipt.isActive()) {
-                insert(receipt);
-            } else {
+            if (receipt.isDeleted() || !receipt.isActive()) {
                 ReceiptItemUtils.delete(receipt.getId());
                 delete(receipt.getId());
                 Log.d(TAG, "Deleted receipts: " + receipt.getId());
+            } else {
+                insert(receipt);
             }
         }
     }
