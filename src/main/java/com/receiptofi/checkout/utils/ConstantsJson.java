@@ -2,7 +2,7 @@ package com.receiptofi.checkout.utils;
 
 /**
  * Contains JSON field constants.
- *
+ * <p/>
  * User: hitender
  * Date: 5/2/15 3:59 PM
  */

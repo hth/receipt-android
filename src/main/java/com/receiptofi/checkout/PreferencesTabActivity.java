@@ -75,9 +75,9 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
 
         @Override
         public Fragment getItem(int i) {
-            if(i == 0){
+            if (i == 0) {
                 return new ProfileFragment();
-            } else if(i == 1){
+            } else if (i == 1) {
                 return new PrefFragment();
             } else {
                 return new BillingFragment();

@@ -47,10 +47,10 @@ public class ReceiptListFragment extends Fragment {
                     int childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
 
                     // we wouldn't want to run this, if there is nothing selected in list
-                    if(groupPosition != -1 && childPosition != -1) {
+                    if (groupPosition != -1 && childPosition != -1) {
                         Log.d(TAG, "groupPosition at start is: " + groupPosition + " childPosition at start is: " + childPosition);
                         if (groups.size() > groupPosition) {
-                            if(children.get(groupPosition).size() > childPosition){
+                            if (children.get(groupPosition).size() > childPosition) {
                                 // In this case there is current group has a child at same postion
                                 Log.d(TAG, "Keeping group and child position as it is");
                                 Log.d(TAG, "groupPosition line 58 is: " + groupPosition + " childPosition is: " + childPosition);
@@ -61,7 +61,7 @@ public class ReceiptListFragment extends Fragment {
                                 childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
                                 Log.d(TAG, "Reducing child position");
                                 Log.d(TAG, "groupPosition line 64 is: " + groupPosition + " childPosition is: " + childPosition);
-                                if(explv != null){
+                                if (explv != null) {
                                     explv.expandGroup(groupPosition);
                                     int index = explv.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                                     explv.setItemChecked(index, true);
@@ -72,11 +72,11 @@ public class ReceiptListFragment extends Fragment {
                             // In this case last child was deleted from current group, but the group doesn't has more children
                             ((ReceiptListActivity) getActivity()).setGroupIndex(--groupPosition);
                             groupPosition = ((ReceiptListActivity) getActivity()).getGroupIndex();
-                            ((ReceiptListActivity) getActivity()).setChildIndex((children.get(groupPosition).size())-1);
+                            ((ReceiptListActivity) getActivity()).setChildIndex((children.get(groupPosition).size()) - 1);
                             childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
                             Log.d(TAG, "Reducing group position & setting child position");
                             Log.d(TAG, "groupPosition line 71 is: " + groupPosition + " childPosition is: " + childPosition);
-                            if(explv != null){
+                            if (explv != null) {
                                 explv.expandGroup(groupPosition);
                                 int index = explv.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                                 explv.setItemChecked(index, true);
@@ -84,7 +84,7 @@ public class ReceiptListFragment extends Fragment {
                             ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
                         }
                     }
-                break;
+                    break;
             }
         }
     };

@@ -114,7 +114,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
         rdItemsList.addFooterView(totalFooter);
 
-        drawerIndicator = (ImageView)receiptDetailView.findViewById(R.id.rd_drawer_indicator);
+        drawerIndicator = (ImageView) receiptDetailView.findViewById(R.id.rd_drawer_indicator);
 
         return receiptDetailView;
 
@@ -142,13 +142,13 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     public void updateReceiptDetailView(int index, int position) {
         // Coming from ReceiptListActivity: we show and activate drawer view
-        if(drawerIndicator.getVisibility() == View.GONE){
+        if (drawerIndicator.getVisibility() == View.GONE) {
             drawerIndicator.setVisibility(View.VISIBLE);
         }
         drawerIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((ReceiptListActivity)getActivity()).openDrawer();
+                ((ReceiptListActivity) getActivity()).openDrawer();
             }
         });
 
@@ -212,7 +212,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             //Phone action
             final String phoneNumber = rdModel.getPhone().trim();
             rdBizPhone.setText(phoneNumber);
-            if(!AppUtils.isTablet(getActivity())) {
+            if (!AppUtils.isTablet(getActivity())) {
                 rdBizPhone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {

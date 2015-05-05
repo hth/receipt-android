@@ -140,7 +140,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     public void onReceiptSelected(int index, int position) {
         // The user selected the headline of an article from the HeadlinesFragment
         Log.d(TAG, "executing onReceiptSelected: index is: " + index + " position is: " + position);
-        if(index < 0 || position < 0){
+        if (index < 0 || position < 0) {
             return;
         }
 
@@ -298,7 +298,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         }
     }
 
-    public void openDrawer(){
+    public void openDrawer() {
         DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
         drawerLayout.openDrawer(Gravity.END);
     }

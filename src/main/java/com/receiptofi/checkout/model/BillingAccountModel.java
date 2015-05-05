@@ -14,7 +14,8 @@ public class BillingAccountModel {
     private List<BillingHistoryModel> billingHistories = new ArrayList<>();
 
     // needed for view
-    public BillingAccountModel(){}
+    public BillingAccountModel() {
+    }
 
     public BillingAccountModel(String accountBillingType, boolean billedAccount) {
         this.accountBillingType = accountBillingType;

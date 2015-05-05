@@ -32,7 +32,7 @@ public class BillingHistoryUtils {
                         DatabaseTable.BillingHistory.BILLED_STATUS + ", " +
                         DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE +
                         ") VALUES (?, ?, ?, ?)",
-                new String[] {
+                new String[]{
                         billingHistory.getId(),
                         billingHistory.getBilledForMonth(),
                         billingHistory.getBilledStatus(),

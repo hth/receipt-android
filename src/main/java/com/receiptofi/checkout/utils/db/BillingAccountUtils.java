@@ -29,7 +29,7 @@ public class BillingAccountUtils {
                         DatabaseTable.BillingAccount.BILLED_ACCOUNT +
                         ") VALUES ('" +
                         billingAccount.getAccountBillingType() + "'," +
-                         + (billingAccount.isBilledAccount() ? 1 : 0) + ")");
+                        +(billingAccount.isBilledAccount() ? 1 : 0) + ")");
 
         if (!billingAccount.getBillingHistories().isEmpty()) {
             for (BillingHistoryModel billingHistoryModel : billingAccount.getBillingHistories()) {
