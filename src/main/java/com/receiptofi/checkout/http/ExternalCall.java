@@ -402,8 +402,7 @@ public final class ExternalCall {
 
     public static Map<String, String> parseHeader(Header[] headers, Set<String> keys) {
         Log.d(TAG, "executing parseHeader");
-        if (headers != null && headers.length > 0
-                && keys != null && keys.size() > 0) {
+        if (headers != null && headers.length > 0 && keys != null && !keys.isEmpty()) {
             Map<String, String> headerData = new HashMap<>();
 
             for (Header header : headers) {

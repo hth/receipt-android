@@ -33,7 +33,7 @@ public class ImageUploaderService {
         ImageUploaderService.context = context;
         ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
 
-        if (queue != null && queue.size() > 0) {
+        if (queue != null && !queue.isEmpty()) {
             for (int i = 0; i < queue.size() && imageUploadThreads.size() < MAX_NUMBER_THREAD; i++) {
 
                 ImageModel iModel = queue.get(i);
