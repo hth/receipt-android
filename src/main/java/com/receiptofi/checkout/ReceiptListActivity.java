@@ -235,7 +235,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                 }
                 Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + "notes: " + notes);
 
-                if (reCheck || null != tagId || null != notes) {
+                if (reCheck || null != tagId || !TextUtils.isEmpty(notes)) {
                     JSONObject postData = new JSONObject();
                     try {
                         postData.put("expenseTagId", tagId);
