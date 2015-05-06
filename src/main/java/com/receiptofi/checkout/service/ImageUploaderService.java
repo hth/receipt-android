@@ -41,11 +41,9 @@ public class ImageUploaderService {
             for (int i = 0; i < queue.size() && imageUploadThreads.size() < MAX_NUMBER_THREAD; i++) {
 
                 ImageModel iModel = queue.get(i);
-
                 if (validateImageForUpload(iModel)) {
                     isServiceStarted = true;
-                    Log.i(i + " image upload started for ", iModel.imgPath);
-
+                    Log.d(TAG, i + " image upload started for " + iModel.imgPath);
                     Thread imageUploaderThread = getUploaderThread(context, iModel);
                     imageUploadThreads.add(imageUploaderThread);
                     allThreads.add(imageUploaderThread);
@@ -93,7 +91,7 @@ public class ImageUploaderService {
                     }
                 }
 
-                Log.i("image upload done for ", iModel.imgPath);
+                Log.d(TAG, "image upload done for " +iModel.imgPath);
             }
 
             @Override
