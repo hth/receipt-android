@@ -12,6 +12,8 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.NotificationModel;
 import com.receiptofi.checkout.utils.Constants;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
 import java.util.List;
 
 /**
@@ -23,6 +25,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
     private final LayoutInflater inflater;
     private Context context;
     private List<NotificationModel> notificationList;
+    private static final PrettyTime prettyTime = new PrettyTime();
 
     public NotificationAdapter(Context context, List<NotificationModel> notificationList) {
         super(context, R.layout.rd_item_list, notificationList);
@@ -67,10 +70,10 @@ public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
             }
 
             NotificationModel notification = getItem(position);
-            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(notification.getUpdated()));
+            String time = prettyTime.format(Constants.ISO_DF.parse(notification.getUpdated()));
 
             holder.notificationText.setText(notification.getMessage());
-            holder.notificationTime.setText(formattedDate);
+            holder.notificationTime.setText(time);
 
             return convertView;
         } catch (Exception e) {
