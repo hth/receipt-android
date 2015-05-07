@@ -9,7 +9,6 @@
     <dimen name="activity_vertical_margin_narrow">4dp</dimen>
     <dimen name="activity_touch_padding">10dp</dimen>
 
-
     <!--    Custom button height    -->
     <dimen name="app_button_height">50dp</dimen>
     <dimen name="action_button_height">100dp</dimen>
@@ -30,7 +29,8 @@
     <dimen name="rd_elements_vertical_padding">2dp</dimen>
     <dimen name="rd_block_vertical_padding">16dp</dimen>
 
-
+    <!--    Notification List View    -->
+    <dimen name="notification_list_vertical_padding">2dp</dimen>
 
     <dimen name="image_info_margin_side">70dp</dimen>
 
