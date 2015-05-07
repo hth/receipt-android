@@ -10,12 +10,14 @@ public class BillingHistoryModel {
     private String billedForMonth;
     private String billedStatus;
     private String accountBillingType;
+    private String billedDate;
 
-    public BillingHistoryModel(String id, String billedForMonth, String billedStatus, String accountBillingType) {
+    public BillingHistoryModel(String id, String billedForMonth, String billedStatus, String accountBillingType, String billedDate) {
         this.id = id;
+        this.billedForMonth = billedForMonth;
         this.billedStatus = billedStatus;
         this.accountBillingType = accountBillingType;
-        this.billedForMonth = billedForMonth;
+        this.billedDate = billedDate;
     }
 
     public String getId() {
@@ -32,5 +34,9 @@ public class BillingHistoryModel {
 
     public String getAccountBillingType() {
         return accountBillingType;
+    }
+
+    public String getBilledDate() {
+        return billedDate;
     }
 }

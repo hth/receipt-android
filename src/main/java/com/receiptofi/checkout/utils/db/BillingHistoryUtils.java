@@ -33,13 +33,15 @@ public class BillingHistoryUtils {
                         DatabaseTable.BillingHistory.ID + ", " +
                         DatabaseTable.BillingHistory.BILLED_MONTH + ", " +
                         DatabaseTable.BillingHistory.BILLED_STATUS + ", " +
-                        DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE +
-                        ") VALUES (?, ?, ?, ?)",
+                        DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE + ", " +
+                        DatabaseTable.BillingHistory.BILLED_DATE +
+                        ") VALUES (?, ?, ?, ?, ?)",
                 new String[]{
                         billingHistory.getId(),
                         billingHistory.getBilledForMonth(),
                         billingHistory.getBilledStatus(),
-                        billingHistory.getAccountBillingType()
+                        billingHistory.getAccountBillingType(),
+                        billingHistory.getBilledDate()
                 }
         );
     }
@@ -65,7 +67,8 @@ public class BillingHistoryUtils {
                             cursor.getString(0),
                             cursor.getString(1),
                             cursor.getString(2),
-                            cursor.getString(3)
+                            cursor.getString(3),
+                            cursor.getString(4)
                     );
 
                     list.add(billingHistoryModel);
