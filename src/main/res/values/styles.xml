@@ -14,7 +14,7 @@
     </style>
 
     <style name="exp_list_parent_text_right_style" parent="@style/exp_list_parent_text_left_style">
-        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="exp_list_child_text_left_primary_style" parent="@android:style/TextAppearance.Small">
@@ -116,6 +116,12 @@
         <item name="android:textColor">@color/app_theme_txt_color</item>
         <item name="android:paddingTop">@dimen/notification_list_vertical_padding</item>
         <item name="android:paddingBottom">@dimen/notification_list_vertical_padding</item>
+    </style>
+
+    <style name="billing_history_list_item_style" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:paddingBottom">@dimen/rd_list_item_vertical_padding</item>
     </style>
 
 <!--  /////////////////////////////////////////////////////////////////////////////////////// -->
