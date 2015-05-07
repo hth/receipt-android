@@ -102,9 +102,9 @@ public class BillingFragment extends Fragment {
                     holder = (ViewHolder) convertView.getTag();
                 }
 
-                holder.billingMonth.setText(getItem(position).getBilledForMonth());
-                holder.billingPlan.setText(getItem(position).getAccountBillingType());
-                holder.billingDate.setText(getItem(position).getBilledStatus());
+                holder.billingMonth.setText(getItem(position).displayBilledMonth());
+                holder.billingPlan.setText(getItem(position).displayBillingType());
+                holder.billingDate.setText(getItem(position).displayBilledInfo());
                 return convertView;
             } catch (Exception e) {
                 Log.d(TAG, "Exception " + e.getMessage());

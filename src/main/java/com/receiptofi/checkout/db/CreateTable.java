@@ -133,9 +133,9 @@ public class CreateTable {
         Log.d(TAG, "executing createTableNotification");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.BillingHistory.TABLE_NAME + "("
                 + DatabaseTable.BillingHistory.ID + " TEXT ,"
+                + DatabaseTable.BillingHistory.BILLED_MONTH + " TEXT ,"
                 + DatabaseTable.BillingHistory.BILLED_STATUS + " TEXT ,"
                 + DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE + " TEXT ,"
-                + DatabaseTable.BillingHistory.BILLED_MONTH + " TEXT ,"
                 + DatabaseTable.BillingHistory.BILLED_DATE + " TEXT " +
 
                 ");");

@@ -51,8 +51,8 @@ import java.util.Locale;
 public class HomeActivity extends Activity implements OnChartValueSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
-    private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.ENGLISH);
-    public static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy MM", Locale.ENGLISH);
+    private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.US);
+    public static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy MM", Locale.US);
 
     public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
     public static final int IMAGE_ALREADY_QUEUED = 0x2565;

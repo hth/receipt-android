@@ -118,6 +118,12 @@
         <item name="android:paddingBottom">@dimen/notification_list_vertical_padding</item>
     </style>
 
+    <style name="billing_history_list_item_style" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:paddingBottom">@dimen/rd_list_item_vertical_padding</item>
+    </style>
+
 <!--  /////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
