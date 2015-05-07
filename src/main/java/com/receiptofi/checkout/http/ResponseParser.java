@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ResponseParser {
 
@@ -27,11 +28,8 @@ public class ResponseParser {
     public static String getSocialAuthError(String response) {
         try {
             JSONObject loginResponseJson = new JSONObject(response);
-
             JSONObject error = loginResponseJson.getJSONObject("error");
-
             String errorMsg = error.getString("reason");
-
             return errorMsg;
         } catch (JSONException e) {
             // TODO Auto-generated catch block
@@ -55,9 +53,8 @@ public class ResponseParser {
         return bundle;
     }
 
-    public static ArrayList<ReceiptModel> getReceipts(String response) {
-
-        ArrayList<ReceiptModel> models = new ArrayList<>();
+    public static List<ReceiptModel> getReceipts(String response) {
+        List<ReceiptModel> models = new ArrayList<>();
         // ArrayList<Rec>
         try {
             JSONArray array = new JSONArray(response);
@@ -87,14 +84,12 @@ public class ResponseParser {
                 model.setNotes(notesJson.getString("text"));
 
                 String ptax = json.getString("ptax");
-                if (ptax != null) {
+                if (null != ptax) {
                     model.setPtax(Double.valueOf(ptax));
                 }
                 model.setRid(json.getString("rid"));
                 Double total = json.getDouble("total");
-                if (total != null) {
-                    model.setTotal(total);
-                }
+                model.setTotal(total);
                 models.add(model);
             }
         } catch (Exception e) {
@@ -103,6 +98,4 @@ public class ResponseParser {
 
         return models;
     }
-
-
 }

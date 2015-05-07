@@ -85,7 +85,6 @@
         <item name="android:textColor">@color/gray_darker</item>
     </style>
 
-
     <style name="rd_list_item_header_text" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/gray_darker</item>
         <item name="android:textStyle">bold</item>
@@ -109,11 +108,14 @@
 
     <!--    Notification view    -->
     <style name="text_notification" parent="@android:style/TextAppearance.Medium">
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="date_notification" parent="@android:style/TextAppearance.Small">
         <item name="android:textColor">@color/app_theme_txt_color</item>
+        <item name="android:paddingTop">@dimen/notification_list_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/notification_list_vertical_padding</item>
     </style>
 
 <!--  /////////////////////////////////////////////////////////////////////////////////////// -->
@@ -121,6 +123,4 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
-
-
 </resources>
