@@ -1,5 +1,8 @@
 package com.receiptofi.checkout.utils;
 
+import org.joda.time.format.DateTimeFormatter;
+import org.joda.time.format.ISODateTimeFormat;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -17,6 +20,7 @@ public class Constants {
     public static final int DEFAULT_REMINDER_TIME = 15;
 
     public static final DateFormat ISO_DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
+    public static final DateTimeFormatter ISO_J_DF = ISODateTimeFormat.dateTime();
     public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a", Locale.US);
 
     public enum ReceiptFilter {

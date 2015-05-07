@@ -8,6 +8,8 @@ import com.receiptofi.checkout.db.DatabaseHandler;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 
+import net.danlew.android.joda.JodaTimeAndroid;
+
 public class ReceiptofiApplication extends Application {
 
     private static final String TAG = ReceiptofiApplication.class.getSimpleName();
@@ -31,6 +33,7 @@ public class ReceiptofiApplication extends Application {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
+        JodaTimeAndroid.init(this);
         Log.d(TAG, "ReceiptofiApplication onCreate");
         RDH = DatabaseHandler.getsInstance(this);
         DBUtils.initializeDefaults();
