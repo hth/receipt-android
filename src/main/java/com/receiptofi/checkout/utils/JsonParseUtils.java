@@ -265,7 +265,8 @@ public class JsonParseUtils {
                     jsonObject.getString("id"),
                     jsonObject.getString("bm"),
                     jsonObject.getString("bs"),
-                    jsonObject.getString("bt")
+                    jsonObject.getString("bt"),
+                    jsonObject.getString("bd")
             );
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing billing account response=" + jsonObject, e);

@@ -90,7 +90,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             // However, if we're being restored from a previous state,
             // then we don't need to do anything and should return or else
             // we could end up with overlapping fragments.
-            if (savedInstanceState != null) {
+            if (null != savedInstanceState) {
                 return;
             }
 

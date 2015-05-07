@@ -121,6 +121,7 @@ public class DatabaseTable {
         public static final String BILLED_MONTH = "billedForMonth";
         public static final String BILLED_STATUS = "billedStatus";
         public static final String ACCOUNT_BILLING_TYPE = "accountBillingType";
+        public static final String BILLED_DATE = "billedDate";
 
         private BillingHistory() {
         }
