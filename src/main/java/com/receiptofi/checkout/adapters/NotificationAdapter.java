@@ -12,6 +12,8 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.NotificationModel;
 import com.receiptofi.checkout.utils.Constants;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.List;
@@ -70,10 +72,9 @@ public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
             }
 
             NotificationModel notification = getItem(position);
-            String time = prettyTime.format(Constants.ISO_DF.parse(notification.getUpdated()));
-
+            DateTime dateTime = Constants.ISO_J_DF.parseDateTime(notification.getUpdated()).withZone(DateTimeZone.getDefault());
             holder.notificationText.setText(notification.getMessage());
-            holder.notificationTime.setText(time);
+            holder.notificationTime.setText(prettyTime.format(dateTime.toDate()));
 
             return convertView;
         } catch (Exception e) {
