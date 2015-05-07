@@ -51,7 +51,7 @@ public class BillingFragment extends Fragment {
     }
 
     private void showData() {
-        billingPlan.setText(billingAccountData.getAccountBillingType());
+        billingPlan.setText(billingAccountData.displayBillingType());
         billingDate.setText(billingAccountData.isBilledAccount() + "");
         ((BillingListAdapter) billingHistoryList.getAdapter()).notifyDataSetChanged();
     }
