@@ -1,57 +1,58 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-        android:orientation="vertical">
-
-    <TextView
-            android:id="@+id/rd_biz_name"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            style="@style/text_larger"/>
+            android:layout_weight="1"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/rd_biz_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+            <TextView
+                android:id="@+id/rd_biz_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/text_larger"/>
 
-    <TextView
-        android:id="@+id/rd_biz_add_line1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/action_text_small"/>
+            <LinearLayout
+                android:id="@+id/rd_biz_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/rd_biz_add_line2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/action_text_small"/>
+                <TextView
+                    android:id="@+id/rd_biz_add_line1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/action_text_small"/>
 
-    <TextView
-        android:id="@+id/rd_biz_add_line3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        style="@style/action_text_small"/>
+                <TextView
+                    android:id="@+id/rd_biz_add_line2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/action_text_small"/>
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/rd_biz_add_line3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/action_text_small"/>
 
-    <TextView
-        android:id="@+id/rd_biz_phone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:drawableLeft="@drawable/call_contact"
-        style="@style/action_text_small"/>
+            </LinearLayout>
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/rd_biz_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/call_contact"
+                style="@style/action_text_small"/>
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/rd_view_receipt"
@@ -65,4 +66,4 @@
             android:src="@drawable/ic_menu_upload"/>
 
     </LinearLayout>
-    </merge>
+</merge>

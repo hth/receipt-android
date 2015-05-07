@@ -7,4 +7,4 @@
         android:layout_gravity="right"
         style="@style/text_small_bold"/>
 
-    </merge>
+</merge>
