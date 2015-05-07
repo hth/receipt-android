@@ -52,7 +52,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     protected static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     protected static final int FACEBOOK_SIGN_IN = 0x2566;
     private static final String TAG = ParentActivity.class.getSimpleName();
-    private static ArrayList<Activity> backStack;
+    private static List<Activity> backStack;
     protected boolean isFbLoginClicked = false;
     protected boolean isGPlusLoginClicked = false;
     protected Handler uiThread = new Handler();
@@ -137,7 +137,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         backStack.add(activity);
     }
 
-    protected ArrayList<Activity> getBackStack() {
+    protected List<Activity> getBackStack() {
         return backStack;
     }
 
@@ -288,7 +288,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 finish();
             }
         });
-
     }
 
     /**
