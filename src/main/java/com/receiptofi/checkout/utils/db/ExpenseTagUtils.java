@@ -38,6 +38,7 @@ public class ExpenseTagUtils {
     }
 
     public static void insert(List<ExpenseTagModel> expensesTags) {
+        DBUtils.clearDB(DatabaseTable.ExpenseTag.TABLE_NAME);
         for (ExpenseTagModel expenseTag : expensesTags) {
             insert(expenseTag);
         }
