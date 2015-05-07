@@ -1,6 +1,7 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <CheckBox android:id="@+id/receipt_action_recheck"
+    <CheckBox
+        android:id="@+id/receipt_action_recheck"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -9,9 +10,10 @@
         android:scaleX="1.2"
         android:scaleY="1.2"
         style="@style/text_large"
-        android:text="@string/receipt_action_recheck" />
+        android:text="@string/receipt_action_recheck"/>
 
-    <TextView android:id="@+id/receipt_action_expense_tag_label"
+    <TextView
+        android:id="@+id/receipt_action_expense_tag_label"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_gravity="end|right|bottom"
@@ -20,7 +22,8 @@
         style="@style/text_receipt_action_label"
         android:text="@string/receipt_action_expense_tag_label"/>
 
-    <ListView android:id="@+id/receipt_action_expense_tag_list"
+    <ListView
+        android:id="@+id/receipt_action_expense_tag_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
@@ -28,7 +31,8 @@
         android:choiceMode="singleChoice"
         android:divider="@null"/>
 
-    <TextView android:id="@+id/receipt_action_note_label"
+    <TextView
+        android:id="@+id/receipt_action_note_label"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_gravity="end|right|bottom"
@@ -37,11 +41,13 @@
         style="@style/text_receipt_action_label"
         android:text="@string/receipt_action_note_label"/>
 
-    <View android:layout_width="match_parent"
+    <View
+        android:layout_width="match_parent"
         android:layout_height="3dp"
         android:background="@color/gray"/>
 
-    <EditText android:id="@+id/receipt_action_note"
+    <EditText
+        android:id="@+id/receipt_action_note"
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:minLines="3"

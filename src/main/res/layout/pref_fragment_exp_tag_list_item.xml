@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:minHeight="?android:attr/listPreferredItemHeight"
-    android:orientation="horizontal">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:minHeight="?android:attr/listPreferredItemHeight"
+              android:orientation="horizontal">
 
     <View
         android:id="@+id/exp_list_tag_color"
@@ -15,14 +15,15 @@
         android:layout_marginStart="@dimen/activity_horizontal_margin_narrow"
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_gravity="start|left|center_vertical" />
+        android:layout_gravity="start|left|center_vertical"/>
 
-    <TextView android:id="@+id/exp_list_tag_name"
+    <TextView
+        android:id="@+id/exp_list_tag_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         style="@style/text_medium"
-        android:layout_gravity="center_vertical" />
+        android:layout_gravity="center_vertical"/>
 
     <ImageButton
         android:id="@+id/exp_list_tag_edit"
