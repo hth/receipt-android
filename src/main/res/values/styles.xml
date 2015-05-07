@@ -14,7 +14,7 @@
     </style>
 
     <style name="exp_list_parent_text_right_style" parent="@style/exp_list_parent_text_left_style">
-        <item name="android:textStyle">bold|italic</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="exp_list_child_text_left_primary_style" parent="@android:style/TextAppearance.Small">
