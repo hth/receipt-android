@@ -11,17 +11,20 @@
 
         <TextView
             android:id="@+id/billing_plan_text"
-            style="@style/text_medium"
-            android:layout_width="wrap_content"
+            style="@style/billing_history_list_item_style"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/billing_plan"/>
 
         <TextView
             android:id="@+id/billing_plan_value"
-            style="@style/text_medium"
+            style="@style/billing_history_list_item_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
 
     </LinearLayout>
 
@@ -32,17 +35,20 @@
 
         <TextView
             android:id="@+id/billing_date_text"
-            style="@style/text_medium"
-            android:layout_width="wrap_content"
+            style="@style/billing_history_list_item_style"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/billing_date"/>
 
         <TextView
             android:id="@+id/billing_date_value"
-            style="@style/text_medium"
+            style="@style/billing_history_list_item_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"/>
 
     </LinearLayout>
 
