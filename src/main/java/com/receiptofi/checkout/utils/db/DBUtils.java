@@ -96,4 +96,12 @@ public class DBUtils {
         Log.d(TAG, "Number of table count in db " + count);
         return count;
     }
+
+    public static void clearDB(String tableName) {
+        RDH.getReadableDatabase().delete(
+                tableName,
+                null,
+                null
+        );
+    }
 }

@@ -52,14 +52,12 @@ public class KeyValueUtils {
         ContentValues contentValues = new ContentValues();
         contentValues.put(DatabaseTable.KeyValue.VALUE, "");
 
-        boolean success = RDH.getWritableDatabase().update(
+        return RDH.getWritableDatabase().update(
                 DatabaseTable.KeyValue.TABLE_NAME,
                 contentValues,
                 DatabaseTable.KeyValue.KEY + "=?",
                 new String[]{key}
         ) > 0;
-
-        return success;
     }
 
     //http://www.androidhive.info/2011/11/android-sqlite-database-tutorial/
@@ -101,11 +99,7 @@ public class KeyValueUtils {
     }
 
     public static void clearReceiptsDB() {
-        RDH.getReadableDatabase().delete(
-                DatabaseTable.Receipt.TABLE_NAME,
-                null,
-                null
-        );
+        DBUtils.clearDB(DatabaseTable.Receipt.TABLE_NAME);
     }
 
     public static class KEYS {
