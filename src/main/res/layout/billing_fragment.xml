@@ -57,6 +57,7 @@
         android:id="@+id/billing_history_header"
         style="@style/billing_fragment_style"
         android:paddingLeft="10dp"
+        android:textSize="18sp"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
