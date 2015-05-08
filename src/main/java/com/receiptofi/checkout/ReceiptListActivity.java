@@ -309,7 +309,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     }
 
     private void launchSettings() {
-        startActivity(new Intent(this, SettingsActivity.class));
+        startActivity(new Intent(this, PreferencesTabActivity.class));
     }
 
     private void logout() {

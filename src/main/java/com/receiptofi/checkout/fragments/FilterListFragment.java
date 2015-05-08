@@ -49,8 +49,6 @@ public class FilterListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         explv = (ExpandableListView) view.findViewById(R.id.exp_list_view);
         explv.setEmptyView(view.findViewById(R.id.empty_view));
         explv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);

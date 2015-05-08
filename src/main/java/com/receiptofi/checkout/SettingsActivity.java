@@ -28,26 +28,21 @@ import java.util.Map;
 import java.util.Set;
 
 public class SettingsActivity extends PreferenceActivity {
-
     private static final String TAG = SettingsActivity.class.getSimpleName();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new PrefFragment())
                 .commit();
-
     }
 
     /**
      * This fragment shows the preferences for the first header.
      */
     public static class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
-
         protected static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
-
         private final Handler updateHandler = new Handler() {
             public void handleMessage(Message msg) {
                 final int what = msg.what;
@@ -117,12 +112,9 @@ public class SettingsActivity extends PreferenceActivity {
             } else if (key.equals(getString(R.string.key_pref_notification))) {
                 Log.d(TAG, "notification setting changed- new value: " + sharedPreferences.getBoolean(key, false));
                 //TODO add this
-
             } else {
                 Log.d(TAG, "No match for key: " + key);
             }
-
-
         }
 
         private void updateLoginId(String key, String data) {
