@@ -21,7 +21,6 @@ import com.receiptofi.checkout.utils.db.BillingAccountUtils;
  * Created by PT on 4/9/15.
  */
 public class BillingFragment extends Fragment {
-
     private static final String TAG = BillingFragment.class.getSimpleName();
 
     private TextView billingPlan;
@@ -41,7 +40,6 @@ public class BillingFragment extends Fragment {
 
         billingPlan = (TextView) rootView.findViewById(R.id.billing_plan_value);
         billingDate = (TextView) rootView.findViewById(R.id.billing_date_value);
-
 
         billingHistoryList = (ListView) rootView.findViewById(R.id.billing_history_list);
         billingHistoryList.setAdapter(new BillingListAdapter(getActivity()));
