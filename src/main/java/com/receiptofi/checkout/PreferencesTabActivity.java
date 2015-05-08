@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 
 import com.receiptofi.checkout.fragments.BillingFragment;
 import com.receiptofi.checkout.fragments.PrefFragment;
@@ -16,37 +17,35 @@ import com.receiptofi.checkout.fragments.ProfileFragment;
  * Created by PT on 4/9/15.
  */
 public class PreferencesTabActivity extends FragmentActivity implements ActionBar.TabListener {
-    CollectionPagerAdapter mCollectionPagerAdapter;
-    ViewPager mViewPager;
+    private static final String TAG = PreferencesTabActivity.class.getSimpleName();
+    private CollectionPagerAdapter mCollectionPagerAdapter;
+    private ViewPager mViewPager;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate Preference");
         setContentView(R.layout.preferences_activity);
 
-        mCollectionPagerAdapter = new CollectionPagerAdapter(
-                getSupportFragmentManager());
-
+        mCollectionPagerAdapter = new CollectionPagerAdapter(getSupportFragmentManager());
         final ActionBar actionBar = getActionBar();
         actionBar.setHomeButtonEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mCollectionPagerAdapter);
-        mViewPager
-                .setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-
+        mViewPager.setOnPageChangeListener(
+                new ViewPager.SimpleOnPageChangeListener() {
                     @Override
-
                     public void onPageSelected(int position) {
                         actionBar.setSelectedNavigationItem(position);
                     }
+                }
+        );
 
-                });
         for (int i = 0; i < mCollectionPagerAdapter.getCount(); i++) {
             actionBar.addTab(actionBar.newTab()
                     .setText(mCollectionPagerAdapter.getPageTitle(i))
                     .setTabListener(this));
         }
-
     }
 
     @Override
@@ -65,12 +64,10 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
     }
 
     public class CollectionPagerAdapter extends FragmentPagerAdapter {
-
-        final int NUM_ITEMS = 3; // number of tabs
-
+        /** Number of tabs. */
+        final int NUM_ITEMS = 3;
         public CollectionPagerAdapter(FragmentManager fm) {
             super(fm);
-
         }
 
         @Override
@@ -86,9 +83,7 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
 
         @Override
         public int getCount() {
-
             return NUM_ITEMS;
-
         }
 
         @Override
@@ -104,12 +99,9 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
                 case 2:
                     tabLabel = getString(R.string.billing);
                     break;
-
             }
 
             return tabLabel;
-
         }
     }
-
 }

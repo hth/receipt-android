@@ -337,6 +337,13 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
     */
 
+    /**
+     * On Pie selection.
+     *
+     * @param entry
+     * @param index
+     * @param h
+     */
     @Override
     public void onValueSelected(Entry entry, int index, Highlight h) {
         String bizName = expByBizData.getXVals().get(entry.getXIndex());
