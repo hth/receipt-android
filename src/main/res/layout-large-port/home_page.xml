@@ -128,16 +128,17 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
                     android:orientation="vertical">
-                <TextView
-                    android:id="@+id/textView3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="70dp"
-                    android:layout_marginStart="70dp"
-                    android:text="@string/view_receipt"
-                    android:textColor="@drawable/action_button_text_color"
-                    android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="70dp"
+                        android:layout_marginStart="70dp"
+                        android:text="@string/view_receipt"
+                        android:textColor="@drawable/action_button_text_color"
+                        android:textStyle="bold"/>
 
                     <TextView
                         android:id="@+id/processing_info"
@@ -178,11 +179,18 @@
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart"
+            android:layout_height="400dp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@+id/current_amount"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"/>
+
+        <com.receiptofi.checkout.views.FlowLayout
+            android:id="@+id/legend_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pie_chart"
+            android:orientation="horizontal" />
 
         <TextView
             android:id="@+id/empty_chart"

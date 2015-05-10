@@ -23,12 +23,14 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -41,6 +43,7 @@ import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
+import com.receiptofi.checkout.views.FlowLayout;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -236,36 +239,24 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // change the color of the center-hole
         mChart.setDrawHoleEnabled(true);
         mChart.setHoleColorTransparent(true);
-
-        // Causing java.lang.RuntimeException: native typeface cannot be made
-        mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
-
-
         mChart.setHoleRadius(45f);
 
         mChart.setDrawCenterText(true);
         mChart.setRotationAngle(0);
         // enable rotation of the chart by touch
         mChart.setRotationEnabled(true);
-        //mChart.setDescription(getString(R.string.chart_desc));
-        //mChart.setDescriptionTextSize(16f);
-        mChart.setDescription("");
 
+        mChart.setDescription("");
         // display percentage values
         mChart.setUsePercentValues(true);
 
         // add a selection listener
         mChart.setOnChartValueSelectedListener(this);
-        // mChart.setTouchEnabled(false);
 
         mChart.setCenterText(getString(R.string.chart_desc_short));
-        mChart.setCenterTextSize(12f);
-/*
-        Legend l = mChart.getLegend();
-        l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART);
-        l.setXEntrySpace(7f);
-        l.setYEntrySpace(5f);
-        */
+        mChart.setCenterTextSize(14f);
+        mChart.setCenterTextColor(getResources().getColor(R.color.app_theme_txt_color));
+        mChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
     }
 
     private void updateChartData() {
@@ -286,6 +277,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             mChart.highlightValues(null);
 
             mChart.invalidate();
+            addLegend();
         } else {
             mChart.setVisibility(View.GONE);
             emptyChart.setVisibility(View.VISIBLE);
@@ -304,38 +296,34 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             mChart.highlightValues(null);
 
             mChart.invalidate();
+            addLegend();
         } else {
             mChart.setVisibility(View.GONE);
             emptyChart.setVisibility(View.VISIBLE);
         }
     }
 
-    /*
-    private void updateChartData() {
-        if (expByBizAnimate) {
-            mChart.animateXY(1500, 1500);
-            // mChart.spin(2000, 0, 360);
-            expByBizAnimate = false;
+    private void addLegend(){
+        Legend legend = mChart.getLegend();
+        int[] colorCodes = legend.getColors();
+        String[] labelArr = legend.getLegendLabels();
+        legend.setEnabled(false);
+
+        FlowLayout ll = (FlowLayout)findViewById(R.id.legend_layout);
+        ll.removeAllViews();
+        for (int i = 0; i < colorCodes.length; i++){
+
+            LinearLayout legendLayout = (LinearLayout)LayoutInflater.from(this).inflate(R.layout.legend_item, null);
+
+            View legendColor = legendLayout.getChildAt(0);
+            legendColor.setBackgroundColor(colorCodes[i]);
+
+            TextView legendText = (TextView)legendLayout.getChildAt(1);
+            legendText.setText(labelArr[i]);
+
+            ll.addView(legendLayout);
         }
-
-        expByBizData = ChartService.getPieData();
-        mChart.setData(expByBizData);
-
-        // undo all highlights
-        mChart.highlightValues(null);
-
-        mChart.invalidate();
     }
-
-    private void setUpChartData() {
-        mChart.setData(expByBizData);
-
-        // undo all highlights
-        mChart.highlightValues(null);
-
-        mChart.invalidate();
-    }
-    */
 
     /**
      * On Pie selection.

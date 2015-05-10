@@ -225,13 +225,16 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
                 ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
+                // Assign values only if fields have been changed
                 boolean reCheck = recheckBox.isChecked();
                 String tagId = null;
                 if (selectedTagModel != null && !selectedTagModel.getId().equals(rModel.getExpenseTagId())) {
                     tagId = selectedTagModel.getId();
                 }
                 String notes = null;
-                if (!(noteText.getText().toString()).equals(rModel.getNotes())) {
+                String newNotes = noteText.getText().toString();
+                if (!(TextUtils.isEmpty(notes) && TextUtils.isEmpty(newNotes))
+                        && !(noteText.getText().toString()).equals(rModel.getNotes())) {
                     notes = noteText.getText().toString();
                 }
                 Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + " notes: " + notes);
