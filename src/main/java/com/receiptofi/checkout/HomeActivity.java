@@ -241,7 +241,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         mChart.setHoleColorTransparent(true);
 
         // Causing java.lang.RuntimeException: native typeface cannot be made
-        mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
+        //mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
 
 
         mChart.setHoleRadius(45f);
@@ -262,7 +262,10 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // mChart.setTouchEnabled(false);
 
         mChart.setCenterText(getString(R.string.chart_desc_short));
-        mChart.setCenterTextSize(12f);
+        mChart.setCenterTextSize(14f);
+        mChart.setCenterTextColor(getResources().getColor(R.color.app_theme_txt_color));
+        mChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+
     }
 
     private void updateChartData() {
