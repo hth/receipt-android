@@ -7,7 +7,7 @@
 
     <item
         android:state_selected="true"
-        android:drawable="@color/app_light_bg" />
+        android:drawable="@color/app_light_bg"/>
 
     <item
         android:state_activated="true"
@@ -17,6 +17,6 @@
         android:state_checked="true"
         android:drawable="@color/app_light_bg"/>
 
-    <item android:drawable="@color/transparent" />
+    <item android:drawable="@color/transparent"/>
 
 </selector> 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true"
-    android:background="@color/app_light_bg">
+            android:id="@+id/scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+            android:background="@color/app_light_bg">
 
     <RelativeLayout
         android:id="@+id/parent_container"
@@ -32,7 +32,7 @@
                 android:layout_marginLeft="@dimen/image_info_margin_side"
                 android:layout_marginRight="@dimen/image_info_margin_side"
                 android:src="@drawable/app_logo"
-                android:contentDescription="@string/app_info_cnt_dscp" />
+                android:contentDescription="@string/app_info_cnt_dscp"/>
 
             <TextView
                 android:id="@+id/logo_view_text"
@@ -42,7 +42,7 @@
                 android:layout_marginBottom="@dimen/activity_horizontal_margin_wide"
                 android:layout_centerHorizontal="true"
                 style="@style/logo_text_style"
-                android:text="@string/app_name" />
+                android:text="@string/app_name"/>
 
         </RelativeLayout>
 
@@ -69,7 +69,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/facebook"
-                    android:contentDescription="@string/facebook_login_cnt_dscp" />
+                    android:contentDescription="@string/facebook_login_cnt_dscp"/>
 
                 <TextView
                     android:id="@+id/facebook_login_text"
@@ -80,7 +80,7 @@
                     android:gravity="center"
                     android:text="@string/login_with_facebook"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"/>
             </LinearLayout>
 
             <LinearLayout
@@ -99,7 +99,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@drawable/google"
-                    android:contentDescription="@string/google_login_cnt_dscp" />
+                    android:contentDescription="@string/google_login_cnt_dscp"/>
 
                 <TextView
                     android:id="@+id/google_login_text"
@@ -110,7 +110,7 @@
                     android:gravity="center"
                     android:text="@string/login_with_google"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"/>
             </LinearLayout>
 
             <TextView
@@ -123,7 +123,7 @@
                 android:gravity="center_horizontal"
                 android:text="@string/use_email"
                 android:textAppearance="?android:attr/textAppearanceSmall"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,12 +140,12 @@
                     android:gravity="center"
                     android:text="@string/sign_up"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"/>
 
                 <View
                     android:layout_width="@dimen/activity_horizontal_margin"
                     android:layout_height="match_parent"
-                    android:background="@color/transparent" />
+                    android:background="@color/transparent"/>
 
                 <TextView
                     android:id="@+id/sign_in_button"
@@ -156,7 +156,7 @@
                     android:gravity="center"
                     android:text="@string/log_in"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@android:color/white" />
+                    android:textColor="@android:color/white"/>
             </LinearLayout>
 
 

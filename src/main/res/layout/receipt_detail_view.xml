@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/app_light_bg"
-    android:fillViewport="true">
+            android:id="@+id/scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/app_light_bg"
+            android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -13,8 +13,8 @@
         android:paddingBottom="@dimen/activity_horizontal_margin_narrow"
         android:paddingLeft="@dimen/activity_horizontal_margin_narrow"
         android:paddingRight="@dimen/activity_horizontal_margin_narrow"
-        android:orientation="horizontal" >
-        
+        android:orientation="horizontal">
+
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -28,11 +28,11 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/notify_empty_detail" />
+                android:text="@string/notify_empty_detail"/>
 
-            <include layout="@layout/rd_address_block" />
+            <include layout="@layout/rd_address_block"/>
 
-            <include layout="@layout/rd_date_block" />
+            <include layout="@layout/rd_date_block"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -49,33 +49,33 @@
 
         </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/rd_drawer_indicator_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
-        android:layout_marginLeft="@dimen/activity_horizontal_margin_narrow"
-        android:orientation="vertical"
-        android:visibility="gone" >
-
-        <ImageView
+        <LinearLayout
+            android:id="@+id/rd_drawer_indicator_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|top"
-            android:src="@drawable/drawer_left_arrow" />
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin_narrow"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_gravity="end|center_vertical"
-            android:src="@drawable/drawer_left_arrow" />
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|top"
+                android:src="@drawable/drawer_left_arrow"/>
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:src="@drawable/drawer_left_arrow" />
-    </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/drawer_left_arrow"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end|bottom"
+                android:src="@drawable/drawer_left_arrow"/>
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -3,7 +3,7 @@
     <style name="AppBaseTheme" parent="android:Theme.Light"></style>
 
     <style name="logo_text_style" parent="@android:style/TextAppearance.Large">
-        <item name="android:textColor">@color/app_theme_txt_color </item>
+        <item name="android:textColor">@color/app_theme_txt_color</item>
         <item name="android:typeface">sans</item>
         <item name="android:textSize">30sp</item>
     </style>
@@ -130,7 +130,7 @@
         <item name="android:paddingBottom">@dimen/rd_list_item_vertical_padding</item>
     </style>
 
-<!--  /////////////////////////////////////////////////////////////////////////////////////// -->
+    <!--  /////////////////////////////////////////////////////////////////////////////////////// -->
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
