@@ -1,7 +1,7 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/receipt_drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+                                        android:id="@+id/receipt_drawer_layout"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent">
 
     <!-- The main content view -->
     <LinearLayout
@@ -14,21 +14,21 @@
             android:name="com.receiptofi.checkout.fragments.ReceiptListFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="3" />
+            android:layout_weight="3"/>
 
         <View
             android:layout_width=".5dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="@dimen/activity_vertical_margin"
             android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:background="@color/gray_light" />
+            android:background="@color/gray_light"/>
 
         <fragment
             android:id="@+id/rdetail_fragment"
             android:name="com.receiptofi.checkout.fragments.ReceiptDetailFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4" />
+            android:layout_weight="4"/>
 
     </LinearLayout>
 
@@ -39,9 +39,9 @@
         android:layout_width="280dp"
         android:layout_gravity="end"
         android:background="@color/app_light_bg"
-        android:orientation="vertical" >
+        android:orientation="vertical">
 
-        <include layout="@layout/receipt_action_layout" />
+        <include layout="@layout/receipt_action_layout"/>
 
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

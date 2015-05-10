@@ -5,13 +5,13 @@
         android:key="@string/key_pref_sync"
         android:title="@string/pref_sync"
         android:summaryOn="@string/pref_sync_on"
-        android:summaryOff="@string/pref_sync_off" />
+        android:summaryOff="@string/pref_sync_off"/>
 
     <com.receiptofi.checkout.views.LoginIdPreference
         android:id="@+id/pref_user_id"
         android:key="@string/key_pref_login_id"
         android:title="@string/pref_login_id"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"/>
 
     <com.receiptofi.checkout.views.PasswordPreference
         android:id="@+id/pref_password"
@@ -27,6 +27,6 @@
         android:key="@string/key_pref_notification"
         android:title="@string/pref_notification"
         android:summaryOn="@string/pref_notification_on"
-        android:summaryOff="@string/pref_notification_off" />
+        android:summaryOff="@string/pref_notification_off"/>
 
 </PreferenceScreen>

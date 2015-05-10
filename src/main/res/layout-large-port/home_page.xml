@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fillViewport="true"
-    android:background="@color/app_light_bg">
+            android:id="@+id/scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:fillViewport="true"
+            android:background="@color/app_light_bg">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin" >
+        android:padding="@dimen/activity_horizontal_margin">
 
         <RelativeLayout
             android:id="@+id/action_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:orientation="vertical" >
+            android:orientation="vertical">
 
 
             <LinearLayout
@@ -38,7 +38,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/action_icon_camera_bg" />
+                    android:background="@drawable/action_icon_camera_bg"/>
 
                 <TextView
                     android:id="@+id/textView1"
@@ -49,7 +49,7 @@
                     android:layout_marginStart="60dp"
                     android:text="@string/take_photo"
                     android:textColor="@drawable/action_button_text_color"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
 
             </LinearLayout>
 
@@ -58,7 +58,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="5dp"/>
 
             <LinearLayout
                 android:id="@+id/gallery_action_layout"
@@ -80,7 +80,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/action_icon_gallery_bg" />
+                    android:background="@drawable/action_icon_gallery_bg"/>
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -90,7 +90,7 @@
                     android:layout_marginStart="60dp"
                     android:text="@string/choose_photo"
                     android:textColor="@drawable/action_button_text_color"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"/>
             </LinearLayout>
 
             <View
@@ -99,7 +99,7 @@
                 android:layout_height="100dp"
                 android:layout_below="@id/camera_action_layout"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="5dp"/>
 
             <LinearLayout
                 android:id="@+id/list_action_layout"
@@ -121,7 +121,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:background="@drawable/action_icon_list_bg" />
+                    android:background="@drawable/action_icon_list_bg"/>
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -148,7 +148,7 @@
                         android:layout_marginLeft="50dp"
                         android:layout_marginStart="50dp"
                         android:textColor="@color/common_signin_btn_dark_text_disabled"
-                        android:text="@string/processing_info" />
+                        android:text="@string/processing_info"/>
                 </LinearLayout>
 
             </LinearLayout>
@@ -159,7 +159,7 @@
                 android:layout_height="100dp"
                 android:layout_below="@id/gallery_action_layout"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="5dp" />
+                android:layout_marginBottom="5dp"/>
 
         </RelativeLayout>
 
@@ -174,7 +174,7 @@
             android:padding="@dimen/activity_touch_padding"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:textColor="@drawable/action_button_text_color"
-            android:textStyle="bold" />
+            android:textStyle="bold"/>
 
 
         <com.github.mikephil.charting.charts.PieChart
@@ -190,7 +190,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/pie_chart"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"/>
 
         <TextView
             android:id="@+id/empty_chart"
