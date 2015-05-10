@@ -239,33 +239,24 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // change the color of the center-hole
         mChart.setDrawHoleEnabled(true);
         mChart.setHoleColorTransparent(true);
-
-        // Causing java.lang.RuntimeException: native typeface cannot be made
-        //mChart.setCenterTextTypeface(Typeface.createFromAsset(getAssets(), "fonts/OpenSans-Light.ttf"));
-
-
         mChart.setHoleRadius(45f);
 
         mChart.setDrawCenterText(true);
         mChart.setRotationAngle(0);
         // enable rotation of the chart by touch
         mChart.setRotationEnabled(true);
-        //mChart.setDescription(getString(R.string.chart_desc));
-        //mChart.setDescriptionTextSize(16f);
-        mChart.setDescription("");
 
+        mChart.setDescription("");
         // display percentage values
         mChart.setUsePercentValues(true);
 
         // add a selection listener
         mChart.setOnChartValueSelectedListener(this);
-        // mChart.setTouchEnabled(false);
 
         mChart.setCenterText(getString(R.string.chart_desc_short));
         mChart.setCenterTextSize(14f);
         mChart.setCenterTextColor(getResources().getColor(R.color.app_theme_txt_color));
         mChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
-
     }
 
     private void updateChartData() {
