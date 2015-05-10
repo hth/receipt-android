@@ -69,7 +69,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private TextView taxAmountView;
     private TextView totalAmountView;
     // Receipt action drawer
-    private ImageView drawerIndicator;
+    private LinearLayout drawerIndicator;
     private List<ReceiptItemModel> itemList;
 
     @Override
@@ -114,7 +114,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
         rdItemsList.addFooterView(totalFooter);
 
-        drawerIndicator = (ImageView) receiptDetailView.findViewById(R.id.rd_drawer_indicator);
+        drawerIndicator = (LinearLayout)receiptDetailView.findViewById(R.id.rd_drawer_indicator_layout);
 
         return receiptDetailView;
 
@@ -142,13 +142,14 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     public void updateReceiptDetailView(int index, int position) {
         // Coming from ReceiptListActivity: we show and activate drawer view
-        if (drawerIndicator.getVisibility() == View.GONE) {
+        if(drawerIndicator.getVisibility() == View.GONE){
             drawerIndicator.setVisibility(View.VISIBLE);
         }
         drawerIndicator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ((ReceiptListActivity) getActivity()).openDrawer();
+                Log.d(TAG, "!!!!!!!!!!! drawer icon clicked");
+                        ((ReceiptListActivity) getActivity()).openDrawer();
             }
         });
 
@@ -212,7 +213,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             //Phone action
             final String phoneNumber = rdModel.getPhone().trim();
             rdBizPhone.setText(phoneNumber);
-            if (!AppUtils.isTablet(getActivity())) {
+            if(!AppUtils.isTablet(getActivity())) {
                 rdBizPhone.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -322,7 +323,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         // TODO: fix me - 1. No calendar
         // TODO:          2. Multiple calendar
         Map<Long, String> calendarMap = getAllCalendars();
-        if (null != calendarMap && !calendarMap.isEmpty()) {
+        if (calendarMap != null && calendarMap.size() > 0) {
             Long calId = -1L;
             for (Entry entry : calendarMap.entrySet()) {
                 calId = (Long) entry.getKey();
@@ -370,4 +371,5 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         Log.d(TAG, "found calendars " + calendarMap.toString());
         return calendarMap;
     }
+
 }
