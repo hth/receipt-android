@@ -219,7 +219,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         unprocessedDocumentCount = (TextView) findViewById(R.id.processing_info);
         currentMonthExp = (TextView) findViewById(R.id.current_amount);
         mChart = (PieChart) findViewById(R.id.pie_chart);
-        emptyChart = (TextView)findViewById(R.id.empty_chart);
+        emptyChart = (TextView) findViewById(R.id.empty_chart);
         setUpChartView();
     }
 
@@ -261,8 +261,8 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
     private void updateChartData() {
         expByBizData = ChartService.getPieData();
-        if(expByBizData.getXVals().size() > 0) {
-            if(mChart.getVisibility() == View.GONE){
+        if (expByBizData.getXVals().size() > 0) {
+            if (mChart.getVisibility() == View.GONE) {
                 mChart.setVisibility(View.VISIBLE);
                 emptyChart.setVisibility(View.GONE);
             }
@@ -285,8 +285,8 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
 
     private void setUpChartData() {
-        if(expByBizData.getXVals().size() > 0) {
-            if(mChart.getVisibility() == View.GONE){
+        if (expByBizData.getXVals().size() > 0) {
+            if (mChart.getVisibility() == View.GONE) {
                 mChart.setVisibility(View.VISIBLE);
                 emptyChart.setVisibility(View.GONE);
             }
@@ -303,22 +303,22 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         }
     }
 
-    private void addLegend(){
+    private void addLegend() {
         Legend legend = mChart.getLegend();
         int[] colorCodes = legend.getColors();
         String[] labelArr = legend.getLegendLabels();
         legend.setEnabled(false);
 
-        FlowLayout ll = (FlowLayout)findViewById(R.id.legend_layout);
+        FlowLayout ll = (FlowLayout) findViewById(R.id.legend_layout);
         ll.removeAllViews();
-        for (int i = 0; i < colorCodes.length; i++){
+        for (int i = 0; i < colorCodes.length; i++) {
 
-            LinearLayout legendLayout = (LinearLayout)LayoutInflater.from(this).inflate(R.layout.legend_item, null);
+            LinearLayout legendLayout = (LinearLayout) LayoutInflater.from(this).inflate(R.layout.legend_item, null);
 
             View legendColor = legendLayout.getChildAt(0);
             legendColor.setBackgroundColor(colorCodes[i]);
 
-            TextView legendText = (TextView)legendLayout.getChildAt(1);
+            TextView legendText = (TextView) legendLayout.getChildAt(1);
             legendText.setText(labelArr[i]);
 
             ll.addView(legendLayout);
