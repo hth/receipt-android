@@ -22,7 +22,7 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class ExpenseTagUtils {
 
     private static final String TAG = ExpenseTagUtils.class.getSimpleName();
-    private static Map<String, ExpenseTagModel> expenseTagModels = new LinkedHashMap<>();
+    private static Map<String, ExpenseTagModel> expenseTagModels = null;
 
     /**
      * Expense Tag is static list available across the app. Anytime expense tag is added, deleted, updated, then

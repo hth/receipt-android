@@ -111,7 +111,9 @@ public class DeviceService {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
         ReceiptUtils.insert(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
-        ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
+        if (!dataWrapper.getExpenseTagModels().isEmpty()) {
+            ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
+        }
         NotificationUtils.insert(dataWrapper.getNotificationModels());
         if (null != dataWrapper.getBillingAccountModel()) {
             BillingAccountUtils.insertOrReplace(dataWrapper.getBillingAccountModel());

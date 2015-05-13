@@ -88,10 +88,8 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             receiptListFragment.setArguments(getIntent().getExtras());
 
             // Add the fragment to the 'fragment_container' FrameLayout
-            getFragmentManager().beginTransaction()
-                    .add(R.id.fragment_container, receiptListFragment).commit();
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, receiptListFragment).commit();
         }
-
     }
 
     @Override
@@ -232,9 +230,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                     tagId = selectedTagModel.getId();
                 }
                 String notes = null;
-                String newNotes = noteText.getText().toString();
-                if (!(TextUtils.isEmpty(notes) && TextUtils.isEmpty(newNotes))
-                        && !(noteText.getText().toString()).equals(rModel.getNotes())) {
+                if (!TextUtils.isEmpty(noteText.getText().toString()) && !(noteText.getText().toString()).equals(rModel.getNotes())) {
                     notes = noteText.getText().toString();
                 }
                 Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + " notes: " + notes);
