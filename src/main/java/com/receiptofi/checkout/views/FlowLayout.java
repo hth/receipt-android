@@ -124,7 +124,7 @@ public class  FlowLayout extends ViewGroup {
     @Override
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
 
-        LinkedList<MyView> row = new LinkedList<MyView>();
+        LinkedList<MyView> row = new LinkedList<>();
         if (isRTL) {
             int layoutWidth = right - left;
             int childRight = layoutWidth - getPaddingRight();
