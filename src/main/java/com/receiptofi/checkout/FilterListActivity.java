@@ -12,15 +12,19 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
 
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
+import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ReceiptGroup;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.Constants.ReceiptFilter;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import java.util.Date;
@@ -177,6 +181,27 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         return true;
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                DeviceService.getNewUpdates();
+                return true;
+            case R.id.menu_notofication:
+                launchNotifications();
+                return true;
+            case R.id.menu_settings:
+                launchSettings();
+                return true;
+            case R.id.menu_logout:
+                logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     private SearchView setSearchConfig(Menu menu) {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -219,5 +244,19 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
             filterListFragment.notifyDataChanged(receiptGroup);
         }
+    }
+
+    private void launchNotifications() {
+        startActivity(new Intent(this, NotificationActivity.class));
+    }
+
+    private void launchSettings() {
+        startActivity(new Intent(this, PreferencesTabActivity.class));
+    }
+
+    private void logout() {
+        KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
+        startActivity(new Intent(this, LaunchActivity.class));
+        finish();
     }
 }
