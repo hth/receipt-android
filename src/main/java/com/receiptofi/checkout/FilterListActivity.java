@@ -20,7 +20,6 @@ import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.Constants.FilterActionBarType;
 import com.receiptofi.checkout.utils.Constants.ReceiptFilter;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
@@ -37,9 +36,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     private int childIndex = -1;
 
     private FilterListFragment filterListFragment = null;
-    private ReceiptGroup receiptData;
     private ReceiptFilter receiptFilter;
-    private FilterActionBarType actionBarType;
 
     /**
      * Called when the activity is first created.
@@ -56,12 +53,10 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             if (ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)) {
                 receiptFilter = ReceiptFilter.FILTER_BY_BIZ_AND_MONTH;
                 new FilterDataTask().execute(ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue(), getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME));
-                actionBarType = FilterActionBarType.MENU_MAIN;
                 addFragments(savedInstanceState);
             }
         } else if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
             receiptFilter = ReceiptFilter.FILTER_BY_KEYWORD;
-            actionBarType = FilterActionBarType.MENU_FILTER;
             handleIntent(getIntent());
         }
     }
@@ -177,18 +172,8 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(TAG, "executing onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
-        if (actionBarType == FilterActionBarType.MENU_MAIN) {
-            inflater.inflate(R.menu.menu_main, menu);
-            setSearchConfig(menu);
-        } else {
-            Log.d(TAG, "Inflating menu for FilterActionBarType.MENU_FILTER");
-            inflater.inflate(R.menu.menu_filter, menu);
-            SearchView searchView = setSearchConfig(menu);
-
-            if (getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
-                searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
-            }
-        }
+        inflater.inflate(R.menu.menu_main, menu);
+        setSearchConfig(menu);
         return true;
     }
 
@@ -199,9 +184,14 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         searchView.setIconifiedByDefault(false);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        if (getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
+            searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
+        }
+
         int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
         return searchView;
     }
 
@@ -226,7 +216,6 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
 
         @Override
         protected void onPostExecute(ReceiptGroup receiptGroup) {
-            receiptData = receiptGroup;
             Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
             filterListFragment.notifyDataChanged(receiptGroup);
         }
