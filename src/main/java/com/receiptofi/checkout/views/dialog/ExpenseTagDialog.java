@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -78,7 +77,6 @@ public class ExpenseTagDialog extends DialogFragment {
         final ColorPickerView colorPicker = (ColorPickerView) rootView.findViewById(R.id.edit_tag_colorPicker);
         label = (EditText) rootView.findViewById(R.id.edit_tag_label);
         label.setSelected(false);
-        label.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
 
         if (DialogMode.MODE_UPDATE == dialogMode) {
             tagModel = ExpenseTagUtils.getExpenseTagModels().get(tagId);
