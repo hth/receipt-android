@@ -33,6 +33,7 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -161,7 +162,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            receiptDetailFragment.updateReceiptDetailView(index, position);
+            receiptDetailFragment.updateReceiptDetailView(index, position, false);
 
         } else {
             Log.d(TAG, "Instantiating new detail fragment");
@@ -170,8 +171,8 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             // Create fragment and give it an argument for the selected article
             ReceiptDetailFragment newFragment = new ReceiptDetailFragment();
             Bundle args = new Bundle();
-            args.putInt(ReceiptDetailFragment.ARG_INDEX, index);
-            args.putInt(ReceiptDetailFragment.ARG_POSITION, position);
+            args.putInt(Constants.ARG_INDEX, index);
+            args.putInt(Constants.ARG_POSITION, position);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
