@@ -13,6 +13,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -191,6 +193,10 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
+        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         return true;
     }
 
