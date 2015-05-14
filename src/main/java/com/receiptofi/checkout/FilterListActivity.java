@@ -18,6 +18,7 @@ import android.widget.SearchView;
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.model.ReceiptGroup;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.Constants.FilterActionBarType;
 import com.receiptofi.checkout.utils.Constants.ReceiptFilter;
@@ -80,7 +81,16 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // use the query to search your data somehow
             new FilterDataTask().execute(ReceiptFilter.FILTER_BY_KEYWORD.getValue(), intent.getStringExtra(SearchManager.QUERY));
-            addFragments(null);
+            if(filterListFragment == null){
+                addFragments(null);
+            }
+            if(!AppUtils.isTablet(this)){
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, filterListFragment);
+
+                // Commit the transaction
+                transaction.commit();
+            }
         }
     }
 
@@ -126,7 +136,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            receiptDetailFragment.updateReceiptDetailView(index, position, receiptData.getReceiptModels().get(index).get(position));
+            receiptDetailFragment.updateReceiptDetailView(index, position, true);
 
         } else {
             Log.d(TAG, "Instantiating new detail fragment");
@@ -135,8 +145,9 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             // Create fragment and give it an argument for the selected article
             ReceiptDetailFragment newFragment = new ReceiptDetailFragment();
             Bundle args = new Bundle();
-            args.putInt(ReceiptDetailFragment.ARG_INDEX, index);
-            args.putInt(ReceiptDetailFragment.ARG_POSITION, position);
+            args.putBoolean(Constants.ARG_TYPE_FILTER, true);
+            args.putInt(Constants.ARG_INDEX, index);
+            args.putInt(Constants.ARG_POSITION, position);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 

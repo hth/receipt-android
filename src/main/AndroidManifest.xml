@@ -88,7 +88,8 @@
         <activity
             android:name=".FilterListActivity"
             android:launchMode="singleTop"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
                 <category android:name="android.intent.category.DEFAULT" />

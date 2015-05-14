@@ -62,7 +62,7 @@ public class FilterListFragment extends Fragment {
                 expandableListView.setItemChecked(index, true);
 
                 ((FilterListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
-                return false;
+                return true;
             }
         });
     }
