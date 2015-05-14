@@ -54,11 +54,6 @@ public class Constants {
         }
     }
 
-    public enum FilterActionBarType {
-        MENU_MAIN,
-        MENU_FILTER
-    }
-
     public enum DialogMode {
         MODE_CREATE,
         MODE_UPDATE
