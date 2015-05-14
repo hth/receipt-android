@@ -14,6 +14,10 @@ public class Constants {
 
     public static final boolean SET_RECEIPT_REMINDER = false;
 
+    public final static String ARG_INDEX = "index";
+    public final static String ARG_POSITION = "position";
+    public final static String ARG_TYPE_FILTER = "filter";
+
     public static final String INTENT_EXTRA_FILTER_TYPE = "filter_type";
     public static final String INTENT_EXTRA_BIZ_NAME = "biz_name";
 
@@ -48,11 +52,6 @@ public class Constants {
         public String toString() {
             return filterType;
         }
-    }
-
-    public enum FilterActionBarType {
-        MENU_MAIN,
-        MENU_FILTER
     }
 
     public enum DialogMode {

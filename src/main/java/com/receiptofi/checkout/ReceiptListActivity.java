@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -16,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -31,6 +33,7 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -112,6 +115,11 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
+        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
         return true;
     }
 
@@ -154,7 +162,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            receiptDetailFragment.updateReceiptDetailView(index, position);
+            receiptDetailFragment.updateReceiptDetailView(index, position, false);
 
         } else {
             Log.d(TAG, "Instantiating new detail fragment");
@@ -163,8 +171,8 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             // Create fragment and give it an argument for the selected article
             ReceiptDetailFragment newFragment = new ReceiptDetailFragment();
             Bundle args = new Bundle();
-            args.putInt(ReceiptDetailFragment.ARG_INDEX, index);
-            args.putInt(ReceiptDetailFragment.ARG_POSITION, position);
+            args.putInt(Constants.ARG_INDEX, index);
+            args.putInt(Constants.ARG_POSITION, position);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 

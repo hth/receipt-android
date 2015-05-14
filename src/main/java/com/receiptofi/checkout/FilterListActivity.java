@@ -7,17 +7,19 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
 
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.model.ReceiptGroup;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.Constants.FilterActionBarType;
 import com.receiptofi.checkout.utils.Constants.ReceiptFilter;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
@@ -34,9 +36,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     private int childIndex = -1;
 
     private FilterListFragment filterListFragment = null;
-    private ReceiptGroup receiptData;
     private ReceiptFilter receiptFilter;
-    private FilterActionBarType actionBarType;
 
     /**
      * Called when the activity is first created.
@@ -53,12 +53,10 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             if (ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue().equalsIgnoreCase(filterType)) {
                 receiptFilter = ReceiptFilter.FILTER_BY_BIZ_AND_MONTH;
                 new FilterDataTask().execute(ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue(), getIntent().getStringExtra(Constants.INTENT_EXTRA_BIZ_NAME));
-                actionBarType = FilterActionBarType.MENU_MAIN;
                 addFragments(savedInstanceState);
             }
         } else if (Intent.ACTION_SEARCH.equals(getIntent().getAction())) {
             receiptFilter = ReceiptFilter.FILTER_BY_KEYWORD;
-            actionBarType = FilterActionBarType.MENU_FILTER;
             handleIntent(getIntent());
         }
     }
@@ -78,7 +76,16 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // use the query to search your data somehow
             new FilterDataTask().execute(ReceiptFilter.FILTER_BY_KEYWORD.getValue(), intent.getStringExtra(SearchManager.QUERY));
-            addFragments(null);
+            if(filterListFragment == null){
+                addFragments(null);
+            }
+            if(!AppUtils.isTablet(this)){
+                FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                transaction.replace(R.id.fragment_container, filterListFragment);
+
+                // Commit the transaction
+                transaction.commit();
+            }
         }
     }
 
@@ -124,7 +131,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             // If article frag is available, we're in two-pane layout...
 
             // Call a method in the ArticleFragment to update its content
-            receiptDetailFragment.updateReceiptDetailView(index, position, receiptData.getReceiptModels().get(index).get(position));
+            receiptDetailFragment.updateReceiptDetailView(index, position, true);
 
         } else {
             Log.d(TAG, "Instantiating new detail fragment");
@@ -133,8 +140,9 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             // Create fragment and give it an argument for the selected article
             ReceiptDetailFragment newFragment = new ReceiptDetailFragment();
             Bundle args = new Bundle();
-            args.putInt(ReceiptDetailFragment.ARG_INDEX, index);
-            args.putInt(ReceiptDetailFragment.ARG_POSITION, position);
+            args.putBoolean(Constants.ARG_TYPE_FILTER, true);
+            args.putInt(Constants.ARG_INDEX, index);
+            args.putInt(Constants.ARG_POSITION, position);
             newFragment.setArguments(args);
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
@@ -164,18 +172,8 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     public boolean onCreateOptionsMenu(Menu menu) {
         Log.d(TAG, "executing onCreateOptionsMenu");
         MenuInflater inflater = getMenuInflater();
-        if (actionBarType == FilterActionBarType.MENU_MAIN) {
-            inflater.inflate(R.menu.menu_main, menu);
-            setSearchConfig(menu);
-        } else {
-            Log.d(TAG, "Inflating menu for FilterActionBarType.MENU_FILTER");
-            inflater.inflate(R.menu.menu_filter, menu);
-            SearchView searchView = setSearchConfig(menu);
-
-            if (getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
-                searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
-            }
-        }
+        inflater.inflate(R.menu.menu_main, menu);
+        setSearchConfig(menu);
         return true;
     }
 
@@ -185,6 +183,15 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setIconifiedByDefault(false);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+
+        if (getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
+            searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
+        }
+
+        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
+        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
         return searchView;
     }
 
@@ -209,7 +216,6 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
 
         @Override
         protected void onPostExecute(ReceiptGroup receiptGroup) {
-            receiptData = receiptGroup;
             Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
             filterListFragment.notifyDataChanged(receiptGroup);
         }

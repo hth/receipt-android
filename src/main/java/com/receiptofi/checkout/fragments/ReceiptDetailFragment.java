@@ -46,10 +46,9 @@ import java.util.TimeZone;
  */
 public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.OnDateSetListener {
 
-    public final static String ARG_INDEX = "index";
-    public final static String ARG_POSITION = "position";
     private static final String TAG = ReceiptDetailFragment.class.getSimpleName();
     private static boolean dateSet = false;
+    boolean mTypeFilter = false;
     int mCurrentIndex = -1;
     int mCurrentPosition = -1;
     int mCurrItemIndex = -1;
@@ -78,8 +77,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
         if (savedInstanceState != null) {
-            mCurrentIndex = savedInstanceState.getInt(ARG_INDEX);
-            mCurrentPosition = savedInstanceState.getInt(ARG_POSITION);
+            mTypeFilter = savedInstanceState.getBoolean(Constants.ARG_TYPE_FILTER, false);
+            mCurrentIndex = savedInstanceState.getInt(Constants.ARG_INDEX);
+            mCurrentPosition = savedInstanceState.getInt(Constants.ARG_POSITION);
         }
 
         // Inflate the layout for this fragment
@@ -129,38 +129,38 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         Bundle args = getArguments();
         if (args != null) {
             // Set article based on argument passed in
-            updateReceiptDetailView(args.getInt(ARG_INDEX), args.getInt(ARG_POSITION));
+            updateReceiptDetailView(args.getInt(Constants.ARG_INDEX), args.getInt(Constants.ARG_POSITION),
+                    args.getBoolean(Constants.ARG_TYPE_FILTER, false));
         } else if (mCurrentIndex != -1 && mCurrentPosition != -1) {
             // Set article based on saved instance state defined during onCreateView
-            updateReceiptDetailView(mCurrentIndex, mCurrentPosition);
+            updateReceiptDetailView(mCurrentIndex, mCurrentPosition, mTypeFilter);
         }
     }
 
-    public void updateReceiptDetailView(int index, int position) {
-        // Coming from ReceiptListActivity: we show and activate drawer view
-        if (drawerIndicator.getVisibility() == View.GONE) {
-            drawerIndicator.setVisibility(View.VISIBLE);
-        }
-        drawerIndicator.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(TAG, "!!!!!!!!!!! drawer icon clicked");
-                ((ReceiptListActivity) getActivity()).openDrawer();
-            }
-        });
-
-        updateReceiptDetailView(index, position, null);
-    }
-
-    public void updateReceiptDetailView(int index, int position, ReceiptModel rdModel) {
+    public void updateReceiptDetailView(int index, int position, boolean isFilterList) {
         Log.d(TAG, "executing updateReceiptDetailView");
         try {
             if (index == -1 || position == -1) {
                 return;
             }
 
-            if (rdModel == null) {
+            ReceiptModel rdModel = null;
+            if(!isFilterList){
+                // Coming from ReceiptListActivity: we show and activate drawer view
+                if(drawerIndicator.getVisibility() == View.GONE){
+                    drawerIndicator.setVisibility(View.VISIBLE);
+                }
+                drawerIndicator.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Log.d(TAG, "!!!!!!!!!!! drawer icon clicked");
+                        ((ReceiptListActivity) getActivity()).openDrawer();
+                    }
+                });
                 rdModel = ReceiptListFragment.children.get(index).get(position);
+            } else {
+                // Coming from FilterListActivity: we show and activate drawer view
+                rdModel = FilterListFragment.children.get(index).get(position);
             }
 
             // Biz address
@@ -287,8 +287,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         Log.d(TAG, "executing onSaveInstanceState");
 
         // Save the current article selection in case we need to recreate the fragment
-        outState.putInt(ARG_INDEX, mCurrentIndex);
-        outState.putInt(ARG_POSITION, mCurrentPosition);
+        outState.putBoolean(Constants.ARG_TYPE_FILTER, mTypeFilter);
+        outState.putInt(Constants.ARG_INDEX, mCurrentIndex);
+        outState.putInt(Constants.ARG_POSITION, mCurrentPosition);
     }
 
     @Override

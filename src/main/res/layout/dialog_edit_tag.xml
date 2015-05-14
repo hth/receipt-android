@@ -9,7 +9,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         style="@style/text_large"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        android:inputType="textNoSuggestions"/>
 
     <com.receiptofi.checkout.views.ColorPickerView
         android:id="@+id/edit_tag_colorPicker"
