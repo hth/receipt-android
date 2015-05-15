@@ -6,10 +6,12 @@ import android.util.Log;
 import android.webkit.MimeTypeMap;
 
 import com.receiptofi.checkout.BuildConfig;
+import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.types.Protocol;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import org.apache.http.Header;
@@ -47,30 +49,37 @@ public final class ExternalCall {
     }
 
     public static void doPost(
+            Context context,
             JSONObject postData,
             String api,
             IncludeAuthentication includeAuthentication,
             ResponseHandler responseHandler
     ) {
-        doPost(postData, api, includeAuthentication, IncludeDevice.NO, responseHandler);
+        doPost(context, postData, api, includeAuthentication, IncludeDevice.NO, responseHandler);
     }
 
     public static void doPost(
+            Context context,
             String api,
             IncludeAuthentication includeAuthentication,
             IncludeDevice includeDevice,
             ResponseHandler responseHandler
     ) {
-        doPost(null, api, includeAuthentication, includeDevice, responseHandler);
+        doPost(context, null, api, includeAuthentication, includeDevice, responseHandler);
     }
 
     public static void doPost(
+            final Context context,
             final JSONObject postData,
             final String api,
             final IncludeAuthentication includeAuthentication,
             final IncludeDevice includeDevice,
             final ResponseHandler responseHandler
     ) {
+       if(!AppUtils.isNetworkConnected(context)){
+           responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
+           return;
+       }
         new Thread() {
             public void run() {
                 try {
@@ -116,9 +125,14 @@ public final class ExternalCall {
      * @param responseHandler
      */
     public static void authenticate(
+            final Context context,
             final List<NameValuePair> params,
             final ResponseHandler responseHandler
     ) {
+        if(!AppUtils.isNetworkConnected(context)){
+            responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
+            return;
+        }
         new Thread() {
             public void run() {
                 try {
@@ -143,15 +157,20 @@ public final class ExternalCall {
         }.start();
     }
 
-    public static void doGet(String api, ResponseHandler responseHandler) {
-        doGet(IncludeDevice.NO, api, responseHandler);
+    public static void doGet(Context context,String api, ResponseHandler responseHandler) {
+        doGet(context, IncludeDevice.NO, api, responseHandler);
     }
 
     public static void doGet(
+            final Context context,
             final IncludeDevice includeDevice,
             final String api,
             final ResponseHandler responseHandler
     ) {
+        if(!AppUtils.isNetworkConnected(context)){
+            responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
+            return;
+        }
         new Thread() {
             public void run() {
                 try {
@@ -216,6 +235,7 @@ public final class ExternalCall {
     }
 
     public static String getPostResponse(
+            Context context,
             List<NameValuePair> params,
             String API
     ) throws Exception {
@@ -244,7 +264,7 @@ public final class ExternalCall {
         return responseBuffer.toString();
     }
 
-    public static String getResponse(List<NameValuePair> params, String API) throws Exception {
+    public static String getResponse(Context context, List<NameValuePair> params, String API) throws Exception {
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet;
 
@@ -272,6 +292,7 @@ public final class ExternalCall {
     }
 
     public static void AsyncRequest(
+            final Context context,
             final List<NameValuePair> params,
             final String api,
             final String httpMethod,
@@ -280,14 +301,13 @@ public final class ExternalCall {
         new Thread() {
             @Override
             public void run() {
-                // TODO Auto-generated method stub
                 super.run();
                 String response = null;
                 try {
                     if (httpMethod.equalsIgnoreCase(Protocol.POST.name())) {
-                        response = getPostResponse(params, api);
+                        response = getPostResponse(context, params, api);
                     } else if (httpMethod.equalsIgnoreCase(Protocol.GET.name())) {
-                        response = getResponse(params, api);
+                        response = getResponse(context, params, api);
                     }
                     handler.onSuccess(null, null);
                 } catch (Exception e) {

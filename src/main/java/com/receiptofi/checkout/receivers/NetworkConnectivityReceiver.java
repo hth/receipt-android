@@ -4,9 +4,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.service.ImageUploaderService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import java.util.ArrayList;
@@ -20,6 +22,8 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
         if (queue != null && !queue.isEmpty()) {
             if (context != null && UserUtils.UserSettings.isStartImageUploadProcess(context)) {
                 ImageUploaderService.start(context);
+            } else {
+                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
             }
         }
     }

@@ -186,7 +186,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                DeviceService.getNewUpdates();
+                DeviceService.getNewUpdates(this);
                 return true;
             case R.id.menu_notofication:
                 launchNotifications();

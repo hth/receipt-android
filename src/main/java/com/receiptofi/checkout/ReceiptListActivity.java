@@ -128,7 +128,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                DeviceService.getNewUpdates();
+                DeviceService.getNewUpdates(this);
                 return true;
             case R.id.menu_notofication:
                 launchNotifications();
@@ -251,7 +251,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                         postData.put(ConstantsJson.RECHECK, reCheck ? "RECHECK" : "");
                         postData.put(ConstantsJson.RECEIPT_ID, rModel.getId());
 
-                        ExternalCall.doPost(postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
+                        ExternalCall.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
                             @Override
                             public void onSuccess(Header[] headers, String body) {
                                 DeviceService.onSuccess(headers, body);

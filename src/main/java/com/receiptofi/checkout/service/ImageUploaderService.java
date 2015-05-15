@@ -154,6 +154,8 @@ public class ImageUploaderService {
         }
         if (UserSettings.isStartImageUploadProcess(context)) {
             start(context);
+        } else {
+            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
         }
     }
 

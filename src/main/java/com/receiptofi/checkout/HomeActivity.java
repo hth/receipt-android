@@ -58,8 +58,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.US);
     public static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy MM", Locale.US);
 
-    public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
-    public static final int IMAGE_ALREADY_QUEUED = 0x2565;
+    public static final int IMAGE_UPLOAD_SUCCESS = 0x2563;
+    public static final int IMAGE_ALREADY_QUEUED = 0x2564;
+    public static final int IMAGE_ADDED_TO_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
     public static final int UPDATE_UNPROCESSED_COUNT = 0x2567;
     public static final int UPDATE_MONTHLY_EXPENSE = 0x2568;
@@ -94,6 +95,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     break;
                 case IMAGE_UPLOAD_FAILURE:
                     showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
+                case IMAGE_ADDED_TO_QUEUED:
                     endAnimation();
                     break;
                 case IMAGE_ALREADY_QUEUED:
@@ -204,7 +208,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                DeviceService.getNewUpdates();
+                DeviceService.getNewUpdates(this);
                 return true;
             case R.id.menu_notofication:
                 launchNotifications();

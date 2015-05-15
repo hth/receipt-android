@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
+import android.content.Context;
 import android.database.Cursor;
 import android.os.Message;
 import android.text.TextUtils;
@@ -44,9 +45,9 @@ public class ReceiptUtils {
     private static final String TAG = ReceiptUtils.class.getSimpleName();
     private static final SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-");
 
-    public static void getUnprocessedCount() {
+    public static void getUnprocessedCount(Context context) {
 
-        ExternalCall.doGet(API.UNPROCESSED_COUNT_API, new ResponseHandler() {
+        ExternalCall.doGet(context, API.UNPROCESSED_COUNT_API, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
@@ -71,8 +72,8 @@ public class ReceiptUtils {
         });
     }
 
-    public static void getAllReceipts() {
-        ExternalCall.doGet(API.GET_ALL_RECEIPTS, new ResponseHandler() {
+    public static void getAllReceipts(Context context) {
+        ExternalCall.doGet(context, API.GET_ALL_RECEIPTS, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
@@ -99,13 +100,14 @@ public class ReceiptUtils {
     }
 
 
-    public static void fetchReceiptsAndSave() {
+    public static void fetchReceiptsAndSave(Context context) {
 
         ArrayList<NameValuePair> headerData = new ArrayList<>();
         headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
         headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
 
         ExternalCall.AsyncRequest(
+                context,
                 headerData,
                 API.GET_ALL_RECEIPTS,
                 Protocol.GET.name(),

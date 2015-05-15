@@ -21,6 +21,7 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 
@@ -179,8 +180,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             bundle.putString(API.key.SIGNUP_FIRSTNAME, nameStr);
             bundle.putString(API.key.SIGNUP_EMAIL, emailStr);
             bundle.putString(API.key.SIGNUP_PASSWORD, passwordStr);
-            //TODO
-            bundle.putString(API.key.SIGNUP_AGE, "");
+            bundle.putString(API.key.SIGNUP_AGE, ageRange);
             authenticateSignUp(bundle);
         }
 
@@ -209,7 +209,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        ExternalCall.doPost(postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCall.doPost(SignUpActivity.this, postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
@@ -223,14 +223,16 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing authenticateSignUp: onError" + error);
+                Log.d(TAG, "executing authenticateSignUp: onError " + error);
                 hideLoader();
+                showErrorMsg(JsonParseUtils.parseError(error), Toast.LENGTH_LONG);
             }
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "executing authenticateSignUp: onException" + exception.getMessage());
+                Log.d(TAG, "executing authenticateSignUp: onException " + exception.getMessage());
                 hideLoader();
+                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
             }
         });
     }

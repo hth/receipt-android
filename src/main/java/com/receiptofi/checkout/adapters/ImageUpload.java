@@ -9,6 +9,7 @@ import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.service.ImageUploaderService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
 import java.util.ArrayList;
@@ -42,6 +43,8 @@ public class ImageUpload {
             if (!ImageUploaderService.isServiceConnected() && isAddedToDB && UserSettings.isStartImageUploadProcess(context)) {
                 Log.i("image added to queue", model.imgPath);
                 ImageUploaderService.start(context);
+            } else {
+                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
             }
         } catch (SQLiteConstraintException e) {
             Message msg = new Message();

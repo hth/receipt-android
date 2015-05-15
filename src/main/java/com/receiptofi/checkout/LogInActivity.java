@@ -215,7 +215,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         credentials.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
         credentials.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
-        ExternalCall.authenticate(credentials, new ResponseHandler() {
+        ExternalCall.authenticate(LogInActivity.this, credentials, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
@@ -231,15 +231,14 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             public void onException(Exception exception) {
                 Log.d(TAG, "Executing authenticateLogIn: onException");
                 hideLoader();
-                showErrorMsg("Please check your network connection");
-
+                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Executing authenticateLogIn: onError");
                 hideLoader();
-                showErrorMsg(error);
+                showErrorMsg(error, Toast.LENGTH_LONG);
             }
         });
     }

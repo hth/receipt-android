@@ -137,7 +137,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             Log.e(TAG, "Exception while adding postdata: " + e.getMessage(), e);
         }
 
-        ExternalCall.doPost(postData, API.PASSWORD_RECOVER_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCall.doPost(PasswordRecoveryActivity.this, postData, API.PASSWORD_RECOVER_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {

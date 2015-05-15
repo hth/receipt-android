@@ -131,7 +131,7 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
             }
 
-            ExternalCall.doPost(postData, API.SETTINGS_UPDATE_LOGIN_ID_API, IncludeAuthentication.YES, new ResponseHandler() {
+            ExternalCall.doPost(getActivity(), postData, API.SETTINGS_UPDATE_LOGIN_ID_API, IncludeAuthentication.YES, new ResponseHandler() {
 
                 @Override
                 public void onSuccess(org.apache.http.Header[] headers, String body) {
@@ -170,7 +170,7 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
             }
 
-            ExternalCall.doPost(postData, API.SETTINGS_UPDATE_PASSWORD_API, IncludeAuthentication.YES, new ResponseHandler() {
+            ExternalCall.doPost(getActivity(), postData, API.SETTINGS_UPDATE_PASSWORD_API, IncludeAuthentication.YES, new ResponseHandler() {
 
                 @Override
                 public void onSuccess(org.apache.http.Header[] headers, String body) {

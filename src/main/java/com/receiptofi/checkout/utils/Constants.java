@@ -13,6 +13,9 @@ import java.util.Locale;
 public class Constants {
 
     public static final boolean SET_RECEIPT_REMINDER = false;
+    public static final int DEFAULT_REMINDER_TIME = 15;
+
+    public static final long EXPANSE_TAG_UPDATE_DELAY = 6000;
 
     public final static String ARG_INDEX = "index";
     public final static String ARG_POSITION = "position";
@@ -21,13 +24,10 @@ public class Constants {
     public static final String INTENT_EXTRA_FILTER_TYPE = "filter_type";
     public static final String INTENT_EXTRA_BIZ_NAME = "biz_name";
 
-    public static final int DEFAULT_REMINDER_TIME = 15;
 
     public static final DateFormat ISO_DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
     public static final DateTimeFormatter ISO_J_DF = ISODateTimeFormat.dateTime();
     public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a", Locale.US);
-
-    public static final long EXPANSE_TAG_UPDATE_DELAY = 6000;
 
     public enum ReceiptFilter {
         FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),

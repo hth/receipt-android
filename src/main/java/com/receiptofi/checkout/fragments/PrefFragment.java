@@ -171,7 +171,7 @@ public class PrefFragment extends Fragment {
                                         postData.put("tagId", tagId);
                                         postData.put("tagName", tagName);
 
-                                        ExternalCall.doPost(postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        ExternalCall.doPost(getActivity(), postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
                                             public void onSuccess(Header[] headers, String body) {
                                                 DeviceService.onSuccess(headers, body);

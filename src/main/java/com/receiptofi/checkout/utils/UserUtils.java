@@ -4,6 +4,8 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.service.ImageUploaderService;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import java.io.UnsupportedEncodingException;
@@ -92,6 +94,11 @@ public class UserUtils {
         public static void setWifiSync(Context context, boolean value) {
             Log.d(TAG, "saving wifi sync only to: " + value);
             KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, String.valueOf(value));
+            if (context != null && UserUtils.UserSettings.isStartImageUploadProcess(context)) {
+                ImageUploaderService.start(context);
+            } else {
+                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
+            }
         }
 
         public static boolean isStartImageUploadProcess(Context context) {
@@ -99,7 +106,7 @@ public class UserUtils {
             if(isWifiSyncOnly() && wifiConnected){
                 Log.d(TAG, "isWifiSyncOnly: " + true + " and wifi is connected: " + wifiConnected);
                 return true;
-            } else if (!isWifiSyncOnly() && (AppUtils.isWifiConnected(context) || AppUtils.isMobileInternetConnected(context))) {
+            } else if (!isWifiSyncOnly() && AppUtils.isNetworkConnected(context)) {
                 Log.d(TAG, "isWifiSyncOnly: " + false + " and wifi/mobile is connected: " + true);
                 return true;
             } else {
