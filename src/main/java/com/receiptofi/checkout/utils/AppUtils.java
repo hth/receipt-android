@@ -8,12 +8,15 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AppUtils {
+
+    private static final String TAG = AppUtils.class.getSimpleName();
 
     static File image;
     static File receiptofiImgDir;
@@ -68,6 +71,7 @@ public class AppUtils {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetwork = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
+        Log.d(TAG, "wifi is connected: " + wifiNetwork.isConnected());
         if (wifiNetwork.isConnected()) {
             return true;
         } else {
@@ -79,6 +83,7 @@ public class AppUtils {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo mobileInternet = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
 
+        Log.d(TAG, "mobile network is connected: " + mobileInternet.isConnected());
         if (mobileInternet.isConnected()) {
             return true;
         } else {
