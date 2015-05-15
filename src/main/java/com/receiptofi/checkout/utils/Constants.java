@@ -27,6 +27,8 @@ public class Constants {
     public static final DateTimeFormatter ISO_J_DF = ISODateTimeFormat.dateTime();
     public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a", Locale.US);
 
+    public static final long EXPANSE_TAG_UPDATE_DELAY = 6000;
+
     public enum ReceiptFilter {
         FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),
         FILTER_BY_KEYWORD("filter_by_keyword"),

@@ -1,7 +1,9 @@
 package com.receiptofi.checkout;
 
 import android.app.ActionBar;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -12,14 +14,16 @@ import android.util.Log;
 import com.receiptofi.checkout.fragments.BillingFragment;
 import com.receiptofi.checkout.fragments.PrefFragment;
 import com.receiptofi.checkout.fragments.ProfileFragment;
+import com.receiptofi.checkout.utils.Constants;
 
 /**
  * Created by PT on 4/9/15.
  */
-public class PreferencesTabActivity extends FragmentActivity implements ActionBar.TabListener {
+public class PreferencesTabActivity extends FragmentActivity implements ActionBar.TabListener, DialogInterface.OnDismissListener{
     private static final String TAG = PreferencesTabActivity.class.getSimpleName();
     private CollectionPagerAdapter mCollectionPagerAdapter;
     private ViewPager mViewPager;
+    private Fragment prefFragment;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +67,15 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
 
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialogInterface) {
+        Log.d(TAG, "  -----------    onDismiss    -----------");
+        if(prefFragment != null){
+            ((PrefFragment)prefFragment).updateHandler.sendEmptyMessageDelayed(PrefFragment.EXPENSE_TAG_UPDATED,
+                    Constants.EXPANSE_TAG_UPDATE_DELAY);
+        }
+    }
+
     public class CollectionPagerAdapter extends FragmentPagerAdapter {
         /** Number of tabs. */
         final int NUM_ITEMS = 3;
@@ -75,7 +88,8 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
             if (i == 0) {
                 return new ProfileFragment();
             } else if (i == 1) {
-                return new PrefFragment();
+                prefFragment = new PrefFragment();
+                return prefFragment;
             } else {
                 return new BillingFragment();
             }

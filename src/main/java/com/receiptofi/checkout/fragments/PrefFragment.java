@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -40,9 +42,31 @@ import java.util.Map;
  * Created by PT on 4/9/15.
  */
 public class PrefFragment extends Fragment {
+
     private static final String TAG = PrefFragment.class.getSimpleName();
+    public static final int EXPENSE_TAG_DELETED = 0x1561;
+    public static final int EXPENSE_TAG_UPDATED = 0x1562;
 
     private List<ExpenseTagModel> tagModelList;
+    private ListView tagListView;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case EXPENSE_TAG_DELETED:
+                    notifyList();
+                    break;
+                case EXPENSE_TAG_UPDATED:
+                    notifyList();
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +80,7 @@ public class PrefFragment extends Fragment {
         Button addButton = (Button) rootView.findViewById(R.id.pref_fragment_add_expense_tag);
         addButton.setOnClickListener(onAddButtonClicked);
 
-        ListView tagListView = (ListView) rootView.findViewById(R.id.pref_fragment_expense_tag_list);
+        tagListView = (ListView) rootView.findViewById(R.id.pref_fragment_expense_tag_list);
         Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         tagModelList = new LinkedList<>(expTagMap.values());
         tagListView.setAdapter(new ExpenseTagListAdapter(getActivity(), tagModelList));
@@ -151,6 +175,7 @@ public class PrefFragment extends Fragment {
                                             @Override
                                             public void onSuccess(Header[] headers, String body) {
                                                 DeviceService.onSuccess(headers, body);
+                                                updateHandler.sendEmptyMessage(EXPENSE_TAG_DELETED);
                                             }
 
                                             @Override
@@ -179,26 +204,30 @@ public class PrefFragment extends Fragment {
         }
     };
 
+    private void notifyList(){
+        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
+        tagModelList = new LinkedList<>(expTagMap.values());
+        ((ExpenseTagListAdapter)tagListView.getAdapter()).notifyDataSetChanged();
+    }
+
     public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
 
         private final String TAG = ExpenseTagListAdapter.class.getSimpleName();
         private final LayoutInflater inflater;
-        private List<ExpenseTagModel> tagList;
 
         public ExpenseTagListAdapter(Context context, List<ExpenseTagModel> tags) {
             super(context, R.layout.pref_fragment_exp_tag_list_item, tags);
-            this.tagList = tags;
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return tagList.size();
+            return tagModelList.size();
         }
 
         @Override
         public ExpenseTagModel getItem(int position) {
-            return tagList.get(position);
+            return tagModelList.get(position);
         }
 
         @Override

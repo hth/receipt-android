@@ -71,7 +71,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
-    protected Handler uiThread = new Handler();
 
     private TextView unprocessedDocumentCount;
     private String unprocessedValue;
@@ -83,8 +82,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private PieData expByBizData;
     private boolean expByBizAnimate = false;
 
-    public final Handler updateHandler = new Handler(Looper.getMainLooper()) {
-        public void handleMessage(Message msg) {
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case IMAGE_UPLOAD_SUCCESS:
@@ -115,10 +115,10 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     break;
                 default:
                     Log.e(TAG, "Update handler not defined " + what);
-                    throw new IllegalStateException("Update handler not defined");
             }
+            return true;
         }
-    };
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

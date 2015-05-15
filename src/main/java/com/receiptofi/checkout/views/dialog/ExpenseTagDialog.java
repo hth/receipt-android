@@ -1,12 +1,15 @@
 package com.receiptofi.checkout.views.dialog;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,6 +19,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.fragments.PrefFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -210,5 +214,14 @@ public class ExpenseTagDialog extends DialogFragment {
             }
         };
         label.addTextChangedListener(textWatcher);
+    }
+
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        super.onDismiss(dialog);
+        final Activity activity = getActivity();
+        if (activity instanceof DialogInterface.OnDismissListener) {
+            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        }
     }
 }
