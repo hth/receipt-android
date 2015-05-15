@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
@@ -114,7 +113,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     updateChartData();
                     break;
                 default:
-                    Log.e(TAG, "Update handler not defined " + what);
+                    Log.e(TAG, "Update handler not defined for: " + what);
             }
             return true;
         }

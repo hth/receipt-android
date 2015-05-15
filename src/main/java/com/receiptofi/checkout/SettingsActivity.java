@@ -43,16 +43,20 @@ public class SettingsActivity extends PreferenceActivity {
      */
     public static class PrefFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
         protected static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
-        private final Handler updateHandler = new Handler() {
-            public void handleMessage(Message msg) {
+        public final Handler updateHandler = new Handler(new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
                 final int what = msg.what;
                 switch (what) {
                     case LOGIN_ID_UPDATE_SUCCESS:
                         updatePrefs();
                         break;
+                    default:
+                        Log.e(TAG, "Update handler not defined for: " + what);
                 }
+                return true;
             }
-        };
+        });
 
         @Override
         public void onCreate(Bundle savedInstanceState) {

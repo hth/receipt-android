@@ -137,25 +137,24 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             Log.e(TAG, "Exception while adding postdata: " + e.getMessage(), e);
         }
 
-        final PasswordRecoveryHandler handler = new PasswordRecoveryHandler();
         ExternalCall.doPost(postData, API.PASSWORD_RECOVER_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
-                handler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "executing sendRecoveryInfo: onError" + error);
-                handler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onException(Exception exception) {
                 Log.d(TAG, "executing sendRecoveryInfo: onException" + exception.getMessage());
-                handler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
             }
         });
         //TODO
@@ -201,9 +200,9 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         recoveryStatus.setVisibility(View.VISIBLE);
     }
 
-    class PasswordRecoveryHandler extends Handler {
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case PASSWORD_RECOVERY_SUCCESS:
                     passwordChanged(true);
@@ -212,8 +211,9 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
                     passwordChanged(false);
                     break;
                 default:
-                    super.handleMessage(msg);
+                    Log.e(TAG, "Update handler not defined for: " + msg);
             }
+            return true;
         }
-    }
+    });
 }

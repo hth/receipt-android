@@ -85,7 +85,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     }
 
     public void startFragment(Fragment fragment, boolean isaddToBackStack, int viewId) {
-        // TODO Auto-generated method stub
         getFragmentManager().beginTransaction().replace(viewId, fragment)
                 .addToBackStack(null).commit();
     }
@@ -470,7 +469,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             super.onPostExecute(result);
 
             if (token != null) {
-                Log.i("TOKEN IS NOT NULL MAKING QUERY", "TOKEN IS NOT NULL MAKING QUERY");
+                Log.i("TOKEN NOT NULL", "TOKEN IS NOT NULL MAKING QUERY");
                 Bundle data = new Bundle();
                 data.putString(API.key.PID, API.key.PID_GOOGLE);
                 data.putString(API.key.ACCESS_TOKEN, token);
@@ -481,7 +480,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 }
                 authenticateSocialAccount(data);
             } else {
-                Log.i("TOKEN IS  NULL MAKING QUERY", "TOKEN IS  NULL MAKING QUERY");
+                Log.i("TOKEN IS  NULL", "TOKEN IS  NULL MAKING QUERY");
             }
         }
     }

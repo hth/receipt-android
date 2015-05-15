@@ -34,8 +34,9 @@ public class ReceiptListFragment extends Fragment {
     private static final String TAG = ReceiptListFragment.class.getSimpleName();
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
-    public final Handler updateHandler = new Handler(Looper.getMainLooper()) {
-        public void handleMessage(Message msg) {
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case RECEIPT_MODEL_UPDATED:
@@ -85,9 +86,13 @@ public class ReceiptListFragment extends Fragment {
                         }
                     }
                     break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
             }
+            return true;
         }
-    };
+    });
+    
     public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
     private ExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
