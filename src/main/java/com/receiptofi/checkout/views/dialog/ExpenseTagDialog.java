@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
@@ -24,8 +25,10 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.Constants.DialogMode;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -125,12 +128,14 @@ public class ExpenseTagDialog extends DialogFragment {
 
                                             @Override
                                             public void onError(int statusCode, String error) {
-
+                                                Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
+                                                ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
                                             public void onException(Exception exception) {
-
+                                                Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
+                                                ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -159,12 +164,14 @@ public class ExpenseTagDialog extends DialogFragment {
 
                                                 @Override
                                                 public void onError(int statusCode, String error) {
-
+                                                    Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
+                                                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                                                 }
 
                                                 @Override
                                                 public void onException(Exception exception) {
-
+                                                    Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onException: " + exception.getMessage());
+                                                    ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                                                 }
                                             });
 

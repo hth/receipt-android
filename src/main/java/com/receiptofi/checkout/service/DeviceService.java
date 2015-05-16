@@ -47,12 +47,12 @@ public class DeviceService {
 
             @Override
             public void onError(int statusCode, String error) {
-
+                Log.d(TAG, "executing getNewUpdates: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
-
+                Log.d(TAG, "executing getNewUpdates: onException: " + exception.getMessage());
             }
         });
     }
@@ -67,12 +67,12 @@ public class DeviceService {
 
             @Override
             public void onError(int statusCode, String error) {
-
+                Log.d(TAG, "executing getAll: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
-
+                Log.d(TAG, "executing getAll: onException: " + exception.getMessage());
             }
         });
     }
@@ -99,11 +99,13 @@ public class DeviceService {
             @Override
             public void onError(int statusCode, String error) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
+                Log.d(TAG, "executing registerDevice: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
+                Log.d(TAG, "executing registerDevice: onException: " + exception.getMessage());
             }
         });
     }

@@ -15,6 +15,7 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
@@ -147,12 +148,14 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 public void onError(int statusCode, String error) {
                     Log.d(TAG, "executing updateLoginId: onError" + error);
                     resetLoginId();
+                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onException(Exception exception) {
                     Log.d(TAG, "executing updateLoginId: onException" + exception.getMessage());
                     resetLoginId();
+                    ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -184,11 +187,13 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 @Override
                 public void onError(int statusCode, String error) {
                     Log.d(TAG, "executing updatePassword: onError" + error);
+                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onException(Exception exception) {
                     Log.d(TAG, "executing updatePassword: onException" + exception.getMessage());
+                    ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }

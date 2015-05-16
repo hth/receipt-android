@@ -148,19 +148,17 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing sendRecoveryInfo: onError" + error);
+                Log.d(TAG, "executing sendRecoveryInfo: onError: " + error);
                 updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "executing sendRecoveryInfo: onException" + exception.getMessage());
+                Log.d(TAG, "executing sendRecoveryInfo: onException: " + exception.getMessage());
                 updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+                ToastBox.makeText(PasswordRecoveryActivity.this, exception.getMessage(), Toast.LENGTH_SHORT);
             }
         });
-        //TODO
-        // startActivity(new Intent(PasswordRecoveryActivity.this, LaunchActivity.class));
-        // finish();
     }
 
     private void addErrorMsg(String msg) {

@@ -22,6 +22,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
@@ -35,8 +36,10 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -259,12 +262,14 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
                             @Override
                             public void onError(int statusCode, String error) {
-
+                                Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
+                                ToastBox.makeText(ReceiptListActivity.this, JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                             }
 
                             @Override
                             public void onException(Exception exception) {
-
+                                Log.d(TAG, "Executing onDrawerClosed: onException: "+ exception.getMessage());
+                                ToastBox.makeText(ReceiptListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });
 

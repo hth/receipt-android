@@ -218,13 +218,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onException");
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onException: " + exception.getMessage());
                 hideLoader();
+                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
             }
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onError");
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onError: " + error);
                 hideLoader();
                 String errorMsg = ResponseParser.getSocialAuthError(error);
                 (ParentActivity.this).showErrorMsg(errorMsg);

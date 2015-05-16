@@ -62,12 +62,12 @@ public class ReceiptUtils {
 
             @Override
             public void onError(int statusCode, String error) {
-
+                Log.d(TAG, "executing getUnprocessedCount: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
-
+                Log.d(TAG, "executing getUnprocessedCount: onException: " + exception.getMessage());
             }
         });
     }
@@ -89,12 +89,12 @@ public class ReceiptUtils {
 
             @Override
             public void onError(int statusCode, String error) {
-
+                Log.d(TAG, "executing getAllReceipts: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
-
+                Log.d(TAG, "executing getAllReceipts: onException: " + exception.getMessage());
             }
         });
     }
@@ -119,12 +119,12 @@ public class ReceiptUtils {
 
                     @Override
                     public void onException(Exception exception) {
-
+                        Log.d(TAG, "executing fetchReceiptsAndSave: onException: " + exception.getMessage());
                     }
 
                     @Override
                     public void onError(int statusCode, String error) {
-
+                        Log.d(TAG, "executing fetchReceiptsAndSave: onError: " + error);
                     }
                 });
     }

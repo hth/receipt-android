@@ -19,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
@@ -27,7 +28,9 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
+import com.receiptofi.checkout.views.ToastBox;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 
 import org.apache.http.Header;
@@ -180,12 +183,14 @@ public class PrefFragment extends Fragment {
 
                                             @Override
                                             public void onError(int statusCode, String error) {
-
+                                                Log.d(TAG, "executing DELETE_EXPENSE_TAG: onError: " + error);
+                                                ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
                                             public void onException(Exception exception) {
-
+                                                Log.d(TAG, "executing DELETE_EXPENSE_TAG: onException: " + exception.getMessage());
+                                                ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
