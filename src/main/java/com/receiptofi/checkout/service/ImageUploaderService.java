@@ -96,7 +96,6 @@ public class ImageUploaderService {
 
             @Override
             public void onException(ImageModel iModel, Exception exception) {
-                // TODO Auto-generated method stub
                 iModel.updateStatus(false);
                 updateProcessStatus(iModel);
                 Log.e(TAG, "image upload failed due to exception " + iModel.imgPath + " reason " + exception.getLocalizedMessage(), exception);
@@ -154,6 +153,8 @@ public class ImageUploaderService {
         }
         if (UserSettings.isStartImageUploadProcess(context)) {
             start(context);
+        } else {
+            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
         }
     }
 

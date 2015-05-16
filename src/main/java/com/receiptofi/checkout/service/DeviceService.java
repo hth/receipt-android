@@ -1,5 +1,6 @@
 package com.receiptofi.checkout.service;
 
+import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 
@@ -36,9 +37,9 @@ public class DeviceService {
     private DeviceService() {
     }
 
-    public static void getNewUpdates() {
+    public static void getNewUpdates(Context context) {
         Log.d(TAG, "get new update for device");
-        ExternalCall.doGet(IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
+        ExternalCall.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 DeviceService.onSuccess(headers, body);
@@ -46,19 +47,19 @@ public class DeviceService {
 
             @Override
             public void onError(int statusCode, String error) {
-
+                Log.d(TAG, "executing getNewUpdates: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
-
+                Log.d(TAG, "executing getNewUpdates: onException: " + exception.getMessage());
             }
         });
     }
 
-    public static void getAll() {
+    public static void getAll(Context context) {
         Log.d(TAG, "get all data for new device");
-        ExternalCall.doGet(IncludeDevice.NO, API.ALL_FROM_BEGINNING, new ResponseHandler() {
+        ExternalCall.doGet(context, IncludeDevice.NO, API.ALL_FROM_BEGINNING, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 DeviceService.onSuccess(headers, body);
@@ -66,12 +67,12 @@ public class DeviceService {
 
             @Override
             public void onError(int statusCode, String error) {
-
+                Log.d(TAG, "executing getAll: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
-
+                Log.d(TAG, "executing getAll: onException: " + exception.getMessage());
             }
         });
     }
@@ -80,11 +81,11 @@ public class DeviceService {
      * Create new device identity and insert to database. Then register the device id. In case of failure, remove the
      * the device id.
      */
-    public static void registerDevice() {
+    public static void registerDevice(Context context) {
         Log.d(TAG, "register device");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
-        ExternalCall.doPost(API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
+        ExternalCall.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
@@ -98,11 +99,13 @@ public class DeviceService {
             @Override
             public void onError(int statusCode, String error) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
+                Log.d(TAG, "executing registerDevice: onError: " + error);
             }
 
             @Override
             public void onException(Exception exception) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
+                Log.d(TAG, "executing registerDevice: onException: " + exception.getMessage());
             }
         });
     }

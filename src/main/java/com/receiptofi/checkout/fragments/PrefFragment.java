@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -17,6 +19,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
@@ -25,7 +28,9 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
+import com.receiptofi.checkout.views.ToastBox;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 
 import org.apache.http.Header;
@@ -40,9 +45,31 @@ import java.util.Map;
  * Created by PT on 4/9/15.
  */
 public class PrefFragment extends Fragment {
+
     private static final String TAG = PrefFragment.class.getSimpleName();
+    public static final int EXPENSE_TAG_DELETED = 0x1561;
+    public static final int EXPENSE_TAG_UPDATED = 0x1562;
 
     private List<ExpenseTagModel> tagModelList;
+    private ListView tagListView;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case EXPENSE_TAG_DELETED:
+                    notifyList();
+                    break;
+                case EXPENSE_TAG_UPDATED:
+                    notifyList();
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -56,7 +83,7 @@ public class PrefFragment extends Fragment {
         Button addButton = (Button) rootView.findViewById(R.id.pref_fragment_add_expense_tag);
         addButton.setOnClickListener(onAddButtonClicked);
 
-        ListView tagListView = (ListView) rootView.findViewById(R.id.pref_fragment_expense_tag_list);
+        tagListView = (ListView) rootView.findViewById(R.id.pref_fragment_expense_tag_list);
         Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         tagModelList = new LinkedList<>(expTagMap.values());
         tagListView.setAdapter(new ExpenseTagListAdapter(getActivity(), tagModelList));
@@ -147,20 +174,23 @@ public class PrefFragment extends Fragment {
                                         postData.put("tagId", tagId);
                                         postData.put("tagName", tagName);
 
-                                        ExternalCall.doPost(postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        ExternalCall.doPost(getActivity(), postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
                                             public void onSuccess(Header[] headers, String body) {
                                                 DeviceService.onSuccess(headers, body);
+                                                updateHandler.sendEmptyMessage(EXPENSE_TAG_DELETED);
                                             }
 
                                             @Override
                                             public void onError(int statusCode, String error) {
-
+                                                Log.d(TAG, "executing DELETE_EXPENSE_TAG: onError: " + error);
+                                                ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
                                             public void onException(Exception exception) {
-
+                                                Log.d(TAG, "executing DELETE_EXPENSE_TAG: onException: " + exception.getMessage());
+                                                ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
@@ -179,26 +209,30 @@ public class PrefFragment extends Fragment {
         }
     };
 
+    private void notifyList(){
+        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
+        tagModelList = new LinkedList<>(expTagMap.values());
+        ((ExpenseTagListAdapter)tagListView.getAdapter()).notifyDataSetChanged();
+    }
+
     public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
 
         private final String TAG = ExpenseTagListAdapter.class.getSimpleName();
         private final LayoutInflater inflater;
-        private List<ExpenseTagModel> tagList;
 
         public ExpenseTagListAdapter(Context context, List<ExpenseTagModel> tags) {
             super(context, R.layout.pref_fragment_exp_tag_list_item, tags);
-            this.tagList = tags;
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return tagList.size();
+            return tagModelList.size();
         }
 
         @Override
         public ExpenseTagModel getItem(int position) {
-            return tagList.get(position);
+            return tagModelList.get(position);
         }
 
         @Override

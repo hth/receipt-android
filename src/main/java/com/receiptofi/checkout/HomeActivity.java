@@ -9,7 +9,6 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
@@ -46,6 +45,7 @@ import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.FlowLayout;
+import com.receiptofi.checkout.views.ToastBox;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -59,8 +59,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.US);
     public static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy MM", Locale.US);
 
-    public static final int IMAGE_UPLOAD_SUCCESS = 0x2564;
-    public static final int IMAGE_ALREADY_QUEUED = 0x2565;
+    public static final int IMAGE_UPLOAD_SUCCESS = 0x2563;
+    public static final int IMAGE_ALREADY_QUEUED = 0x2564;
+    public static final int IMAGE_ADDED_TO_QUEUED = 0x2565;
     public static final int IMAGE_UPLOAD_FAILURE = 0x2566;
     public static final int UPDATE_UNPROCESSED_COUNT = 0x2567;
     public static final int UPDATE_MONTHLY_EXPENSE = 0x2568;
@@ -71,7 +72,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
-    protected Handler uiThread = new Handler();
 
     private TextView unprocessedDocumentCount;
     private String unprocessedValue;
@@ -83,8 +83,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     private PieData expByBizData;
     private boolean expByBizAnimate = false;
 
-    public final Handler updateHandler = new Handler(Looper.getMainLooper()) {
-        public void handleMessage(Message msg) {
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case IMAGE_UPLOAD_SUCCESS:
@@ -95,6 +96,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     break;
                 case IMAGE_UPLOAD_FAILURE:
                     showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
+                case IMAGE_ADDED_TO_QUEUED:
                     endAnimation();
                     break;
                 case IMAGE_ALREADY_QUEUED:
@@ -114,11 +118,11 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
                     updateChartData();
                     break;
                 default:
-                    Log.e(TAG, "Update handler not defined " + what);
-                    throw new IllegalStateException("Update handler not defined");
+                    Log.e(TAG, "Update handler not defined for: " + what);
             }
+            return true;
         }
-    };
+    });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -205,7 +209,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_refresh:
-                DeviceService.getNewUpdates();
+                DeviceService.getNewUpdates(this);
                 return true;
             case R.id.menu_notofication:
                 launchNotifications();
@@ -470,6 +474,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
 
     private void showErrorMsg(String msg) {
-        Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
+        ToastBox.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

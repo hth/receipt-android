@@ -21,8 +21,10 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -170,7 +172,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());
@@ -179,8 +181,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             bundle.putString(API.key.SIGNUP_FIRSTNAME, nameStr);
             bundle.putString(API.key.SIGNUP_EMAIL, emailStr);
             bundle.putString(API.key.SIGNUP_PASSWORD, passwordStr);
-            //TODO
-            bundle.putString(API.key.SIGNUP_AGE, "");
+            bundle.putString(API.key.SIGNUP_AGE, ageRange);
             authenticateSignUp(bundle);
         }
 
@@ -192,7 +193,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
         if (data == null) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());
@@ -209,7 +210,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        ExternalCall.doPost(postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCall.doPost(SignUpActivity.this, postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
@@ -223,14 +224,16 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing authenticateSignUp: onError" + error);
+                Log.d(TAG, "executing authenticateSignUp: onError: " + error);
                 hideLoader();
+                showErrorMsg(JsonParseUtils.parseError(error), Toast.LENGTH_LONG);
             }
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "executing authenticateSignUp: onException" + exception.getMessage());
+                Log.d(TAG, "executing authenticateSignUp: onException: " + exception.getMessage());
                 hideLoader();
+                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
             }
         });
     }

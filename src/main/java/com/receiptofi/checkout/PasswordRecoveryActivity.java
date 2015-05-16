@@ -24,6 +24,7 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -108,7 +109,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());
@@ -123,7 +124,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
         if (TextUtils.isEmpty(email)) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());
@@ -137,30 +138,27 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             Log.e(TAG, "Exception while adding postdata: " + e.getMessage(), e);
         }
 
-        final PasswordRecoveryHandler handler = new PasswordRecoveryHandler();
-        ExternalCall.doPost(postData, API.PASSWORD_RECOVER_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCall.doPost(PasswordRecoveryActivity.this, postData, API.PASSWORD_RECOVER_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
-                handler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing sendRecoveryInfo: onError" + error);
-                handler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                Log.d(TAG, "executing sendRecoveryInfo: onError: " + error);
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "executing sendRecoveryInfo: onException" + exception.getMessage());
-                handler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+                Log.d(TAG, "executing sendRecoveryInfo: onException: " + exception.getMessage());
+                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+                ToastBox.makeText(PasswordRecoveryActivity.this, exception.getMessage(), Toast.LENGTH_SHORT);
             }
         });
-        //TODO
-        // startActivity(new Intent(PasswordRecoveryActivity.this, LaunchActivity.class));
-        // finish();
     }
 
     private void addErrorMsg(String msg) {
@@ -201,9 +199,9 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         recoveryStatus.setVisibility(View.VISIBLE);
     }
 
-    class PasswordRecoveryHandler extends Handler {
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
-        public void handleMessage(Message msg) {
+        public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case PASSWORD_RECOVERY_SUCCESS:
                     passwordChanged(true);
@@ -212,8 +210,9 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
                     passwordChanged(false);
                     break;
                 default:
-                    super.handleMessage(msg);
+                    Log.e(TAG, "Update handler not defined for: " + msg);
             }
+            return true;
         }
-    }
+    });
 }

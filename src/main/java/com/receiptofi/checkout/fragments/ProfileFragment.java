@@ -15,9 +15,11 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,16 +38,20 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
 
     protected static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
 
-    private final Handler updateHandler = new Handler() {
-        public void handleMessage(Message msg) {
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
                 case LOGIN_ID_UPDATE_SUCCESS:
                     updatePrefs();
                     break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
             }
+            return true;
         }
-    };
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -127,7 +133,7 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
             }
 
-            ExternalCall.doPost(postData, API.SETTINGS_UPDATE_LOGIN_ID_API, IncludeAuthentication.YES, new ResponseHandler() {
+            ExternalCall.doPost(getActivity(), postData, API.SETTINGS_UPDATE_LOGIN_ID_API, IncludeAuthentication.YES, new ResponseHandler() {
 
                 @Override
                 public void onSuccess(org.apache.http.Header[] headers, String body) {
@@ -142,12 +148,14 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 public void onError(int statusCode, String error) {
                     Log.d(TAG, "executing updateLoginId: onError" + error);
                     resetLoginId();
+                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onException(Exception exception) {
                     Log.d(TAG, "executing updateLoginId: onException" + exception.getMessage());
                     resetLoginId();
+                    ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -166,7 +174,7 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
             }
 
-            ExternalCall.doPost(postData, API.SETTINGS_UPDATE_PASSWORD_API, IncludeAuthentication.YES, new ResponseHandler() {
+            ExternalCall.doPost(getActivity(), postData, API.SETTINGS_UPDATE_PASSWORD_API, IncludeAuthentication.YES, new ResponseHandler() {
 
                 @Override
                 public void onSuccess(org.apache.http.Header[] headers, String body) {
@@ -179,11 +187,13 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
                 @Override
                 public void onError(int statusCode, String error) {
                     Log.d(TAG, "executing updatePassword: onError" + error);
+                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                 }
 
                 @Override
                 public void onException(Exception exception) {
                     Log.d(TAG, "executing updatePassword: onException" + exception.getMessage());
+                    ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -211,7 +221,7 @@ public class ProfileFragment extends PreferenceFragment implements SharedPrefere
 
             @Override
             public void run() {
-                Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                ToastBox.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
             }
 
         });

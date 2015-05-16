@@ -8,12 +8,15 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class AppUtils {
+
+    private static final String TAG = AppUtils.class.getSimpleName();
 
     static File image;
     static File receiptofiImgDir;
@@ -64,22 +67,22 @@ public class AppUtils {
         homePageContext = context;
     }
 
+    public static  boolean isNetworkConnected(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        if (networkInfo == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
+    }
+
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetwork = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
+        Log.d(TAG, "wifi is connected: " + wifiNetwork.isConnected());
         if (wifiNetwork.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public static boolean isMobileInternetConnected(Context context) {
-        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo mobileInternet = connManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-
-        if (mobileInternet.isConnected()) {
             return true;
         } else {
             return false;

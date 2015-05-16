@@ -34,6 +34,7 @@ import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -85,7 +86,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     }
 
     public void startFragment(Fragment fragment, boolean isaddToBackStack, int viewId) {
-        // TODO Auto-generated method stub
         getFragmentManager().beginTransaction().replace(viewId, fragment)
                 .addToBackStack(null).commit();
     }
@@ -155,14 +155,18 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     /**
      * ********    Toast and loader for login status    ***********
      */
-    public void showErrorMsg(final String msg) {
+    public void showErrorMsg(final String msg){
+        showErrorMsg(msg, Toast.LENGTH_SHORT);
+    }
+    public void showErrorMsg(final String msg, final int length) {
+        if(TextUtils.isEmpty(msg)){
+            return;
+        }
         uiThread.post(new Runnable() {
-
             @Override
             public void run() {
-                Toast.makeText(ParentActivity.this, msg, Toast.LENGTH_SHORT).show();
+                ToastBox.makeText(ParentActivity.this, msg, length).show();
             }
-
         });
     }
 
@@ -202,7 +206,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
 
-        ExternalCall.doPost(postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCall.doPost(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
@@ -214,13 +218,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onException");
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onException: " + exception.getMessage());
                 hideLoader();
+                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
             }
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onError");
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onError: " + error);
                 hideLoader();
                 String errorMsg = ResponseParser.getSocialAuthError(error);
                 (ParentActivity.this).showErrorMsg(errorMsg);
@@ -263,14 +268,11 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             // TODO make this call later
             String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
             if (TextUtils.isEmpty(did)) {
-                DeviceService.registerDevice();
-                DeviceService.getAll();
+                DeviceService.registerDevice(this);
+                DeviceService.getAll(this);
             } else {
-                DeviceService.getNewUpdates();
+                DeviceService.getNewUpdates(this);
             }
-            //ReceiptUtils.getUnprocessedCount();
-            //ReceiptUtils.getAllReceipts();
-            //ReceiptUtils.fetchReceiptsAndSave();
         } else {
             showErrorMsg("Login Failed !!!");
         }
@@ -393,7 +395,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         Log.d(TAG, "executing onConnected");
         Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         isGPlusLoginClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+        showErrorMsg("User is connected!");
 
         // Get user's information
         getUserInformation();
@@ -470,7 +472,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             super.onPostExecute(result);
 
             if (token != null) {
-                Log.i("TOKEN IS NOT NULL MAKING QUERY", "TOKEN IS NOT NULL MAKING QUERY");
+                Log.i("TOKEN NOT NULL", "TOKEN IS NOT NULL MAKING QUERY");
                 Bundle data = new Bundle();
                 data.putString(API.key.PID, API.key.PID_GOOGLE);
                 data.putString(API.key.ACCESS_TOKEN, token);
@@ -481,7 +483,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 }
                 authenticateSocialAccount(data);
             } else {
-                Log.i("TOKEN IS  NULL MAKING QUERY", "TOKEN IS  NULL MAKING QUERY");
+                Log.i("TOKEN IS  NULL", "TOKEN IS  NULL MAKING QUERY");
             }
         }
     }

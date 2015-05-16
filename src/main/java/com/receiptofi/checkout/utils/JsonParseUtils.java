@@ -1,5 +1,6 @@
 package com.receiptofi.checkout.utils;
 
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.http.API;
@@ -323,5 +324,22 @@ public class JsonParseUtils {
         }
 
         return dataWrapper;
+    }
+
+    public static String parseError(String jsonResponse) {
+        if(TextUtils.isEmpty(jsonResponse)){
+            return null;
+        }
+        try {
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONObject errorJosn = jsonObject.getJSONObject("error");
+            String errorReason = errorJosn.getString("reason");
+            Log.d(TAG, "errorReason: " + errorReason);
+            return errorReason;
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse, e);
+            e.printStackTrace();
+        }
+        return null;
     }
 }
