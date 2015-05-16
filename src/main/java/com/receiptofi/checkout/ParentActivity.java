@@ -34,6 +34,7 @@ import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -164,8 +165,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         uiThread.post(new Runnable() {
             @Override
             public void run() {
-                Toast.makeText(ParentActivity.this, msg, length).show();
-
+                ToastBox.makeText(ParentActivity.this, msg, length).show();
             }
         });
     }
@@ -394,7 +394,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         Log.d(TAG, "executing onConnected");
         Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         isGPlusLoginClicked = false;
-        Toast.makeText(this, "User is connected!", Toast.LENGTH_LONG).show();
+        showErrorMsg("User is connected!");
 
         // Get user's information
         getUserInformation();

@@ -21,6 +21,7 @@ import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.apache.http.NameValuePair;
@@ -187,7 +188,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());
@@ -205,7 +206,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
         if (data == null) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());

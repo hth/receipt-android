@@ -45,6 +45,7 @@ import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.FlowLayout;
+import com.receiptofi.checkout.views.ToastBox;
 
 import java.io.File;
 import java.text.DateFormat;
@@ -473,6 +474,6 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
     }
 
     private void showErrorMsg(String msg) {
-        Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
+        ToastBox.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 }

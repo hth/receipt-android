@@ -30,6 +30,7 @@ import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.views.ToastBox;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -340,7 +341,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             // in case we would want to do something with event later
             Uri uri2 = cr.insert(Reminders.CONTENT_URI, reminders);
 
-            Toast.makeText(getActivity(), getActivity().getString(R.string.reminder_toast) + " " + itemModel.getName(), Toast.LENGTH_SHORT).show();
+            ToastBox.makeText(getActivity(), getActivity().getString(R.string.reminder_toast) + " " + itemModel.getName(), Toast.LENGTH_SHORT).show();
 
         } else {
             //TODO: add logic to show - register for calendar

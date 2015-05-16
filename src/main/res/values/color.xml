@@ -4,6 +4,9 @@
     <color name="app_light_bg">#E6E6E5</color>
     <color name="app_theme_bg">#43BDE7</color>
     <color name="app_theme_txt_color">#0F9CBC</color>
+    <color name="app_theme_bg_gradient_start">#FF1CAADB</color>
+    <color name="app_theme_bg_gradient_end">#FF1999C4</color>
+
 
     <!--       Color from Android      -->
     <color name="transparent">@android:color/transparent</color>

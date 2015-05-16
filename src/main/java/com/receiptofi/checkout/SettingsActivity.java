@@ -18,6 +18,7 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -219,7 +220,7 @@ public class SettingsActivity extends PreferenceActivity {
 
                 @Override
                 public void run() {
-                    Toast.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
+                    ToastBox.makeText(getActivity().getApplicationContext(), msg, Toast.LENGTH_SHORT).show();
                 }
 
             });

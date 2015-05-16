@@ -24,6 +24,7 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
+import com.receiptofi.checkout.views.ToastBox;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -108,7 +109,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());
@@ -123,7 +124,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
         if (TextUtils.isEmpty(email)) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = Toast.makeText(this, errors, Toast.LENGTH_SHORT);
+            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
             errors.delete(0, errors.length());
