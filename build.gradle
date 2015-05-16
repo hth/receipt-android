@@ -70,6 +70,12 @@ idea {
     }
 }
 
+//http://stackoverflow.com/questions/3993924/get-android-api-level-of-phone-currently-running-my-application
+//http://en.wikipedia.org/wiki/Android_version_history
+//Global Android version distribution since December 2009. As of May 2015, Android 4.4 "KitKat" is the
+//single most widely used Android version, operating on 39.8% of all Android devices accessing Google Play.
+//        The second are different Android "Jelly Bean" versions (4.1–4.3.1), with a combined share of 39.2%.[1]
+
 android {
     archivesBaseName = "checkout";
 
@@ -78,7 +84,7 @@ android {
 
     defaultConfig {
         applicationId "com.receiptofi.checkout"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 22
         testHandleProfiling true
         testFunctionalTest true
