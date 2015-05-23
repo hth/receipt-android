@@ -10,7 +10,7 @@
    
 Link below would get you different credit card samples (Visa, MasterCard)
    
-   [https://developers.braintreepayments.com/android+java/reference/general/testing] (https://developers.braintreepayments.com/android+java/reference/general/testing)
+   [https://developers.braintreepayments.com/android+java/reference/general/testing#credit-card-numbers] (https://developers.braintreepayments.com/android+java/reference/general/testing#credit-card-numbers)
    
     Postal Code - 60645 or any five digit
     CVV - 100 or any three digit
