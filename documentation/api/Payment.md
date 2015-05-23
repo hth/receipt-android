@@ -12,9 +12,9 @@ Link below would get you different credit card samples (Visa, MasterCard)
    
    [https://developers.braintreepayments.com/android+java/reference/general/testing] (https://developers.braintreepayments.com/android+java/reference/general/testing)
    
-   Postal Code - 60645 or any five digit
-   CVV - 100 or any three digit
-   Expiration - 06/16 or any date in future (3 or less years from now)   
+    Postal Code - 60645 or any five digit
+    CVV - 100 or any three digit
+    Expiration - 06/16 or any date in future (3 or less years from now)   
 
 ### Client Token
 
