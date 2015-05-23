@@ -61,22 +61,19 @@ Response
 Submit payment
 
 API call `POST`. API call `/receipt-mobile/api/payment.json`
-
-    curl -X "POST" "http://localhost:9090/receipt-mobile/api/payment.json"
-    	-H "X-R-AUTH: $2a$15$e2k"
-    	-H "X-R-DID: 12347"
-    	-H "X-R-MAIL: test@receiptofi.com"
+    	
+    curl -X "POST" "http://localhost:9090/receipt-mobile/api/payment.json" 
+    	-H "X-R-AUTH: $2a$15$e2k" 
+    	-H "X-R-DID: 12347" 
+    	-H "X-R-MAIL: test@receiptofi.com" 
     	-d "{
     	"planId":"M10",
     	"firstName":"Jenna",
-    	"lastName":"Smith",
+    	"lastName":"Smith", 
+    	"postal":"60622",
     	"company":"Some Company",
-    	"cardNumber":"4111111111111111",
-    	"month":"05",
-    	"year":"2016",
-    	"cvv":"100",
-    	"postal":"60622"
-    	}"
+    	"payment-method-nonce":"payment-method-nonce"
+    	}"	
 
 Response
 
