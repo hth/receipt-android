@@ -29,7 +29,27 @@ API call `POST`. API call `/receipt-mobile/api/token.json`
 
 Response
 
-    {"token":"eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIy"}
+##### When user details does not exists. First time.
+    
+    {
+      "hasCustomerInfo": false,
+      "firstName": null,
+      "lastName": null,
+      "planId": null,
+      "postalCode": null,
+      "token": "eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIy=="
+    }
+    
+##### When user details exists.     
+    	
+    {
+      "hasCustomerInfo": true,
+      "firstName": "Aj",
+      "lastName": "Sh",
+      "planId": "M10",
+      "postalCode": "84236",
+      "token": "eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIy"
+    }
 
 ### Plans
 
@@ -87,6 +107,10 @@ API call `POST`. API call `/receipt-mobile/api/payment.json`
 
 Response
 
-    {"status":true}
+    {
+      "success": true,
+      "planId" : "M10",
+      "transactionId" : "jhgsdf"
+    }
 
 ### More API to come
