@@ -113,4 +113,21 @@ Response
       "transactionId" : "jhgsdf"
     }
 
+### Cancel Subscription
+    	
+API call `POST`. API call `/receipt-mobile/api/cancelSubscription.json`
+
+    curl -X "POST" "http://localhost:9090/receipt-mobile/api/cancelSubscription.json" 
+        	-H "X-R-AUTH: $2a$15$e2k" 
+        	-H "X-R-DID: 12347" 
+        	-H "X-R-MAIL: test@receiptofi.com"
+        	
+Response
+    	
+    {
+      "success": true,
+      "planId" : "M10",
+      "transactionId" : "jhgsdf"
+    }        	
+
 ### More API to come
