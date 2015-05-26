@@ -36,4 +36,9 @@
 
     <!--    Large screen spec    -->
     <dimen name="view_with_paddings_on_side">400dp</dimen>
+
+    <!--    For LDrawer width    -->
+    <dimen name="navdrawer_width">260dp</dimen>
+    <dimen name="layout_marginleft">20dp</dimen>
+    <dimen name="lmenu_textsize">20sp</dimen>
 </resources>

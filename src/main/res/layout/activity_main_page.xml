@@ -1,0 +1,70 @@
+<android.support.v4.widget.DrawerLayout
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <FrameLayout
+        android:id="@+id/main_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_below="@+id/rl_title">
+    </FrameLayout>
+
+    <!-- The navigation drawer -->
+    <RelativeLayout
+        android:layout_width="@dimen/navdrawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:id="@+id/navdrawer_RelativeLayout"
+        android:background="@color/app_theme_bg"
+        android:drawSelectorOnTop="false">
+        <com.receiptofi.checkout.views.CircleImageView android:id="@+id/headImage"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:layout_width = "96dp"
+            android:layout_height="96dp"
+            android:src="@drawable/ic_profile"
+            app:border_width="2dp"
+            app:border_color="#FF000000"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="@dimen/layout_marginleft"
+            />
+        <TextView
+            android:id = "@+id/userEmail"
+            android:layout_below = "@id/headImage"
+            android:layout_width = "wrap_content"
+            android:layout_height = "wrap_content"
+            android:layout_marginTop="@dimen/layout_marginleft"
+            android:text = "xxxx@xxx.com"
+            android:textSize="@dimen/lmenu_textsize"
+            android:textColor="@color/white"
+            android:layout_marginLeft="@dimen/layout_marginleft"
+            />
+        <ListView
+            android:id="@+id/navdrawer"
+            android:layout_below="@id/userEmail"
+            android:layout_width="@dimen/navdrawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:layout_marginLeft="@dimen/layout_marginleft"
+            android:layout_marginTop="40dp"
+            android:background="@color/app_theme_bg"
+            android:choiceMode="singleChoice"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="0dp"
+            android:drawSelectorOnTop="false">
+        </ListView>
+        <Button
+            android:id="@+id/btn_Logout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="20dp"
+            android:text="Log Out"
+            android:textSize="@dimen/lmenu_textsize"
+            android:textColor="@color/white"
+            />
+    </RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

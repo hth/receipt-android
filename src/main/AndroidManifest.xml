@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.receiptofi.checkout">
+    package="com.receiptofi.checkout"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -18,11 +19,12 @@
     <uses-permission android:name="android.permission.TIMEZONE_CHANGED" />
 
     <application
-        android:name="com.receiptofi.checkout.ReceiptofiApplication"
+        android:name=".ReceiptofiApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
-        android:theme="@style/CustomActionBarTheme">
+        android:theme="@style/CustomActionBarTheme"
+        tools:replace="android:icon,android:theme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/app_id" />
@@ -32,79 +34,88 @@
 
         <!-- Required to use Drop-In -->
         <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity" />
-
         <activity
-            android:name="com.receiptofi.checkout.LaunchActivity"
-            android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            android:name=".LaunchActivity"
+            android:windowSoftInputMode="stateAlwaysHidden" >
+
         </activity>
         <activity
-            android:name="com.receiptofi.checkout.LogInActivity"
+            android:name=".LogInActivity"
             android:label="@string/label_log_in"
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
             android:name="com.facebook.LoginActivity"
-            android:label="@string/label_log_in">
+            android:label="@string/label_log_in" >
         </activity>
         <activity
-            android:name="com.receiptofi.checkout.SignUpActivity"
+            android:name=".SignUpActivity"
             android:label="@string/label_sign_up"
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
-            android:name="com.receiptofi.checkout.PasswordRecoveryActivity"
+            android:name=".PasswordRecoveryActivity"
             android:label="@string/label_password_recovery"
-            android:windowSoftInputMode="stateAlwaysVisible">
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
             android:name=".HomeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".FilterListActivity" />
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/settings">
+            android:label="@string/settings" >
         </activity>
         <activity
             android:name=".PreferencesTabActivity"
-            android:label="@string/settings">
+            android:label="@string/settings" >
         </activity>
         <activity
             android:name=".ReceiptListActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".FilterListActivity" />
         </activity>
         <activity
             android:name=".FilterListActivity"
-            android:launchMode="singleTop"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:noHistory="true">
+            android:launchMode="singleTop"
+            android:noHistory="true" >
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
+
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
         </activity>
         <activity
             android:name=".NotificationActivity"
-            android:label="@string/notifications">
+            android:label="@string/notifications" >
         </activity>
 
-        <receiver android:name="com.receiptofi.checkout.receivers.NetworkConnectivityReceiver">
+        <receiver android:name=".receivers.NetworkConnectivityReceiver" >
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
                 <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name=".MainPageActivity"
+            android:label="@string/title_activity_main_page" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>
