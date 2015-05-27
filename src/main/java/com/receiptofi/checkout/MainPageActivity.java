@@ -77,8 +77,10 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         if (item.getItemId() == android.R.id.home) {
             if (mDrawerLayout.isDrawerOpen(mDrawerLayout_L)) {
                 mDrawerLayout.closeDrawer(mDrawerLayout_L);
+                drawerArrow.setProgress(0f);
             } else {
                 mDrawerLayout.openDrawer(mDrawerLayout_L);
+                drawerArrow.setProgress(1f);
             }
         }
         int id = item.getItemId();
@@ -185,8 +187,8 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                 RippleView rippleView;
                 switch (position) {
                     case 0:
-                        mDrawerToggle.setAnimateEnabled(false);
-                        drawerArrow.setProgress(1f);
+                        mDrawerToggle.setAnimateEnabled(true);
+//                        drawerArrow.setProgress(1f);
                         rippleView = (RippleView)view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
@@ -197,13 +199,14 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                         });
                         break;
                     case 1:
-                        mDrawerToggle.setAnimateEnabled(false);
-                        drawerArrow.setProgress(0f);
+                        mDrawerToggle.setAnimateEnabled(true);
+//                        drawerArrow.setProgress(1f);
                         rippleView = (RippleView)view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {
                                 mDrawerLayout.closeDrawer(mDrawerLayout_L);
+//                                drawerArrow.setProgress(0f);
                                 changeFragment(NotificationFragment.newInstance("", ""));
                             }
                         });
@@ -211,6 +214,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                     case 2:
                         mDrawerToggle.setAnimateEnabled(true);
                         mDrawerToggle.syncState();
+
                         rippleView = (RippleView)view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override

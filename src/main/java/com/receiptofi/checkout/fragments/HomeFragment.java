@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -13,6 +15,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
@@ -95,6 +98,47 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private View view;
 
     private OnFragmentInteractionListener mListener;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case IMAGE_UPLOAD_SUCCESS:
+                    unprocessedValue = Integer.toString(msg.arg1);
+                    setUnprocessedCount();
+                    showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
+                case IMAGE_UPLOAD_FAILURE:
+                    showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
+                case IMAGE_ADDED_TO_QUEUED:
+                    endAnimation();
+                    break;
+                case IMAGE_ALREADY_QUEUED:
+                    showErrorMsg((String) msg.obj);
+                    endAnimation();
+                    break;
+                case UPDATE_UNPROCESSED_COUNT:
+                    unprocessedValue = (String) msg.obj;
+                    setUnprocessedCount();
+                    break;
+                case UPDATE_MONTHLY_EXPENSE:
+                    currentMonthExpValue = (String) msg.obj;
+                    setMonthlyExpense();
+                    break;
+                case UPDATE_EXP_BY_BIZ_CHART:
+                    expByBizAnimate = true;
+                    updateChartData();
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     /**
      * Use this factory method to create a new instance of
@@ -357,6 +401,15 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     private void showErrorMsg(String msg) {
         ToastBox.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void endAnimation() {
+        MenuItem item = optionMenu.findItem(R.id.menu_refresh);
+        if (null != item.getActionView()) {
+            // Remove the animation.
+            item.getActionView().clearAnimation();
+            item.setActionView(null);
+        }
     }
 
 
