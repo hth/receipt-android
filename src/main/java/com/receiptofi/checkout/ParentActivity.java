@@ -284,7 +284,9 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
             @Override
             public void run() {
-                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                // KEVIN add for test
+//                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                Intent i = new Intent(ParentActivity.this, MainPageActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 finish();

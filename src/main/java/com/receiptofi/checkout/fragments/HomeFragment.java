@@ -41,6 +41,7 @@ import com.receiptofi.checkout.service.ChartService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.FlowLayout;
 import com.receiptofi.checkout.views.ToastBox;
 
@@ -180,6 +181,20 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         scrollView.setVerticalScrollBarEnabled(false);
         AppUtils.setHomePageContext(getActivity());
         this.instantiateViews();
+
+        // OnCreate we need to set values from Database and these will be updated later once
+        // update from server is received.
+        unprocessedValue = KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT);
+        setUnprocessedCount();
+        try {
+            String[] monthDay = DF_YYYY_MM.format(new Date()).split(" ");
+            currentMonthExpValue = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
+            setMonthlyExpense();
+        } catch (Exception e) {
+            Log.e(TAG, "Exception" + e.getMessage(), e);
+        }
+        updateChartData();
+        Log.d(TAG, "Done onCreate!!");
 
         return view;
     }

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -141,6 +142,8 @@ public class DeviceService {
             if (ReceiptofiApplication.isHomeActivityVisible()) {
                 ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
                 ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
+                // KEVIN add for new setting page.
+                HomeFragment.newInstance("", "").updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
             }
 
             /** Populate data in advance for master/detail views */

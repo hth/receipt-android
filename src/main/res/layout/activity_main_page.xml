@@ -20,7 +20,9 @@
         android:layout_gravity="start"
         android:id="@+id/navdrawer_RelativeLayout"
         android:background="@color/app_theme_bg"
-        android:drawSelectorOnTop="false">
+        android:drawSelectorOnTop="false"
+        android:isScrollContainer="true"
+        >
         <com.receiptofi.checkout.views.CircleImageView android:id="@+id/headImage"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width = "96dp"
@@ -57,7 +59,7 @@
             android:id="@+id/navdrawer"
             android:layout_below="@id/userEmail"
             android:layout_width="@dimen/navdrawer_width"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="start"
             android:layout_marginLeft="@dimen/layout_marginleft"
             android:layout_marginTop="20dp"
@@ -68,6 +70,18 @@
             android:drawSelectorOnTop="false"
             >
         </ListView>
+        <TextView
+            android:id="@+id/line2"
+            style="?android:attr/listSeparatorTextViewStyle"
+            android:paddingTop="5dip"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/navdrawer"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="@dimen/layout_marginleft"
+            android:layout_marginRight="@dimen/layout_marginleft"
+            android:background="@color/gray_light" />
         <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btn_Logout"
             android:layout_width="200dp"
@@ -76,21 +90,8 @@
             android:text="Log Out"
             android:textSize="@dimen/lmenu_textsize"
             android:textColor="@color/white"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
+            android:layout_below="@id/line2"
             android:layout_marginLeft="@dimen/layout_marginleft"
             />
-        <TextView
-            android:id="@+id/line2"
-            style="?android:attr/listSeparatorTextViewStyle"
-            android:paddingTop="5dip"
-            android:gravity="center_horizontal"
-            android:layout_above="@id/btn_Logout"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="@dimen/layout_marginleft"
-            android:layout_marginRight="@dimen/layout_marginleft"
-            android:background="@color/gray_light" />
     </RelativeLayout>
 </android.support.v4.widget.DrawerLayout>

@@ -29,6 +29,7 @@ import android.widget.RelativeLayout;
 import android.widget.SearchView;
 
 import com.andexert.library.RippleView;
+import com.gc.materialdesign.views.ScrollView;
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.joanzapata.android.iconify.IconDrawable;
@@ -145,6 +146,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
+        ab.setTitle("Checkout");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.navdrawer);
