@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +10,25 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.Tag;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * Created by kevin on 5/26/15.
  */
 public class TagListAdapter extends BaseAdapter {
-    private LinkedList<Tag> mList;
+    private List<ExpenseTagModel> mList;
     private Context mContext;
-    public TagListAdapter(Context context, LinkedList<Tag> mlistHashMaps) {
+    public TagListAdapter(Context context, List<ExpenseTagModel> tags) {
 
         this.mContext = context;
-        this.mList = mlistHashMaps;
+        this.mList = tags;
     }
 
-    public void updateList( LinkedList<Tag> mlistHashMaps) {
+    public void updateList( List<ExpenseTagModel> mlistHashMaps) {
         this.mList = mlistHashMaps;
     }
 
@@ -46,15 +49,16 @@ public class TagListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        Log.i("Kevin", "in getView: i:" + i + ". And the tag is:" + mList.get(i).getTag());
+//        Log.i("Kevin", "in getView: i:" + i + ". And the tag is:" + mList.get(i).getTag());
         if (view == null) {
             view = View.inflate(mContext,
                     R.layout.list_item, null);
             new ViewHolder(view);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        holder.tv_content.setText(mList.get(i).getTag());
-        holder.iv_label.setBackgroundColor(mList.get(i).getColor());
+        ExpenseTagModel tagModel = (ExpenseTagModel)getItem(i);
+        holder.tv_content.setText(tagModel.getName());
+        holder.iv_label.setBackgroundColor(Color.parseColor(tagModel.getColor()));
         return view;
     }
 

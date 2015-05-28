@@ -40,7 +40,7 @@
             android:layout_height = "wrap_content"
             android:layout_marginTop="@dimen/layout_marginleft"
             android:text = "xxxx@xxx.com"
-            android:textSize="@dimen/lmenu_textsize"
+            android:textSize="14sp"
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/layout_marginleft"
             />

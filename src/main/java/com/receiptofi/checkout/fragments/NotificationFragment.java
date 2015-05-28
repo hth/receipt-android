@@ -2,13 +2,20 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.adapters.NotificationAdapter;
+import com.receiptofi.checkout.model.NotificationModel;
+import com.receiptofi.checkout.utils.db.NotificationUtils;
+
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,6 +34,7 @@ public class NotificationFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private View mView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -65,7 +73,10 @@ public class NotificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notification, container, false);
+        mView =  inflater.inflate(R.layout.fragment_notification, container, false);
+        // start query
+        new NotificationDataTask().execute();
+        return mView;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -107,4 +118,21 @@ public class NotificationFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    private void setListData(List<NotificationModel> notificationModels) {
+        ListView listView = (ListView) mView.findViewById(R.id.notification_list);
+        listView.setAdapter(new NotificationAdapter(getActivity(), notificationModels));
+    }
+
+    private class NotificationDataTask extends AsyncTask<Void, Void, List<NotificationModel>> {
+
+        @Override
+        protected List<NotificationModel> doInBackground(Void... voids) {
+            return NotificationUtils.getAll();
+        }
+
+        @Override
+        protected void onPostExecute(List<NotificationModel> notificationModels) {
+            setListData(notificationModels);
+        }
+    }
 }

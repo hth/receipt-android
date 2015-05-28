@@ -27,8 +27,10 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.andexert.library.RippleView;
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.gc.materialdesign.views.ScrollView;
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
@@ -41,7 +43,11 @@ import com.receiptofi.checkout.fragments.HomeFragment.OnFragmentInteractionListe
 import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.ProfileFragment;
 import com.receiptofi.checkout.fragments.TagModifyFragment;
+import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 
 public class MainPageActivity extends FragmentActivity implements OnFragmentInteractionListener {
@@ -54,9 +60,12 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
     private boolean drawerArrowColor;
     private static final String TAG = MainPageActivity.class.getSimpleName();
     public HomeFragment mHomeFragment;
+    public TagModifyFragment mTagModifyFragment;
     private Menu optionMenu;
     private SearchView searchView;
     private Context mContext;
+    private TextView tvEmail;
+    private ButtonRectangle btnLogout;
 //
 
 
@@ -67,6 +76,15 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         ReceiptofiApplication.homeActivityResumed();
         mContext = getApplicationContext();
         setupView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "executing onDestroy");
+        ReceiptofiApplication.homeActivityPaused();
+        AppUtils.setHomePageContext(null);
+        Log.d(TAG, "Done onDestroy!!");
     }
 
     @Override
@@ -151,6 +169,12 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.navdrawer);
         mDrawerLayout_L = (RelativeLayout) findViewById(R.id.navdrawer_RelativeLayout);
+        tvEmail = (TextView) findViewById(R.id.userEmail);
+        btnLogout = (ButtonRectangle)findViewById(R.id.btn_Logout);
+        btnLogout.setOnClickListener(onLogoutButtonClicked);
+
+        String username = UserUtils.getEmail();
+        tvEmail.setText(username);
 
         drawerArrow = new DrawerArrowDrawable(this) {
             @Override
@@ -178,6 +202,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
 
         mHomeFragment = HomeFragment.newInstance("", "");
         changeFragment(mHomeFragment);
+        mTagModifyFragment = TagModifyFragment.newInstance("", "");
 
         MenuListAdapter adapter = new MenuListAdapter(this);
         mDrawerList.setAdapter(adapter);
@@ -222,7 +247,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                             @Override
                             public void onComplete(RippleView rippleView) {
                                 mDrawerLayout.closeDrawer(mDrawerLayout_L);
-                                changeFragment(TagModifyFragment.newInstance("", ""));
+                                changeFragment(mTagModifyFragment);
                             }
                         });
 
@@ -303,5 +328,17 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    View.OnClickListener onLogoutButtonClicked = new View.OnClickListener() {
+        @Override
+        public void onClick(View button) {
+            logout();
+        }
+    };
+    private void logout() {
+        KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
+        startActivity(new Intent(this, LaunchActivity.class));
+        finish();
     }
 }

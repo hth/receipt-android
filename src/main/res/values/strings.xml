@@ -166,6 +166,7 @@
     <string name="app_description">mainpage activity</string>
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
+    <string name="tag_modifify_note">Select Any Tag To Modify, you can swipt from right side to edit or delect a tag.</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

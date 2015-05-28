@@ -1,12 +1,15 @@
 package com.receiptofi.checkout.service;
 
+import android.app.Fragment;
 import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.HomeFragment;
+import com.receiptofi.checkout.fragments.TagModifyFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -117,6 +120,10 @@ public class DeviceService {
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
+            // KEVIN : Add below solution for new tag modifiy page.
+            if (((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment != null) {
+                ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(TagModifyFragment.EXPENSE_TAG_UPDATED);
+            }
         }
         NotificationUtils.insert(dataWrapper.getNotificationModels());
         if (null != dataWrapper.getBillingAccountModel()) {
@@ -127,9 +134,14 @@ public class DeviceService {
 
         Message countMessage = new Message();
         countMessage.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
-        countMessage.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
+//        countMessage.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
+        // KEVIN : Add for new setting.
+        countMessage.what = HomeFragment.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
-            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
+//            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
+            // KEVIN : Add for new setting.
+//            HomeFragment.newInstance("", "").updateHandler.sendMessage(countMessage);
+            ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
         }
 
         if (!dataWrapper.getReceiptModels().isEmpty()) {
@@ -138,12 +150,19 @@ public class DeviceService {
             String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
             Message amountMessage = new Message();
             amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
-            amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
+//            amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
+            // KEVIN : Add for new setting page.
+            amountMessage.what = HomeFragment.UPDATE_MONTHLY_EXPENSE;
             if (ReceiptofiApplication.isHomeActivityVisible()) {
-                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
-                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
-                // KEVIN add for new setting page.
-                HomeFragment.newInstance("", "").updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
+//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
+                // KEVIN : add for new setting page.
+//                HomeFragment.newInstance("", "").updateHandler.sendMessage(amountMessage);
+//                HomeFragment.newInstance("", "").updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+
+                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
+                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+
             }
 
             /** Populate data in advance for master/detail views */

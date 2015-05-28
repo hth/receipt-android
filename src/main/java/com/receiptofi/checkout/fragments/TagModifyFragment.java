@@ -1,13 +1,18 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
 import android.util.TypedValue;
@@ -26,11 +31,27 @@ import com.r0adkll.postoffice.model.Design;
 import com.r0adkll.postoffice.styles.EditTextStyle;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.TagListAdapter;
+import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.Tag;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.JsonParseUtils;
+import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
+import com.receiptofi.checkout.views.ToastBox;
+import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 import com.shamanland.fab.FloatingActionButton;
 import com.shamanland.fab.ShowHideOnScroll;
 
+import org.apache.http.Header;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -51,11 +72,33 @@ public class TagModifyFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    public static LinkedList<Tag> mTagArrayList = new LinkedList<Tag>();
+//    public static LinkedList<Tag> mTagArrayList = new LinkedList<Tag>();
     private SwipeMenuListView mListView;
     private TagListAdapter mAdapter;
+    private List<ExpenseTagModel> tagModelList;
+    private static final String TAG = "TagMofifyFragment";
 
     private View view;
+    public static final int EXPENSE_TAG_DELETED = 0x1561;
+    public static final int EXPENSE_TAG_UPDATED = 0x1562;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case EXPENSE_TAG_DELETED:
+                    notifyList();
+                    break;
+                case EXPENSE_TAG_UPDATED:
+                    notifyList();
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     /**
      * Use this factory method to create a new instance of
@@ -150,65 +193,59 @@ public class TagModifyFragment extends Fragment {
                 Toast.makeText(v.getContext(), "Hi", Toast.LENGTH_SHORT).show();
                 Delivery delivery = null;
                 String tag = "";
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
 
-                delivery = PostOffice.newMail(getActivity())
-                        .setTitle("Please input your tag:")
-                        .setThemeColor(Color.BLUE)
-                        .setDesign(Design.MATERIAL_LIGHT)
-                        .showKeyboardOnDisplay(true)
-                        .setButton(Dialog.BUTTON_POSITIVE, "Save", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.cancel();
-                            }
-                        })
-                        .setStyle(new EditTextStyle.Builder(getActivity())
-                                .setHint("Tag:")
-                                .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                                .setOnTextAcceptedListener(new EditTextStyle.OnTextAcceptedListener() {
-                                    @Override
-                                    public void onAccepted(String text) {
-                                        Toast.makeText(getActivity(), "TAG was accepted: " + text, Toast.LENGTH_SHORT).show();
-                                        Tag test = new Tag(text, Color.RED);
-                                        mTagArrayList.add(test);
-                                        mAdapter.notifyDataSetChanged();
-                                    }
-                                }).build())
-                        .build();
-                if(delivery != null)
-                    delivery.show(getFragmentManager(), tag);
+                // Create and show the dialog.
+                DialogFragment editTagDialog = ExpenseTagDialog.newInstance(null);
+                editTagDialog.show(ft, "dialog");
+                // int num = newFragment.show(ft, "dialog");
+
+//                delivery = PostOffice.newMail(getActivity())
+//                        .setTitle("Please input your tag:")
+//                        .setThemeColor(Color.BLUE)
+//                        .setDesign(Design.MATERIAL_LIGHT)
+//                        .showKeyboardOnDisplay(true)
+//                        .setButton(Dialog.BUTTON_POSITIVE, "Save", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.dismiss();
+//                            }
+//                        })
+//                        .setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int which) {
+//                                dialog.cancel();
+//                            }
+//                        })
+//                        .setStyle(new EditTextStyle.Builder(getActivity())
+//                                .setHint("Tag:")
+//                                .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+//                                .setOnTextAcceptedListener(new EditTextStyle.OnTextAcceptedListener() {
+//                                    @Override
+//                                    public void onAccepted(String text) {
+//                                        Toast.makeText(getActivity(), "TAG was accepted: " + text, Toast.LENGTH_SHORT).show();
+//                                        Tag test = new Tag(text, Color.RED);
+//                                        mTagArrayList.add(test);
+//                                        mAdapter.notifyDataSetChanged();
+//                                    }
+//                                }).build())
+//                        .build();
+//                if(delivery != null)
+//                    delivery.show(getFragmentManager(), tag);
             }
         });
 
         mListView = (SwipeMenuListView) view.findViewById(R.id.listView);
         mListView.setOnTouchListener(new ShowHideOnScroll(fab));
-        Tag test = new Tag("CHECKING", Color.RED);
-        Tag test1 = new Tag("HOME", Color.BLUE);
-        Tag test2 = new Tag("PARA", getResources().getColor(R.color.blue));
 
-        mTagArrayList.add(test);
-        mTagArrayList.add(test1);
-        mTagArrayList.add(test2);
-        for (int i=0; i< 15; i++) {
-            Tag testTemp;
-            if (i%3 == 0)
-                testTemp = new Tag("KK" + i, Color.RED);
-            else if (i%3 == 1)
-                testTemp = new Tag("KK" + i, Color.GREEN);
-            else if (i%3 == 2)
-                testTemp = new Tag("KK" + i, Color.BLUE);
-            else
-                testTemp = new Tag("KK" + i, Color.CYAN);
-            mTagArrayList.add(testTemp);
-        }
-        mAdapter = new TagListAdapter(getActivity(), mTagArrayList);
-//        lv.setAdapter(mAdapter);
+        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
+        tagModelList = new LinkedList<>(expTagMap.values());
+        mAdapter = new TagListAdapter(getActivity(), tagModelList);
         mListView.setAdapter(mAdapter);
         // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
@@ -252,57 +289,111 @@ public class TagModifyFragment extends Fragment {
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
-                Tag item = mTagArrayList.get(position);
-                Log.i("Kevin", "The postion is: " + position);
+
+                final ExpenseTagModel tagModel = tagModelList.get(position);
+                Log.d(TAG, "Selected tag name is: " + tagModel.getName());
                 switch (index) {
                     case 0:
+                        // Modify
                         Delivery delivery = null;
                         String tag = "";
-//                Design holoDesign = isLight() ? Design.HOLO_LIGHT : Design.HOLO_DARK;
-//                Design mtrlDesign = isLight() ? Design.MATERIAL_LIGHT : Design.MATERIAL_DARK;
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                        if (prev != null) {
+                            ft.remove(prev);
+                        }
+                        ft.addToBackStack(null);
 
-                        delivery = PostOffice.newMail(getActivity())
-                                .setTitle("Please input your tag:")
-                                .setThemeColor(Color.BLUE)
-                                .setDesign(Design.MATERIAL_LIGHT)
-                                .showKeyboardOnDisplay(true)
-                                .setButton(Dialog.BUTTON_POSITIVE, "Save", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.dismiss();
-                                    }
-                                })
-                                .setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        dialog.cancel();
-                                    }
-                                })
-                                .setStyle(new EditTextStyle.Builder(getActivity())
-                                        .setHint("Tag:")
-                                        .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-                                        .setOnTextAcceptedListener(new EditTextStyle.OnTextAcceptedListener() {
-                                            @Override
-                                            public void onAccepted(String text) {
-                                                Toast.makeText(getActivity(), "TAG was accepted: " + text, Toast.LENGTH_SHORT).show();
+                        // Create and show the dialog.
+                        DialogFragment editTagDialog = ExpenseTagDialog.newInstance(tagModel.getId());
+                        editTagDialog.show(ft, "dialog");
 
-                                                mTagArrayList.get(position).setTag(text);
-                                                mAdapter.notifyDataSetChanged();
-                                            }
-                                        }).build())
-                                .build();
-                        if(delivery != null)
-                            delivery.show(getFragmentManager(), tag);
+//                        delivery = PostOffice.newMail(getActivity())
+//                                .setTitle("Please input your tag:")
+//                                .setThemeColor(Color.BLUE)
+//                                .setDesign(Design.MATERIAL_LIGHT)
+//                                .showKeyboardOnDisplay(true)
+//                                .setButton(Dialog.BUTTON_POSITIVE, "Save", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.dismiss();
+//                                    }
+//                                })
+//                                .setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
+//                                    @Override
+//                                    public void onClick(DialogInterface dialog, int which) {
+//                                        dialog.cancel();
+//                                    }
+//                                })
+//                                .setStyle(new EditTextStyle.Builder(getActivity())
+//                                        .setHint("Tag:")
+//                                        .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
+//                                        .setOnTextAcceptedListener(new EditTextStyle.OnTextAcceptedListener() {
+//                                            @Override
+//                                            public void onAccepted(String text) {
+//                                                Toast.makeText(getActivity(), "TAG was accepted: " + text, Toast.LENGTH_SHORT).show();
+//
+//                                                mTagArrayList.get(position).setTag(text);
+//                                                mAdapter.notifyDataSetChanged();
+//                                            }
+//                                        }).build())
+//                                .build();
+//                        if(delivery != null)
+//                            delivery.show(getFragmentManager(), tag);
 
                         break;
                     case 1:
                         // delete
-//					delete(item);
-                        mTagArrayList.remove(position);
-                        Log.i("Kevin", "after remove :" + mTagArrayList.get(position).getTag());
-                        mAdapter.updateList(mTagArrayList);
-                        mAdapter.notifyDataSetChanged();
+//                        mTagArrayList.remove(position);
+//                        Log.i("Kevin", "after remove :" + mTagArrayList.get(position).getTag());
 
+                        new AlertDialog.Builder(getActivity())
+                                .setTitle(getString(R.string.expense_tag_dialog_delete_label))
+                                .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
+                                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        // do nothing
+                                    }
+                                })
+                                .setPositiveButton(getString(R.string.expense_tag_dialog_button_delete), new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        String tagId = tagModel.getId();
+                                        String tagName = tagModel.getName();
+
+                                        if (null != tagId || null != tagName) {
+                                            JSONObject postData = new JSONObject();
+                                            try {
+                                                postData.put("tagId", tagId);
+                                                postData.put("tagName", tagName);
+
+                                                ExternalCall.doPost(getActivity(), postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                                    @Override
+                                                    public void onSuccess(Header[] headers, String body) {
+                                                        DeviceService.onSuccess(headers, body);
+                                                        updateHandler.sendEmptyMessage(EXPENSE_TAG_DELETED);
+                                                    }
+
+                                                    @Override
+                                                    public void onError(int statusCode, String error) {
+                                                        Log.d(TAG, "executing DELETE_EXPENSE_TAG: onError: " + error);
+                                                        ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
+                                                    }
+
+                                                    @Override
+                                                    public void onException(Exception exception) {
+                                                        Log.d(TAG, "executing DELETE_EXPENSE_TAG: onException: " + exception.getMessage());
+                                                        ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+
+                                            } catch (JSONException e) {
+                                                Log.e(TAG, "Exception while deleting expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                            }
+                                        }
+                                    }
+                                })
+                                .setIcon(android.R.drawable.ic_dialog_alert)
+                                .show();
                         break;
                 }
                 return false;
@@ -312,6 +403,16 @@ public class TagModifyFragment extends Fragment {
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
+    }
+
+    private void notifyList(){
+        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
+        tagModelList = new LinkedList<>(expTagMap.values());
+        if (mAdapter != null) {
+            mAdapter.updateList(tagModelList);
+            mAdapter.notifyDataSetChanged();
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
 }
