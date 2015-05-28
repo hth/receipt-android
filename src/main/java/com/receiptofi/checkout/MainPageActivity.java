@@ -8,12 +8,10 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.text.InputType;
 import android.util.Log;
@@ -66,8 +64,6 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
     private Context mContext;
     private TextView tvEmail;
     private ButtonRectangle btnLogout;
-//
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -164,13 +160,14 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
+        // TODO: Retrieve screen title from xml.
         ab.setTitle("Checkout");
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.navdrawer);
         mDrawerLayout_L = (RelativeLayout) findViewById(R.id.navdrawer_RelativeLayout);
         tvEmail = (TextView) findViewById(R.id.userEmail);
-        btnLogout = (ButtonRectangle)findViewById(R.id.btn_Logout);
+        btnLogout = (ButtonRectangle) findViewById(R.id.btn_Logout);
         btnLogout.setOnClickListener(onLogoutButtonClicked);
 
         String username = UserUtils.getEmail();
@@ -215,8 +212,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                 switch (position) {
                     case 0:
                         mDrawerToggle.setAnimateEnabled(true);
-//                        drawerArrow.setProgress(1f);
-                        rippleView = (RippleView)view.findViewById(R.id.ripple_View);
+                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {
@@ -227,13 +223,11 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                         break;
                     case 1:
                         mDrawerToggle.setAnimateEnabled(true);
-//                        drawerArrow.setProgress(1f);
-                        rippleView = (RippleView)view.findViewById(R.id.ripple_View);
+                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {
                                 mDrawerLayout.closeDrawer(mDrawerLayout_L);
-//                                drawerArrow.setProgress(0f);
                                 changeFragment(NotificationFragment.newInstance("", ""));
                             }
                         });
@@ -242,7 +236,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                         mDrawerToggle.setAnimateEnabled(true);
                         mDrawerToggle.syncState();
 
-                        rippleView = (RippleView)view.findViewById(R.id.ripple_View);
+                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {
@@ -253,17 +247,18 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
 
                         break;
                     case 3:
-                        rippleView = (RippleView)view.findViewById(R.id.ripple_View);
+                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {
-                                changeFragment(new BillingFragment());
                                 mDrawerLayout.closeDrawer(mDrawerLayout_L);
+                                changeFragment(new BillingFragment());
+
                             }
                         });
                         break;
                     case 4:
-                        rippleView = (RippleView)view.findViewById(R.id.ripple_View);
+                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
                         rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
                             @Override
                             public void onComplete(RippleView rippleView) {
@@ -293,6 +288,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
             @Override
             public void onBackStackChanged() {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+                // TODO: Change the title of each page, that's really depands by James decision.
 //                Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment);
 //                if (f != null) {
 //                    String fragmentName = f.getClass().getName();
@@ -330,15 +326,44 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
 
     }
 
+    /**
+     * Internal Event to handle the logout button in L menu
+     */
     View.OnClickListener onLogoutButtonClicked = new View.OnClickListener() {
         @Override
         public void onClick(View button) {
             logout();
         }
     };
+
     private void logout() {
         KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
+    }
+
+    /**
+     * Below three functions are the XML linear layout onclick handler.
+     *
+     * @param view
+     */
+    public void takePhoto(View view) {
+        if (this.mHomeFragment != null) {
+            mHomeFragment.takePhoto(view);
+        }
+
+    }
+
+    public void chooseImage(View view) {
+        if (this.mHomeFragment != null) {
+            mHomeFragment.chooseImage(view);
+        }
+
+    }
+
+    public void invokeReceiptList(View view) {
+        if (this.mHomeFragment != null) {
+            mHomeFragment.invokeReceiptList(view);
+        }
     }
 }

@@ -35,7 +35,6 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
-import com.receiptofi.checkout.model.Tag;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.JsonParseUtils;
@@ -72,11 +71,10 @@ public class TagModifyFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-//    public static LinkedList<Tag> mTagArrayList = new LinkedList<Tag>();
     private SwipeMenuListView mListView;
     private TagListAdapter mAdapter;
     private List<ExpenseTagModel> tagModelList;
-    private static final String TAG = "TagMofifyFragment";
+    private static final String TAG = TagModifyFragment.class.getSimpleName();
 
     private View view;
     public static final int EXPENSE_TAG_DELETED = 0x1561;
@@ -135,7 +133,7 @@ public class TagModifyFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_tag_modify, container, false);
+        view = inflater.inflate(R.layout.fragment_tag_modify, container, false);
         setupView();
         return view;
     }
@@ -153,8 +151,7 @@ public class TagModifyFragment extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
+            e.printStackTrace();
         }
     }
 
@@ -190,7 +187,7 @@ public class TagModifyFragment extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(v.getContext(), "Hi", Toast.LENGTH_SHORT).show();
+
                 Delivery delivery = null;
                 String tag = "";
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -203,8 +200,7 @@ public class TagModifyFragment extends Fragment {
                 // Create and show the dialog.
                 DialogFragment editTagDialog = ExpenseTagDialog.newInstance(null);
                 editTagDialog.show(ft, "dialog");
-                // int num = newFragment.show(ft, "dialog");
-
+                // TODO: Replace DialogFragment with PostOffice dialog.
 //                delivery = PostOffice.newMail(getActivity())
 //                        .setTitle("Please input your tag:")
 //                        .setThemeColor(Color.BLUE)
@@ -294,7 +290,9 @@ public class TagModifyFragment extends Fragment {
                 Log.d(TAG, "Selected tag name is: " + tagModel.getName());
                 switch (index) {
                     case 0:
-                        // Modify
+                        /**
+                         * Edit Tag.
+                         */
                         Delivery delivery = null;
                         String tag = "";
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -307,7 +305,7 @@ public class TagModifyFragment extends Fragment {
                         // Create and show the dialog.
                         DialogFragment editTagDialog = ExpenseTagDialog.newInstance(tagModel.getId());
                         editTagDialog.show(ft, "dialog");
-
+// TODO: Replace DialogFragment with PostOffice dialog.
 //                        delivery = PostOffice.newMail(getActivity())
 //                                .setTitle("Please input your tag:")
 //                                .setThemeColor(Color.BLUE)
@@ -343,10 +341,10 @@ public class TagModifyFragment extends Fragment {
 
                         break;
                     case 1:
-                        // delete
-//                        mTagArrayList.remove(position);
-//                        Log.i("Kevin", "after remove :" + mTagArrayList.get(position).getTag());
-
+                        /**
+                         * Delete tag.
+                         */
+// TODO: Replace DialogFragment with PostOffice dialog.
                         new AlertDialog.Builder(getActivity())
                                 .setTitle(getString(R.string.expense_tag_dialog_delete_label))
                                 .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
@@ -400,12 +398,13 @@ public class TagModifyFragment extends Fragment {
             }
         });
     }
+
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getResources().getDisplayMetrics());
     }
 
-    private void notifyList(){
+    private void notifyList() {
         Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         tagModelList = new LinkedList<>(expTagMap.values());
         if (mAdapter != null) {

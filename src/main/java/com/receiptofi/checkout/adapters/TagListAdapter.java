@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.ExpenseTagModel;
-import com.receiptofi.checkout.model.Tag;
 
 import java.util.LinkedList;
 import java.util.List;

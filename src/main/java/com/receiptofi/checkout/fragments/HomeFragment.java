@@ -13,6 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -50,6 +51,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+
+import in.srain.cube.views.ptr.PtrClassicFrameLayout;
+import in.srain.cube.views.ptr.PtrDefaultHandler;
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.header.MaterialHeader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -97,6 +104,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private PieData expByBizData;
     private boolean expByBizAnimate = false;
     private View view;
+    protected PtrFrameLayout mPtrFrameLayout;
 
     private OnFragmentInteractionListener mListener;
 
@@ -177,8 +185,54 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_home, container, false);
-        ScrollView scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
+        final ScrollView scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
+        /**
+         * Setup Material design pull to refresh
+         */
+        mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.material_style_ptr_frame);
+        // header
+        final MaterialHeader header = new MaterialHeader(getActivity());
+        int[] colors = getResources().getIntArray(R.array.google_colors);
+        header.setColorSchemeColors(colors);
+        header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
+        header.setPadding(0, dp2px(15), 0, dp2px(10));
+        header.setPtrFrameLayout(mPtrFrameLayout);
+
+        mPtrFrameLayout.setLoadingMinTime(1000);
+        mPtrFrameLayout.setDurationToCloseHeader(1500);
+        mPtrFrameLayout.setHeaderView(header);
+        mPtrFrameLayout.addPtrUIHandler(header);
+        mPtrFrameLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                mPtrFrameLayout.autoRefresh(false);
+            }
+        }, 100);
+
+        mPtrFrameLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                if(scrollView.getScrollY() == 0)
+                    return true;
+                else
+                    return false;
+            }
+
+            @Override
+            public void onRefreshBegin(final PtrFrameLayout frame) {
+                // TODO: Add real refresh process here.
+                long delay = (long) (1000 + Math.random() * 2000);
+                    delay = Math.max(0, delay);
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        frame.refreshComplete();
+                    }
+                }, delay);
+            }
+        });
+
         AppUtils.setHomePageContext(getActivity());
         this.instantiateViews();
 
@@ -195,7 +249,6 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         }
         updateChartData();
         Log.d(TAG, "Done onCreate!!");
-
         return view;
     }
 
@@ -427,5 +480,9 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         }
     }
 
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getActivity().getResources().getDisplayMetrics());
+    }
 
 }
