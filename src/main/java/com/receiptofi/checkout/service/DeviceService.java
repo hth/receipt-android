@@ -1,11 +1,9 @@
 package com.receiptofi.checkout.service;
 
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 
-import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.HomeFragment;

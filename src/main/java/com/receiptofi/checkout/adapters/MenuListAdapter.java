@@ -27,7 +27,8 @@ public class MenuListAdapter extends BaseAdapter {
             "Home",
             "Notification",
             "Tag Expenses",
-            "Billing",
+            "Billing History",
+            "Subscription",
             "Setting"
     };
 
@@ -50,6 +51,9 @@ public class MenuListAdapter extends BaseAdapter {
                 .colorRes(R.color.white)
                 .actionBarSize());
         icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_shopping_cart)
+                .colorRes(R.color.white)
+                .actionBarSize());
+        icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_money)
                 .colorRes(R.color.white)
                 .actionBarSize());
         icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_cogs)
