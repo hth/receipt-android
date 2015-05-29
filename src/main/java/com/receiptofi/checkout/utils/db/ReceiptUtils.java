@@ -8,8 +8,10 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
+import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -51,12 +53,16 @@ public class ReceiptUtils {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
-                msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
+                // KEVIN : Add to replace the HomeActivy by HomeFragment
+//                msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
+                msg.what  = HomeFragment.UPDATE_UNPROCESSED_COUNT;
                 UnprocessedDocumentModel unprocessedDocumentModel = JsonParseUtils.parseUnprocessedDocument(body);
                 msg.obj = unprocessedDocumentModel.getCount();
                 updateInsert(KEYS.UNPROCESSED_DOCUMENT, unprocessedDocumentModel.getCount());
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    // KEVIN : Add to replace the HomeActivy by HomeFragment
+//                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                 }
             }
 
@@ -77,10 +83,14 @@ public class ReceiptUtils {
             @Override
             public void onSuccess(Header[] headers, String body) {
                 Message msg = new Message();
-                msg.what = HomeActivity.GET_ALL_RECEIPTS;
+                // KEVIN : Add to replace the HomeActivy by HomeFragment
+//                msg.what = HomeActivity.GET_ALL_RECEIPTS;
+                msg.what = HomeFragment.GET_ALL_RECEIPTS;
                 insert(JsonParseUtils.parseReceipts(body));
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    // KEVIN : Add to replace the HomeActivy by HomeFragment
+//                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                 }
 
                 //Remove this method call

@@ -65,6 +65,7 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
     private Context mContext;
     private TextView tvEmail;
     private ButtonRectangle btnLogout;
+    private ActionBar ab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,17 +171,16 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
     }
 
     @Override
-    public void onBackPressed(){
-        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1) {
             finish();
-        }
-        else {
+        } else {
             super.onBackPressed();
         }
     }
 
     private void setupView() {
-        ActionBar ab = getActionBar();
+        ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
         // TODO: Retrieve screen title from xml.
@@ -312,37 +312,23 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
             @Override
             public void onBackStackChanged() {
                 Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment);
-                // TODO: Change the title of each page, that's really depands by James decision.
-//                Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment);
-//                if (f != null) {
-//                    String fragmentName = f.getClass().getName();
-//                    if (fragmentName.equals(HomeFragment.class.getName())) {
-//                        title.setText((CharSequence) "Home");
-//                    } else if (fragmentName.equals(ImagesFragment.class.getName())) {
-//                        title.setText((CharSequence) "Images");
-//                    } else if (fragmentName.equals(ContactFragment.class.getName())) {
-//                        title.setText((CharSequence) "Contact");
-//                    } else if (fragmentName.equals(FenceCaliculateFragment.class.getName())) {
-//                        title.setText((CharSequence) "Fence Calculator");
-//                    } else if (fragmentName.equals(MonthlyGiveAwayFragment.class.getName())) {
-//                        title.setText((CharSequence) "Monthly Give Away");
-//                    } else if (fragmentName.equals(SocialFragment.class.getName())) {
-//                        title.setText((CharSequence) "Social");
-//                    } else if (fragmentName.equals(FenceCaliculateFragment.class.getName())) {
-//                        title.setText((CharSequence) "Fence Calculator");
-//                    } else if (fragmentName.equals(WebViewFragment.class.getName())) {
-//                        if (((WebViewFragment) f).getCategory() == "PRODUCT") {
-//                            title.setText((CharSequence) "Product");
-//                        } else if (((WebViewFragment) f).getCategory() == "ORDER") {
-//                            title.setText((CharSequence) "Order");
-//                        } else if (((WebViewFragment) f).getCategory() == "QUOTE") {
-//                            title.setText((CharSequence) "Quote");
-//                        }
-//                    }
+                if (f != null && ab != null) {
+                    String fragmentName = f.getClass().getName();
+                    if (fragmentName.equals(HomeFragment.class.getName())) {
+                        ab.setTitle((CharSequence) "Checkout");
+                    } else if (fragmentName.equals(NotificationFragment.class.getName())) {
+                        ab.setTitle((CharSequence) "Notification");
+                    } else if (fragmentName.equals(TagModifyFragment.class.getName())) {
+                        ab.setTitle((CharSequence) "Tag Expenses");
+                    } else if (fragmentName.equals(BillingFragment.class.getName())) {
+                        ab.setTitle((CharSequence) "Billing");
+                    } else if (fragmentName.equals(ProfileFragment.class.getName())) {
+                        ab.setTitle((CharSequence) "Setting");
+                    }
+                }
             }
 
         });
-
     }
 
     @Override

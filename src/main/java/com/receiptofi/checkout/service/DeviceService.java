@@ -153,7 +153,9 @@ public class DeviceService {
         if (!dataWrapper.getReceiptModels().isEmpty()) {
             MonthlyReportUtils.computeMonthlyReceiptReport();
 
-            String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
+//            String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
+            // KEVIN : Replace the DF_YYYY_MM with HomeFragment
+            String[] monthDay = HomeFragment.DF_YYYY_MM.format(new Date()).split(" ");
             Message amountMessage = new Message();
             amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
 //            amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
