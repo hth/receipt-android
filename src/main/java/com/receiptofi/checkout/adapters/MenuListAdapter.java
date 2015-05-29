@@ -13,24 +13,25 @@ import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by kevin on 5/26/15.
  */
 public class MenuListAdapter extends BaseAdapter {
-    ArrayList<String> menuList;
-    Activity activity;
-    LayoutInflater inflater = null;
+    private Activity activity;
+    private LayoutInflater inflater = null;
 
     // create menu items;
-    String titles[] = {"Home",
+    private String titles[] = {
+            "Home",
             "Notification",
             "Tag Modify",
             "Billing",
             "Setting"
     };
 
-    ArrayList<IconDrawable> icons_array = new ArrayList<>();
+    private List<IconDrawable> icons_array = new ArrayList<>();
 
     public MenuListAdapter(Activity activity) {
         this.activity = activity;
@@ -93,6 +94,4 @@ public class MenuListAdapter extends BaseAdapter {
         ImageView menu_icon;
         TextView menu_name;
     }
-
-
 }

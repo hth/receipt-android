@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     tools:context="com.receiptofi.checkout.fragments.TagModifyFragment">
 
-    <TextView android:id="@+id/tv_title" android:text="@string/tag_modifify_note" android:layout_width="wrap_content"
+    <TextView android:id="@+id/tv_title" android:text="@string/tag_modify_note" android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"

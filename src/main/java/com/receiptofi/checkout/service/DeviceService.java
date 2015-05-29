@@ -120,7 +120,7 @@ public class DeviceService {
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
-            // KEVIN : Add below solution for new tag modifiy page.
+            // KEVIN : Add below solution for new tag modify page.
             if (((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment != null) {
                 ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(TagModifyFragment.EXPENSE_TAG_UPDATED);
             }
