@@ -413,5 +413,4 @@ public class TagModifyFragment extends Fragment {
             mAdapter.notifyDataSetChanged();
         }
     }
-
 }

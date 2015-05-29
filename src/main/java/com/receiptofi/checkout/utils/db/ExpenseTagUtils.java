@@ -38,12 +38,18 @@ public class ExpenseTagUtils {
     }
 
     public static void insert(List<ExpenseTagModel> expensesTags) {
-        DBUtils.clearDB(DatabaseTable.ExpenseTag.TABLE_NAME);
+        deleteAll();
+
         for (ExpenseTagModel expenseTag : expensesTags) {
             insert(expenseTag);
         }
 
         populateExpenseTagModelMap();
+    }
+
+    public static void deleteAll() {
+        DBUtils.clearDB(DatabaseTable.ExpenseTag.TABLE_NAME);
+        expenseTagModels = new LinkedHashMap<>();
     }
 
     private static void populateExpenseTagModelMap() {

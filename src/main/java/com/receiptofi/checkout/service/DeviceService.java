@@ -118,13 +118,19 @@ public class DeviceService {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
         ReceiptUtils.insert(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
+
+        /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
+            ExpenseTagUtils.deleteAll();
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
             // KEVIN : Add below solution for new tag modify page.
             if (((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment != null) {
                 ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(TagModifyFragment.EXPENSE_TAG_UPDATED);
             }
+        } else {
+            ExpenseTagUtils.deleteAll();
         }
+
         NotificationUtils.insert(dataWrapper.getNotificationModels());
         if (null != dataWrapper.getBillingAccountModel()) {
             BillingAccountUtils.insertOrReplace(dataWrapper.getBillingAccountModel());

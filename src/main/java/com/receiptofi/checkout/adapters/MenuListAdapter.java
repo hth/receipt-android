@@ -26,7 +26,7 @@ public class MenuListAdapter extends BaseAdapter {
     private String titles[] = {
             "Home",
             "Notification",
-            "Tag Modify",
+            "Tag Expenses",
             "Billing",
             "Setting"
     };
