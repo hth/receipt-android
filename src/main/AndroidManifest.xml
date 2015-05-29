@@ -114,6 +114,9 @@
         <activity
             android:name=".MainPageActivity"
             android:label="@string/title_activity_main_page" >
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".FilterListActivity" />
         </activity>
     </application>
 

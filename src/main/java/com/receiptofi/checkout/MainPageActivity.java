@@ -48,7 +48,7 @@ import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 
-public class MainPageActivity extends FragmentActivity implements OnFragmentInteractionListener {
+public class MainPageActivity extends FragmentActivity implements HomeFragment.OnFragmentInteractionListener, TagModifyFragment.OnFragmentInteractionListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -59,6 +59,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
     private static final String TAG = MainPageActivity.class.getSimpleName();
     public HomeFragment mHomeFragment;
     public TagModifyFragment mTagModifyFragment;
+    public NotificationFragment mNotificationFragment;
     private Menu optionMenu;
     private SearchView searchView;
     private Context mContext;
@@ -71,7 +72,19 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         setContentView(R.layout.activity_main_page);
         ReceiptofiApplication.homeActivityResumed();
         mContext = getApplicationContext();
+        AppUtils.setHomePageContext(this);
         setupView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.d(TAG, "executing onResume");
+        if (searchView != null) {
+            searchView.setQuery("", false);
+            searchView.setIconified(true);
+        }
+        Log.d(TAG, "Done onResume!!");
     }
 
     @Override
@@ -156,6 +169,16 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         return true;
     }
 
+    @Override
+    public void onBackPressed(){
+        if (getSupportFragmentManager().getBackStackEntryCount() == 1){
+            finish();
+        }
+        else {
+            super.onBackPressed();
+        }
+    }
+
     private void setupView() {
         ActionBar ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
@@ -200,6 +223,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
         mHomeFragment = HomeFragment.newInstance("", "");
         changeFragment(mHomeFragment);
         mTagModifyFragment = TagModifyFragment.newInstance("", "");
+        mNotificationFragment = NotificationFragment.newInstance("", "");
 
         MenuListAdapter adapter = new MenuListAdapter(this);
         mDrawerList.setAdapter(adapter);
@@ -228,7 +252,7 @@ public class MainPageActivity extends FragmentActivity implements OnFragmentInte
                             @Override
                             public void onComplete(RippleView rippleView) {
                                 mDrawerLayout.closeDrawer(mDrawerLayout_L);
-                                changeFragment(NotificationFragment.newInstance("", ""));
+                                changeFragment(mNotificationFragment);
                             }
                         });
                         break;

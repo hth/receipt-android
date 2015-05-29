@@ -233,7 +233,6 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             }
         });
 
-        AppUtils.setHomePageContext(getActivity());
         this.instantiateViews();
 
         // OnCreate we need to set values from Database and these will be updated later once

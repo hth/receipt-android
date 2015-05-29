@@ -22,7 +22,7 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class ExpenseTagUtils {
 
     private static final String TAG = ExpenseTagUtils.class.getSimpleName();
-    private static Map<String, ExpenseTagModel> expenseTagModels = null;
+    private static Map<String, ExpenseTagModel> expenseTagModels = new LinkedHashMap<>();
 
     /**
      * Expense Tag is static list available across the app. Anytime expense tag is added, deleted, updated, then
@@ -47,7 +47,9 @@ public class ExpenseTagUtils {
     }
 
     private static void populateExpenseTagModelMap() {
-        expenseTagModels = new LinkedHashMap<>();
+        if (expenseTagModels == null) {
+            expenseTagModels = new LinkedHashMap<>();
+        }
         List<ExpenseTagModel> expenseTags = getAll();
         for (ExpenseTagModel expenseTagModel : expenseTags) {
             expenseTagModels.put(expenseTagModel.getId(), expenseTagModel);
