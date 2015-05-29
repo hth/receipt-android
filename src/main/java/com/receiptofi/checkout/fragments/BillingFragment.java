@@ -1,6 +1,8 @@
 package com.receiptofi.checkout.fragments;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,7 +27,7 @@ import com.receiptofi.checkout.utils.db.BillingAccountUtils;
 public class BillingFragment extends Fragment {
     private static final String TAG = BillingFragment.class.getSimpleName();
 
-    private TextView billingPlan;
+    private TextView billingTitle, billingHistoryTitle, billingPlan;
     private TextView billingDate;
     private ListView billingHistoryList;
     private BillingAccountModel billingAccountData = new BillingAccountModel();
@@ -42,17 +44,28 @@ public class BillingFragment extends Fragment {
 
         billingPlan = (TextView) rootView.findViewById(R.id.billing_plan_value);
         billingDate = (TextView) rootView.findViewById(R.id.billing_date_value);
+        billingTitle = (TextView) rootView.findViewById(R.id.tv_billing);
+        billingHistoryTitle = (TextView) rootView.findViewById(R.id.billing_history_header);
 
         billingHistoryList = (ListView) rootView.findViewById(R.id.billing_history_list);
         billingHistoryList.setAdapter(new BillingListAdapter(getActivity()));
+
+        setupView();
 
         new BillingDataTask().execute();
         return rootView;
     }
 
+    private void setupView() {
+        billingTitle.setPaintFlags(billingTitle.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        billingHistoryTitle.setPaintFlags(billingHistoryTitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+    }
+
     private void showData() {
-        billingPlan.setText(billingAccountData.displayBillingType());
-        billingDate.setText(billingAccountData.isBilledAccount() + "");
+        if (billingAccountData != null) {
+            billingPlan.setText(billingAccountData.displayBillingType() + "");
+            billingDate.setText(billingAccountData.isBilledAccount() + "");
+        }
         ((BillingListAdapter) billingHistoryList.getAdapter()).notifyDataSetChanged();
     }
 
@@ -105,6 +118,12 @@ public class BillingFragment extends Fragment {
                 holder.billingMonth.setText(getItem(position).displayBilledMonth());
                 holder.billingPlan.setText(getItem(position).displayBillingType());
                 holder.billingDate.setText(getItem(position).displayBilledInfo());
+                if (getItem(position).displayBilledInfo().equalsIgnoreCase("Payment Due")) {
+                    Log.d(TAG, "Kevin in Color.red");
+                    holder.billingDate.setTextColor(Color.RED);
+                } else {
+                    holder.billingDate.setTextColor(R.color.gray_dark);
+                }
                 return convertView;
             } catch (Exception e) {
                 Log.d(TAG, "Exception " + e.getMessage());

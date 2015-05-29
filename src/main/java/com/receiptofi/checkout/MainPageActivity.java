@@ -74,7 +74,7 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
         ReceiptofiApplication.homeActivityResumed();
         mContext = getApplicationContext();
         AppUtils.setHomePageContext(this);
-        setupView();
+        setupView(savedInstanceState);
     }
 
     @Override
@@ -179,7 +179,7 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
         }
     }
 
-    private void setupView() {
+    private void setupView(Bundle savedInstanceState) {
         ab = getActionBar();
         ab.setDisplayHomeAsUpEnabled(true);
         ab.setHomeButtonEnabled(true);
@@ -221,7 +221,10 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
 
 
         mHomeFragment = HomeFragment.newInstance("", "");
-        changeFragment(mHomeFragment);
+        if(null == savedInstanceState){
+            //set you initial fragment object
+            changeFragment(mHomeFragment);
+        }
         mTagModifyFragment = TagModifyFragment.newInstance("", "");
         mNotificationFragment = NotificationFragment.newInstance("", "");
 
