@@ -39,7 +39,7 @@
         android:title="Check Update">
     </Preference>
         <Preference
-            android:title="About Us">
+            android:title="About">
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -124,7 +124,7 @@ public class DeviceService {
             ExpenseTagUtils.deleteAll();
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
             // KEVIN : Add below solution for new tag modify page.
-            if (((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment != null) {
+            if (null != ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment) {
                 ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(TagModifyFragment.EXPENSE_TAG_UPDATED);
             }
         } else {

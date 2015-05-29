@@ -4,6 +4,10 @@ import android.util.Log;
 
 import com.receiptofi.checkout.model.types.AccountBillingType;
 import com.receiptofi.checkout.model.types.BilledStatus;
+import com.receiptofi.checkout.utils.Constants;
+
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,7 +21,7 @@ import java.util.Locale;
 public class BillingHistoryModel {
     private static final String TAG = BillingHistoryModel.class.getSimpleName();
 
-    private static final DateFormat SDF_DD_MMM_YYYY = new SimpleDateFormat("DD-MMM-yyyy", Locale.US);
+    private static final DateFormat DF_DD_MMM_YYYY = new SimpleDateFormat("dd MMM yyyy", Locale.US);
     private static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy-MM", Locale.US);
     private static final DateFormat DF_MMM_YYYY = new SimpleDateFormat("MMM yyyy", Locale.US);
 
@@ -70,12 +74,15 @@ public class BillingHistoryModel {
 
     public String displayBilledInfo() {
         switch (BilledStatus.valueOf(billedStatus)) {
-            case P:
-                return "NA";
             case NB:
                 return "Payment Due";
+            case P:
+                return "NA";
+            case S:
+                return BilledStatus.S.getDescription();
             case B:
-                return SDF_DD_MMM_YYYY.format(billedDate);
+                DateTime dateTime = Constants.ISO_J_DF.parseDateTime(billedDate).withZone(DateTimeZone.getDefault());
+                return DF_DD_MMM_YYYY.format(dateTime.toDate());
             default:
                 throw new UnsupportedOperationException("Reached unreachable condition " + billedStatus);
 
