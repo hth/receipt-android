@@ -109,6 +109,7 @@ public class BillingFragment extends Fragment {
                     holder = new ViewHolder();
                     holder.billingMonth = (TextView) convertView.findViewById(R.id.billing_history_list_item_month);
                     holder.billingPlan = (TextView) convertView.findViewById(R.id.billing_history_list_item_plan);
+                    holder.billingStatus = (TextView) convertView.findViewById(R.id.billing_history_list_item_bill_status);
                     holder.billingDate = (TextView) convertView.findViewById(R.id.billing_history_list_item_date);
                     convertView.setTag(holder);
                 } else {
@@ -117,6 +118,7 @@ public class BillingFragment extends Fragment {
 
                 holder.billingMonth.setText(getItem(position).displayBilledMonth());
                 holder.billingPlan.setText(getItem(position).displayBillingType());
+                holder.billingStatus.setText("Billed");
                 holder.billingDate.setText(getItem(position).displayBilledInfo());
                 if (getItem(position).displayBilledInfo().equalsIgnoreCase("Payment Due")) {
                     Log.d(TAG, "Kevin in Color.red");
@@ -135,6 +137,7 @@ public class BillingFragment extends Fragment {
         private class ViewHolder {
             TextView billingMonth;
             TextView billingPlan;
+            TextView billingStatus;
             TextView billingDate;
         }
     }

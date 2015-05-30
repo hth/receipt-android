@@ -67,8 +67,8 @@
     <string name="expense_tag_dialog_add_text">Add new tag</string>
 
     <!--Billing fragment-->
-    <string name="billing_plan">Billing plan</string>
-    <string name="billing_date">Next billing date</string>
+    <string name="billing_plan">Plan Subscribed</string>
+    <string name="billing_date">Billed</string>
     <string name="billing_history">Billing History</string>
 
     <!--Preference String-->
