@@ -63,7 +63,7 @@ public class BillingHistoryModel {
         try {
             return DF_MMM_YYYY.format(DF_YYYY_MM.parse(billedForMonth));
         } catch (ParseException e) {
-            Log.e("Date parsing date=" + billedForMonth, e.getLocalizedMessage(), e);
+            Log.e(TAG, "Date parsing date=" + billedForMonth + "reason=" + e.getLocalizedMessage(), e);
             return "Missing";
         }
     }
@@ -84,6 +84,7 @@ public class BillingHistoryModel {
                 DateTime dateTime = Constants.ISO_J_DF.parseDateTime(billedDate).withZone(DateTimeZone.getDefault());
                 return DF_DD_MMM_YYYY.format(dateTime.toDate());
             default:
+                Log.e(TAG, "Reached unreachable condition for billedStatus=" + billedStatus);
                 throw new UnsupportedOperationException("Reached unreachable condition " + billedStatus);
 
         }

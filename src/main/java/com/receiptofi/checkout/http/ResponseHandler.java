@@ -4,12 +4,11 @@ import org.apache.http.Header;
 
 public interface ResponseHandler {
 
-    public void onSuccess(Header[] headers, String body);
+    void onSuccess(Header[] headers, String body);
 
-    public void onError(int statusCode, String error);
+    void onError(int statusCode, String error);
 
-    public void onException(Exception exception);
-
+    void onException(Exception exception);
 }
 
 

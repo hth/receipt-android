@@ -108,19 +108,47 @@ public class ExpenseTagDialog extends DialogFragment {
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String tagName = label.getText().toString();
-                        int colorCode = colorPicker.getColor();
-                        String tagColor = String.format("#%06X", (0xFFFFFF & colorCode));
+                        String tagColor = String.format("#%06X", (0xFFFFFF & colorPicker.getColor()));
+                        JSONObject postData = new JSONObject();
 
                         switch (dialogMode) {
                             case MODE_CREATE:
-                                if (null != tagName || null != tagColor) {
-                                    JSONObject postData = new JSONObject();
+                                try {
+                                    postData.put("tagName", tagName);
+                                    postData.put("tagColor", tagColor);
+
+                                    ExternalCall.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        @Override
+                                        public void onSuccess(Header[] headers, String body) {
+                                            DeviceService.onSuccess(headers, body);
+                                        }
+
+                                        @Override
+                                        public void onError(int statusCode, String error) {
+                                            Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
+                                            ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        @Override
+                                        public void onException(Exception exception) {
+                                            Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
+                                            ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+
+                                } catch (JSONException e) {
+                                    Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                                }
+                                break;
+                            case MODE_UPDATE:
+                                Log.d(TAG, "After dialog dismiss: " + tagColor);
+                                if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
                                     try {
-                                        postData.put("tagId", tagId);
+                                        postData.put("tagId", tagModel.getId());
                                         postData.put("tagName", tagName);
                                         postData.put("tagColor", tagColor);
 
-                                        ExternalCall.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        ExternalCall.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
                                             public void onSuccess(Header[] headers, String body) {
                                                 DeviceService.onSuccess(headers, body);
@@ -128,56 +156,19 @@ public class ExpenseTagDialog extends DialogFragment {
 
                                             @Override
                                             public void onError(int statusCode, String error) {
-                                                Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
+                                                Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
                                                 ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
                                             }
 
                                             @Override
                                             public void onException(Exception exception) {
-                                                Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
+                                                Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onException: " + exception.getMessage());
                                                 ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
                                             }
                                         });
 
                                     } catch (JSONException e) {
-                                        Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-                                    }
-                                }
-                                break;
-                            case MODE_UPDATE:
-                                Log.d("After dialog dismiss: ", tagColor);
-                                if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
-                                    String tagId = tagModel.getId();
-
-                                    if (null != tagId || null != tagName || null != tagColor) {
-                                        JSONObject postData = new JSONObject();
-                                        try {
-                                            postData.put("tagId", tagId);
-                                            postData.put("tagName", tagName);
-                                            postData.put("tagColor", tagColor);
-
-                                            ExternalCall.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-                                                @Override
-                                                public void onSuccess(Header[] headers, String body) {
-                                                    DeviceService.onSuccess(headers, body);
-                                                }
-
-                                                @Override
-                                                public void onError(int statusCode, String error) {
-                                                    Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
-                                                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
-                                                }
-
-                                                @Override
-                                                public void onException(Exception exception) {
-                                                    Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onException: " + exception.getMessage());
-                                                    ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-                                                }
-                                            });
-
-                                        } catch (JSONException e) {
-                                            Log.e(TAG, "Exception while updating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-                                        }
+                                        Log.e(TAG, "Exception while updating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
                                     }
                                 }
                                 break;
