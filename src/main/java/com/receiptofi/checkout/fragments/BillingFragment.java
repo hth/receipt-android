@@ -27,7 +27,7 @@ import com.receiptofi.checkout.utils.db.BillingAccountUtils;
 public class BillingFragment extends Fragment {
     private static final String TAG = BillingFragment.class.getSimpleName();
 
-    private TextView billingTitle, billingHistoryTitle, billingPlan;
+    private TextView billingTitle, billingUsageTitle, billingHistoryTitle, billingPlan;
     private TextView billingDate;
     private ListView billingHistoryList;
     private BillingAccountModel billingAccountData = new BillingAccountModel();
@@ -45,6 +45,7 @@ public class BillingFragment extends Fragment {
         billingPlan = (TextView) rootView.findViewById(R.id.billing_plan_value);
         billingDate = (TextView) rootView.findViewById(R.id.billing_date_value);
         billingTitle = (TextView) rootView.findViewById(R.id.tv_billing);
+        billingUsageTitle = (TextView) rootView.findViewById(R.id.tv_diskUsage);
         billingHistoryTitle = (TextView) rootView.findViewById(R.id.billing_history_header);
 
         billingHistoryList = (ListView) rootView.findViewById(R.id.billing_history_list);
@@ -59,6 +60,7 @@ public class BillingFragment extends Fragment {
     private void setupView() {
         billingTitle.setPaintFlags(billingTitle.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         billingHistoryTitle.setPaintFlags(billingHistoryTitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        billingUsageTitle.setPaintFlags(billingUsageTitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 
     private void showData() {
@@ -121,7 +123,6 @@ public class BillingFragment extends Fragment {
                 holder.billingStatus.setText("Billed");
                 holder.billingDate.setText(getItem(position).displayBilledInfo());
                 if (getItem(position).displayBilledInfo().equalsIgnoreCase("Payment Due")) {
-                    Log.d(TAG, "Kevin in Color.red");
                     holder.billingDate.setTextColor(Color.RED);
                 } else {
                     holder.billingDate.setTextColor(R.color.gray_dark);
