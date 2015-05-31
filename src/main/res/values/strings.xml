@@ -2,7 +2,7 @@
 <resources>
     <!--App-->
     <string name="app_name">Checkout</string>
-    <string name="no_network_available">Network connection unavailable, please connect wi-fi/mobile-data.</string>
+    <string name="no_network_available">Network connection unavailable, please connect Wi-Fi/Data plan.</string>
 
     <!--Label-->
     <string name="label_app_name">Checkout</string>

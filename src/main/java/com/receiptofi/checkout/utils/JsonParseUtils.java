@@ -332,8 +332,8 @@ public class JsonParseUtils {
         }
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            JSONObject errorJosn = jsonObject.getJSONObject("error");
-            String errorReason = errorJosn.getString("reason");
+            JSONObject errorJson = jsonObject.getJSONObject("error");
+            String errorReason = errorJson.getString("reason");
             Log.d(TAG, "errorReason: " + errorReason);
             return errorReason;
         } catch (JSONException e) {
