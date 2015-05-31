@@ -216,15 +216,13 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
                 invalidateOptionsMenu();
             }
         };
+        mDrawerToggle.setAnimateEnabled(true);
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
 
         mHomeFragment = HomeFragment.newInstance("", "");
-        if(null == savedInstanceState){
-            //set you initial fragment object
-            changeFragment(mHomeFragment);
-        }
+
         mTagModifyFragment = TagModifyFragment.newInstance("", "");
         mNotificationFragment = NotificationFragment.newInstance("", "");
 
@@ -235,69 +233,31 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
             @Override
             public void onItemClick(AdapterView<?> parent, View view,
                                     int position, long id) {
-                RippleView rippleView;
                 switch (position) {
                     case 0:
-                        mDrawerToggle.setAnimateEnabled(true);
-                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
-                        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                            @Override
-                            public void onComplete(RippleView rippleView) {
-                                mDrawerLayout.closeDrawer(mDrawerLayout_L);
-                                changeFragment(mHomeFragment);
-                            }
-                        });
+                        changeFragment(mHomeFragment);
                         break;
                     case 1:
-                        mDrawerToggle.setAnimateEnabled(true);
-                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
-                        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                            @Override
-                            public void onComplete(RippleView rippleView) {
-                                mDrawerLayout.closeDrawer(mDrawerLayout_L);
-                                changeFragment(mNotificationFragment);
-                            }
-                        });
+                        changeFragment(mNotificationFragment);
                         break;
                     case 2:
-                        mDrawerToggle.setAnimateEnabled(true);
-                        mDrawerToggle.syncState();
-
-                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
-                        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                            @Override
-                            public void onComplete(RippleView rippleView) {
-                                mDrawerLayout.closeDrawer(mDrawerLayout_L);
-                                changeFragment(mTagModifyFragment);
-                            }
-                        });
-
+                        changeFragment(mTagModifyFragment);
                         break;
                     case 3:
-                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
-                        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                            @Override
-                            public void onComplete(RippleView rippleView) {
-                                mDrawerLayout.closeDrawer(mDrawerLayout_L);
-                                changeFragment(new BillingFragment());
-
-                            }
-                        });
+                        changeFragment(new BillingFragment());
                         break;
                     case 4:
-                        rippleView = (RippleView) view.findViewById(R.id.ripple_View);
-                        rippleView.setOnRippleCompleteListener(new RippleView.OnRippleCompleteListener() {
-                            @Override
-                            public void onComplete(RippleView rippleView) {
-                                mDrawerLayout.closeDrawer(mDrawerLayout_L);
-                                changeFragment(new ProfileFragment());
-                            }
-                        });
+                        changeFragment(new ProfileFragment());
                         break;
                 }
 
             }
         });
+
+        if(null == savedInstanceState){
+            //set you initial fragment object
+            changeFragment(mHomeFragment);
+        }
 
     }
 
@@ -328,6 +288,9 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
                     } else if (fragmentName.equals(ProfileFragment.class.getName())) {
                         ab.setTitle((CharSequence) "Setting");
                     }
+                }
+                if (mDrawerLayout.isDrawerOpen(mDrawerLayout_L)) {
+                    mDrawerLayout.closeDrawer(mDrawerLayout_L);
                 }
             }
 

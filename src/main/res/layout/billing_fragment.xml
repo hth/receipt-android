@@ -2,38 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white">
-    <LinearLayout
-        android:layout_width="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_billing"
+        style="@style/billing_history_title_style"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingLeft="10dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        >
-        <TextView
-            android:id = "@+id/tv_billing"
-            style="@style/billing_history_title_style"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Billing"
-            />
-        <TextView
-            android:id = "@+id/tv_diskUsage"
-            style="@style/billing_history_title_style"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Disk Usage"/>
-    </LinearLayout>
+        android:paddingLeft="10dp"
+        android:text="Billing" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="horizontal"
-        android:paddingLeft="15dp"
-        >
+        android:paddingLeft="15dp">
+
         <TextView
             android:id="@+id/billing_plan_text"
             style="@style/billing_history_title_style"
@@ -41,38 +28,15 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:text="@string/billing_plan"/>
+            android:text="@string/billing_plan" />
 
-        <TextView
-            android:id="@+id/billing_disk_uage_title"
-            style="@style/billing_history_title_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="Used"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingLeft="18dp">
         <TextView
             android:id="@+id/billing_plan_value"
             style="@style/billing_fragment_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/billing_disk_uage_value"
-            style="@style/billing_fragment_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="12.272MB"/>
+            android:gravity="center" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,37 +52,15 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="left|center_vertical"
-            android:text="@string/billing_date"/>
-        <TextView
-            android:id="@+id/billing_disk_usage_pending_title"
-            style="@style/billing_history_title_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="Pending"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingLeft="18dp">
+            android:text="@string/billing_date" />
+
         <TextView
             android:id="@+id/billing_date_value"
             style="@style/billing_fragment_style"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"/>
-        <TextView
-            android:id="@+id/billing_disk_usage_pending_value"
-            style="@style/billing_fragment_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="-"/>
-
+            android:gravity="center" />
     </LinearLayout>
 
     <TextView
@@ -126,15 +68,17 @@
         style="@style/billing_history_title_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:text="@string/billing_history"/>
+        android:paddingLeft="10dp"
+        android:text="@string/billing_history" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:gravity="center_vertical"
-        android:layout_marginTop="@dimen/activity_vertical_margin">
+        android:orientation="horizontal">
+
         <TextView
             android:id="@+id/billing_history_title_month"
             style="@style/billing_history_title_style"
@@ -142,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
-            android:text="Month"/>
+            android:text="Month" />
 
         <TextView
             android:id="@+id/billing_history_title_plan"
@@ -151,7 +95,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
-            android:text="Plan"/>
+            android:text="Plan" />
 
         <TextView
             android:id="@+id/billing_history_title_bill_status"
@@ -160,7 +104,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
-            android:text="Bill Status"/>
+            android:text="Bill Status" />
 
 
         <TextView
@@ -170,15 +114,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal|top"
-            android:text="Transaction Date"
             android:maxLines="2"
-            />
+            android:text="Transaction Date" />
     </LinearLayout>
+
     <ListView
         android:id="@+id/billing_history_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        />
+        android:paddingRight="10dp" />
 </LinearLayout>
