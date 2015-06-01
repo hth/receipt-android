@@ -41,4 +41,5 @@ public class ReceiptofiApplication extends Application {
         AppUtils.setHomePageContext(null);
         AppUtils.createImageDir();
     }
+
 }

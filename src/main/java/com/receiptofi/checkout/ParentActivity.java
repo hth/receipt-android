@@ -1,6 +1,7 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -31,6 +32,7 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppConfig;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -263,7 +265,13 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     protected void afterSuccessfulLogin() {
         Log.d(TAG, "Parent executing afterSuccessfulLogin");
         if (UserUtils.isValidAppUser()) {
-            launchHomeScreen();
+            // KEVIN: Add
+            // It should use isFristStart() as condition, but we use true for debug.
+            if (true) {
+                launchSplashScreen();
+            } else {
+                launchHomeScreen();
+            }
             finish();
             // TODO make this call later
             String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
@@ -276,6 +284,40 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         } else {
             showErrorMsg("Login Failed !!!");
         }
+    }
+
+    public void setProperty(String key, String value) {
+        AppConfig.getAppConfig(this).set(key, value);
+    }
+
+    public String getProperty(String key) {
+        String res = AppConfig.getAppConfig(this).get(key);
+        return res;
+    }
+
+    public boolean isFristStart() {
+        boolean res = false;
+        String perf_frist = getProperty(AppConfig.CONF_FRIST_START);
+        // default is http
+        if (isEmpty(perf_frist)) {
+            res = true;
+            setProperty(AppConfig.CONF_FRIST_START, "false");
+        }
+
+        return res;
+    }
+
+    public static boolean isEmpty(String input) {
+        if (input == null || "".equals(input))
+            return true;
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
+                return false;
+            }
+        }
+        return true;
     }
 
     private void launchHomeScreen() {
@@ -294,6 +336,22 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
+
+    private void launchSplashScreen() {
+        Log.d(TAG, "Parent executing launchHomeScreen");
+        uiThread.post(new Runnable() {
+
+            @Override
+            public void run() {
+                // KEVIN add for test
+//                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                Intent i = new Intent(ParentActivity.this, SplashActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
+                finish();
+            }
+        });
+    }
     /**
      * ********    for Facebook login    ***********
      */

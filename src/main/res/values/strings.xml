@@ -13,9 +13,9 @@
     <!--Launch page-->
     <string name="login_with_facebook">Login via Facebook</string>
     <string name="login_with_google">Login via Google+</string>
-    <string name="use_email">------ Use your email -------</string>
-    <string name="sign_up">Sign Up</string>
-    <string name="log_in">Log In</string>
+    <string name="use_email">Or</string>
+    <string name="sign_up">SIGN UP</string>
+    <string name="log_in">LOG IN</string>
 
     <string name="app_info_cnt_dscp">Where do you park your receipt at checkout</string>
     <string name="facebook_login_cnt_dscp">Login using your Facebook account</string>
@@ -167,8 +167,10 @@
     <string name="drawer_open">drawer_open</string>
     <string name="drawer_close">drawer_close</string>
     <string name="tag_modify_note">Swipe from right side to edit or delete a tag.</string>
+    <string name="tag_modify_note_new">Select any tag to modify.</string>
 
 <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_splash">SplashActivity</string>
 
 </resources>

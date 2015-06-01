@@ -65,8 +65,8 @@ public class BillingFragment extends Fragment {
         if (billingAccountData != null) {
             billingPlan.setText(billingAccountData.displayBillingType() + "");
             billingDate.setText(billingAccountData.isBilledAccount() + "");
+            ((BillingListAdapter) billingHistoryList.getAdapter()).notifyDataSetChanged();
         }
-        ((BillingListAdapter) billingHistoryList.getAdapter()).notifyDataSetChanged();
     }
 
     public class BillingListAdapter extends ArrayAdapter<BillingHistoryModel> {

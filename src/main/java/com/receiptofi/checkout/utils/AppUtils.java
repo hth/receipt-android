@@ -11,12 +11,16 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Properties;
 
 public class AppUtils {
 
     private static final String TAG = AppUtils.class.getSimpleName();
+    private final static String APP_CONFIG = "config";
+    public final static String CONF_FRIST_START = "isFristStart";
 
     static File image;
     static File receiptofiImgDir;
@@ -106,4 +110,5 @@ public class AppUtils {
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
+
 }
