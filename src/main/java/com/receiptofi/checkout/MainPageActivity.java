@@ -36,6 +36,7 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.adapters.MenuListAdapter;
 import com.receiptofi.checkout.fragments.BillingFragment;
+import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.HomeFragment.OnFragmentInteractionListener;
 import com.receiptofi.checkout.fragments.NotificationFragment;
@@ -46,9 +47,10 @@ import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 
 
-public class MainPageActivity extends FragmentActivity implements HomeFragment.OnFragmentInteractionListener, TagModifyFragment.OnFragmentInteractionListener {
+public class MainPageActivity extends FragmentActivity implements HomeFragment.OnFragmentInteractionListener, TagModifyFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -60,6 +62,7 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
     public HomeFragment mHomeFragment;
     public TagModifyFragment mTagModifyFragment;
     public NotificationFragment mNotificationFragment;
+    public ExpenseTagFragment mExpenseTagFragment;
     private Menu optionMenu;
     private SearchView searchView;
     private Context mContext;
@@ -225,7 +228,7 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
 
         mTagModifyFragment = TagModifyFragment.newInstance("", "");
         mNotificationFragment = NotificationFragment.newInstance("", "");
-
+        mExpenseTagFragment = ExpenseTagFragment.newInstance("", "");
         MenuListAdapter adapter = new MenuListAdapter(this);
         mDrawerList.setAdapter(adapter);
 
@@ -247,6 +250,9 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
                         changeFragment(new BillingFragment());
                         break;
                     case 4:
+                        changeFragment(mExpenseTagFragment);
+                        break;
+                    case 5:
                         changeFragment(new ProfileFragment());
                         break;
                 }

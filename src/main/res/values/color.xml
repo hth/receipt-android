@@ -39,4 +39,7 @@
     <color name="blue">#0000FF</color>
     <color name="magenta">#DF01D7</color>
 
+    <!--       For text view black color   -->
+    <color name="tv_black">#87000000</color>
+
 </resources>

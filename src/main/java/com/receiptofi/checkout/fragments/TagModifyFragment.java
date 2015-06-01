@@ -188,8 +188,8 @@ public class TagModifyFragment extends Fragment {
             @Override
             public void onClick(View v) {
 
-                Delivery delivery = null;
-                String tag = "";
+
+
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
                 Fragment prev = getFragmentManager().findFragmentByTag("dialog");
                 if (prev != null) {
@@ -201,38 +201,7 @@ public class TagModifyFragment extends Fragment {
                 DialogFragment editTagDialog = ExpenseTagDialog.newInstance(null);
                 editTagDialog.show(ft, "dialog");
                 // TODO: Replace DialogFragment with PostOffice dialog.
-//                delivery = PostOffice.newMail(getActivity())
-//                        .setTitle("Please input your tag:")
-//                        .setThemeColor(Color.BLUE)
-//                        .setDesign(Design.MATERIAL_LIGHT)
-//                        .showKeyboardOnDisplay(true)
-//                        .setButton(Dialog.BUTTON_POSITIVE, "Save", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.cancel();
-//                            }
-//                        })
-//                        .setStyle(new EditTextStyle.Builder(getActivity())
-//                                .setHint("Tag:")
-//                                .setInputType(InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS)
-//                                .setOnTextAcceptedListener(new EditTextStyle.OnTextAcceptedListener() {
-//                                    @Override
-//                                    public void onAccepted(String text) {
-//                                        Toast.makeText(getActivity(), "TAG was accepted: " + text, Toast.LENGTH_SHORT).show();
-//                                        Tag test = new Tag(text, Color.RED);
-//                                        mTagArrayList.add(test);
-//                                        mAdapter.notifyDataSetChanged();
-//                                    }
-//                                }).build())
-//                        .build();
-//                if(delivery != null)
-//                    delivery.show(getFragmentManager(), tag);
+
             }
         });
 
