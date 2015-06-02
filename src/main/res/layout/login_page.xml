@@ -99,9 +99,11 @@
 
             <ImageView
                 android:id="@+id/facebook_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/facebook"
+                android:layout_width="@dimen/social_icon_size"
+                android:layout_height="@dimen/social_icon_size"
+                android:src="@drawable/icon_facebook"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:contentDescription="@string/facebook_login_cnt_dscp"/>
 
             <TextView
@@ -126,9 +128,12 @@
 
             <ImageView
                 android:id="@+id/google_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/google"
+                android:layout_width="@dimen/social_icon_size"
+                android:layout_height="@dimen/social_icon_size"
+                android:src="@drawable/icon_googleplus"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="5dp"
                 android:contentDescription="@string/google_login_cnt_dscp"/>
 
             <TextView

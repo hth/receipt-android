@@ -41,7 +41,7 @@ import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.HomeFragment.OnFragmentInteractionListener;
 import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.ProfileFragment;
-import com.receiptofi.checkout.fragments.TagModifyFragment;
+import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -50,7 +50,7 @@ import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 
 
-public class MainPageActivity extends FragmentActivity implements HomeFragment.OnFragmentInteractionListener, TagModifyFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
+public class MainPageActivity extends FragmentActivity implements HomeFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
 
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
@@ -60,7 +60,7 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
     private boolean drawerArrowColor;
     private static final String TAG = MainPageActivity.class.getSimpleName();
     public HomeFragment mHomeFragment;
-    public TagModifyFragment mTagModifyFragment;
+    public ExpenseTagFragment mTagModifyFragment;
     public NotificationFragment mNotificationFragment;
     public ExpenseTagFragment mExpenseTagFragment;
     private Menu optionMenu;
@@ -226,9 +226,8 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
 
         mHomeFragment = HomeFragment.newInstance("", "");
 
-        mTagModifyFragment = TagModifyFragment.newInstance("", "");
+        mTagModifyFragment = ExpenseTagFragment.newInstance("", "");
         mNotificationFragment = NotificationFragment.newInstance("", "");
-        mExpenseTagFragment = ExpenseTagFragment.newInstance("", "");
         MenuListAdapter adapter = new MenuListAdapter(this);
         mDrawerList.setAdapter(adapter);
 
@@ -287,8 +286,8 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
                         ab.setTitle((CharSequence) "Checkout");
                     } else if (fragmentName.equals(NotificationFragment.class.getName())) {
                         ab.setTitle((CharSequence) "Notification");
-                    } else if (fragmentName.equals(TagModifyFragment.class.getName())) {
-                        ab.setTitle((CharSequence) "Tag Expenses");
+                    } else if (fragmentName.equals(ExpenseTagFragment.class.getName())) {
+                        ab.setTitle((CharSequence) "Expense Tag");
                     } else if (fragmentName.equals(BillingFragment.class.getName())) {
                         ab.setTitle((CharSequence) "Billing");
                     } else if (fragmentName.equals(ProfileFragment.class.getName())) {

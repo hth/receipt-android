@@ -47,4 +47,5 @@
     <!--   For TextView in fragment  -->
     <dimen name="tv_horizontal_margin">16dp</dimen>
     <dimen name="tv_textsize">16sp</dimen>
+    <dimen name="social_icon_size">40dp</dimen>
 </resources>

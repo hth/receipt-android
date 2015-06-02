@@ -6,8 +6,8 @@ import android.util.Log;
 
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
-import com.receiptofi.checkout.fragments.TagModifyFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -123,7 +123,7 @@ public class DeviceService {
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
             // KEVIN : Add below solution for new tag modify page.
             if (null != ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment) {
-                ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(TagModifyFragment.EXPENSE_TAG_UPDATED);
+                ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
             }
         } else {
             ExpenseTagUtils.deleteAll();
