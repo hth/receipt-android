@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -52,6 +53,7 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LaunchActivity.this, SignUpActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -61,8 +63,12 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LaunchActivity.this, LogInActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        ImageButton splashButton = (ImageButton) findViewById(R.id.ib_splash);
+        splashButton.setOnClickListener(this);
     }
 
     @Override
@@ -78,6 +84,9 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
                 Log.d(TAG, "facebook_login clicked");
                 isFbLoginClicked = true;
                 openFacebookSession();
+                break;
+            case R.id.ib_splash:
+                startActivity(new Intent(LaunchActivity.this, SplashActivity.class));
                 break;
             default:
                 Log.d(TAG, "done executing onClick no id match");

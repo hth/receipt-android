@@ -24,8 +24,8 @@
     <!--Log in page-->
     <string name="hint_email">example@receiptofi.com</string>
     <string name="hint_password">Password</string>
-    <string name="use_social">------ Use social account -------</string>
-    <string name="forgot_password">Forgot your password</string>
+    <string name="use_social"> - Or Use Social Account - </string>
+    <string name="forgot_password">Forgot Password?</string>
 
     <!--Sign up page-->
     <string name="hint_name">John Doe</string>

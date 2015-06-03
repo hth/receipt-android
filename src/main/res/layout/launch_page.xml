@@ -21,6 +21,16 @@
             android:contentDescription="@string/app_info_cnt_dscp"
             android:orientation="vertical">
 
+            <ImageButton
+                android:id="@+id/ib_splash"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@drawable/ic_cross"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="30dp"
+                android:background="@drawable/cross_imagebutton_bg"
+              />
+
             <ImageView
                 android:id="@+id/logo_view"
                 android:layout_width="wrap_content"
@@ -67,8 +77,8 @@
 
                 <ImageView
                     android:id="@+id/facebook_logo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/social_icon_size"
+                    android:layout_height="@dimen/social_icon_size"
                     android:background="@drawable/icon_facebook"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
@@ -100,8 +110,8 @@
 
                 <ImageView
                     android:id="@+id/google_logo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="@dimen/social_icon_size"
+                    android:layout_height="@dimen/social_icon_size"
                     android:background="@drawable/icon_googleplus"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"

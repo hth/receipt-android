@@ -267,11 +267,11 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         if (UserUtils.isValidAppUser()) {
             // KEVIN: Add
             // It should use isFristStart() as condition, but we use true for debug.
-            if (isFristStart()) {
-                launchSplashScreen();
-            } else {
+//            if (isFristStart()) {
+//                launchSplashScreen();
+//            } else {
                 launchHomeScreen();
-            }
+//            }
             finish();
             // TODO make this call later
             String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);

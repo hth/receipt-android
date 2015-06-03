@@ -193,7 +193,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         if(position % imageViewList.size() == imageViewList.size()-1)
         {
 
-            Intent i = new Intent(SplashActivity.this, MainPageActivity.class);
+            Intent i = new Intent(SplashActivity.this, LaunchActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(i);
             finish();
