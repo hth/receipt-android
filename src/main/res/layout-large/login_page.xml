@@ -30,7 +30,7 @@
             android:padding="@dimen/activity_horizontal_margin">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/app_button_height"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@drawable/linearlayout_withborder"
@@ -46,11 +46,13 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
-                android:maxLength="@integer/email_max_length"/>
+                android:maxLength="@integer/email_max_length"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/edittext_margin_left"/>
             </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/app_button_height"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@drawable/linearlayout_withborder"
@@ -67,7 +69,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
-                android:maxLength="@integer/password_max_length"/>
+                android:maxLength="@integer/password_max_length"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/edittext_margin_left"/>
             </LinearLayout>
 
             <TextView
@@ -140,8 +144,8 @@
 
                 <ImageView
                     android:id="@+id/facebook_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/app_button_height"
+                    android:layout_height="@dimen/app_button_height"
                     android:background="@drawable/icon_facebook"
                     android:contentDescription="@string/facebook_login_cnt_dscp"
                     android:layout_marginTop="@dimen/icon_social_padding"
@@ -169,8 +173,8 @@
 
                 <ImageView
                     android:id="@+id/google_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/app_button_height"
+                    android:layout_height="@dimen/app_button_height"
                     android:background="@drawable/icon_googleplus"
                     android:contentDescription="@string/google_login_cnt_dscp"
                     android:layout_marginTop="@dimen/icon_social_padding"

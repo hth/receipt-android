@@ -46,7 +46,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_email"
                 android:inputType="textEmailAddress"
-                android:maxLength="@integer/email_max_length"/>
+                android:maxLength="@integer/email_max_length"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/edittext_margin_left"/>
             </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -67,7 +69,9 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_password"
                 android:inputType="textPassword"
-                android:maxLength="@integer/password_max_length"/>
+                android:background="@null"
+                android:maxLength="@integer/password_max_length"
+                android:layout_marginLeft="@dimen/edittext_margin_left"/>
             </LinearLayout>
 
             <TextView

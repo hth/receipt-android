@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.ExpenseTagFragment;
@@ -15,6 +16,7 @@ import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.BillingAccountUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
@@ -122,8 +124,14 @@ public class DeviceService {
             ExpenseTagUtils.deleteAll();
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
             // KEVIN : Add below solution for new tag modify page.
-            if (null != ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment) {
-                ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
+            if (Constants.KEY_NEW_PAGE) {
+                if (null != ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment) {
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
+                }
+            } else {
+                if (null != ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment) {
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
+                }
             }
         } else {
             ExpenseTagUtils.deleteAll();
@@ -145,7 +153,12 @@ public class DeviceService {
 //            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
             // KEVIN : Add for new setting.
 //            HomeFragment.newInstance("", "").updateHandler.sendMessage(countMessage);
-            ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
+            if (Constants.KEY_NEW_PAGE) {
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
+            }
+            else {
+                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
+            }
         }
 
         if (!dataWrapper.getReceiptModels().isEmpty()) {
@@ -165,10 +178,13 @@ public class DeviceService {
                 // KEVIN : add for new setting page.
 //                HomeFragment.newInstance("", "").updateHandler.sendMessage(amountMessage);
 //                HomeFragment.newInstance("", "").updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
-
-                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
-                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
-
+                if (Constants.KEY_NEW_PAGE) {
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+                } else {
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+                }
             }
 
             /** Populate data in advance for master/detail views */

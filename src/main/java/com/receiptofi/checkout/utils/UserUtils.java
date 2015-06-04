@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.service.ImageUploaderService;
@@ -101,7 +102,12 @@ public class UserUtils {
             } else {
                 // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
-                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                if (Constants.KEY_NEW_PAGE) {
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                } else {
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                }
+
             }
         }
 

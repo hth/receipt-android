@@ -5,7 +5,7 @@
     <dimen name="activity_horizontal_margin_wide">40dp</dimen>
     <dimen name="activity_horizontal_margin_narrow">4dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin_wide">30dp</dimen>
+    <dimen name="activity_vertical_margin_wide">10dp</dimen>
     <dimen name="activity_vertical_margin_narrow">4dp</dimen>
     <dimen name="activity_touch_padding">10dp</dimen>
 
@@ -49,4 +49,7 @@
     <dimen name="tv_textsize">16sp</dimen>
     <dimen name="social_icon_size">50dp</dimen>
     <dimen name="login_page_icon_width_height">24dp</dimen>
+    <dimen name="edittext_margin_left">10dp</dimen>
+    <dimen name="signup_button_margin_top">10dp</dimen>
+    <dimen name="social_google_image_margin_left">8dp</dimen>
 </resources>

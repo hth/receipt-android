@@ -75,8 +75,8 @@
 
             <ImageView
                 android:id="@+id/facebook_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/social_icon_size"
+                android:layout_height="@dimen/social_icon_size"
                 android:background="@drawable/icon_facebook"
                 android:contentDescription="@string/facebook_login_cnt_dscp"
                 android:layout_marginTop="@dimen/icon_social_padding"
@@ -107,8 +107,8 @@
 
             <ImageView
                 android:id="@+id/google_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="@dimen/social_icon_size"
+                android:layout_height="@dimen/social_icon_size"
                 android:background="@drawable/icon_googleplus"
                 android:contentDescription="@string/google_login_cnt_dscp"
                 android:layout_marginTop="@dimen/icon_social_padding"

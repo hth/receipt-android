@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
@@ -23,6 +24,7 @@ import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 
@@ -62,7 +64,12 @@ public class ReceiptUtils {
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    if (Constants.KEY_NEW_PAGE) {
+                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    } else {
+                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    }
+
                 }
             }
 
@@ -90,7 +97,11 @@ public class ReceiptUtils {
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    if (Constants.KEY_NEW_PAGE) {
+                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    } else {
+                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    }
                 }
 
                 //Remove this method call

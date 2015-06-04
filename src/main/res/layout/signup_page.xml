@@ -1,86 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/scroll_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@color/app_light_bg"
-            android:fillViewport="true">
+    android:id="@+id/scroll_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/app_light_bg"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/linearlayout_withborder"
-        android:padding="5dp"
-        android:paddingLeft="10dp">
-        <ImageView
-            android:layout_width="@dimen/login_page_icon_width_height"
-            android:layout_height="@dimen/login_page_icon_width_height"
-            android:src="@drawable/ic_fullname"/>
 
-        <EditText
-            android:id="@+id/name"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_name"
-            android:inputType="textCapWords"
-            android:maxLength="@integer/name_max_length"/>
+            android:layout_height="@dimen/app_button_height"
+            android:background="@drawable/linearlayout_withborder"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="@dimen/login_page_icon_width_height"
+                android:layout_height="@dimen/login_page_icon_width_height"
+                android:src="@drawable/ic_fullname" />
+
+            <EditText
+                android:id="@+id/name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_name"
+                android:inputType="textCapWords"
+                android:maxLength="@integer/name_max_length"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/edittext_margin_left"/>
         </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/linearlayout_withborder"
-        android:padding="5dp"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp">
-        <ImageView
-            android:layout_width="@dimen/login_page_icon_width_height"
-            android:layout_height="@dimen/login_page_icon_width_height"
-            android:src="@drawable/ic_email"/>
-        <EditText
-            android:id="@+id/email"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_email"
-            android:inputType="textEmailAddress"
-            android:maxLength="@integer/email_max_length"/>
+            android:layout_height="@dimen/app_button_height"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/linearlayout_withborder"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="@dimen/login_page_icon_width_height"
+                android:layout_height="@dimen/login_page_icon_width_height"
+                android:src="@drawable/ic_email" />
+
+            <EditText
+                android:id="@+id/email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null"
+                android:hint="@string/hint_email"
+                android:inputType="textEmailAddress"
+                android:maxLength="@integer/email_max_length"
+                android:layout_marginLeft="@dimen/edittext_margin_left"/>
         </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:background="@drawable/linearlayout_withborder"
-        android:padding="5dp"
-        android:layout_marginTop="5dp"
-        android:paddingLeft="10dp">
-        <ImageView
-            android:layout_width="@dimen/login_page_icon_width_height"
-            android:layout_height="@dimen/login_page_icon_width_height"
-            android:src="@drawable/ic_pswd"/>
-        <EditText
-            android:id="@+id/password"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/hint_password"
-            android:inputType="textPassword"
-            android:maxLength="@integer/password_max_length"/>
+            android:layout_height="@dimen/app_button_height"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/linearlayout_withborder"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:paddingLeft="10dp">
+
+            <ImageView
+                android:layout_width="@dimen/login_page_icon_width_height"
+                android:layout_height="@dimen/login_page_icon_width_height"
+                android:src="@drawable/ic_pswd" />
+
+            <EditText
+                android:id="@+id/password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_password"
+                android:inputType="textPassword"
+                android:maxLength="@integer/password_max_length"
+                android:background="@null"
+                android:layout_marginLeft="@dimen/edittext_margin_left"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:background="@drawable/linearlayout_withborder"
             android:layout_marginTop="5dp"
+            android:background="@drawable/linearlayout_withborder"
+            android:orientation="horizontal"
             android:padding="@dimen/activity_horizontal_margin">
 
 
@@ -90,15 +104,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/age"
-                android:textStyle="bold"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
 
             <Spinner
                 android:id="@+id/age_spinner"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:entries="@array/age_range"/>
+                android:entries="@array/age_range" />
 
         </LinearLayout>
 
@@ -106,13 +120,22 @@
             android:id="@+id/sign_up_button"
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_button_height"
+            android:layout_marginTop="@dimen/signup_button_margin_top"
             android:background="@drawable/blue_button_selector"
             android:enabled="false"
             android:gravity="center"
             android:text="@string/sign_up"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:layout_marginTop="10dp"
-            android:textColor="@color/white"/>
+            android:textColor="@color/white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="@string/signup_term"
+            android:textSize="12sp"
+             />
 
         <TextView
             android:layout_width="match_parent"
@@ -121,7 +144,7 @@
             android:gravity="center"
             android:text="@string/use_social"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textColor="@android:color/darker_gray"/>
+            android:textColor="@android:color/darker_gray" />
 
         <LinearLayout
             android:id="@+id/facebook_login"
@@ -135,10 +158,10 @@
                 android:id="@+id/facebook_logo"
                 android:layout_width="@dimen/social_icon_size"
                 android:layout_height="@dimen/social_icon_size"
-                android:src="@drawable/icon_facebook"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:contentDescription="@string/facebook_login_cnt_dscp"/>
+                android:layout_marginTop="5dp"
+                android:contentDescription="@string/facebook_login_cnt_dscp"
+                android:src="@drawable/icon_facebook" />
 
             <TextView
                 android:id="@+id/facebook_login_text"
@@ -149,7 +172,7 @@
                 android:gravity="center"
                 android:text="@string/login_with_facebook"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </LinearLayout>
 
         <LinearLayout
@@ -164,11 +187,11 @@
                 android:id="@+id/google_logo"
                 android:layout_width="@dimen/social_icon_size"
                 android:layout_height="@dimen/social_icon_size"
-                android:src="@drawable/icon_googleplus"
-                android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="5dp"
-                android:contentDescription="@string/google_login_cnt_dscp"/>
+                android:layout_marginTop="5dp"
+                android:contentDescription="@string/google_login_cnt_dscp"
+                android:src="@drawable/icon_googleplus" />
 
             <TextView
                 android:id="@+id/google_login_text"
@@ -179,7 +202,7 @@
                 android:gravity="center"
                 android:text="@string/login_with_google"
                 android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
         </LinearLayout>
 
     </LinearLayout>

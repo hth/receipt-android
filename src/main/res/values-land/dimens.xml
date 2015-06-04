@@ -2,5 +2,5 @@
 <resources>
 
     <dimen name="image_info_margin_side">50dp</dimen>
-
+    <dimen name="social_icon_size">40dp</dimen>
 </resources>

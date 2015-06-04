@@ -143,4 +143,19 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+
+    <!-- Kitkat Traslucent Status bar -->
+    <style name="KitkatStatusBar" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar.TranslucentKitKatStatusBar">
+        <item name="android:actionBarStyle">@style/MyActionBar11</item>
+        <item name="colorPrimary">@color/app_theme_bg</item>
+        <item name="colorPrimaryDark">#558b2f</item>
+        <item name="colorAccent">#FFFFFF</item>
+    </style>
+
+    <!-- ActionBar styles -->
+    <style name="MyActionBar11"
+        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:background">@color/app_theme_bg</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
 </resources>

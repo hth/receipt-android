@@ -6,6 +6,7 @@ import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.adapters.ImageUpload;
@@ -17,6 +18,7 @@ import com.receiptofi.checkout.http.ImageResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
 import java.util.ArrayList;
@@ -93,7 +95,11 @@ public class ImageUploaderService {
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
                         // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                        ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                        if (Constants.KEY_NEW_PAGE) {
+                            ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                        } else {
+                            ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                        }
                     }
                 }
 
@@ -114,7 +120,11 @@ public class ImageUploaderService {
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    if (Constants.KEY_NEW_PAGE) {
+                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    } else {
+                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    }
                 }
             }
 
@@ -133,7 +143,11 @@ public class ImageUploaderService {
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    if (Constants.KEY_NEW_PAGE) {
+                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    } else {
+                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    }
                 }
             }
         });
@@ -170,7 +184,11 @@ public class ImageUploaderService {
         } else {
             // KEVIN : Add to replace the HomeActivy by HomeFragment
 //            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
-            ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+            if (Constants.KEY_NEW_PAGE) {
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+            } else {
+                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+            }
         }
     }
 

@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 
 /**
@@ -31,7 +32,11 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
             // KEVIN : Add to replace the HomeActivity with MainpageActivity
-            startActivity(new Intent(this, MainPageActivity.class));
+            if (Constants.KEY_NEW_PAGE) {
+                startActivity(new Intent(this, MainMaterialDrawerActivity.class));
+            } else {
+                startActivity(new Intent(this, MainPageActivity.class));
+            }
 //            startActivity(new Intent(this, HomeActivity.class));
             finish();
         }

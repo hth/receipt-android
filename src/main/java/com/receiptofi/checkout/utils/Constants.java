@@ -34,6 +34,8 @@ public class Constants {
      */
     public static final String PROP_KEY_PRIVATE_TOKEN = "private_token";
 
+    public static final boolean KEY_NEW_PAGE = true;
+
     public enum ReceiptFilter {
         FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),
         FILTER_BY_KEYWORD("filter_by_keyword"),
