@@ -39,6 +39,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.ChartService;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -133,6 +134,9 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 case UPDATE_UNPROCESSED_COUNT:
                     unprocessedValue = (String) msg.obj;
                     setUnprocessedCount();
+                    if (mPtrFrameLayout != null) {
+                        mPtrFrameLayout.refreshComplete();
+                    }
                     break;
                 case UPDATE_MONTHLY_EXPENSE:
                     currentMonthExpValue = (String) msg.obj;
@@ -203,12 +207,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         mPtrFrameLayout.setDurationToCloseHeader(1500);
         mPtrFrameLayout.setHeaderView(header);
         mPtrFrameLayout.addPtrUIHandler(header);
-        mPtrFrameLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                mPtrFrameLayout.autoRefresh(false);
-            }
-        }, 100);
+//        mPtrFrameLayout.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                mPtrFrameLayout.autoRefresh(false);
+//            }
+//        }, 100);
 
         mPtrFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
@@ -221,9 +225,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
             @Override
             public void onRefreshBegin(final PtrFrameLayout frame) {
-                // TODO: Add real refresh process here.
-                long delay = (long) (1000 + Math.random() * 2000);
-                    delay = Math.max(0, delay);
+                // Below is the real refresh event.
+                DeviceService.getNewUpdates(getActivity());
+                // We make a deley 10s in case on internet resposne during the refresh.
+//                long delay = (long) (1000 + Math.random() * 1000);
+//                    delay = Math.max(0, delay);
+                long delay = (long)10000;
                 frame.postDelayed(new Runnable() {
                     @Override
                     public void run() {

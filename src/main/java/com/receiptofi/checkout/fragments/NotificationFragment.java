@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,9 +14,14 @@ import android.widget.ListView;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.NotificationAdapter;
 import com.receiptofi.checkout.model.NotificationModel;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.db.NotificationUtils;
 
 import java.util.List;
+
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
+import in.srain.cube.views.ptr.header.MaterialHeader;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -35,6 +41,8 @@ public class NotificationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private View mView;
+    protected PtrFrameLayout mPtrFrameLayout;
+    ListView listView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -74,6 +82,7 @@ public class NotificationFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView =  inflater.inflate(R.layout.fragment_notification, container, false);
+        setupView();
         // start query
         new NotificationDataTask().execute();
         return mView;
@@ -118,8 +127,53 @@ public class NotificationFragment extends Fragment {
         public void onFragmentInteraction(Uri uri);
     }
 
+    private void setupView() {
+        /**
+         * Setup Material design pull to refresh
+         */
+        mPtrFrameLayout = (PtrFrameLayout) mView.findViewById(R.id.material_style_ptr_frame);
+        // header
+        final MaterialHeader header = new MaterialHeader(getActivity());
+        int[] colors = getResources().getIntArray(R.array.google_colors);
+        header.setColorSchemeColors(colors);
+        header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
+        header.setPadding(0, dp2px(15), 0, dp2px(10));
+        header.setPtrFrameLayout(mPtrFrameLayout);
+
+        mPtrFrameLayout.setLoadingMinTime(1000);
+        mPtrFrameLayout.setDurationToCloseHeader(1500);
+        mPtrFrameLayout.setHeaderView(header);
+        mPtrFrameLayout.addPtrUIHandler(header);
+
+        mPtrFrameLayout.setPtrHandler(new PtrHandler() {
+            @Override
+            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+                if (listView.getScrollY() == 0)
+                    return true;
+                else
+                    return false;
+            }
+
+            @Override
+            public void onRefreshBegin(final PtrFrameLayout frame) {
+                // Below is the real refresh event.
+                new NotificationDataTask().execute();
+                // We make a deley 10s in case on internet resposne during the refresh.
+//                long delay = (long) (1000 + Math.random() * 1000);
+//                    delay = Math.max(0, delay);
+                long delay = (long) 10000;
+                frame.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        frame.refreshComplete();
+                    }
+                }, delay);
+            }
+        });
+    }
+
     private void setListData(List<NotificationModel> notificationModels) {
-        ListView listView = (ListView) mView.findViewById(R.id.notification_list);
+        listView = (ListView) mView.findViewById(R.id.notification_list);
         listView.setAdapter(new NotificationAdapter(getActivity(), notificationModels));
     }
 
@@ -132,7 +186,15 @@ public class NotificationFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<NotificationModel> notificationModels) {
+            if (mPtrFrameLayout != null) {
+                mPtrFrameLayout.refreshComplete();
+            }
             setListData(notificationModels);
         }
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
+                getActivity().getResources().getDisplayMetrics());
     }
 }
