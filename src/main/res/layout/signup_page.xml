@@ -11,6 +11,18 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/linearlayout_withborder"
+        android:padding="5dp"
+        android:paddingLeft="10dp">
+        <ImageView
+            android:layout_width="@dimen/login_page_icon_width_height"
+            android:layout_height="@dimen/login_page_icon_width_height"
+            android:src="@drawable/ic_fullname"/>
 
         <EditText
             android:id="@+id/name"
@@ -19,7 +31,20 @@
             android:hint="@string/hint_name"
             android:inputType="textCapWords"
             android:maxLength="@integer/name_max_length"/>
-
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/linearlayout_withborder"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp">
+        <ImageView
+            android:layout_width="@dimen/login_page_icon_width_height"
+            android:layout_height="@dimen/login_page_icon_width_height"
+            android:src="@drawable/ic_email"/>
         <EditText
             android:id="@+id/email"
             android:layout_width="match_parent"
@@ -27,7 +52,20 @@
             android:hint="@string/hint_email"
             android:inputType="textEmailAddress"
             android:maxLength="@integer/email_max_length"/>
-
+        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="@drawable/linearlayout_withborder"
+        android:padding="5dp"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="10dp">
+        <ImageView
+            android:layout_width="@dimen/login_page_icon_width_height"
+            android:layout_height="@dimen/login_page_icon_width_height"
+            android:src="@drawable/ic_pswd"/>
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
@@ -35,11 +73,14 @@
             android:hint="@string/hint_password"
             android:inputType="textPassword"
             android:maxLength="@integer/password_max_length"/>
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
+            android:background="@drawable/linearlayout_withborder"
+            android:layout_marginTop="5dp"
             android:padding="@dimen/activity_horizontal_margin">
 
 
@@ -49,6 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/age"
+                android:textStyle="bold"
                 android:textAppearance="?android:attr/textAppearanceMedium"/>
 
             <Spinner
@@ -69,6 +111,7 @@
             android:gravity="center"
             android:text="@string/sign_up"
             android:textAppearance="?android:attr/textAppearanceMedium"
+            android:layout_marginTop="10dp"
             android:textColor="@color/white"/>
 
         <TextView
