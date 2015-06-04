@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.receiptofi.checkout">
+<manifest package="com.receiptofi.checkout"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
-    <uses-permission android:name="android.vending.BILLING" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.vending.BILLING"/>
 
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="true" />
+        android:required="true"/>
 
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.TIMEZONE_CHANGED" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.TIMEZONE_CHANGED"/>
 
     <application
         android:name="ReceiptofiApplication"
@@ -27,56 +27,56 @@
         tools:replace="android:icon,android:theme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/app_id" />
+            android:value="@string/app_id"/>
         <meta-data
             android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+            android:value="@integer/google_play_services_version"/>
 
         <!-- Required to use Drop-In -->
-        <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity" />
+        <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity"/>
         <activity
             android:name=".LaunchActivity"
             android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
         <activity
             android:name=".LogInActivity"
             android:label="@string/label_log_in"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
             android:name="com.facebook.LoginActivity"
-            android:label="@string/label_log_in"></activity>
+            android:label="@string/label_log_in"/>
         <activity
             android:name=".SignUpActivity"
             android:label="@string/label_sign_up"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
             android:name=".PasswordRecoveryActivity"
             android:label="@string/label_password_recovery"
-            android:windowSoftInputMode="stateAlwaysVisible"></activity>
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
             android:name=".HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".FilterListActivity" />
+                android:value=".FilterListActivity"/>
         </activity>
         <activity
             android:name=".SettingsActivity"
-            android:label="@string/settings"></activity>
+            android:label="@string/settings"/>
         <activity
             android:name=".PreferencesTabActivity"
-            android:label="@string/settings"></activity>
+            android:label="@string/settings"/>
         <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".FilterListActivity" />
+                android:value=".FilterListActivity"/>
         </activity>
         <activity
             android:name=".FilterListActivity"
@@ -84,23 +84,23 @@
             android:launchMode="singleTop"
             android:noHistory="true">
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
+                <action android:name="android.intent.action.SEARCH"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+                android:resource="@xml/searchable"/>
         </activity>
         <activity
             android:name=".NotificationActivity"
-            android:label="@string/notifications"></activity>
+            android:label="@string/notifications"/>
 
         <receiver android:name=".receivers.NetworkConnectivityReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
-                <action android:name="android.net.wifi.WIFI_STATE_CHANGED" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="android.net.wifi.WIFI_STATE_CHANGED"/>
             </intent-filter>
         </receiver>
 
@@ -109,11 +109,11 @@
             android:label="@string/title_activity_main_page">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".FilterListActivity" />
+                android:value=".FilterListActivity"/>
         </activity>
         <activity
             android:name=".SplashActivity"
-            android:label="@string/title_activity_splash"></activity>
+            android:label="@string/title_activity_splash"/>
 
         <activity
             android:name=".MainMaterialDrawerActivity"
@@ -121,7 +121,7 @@
             android:theme="@style/KitkatStatusBar">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".FilterListActivity" />
+                android:value=".FilterListActivity"/>
         </activity>
     </application>
 
