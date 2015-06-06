@@ -4,16 +4,13 @@ import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.v4.view.MenuItemCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
@@ -89,7 +86,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                 .colorRes(R.color.white)
                 .actionBarSize(), mBillingFragmentnew));
 
-        this.addSection(newSection("Subscription", new IconDrawable(mContext, Iconify.IconValue.fa_shopping_cart)
+        this.addSection(newSection("Subscription", new IconDrawable(mContext, Iconify.IconValue.fa_money)
                 .colorRes(R.color.white)
                 .actionBarSize(), mBillingFragmentnew));
 
