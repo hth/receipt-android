@@ -458,7 +458,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
-            showErrorMsg("some error occurred !!");
+            showErrorMsg("We seemed to have encountered issue saving your image.");
         }
     }
 
