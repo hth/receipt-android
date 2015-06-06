@@ -11,14 +11,13 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
-import java.util.Date;
-import java.util.UUID;
 
 public class AppUtils {
 
     private static final String TAG = AppUtils.class.getSimpleName();
-    private final static String APP_CONFIG = "config";
-    public final static String CONF_FRIST_START = "isFristStart";
+    private static final String APP_CONFIG = "config";
+    public static final String CONF_FRIST_START = "isFristStart";
+    private static final int RANDOM_STRING_SIZE = 4;
 
     static File image;
     static File receiptofiImgDir;
@@ -34,11 +33,12 @@ public class AppUtils {
     public static File createImageFile() {
         // Create an image file name
         try {
-            String imageFileName = "receipt_" + getRandomString();
-            image = File.createTempFile(imageFileName, ".jpg", getImageDir());
+            image = File.createTempFile(
+                    "Receipt_" + RandomString.newInstance(RANDOM_STRING_SIZE).nextString() + "-", ".jpg",
+                    getImageDir());
 
             // Save a file: path for use with ACTION_VIEW intents
-            String mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+            String mCurrentPhotoPath = "file:" + image.getAbsolutePath().replace("--", "-");
 
             return image;
         } catch (Exception e) {
@@ -50,24 +50,6 @@ public class AppUtils {
             }
             return null;
         }
-    }
-
-    /**
-     * Gets random string from UUID of first four characters or ISO date.
-     */
-    private static String getRandomString() {
-        String randomString;
-        String[] split = UUID.randomUUID().toString().split("-");
-        if (split.length > 0) {
-            if (split[0].length() > 4) {
-                randomString = split[0].substring(0, 4);
-            } else {
-                randomString = split[0];
-            }
-        } else {
-            randomString = ISO8601DateParser.toString(new Date());
-        }
-        return randomString;
     }
 
     public static String getImageFilePath() {
@@ -117,5 +99,4 @@ public class AppUtils {
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
-
 }

@@ -65,10 +65,10 @@ dependencies {
     compile 'net.danlew:android.joda:2.7.2'
     compile 'org.ocpsoft.prettytime:prettytime:4.0.0.Final'
     compile 'com.braintreepayments.api:braintree:1.5.0'
-    compile('org.apache.httpcomponents:httpmime:4.3.6') {
+    compile('org.apache.httpcomponents:httpmime:4.3.5') {
         exclude module: 'httpclient'
     }
-    compile 'org.apache.httpcomponents:httpclient-android:4.3.5'
+    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     compile 'com.google.android.gms:play-services:7.3.0'
     compile 'com.facebook.android:facebook-android-sdk:3.23.1'
     androidTestCompile 'junit:junit:4.10'
