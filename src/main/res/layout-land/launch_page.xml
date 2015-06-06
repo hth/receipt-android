@@ -15,6 +15,15 @@
         android:layout_weight="1"
         android:contentDescription="@string/app_info_cnt_dscp"
         android:orientation="vertical">
+        <ImageButton
+            android:id="@+id/ib_splash"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:src="@drawable/ic_cross"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/cross_imagebutton_bg"
+            />
 
         <ImageView
             android:id="@+id/logo_view"

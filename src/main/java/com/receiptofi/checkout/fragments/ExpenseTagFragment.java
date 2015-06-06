@@ -129,7 +129,6 @@ public class ExpenseTagFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_expense_tag, container, false);
         gridView = (GridView)rootView.findViewById(R.id.gv_tag);
-//        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         fbAddTag = (ButtonFloat)rootView.findViewById(R.id.buttonFloat);
         fbAddTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,24 +145,6 @@ public class ExpenseTagFragment extends Fragment {
                 editTagDialog.show(ft, "dialog");
             }
         });
-
-//        tagModelList = new LinkedList<>();
-//
-//        for (int i = 0; i < 6; i ++) {
-//            ExpenseTagModel temp = new ExpenseTagModel("id" + i, "name" + i, "#795548");
-//            if (i == 1) {
-//                temp = new ExpenseTagModel("id" + i, "name" + i, "#795548");
-//            } else if (i == 2) {
-//                temp = new ExpenseTagModel("id" + i, "name" + i, "#FF5722");
-//            } else if (i == 3)  {
-//                temp = new ExpenseTagModel("id" + i, "name" + i, "#4CAF50");
-//            } else if (i == 4)  {
-//                temp = new ExpenseTagModel("id" + i, "name" + i, "#00BCD4");
-//            } else if (i == 5)  {
-//                temp = new ExpenseTagModel("id" + i, "name" + i, "#3F51B5");
-//            }
-//            tagModelList.add(temp);
-//        }
 
         Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         tagModelList = new LinkedList<>(expTagMap.values());

@@ -419,7 +419,13 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     private void setMonthlyExpense() {
         Log.d(TAG, "executing setMonthlyExpense");
-        currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), currentMonthExpValue));
+        Activity activity = getActivity();
+        if(activity != null) {
+            currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), currentMonthExpValue));
+        }
+        else {
+                Log.d(TAG, "setMonthlyExpense the response of getActivity() is null.");
+        }
     }
 
     /**

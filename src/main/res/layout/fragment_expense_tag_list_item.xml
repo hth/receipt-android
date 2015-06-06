@@ -1,21 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
->
+    android:layout_width="match_parent" android:layout_height="match_parent">
     <Button
         android:id="@+id/btn_tag"
         android:text="x  BUSINESS"
         android:textColor="#879C27B0"
-        android:textSize="20sp"
-        android:layout_width="120dp"
-        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_width="140dp"
+        android:layout_height="40dp"
         android:background="@drawable/action_button_tag"
-        android:gravity="left|center_vertical"
+        android:gravity="center_vertical"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:fontFamily="sans-serif-thin"
         android:focusable="false"
         android:focusableInTouchMode="false"
         android:clickable="false"
+        android:scrollHorizontally="true"
+        android:lines="1"
+        android:ellipsize="end"
         />
 </LinearLayout>

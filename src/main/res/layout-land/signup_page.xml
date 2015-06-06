@@ -171,8 +171,8 @@
 
                 <ImageView
                     android:id="@+id/facebook_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/app_button_height"
+                    android:layout_width="@dimen/social_icon_size"
+                    android:layout_height="@dimen/social_icon_size"
                     android:layout_marginBottom="@dimen/icon_social_padding"
                     android:layout_marginTop="@dimen/icon_social_padding"
                     android:background="@drawable/icon_facebook"
@@ -200,8 +200,8 @@
 
                 <ImageView
                     android:id="@+id/google_logo"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/app_button_height"
+                    android:layout_width="@dimen/social_icon_size"
+                    android:layout_height="@dimen/social_icon_size"
                     android:layout_marginBottom="@dimen/icon_social_padding"
                     android:layout_marginLeft="@dimen/icon_google_margin_left"
                     android:layout_marginTop="@dimen/icon_social_padding"
