@@ -148,7 +148,7 @@
     <style name="KitkatStatusBar" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar.TranslucentKitKatStatusBar">
         <item name="android:actionBarStyle">@style/MyActionBar11</item>
         <item name="colorPrimary">@color/app_theme_bg</item>
-        <item name="colorPrimaryDark">#558b2f</item>
+        <item name="colorPrimaryDark">#FFFFFF</item>
         <item name="colorAccent">#FFFFFF</item>
     </style>
 
