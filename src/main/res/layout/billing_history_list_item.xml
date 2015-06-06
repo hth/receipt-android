@@ -12,7 +12,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical|left"/>
+        android:gravity="center"/>
 
     <TextView
         android:id="@+id/billing_history_list_item_plan"
@@ -20,7 +20,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical|left"/>
+        android:gravity="center"/>
 
 
     <TextView
@@ -29,7 +29,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:gravity="center_vertical|left"/>
+        android:gravity="center"/>
 
 
     <TextView

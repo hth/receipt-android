@@ -266,6 +266,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     protected void afterSuccessfulLogin() {
         Log.d(TAG, "Parent executing afterSuccessfulLogin");
         if (UserUtils.isValidAppUser()) {
+            // TODO: Delete Me
             // KEVIN: Add
             // It should use isFristStart() as condition, but we use true for debug.
 //            if (isFristStart()) {

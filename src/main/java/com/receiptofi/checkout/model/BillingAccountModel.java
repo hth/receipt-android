@@ -37,7 +37,9 @@ public class BillingAccountModel {
     }
 
     public void setBillingHistories(List<BillingHistoryModel> billingHistories) {
-        this.billingHistories = billingHistories;
+        if (billingHistories != null) {
+            this.billingHistories = billingHistories;
+        }
     }
 
     public String displayBillingType() {
