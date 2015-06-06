@@ -409,7 +409,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     private void setUnprocessedCount() {
         Log.d(TAG, "executing setUnprocessedCount");
-        unprocessedDocumentCount.setText(getString(R.string.processing_info, unprocessedValue));
+        Activity activity = getActivity();
+        if(activity != null) {
+            unprocessedDocumentCount.setText(getString(R.string.processing_info, unprocessedValue));
+        } else {
+            Log.d(TAG, "setUnprocessedCount the response of getActivity() is null.");
+        }
     }
 
     private void setMonthlyExpense() {
@@ -417,19 +422,6 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), currentMonthExpValue));
     }
 
-//    private void launchNotifications() {
-//        startActivity(new Intent(this, NotificationActivity.class));
-//    }
-
-//    private void launchSettings() {
-//        startActivity(new Intent(this, PreferencesTabActivity.class));
-//    }
-//
-//    private void logout() {
-//        KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
-//        startActivity(new Intent(this, LaunchActivity.class));
-//        finish();
-//    }
     /**
      * On Pie selection.
      *
