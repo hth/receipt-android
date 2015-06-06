@@ -59,7 +59,7 @@ public class AppUtils {
         String randomString;
         String[] split = UUID.randomUUID().toString().split("-");
         if (split.length > 0) {
-            if(split[0].length() > 4) {
+            if (split[0].length() > 4) {
                 randomString = split[0].substring(0, 4);
             } else {
                 randomString = split[0];
