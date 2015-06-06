@@ -6,11 +6,11 @@
 
     <EditText
         android:id="@+id/edit_tag_label"
+        style="@style/text_large"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        style="@style/text_large"
-        android:singleLine="true"
-        android:inputType="textNoSuggestions"/>
+        android:inputType="textNoSuggestions|textCapCharacters"
+        android:singleLine="true"/>
 
     <com.receiptofi.checkout.views.ColorPickerView
         android:id="@+id/edit_tag_colorPicker"
