@@ -128,6 +128,7 @@ public class NotificationFragment extends Fragment {
     }
 
     private void setupView() {
+        listView = (ListView) mView.findViewById(R.id.notification_list);
         /**
          * Setup Material design pull to refresh
          */
@@ -148,7 +149,7 @@ public class NotificationFragment extends Fragment {
         mPtrFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                if (listView.getScrollY() == 0)
+                if (listIsAtTop())
                     return true;
                 else
                     return false;
@@ -173,7 +174,6 @@ public class NotificationFragment extends Fragment {
     }
 
     private void setListData(List<NotificationModel> notificationModels) {
-        listView = (ListView) mView.findViewById(R.id.notification_list);
         listView.setAdapter(new NotificationAdapter(getActivity(), notificationModels));
     }
 
@@ -196,5 +196,10 @@ public class NotificationFragment extends Fragment {
     private int dp2px(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getActivity().getResources().getDisplayMetrics());
+    }
+
+    private boolean listIsAtTop() {
+        if(listView.getChildCount() == 0) return true;
+        return listView.getChildAt(0).getTop() == 0;
     }
 }
