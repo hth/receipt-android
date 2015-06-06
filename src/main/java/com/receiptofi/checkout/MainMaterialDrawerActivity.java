@@ -7,17 +7,21 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.view.MenuItemCompat;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.fragments.BillingFragment;
 import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
@@ -26,6 +30,9 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.views.ToastBox;
+
+import java.io.File;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
@@ -45,6 +52,10 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public ExpenseTagFragment mExpenseTagFragment;
     public BillingFragment mBillingFragmentnew;
     private Context mContext;
+
+    private static final int RESULT_IMAGE_GALLERY = 0x4c5;
+    private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
+
     @Override
     public void init(Bundle savedInstanceState) {
 
@@ -150,6 +161,76 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        // TODO Auto-generated method stub
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == RESULT_IMAGE_GALLERY && resultCode == RESULT_OK && null != data) {
+
+            Uri imageGallery = data.getData();
+            String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallery);
+
+            if (null != imageAbsolutePath) {
+                File pickerImage = new File(imageAbsolutePath);
+                if ((pickerImage.length() / 1048576) >= 10) {
+                    showErrorMsg("Image size of more than 10MB not supported.");
+                } else {
+//                    startAnimation();
+                    ImageUpload.process(this, imageAbsolutePath);
+                }
+            }
+
+        } else if (requestCode == RESULT_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+
+            String capturedImgFile = AppUtils.getImageFilePath();
+            if (null != capturedImgFile) {
+
+                File capturedFile = new File(capturedImgFile);
+                Uri contentUri = Uri.fromFile(capturedFile);
+                mediaScanIntent.setData(contentUri);
+                this.sendBroadcast(mediaScanIntent);
+
+//                startAnimation();
+                ImageUpload.process(this, capturedImgFile);
+            }
+        }
+
+    }
+
+    /**
+     * Below three functions are the XML linear layout onclick handler.
+     *
+     * @param view
+     */
+    public void takePhoto(View view) {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        File photoFile = AppUtils.createImageFile();
+        // Continue only if the File was successfully created
+        if (null != photoFile) {
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
+            startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
+        } else {
+            showErrorMsg("some error occurred !!");
+        }
+    }
+
+    public void chooseImage(View view) {
+        Intent g = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(g, RESULT_IMAGE_GALLERY);
+    }
+
+    public void invokeReceiptList(View view) {
+        startActivity(new Intent(MainMaterialDrawerActivity.this, ReceiptListActivity.class));
+    }
+
+
+    private void showErrorMsg(String msg) {
+        ToastBox.makeText(MainMaterialDrawerActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 
 }

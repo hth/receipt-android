@@ -19,6 +19,7 @@ import android.widget.Toast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.views.ToastBox;
@@ -99,6 +100,9 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
 
+        if (Constants.KEVIN_DEBUG) {
+            logIn.setEnabled(true);
+        }
     }
 
     @Override
@@ -174,6 +178,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         // getting username and password
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
+        // KEVIN: Add this for debug.
+        if (Constants.KEVIN_DEBUG) {
+            emailStr = "li@receiptofi.com";
+            passwordStr = "Chongzhi";
+        }
 
         if (TextUtils.isEmpty(emailStr)) {
             errors.append(this.getResources().getString(R.string.err_str_enter_email));

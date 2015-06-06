@@ -118,18 +118,18 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     unprocessedValue = Integer.toString(msg.arg1);
                     setUnprocessedCount();
                     showErrorMsg((String) msg.obj);
-                    endAnimation();
+//                    endAnimation();
                     break;
                 case IMAGE_UPLOAD_FAILURE:
                     showErrorMsg((String) msg.obj);
-                    endAnimation();
+//                    endAnimation();
                     break;
                 case IMAGE_ADDED_TO_QUEUED:
-                    endAnimation();
+//                    endAnimation();
                     break;
                 case IMAGE_ALREADY_QUEUED:
                     showErrorMsg((String) msg.obj);
-                    endAnimation();
+//                    endAnimation();
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
                     unprocessedValue = (String) msg.obj;
@@ -470,8 +470,10 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     }
 
     public void invokeReceiptList(View view) {
+        Log.d(TAG, "InvokeReceiptList getActivity is: " + getActivity());
         startActivity(new Intent(getActivity(), ReceiptListActivity.class));
     }
+
 
     private void showErrorMsg(String msg) {
         ToastBox.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
