@@ -53,6 +53,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+// TODO: Delete this class file.
+
+/**
+ * Deprecated Implementation.
+ */
 public class HomeActivity extends Activity implements OnChartValueSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();

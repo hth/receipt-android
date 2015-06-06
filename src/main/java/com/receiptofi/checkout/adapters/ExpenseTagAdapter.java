@@ -60,17 +60,17 @@ public class ExpenseTagAdapter extends BaseAdapter {
         int paddingTop = holder.btn_tag.getPaddingTop();
         int paddingBottom = holder.btn_tag.getPaddingBottom();
 
-        holder.btn_tag.setText(" x   " + tagModel.getName());
+        holder.btn_tag.setText(" x  " + tagModel.getName());
         holder.btn_tag.setTextColor(Color.parseColor(tagModel.getColor()));
         holder.btn_tag.setPadding(paddingLeft, paddingRight, paddingTop, paddingBottom);
         return view;
     }
 
     class ViewHolder {
-        Button btn_tag;
+        TextView btn_tag;
 
         public ViewHolder(View view) {
-            btn_tag = (Button) view.findViewById(R.id.btn_tag);
+            btn_tag = (TextView) view.findViewById(R.id.btn_tag);
             view.setTag(this);
         }
     }

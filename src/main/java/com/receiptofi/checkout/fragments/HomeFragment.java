@@ -144,7 +144,10 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     break;
                 case UPDATE_EXP_BY_BIZ_CHART:
                     expByBizAnimate = true;
-                    updateChartData();
+                    // We must add below condition to avoid getActivity be null exception.
+                    if (isAdded()) {
+                        updateChartData();
+                    }
                     break;
                 default:
                     Log.e(TAG, "Update handler not defined for: " + what);

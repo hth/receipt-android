@@ -49,7 +49,11 @@ import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 
+// TODO: Delete this class file.
 
+/**
+ * Deprecated Implementation.
+ */
 public class MainPageActivity extends FragmentActivity implements HomeFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
 
     private DrawerLayout mDrawerLayout;

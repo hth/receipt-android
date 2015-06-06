@@ -68,7 +68,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         String username = UserUtils.getEmail();
 
-        MaterialAccount account = new MaterialAccount(this.getResources(),"NeoKree"," " + username, R.drawable.photo, R.drawable.bamboo);
+        MaterialAccount account = new MaterialAccount(this.getResources(),"Li"," " + username, R.drawable.ic_profile, R.drawable.bamboo);
         this.addAccount(account);
         this.addSection(newSection("Home", new IconDrawable(mContext, Iconify.IconValue.fa_home)
                 .colorRes(R.color.white)
@@ -102,6 +102,8 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         // Close the drawer menu.
         this.disableLearningPattern();
+
+        setBackPattern(MaterialNavigationDrawer.BACKPATTERN_BACK_TO_FIRST);
     }
 
     @Override
