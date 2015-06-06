@@ -47,7 +47,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public HomeFragment mHomeFragment;
     public NotificationFragment mNotificationFragment;
     public ExpenseTagFragment mExpenseTagFragment;
-    public BillingFragment mBillingFragmentnew;
+    public BillingFragment mBillingFragment;
     private Context mContext;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
@@ -60,15 +60,12 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         mContext = getApplicationContext();
         AppUtils.setHomePageContext(this);
 
-
         mHomeFragment = HomeFragment.newInstance("", "");
         mNotificationFragment = NotificationFragment.newInstance("", "");
         mExpenseTagFragment = ExpenseTagFragment.newInstance("", "");
-        mBillingFragmentnew = new BillingFragment();
+        mBillingFragment = new BillingFragment();
 
-        String username = UserUtils.getEmail();
-
-        MaterialAccount account = new MaterialAccount(this.getResources(),"Li"," " + username, R.drawable.ic_profile, R.drawable.bamboo);
+        MaterialAccount account = new MaterialAccount(this.getResources(), "Li", UserUtils.getEmail(), R.drawable.ic_profile, R.drawable.bamboo);
         this.addAccount(account);
         this.addSection(newSection("Home", new IconDrawable(mContext, Iconify.IconValue.fa_home)
                 .colorRes(R.color.white)
@@ -84,11 +81,11 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         this.addSection(newSection("Billing History", new IconDrawable(mContext, Iconify.IconValue.fa_shopping_cart)
                 .colorRes(R.color.white)
-                .actionBarSize(), mBillingFragmentnew));
+                .actionBarSize(), mBillingFragment));
 
         this.addSection(newSection("Subscription", new IconDrawable(mContext, Iconify.IconValue.fa_money)
                 .colorRes(R.color.white)
-                .actionBarSize(), mBillingFragmentnew));
+                .actionBarSize(), mBillingFragment));
 
         this.addSection(newSection("Log Out", new MaterialSectionListener() {
             @Override

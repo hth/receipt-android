@@ -193,7 +193,7 @@ public class JsonParseUtils {
                     jsonObject.getString("color")
             );
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing expense response=" + jsonObject, e);
+            Log.e(TAG, "Fail parsing expense response=" + jsonObject + " reason=" + e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -240,7 +240,7 @@ public class JsonParseUtils {
             }
             return billingAccountModel;
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing billing account response=" + jsonObject, e);
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject + " reason=" + e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -270,7 +270,7 @@ public class JsonParseUtils {
                     jsonObject.getString("bd")
             );
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing billing account response=" + jsonObject, e);
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject + "reason=" + e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -319,15 +319,13 @@ public class JsonParseUtils {
 
             Log.d(TAG, "parsed all data");
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse, e);
-            e.printStackTrace();
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
-
         return dataWrapper;
     }
 
     public static String parseError(String jsonResponse) {
-        if(TextUtils.isEmpty(jsonResponse)){
+        if (TextUtils.isEmpty(jsonResponse)) {
             return null;
         }
         try {
@@ -337,8 +335,7 @@ public class JsonParseUtils {
             Log.d(TAG, "errorReason: " + errorReason);
             return errorReason;
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse, e);
-            e.printStackTrace();
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
         return null;
     }
