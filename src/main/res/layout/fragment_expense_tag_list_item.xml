@@ -3,11 +3,9 @@
     android:layout_width="match_parent" android:layout_height="match_parent">
     <Button
         android:id="@+id/btn_tag"
-        android:text="x  BUSINESS"
-        android:textColor="#879C27B0"
-        android:textSize="14sp"
-        android:layout_width="140dp"
-        android:layout_height="40dp"
+        android:textSize="20sp"
+        android:layout_width="180dp"
+        android:layout_height="60dp"
         android:background="@drawable/action_button_tag"
         android:gravity="center_vertical"
         android:paddingLeft="10dp"
