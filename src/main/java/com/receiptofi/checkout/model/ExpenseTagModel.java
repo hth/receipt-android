@@ -9,11 +9,13 @@ public class ExpenseTagModel {
     private String id;
     private String name;
     private String color;
+    private boolean deleted;
 
-    public ExpenseTagModel(String id, String name, String color) {
+    public ExpenseTagModel(String id, String name, String color, boolean deleted) {
         this.id = id;
         this.name = name;
         this.color = color;
+        this.deleted = deleted;
     }
 
     public String getId() {
@@ -28,12 +30,17 @@ public class ExpenseTagModel {
         return color;
     }
 
+    public boolean isDeleted() {
+        return deleted;
+    }
+
     @Override
     public String toString() {
         return "ExpenseTagModel{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", color='" + color + '\'' +
+                ", deleted=" + deleted +
                 '}';
     }
 }

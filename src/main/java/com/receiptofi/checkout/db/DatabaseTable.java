@@ -98,6 +98,7 @@ public class DatabaseTable {
         public static final String ID = "id";
         public static final String NAME = "name";
         public static final String COLOR = "color";
+        public static final String DELETED = "deleted";
 
         private ExpenseTag() {
         }

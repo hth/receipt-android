@@ -29,6 +29,7 @@ import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptModel;
@@ -40,6 +41,7 @@ import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -254,9 +256,9 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                         postData.put(ConstantsJson.RECHECK, reCheck ? "RECHECK" : "");
                         postData.put(ConstantsJson.RECEIPT_ID, rModel.getId());
 
-                        ExternalCall.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
+                        ExternalCallWithOkHttp.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
                             @Override
-                            public void onSuccess(Header[] headers, String body) {
+                            public void onSuccess(Headers headers, String body) {
                                 DeviceService.onSuccess(headers, body);
                             }
 
@@ -268,7 +270,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
                             @Override
                             public void onException(Exception exception) {
-                                Log.d(TAG, "Executing onDrawerClosed: onException: "+ exception.getMessage());
+                                Log.d(TAG, "Executing onDrawerClosed: onException: " + exception.getMessage());
                                 ToastBox.makeText(ReceiptListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });

@@ -128,6 +128,7 @@ public final class ExternalCall {
      * @param params          credential
      * @param responseHandler
      */
+    @Deprecated
     public static void authenticate(
             final Context context,
             final List<NameValuePair> params,
@@ -161,10 +162,12 @@ public final class ExternalCall {
         }.start();
     }
 
+    @Deprecated
     public static void doGet(Context context, String api, ResponseHandler responseHandler) {
         doGet(context, IncludeDevice.NO, api, responseHandler);
     }
 
+    @Deprecated
     public static void doGet(
             final Context context,
             final IncludeDevice includeDevice,
@@ -443,22 +446,6 @@ public final class ExternalCall {
                     headerData.put(key, header.getValue());
                     Log.d(TAG, "Fetching header data: key is:  " + key + "  value is:  " + header.getValue());
                 }
-            }
-            Log.d(TAG, "headerData is: " + headerData);
-            return headerData;
-        }
-        Log.d(TAG, "Couldn't parse header");
-        return null;
-    }
-
-    public static Map<String, String> parseHeader(Headers headers, Set<String> keys) {
-        Log.d(TAG, "executing parseHeader");
-        if (headers != null && headers.size() > 0 && keys != null && !keys.isEmpty()) {
-            Map<String, String> headerData = new HashMap<>();
-
-            for (String name : headers.names()) {
-                headerData.put(name, headers.get(name));
-                Log.d(TAG, "Fetching header data: key is:  " + name + "  value is:  " + headers.get(name));
             }
             Log.d(TAG, "headerData is: " + headerData);
             return headerData;

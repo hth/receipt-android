@@ -18,15 +18,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -210,13 +210,13 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
         }
 
-        ExternalCall.doPost(SignUpActivity.this, postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCallWithOkHttp.doPost(SignUpActivity.this, postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Log.d(TAG, "executing authenticateSignUp: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                saveAuthKey(ExternalCall.parseHeader(headers, keys));
+                saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
                 finish();

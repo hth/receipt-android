@@ -109,7 +109,8 @@ public class CreateTable {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ExpenseTag.TABLE_NAME + "("
                 + DatabaseTable.ExpenseTag.ID + " TEXT ,"
                 + DatabaseTable.ExpenseTag.NAME + " TEXT ,"
-                + DatabaseTable.ExpenseTag.COLOR + " TEXT " +
+                + DatabaseTable.ExpenseTag.COLOR + " TEXT ,"
+                + DatabaseTable.ExpenseTag.DELETED + " BOOLEAN " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableItem");

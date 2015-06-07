@@ -7,7 +7,6 @@ import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
@@ -27,8 +26,8 @@ import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
@@ -54,11 +53,11 @@ public class ReceiptUtils {
 
         ExternalCall.doGet(context, API.UNPROCESSED_COUNT_API, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Message msg = new Message();
                 // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
-                msg.what  = HomeFragment.UPDATE_UNPROCESSED_COUNT;
+                msg.what = HomeFragment.UPDATE_UNPROCESSED_COUNT;
                 UnprocessedDocumentModel unprocessedDocumentModel = JsonParseUtils.parseUnprocessedDocument(body);
                 msg.obj = unprocessedDocumentModel.getCount();
                 updateInsert(KEYS.UNPROCESSED_DOCUMENT, unprocessedDocumentModel.getCount());
@@ -89,7 +88,7 @@ public class ReceiptUtils {
     public static void getAllReceipts(Context context) {
         ExternalCall.doGet(context, API.GET_ALL_RECEIPTS, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Message msg = new Message();
                 // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                msg.what = HomeActivity.GET_ALL_RECEIPTS;
@@ -135,7 +134,7 @@ public class ReceiptUtils {
                 Protocol.GET.name(),
                 new ResponseHandler() {
                     @Override
-                    public void onSuccess(Header[] arr, String body) {
+                    public void onSuccess(Headers headers, String body) {
                         insert(ResponseParser.getReceipts(body));
                     }
 

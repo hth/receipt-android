@@ -190,7 +190,8 @@ public class JsonParseUtils {
             return new ExpenseTagModel(
                     jsonObject.getString("id"),
                     jsonObject.getString("tag"),
-                    jsonObject.getString("color")
+                    jsonObject.getString("color"),
+                    jsonObject.getBoolean("d")
             );
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing expense response=" + jsonObject + " reason=" + e.getLocalizedMessage(), e);

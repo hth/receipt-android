@@ -11,6 +11,7 @@ import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
@@ -26,6 +27,7 @@ import com.receiptofi.checkout.utils.db.NotificationUtils;
 import com.receiptofi.checkout.utils.db.ProfileUtils;
 import com.receiptofi.checkout.utils.db.ReceiptItemUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
+import com.squareup.okhttp.Headers;
 
 import org.apache.http.Header;
 
@@ -44,9 +46,9 @@ public class DeviceService {
 
     public static void getNewUpdates(Context context) {
         Log.d(TAG, "get new update for device");
-        ExternalCall.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
+        ExternalCallWithOkHttp.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
             }
 
@@ -64,9 +66,9 @@ public class DeviceService {
 
     public static void getAll(Context context) {
         Log.d(TAG, "get all data for new device");
-        ExternalCall.doGet(context, IncludeDevice.NO, API.ALL_FROM_BEGINNING, new ResponseHandler() {
+        ExternalCallWithOkHttp.doGet(context, API.ALL_FROM_BEGINNING, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
             }
 
@@ -90,10 +92,10 @@ public class DeviceService {
         Log.d(TAG, "register device");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
-        ExternalCall.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
+        ExternalCallWithOkHttp.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 boolean registration = JsonParseUtils.parseDeviceRegistration(body);
                 if (!registration) {
                     Log.d(TAG, "register device failed");
@@ -115,7 +117,7 @@ public class DeviceService {
         });
     }
 
-    public static void onSuccess(Header[] headers, String body) {
+    public static void onSuccess(Headers headers, String body) {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
 
         if (null != dataWrapper.getProfileModel()) {
@@ -127,7 +129,6 @@ public class DeviceService {
 
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
-            ExpenseTagUtils.deleteAll();
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
             // KEVIN : Add below solution for new tag modify page.
             if (Constants.KEY_NEW_PAGE) {
@@ -139,8 +140,6 @@ public class DeviceService {
                     ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
                 }
             }
-        } else {
-            ExpenseTagUtils.deleteAll();
         }
 
         NotificationUtils.insert(dataWrapper.getNotificationModels());

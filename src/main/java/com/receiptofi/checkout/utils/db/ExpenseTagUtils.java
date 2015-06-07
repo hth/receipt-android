@@ -38,12 +38,15 @@ public class ExpenseTagUtils {
     }
 
     public static void insert(List<ExpenseTagModel> expensesTags) {
-        deleteAll();
-
         for (ExpenseTagModel expenseTag : expensesTags) {
-            insert(expenseTag);
+            if (expenseTag.isDeleted()) {
+                delete(expenseTag.getId());
+            } else {
+                insert(expenseTag);
+            }
         }
 
+        expenseTagModels = null;
         populateExpenseTagModelMap();
     }
 
@@ -72,11 +75,20 @@ public class ExpenseTagUtils {
         values.put(DatabaseTable.ExpenseTag.ID, expenseTag.getId());
         values.put(DatabaseTable.ExpenseTag.NAME, expenseTag.getName());
         values.put(DatabaseTable.ExpenseTag.COLOR, expenseTag.getColor());
+        values.put(DatabaseTable.ExpenseTag.DELETED, expenseTag.isDeleted());
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
                 DatabaseTable.ExpenseTag.TABLE_NAME,
                 null,
                 values
+        );
+    }
+
+    private static void delete(String expenseTagId) {
+        RDH.getWritableDatabase().delete(
+                DatabaseTable.ExpenseTag.TABLE_NAME,
+                DatabaseTable.ExpenseTag.ID + " = '" + expenseTagId + "'",
+                null
         );
     }
 
@@ -100,7 +112,8 @@ public class ExpenseTagUtils {
                     ExpenseTagModel expenseTagModel = new ExpenseTagModel(
                             cursor.getString(0),
                             cursor.getString(1),
-                            cursor.getString(2)
+                            cursor.getString(2),
+                            cursor.getInt(3) == 1
                     );
 
                     list.add(expenseTagModel);

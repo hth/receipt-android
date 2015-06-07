@@ -20,6 +20,7 @@ import android.widget.Toast;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
@@ -29,6 +30,7 @@ import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
 import org.apache.http.Header;
 import org.json.JSONException;
@@ -117,9 +119,9 @@ public class ExpenseTagDialog extends DialogFragment {
                                     postData.put("tagName", tagName);
                                     postData.put("tagColor", tagColor);
 
-                                    ExternalCall.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                    ExternalCallWithOkHttp.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                         @Override
-                                        public void onSuccess(Header[] headers, String body) {
+                                        public void onSuccess(Headers headers, String body) {
                                             DeviceService.onSuccess(headers, body);
                                         }
 
@@ -148,9 +150,9 @@ public class ExpenseTagDialog extends DialogFragment {
                                         postData.put("tagName", tagName);
                                         postData.put("tagColor", tagColor);
 
-                                        ExternalCall.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                        ExternalCallWithOkHttp.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
-                                            public void onSuccess(Header[] headers, String body) {
+                                            public void onSuccess(Headers headers, String body) {
                                                 DeviceService.onSuccess(headers, body);
                                             }
 

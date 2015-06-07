@@ -12,7 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.JsonParseUtils;
@@ -20,6 +20,7 @@ import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -137,13 +138,13 @@ public class SettingsActivity extends PreferenceActivity {
                     Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
                 }
 
-                ExternalCall.doPost(getActivity(), postData, API.SETTINGS_UPDATE_LOGIN_ID_API, IncludeAuthentication.YES, new ResponseHandler() {
+                ExternalCallWithOkHttp.doPost(getActivity(), postData, API.SETTINGS_UPDATE_LOGIN_ID_API, IncludeAuthentication.YES, new ResponseHandler() {
 
                     @Override
-                    public void onSuccess(org.apache.http.Header[] headers, String body) {
+                    public void onSuccess(Headers headers, String body) {
                         Log.d(TAG, "executing updateLoginId: onSuccess");
                         Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                        Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
+                        Map<String, String> headerData = ExternalCallWithOkHttp.parseHeader(headers, keys);
                         saveAuthKey(headerData);
                         updateHandler.sendEmptyMessage(LOGIN_ID_UPDATE_SUCCESS);
                     }
@@ -178,13 +179,13 @@ public class SettingsActivity extends PreferenceActivity {
                     Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
                 }
 
-                ExternalCall.doPost(getActivity(), postData, API.SETTINGS_UPDATE_PASSWORD_API, IncludeAuthentication.YES, new ResponseHandler() {
+                ExternalCallWithOkHttp.doPost(getActivity(), postData, API.SETTINGS_UPDATE_PASSWORD_API, IncludeAuthentication.YES, new ResponseHandler() {
 
                     @Override
-                    public void onSuccess(org.apache.http.Header[] headers, String body) {
+                    public void onSuccess(Headers headers, String body) {
                         Log.d(TAG, "executing updatePassword: onSuccess");
                         Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                        Map<String, String> headerData = ExternalCall.parseHeader(headers, keys);
+                        Map<String, String> headerData = ExternalCallWithOkHttp.parseHeader(headers, keys);
                         saveAuthKey(headerData);
                     }
 

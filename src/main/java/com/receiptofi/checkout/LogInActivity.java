@@ -17,21 +17,18 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.RequestBody;
 
-import org.apache.http.Header;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -212,7 +209,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     }
 
     private void authenticateLogIn(Bundle data) {
-        Log.d(TAG, "executing authenticateLogIn");
+        Log.d(TAG, "Authenticating");
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         if (data == null) {
@@ -223,17 +220,19 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             errors.delete(0, errors.length());
             return;
         }
-        List<NameValuePair> credentials = new ArrayList<>();
-        credentials.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
-        credentials.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
-        ExternalCall.authenticate(LogInActivity.this, credentials, new ResponseHandler() {
+        RequestBody formBody = new FormEncodingBuilder()
+                .add(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL))
+                .add(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD))
+                .build();
+
+        ExternalCallWithOkHttp.authenticate(LogInActivity.this, formBody, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Log.d(TAG, "Executing authenticateLogIn: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                saveAuthKey(ExternalCall.parseHeader(headers, keys));
+                saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
                 finish();

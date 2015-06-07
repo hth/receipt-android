@@ -1,7 +1,6 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
-import android.app.Application;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -27,7 +26,7 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
@@ -38,8 +37,8 @@ import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -209,12 +208,12 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
 
-        ExternalCall.doPost(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCallWithOkHttp.doPost(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                saveAuthKey(ExternalCall.parseHeader(headers, keys));
+                saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
             }
