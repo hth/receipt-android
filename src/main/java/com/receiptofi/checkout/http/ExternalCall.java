@@ -13,6 +13,7 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.squareup.okhttp.Headers;
 
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -48,6 +49,7 @@ public final class ExternalCall {
     private ExternalCall() {
     }
 
+    @Deprecated
     public static void doPost(
             Context context,
             JSONObject postData,
@@ -58,6 +60,7 @@ public final class ExternalCall {
         doPost(context, postData, api, includeAuthentication, IncludeDevice.NO, responseHandler);
     }
 
+    @Deprecated
     public static void doPost(
             Context context,
             String api,
@@ -68,6 +71,7 @@ public final class ExternalCall {
         doPost(context, null, api, includeAuthentication, includeDevice, responseHandler);
     }
 
+    @Deprecated
     public static void doPost(
             final Context context,
             final JSONObject postData,
@@ -76,10 +80,10 @@ public final class ExternalCall {
             final IncludeDevice includeDevice,
             final ResponseHandler responseHandler
     ) {
-       if(!AppUtils.isNetworkConnected(context)){
-           responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
-           return;
-       }
+        if (!AppUtils.isNetworkConnected(context)) {
+            responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
+            return;
+        }
         new Thread() {
             public void run() {
                 try {
@@ -129,7 +133,7 @@ public final class ExternalCall {
             final List<NameValuePair> params,
             final ResponseHandler responseHandler
     ) {
-        if(!AppUtils.isNetworkConnected(context)){
+        if (!AppUtils.isNetworkConnected(context)) {
             responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
             return;
         }
@@ -157,7 +161,7 @@ public final class ExternalCall {
         }.start();
     }
 
-    public static void doGet(Context context,String api, ResponseHandler responseHandler) {
+    public static void doGet(Context context, String api, ResponseHandler responseHandler) {
         doGet(context, IncludeDevice.NO, api, responseHandler);
     }
 
@@ -167,7 +171,7 @@ public final class ExternalCall {
             final String api,
             final ResponseHandler responseHandler
     ) {
-        if(!AppUtils.isNetworkConnected(context)){
+        if (!AppUtils.isNetworkConnected(context)) {
             responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
             return;
         }
@@ -210,7 +214,14 @@ public final class ExternalCall {
         } else {
             if (!bodyContainsError(body)) {
                 Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onSuccess");
-                responseHandler.onSuccess(response.getAllHeaders(), body);
+
+                Map<String, String> headerMap = new HashMap<>();
+                Header[] headers = response.getAllHeaders();
+                for(Header header : headers) {
+                    headerMap.put(header.getName(), header.getValue());
+                }
+
+                responseHandler.onSuccess(Headers.of(headerMap), body);
             } else {
                 Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onError");
                 responseHandler.onError(statusCode, body);
@@ -420,6 +431,7 @@ public final class ExternalCall {
         return !TextUtils.isEmpty(body) && body.contains("error");
     }
 
+    @Deprecated
     public static Map<String, String> parseHeader(Header[] headers, Set<String> keys) {
         Log.d(TAG, "executing parseHeader");
         if (headers != null && headers.length > 0 && keys != null && !keys.isEmpty()) {
@@ -431,6 +443,22 @@ public final class ExternalCall {
                     headerData.put(key, header.getValue());
                     Log.d(TAG, "Fetching header data: key is:  " + key + "  value is:  " + header.getValue());
                 }
+            }
+            Log.d(TAG, "headerData is: " + headerData);
+            return headerData;
+        }
+        Log.d(TAG, "Couldn't parse header");
+        return null;
+    }
+
+    public static Map<String, String> parseHeader(Headers headers, Set<String> keys) {
+        Log.d(TAG, "executing parseHeader");
+        if (headers != null && headers.size() > 0 && keys != null && !keys.isEmpty()) {
+            Map<String, String> headerData = new HashMap<>();
+
+            for (String name : headers.names()) {
+                headerData.put(name, headers.get(name));
+                Log.d(TAG, "Fetching header data: key is:  " + name + "  value is:  " + headers.get(name));
             }
             Log.d(TAG, "headerData is: " + headerData);
             return headerData;
