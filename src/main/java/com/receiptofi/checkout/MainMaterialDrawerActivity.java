@@ -93,12 +93,16 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                 .colorRes(R.color.white)
                 .actionBarSize(), mBillingFragment));
 
-        this.addSection(newSection("Log Out", new MaterialSectionListener() {
-            @Override
-            public void onClick(MaterialSection materialSection) {
-                logout();
-            }
-        }));
+        this.addSection(newSection("Log Out",
+                new IconDrawable(mContext, Iconify.IconValue.fa_sign_out)
+                        .colorRes(R.color.white)
+                        .actionBarSize(),
+                new MaterialSectionListener() {
+                    @Override
+                    public void onClick(MaterialSection materialSection) {
+                        logout();
+                    }
+                }));
 
         // create bottom section
         this.addBottomSection(newSection("Settings", R.drawable.ic_settings_black_24dp, new Intent(this, SettingsActivity.class)));

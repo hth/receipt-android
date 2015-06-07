@@ -38,6 +38,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
@@ -47,7 +48,7 @@ import static com.receiptofi.checkout.utils.db.KeyValueUtils.updateInsert;
 public class ReceiptUtils {
 
     private static final String TAG = ReceiptUtils.class.getSimpleName();
-    private static final SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-");
+    private static final SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-", Locale.US);
 
     public static void getUnprocessedCount(Context context) {
 
