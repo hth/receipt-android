@@ -24,9 +24,11 @@ import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
+import com.receiptofi.checkout.utils.db.ProfileUtils;
 import com.receiptofi.checkout.views.ToastBox;
 
 import java.io.File;
@@ -39,7 +41,7 @@ import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionLis
 /**
  * Created by kevin on 6/4/15.
  */
-public class MainMaterialDrawerActivity extends MaterialNavigationDrawer implements HomeFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener{
+public class MainMaterialDrawerActivity extends MaterialNavigationDrawer implements HomeFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
     private Menu optionMenu;
     private SearchView searchView;
     private static final String TAG = MainMaterialDrawerActivity.class.getSimpleName();
@@ -65,7 +67,11 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         mExpenseTagFragment = ExpenseTagFragment.newInstance("", "");
         mBillingFragment = new BillingFragment();
 
-        MaterialAccount account = new MaterialAccount(this.getResources(), "Li", UserUtils.getEmail(), R.drawable.ic_profile, R.drawable.bamboo);
+        ProfileModel profileModel = ProfileUtils.getProfile();
+        String name = profileModel != null ? profileModel.getName() : "";
+        String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
+
+        MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, R.drawable.bamboo);
         this.addAccount(account);
         this.addSection(newSection("Home", new IconDrawable(mContext, Iconify.IconValue.fa_home)
                 .colorRes(R.color.white)

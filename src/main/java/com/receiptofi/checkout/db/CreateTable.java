@@ -13,6 +13,18 @@ public class CreateTable {
     private CreateTable() {
     }
 
+    public static void createTableProfile(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableReceipts");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Profile.TABLE_NAME + "("
+                + DatabaseTable.Profile.FIRST_NAME + " TEXT ,"
+                + DatabaseTable.Profile.LAST_NAME + " TEXT ,"
+                + DatabaseTable.Profile.MAIL + " TEXT ,"
+                + DatabaseTable.Profile.NAME + " TEXT ,"
+                + DatabaseTable.Profile.RID + " TEXT " +
+
+                ");");
+    }
+
     public static void createTableReceipts(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableReceipts");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Receipt.TABLE_NAME + "("

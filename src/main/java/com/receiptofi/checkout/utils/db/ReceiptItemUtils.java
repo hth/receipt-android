@@ -21,6 +21,9 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class ReceiptItemUtils {
     private static final String TAG = ReceiptItemUtils.class.getSimpleName();
 
+    private ReceiptItemUtils() {
+    }
+
     public static void insert(List<ReceiptItemModel> items) {
         for (ReceiptItemModel item : items) {
             insert(item);

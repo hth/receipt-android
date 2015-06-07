@@ -23,6 +23,7 @@ import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.utils.db.NotificationUtils;
+import com.receiptofi.checkout.utils.db.ProfileUtils;
 import com.receiptofi.checkout.utils.db.ReceiptItemUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
@@ -116,6 +117,11 @@ public class DeviceService {
 
     public static void onSuccess(Header[] headers, String body) {
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
+
+        if (null != dataWrapper.getProfileModel()) {
+            ProfileUtils.insert(dataWrapper.getProfileModel());
+        }
+
         ReceiptUtils.insert(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
 
@@ -155,8 +161,7 @@ public class DeviceService {
 //            HomeFragment.newInstance("", "").updateHandler.sendMessage(countMessage);
             if (Constants.KEY_NEW_PAGE) {
                 ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
-            }
-            else {
+            } else {
                 ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
             }
         }
