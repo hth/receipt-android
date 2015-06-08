@@ -14,7 +14,6 @@ import android.widget.ListView;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.NotificationAdapter;
 import com.receiptofi.checkout.model.NotificationModel;
-import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.db.NotificationUtils;
 
 import java.util.List;

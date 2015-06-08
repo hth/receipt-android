@@ -16,7 +16,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
@@ -28,7 +27,6 @@ import com.r0adkll.postoffice.model.Design;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ExpenseTagAdapter;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
@@ -40,7 +38,6 @@ import com.receiptofi.checkout.views.ToastBox;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 

@@ -1,17 +1,16 @@
 package com.receiptofi.checkout;
 
 import android.app.ActionBar;
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.InputType;
 import android.util.Log;
@@ -20,16 +19,13 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.andexert.library.RippleView;
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.views.ScrollView;
 import com.ikimuhendis.ldrawer.ActionBarDrawerToggle;
 import com.ikimuhendis.ldrawer.DrawerArrowDrawable;
 import com.joanzapata.android.iconify.IconDrawable;
@@ -38,16 +34,13 @@ import com.receiptofi.checkout.adapters.MenuListAdapter;
 import com.receiptofi.checkout.fragments.BillingFragment;
 import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
-import com.receiptofi.checkout.fragments.HomeFragment.OnFragmentInteractionListener;
 import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.ProfileFragment;
-import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 
 // TODO: Delete this class file.
 

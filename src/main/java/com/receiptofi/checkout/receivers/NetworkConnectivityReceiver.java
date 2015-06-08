@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
-import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.adapters.ImageUpload;

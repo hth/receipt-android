@@ -5,7 +5,6 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Message;
 import android.util.Log;
 
-import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.HomeFragment;

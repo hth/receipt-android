@@ -19,7 +19,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
@@ -28,7 +27,6 @@ import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 

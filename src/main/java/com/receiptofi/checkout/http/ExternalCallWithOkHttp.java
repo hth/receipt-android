@@ -17,7 +17,6 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
 import com.squareup.okhttp.Response;
 
-import org.apache.http.Header;
 import org.json.JSONObject;
 
 import java.util.HashMap;

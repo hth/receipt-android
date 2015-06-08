@@ -4,7 +4,6 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.fragments.HomeFragment;

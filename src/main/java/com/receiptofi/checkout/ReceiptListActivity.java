@@ -28,7 +28,6 @@ import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
@@ -43,7 +42,6 @@ import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 

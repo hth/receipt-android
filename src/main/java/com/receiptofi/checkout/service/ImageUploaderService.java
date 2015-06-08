@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 
-import com.receiptofi.checkout.HomeActivity;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;

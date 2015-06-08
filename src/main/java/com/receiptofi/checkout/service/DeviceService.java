@@ -10,7 +10,6 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.DataWrapper;
@@ -28,8 +27,6 @@ import com.receiptofi.checkout.utils.db.ProfileUtils;
 import com.receiptofi.checkout.utils.db.ReceiptItemUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 import com.squareup.okhttp.Headers;
-
-import org.apache.http.Header;
 
 import java.util.Date;
 import java.util.UUID;
