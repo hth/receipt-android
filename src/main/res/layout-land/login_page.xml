@@ -7,7 +7,7 @@
             android:fillViewport="true">
 
     <RelativeLayout
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:orientation="horizontal">
@@ -23,19 +23,20 @@
 
         <LinearLayout
             android:id="@+id/login_container"
-            android:layout_width="@dimen/view_with_paddings_on_side"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/app_button_height"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@drawable/linearlayout_withborder"
             android:padding="5dp"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10dp"
+            android:addStatesFromChildren="true">
             <ImageView
                 android:layout_width="@dimen/login_page_icon_width_height"
                 android:layout_height="@dimen/login_page_icon_width_height"
@@ -53,13 +54,14 @@
             </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/app_button_height"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:background="@drawable/linearlayout_withborder"
             android:padding="5dp"
             android:layout_marginTop="5dp"
-            android:paddingLeft="10dp">
+            android:paddingLeft="10dp"
+            android:addStatesFromChildren="true">
             <ImageView
                 android:layout_width="@dimen/login_page_icon_width_height"
                 android:layout_height="@dimen/login_page_icon_width_height"
@@ -93,10 +95,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/app_button_height"
                 android:layout_marginTop="@dimen/activity_vertical_margin"
-                android:background="@drawable/gray_button_selector"
                 android:gravity="center"
                 android:text="@string/forgot_password"
-                android:textAppearance="?android:attr/textAppearanceMedium"/>
+                android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

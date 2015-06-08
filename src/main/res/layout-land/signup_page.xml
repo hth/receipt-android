@@ -63,7 +63,8 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="5dp"
-                android:paddingLeft="10dp">
+                android:paddingLeft="10dp"
+                android:addStatesFromChildren="true">
 
                 <ImageView
                     android:layout_width="@dimen/login_page_icon_width_height"
@@ -90,7 +91,8 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:padding="5dp"
-                android:paddingLeft="10dp">
+                android:paddingLeft="10dp"
+                android:addStatesFromChildren="true">
 
                 <ImageView
                     android:layout_width="@dimen/login_page_icon_width_height"
@@ -113,7 +115,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/linearlayout_withborder"
+                android:background="@drawable/linearlayout_withborder_for_spinner"
                 android:orientation="horizontal"
                 android:padding="@dimen/activity_horizontal_margin">
 
