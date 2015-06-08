@@ -57,14 +57,14 @@ public class BillingAccountUtils {
             );
 
             if (null != cursor && cursor.getCount() > 0) {
-                if (cursor.moveToNext()) {
-                    billingAccountModel = new BillingAccountModel(
-                            cursor.getString(0),
-                            cursor.getInt(1) == 1
-                    );
-                    if (BillingHistoryUtils.getAll() != null) {
-                        billingAccountModel.setBillingHistories(BillingHistoryUtils.getAll());
-                    }
+                cursor.moveToNext();
+                
+                billingAccountModel = new BillingAccountModel(
+                        cursor.getString(0),
+                        cursor.getInt(1) == 1
+                );
+                if (BillingHistoryUtils.getAll() != null) {
+                    billingAccountModel.setBillingHistories(BillingHistoryUtils.getAll());
                 }
             }
         } catch (Exception e) {
