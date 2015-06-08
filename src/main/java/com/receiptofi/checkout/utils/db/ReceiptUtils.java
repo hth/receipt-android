@@ -1,35 +1,16 @@
 package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
-import android.content.Context;
 import android.database.Cursor;
-import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.receiptofi.checkout.MainMaterialDrawerActivity;
-import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
-import com.receiptofi.checkout.fragments.HomeFragment;
-import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
-import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.http.ResponseParser;
-import com.receiptofi.checkout.http.types.Protocol;
 import com.receiptofi.checkout.model.ChartModel;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
-import com.receiptofi.checkout.model.UnprocessedDocumentModel;
-import com.receiptofi.checkout.utils.AppUtils;
-import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.JsonParseUtils;
-import com.receiptofi.checkout.utils.UserUtils;
-import com.squareup.okhttp.Headers;
-
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,118 +22,11 @@ import java.util.Locale;
 import java.util.Map;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
-import static com.receiptofi.checkout.utils.db.KeyValueUtils.KEYS;
-import static com.receiptofi.checkout.utils.db.KeyValueUtils.updateInsert;
 
 public class ReceiptUtils {
 
     private static final String TAG = ReceiptUtils.class.getSimpleName();
     private static final SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-", Locale.US);
-
-    public static void getUnprocessedCount(Context context) {
-
-        ExternalCall.doGet(context, API.UNPROCESSED_COUNT_API, new ResponseHandler() {
-            @Override
-            public void onSuccess(Headers headers, String body) {
-                Message msg = new Message();
-                // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                msg.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
-                msg.what = HomeFragment.UPDATE_UNPROCESSED_COUNT;
-                UnprocessedDocumentModel unprocessedDocumentModel = JsonParseUtils.parseUnprocessedDocument(body);
-                msg.obj = unprocessedDocumentModel.getCount();
-                updateInsert(KEYS.UNPROCESSED_DOCUMENT, unprocessedDocumentModel.getCount());
-                if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    if (Constants.KEY_NEW_PAGE) {
-                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    } else {
-                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    }
-
-                }
-            }
-
-            @Override
-            public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing getUnprocessedCount: onError: " + error);
-            }
-
-            @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "executing getUnprocessedCount: onException: " + exception.getMessage());
-            }
-        });
-    }
-
-    public static void getAllReceipts(Context context) {
-        ExternalCall.doGet(context, API.GET_ALL_RECEIPTS, new ResponseHandler() {
-            @Override
-            public void onSuccess(Headers headers, String body) {
-                Message msg = new Message();
-                // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                msg.what = HomeActivity.GET_ALL_RECEIPTS;
-                msg.what = HomeFragment.GET_ALL_RECEIPTS;
-                insert(JsonParseUtils.parseReceipts(body));
-                if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    if (Constants.KEY_NEW_PAGE) {
-                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    } else {
-                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    }
-                }
-
-                //Remove this method call
-                //MonthlyReportUtils.computeMonthlyReceiptReport();
-            }
-
-            @Override
-            public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing getAllReceipts: onError: " + error);
-            }
-
-            @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "executing getAllReceipts: onException: " + exception.getMessage());
-            }
-        });
-    }
-
-
-    public static void fetchReceiptsAndSave(Context context) {
-
-        ArrayList<NameValuePair> headerData = new ArrayList<>();
-        headerData.add(new BasicNameValuePair(API.key.XR_AUTH, UserUtils.getAuth()));
-        headerData.add(new BasicNameValuePair(API.key.XR_MAIL, UserUtils.getEmail()));
-
-        ExternalCall.AsyncRequest(
-                context,
-                headerData,
-                API.GET_ALL_RECEIPTS,
-                Protocol.GET.name(),
-                new ResponseHandler() {
-                    @Override
-                    public void onSuccess(Headers headers, String body) {
-                        insert(ResponseParser.getReceipts(body));
-                    }
-
-                    @Override
-                    public void onException(Exception exception) {
-                        Log.d(TAG, "executing fetchReceiptsAndSave: onException: " + exception.getMessage());
-                    }
-
-                    @Override
-                    public void onError(int statusCode, String error) {
-                        Log.d(TAG, "executing fetchReceiptsAndSave: onError: " + error);
-                    }
-                });
-    }
-
-    public static void clearReceipts() {
-        ReceiptofiApplication.RDH.getWritableDatabase().rawQuery("delete from " + DatabaseTable.Receipt.TABLE_NAME + ";", null);
-    }
 
     /**
      * Insert receipts in table.
