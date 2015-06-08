@@ -21,7 +21,7 @@ public class ProfileUtils {
     }
 
     public static void insert(ProfileModel profile) {
-        delete();
+        deleteAll();
 
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.Profile.FIRST_NAME, profile.getFirstName());
@@ -38,12 +38,8 @@ public class ProfileUtils {
 
     }
 
-    protected static void delete() {
-        RDH.getWritableDatabase().delete(
-                DatabaseTable.Profile.TABLE_NAME,
-                null,
-                null
-        );
+    protected static void deleteAll() {
+        DBUtils.clearDB(DatabaseTable.Profile.TABLE_NAME);
     }
 
     public static ProfileModel getProfile() {
