@@ -24,6 +24,9 @@ public class ExpenseTagUtils {
     private static final String TAG = ExpenseTagUtils.class.getSimpleName();
     private static Map<String, ExpenseTagModel> expenseTagModels = new LinkedHashMap<>();
 
+    private ExpenseTagUtils() {
+    }
+
     /**
      * Expense Tag is static list available across the app. Anytime expense tag is added, deleted, updated, then
      * set new values to expenseTagModels.

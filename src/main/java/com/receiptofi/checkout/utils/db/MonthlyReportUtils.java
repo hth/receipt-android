@@ -16,6 +16,9 @@ import static com.receiptofi.checkout.db.DatabaseTable.MonthlyReport;
 public class MonthlyReportUtils {
     private static final String TAG = MonthlyReportUtils.class.getSimpleName();
 
+    private MonthlyReportUtils() {
+    }
+
     public static void computeMonthlyReceiptReport() {
         Log.d(TAG, "Compute monthly receipt report");
         dropAndCreateTableMonthlyReport();

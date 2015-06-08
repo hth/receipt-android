@@ -28,6 +28,9 @@ public class ReceiptUtils {
     private static final String TAG = ReceiptUtils.class.getSimpleName();
     private static final SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-", Locale.US);
 
+    private ReceiptUtils() {
+    }
+
     /**
      * Insert receipts in table.
      *
