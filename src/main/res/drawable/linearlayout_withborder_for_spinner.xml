@@ -1,18 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item
-        android:state_focused="true">
-        <shape>
-            <stroke
-                android:width="2dip"
-                android:color="@android:color/holo_blue_light"
-                />
-            <corners android:radius="10dp"/>
-        </shape>
-    </item>
-    <item
-        android:state_focused="false">
+    <!-- Spinner normal state -->
+    <item android:state_enabled="true" android:state_window_focused="true">
         <shape>
             <stroke
                 android:width="2dip"
@@ -22,11 +12,12 @@
         </shape>
     </item>
 
+    <!-- Spinner list view show up -->
     <item android:shape="rectangle">
         <shape>
             <stroke
                 android:width="2dip"
-                android:color="@android:color/white"
+                android:color="@android:color/holo_blue_light"
                 />
             <corners android:radius="10dp"/>
         </shape>

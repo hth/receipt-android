@@ -2,6 +2,7 @@ package com.receiptofi.checkout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -83,6 +84,10 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         password.addTextChangedListener(textWatcher);
 
         TextView forgotPassword = (TextView) findViewById(R.id.forgot_password_button);
+        /**
+         * Add underline of forgot Password to make it looks more hybird link.
+         */
+        forgotPassword.setPaintFlags(forgotPassword.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
 
             @Override
