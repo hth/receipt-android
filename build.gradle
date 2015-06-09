@@ -51,13 +51,15 @@ dependencies {
     compile project(':fatlibs:library_ldrawer')
     /** Expense Tag Swipe. */
     compile project(':fatlibs:library_swipt')
+    /** Kevin customed pull to refrsh lib */
+    compile project(':fatlibs:ptr-lib')
     /** Pretty messages. */
     compile 'com.r0adkll:postoffice:1.1.9'
     compile 'com.github.traex.rippleeffect:library:1.3'
     /** Android library for material design. */
     compile 'com.github.navasmdc:MaterialDesign:1.3'
-    /** Pull refresh. */
-    compile 'in.srain.cube:ultra-ptr:1.0.9'
+    /** Pull refresh.
+    compile 'in.srain.cube:ultra-ptr:1.0.9' */
     /** Material Navigation Drawer */
     compile 'it.neokree:MaterialNavigationDrawer:1.3.3'
 
