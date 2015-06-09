@@ -10,6 +10,7 @@ public class ProfileModel {
     private String mail;
     private String name;
     private String rid;
+    private int profileBackgroundImage;
 
     public ProfileModel(String firstName, String mail, String rid) {
         this.firstName = firstName;
@@ -43,6 +44,14 @@ public class ProfileModel {
 
     public String getRid() {
         return rid;
+    }
+
+    public void setProfileBackgroundImage(int image) {
+        this.profileBackgroundImage = image;
+    }
+
+    public int getProfileBackgroundImage() {
+        return profileBackgroundImage;
     }
 
     @Override
