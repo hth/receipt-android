@@ -1,2 +1,2 @@
 rootProject.name = "receipt-android"
-include ':fatlibs:library_ldrawer', ':fatlibs:library_swipt', ':fatlibs:ptr-lib'
+include ':fatlibs:library_ldrawer', ':fatlibs:library_swipt'
