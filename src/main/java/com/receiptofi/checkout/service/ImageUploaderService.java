@@ -13,6 +13,7 @@ import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ImageResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.ImageModel;
@@ -102,14 +103,14 @@ public class ImageUploaderService {
                     }
                 }
 
-                Log.d(TAG, "image upload done for " +iModel.imgPath);
+                Log.d(TAG, "Image upload complete for " + iModel.imgPath);
             }
 
             @Override
             public void onException(ImageModel iModel, Exception exception) {
                 iModel.updateStatus(false);
                 updateProcessStatus(iModel);
-                Log.e(TAG, "image upload failed due to exception " + iModel.imgPath + " reason " + exception.getLocalizedMessage(), exception);
+                Log.e(TAG, "Image upload failed due to exception " + iModel.imgPath + " reason " + exception.getLocalizedMessage(), exception);
 
                 Message msg = new Message();
                 // KEVIN : Add to replace the HomeActivy by HomeFragment

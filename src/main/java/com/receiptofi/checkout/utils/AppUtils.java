@@ -30,11 +30,13 @@ public class AppUtils {
         return c.getString(c.getColumnIndex(filePathColumn[0]));
     }
 
+    /**
+     * Create place holder for new image that is about to be clicked.
+     */
     public static File createImageFile() {
-        // Create an image file name
         try {
             image = File.createTempFile(
-                    "Receipt_" + RandomString.newInstance(RANDOM_STRING_SIZE).nextString() + "-", ".jpg",
+                    "Receipt_" + RandomString.newInstance(RANDOM_STRING_SIZE).nextString(), ".jpg",
                     getImageDir());
 
             // Save a file: path for use with ACTION_VIEW intents

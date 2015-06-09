@@ -144,7 +144,7 @@
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
 
-    <!-- Kitkat Traslucent Status bar -->
+    <!-- Kitkat Translucent Status bar -->
     <style name="KitkatStatusBar" parent="MaterialNavigationDrawerTheme.Light.DarkActionBar.TranslucentKitKatStatusBar">
         <item name="android:actionBarStyle">@style/MyActionBar11</item>
         <item name="colorPrimary">@color/app_theme_bg</item>
