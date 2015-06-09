@@ -2,6 +2,7 @@
 <resources>
     <dimen name="activity_horizontal_margin_wide">100dp</dimen>
     <dimen name="activity_vertical_margin_wide">100dp</dimen>
+    <dimen name="activity_vertical_margin_top">20dp</dimen>
 
 
     <dimen name="image_info_margin_side">40dp</dimen>
