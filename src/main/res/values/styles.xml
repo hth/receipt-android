@@ -150,6 +150,7 @@
         <item name="colorPrimary">@color/app_theme_bg</item>
         <item name="colorPrimaryDark">#FFFFFF</item>
         <item name="colorAccent">#FFFFFF</item>
+        <item name="singleAccount">true</item>
     </style>
 
     <!-- ActionBar styles -->
