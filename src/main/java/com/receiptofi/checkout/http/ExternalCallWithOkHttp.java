@@ -6,12 +6,14 @@ import android.util.Log;
 
 import com.receiptofi.checkout.BuildConfig;
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.squareup.okhttp.Headers;
 import com.squareup.okhttp.MediaType;
+import com.squareup.okhttp.MultipartBuilder;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.RequestBody;
@@ -19,6 +21,7 @@ import com.squareup.okhttp.Response;
 
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -232,75 +235,43 @@ public class ExternalCallWithOkHttp {
         return !TextUtils.isEmpty(body) && body.contains("error");
     }
 
-//    public static Thread uploadImageNew(
-//            final Context context,
-//            final String api,
-//            final ImageModel imageModel,
-//            final ImageResponseHandler handler
-//    ) {
-//        Thread t = new Thread() {
-//            public void run() {
-//                try {
-//                    OkHttpClient client = new OkHttpClient();
-//
-//
-//                    File imageFile = new File(imageModel.imgPath);
-//                    RequestBody requestBody = new MultipartBuilder()
-//                            .type(MultipartBuilder.FORM)
-//                            .addPart(
-//                                    Headers.of("Content-Disposition", "form-data; name=\"qqfile\""),
-//                                    RequestBody.create(MediaType.parse(imageModel.imgPath), imageFile))
-//                            .build();
-//
-//                    Request request;
-//                    if (api != null) {
-//                        request = new Request.Builder()
-//                                .url(BuildConfig.RECEIPTOFI_MOBILE + api)
-//                                .post(requestBody)
-//                                .addHeader(API.key.XR_AUTH, UserUtils.getAuth())
-//                                .addHeader(API.key.XR_MAIL, UserUtils.getEmail())
-//                                .build();
-//                    } else {
-//                        request = new Request.Builder()
-//                                .url(BuildConfig.RECEIPTOFI_MOBILE)
-//                                .post(requestBody)
-//                                .addHeader(API.key.XR_AUTH, UserUtils.getAuth())
-//                                .addHeader(API.key.XR_MAIL, UserUtils.getEmail())
-//                                .build();
-//                    }
-//
-//
-//                    MultipartEntityBuilder builder = MultipartEntityBuilder.create();
-//                    builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-//                    builder.addPart("qqfile", fileBody);
-//
-//                    HttpEntity entity = builder.build();
-//
-//                    post.addHeader(API.key.XR_AUTH, UserUtils.getAuth());
-//                    post.addHeader(API.key.XR_MAIL, UserUtils.getEmail());
-//                    post.setEntity(entity);
-//
-//                    response = client.execute(post);
-//
-//                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-//                    StringBuilder responseBuffer = new StringBuilder();
-//                    String line;
-//                    while ((line = reader.readLine()) != null) {
-//                        responseBuffer.append(line);
-//                    }
-//
-//                    handler.onSuccess(imageModel, responseBuffer.toString());
-//                } catch (Exception e) {
-//                    // TODO: handle exception
-//                    handler.onException(imageModel, e);
-//                }
-//            }
-//        };
-//
-//        t.start();
-//        return t;
-//    }
+    public static Thread uploadImage(
+            final Context context,
+            final String api,
+            final ImageModel imageModel,
+            final ImageResponseHandler handler
+    ) {
+        Thread t = new Thread() {
+            public void run() {
+                try {
+                    RequestBody requestBody = new MultipartBuilder()
+                            .type(MultipartBuilder.FORM)
+                            .addPart(
+                                    Headers.of("Content-Disposition", "form-data; name=\"qqfile\""),
+                                    RequestBody.create(
+                                            MediaType.parse(imageModel.imgPath),
+                                            new File(imageModel.imgPath)))
+                            .build();
 
+                    Request request = new Request.Builder()
+                            .url(BuildConfig.RECEIPTOFI_MOBILE + api)
+                            .post(requestBody)
+                            .addHeader(API.key.XR_AUTH, UserUtils.getAuth())
+                            .addHeader(API.key.XR_MAIL, UserUtils.getEmail())
+                            .build();
+
+                    Response response = new OkHttpClient().newCall(request).execute();
+                    handler.onSuccess(imageModel, response.body().string());
+                } catch (Exception e) {
+                    // TODO: handle exception
+                    handler.onException(imageModel, e);
+                }
+            }
+        };
+
+        t.start();
+        return t;
+    }
 
     private static RequestBody getRequestBody(MediaType mediaType, JSONObject postData) {
         RequestBody requestBody;
