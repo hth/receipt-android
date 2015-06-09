@@ -30,7 +30,7 @@
     <!--Sign up page-->
     <string name="hint_name">John Doe</string>
     <string name="age">Age</string>
-    <string name="signup_term">Tapping "Sign Up" confirms that you agree to the Checkout Terms of use.</string>
+    <string name="signup_term">Tapping \"Sign Up\" confirms that you agree to the Checkout Terms of use.</string>
 
     <!--Password recovery page-->
     <string name="password_recovery">SEND RECOVERY EMAIL</string>
