@@ -70,8 +70,10 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         ProfileModel profileModel = ProfileUtils.getProfile();
         String name = profileModel != null ? profileModel.getName() : "";
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
+        int backgroundImage = profileModel != null ? profileModel.getProfileBackgroundImage() : R.drawable.bamboo;
 
-        MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, R.drawable.bamboo);
+        MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, backgroundImage);
+
         this.addAccount(account);
         this.addSection(newSection("Home", new IconDrawable(mContext, Iconify.IconValue.fa_home)
                 .colorRes(R.color.white)
