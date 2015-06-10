@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -71,6 +73,10 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         String name = profileModel != null ? profileModel.getName() : "";
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
         int backgroundImage = profileModel != null ? profileModel.getProfileBackgroundImage() : R.drawable.bamboo;
+        /**
+         * Add below checkt about the app already have resource of backgroundImage
+         */
+        backgroundImage = BitmapFactory.decodeResource(getResources(),backgroundImage) != null ? backgroundImage : R.drawable.bamboo;
 
         MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, backgroundImage);
 
@@ -113,6 +119,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.disableLearningPattern();
 
         setBackPattern(MaterialNavigationDrawer.BACKPATTERN_BACK_TO_FIRST);
+        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
     }
 
     @Override

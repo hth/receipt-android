@@ -36,6 +36,7 @@ import com.receiptofi.checkout.service.ChartService;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.FlowLayout;
@@ -469,7 +470,15 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
 
     private void showErrorMsg(String msg) {
-        ToastBox.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+        if (null != getActivity()) {
+            final String errorMessage = msg;
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    ToastBox.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     private void endAnimation() {

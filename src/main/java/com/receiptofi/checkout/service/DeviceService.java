@@ -115,6 +115,10 @@ public class DeviceService {
     }
 
     public static void onSuccess(Headers headers, String body) {
+        // If HomePageContext has been cleared, then we should discard the http response.
+        if (AppUtils.getHomePageContext() == null) {
+            return;
+        }
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
 
         if (null != dataWrapper.getProfileModel()) {

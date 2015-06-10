@@ -126,13 +126,29 @@ public class ExpenseTagDialog extends DialogFragment {
                                         @Override
                                         public void onError(int statusCode, String error) {
                                             Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
-                                            ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
+                                            if (null != getActivity()) {
+                                                final String errorMessage = error;
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        ToastBox.makeText(getActivity(), JsonParseUtils.parseError(errorMessage), Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
                                         }
 
                                         @Override
                                         public void onException(Exception exception) {
                                             Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
-                                            ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                            if (null != getActivity()) {
+                                                final String errorMessage = exception.getMessage();
+                                                getActivity().runOnUiThread(new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        ToastBox.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                                                    }
+                                                });
+                                            }
                                         }
                                     });
 
