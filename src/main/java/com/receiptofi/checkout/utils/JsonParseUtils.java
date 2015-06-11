@@ -231,11 +231,7 @@ public class JsonParseUtils {
 
     public static BillingAccountModel parseBilling(JSONObject jsonObject) {
         try {
-            BillingAccountModel billingAccountModel = new BillingAccountModel(
-                    jsonObject.getString("bt"),
-                    jsonObject.getBoolean("ba")
-            );
-
+            BillingAccountModel billingAccountModel = new BillingAccountModel(jsonObject.getString("bt"));
             if (jsonObject.has("billingHistories")) {
                 billingAccountModel.setBillingHistories(parseBillingHistories(jsonObject.getJSONArray("billingHistories")));
             }

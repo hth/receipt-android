@@ -39,30 +39,6 @@
             android:gravity="center" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:orientation="horizontal"
-        android:paddingLeft="15dp">
-
-        <TextView
-            android:id="@+id/billing_date_text"
-            style="@style/billing_history_title_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="left|center_vertical"
-            android:text="@string/billing_date" />
-
-        <TextView
-            android:id="@+id/billing_date_value"
-            style="@style/billing_fragment_style"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center" />
-    </LinearLayout>
-
     <TextView
         android:id="@+id/billing_history_header"
         style="@style/billing_history_title_style"

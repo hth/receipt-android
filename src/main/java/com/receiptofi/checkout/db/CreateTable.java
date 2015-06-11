@@ -135,8 +135,7 @@ public class CreateTable {
     public static void createTableBillingAccount(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableNotification");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.BillingAccount.TABLE_NAME + "("
-                + DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + " TEXT ,"
-                + DatabaseTable.BillingAccount.BILLED_ACCOUNT + " BOOLEAN " +
+                + DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + " TEXT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableBillingAccount");

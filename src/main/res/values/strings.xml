@@ -69,7 +69,6 @@
 
     <!--Billing fragment-->
     <string name="billing_plan">Plan Subscribed</string>
-    <string name="billing_date">Billed</string>
     <string name="billing_history">Billing History</string>
 
     <!--Preference String-->

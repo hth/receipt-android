@@ -12,24 +12,18 @@ import java.util.List;
 public class BillingAccountModel {
 
     private String accountBillingType;
-    private boolean billedAccount;
     private List<BillingHistoryModel> billingHistories = new ArrayList<>();
 
     // needed for view
     public BillingAccountModel() {
     }
 
-    public BillingAccountModel(String accountBillingType, boolean billedAccount) {
+    public BillingAccountModel(String accountBillingType) {
         this.accountBillingType = accountBillingType;
-        this.billedAccount = billedAccount;
     }
 
     public String getAccountBillingType() {
         return accountBillingType;
-    }
-
-    public boolean isBilledAccount() {
-        return billedAccount;
     }
 
     public List<BillingHistoryModel> getBillingHistories() {

@@ -41,7 +41,6 @@ public class BillingFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.billing_fragment, container, false);
 
         billingPlan = (TextView) rootView.findViewById(R.id.billing_plan_value);
-        billingDate = (TextView) rootView.findViewById(R.id.billing_date_value);
         billingTitle = (TextView) rootView.findViewById(R.id.tv_billing);
         billingHistoryTitle = (TextView) rootView.findViewById(R.id.billing_history_header);
 
@@ -62,7 +61,6 @@ public class BillingFragment extends Fragment {
     private void showData() {
         if (billingAccountData != null) {
             billingPlan.setText(billingAccountData.displayBillingType() + "");
-            billingDate.setText(billingAccountData.isBilledAccount() + "");
             ((BillingListAdapter) billingHistoryList.getAdapter()).notifyDataSetChanged();
         }
     }

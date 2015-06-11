@@ -122,7 +122,6 @@ public class DatabaseTable {
     public static class BillingAccount {
         public static final String TABLE_NAME = "BILLING_ACCOUNT";
         public static final String ACCOUNT_BILLING_TYPE = "accountBillingType";
-        public static final String BILLED_ACCOUNT = "billedAccount";
 
         private BillingAccount() {
         }
