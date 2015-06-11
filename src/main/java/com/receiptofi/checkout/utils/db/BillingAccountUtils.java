@@ -30,7 +30,7 @@ public class BillingAccountUtils {
                 "INSERT OR REPLACE INTO " + DatabaseTable.BillingAccount.TABLE_NAME + " (" +
                         DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE +
                         ") VALUES ('" +
-                        billingAccount.getAccountBillingType() + ")");
+                        billingAccount.getAccountBillingType() + "')");
 
         if (!billingAccount.getBillingHistories().isEmpty()) {
             for (BillingHistoryModel billingHistoryModel : billingAccount.getBillingHistories()) {
