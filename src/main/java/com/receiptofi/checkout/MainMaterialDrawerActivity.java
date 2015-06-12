@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -16,6 +17,7 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -37,6 +39,7 @@ import com.receiptofi.checkout.utils.db.ProfileUtils;
 import com.receiptofi.checkout.views.ToastBox;
 
 import java.io.File;
+import java.lang.reflect.Field;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
@@ -152,12 +155,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_material_drawer_activity, menu);
-        menu.findItem(R.id.menu_search).setIcon(
-                new IconDrawable(this, Iconify.IconValue.fa_search)
-                        .colorRes(R.color.white)
-                        .actionBarSize());
 
         optionMenu = menu;
 
@@ -166,10 +166,22 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        /**
+         * Replace the default menu search image.
+         */
+        Drawable mDraw = new IconDrawable(this, Iconify.IconValue.fa_search)
+                .colorRes(R.color.white)
+                .actionBarSize();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+        v.setImageDrawable(mDraw);
+
         int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setTextColor(Color.WHITE);
+        searchAutoCompleteTextView.setHint("Search");
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void logout() {

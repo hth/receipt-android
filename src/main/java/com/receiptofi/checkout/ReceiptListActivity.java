@@ -5,6 +5,8 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.InputType;
@@ -20,6 +22,7 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
@@ -115,19 +118,27 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-//        menu.findItem(R.id.menu_search).setIcon(
-//                new IconDrawable(this, Iconify.IconValue.fa_search)
-//                        .colorRes(R.color.white)
-//                        .actionBarSize());
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        /**
+         * Replace the default menu search image.
+         */
+        Drawable mDraw = new IconDrawable(this, Iconify.IconValue.fa_search)
+                .colorRes(R.color.white)
+                .actionBarSize();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+        v.setImageDrawable(mDraw);
+
         int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setTextColor(Color.WHITE);
+        searchAutoCompleteTextView.setHint("Search");
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
