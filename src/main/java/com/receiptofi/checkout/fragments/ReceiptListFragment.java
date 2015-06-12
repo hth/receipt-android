@@ -8,6 +8,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -19,20 +20,31 @@ import com.receiptofi.checkout.adapters.ReceiptListAdapter;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptGroupObservable;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.views.PinnedHeaderExpandableListView;
+import com.receiptofi.checkout.views.StickyLayout;
 
+import android.widget.AbsListView.LayoutParams;
+import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * User: PT
  * Date: 1/1/15 12:44 PM
  */
-public class ReceiptListFragment extends Fragment {
+public class ReceiptListFragment extends Fragment implements PinnedHeaderExpandableListView.OnHeaderUpdateListener{
 
     public static final int RECEIPT_MODEL_UPDATED = 0x2436;
     private static final String TAG = ReceiptListFragment.class.getSimpleName();
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
+    public ReceiptListAdapter adapter = null;
+    private StickyLayout stickyLayout;
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -93,7 +105,7 @@ public class ReceiptListFragment extends Fragment {
     });
     
     public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
-    private ExpandableListView explv;
+    private PinnedHeaderExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
     private DataSetObserver receiptGroupObserver;
 
@@ -138,14 +150,14 @@ public class ReceiptListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
 
-        explv = (ExpandableListView) view.findViewById(R.id.exp_list_view);
+        explv = (PinnedHeaderExpandableListView) view.findViewById(R.id.exp_list_view);
         explv.setEmptyView(view.findViewById(R.id.empty_view));
         explv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 
         Log.d(TAG, "****************************        receiptGroupObserver registered");
 
 
-        final ReceiptListAdapter adapter = new ReceiptListAdapter(getActivity());
+        adapter = new ReceiptListAdapter(getActivity());
         explv.setAdapter(adapter);
         explv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -157,6 +169,13 @@ public class ReceiptListFragment extends Fragment {
                 return false;
             }
         });
+
+        // expand all group
+        for (int i = 0, count = explv.getCount(); i < count; i++) {
+            explv.expandGroup(i);
+        }
+        explv.setOnHeaderUpdateListener(this);
+
     }
 
     @Override
@@ -170,6 +189,36 @@ public class ReceiptListFragment extends Fragment {
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnReceiptSelectedListener");
+        }
+    }
+
+    @Override
+    public View getPinnedHeader() {
+        View headerView = (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.receipt_list_parent, null);
+        headerView.setLayoutParams(new LayoutParams(
+                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        return headerView;
+    }
+
+    @Override
+    public void updatePinnedHeader(View headerView, int firstVisibleGroupPos) {
+        ReceiptGroupHeader firstVisibleGroup = (ReceiptGroupHeader) adapter.getGroup(firstVisibleGroupPos);
+        TextView header_month = (TextView) headerView.findViewById(R.id.exp_list_header_month);
+        TextView header_amount = (TextView) headerView.findViewById(R.id.exp_list_header_amount);
+        String year = firstVisibleGroup.getYear();
+        String month = firstVisibleGroup.getMonth();
+        DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);
+        DateFormat outputDF = new SimpleDateFormat("MMM yyyy", Locale.US);
+        try {
+            String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
+            header_month.setText(getActivity().getString(R.string.receipt_list_header_month, formattedMonth, firstVisibleGroup.getCount()));
+            header_amount.setText(getActivity().getString(R.string.receipt_list_header_amount, firstVisibleGroup.getTotal()));
+        } catch (ParseException e) {
+            Log.d(TAG, "ParseException " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            Log.d(TAG, "Exception " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
