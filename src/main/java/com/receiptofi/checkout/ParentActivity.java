@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -167,7 +170,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         uiThread.post(new Runnable() {
             @Override
             public void run() {
-                ToastBox.makeText(ParentActivity.this, msg, length).show();
+                SuperActivityToast superActivityToast = new SuperActivityToast(ParentActivity.this);
+                superActivityToast.setText(msg);
+                superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setTextColor(Color.WHITE);
+                superActivityToast.setTouchToDismiss(true);
+                superActivityToast.show();
+//                ToastBox.makeText(ParentActivity.this, msg, length).show();
             }
         });
     }

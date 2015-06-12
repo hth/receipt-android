@@ -12,9 +12,4 @@
         android:title="@string/menu_search"
         ReceiptofiApplication:showAsAction="always"
         ReceiptofiApplication:actionViewClass="android.widget.SearchView"/>
-    <item
-        android:id="@+id/menu_refresh"
-        android:icon="@drawable/ic_menu_refresh"
-        android:title="@string/menu_refresh"
-        ReceiptofiApplication:showAsAction="always"/>
 </menu>

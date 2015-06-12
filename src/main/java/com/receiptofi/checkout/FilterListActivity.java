@@ -188,12 +188,12 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             case R.id.menu_refresh:
                 DeviceService.getNewUpdates(this);
                 return true;
-            case R.id.menu_notofication:
-                launchNotifications();
-                return true;
-            case R.id.menu_settings:
-                launchSettings();
-                return true;
+//            case R.id.menu_notofication:
+//                launchNotifications();
+//                return true;
+//            case R.id.menu_settings:
+//                launchSettings();
+//                return true;
             case R.id.menu_logout:
                 logout();
                 return true;

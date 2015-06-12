@@ -5,6 +5,7 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +19,8 @@ import android.widget.AutoCompleteTextView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.adapters.ImageUpload;
@@ -155,10 +158,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                 new IconDrawable(this, Iconify.IconValue.fa_search)
                         .colorRes(R.color.white)
                         .actionBarSize());
-        menu.findItem(R.id.menu_refresh).setIcon(
-                new IconDrawable(this, Iconify.IconValue.fa_refresh)
-                        .colorRes(R.color.white)
-                        .actionBarSize());
+
         optionMenu = menu;
 
         // Associate searchable configuration with the SearchView
@@ -245,7 +245,15 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
 
     private void showErrorMsg(String msg) {
-        ToastBox.makeText(MainMaterialDrawerActivity.this, msg, Toast.LENGTH_SHORT).show();
+        SuperActivityToast superActivityToast = new SuperActivityToast(MainMaterialDrawerActivity.this);
+        superActivityToast.setText(msg);
+        superActivityToast.setDuration(SuperToast.Duration.SHORT);
+        superActivityToast.setBackground(SuperToast.Background.BLUE);
+        superActivityToast.setTextColor(Color.WHITE);
+        superActivityToast.setTouchToDismiss(true);
+        superActivityToast.show();
+
+//        ToastBox.makeText(MainMaterialDrawerActivity.this, msg, Toast.LENGTH_SHORT).show();
     }
 
 }

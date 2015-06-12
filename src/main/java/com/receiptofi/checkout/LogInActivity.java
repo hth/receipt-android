@@ -2,6 +2,7 @@ package com.receiptofi.checkout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,6 +18,8 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -201,9 +204,18 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
+//            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.TOP, 0, 20);
+//            toast.show();
+
+            SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
+            superActivityToast.setText(errors);
+            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+            superActivityToast.setBackground(SuperToast.Background.BLUE);
+            superActivityToast.setTextColor(Color.WHITE);
+            superActivityToast.setTouchToDismiss(true);
+            superActivityToast.show();
+
             errors.delete(0, errors.length());
         } else {
             Bundle bundle = new Bundle();
@@ -219,9 +231,17 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
         if (data == null) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
+//            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.TOP, 0, 20);
+//            toast.show();
+            SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
+            superActivityToast.setText(errors);
+            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+            superActivityToast.setBackground(SuperToast.Background.BLUE);
+            superActivityToast.setTextColor(Color.WHITE);
+            superActivityToast.setTouchToDismiss(true);
+            superActivityToast.show();
+
             errors.delete(0, errors.length());
             return;
         }

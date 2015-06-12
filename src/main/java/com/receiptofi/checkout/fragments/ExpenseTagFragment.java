@@ -27,6 +27,8 @@ import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.gc.materialdesign.widgets.Dialog;
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.r0adkll.postoffice.PostOffice;
 import com.r0adkll.postoffice.model.Delivery;
 import com.r0adkll.postoffice.model.Design;
@@ -306,7 +308,14 @@ public class ExpenseTagFragment extends Fragment {
                                                             getActivity().runOnUiThread(new Runnable() {
                                                                 @Override
                                                                 public void run() {
-                                                                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(errorMessage), Toast.LENGTH_SHORT).show();
+                                                                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                                                                    superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
+                                                                    superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                                                                    superActivityToast.setBackground(SuperToast.Background.BLUE);
+                                                                    superActivityToast.setTextColor(Color.WHITE);
+                                                                    superActivityToast.setTouchToDismiss(true);
+                                                                    superActivityToast.show();
+//                                                                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(errorMessage), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             });
                                                         }
@@ -320,7 +329,14 @@ public class ExpenseTagFragment extends Fragment {
                                                             getActivity().runOnUiThread(new Runnable() {
                                                                 @Override
                                                                 public void run() {
-                                                                    ToastBox.makeText(getActivity(), exceptionMessage, Toast.LENGTH_SHORT).show();
+                                                                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                                                                    superActivityToast.setText(exceptionMessage);
+                                                                    superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                                                                    superActivityToast.setBackground(SuperToast.Background.BLUE);
+                                                                    superActivityToast.setTextColor(Color.WHITE);
+                                                                    superActivityToast.setTouchToDismiss(true);
+                                                                    superActivityToast.show();
+//                                                                    ToastBox.makeText(getActivity(), exceptionMessage, Toast.LENGTH_SHORT).show();
                                                                 }
                                                             });
                                                         }

@@ -24,6 +24,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
@@ -113,7 +115,10 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-
+//        menu.findItem(R.id.menu_search).setIcon(
+//                new IconDrawable(this, Iconify.IconValue.fa_search)
+//                        .colorRes(R.color.white)
+//                        .actionBarSize());
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -122,7 +127,6 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
         return true;
     }
 
@@ -130,15 +134,15 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                DeviceService.getNewUpdates(this);
-                return true;
-            case R.id.menu_notofication:
-                launchNotifications();
-                return true;
-            case R.id.menu_settings:
-                launchSettings();
-                return true;
+//            case R.id.menu_refresh:
+//                DeviceService.getNewUpdates(this);
+//                return true;
+//            case R.id.menu_notofication:
+//                launchNotifications();
+//                return true;
+//            case R.id.menu_settings:
+//                launchSettings();
+//                return true;
             case R.id.menu_logout:
                 logout();
                 return true;

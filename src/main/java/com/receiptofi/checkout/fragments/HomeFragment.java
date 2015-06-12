@@ -2,6 +2,7 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
@@ -23,6 +24,8 @@ import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
@@ -251,15 +254,16 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         }
         updateChartData();
         Log.d(TAG, "Done onCreate!!");
+
         return view;
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
+//    // TODO: Rename method, update argument and hook method into UI event
+//    public void onButtonPressed(Uri uri) {
+//        if (mListener != null) {
+//            mListener.onFragmentInteraction(uri);
+//        }
+//    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -475,7 +479,14 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    ToastBox.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
+                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                    superActivityToast.setText(errorMessage);
+                    superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                    superActivityToast.setBackground(SuperToast.Background.BLUE);
+                    superActivityToast.setTextColor(Color.WHITE);
+                    superActivityToast.setTouchToDismiss(true);
+                    superActivityToast.show();
+//                    ToastBox.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
         }
