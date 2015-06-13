@@ -26,7 +26,6 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
 
     private static final String TAG = LaunchActivity.class.getSimpleName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
