@@ -7,17 +7,20 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.DatePicker;
+import android.widget.IconTextView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -71,6 +74,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private LinearLayout drawerIndicator;
     private List<ReceiptItemModel> itemList;
 
+    private IconTextView tagIcon;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "executing onCreateView");
@@ -97,23 +102,16 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdItemsList = (ListView) receiptDetailView.findViewById(R.id.rd_items_list);
         rdItemsList.setEmptyView(receiptDetailView.findViewById(R.id.empty_view));
 
-        // Add list header
-        View header = View.inflate(getActivity(), R.layout.rd_item_list_header, null);
-        //header.setTag(TAG_HEADER);
-        rdItemsList.addHeaderView(header);
-
         // Add tax footer
         View taxFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_tax, null);
         taxDscpView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_dscp);
         taxAmountView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_amount);
         rdItemsList.addFooterView(taxFooter);
 
-        View totalFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_total, null);
-        totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
-        rdItemsList.addFooterView(totalFooter);
-
+        totalAmountView = (TextView) receiptDetailView.findViewById(R.id.rd_item_list_footer_total_amount);
         drawerIndicator = (LinearLayout) receiptDetailView.findViewById(R.id.rd_drawer_indicator_layout);
 
+        tagIcon = (IconTextView) receiptDetailView.findViewById(R.id.tag_icon);
         return receiptDetailView;
     }
 
@@ -272,6 +270,16 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             // Update trackers
             mCurrentIndex = index;
             mCurrentPosition = position;
+
+            // Set Tag Color
+            /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
+            if (!TextUtils.isEmpty(rdModel.getExpenseTagId()) && null != rdModel.getExpenseTagModel()) {
+                String colorCode = rdModel.getExpenseTagModel().getColor();
+                tagIcon.setTextColor(Color.parseColor(colorCode));
+                tagIcon.setVisibility(View.VISIBLE);
+            } else {
+                tagIcon.setVisibility(View.INVISIBLE);
+            }
 
         } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/scroll_view"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:background="@color/app_light_bg"
-            android:fillViewport="true">
+    android:id="@+id/scroll_view"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/app_light_bg"
+    android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingTop="@dimen/activity_horizontal_margin_narrow"
+        android:orientation="horizontal"
         android:paddingBottom="@dimen/activity_horizontal_margin_narrow"
         android:paddingLeft="@dimen/activity_horizontal_margin_narrow"
         android:paddingRight="@dimen/activity_horizontal_margin_narrow"
-        android:orientation="horizontal">
+        android:paddingTop="@dimen/activity_horizontal_margin_narrow">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -28,33 +28,89 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/notify_empty_detail"/>
+                android:text="@string/notify_empty_detail" />
 
-            <include layout="@layout/rd_address_block"/>
+            <include layout="@layout/rd_address_block" />
 
-            <include layout="@layout/rd_date_block"/>
+            <include layout="@layout/rd_date_block" />
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp">
+                <LinearLayout
+                    android:id="@+id/header"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp">
+                    <TextView
+                        android:id="@+id/rd_list_item_header_title"
+                        style="@style/rd_list_item_header_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/rd_item_header_title"
+                        />
+
+                    <TextView
+                        android:id="@+id/rd_list_item_header_amount"
+                        style="@style/rd_list_item_header_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_horizontal"
+                        android:text="@string/rd_item_header_amount" />
+                </LinearLayout>
 
                 <ListView
                     android:id="@+id/rd_items_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:listSelector="@drawable/list_selector_app_theme"></ListView>
+                    android:layout_below="@+id/header"
+                    android:listSelector="@drawable/list_selector_app_theme"
+                    android:layout_above="@+id/footer">
+                </ListView>
 
-            </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/footer"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
+                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin">
 
+                    <TextView
+                        android:id="@+id/rd_item_list_footer_total_title"
+                        style="@style/rd_list_item_total_footer_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/rd_item_header_total_title" />
+
+                    <TextView
+                        android:id="@+id/rd_item_list_footer_total_amount"
+                        style="@style/rd_list_item_total_footer_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_weight="1"
+                        android:gravity="right"
+                        android:textColor="@color/app_theme_txt_color" />
+                </LinearLayout>
+            </RelativeLayout>
         </LinearLayout>
+
 
         <LinearLayout
             android:id="@+id/rd_drawer_indicator_layout"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
             android:layout_marginLeft="@dimen/activity_horizontal_margin_narrow"
+            android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
             android:orientation="vertical"
             android:visibility="gone">
 
@@ -62,20 +118,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|top"
-                android:src="@drawable/drawer_left_arrow"/>
+                android:src="@drawable/drawer_left_arrow" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_gravity="end|center_vertical"
-                android:src="@drawable/drawer_left_arrow"/>
+                android:layout_weight="1"
+                android:src="@drawable/drawer_left_arrow" />
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end|bottom"
-                android:src="@drawable/drawer_left_arrow"/>
+                android:src="@drawable/drawer_left_arrow" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

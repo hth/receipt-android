@@ -8,62 +8,110 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_weight="1"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/rd_biz_name"
+                style="@style/text_larger"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/text_larger"/>
+                android:text="BIZ NAME" />
 
             <LinearLayout
                 android:id="@+id/rd_biz_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/rd_biz_add_line1"
+                    style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/action_text_small"/>
+                    android:text="324 EL Camino Real" />
 
                 <TextView
                     android:id="@+id/rd_biz_add_line2"
+                    style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/action_text_small"/>
+                    android:text="Sunnyvale, CA 94087, USA" />
 
                 <TextView
                     android:id="@+id/rd_biz_add_line3"
+                    style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    style="@style/action_text_small"/>
+                    android:text="California" />
 
             </LinearLayout>
 
             <TextView
                 android:id="@+id/rd_biz_phone"
+                style="@style/action_text_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:drawableLeft="@drawable/call_contact"
-                style="@style/action_text_small"/>
+                android:drawablePadding="10dp"
+                android:gravity="center_vertical"
+                android:text="(408)773-1304" />
 
         </LinearLayout>
 
-        <ImageView
-            android:id="@+id/rd_view_receipt"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="fill_parent"
             android:layout_marginEnd="@dimen/activity_horizontal_margin_narrow"
             android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
-            android:layout_gravity="center_vertical"
-            android:scaleX="1.5"
-            android:scaleY="1.5"
-            android:src="@drawable/ic_menu_upload"/>
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <android.widget.IconTextView
+                android:id = "@+id/tag_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:shadowColor="#22000000"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
+                android:text="{fa-tag}"
+                android:textColor="#FF33B5E5"
+                android:textSize="30dp"
+                android:gravity="center_vertical"
+                />
+
+            <android.widget.IconButton
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:shadowColor="#22000000"
+                android:shadowDx="3"
+                android:shadowDy="3"
+                android:shadowRadius="1"
+                android:text="{fa-download}"
+                android:textColor="#FF33B5E5"
+                android:textSize="30dp"
+                android:background="@color/transparent">
+            </android.widget.IconButton>
+            <!--
+                <ImageView
+                    android:id="@+id/rd_view_receipt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="@dimen/activity_horizontal_margin_narrow"
+                    android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
+                    android:layout_gravity="center_vertical"
+                    android:scaleX="1.5"
+                    android:scaleY="1.5"
+                    android:src="@drawable/ic_menu_upload"/>
+                    -->
+        </LinearLayout>
 
     </LinearLayout>
 </merge>

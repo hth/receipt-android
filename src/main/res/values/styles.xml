@@ -85,7 +85,7 @@
         <item name="android:textColor">@color/gray_darker</item>
     </style>
 
-    <style name="rd_list_item_header_text" parent="@android:style/TextAppearance.Small">
+    <style name="rd_list_item_header_text" parent="@android:style/TextAppearance.Medium">
         <item name="android:textColor">@color/gray_darker</item>
         <item name="android:textStyle">bold</item>
     </style>
