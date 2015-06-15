@@ -17,6 +17,16 @@
         android:contentDescription="@string/app_info_cnt_dscp"
         android:orientation="vertical">
 
+        <ImageButton
+            android:id="@+id/ib_splash"
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:src="@drawable/ic_cross"
+            android:layout_marginTop="0dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/cross_imagebutton_bg"
+            />
+
         <ImageView
             android:id="@+id/logo_view"
             android:layout_width="match_parent"
@@ -65,10 +75,12 @@
 
             <ImageView
                 android:id="@+id/facebook_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/facebook"
-                android:contentDescription="@string/facebook_login_cnt_dscp"/>
+                android:layout_width="@dimen/social_icon_size"
+                android:layout_height="@dimen/social_icon_size"
+                android:background="@drawable/icon_facebook"
+                android:contentDescription="@string/facebook_login_cnt_dscp"
+                android:layout_marginTop="@dimen/icon_social_padding"
+                android:layout_marginBottom="@dimen/icon_social_padding"/>
 
             <TextView
                 android:id="@+id/facebook_login_text"
@@ -95,10 +107,13 @@
 
             <ImageView
                 android:id="@+id/google_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/google"
-                android:contentDescription="@string/google_login_cnt_dscp"/>
+                android:layout_width="@dimen/social_icon_size"
+                android:layout_height="@dimen/social_icon_size"
+                android:background="@drawable/icon_googleplus"
+                android:contentDescription="@string/google_login_cnt_dscp"
+                android:layout_marginTop="@dimen/icon_social_padding"
+                android:layout_marginLeft="8dp"
+                android:layout_marginBottom="@dimen/icon_social_padding"/>
 
             <TextView
                 android:id="@+id/google_login_text"

@@ -11,12 +11,13 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class AppUtils {
 
     private static final String TAG = AppUtils.class.getSimpleName();
+    private static final String APP_CONFIG = "config";
+    public static final String CONF_FRIST_START = "isFristStart";
+    private static final int RANDOM_STRING_SIZE = 4;
 
     static File image;
     static File receiptofiImgDir;
@@ -29,19 +30,21 @@ public class AppUtils {
         return c.getString(c.getColumnIndex(filePathColumn[0]));
     }
 
+    /**
+     * Create place holder for new image that is about to be clicked.
+     */
     public static File createImageFile() {
-        // Create an image file name
         try {
-            String timeStamp = new SimpleDateFormat("dd_MM_yyyy_HHmmss").format(new Date());
-            String imageFileName = "Receipt_android_" + timeStamp + "_";
-
-            image = File.createTempFile(imageFileName, ".jpg", getImageDir());
+            image = File.createTempFile(
+                    "Receipt_" + RandomString.newInstance(RANDOM_STRING_SIZE).nextString(), ".jpg",
+                    getImageDir());
 
             // Save a file: path for use with ACTION_VIEW intents
-            String mCurrentPhotoPath = "file:" + image.getAbsolutePath();
+            String mCurrentPhotoPath = "file:" + image.getAbsolutePath().replace("--", "-");
 
             return image;
         } catch (Exception e) {
+            Log.e(TAG, "Failed to create image file");
             // TODO: handle exception
             if (image != null && image.exists()) {
                 image.delete();
@@ -67,26 +70,18 @@ public class AppUtils {
         homePageContext = context;
     }
 
-    public static  boolean isNetworkConnected(Context context) {
+    public static boolean isNetworkConnected(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        if (networkInfo == null) {
-            // There are no active networks.
-            return false;
-        } else
-            return true;
+        return null != networkInfo;
     }
 
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetwork = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        Log.d(TAG, "wifi is connected: " + wifiNetwork.isConnected());
-        if (wifiNetwork.isConnected()) {
-            return true;
-        } else {
-            return false;
-        }
+        Log.d(TAG, "Wi-Fi is connected: " + wifiNetwork.isConnected());
+        return wifiNetwork.isConnected();
     }
 
     public static void createImageDir() {

@@ -28,11 +28,9 @@ public class BillingAccountUtils {
     public static void insertOrReplace(BillingAccountModel billingAccount) {
         ReceiptofiApplication.RDH.getWritableDatabase().execSQL(
                 "INSERT OR REPLACE INTO " + DatabaseTable.BillingAccount.TABLE_NAME + " (" +
-                        DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + ", " +
-                        DatabaseTable.BillingAccount.BILLED_ACCOUNT +
+                        DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE +
                         ") VALUES ('" +
-                        billingAccount.getAccountBillingType() + "'," +
-                        +(billingAccount.isBilledAccount() ? 1 : 0) + ")");
+                        billingAccount.getAccountBillingType() + "')");
 
         if (!billingAccount.getBillingHistories().isEmpty()) {
             for (BillingHistoryModel billingHistoryModel : billingAccount.getBillingHistories()) {
@@ -57,12 +55,10 @@ public class BillingAccountUtils {
             );
 
             if (null != cursor && cursor.getCount() > 0) {
-                if (cursor.moveToNext()) {
-                    billingAccountModel = new BillingAccountModel(
-                            cursor.getString(0),
-                            cursor.getInt(1) == 1
-                    );
-
+                cursor.moveToNext();
+                
+                billingAccountModel = new BillingAccountModel(cursor.getString(0));
+                if (BillingHistoryUtils.getAll() != null) {
                     billingAccountModel.setBillingHistories(BillingHistoryUtils.getAll());
                 }
             }

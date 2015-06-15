@@ -90,16 +90,8 @@ public class KeyValueUtils {
         return value;
     }
 
-    public static void clearKeyValues() {
-        RDH.getReadableDatabase().delete(
-                DatabaseTable.KeyValue.TABLE_NAME,
-                null,
-                null
-        );
-    }
-
-    public static void clearReceiptsDB() {
-        DBUtils.clearDB(DatabaseTable.Receipt.TABLE_NAME);
+    public static void deleteAll() {
+        DBUtils.clearDB(DatabaseTable.KeyValue.TABLE_NAME);
     }
 
     public static class KEYS {

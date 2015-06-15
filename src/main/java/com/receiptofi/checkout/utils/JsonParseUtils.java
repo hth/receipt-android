@@ -190,10 +190,11 @@ public class JsonParseUtils {
             return new ExpenseTagModel(
                     jsonObject.getString("id"),
                     jsonObject.getString("tag"),
-                    jsonObject.getString("color")
+                    jsonObject.getString("color"),
+                    jsonObject.getBoolean("d")
             );
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing expense response=" + jsonObject, e);
+            Log.e(TAG, "Fail parsing expense response=" + jsonObject + " reason=" + e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -230,17 +231,13 @@ public class JsonParseUtils {
 
     public static BillingAccountModel parseBilling(JSONObject jsonObject) {
         try {
-            BillingAccountModel billingAccountModel = new BillingAccountModel(
-                    jsonObject.getString("bt"),
-                    jsonObject.getBoolean("ba")
-            );
-
+            BillingAccountModel billingAccountModel = new BillingAccountModel(jsonObject.getString("bt"));
             if (jsonObject.has("billingHistories")) {
                 billingAccountModel.setBillingHistories(parseBillingHistories(jsonObject.getJSONArray("billingHistories")));
             }
             return billingAccountModel;
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing billing account response=" + jsonObject, e);
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject + " reason=" + e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -270,7 +267,7 @@ public class JsonParseUtils {
                     jsonObject.getString("bd")
             );
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing billing account response=" + jsonObject, e);
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject + "reason=" + e.getLocalizedMessage(), e);
             return null;
         }
     }
@@ -319,26 +316,23 @@ public class JsonParseUtils {
 
             Log.d(TAG, "parsed all data");
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse, e);
-            e.printStackTrace();
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
-
         return dataWrapper;
     }
 
     public static String parseError(String jsonResponse) {
-        if(TextUtils.isEmpty(jsonResponse)){
+        if (TextUtils.isEmpty(jsonResponse)) {
             return null;
         }
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            JSONObject errorJosn = jsonObject.getJSONObject("error");
-            String errorReason = errorJosn.getString("reason");
+            JSONObject errorJson = jsonObject.getJSONObject("error");
+            String errorReason = errorJson.getString("reason");
             Log.d(TAG, "errorReason: " + errorReason);
             return errorReason;
         } catch (JSONException e) {
-            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse, e);
-            e.printStackTrace();
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
         return null;
     }

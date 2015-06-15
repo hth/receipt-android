@@ -4,25 +4,29 @@ import android.content.Context;
 import android.os.Message;
 import android.util.Log;
 
-import com.receiptofi.checkout.HomeActivity;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
+import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.fragments.ExpenseTagFragment;
+import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.BillingAccountUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.utils.db.NotificationUtils;
+import com.receiptofi.checkout.utils.db.ProfileUtils;
 import com.receiptofi.checkout.utils.db.ReceiptItemUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
-
-import org.apache.http.Header;
+import com.squareup.okhttp.Headers;
 
 import java.util.Date;
 import java.util.UUID;
@@ -39,9 +43,9 @@ public class DeviceService {
 
     public static void getNewUpdates(Context context) {
         Log.d(TAG, "get new update for device");
-        ExternalCall.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
+        ExternalCallWithOkHttp.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
             }
 
@@ -59,9 +63,9 @@ public class DeviceService {
 
     public static void getAll(Context context) {
         Log.d(TAG, "get all data for new device");
-        ExternalCall.doGet(context, IncludeDevice.NO, API.ALL_FROM_BEGINNING, new ResponseHandler() {
+        ExternalCallWithOkHttp.doGet(context, API.ALL_FROM_BEGINNING, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
             }
 
@@ -85,10 +89,10 @@ public class DeviceService {
         Log.d(TAG, "register device");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
-        ExternalCall.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
+        ExternalCallWithOkHttp.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 boolean registration = JsonParseUtils.parseDeviceRegistration(body);
                 if (!registration) {
                     Log.d(TAG, "register device failed");
@@ -110,13 +114,35 @@ public class DeviceService {
         });
     }
 
-    public static void onSuccess(Header[] headers, String body) {
+    public static void onSuccess(Headers headers, String body) {
+        // If HomePageContext has been cleared, then we should discard the http response.
+        if (AppUtils.getHomePageContext() == null) {
+            return;
+        }
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
+
+        if (null != dataWrapper.getProfileModel()) {
+            ProfileUtils.insert(dataWrapper.getProfileModel());
+        }
+
         ReceiptUtils.insert(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
+
+        /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
             ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
+            // KEVIN : Add below solution for new tag modify page.
+            if (Constants.KEY_NEW_PAGE) {
+                if (null != ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment) {
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
+                }
+            } else {
+                if (null != ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment) {
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
+                }
+            }
         }
+
         NotificationUtils.insert(dataWrapper.getNotificationModels());
         if (null != dataWrapper.getBillingAccountModel()) {
             BillingAccountUtils.insertOrReplace(dataWrapper.getBillingAccountModel());
@@ -126,21 +152,44 @@ public class DeviceService {
 
         Message countMessage = new Message();
         countMessage.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
-        countMessage.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
+//        countMessage.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
+        // KEVIN : Add for new setting.
+        countMessage.what = HomeFragment.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
-            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
+//            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
+            // KEVIN : Add for new setting.
+//            HomeFragment.newInstance("", "").updateHandler.sendMessage(countMessage);
+            if (Constants.KEY_NEW_PAGE) {
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
+            } else {
+                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
+            }
         }
 
         if (!dataWrapper.getReceiptModels().isEmpty()) {
             MonthlyReportUtils.computeMonthlyReceiptReport();
 
-            String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
+//            String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
+            // KEVIN : Replace the DF_YYYY_MM with HomeFragment
+            String[] monthDay = HomeFragment.DF_YYYY_MM.format(new Date()).split(" ");
             Message amountMessage = new Message();
             amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
-            amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
+//            amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
+            // KEVIN : Add for new setting page.
+            amountMessage.what = HomeFragment.UPDATE_MONTHLY_EXPENSE;
             if (ReceiptofiApplication.isHomeActivityVisible()) {
-                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
-                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
+//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
+//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
+                // KEVIN : add for new setting page.
+//                HomeFragment.newInstance("", "").updateHandler.sendMessage(amountMessage);
+//                HomeFragment.newInstance("", "").updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+                if (Constants.KEY_NEW_PAGE) {
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+                } else {
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
+                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+                }
             }
 
             /** Populate data in advance for master/detail views */

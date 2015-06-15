@@ -2,5 +2,22 @@
 <resources>
 
     <dimen name="image_info_margin_side">50dp</dimen>
+    <dimen name="social_icon_size">40dp</dimen>
+    <!--    For LDrawer width    -->
+    <dimen name="navdrawer_width">260dp</dimen>
+    <dimen name="layout_marginleft">20dp</dimen>
+    <dimen name="lmenu_textsize">20sp</dimen>
+    <dimen name="tagColorMargin">10dp</dimen>
+    <dimen name="tagTextMargin">30dp</dimen>
+
+    <!--   For TextView in fragment  -->
+    <dimen name="tv_horizontal_margin">16dp</dimen>
+    <dimen name="tv_textsize">16sp</dimen>
+    <dimen name="login_page_icon_width_height">24dp</dimen>
+    <dimen name="edittext_margin_left">10dp</dimen>
+    <dimen name="signup_button_margin_top">10dp</dimen>
+    <dimen name="social_google_image_margin_left">8dp</dimen>
+    <dimen name="icon_social_padding">10dp</dimen>
+    <dimen name="icon_google_margin_left">8dp</dimen>
 
 </resources>

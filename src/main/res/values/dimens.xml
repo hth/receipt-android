@@ -5,7 +5,7 @@
     <dimen name="activity_horizontal_margin_wide">40dp</dimen>
     <dimen name="activity_horizontal_margin_narrow">4dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="activity_vertical_margin_wide">40dp</dimen>
+    <dimen name="activity_vertical_margin_wide">10dp</dimen>
     <dimen name="activity_vertical_margin_narrow">4dp</dimen>
     <dimen name="activity_touch_padding">10dp</dimen>
 
@@ -36,4 +36,20 @@
 
     <!--    Large screen spec    -->
     <dimen name="view_with_paddings_on_side">400dp</dimen>
+
+    <!--    For LDrawer width    -->
+    <dimen name="navdrawer_width">260dp</dimen>
+    <dimen name="layout_marginleft">20dp</dimen>
+    <dimen name="lmenu_textsize">20sp</dimen>
+    <dimen name="tagColorMargin">10dp</dimen>
+    <dimen name="tagTextMargin">30dp</dimen>
+
+    <!--   For TextView in fragment  -->
+    <dimen name="tv_horizontal_margin">16dp</dimen>
+    <dimen name="tv_textsize">16sp</dimen>
+    <dimen name="social_icon_size">50dp</dimen>
+    <dimen name="login_page_icon_width_height">24dp</dimen>
+    <dimen name="edittext_margin_left">10dp</dimen>
+    <dimen name="signup_button_margin_top">10dp</dimen>
+    <dimen name="social_google_image_margin_left">8dp</dimen>
 </resources>

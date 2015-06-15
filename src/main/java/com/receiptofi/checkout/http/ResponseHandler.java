@@ -1,15 +1,14 @@
 package com.receiptofi.checkout.http;
 
-import org.apache.http.Header;
+import com.squareup.okhttp.Headers;
 
 public interface ResponseHandler {
 
-    public void onSuccess(Header[] headers, String body);
+    void onSuccess(Headers headers, String body);
 
-    public void onError(int statusCode, String error);
+    void onError(int statusCode, String error);
 
-    public void onException(Exception exception);
-
+    void onException(Exception exception);
 }
 
 

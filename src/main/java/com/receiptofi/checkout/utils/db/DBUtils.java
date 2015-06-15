@@ -22,6 +22,7 @@ public class DBUtils {
         Log.d(TAG, "Initialize database");
 
         /** Delete all tables. */
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Profile.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Receipt.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.KeyValue.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ImageIndex.TABLE_NAME);
@@ -34,6 +35,7 @@ public class DBUtils {
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.BillingHistory.TABLE_NAME);
 
         /** Create tables. */
+        CreateTable.createTableProfile(RDH.getDb());
         CreateTable.createTableReceipts(RDH.getDb());
         CreateTable.createTableImageIndex(RDH.getDb());
         CreateTable.createTableKeyValue(RDH.getDb());

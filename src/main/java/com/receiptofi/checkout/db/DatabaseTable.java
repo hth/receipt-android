@@ -4,6 +4,18 @@ public class DatabaseTable {
 
     public static String DB_NAME = "receiptofi.db";
 
+    public static class Profile {
+        public static final String TABLE_NAME = "PROFILE";
+        public static final String FIRST_NAME = "firstName";
+        public static final String LAST_NAME = "lastName";
+        public static final String MAIL = "mail";
+        public static final String NAME = "name";
+        public static final String RID = "rid";
+
+        private Profile() {
+        }
+    }
+
     public static class Receipt {
         public static final String TABLE_NAME = "RECEIPT";
         public static final String BIZ_NAME = "bizName";
@@ -86,6 +98,7 @@ public class DatabaseTable {
         public static final String ID = "id";
         public static final String NAME = "name";
         public static final String COLOR = "color";
+        public static final String DELETED = "deleted";
 
         private ExpenseTag() {
         }
@@ -109,7 +122,6 @@ public class DatabaseTable {
     public static class BillingAccount {
         public static final String TABLE_NAME = "BILLING_ACCOUNT";
         public static final String ACCOUNT_BILLING_TYPE = "accountBillingType";
-        public static final String BILLED_ACCOUNT = "billedAccount";
 
         private BillingAccount() {
         }

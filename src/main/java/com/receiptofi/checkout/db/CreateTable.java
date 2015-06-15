@@ -13,6 +13,18 @@ public class CreateTable {
     private CreateTable() {
     }
 
+    public static void createTableProfile(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableReceipts");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Profile.TABLE_NAME + "("
+                + DatabaseTable.Profile.FIRST_NAME + " TEXT ,"
+                + DatabaseTable.Profile.LAST_NAME + " TEXT ,"
+                + DatabaseTable.Profile.MAIL + " TEXT ,"
+                + DatabaseTable.Profile.NAME + " TEXT ,"
+                + DatabaseTable.Profile.RID + " TEXT " +
+
+                ");");
+    }
+
     public static void createTableReceipts(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableReceipts");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Receipt.TABLE_NAME + "("
@@ -97,7 +109,8 @@ public class CreateTable {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ExpenseTag.TABLE_NAME + "("
                 + DatabaseTable.ExpenseTag.ID + " TEXT ,"
                 + DatabaseTable.ExpenseTag.NAME + " TEXT ,"
-                + DatabaseTable.ExpenseTag.COLOR + " TEXT " +
+                + DatabaseTable.ExpenseTag.COLOR + " TEXT ,"
+                + DatabaseTable.ExpenseTag.DELETED + " BOOLEAN " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
@@ -122,8 +135,7 @@ public class CreateTable {
     public static void createTableBillingAccount(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableNotification");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.BillingAccount.TABLE_NAME + "("
-                + DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + " TEXT ,"
-                + DatabaseTable.BillingAccount.BILLED_ACCOUNT + " BOOLEAN " +
+                + DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + " TEXT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableBillingAccount");

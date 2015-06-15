@@ -5,6 +5,8 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.InputType;
@@ -20,15 +22,18 @@ import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptModel;
@@ -40,8 +45,8 @@ import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -113,32 +118,42 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_main, menu);
-
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
 
+        /**
+         * Replace the default menu search image.
+         */
+        Drawable mDraw = new IconDrawable(this, Iconify.IconValue.fa_search)
+                .colorRes(R.color.white)
+                .actionBarSize();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+        v.setImageDrawable(mDraw);
+
         int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setTextColor(Color.WHITE);
+        searchAutoCompleteTextView.setHint("Search");
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                DeviceService.getNewUpdates(this);
-                return true;
-            case R.id.menu_notofication:
-                launchNotifications();
-                return true;
-            case R.id.menu_settings:
-                launchSettings();
-                return true;
+//            case R.id.menu_refresh:
+//                DeviceService.getNewUpdates(this);
+//                return true;
+//            case R.id.menu_notofication:
+//                launchNotifications();
+//                return true;
+//            case R.id.menu_settings:
+//                launchSettings();
+//                return true;
             case R.id.menu_logout:
                 logout();
                 return true;
@@ -254,9 +269,9 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                         postData.put(ConstantsJson.RECHECK, reCheck ? "RECHECK" : "");
                         postData.put(ConstantsJson.RECEIPT_ID, rModel.getId());
 
-                        ExternalCall.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
+                        ExternalCallWithOkHttp.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
                             @Override
-                            public void onSuccess(Header[] headers, String body) {
+                            public void onSuccess(Headers headers, String body) {
                                 DeviceService.onSuccess(headers, body);
                             }
 
@@ -268,7 +283,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
                             @Override
                             public void onException(Exception exception) {
-                                Log.d(TAG, "Executing onDrawerClosed: onException: "+ exception.getMessage());
+                                Log.d(TAG, "Executing onDrawerClosed: onException: " + exception.getMessage());
                                 ToastBox.makeText(ReceiptListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
                             }
                         });

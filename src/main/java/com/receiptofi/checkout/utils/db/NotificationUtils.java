@@ -20,6 +20,9 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class NotificationUtils {
     private static final String TAG = NotificationUtils.class.getSimpleName();
 
+    private NotificationUtils() {
+    }
+
     public static void insert(List<NotificationModel> notifications) {
         for (NotificationModel notification : notifications) {
             if (notification.isActive()) {

@@ -53,6 +53,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+// TODO: Delete this class file.
+
+/**
+ * Deprecated Implementation.
+ */
 public class HomeActivity extends Activity implements OnChartValueSelectedListener {
 
     private static final String TAG = HomeActivity.class.getSimpleName();
@@ -211,12 +216,12 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             case R.id.menu_refresh:
                 DeviceService.getNewUpdates(this);
                 return true;
-            case R.id.menu_notofication:
-                launchNotifications();
-                return true;
-            case R.id.menu_settings:
-                launchSettings();
-                return true;
+//            case R.id.menu_notofication:
+//                launchNotifications();
+//                return true;
+//            case R.id.menu_settings:
+//                launchSettings();
+//                return true;
             case R.id.menu_logout:
                 logout();
                 return true;
@@ -365,7 +370,7 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
-            showErrorMsg("some error occurred !!");
+            showErrorMsg("We seemed to have encountered issue saving your image.");
         }
     }
 

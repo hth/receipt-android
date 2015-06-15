@@ -2,6 +2,8 @@ package com.receiptofi.checkout;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -16,21 +18,21 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.FormEncodingBuilder;
+import com.squareup.okhttp.Headers;
+import com.squareup.okhttp.RequestBody;
 
-import org.apache.http.Header;
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 
@@ -85,6 +87,10 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         password.addTextChangedListener(textWatcher);
 
         TextView forgotPassword = (TextView) findViewById(R.id.forgot_password_button);
+        /**
+         * Add underline of forgot Password to make it looks more hybird link.
+         */
+        forgotPassword.setPaintFlags(forgotPassword.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -99,6 +105,10 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
 
+        // TODO: DELETE ME
+        if (Constants.KEVIN_DEBUG) {
+            logIn.setEnabled(true);
+        }
     }
 
     @Override
@@ -174,6 +184,12 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         // getting username and password
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
+        // TODO: DELETE ME
+        // KEVIN: Add this for debug.
+        if (Constants.KEVIN_DEBUG) {
+            emailStr = "li@receiptofi.com";
+            passwordStr = "Chongzhi";
+        }
 
         if (TextUtils.isEmpty(emailStr)) {
             errors.append(this.getResources().getString(R.string.err_str_enter_email));
@@ -188,9 +204,18 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
+//            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.TOP, 0, 20);
+//            toast.show();
+
+            SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
+            superActivityToast.setText(errors);
+            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+            superActivityToast.setBackground(SuperToast.Background.BLUE);
+            superActivityToast.setTextColor(Color.WHITE);
+            superActivityToast.setTouchToDismiss(true);
+            superActivityToast.show();
+
             errors.delete(0, errors.length());
         } else {
             Bundle bundle = new Bundle();
@@ -201,28 +226,38 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     }
 
     private void authenticateLogIn(Bundle data) {
-        Log.d(TAG, "executing authenticateLogIn");
+        Log.d(TAG, "Authenticating");
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         if (data == null) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
+//            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
+//            toast.setGravity(Gravity.TOP, 0, 20);
+//            toast.show();
+            SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
+            superActivityToast.setText(errors);
+            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+            superActivityToast.setBackground(SuperToast.Background.BLUE);
+            superActivityToast.setTextColor(Color.WHITE);
+            superActivityToast.setTouchToDismiss(true);
+            superActivityToast.show();
+
             errors.delete(0, errors.length());
             return;
         }
-        List<NameValuePair> credentials = new ArrayList<>();
-        credentials.add(new BasicNameValuePair(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL)));
-        credentials.add(new BasicNameValuePair(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD)));
 
-        ExternalCall.authenticate(LogInActivity.this, credentials, new ResponseHandler() {
+        RequestBody formBody = new FormEncodingBuilder()
+                .add(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL))
+                .add(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD))
+                .build();
+
+        ExternalCallWithOkHttp.authenticate(LogInActivity.this, formBody, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Log.d(TAG, "Executing authenticateLogIn: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                saveAuthKey(ExternalCall.parseHeader(headers, keys));
+                saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
                 finish();

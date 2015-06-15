@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.receiptofi.checkout.ReceiptListActivity">
     <item
         android:id="@+id/menu_search"
-        android:icon="@drawable/ic_menu_find"
+        android:icon="@drawable/ic_menu_login"
         android:title="@string/menu_search"
         android:showAsAction="always"
         android:actionViewClass="android.widget.SearchView"/>
+    <!--
     <item
         android:id="@+id/menu_refresh"
         android:icon="@drawable/ic_menu_refresh"
@@ -21,6 +24,7 @@
         android:icon="@drawable/ic_menu_settings"
         android:title="@string/menu_settings"
         android:showAsAction="ifRoom"/>
+     -->
     <item
         android:id="@+id/menu_logout"
         android:icon="@drawable/ic_menu_login"

@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.google.android.gms.auth.GoogleAuthException;
 import com.google.android.gms.auth.GoogleAuthUtil;
 import com.google.android.gms.auth.UserRecoverableAuthException;
@@ -26,17 +29,19 @@ import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppConfig;
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -165,7 +170,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         uiThread.post(new Runnable() {
             @Override
             public void run() {
-                ToastBox.makeText(ParentActivity.this, msg, length).show();
+                SuperActivityToast superActivityToast = new SuperActivityToast(ParentActivity.this);
+                superActivityToast.setText(msg);
+                superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setTextColor(Color.WHITE);
+                superActivityToast.setTouchToDismiss(true);
+                superActivityToast.show();
+//                ToastBox.makeText(ParentActivity.this, msg, length).show();
             }
         });
     }
@@ -206,12 +218,12 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
 
-        ExternalCall.doPost(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCallWithOkHttp.doPost(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
-                saveAuthKey(ExternalCall.parseHeader(headers, keys));
+                saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
             }
@@ -263,7 +275,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     protected void afterSuccessfulLogin() {
         Log.d(TAG, "Parent executing afterSuccessfulLogin");
         if (UserUtils.isValidAppUser()) {
-            launchHomeScreen();
+            // TODO: Delete Me
+            // KEVIN: Add
+            // It should use isFristStart() as condition, but we use true for debug.
+//            if (isFristStart()) {
+//                launchSplashScreen();
+//            } else {
+                launchHomeScreen();
+//            }
             finish();
             // TODO make this call later
             String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
@@ -278,20 +297,79 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         }
     }
 
+    public void setProperty(String key, String value) {
+        AppConfig.getAppConfig(this).set(key, value);
+    }
+
+    public String getProperty(String key) {
+        String res = AppConfig.getAppConfig(this).get(key);
+        return res;
+    }
+
+    public boolean isFristStart() {
+        boolean res = false;
+        String perf_frist = getProperty(AppConfig.CONF_FRIST_START);
+        // default is http
+        if (isEmpty(perf_frist)) {
+            res = true;
+            setProperty(AppConfig.CONF_FRIST_START, "false");
+        }
+
+        return res;
+    }
+
+    public static boolean isEmpty(String input) {
+        if (input == null || "".equals(input))
+            return true;
+
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (c != ' ' && c != '\t' && c != '\r' && c != '\n') {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void launchHomeScreen() {
         Log.d(TAG, "Parent executing launchHomeScreen");
         uiThread.post(new Runnable() {
 
             @Override
             public void run() {
-                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                // KEVIN add for test
+//                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                if (Constants.KEY_NEW_PAGE) {
+                    Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                } else {
+                    Intent i = new Intent(ParentActivity.this, MainPageActivity.class);
+                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(i);
+                }
+
+                finish();
+            }
+        });
+    }
+
+
+    private void launchSplashScreen() {
+        Log.d(TAG, "Parent executing launchHomeScreen");
+        uiThread.post(new Runnable() {
+
+            @Override
+            public void run() {
+                // KEVIN add for test
+//                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                Intent i = new Intent(ParentActivity.this, SplashActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 finish();
             }
         });
     }
-
     /**
      * ********    for Facebook login    ***********
      */

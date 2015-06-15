@@ -19,14 +19,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
 
-import org.apache.http.Header;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -138,10 +138,10 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             Log.e(TAG, "Exception while adding postdata: " + e.getMessage(), e);
         }
 
-        ExternalCall.doPost(PasswordRecoveryActivity.this, postData, API.PASSWORD_RECOVER_API, IncludeAuthentication.NO, new ResponseHandler() {
+        ExternalCallWithOkHttp.doPost(PasswordRecoveryActivity.this, postData, API.PASSWORD_RECOVER_API, IncludeAuthentication.NO, new ResponseHandler() {
 
             @Override
-            public void onSuccess(Header[] headers, String body) {
+            public void onSuccess(Headers headers, String body) {
                 Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
                 updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
             }

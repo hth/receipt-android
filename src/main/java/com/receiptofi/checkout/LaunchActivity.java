@@ -5,9 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 
 /**
@@ -24,12 +26,17 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
 
     private static final String TAG = LaunchActivity.class.getSimpleName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
-            startActivity(new Intent(this, HomeActivity.class));
+            // KEVIN : Add to replace the HomeActivity with MainpageActivity
+            if (Constants.KEY_NEW_PAGE) {
+                startActivity(new Intent(this, MainMaterialDrawerActivity.class));
+            } else {
+                startActivity(new Intent(this, MainPageActivity.class));
+            }
+//            startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
         Log.d(TAG, "executing onCreate");
@@ -50,6 +57,7 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LaunchActivity.this, SignUpActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
@@ -59,8 +67,12 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LaunchActivity.this, LogInActivity.class));
+                overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
+
+        ImageButton splashButton = (ImageButton) findViewById(R.id.ib_splash);
+        splashButton.setOnClickListener(this);
     }
 
     @Override
@@ -76,6 +88,9 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
                 Log.d(TAG, "facebook_login clicked");
                 isFbLoginClicked = true;
                 openFacebookSession();
+                break;
+            case R.id.ib_splash:
+                startActivity(new Intent(LaunchActivity.this, SplashActivity.class));
                 break;
             default:
                 Log.d(TAG, "done executing onClick no id match");

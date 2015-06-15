@@ -2,7 +2,12 @@
 <resources>
     <dimen name="activity_horizontal_margin_wide">100dp</dimen>
     <dimen name="activity_vertical_margin_wide">100dp</dimen>
+    <dimen name="activity_vertical_margin_top">20dp</dimen>
 
 
     <dimen name="image_info_margin_side">40dp</dimen>
+    <dimen name="social_icon_size">40dp</dimen>
+    <dimen name="icon_social_padding">10dp</dimen>
+    <dimen name="app_button_height">50dp</dimen>
+    <dimen name="icon_google_margin_left">8dp</dimen>
 </resources>

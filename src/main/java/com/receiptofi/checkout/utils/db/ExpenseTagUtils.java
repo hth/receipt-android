@@ -22,7 +22,10 @@ import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 public class ExpenseTagUtils {
 
     private static final String TAG = ExpenseTagUtils.class.getSimpleName();
-    private static Map<String, ExpenseTagModel> expenseTagModels = null;
+    private static Map<String, ExpenseTagModel> expenseTagModels = new LinkedHashMap<>();
+
+    private ExpenseTagUtils() {
+    }
 
     /**
      * Expense Tag is static list available across the app. Anytime expense tag is added, deleted, updated, then
@@ -38,16 +41,27 @@ public class ExpenseTagUtils {
     }
 
     public static void insert(List<ExpenseTagModel> expensesTags) {
-        DBUtils.clearDB(DatabaseTable.ExpenseTag.TABLE_NAME);
         for (ExpenseTagModel expenseTag : expensesTags) {
-            insert(expenseTag);
+            if (expenseTag.isDeleted()) {
+                delete(expenseTag.getId());
+            } else {
+                insert(expenseTag);
+            }
         }
 
+        expenseTagModels = null;
         populateExpenseTagModelMap();
     }
 
-    private static void populateExpenseTagModelMap() {
+    public static void deleteAll() {
+        DBUtils.clearDB(DatabaseTable.ExpenseTag.TABLE_NAME);
         expenseTagModels = new LinkedHashMap<>();
+    }
+
+    private static void populateExpenseTagModelMap() {
+        if (expenseTagModels == null) {
+            expenseTagModels = new LinkedHashMap<>();
+        }
         List<ExpenseTagModel> expenseTags = getAll();
         for (ExpenseTagModel expenseTagModel : expenseTags) {
             expenseTagModels.put(expenseTagModel.getId(), expenseTagModel);
@@ -64,11 +78,20 @@ public class ExpenseTagUtils {
         values.put(DatabaseTable.ExpenseTag.ID, expenseTag.getId());
         values.put(DatabaseTable.ExpenseTag.NAME, expenseTag.getName());
         values.put(DatabaseTable.ExpenseTag.COLOR, expenseTag.getColor());
+        values.put(DatabaseTable.ExpenseTag.DELETED, expenseTag.isDeleted());
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
                 DatabaseTable.ExpenseTag.TABLE_NAME,
                 null,
                 values
+        );
+    }
+
+    private static void delete(String expenseTagId) {
+        RDH.getWritableDatabase().delete(
+                DatabaseTable.ExpenseTag.TABLE_NAME,
+                DatabaseTable.ExpenseTag.ID + " = '" + expenseTagId + "'",
+                null
         );
     }
 
@@ -92,7 +115,8 @@ public class ExpenseTagUtils {
                     ExpenseTagModel expenseTagModel = new ExpenseTagModel(
                             cursor.getString(0),
                             cursor.getString(1),
-                            cursor.getString(2)
+                            cursor.getString(2),
+                            cursor.getInt(3) == 1
                     );
 
                     list.add(expenseTagModel);
