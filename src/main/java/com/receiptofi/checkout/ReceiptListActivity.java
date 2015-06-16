@@ -1,6 +1,7 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
@@ -31,6 +32,7 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
+import com.receiptofi.checkout.fragments.ReceiptDetailImageFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
@@ -114,54 +116,6 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         Log.d(TAG, "Done onResume!!");
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        /**
-         * Replace the default menu search image.
-         */
-        Drawable mDraw = new IconDrawable(this, Iconify.IconValue.fa_search)
-                .colorRes(R.color.white)
-                .actionBarSize();
-        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
-        ImageView v = (ImageView) searchView.findViewById(searchImgId);
-        v.setImageDrawable(mDraw);
-
-        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
-        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
-        searchAutoCompleteTextView.setTextColor(Color.WHITE);
-        searchAutoCompleteTextView.setHint("Search");
-        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-//            case R.id.menu_refresh:
-//                DeviceService.getNewUpdates(this);
-//                return true;
-//            case R.id.menu_notofication:
-//                launchNotifications();
-//                return true;
-//            case R.id.menu_settings:
-//                launchSettings();
-//                return true;
-            case R.id.menu_logout:
-                logout();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
     public void onReceiptSelected(int index, int position) {
         // The user selected the headline of an article from the HeadlinesFragment
         Log.d(TAG, "executing onReceiptSelected: index is: " + index + " position is: " + position);
@@ -198,7 +152,6 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             // and add the transaction to the back stack so the user can navigate back
             transaction.replace(R.id.fragment_container, newFragment);
             transaction.addToBackStack(null);
-
             // Commit the transaction
             transaction.commit();
         }
@@ -339,10 +292,26 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         startActivity(new Intent(this, PreferencesTabActivity.class));
     }
 
-    private void logout() {
+    public void logout() {
         KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
+    }
+
+    public void showReceiptDetailImageFragment(String url){
+        // Create fragment and give it an argument for the selected article
+        ReceiptDetailImageFragment newFragment = new ReceiptDetailImageFragment();
+        Bundle args = new Bundle();
+        args.putString(Constants.ARG_IMAGE_URL, url);
+        newFragment.setArguments(args);
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        transaction.replace(R.id.fragment_container, newFragment);
+        transaction.addToBackStack(null);
+        // Commit the transaction
+        transaction.commit();
     }
 
 }

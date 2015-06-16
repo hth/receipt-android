@@ -2,18 +2,29 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.SearchManager;
+import android.content.Context;
 import android.database.DataSetObserver;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.adapters.ReceiptListAdapter;
@@ -24,6 +35,8 @@ import com.receiptofi.checkout.views.PinnedHeaderExpandableListView;
 import com.receiptofi.checkout.views.StickyLayout;
 
 import android.widget.AbsListView.LayoutParams;
+import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -45,6 +58,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     public static List<List<ReceiptModel>> children = new LinkedList<>();
     public ReceiptListAdapter adapter = null;
     private StickyLayout stickyLayout;
+    private SearchView searchView;
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -142,7 +156,63 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
+        // Must call below method to make the fragment menu works.
+        setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+//        MenuItem changeTag = menu.findItem(R.id.menu_changeTag).setIcon(
+//                new IconDrawable(getActivity(), Iconify.IconValue.fa_tags)
+//                        .colorRes(R.color.white)
+//                        .actionBarSize());
+//        changeTag.setVisible(false);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        /**
+         * Replace the default menu search image.
+         */
+        Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
+                .colorRes(R.color.white)
+                .actionBarSize();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+        v.setImageDrawable(mDraw);
+
+        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
+        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setTextColor(Color.WHITE);
+        searchAutoCompleteTextView.setHint("Search");
+        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        super.onCreateOptionsMenu(menu,inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_changeTag:
+                ((ReceiptListActivity)getActivity()).openDrawer();
+                return true;
+//            case R.id.menu_notofication:
+//                launchNotifications();
+//                return true;
+//            case R.id.menu_settings:
+//                launchSettings();
+//                return true;
+            case R.id.menu_logout:
+                ((ReceiptListActivity)getActivity()).logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
