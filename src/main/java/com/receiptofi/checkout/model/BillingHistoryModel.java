@@ -2,7 +2,7 @@ package com.receiptofi.checkout.model;
 
 import android.util.Log;
 
-import com.receiptofi.checkout.model.types.AccountBillingType;
+import com.receiptofi.checkout.model.types.BillingPlan;
 import com.receiptofi.checkout.model.types.BilledStatus;
 import com.receiptofi.checkout.utils.Constants;
 
@@ -69,7 +69,7 @@ public class BillingHistoryModel {
     }
 
     public String displayBillingType() {
-        return (AccountBillingType.valueOf(accountBillingType)).getDescription();
+        return (BillingPlan.valueOf(accountBillingType)).getDescription();
     }
 
     public String displayBilledInfo() {
@@ -78,11 +78,11 @@ public class BillingHistoryModel {
                 return "Payment Due";
             case P:
                 return "NA";
-            case S:
-                return BilledStatus.S.getDescription();
             case B:
                 DateTime dateTime = Constants.ISO_J_DF.parseDateTime(billedDate).withZone(DateTimeZone.getDefault());
                 return DF_DD_MMM_YYYY.format(dateTime.toDate());
+            case R:
+                return BilledStatus.R.getDescription();
             default:
                 Log.e(TAG, "Reached unreachable condition for billedStatus=" + billedStatus);
                 throw new UnsupportedOperationException("Reached unreachable condition " + billedStatus);
