@@ -39,21 +39,22 @@ public class ReceiptUtils {
     public static void insert(List<ReceiptModel> receipts) {
         for (ReceiptModel receipt : receipts) {
             if (receipt.isDeleted() || !receipt.isActive()) {
-                ReceiptItemUtils.delete(receipt.getId());
-                delete(receipt.getId());
-                Log.d(TAG, "Deleted receipts: " + receipt.getId());
+                if (delete(receipt.getId())) {
+                    ReceiptItemUtils.delete(receipt.getId());
+                    Log.d(TAG, "Deleted receipt=" + receipt.getId());
+                }
             } else {
                 insert(receipt);
             }
         }
     }
 
-    private static void delete(String receiptId) {
-        RDH.getWritableDatabase().delete(
+    private static boolean delete(String receiptId) {
+        return RDH.getWritableDatabase().delete(
                 DatabaseTable.Receipt.TABLE_NAME,
                 DatabaseTable.Receipt.ID + " = '" + receiptId + "'",
                 null
-        );
+        ) > 0;
     }
 
     /**
