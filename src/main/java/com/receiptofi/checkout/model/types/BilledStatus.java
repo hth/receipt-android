@@ -7,8 +7,8 @@ package com.receiptofi.checkout.model.types;
 public enum BilledStatus {
     NB("NB", "Not Billed"),
     P("P", "Promotion"),
-    S("S", "Submitted For Settlement"),
-    B("B", "Billed");
+    B("B", "Billed"),
+    R("R", "Refund");
 
     private final String description;
     private final String name;

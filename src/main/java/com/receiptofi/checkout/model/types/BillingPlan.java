@@ -4,7 +4,7 @@ package com.receiptofi.checkout.model.types;
  * User: hitender
  * Date: 5/7/15 5:38 AM
  */
-public enum AccountBillingType {
+public enum BillingPlan {
     P("P", "Promotion", 1000),
     NB("NB", "No Billing", 0),
     M10("M10", "Monthly 10", 10),
@@ -20,7 +20,7 @@ public enum AccountBillingType {
     private final String name;
     private final int allowedDocumentsPerMonth;
 
-    AccountBillingType(String name, String description, int allowedDocumentsPerMonth) {
+    BillingPlan(String name, String description, int allowedDocumentsPerMonth) {
         this.name = name;
         this.description = description;
         this.allowedDocumentsPerMonth = allowedDocumentsPerMonth;

@@ -1,6 +1,6 @@
 package com.receiptofi.checkout.model;
 
-import com.receiptofi.checkout.model.types.AccountBillingType;
+import com.receiptofi.checkout.model.types.BillingPlan;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,6 +37,6 @@ public class BillingAccountModel {
     }
 
     public String displayBillingType() {
-        return (AccountBillingType.valueOf(accountBillingType)).getDescription();
+        return (BillingPlan.valueOf(accountBillingType)).getDescription();
     }
 }
