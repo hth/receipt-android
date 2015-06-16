@@ -61,7 +61,7 @@ dependencies {
     compile 'it.neokree:MaterialNavigationDrawer:1.3.3'
     /** Super toast */
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
-    /** Image Download */
+    /** Image download */
     compile 'com.squareup.picasso:picasso:2.5.2'
 
     compile 'com.squareup.okhttp:okhttp:2.4.0'
