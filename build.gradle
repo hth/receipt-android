@@ -61,8 +61,10 @@ dependencies {
     compile 'it.neokree:MaterialNavigationDrawer:1.3.3'
     /** Super toast */
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
-    /** Image download */
+    /** Image download. */
     compile 'com.squareup.picasso:picasso:2.5.2'
+    /** Icons. */
+    compile 'com.joanzapata.android:android-iconify:1.0.9'
 
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
