@@ -9,9 +9,12 @@ public enum AccountBillingType {
     NB("NB", "No Billing", 0),
     M10("M10", "Monthly 10", 10),
     M30("M30", "Monthly 30", 30),
-    M40("M40", "Monthly 40", 40),
     M50("M50", "Monthly 50", 50),
-    A360("A360", "Annual 360", 360);
+    M100("M100", "Monthly 100", 100),
+    A120("A120", "Annual 120", 120),
+    A360("A360", "Annual 360", 360),
+    A600("A600", "Annual 600", 600),
+    A1200("A1200", "Annual 1200", 1200);
 
     private final String description;
     private final String name;
