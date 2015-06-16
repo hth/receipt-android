@@ -2,30 +2,47 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
+import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
+import android.widget.IconButton;
 import android.widget.IconTextView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.BuildConfig;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.adapters.ReceiptItemListAdapter;
@@ -34,6 +51,7 @@ import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.util.Calendar;
@@ -71,14 +89,21 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private TextView taxAmountView;
     private TextView totalAmountView;
     // Receipt action drawer
-    private LinearLayout drawerIndicator;
+//    private LinearLayout drawerIndicator;
     private List<ReceiptItemModel> itemList;
 
     private IconTextView tagIcon;
+    private IconButton btnDownloadImage;
+    private ImageView receiptImage;
+
+    private String blobdIds = "";
+    private SearchView searchView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "executing onCreateView");
+        // Must call below method to make the fragment menu works.
+        setHasOptionsMenu(true);
         // If activity recreated (such as from screen rotate), restore
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
@@ -109,9 +134,29 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdItemsList.addFooterView(taxFooter);
 
         totalAmountView = (TextView) receiptDetailView.findViewById(R.id.rd_item_list_footer_total_amount);
-        drawerIndicator = (LinearLayout) receiptDetailView.findViewById(R.id.rd_drawer_indicator_layout);
 
         tagIcon = (IconTextView) receiptDetailView.findViewById(R.id.tag_icon);
+        btnDownloadImage = (IconButton) receiptDetailView.findViewById(R.id.btn_download_receipt);
+        receiptImage = (ImageView) receiptDetailView.findViewById(R.id.receiptImage);
+        btnDownloadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!blobdIds.isEmpty() && blobdIds != "") {
+                    String url = BuildConfig.AWSS3 + "chk.test/" + blobdIds;
+                    ((ReceiptListActivity)getActivity()).showReceiptDetailImageFragment(url);
+                } else {
+                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                    superActivityToast.setText("No Image for this receipt!");
+                    superActivityToast.setDuration(SuperToast.Duration.EXTRA_LONG);
+                    superActivityToast.setBackground(SuperToast.Background.BLUE);
+                    superActivityToast.setTextColor(Color.WHITE);
+                    superActivityToast.setTouchToDismiss(true);
+                    superActivityToast.show();
+                }
+
+
+            }
+        });
         return receiptDetailView;
     }
 
@@ -136,6 +181,53 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         }
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+//        MenuInflater inflater = getActivity().getMenuInflater();
+        inflater.inflate(R.menu.menu_main_detail_receipt, menu);
+        MenuItem changeTag = menu.findItem(R.id.menu_changeTag).setIcon(
+                new IconDrawable(getActivity(), Iconify.IconValue.fa_tags)
+                        .colorRes(R.color.white)
+                        .actionBarSize());
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        /**
+         * Replace the default menu search image.
+         */
+        Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
+                .colorRes(R.color.white)
+                .actionBarSize();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+        v.setImageDrawable(mDraw);
+
+        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
+        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setTextColor(Color.WHITE);
+        searchAutoCompleteTextView.setHint("Search");
+        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_changeTag:
+                ((ReceiptListActivity)getActivity()).openDrawer();
+                return true;
+            case R.id.menu_logout:
+                ((ReceiptListActivity)getActivity()).logout();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
     public void updateReceiptDetailView(int index, int position, boolean isFilterList) {
         Log.d(TAG, "executing updateReceiptDetailView");
         try {
@@ -145,17 +237,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
             ReceiptModel rdModel = null;
             if(!isFilterList){
-                // Coming from ReceiptListActivity: we show and activate drawer view
-                if(drawerIndicator.getVisibility() == View.GONE){
-                    drawerIndicator.setVisibility(View.VISIBLE);
-                }
-                drawerIndicator.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Log.d(TAG, "!!!!!!!!!!! drawer icon clicked");
-                        ((ReceiptListActivity) getActivity()).openDrawer();
-                    }
-                });
                 rdModel = ReceiptListFragment.children.get(index).get(position);
             } else {
                 // Coming from FilterListActivity: we show and activate drawer view
@@ -280,6 +361,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             } else {
                 tagIcon.setVisibility(View.INVISIBLE);
             }
+
+            blobdIds = rdModel.getBlobIds();
 
         } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());

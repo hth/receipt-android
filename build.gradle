@@ -61,6 +61,8 @@ dependencies {
     compile 'it.neokree:MaterialNavigationDrawer:1.3.3'
     /** Super toast */
     compile 'com.github.johnpersano:supertoasts:1.3.4@aar'
+    /** Image Download */
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
@@ -182,6 +184,7 @@ android {
             buildConfigField STRING, "PROVIDER_AUTHORITY", debugProviderAuthority
             buildConfigField STRING, "RECEIPTOFI_MOBILE", debugEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLocal
+            buildConfigField STRING, "AWSS3", debugEndpointAwsS3
         }
 
         staging {
@@ -212,6 +215,7 @@ android {
             buildConfigField STRING, "PROVIDER_AUTHORITY", stagingProviderAuthority
             buildConfigField STRING, "RECEIPTOFI_MOBILE", stagingEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdStaging
+            buildConfigField STRING, "AWSS3", debugEndpointAwsS3
         }
 
         release {
@@ -242,6 +246,7 @@ android {
             buildConfigField STRING, "PROVIDER_AUTHORITY", releaseProviderAuthority
             buildConfigField STRING, "RECEIPTOFI_MOBILE", releaseEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLive
+            buildConfigField STRING, "AWSS3", releaseEndpointAwsS3
         }
     }
 
