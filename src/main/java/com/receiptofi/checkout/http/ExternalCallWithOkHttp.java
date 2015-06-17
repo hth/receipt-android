@@ -244,13 +244,13 @@ public class ExternalCallWithOkHttp {
         Thread t = new Thread() {
             public void run() {
                 try {
+                    File file = new File(imageModel.imgPath);
                     RequestBody requestBody = new MultipartBuilder()
                             .type(MultipartBuilder.FORM)
-                            .addPart(
-                                    Headers.of("Content-Disposition", "form-data; name=\"qqfile\""),
-                                    RequestBody.create(
-                                            MediaType.parse(imageModel.imgPath),
-                                            new File(imageModel.imgPath)))
+                            .addFormDataPart(
+                                    "qqfile",
+                                    file.getName(),
+                                    RequestBody.create(MediaType.parse("media/type"), file))
                             .build();
 
                     Request request = new Request.Builder()
