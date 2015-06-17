@@ -12,7 +12,6 @@ import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCall;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ImageResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;

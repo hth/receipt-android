@@ -72,10 +72,6 @@ dependencies {
     compile 'net.danlew:android.joda:2.7.2'
     compile 'org.ocpsoft.prettytime:prettytime:4.0.0.Final'
     compile 'com.braintreepayments.api:braintree:1.6.1'
-    compile('org.apache.httpcomponents:httpmime:4.3.5') {
-        exclude module: 'httpclient'
-    }
-    compile 'org.apache.httpcomponents:httpclient-android:4.3.5.1'
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.facebook.android:facebook-android-sdk:3.23.1'
     androidTestCompile 'junit:junit:4.10'
@@ -88,12 +84,6 @@ idea {
         downloadJavadoc = true
     }
 }
-
-//http://stackoverflow.com/questions/3993924/get-android-api-level-of-phone-currently-running-my-application
-//http://en.wikipedia.org/wiki/Android_version_history
-//Global Android version distribution since December 2009. As of May 2015, Android 4.4 "KitKat" is the
-//single most widely used Android version, operating on 39.8% of all Android devices accessing Google Play.
-//        The second are different Android "Jelly Bean" versions (4.1–4.3.1), with a combined share of 39.2%.[1]
 
 android {
     archivesBaseName = "checkout";
