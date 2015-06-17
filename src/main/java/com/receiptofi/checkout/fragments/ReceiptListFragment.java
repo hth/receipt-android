@@ -31,6 +31,7 @@ import com.receiptofi.checkout.adapters.ReceiptListAdapter;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptGroupObservable;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.views.PinnedHeaderExpandableListView;
 import com.receiptofi.checkout.views.StickyLayout;
 
@@ -163,34 +164,31 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        MenuInflater inflater = getActivity().getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-//        MenuItem changeTag = menu.findItem(R.id.menu_changeTag).setIcon(
-//                new IconDrawable(getActivity(), Iconify.IconValue.fa_tags)
-//                        .colorRes(R.color.white)
-//                        .actionBarSize());
-//        changeTag.setVisible(false);
+        if (!AppUtils.isTablet(getActivity())) {
+            inflater.inflate(R.menu.menu_main, menu);
 
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        /**
-         * Replace the default menu search image.
-         */
-        Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
-                .colorRes(R.color.white)
-                .actionBarSize();
-        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
-        ImageView v = (ImageView) searchView.findViewById(searchImgId);
-        v.setImageDrawable(mDraw);
+            // Associate searchable configuration with the SearchView
+            SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+            searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+            searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
-        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
-        searchAutoCompleteTextView.setTextColor(Color.WHITE);
-        searchAutoCompleteTextView.setHint("Search");
-        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            /**
+             * Replace the default menu search image.
+             */
+            Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
+                    .colorRes(R.color.white)
+                    .actionBarSize();
+            int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+            ImageView v = (ImageView) searchView.findViewById(searchImgId);
+            v.setImageDrawable(mDraw);
+
+            int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
+            AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+            searchAutoCompleteTextView.setTextColor(Color.WHITE);
+            searchAutoCompleteTextView.setHint("Search");
+            searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        }
         super.onCreateOptionsMenu(menu,inflater);
     }
 
@@ -201,12 +199,6 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             case R.id.menu_changeTag:
                 ((ReceiptListActivity)getActivity()).openDrawer();
                 return true;
-//            case R.id.menu_notofication:
-//                launchNotifications();
-//                return true;
-//            case R.id.menu_settings:
-//                launchSettings();
-//                return true;
             case R.id.menu_logout:
                 ((ReceiptListActivity)getActivity()).logout();
                 return true;

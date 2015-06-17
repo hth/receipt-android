@@ -65,7 +65,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
     private boolean mIntentInProgress;
-    private ProgressDialog loader;
+    protected ProgressDialog loader;
+    protected static Boolean inLoadingUserLogin = false;
 
     private static Session openActiveSession(Activity activity, boolean allowLoginUI, List permissions, Session.StatusCallback callback) {
         Log.d(TAG, "Parent executing openActiveSession");
@@ -190,11 +191,13 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         loader.setIndeterminate(true);
         loader.setMessage(msg);
         loader.show();
+        inLoadingUserLogin = true;
     }
 
     public void hideLoader() {
         if (loader != null) {
             loader.dismiss();
+            inLoadingUserLogin = false;
         }
         loader = null;
     }
@@ -275,14 +278,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     protected void afterSuccessfulLogin() {
         Log.d(TAG, "Parent executing afterSuccessfulLogin");
         if (UserUtils.isValidAppUser()) {
-            // TODO: Delete Me
-            // KEVIN: Add
-            // It should use isFristStart() as condition, but we use true for debug.
-//            if (isFristStart()) {
-//                launchSplashScreen();
-//            } else {
-                launchHomeScreen();
-//            }
+            launchHomeScreen();
             finish();
             // TODO make this call later
             String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);

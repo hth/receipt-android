@@ -88,8 +88,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private TextView taxDscpView;
     private TextView taxAmountView;
     private TextView totalAmountView;
-    // Receipt action drawer
-//    private LinearLayout drawerIndicator;
     private List<ReceiptItemModel> itemList;
 
     private IconTextView tagIcon;
@@ -183,7 +181,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-//        MenuInflater inflater = getActivity().getMenuInflater();
         inflater.inflate(R.menu.menu_main_detail_receipt, menu);
         MenuItem changeTag = menu.findItem(R.id.menu_changeTag).setIcon(
                 new IconDrawable(getActivity(), Iconify.IconValue.fa_tags)
@@ -218,7 +215,11 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_changeTag:
-                ((ReceiptListActivity)getActivity()).openDrawer();
+                if (((ReceiptListActivity)getActivity()).isDrawerOpened()) {
+                    ((ReceiptListActivity)getActivity()).closeDrawer();
+                } else {
+                    ((ReceiptListActivity) getActivity()).openDrawer();
+                }
                 return true;
             case R.id.menu_logout:
                 ((ReceiptListActivity)getActivity()).logout();

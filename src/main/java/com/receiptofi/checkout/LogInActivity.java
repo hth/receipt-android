@@ -114,8 +114,32 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     @Override
     protected void onPause() {
         super.onPause();
+        /**
+         * We add below to avoid window link exception during orientation change.
+         */
+        if(super.loader != null) {
+            super.loader.dismiss();
+        }
         isLeftButtonClicked = false;
         isRightButtonClicked = false;
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        /**
+         * We add this process.
+         * Because the loader will be destoried during Orientation changing.
+         * And a new Window link exception will throw up.
+         */
+        if (super.inLoadingUserLogin) {
+            if (super.loader == null) {
+                showLoader(this.getResources().getString(R.string.login_auth_msg));
+            } else {
+                super.loader.show();
+            }
+        }
     }
 
     @Override
@@ -204,10 +228,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-//            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.TOP, 0, 20);
-//            toast.show();
-
             SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
             superActivityToast.setText(errors);
             superActivityToast.setDuration(SuperToast.Duration.SHORT);
@@ -231,9 +251,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
         if (data == null) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-//            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-//            toast.setGravity(Gravity.TOP, 0, 20);
-//            toast.show();
             SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
             superActivityToast.setText(errors);
             superActivityToast.setDuration(SuperToast.Duration.SHORT);

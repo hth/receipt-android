@@ -10,11 +10,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.OnSwipeTouchListener;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -79,18 +81,35 @@ public class ReceiptDetailImageFragment extends Fragment {
         mView =  inflater.inflate(R.layout.fragment_receipt_detail_image, container, false);
 
         mReceiptImage = (ImageView) mView.findViewById(R.id.receiptImage);
+        mReceiptImage.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
+            public void onSwipeTop() {
+//                Toast.makeText(getActivity(), "top", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeRight() {
+//                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
+            }
+
+            public void onSwipeLeft() {
+//                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
+                // Pop up self.
+                getFragmentManager().popBackStack();
+            }
+
+            public void onSwipeBottom() {
+//                Toast.makeText(getActivity(), "bottom", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         if (mUrl != "") {
-            Picasso.Builder builder = new Picasso.Builder(getActivity());
+            Picasso.Builder builder = new Picasso.Builder(getActivity()).indicatorsEnabled(true);
             builder.listener(new Picasso.Listener() {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                     exception.printStackTrace();
                 }
             });
-            builder.indicatorsEnabled(true);
-
-            builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {
+            builder.build().load(mUrl).placeholder(R.drawable.receipt_loading).into(mReceiptImage, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
                     Log.d("TAG", "onsuccess");

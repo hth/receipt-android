@@ -73,6 +73,8 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
     private SearchView searchView;
 
+    public DrawerLayout drawerLayout;
+
     /**
      * Called when the activity is first created.
      */
@@ -177,7 +179,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     }
 
     private void initDrawerView() {
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        drawerLayout = (DrawerLayout)findViewById(R.id.receipt_drawer_layout);
         // set the drawer to remain closed until a receipt is selected
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         recheckBox = (CheckBox) findViewById(R.id.receipt_action_recheck);
@@ -256,7 +258,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
 
     private void setDrawerView() {
         // unlock the drawer
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
         Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
         final List<ExpenseTagModel> tagModelList = new LinkedList<>(expTagMap.values());
@@ -280,16 +282,23 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     }
 
     public void openDrawer() {
-        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
         drawerLayout.openDrawer(Gravity.END);
     }
 
-    private void launchNotifications() {
-        startActivity(new Intent(this, NotificationActivity.class));
+    public void closeDrawer() {
+        if (drawerLayout != null) {
+            if (drawerLayout.isDrawerOpen(Gravity.END)) {
+                drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+                drawerLayout.closeDrawer(Gravity.END);
+            }
+        }
     }
 
-    private void launchSettings() {
-        startActivity(new Intent(this, PreferencesTabActivity.class));
+    public boolean isDrawerOpened() {
+        if (drawerLayout != null) {
+            return drawerLayout.isDrawerOpen(Gravity.END);
+        }
+        return false;
     }
 
     public void logout() {

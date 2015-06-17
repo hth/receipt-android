@@ -59,7 +59,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
     }
 
     public boolean onTouch(View var1, MotionEvent var2){
-        return true;
+        return gestureDetector.onTouchEvent(var2);
     }
 
     public void onSwipeRight() {
