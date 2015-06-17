@@ -26,6 +26,8 @@ public class BillingAccountUtils {
      * @param billingAccount
      */
     public static void insertOrReplace(BillingAccountModel billingAccount) {
+        DBUtils.clearDB(DatabaseTable.BillingAccount.TABLE_NAME);
+
         ReceiptofiApplication.RDH.getWritableDatabase().execSQL(
                 "INSERT OR REPLACE INTO " + DatabaseTable.BillingAccount.TABLE_NAME + " (" +
                         DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE +
