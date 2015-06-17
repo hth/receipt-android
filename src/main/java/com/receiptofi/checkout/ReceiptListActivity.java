@@ -1,35 +1,22 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
-import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailImageFragment;

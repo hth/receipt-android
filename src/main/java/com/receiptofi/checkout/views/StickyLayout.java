@@ -26,8 +26,6 @@ SOFTWARE.
 
 package com.receiptofi.checkout.views;
 
-import java.util.NoSuchElementException;
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
@@ -37,6 +35,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.widget.LinearLayout;
+
+import java.util.NoSuchElementException;
 
 
 public class StickyLayout extends LinearLayout {

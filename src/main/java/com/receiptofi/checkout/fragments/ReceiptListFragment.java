@@ -16,12 +16,15 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AbsListView.LayoutParams;
 import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
@@ -34,11 +37,6 @@ import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.views.PinnedHeaderExpandableListView;
 import com.receiptofi.checkout.views.StickyLayout;
-
-import android.widget.AbsListView.LayoutParams;
-import android.widget.ImageView;
-import android.widget.SearchView;
-import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.ParseException;

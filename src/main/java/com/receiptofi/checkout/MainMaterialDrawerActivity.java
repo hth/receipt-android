@@ -19,7 +19,6 @@ import android.view.WindowManager;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -36,10 +35,8 @@ import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.ProfileUtils;
-import com.receiptofi.checkout.views.ToastBox;
 
 import java.io.File;
-import java.lang.reflect.Field;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;

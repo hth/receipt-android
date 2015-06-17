@@ -35,8 +35,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ExpandableListView;
 import android.widget.AbsListView.OnScrollListener;
+import android.widget.ExpandableListView;
 
 public class PinnedHeaderExpandableListView extends ExpandableListView implements OnScrollListener {
     private static final String TAG = "PinnedHeaderExpandable";

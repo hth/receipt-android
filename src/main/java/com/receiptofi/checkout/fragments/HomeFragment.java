@@ -22,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -39,11 +38,9 @@ import com.receiptofi.checkout.service.ChartService;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.FlowLayout;
-import com.receiptofi.checkout.views.ToastBox;
 
 import java.io.File;
 import java.text.DateFormat;

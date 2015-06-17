@@ -11,7 +11,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
@@ -51,7 +50,6 @@ import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.views.ToastBox;
-import com.squareup.picasso.Picasso;
 
 import java.text.ParseException;
 import java.util.Calendar;
