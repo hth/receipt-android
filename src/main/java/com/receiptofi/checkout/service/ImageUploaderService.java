@@ -73,7 +73,7 @@ public class ImageUploaderService {
     private static Thread getUploaderThread(Context context, ImageModel iModel) {
         iModel.LOCK = true;
 
-        Thread imageUploaderThread = ExternalCall.uploadImage(context, API.UPLOAD_IMAGE_API, iModel, new ImageResponseHandler() {
+        Thread imageUploaderThread = ExternalCallWithOkHttp.uploadImage(context, API.UPLOAD_IMAGE_API, iModel, new ImageResponseHandler() {
 
             @Override
             public void onSuccess(ImageModel iModel, String response) {
