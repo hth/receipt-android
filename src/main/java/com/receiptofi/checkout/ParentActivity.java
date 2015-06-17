@@ -39,7 +39,6 @@ import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
-import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
