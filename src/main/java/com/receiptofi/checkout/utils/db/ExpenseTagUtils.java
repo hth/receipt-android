@@ -41,10 +41,11 @@ public class ExpenseTagUtils {
     }
 
     public static void insert(List<ExpenseTagModel> expensesTags) {
+        List<ExpenseTagModel> expenseTagFromDB = getAll();
         for (ExpenseTagModel expenseTag : expensesTags) {
             if (expenseTag.isDeleted()) {
                 delete(expenseTag.getId());
-            } else {
+            } else if(!expenseTagFromDB.contains(expenseTag)) {
                 insert(expenseTag);
             }
         }
