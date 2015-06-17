@@ -5,9 +5,10 @@
 
     <ImageView
         android:id="@+id/tag_color"
-        android:layout_width="8dp"
+        android:layout_width="10dp"
         android:layout_height="fill_parent"
         android:layout_marginBottom="@dimen/tagColorMargin"
+        android:layout_marginLeft="@dimen/tagColorMargin_left"
         android:layout_marginTop="@dimen/tagColorMargin"
         android:background="@color/red"/>
 
