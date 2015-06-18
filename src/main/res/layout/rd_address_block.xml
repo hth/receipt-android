@@ -59,7 +59,7 @@
                 android:drawableLeft="@drawable/call_contact"
                 android:drawablePadding="10dp"
                 android:gravity="center_vertical"
-                android:text="(408)773-1304" />
+                android:text="(000)000-0000" />
 
         </LinearLayout>
 

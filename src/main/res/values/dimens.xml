@@ -42,6 +42,7 @@
     <dimen name="layout_marginleft">20dp</dimen>
     <dimen name="lmenu_textsize">20sp</dimen>
     <dimen name="tagColorMargin">10dp</dimen>
+    <dimen name="tagColorMargin_left">1dp</dimen>
     <dimen name="tagTextMargin">30dp</dimen>
 
     <!--   For TextView in fragment  -->

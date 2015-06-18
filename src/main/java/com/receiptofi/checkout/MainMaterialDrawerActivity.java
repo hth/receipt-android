@@ -79,44 +79,72 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         /**
          * Add below checkt about the app already have resource of backgroundImage
          */
-        backgroundImage = BitmapFactory.decodeResource(getResources(),backgroundImage) != null ? backgroundImage : R.drawable.bamboo;
+        backgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage) != null ? backgroundImage : R.drawable.bamboo;
 
         MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, backgroundImage);
 
         this.addAccount(account);
-        this.addSection(newSection("Home", new IconDrawable(mContext, Iconify.IconValue.fa_home)
-                .colorRes(R.color.white)
-                .actionBarSize(), mHomeFragment));
+        this.addSection(
+                newSection(
+                        "Home",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_home)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        mHomeFragment));
 
-        this.addSection(newSection("Notification", new IconDrawable(mContext, Iconify.IconValue.fa_bell_o)
-                .colorRes(R.color.white)
-                .actionBarSize(), mNotificationFragment));
+        this.addSection(
+                newSection(
+                        "Notification",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_bell_o)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        mNotificationFragment));
 
-        this.addSection(newSection("Tag Expenses", new IconDrawable(mContext, Iconify.IconValue.fa_tags)
-                .colorRes(R.color.white)
-                .actionBarSize(), mExpenseTagFragment));
+        this.addSection(
+                newSection(
+                        "Tag Expenses",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_tags)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        mExpenseTagFragment));
 
-        this.addSection(newSection("Billing History", new IconDrawable(mContext, Iconify.IconValue.fa_shopping_cart)
-                .colorRes(R.color.white)
-                .actionBarSize(), mBillingFragment));
+        this.addSection(
+                newSection(
+                        "Billing History",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_history)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        mBillingFragment));
 
-        this.addSection(newSection("Subscription", new IconDrawable(mContext, Iconify.IconValue.fa_money)
-                .colorRes(R.color.white)
-                .actionBarSize(), mBillingFragment));
+        this.addSection(
+                newSection(
+                        "Subscription",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        mBillingFragment));
 
-        this.addSection(newSection("Log Out",
-                new IconDrawable(mContext, Iconify.IconValue.fa_sign_out)
-                        .colorRes(R.color.white)
-                        .actionBarSize(),
-                new MaterialSectionListener() {
-                    @Override
-                    public void onClick(MaterialSection materialSection) {
-                        logout();
-                    }
-                }));
+        this.addSection(
+                newSection(
+                        "Log Out",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_sign_out)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        new MaterialSectionListener() {
+                            @Override
+                            public void onClick(MaterialSection materialSection) {
+                                logout();
+                            }
+                        }));
 
         // create bottom section
-        this.addBottomSection(newSection("Settings", R.drawable.ic_settings_black_24dp, new Intent(this, SettingsActivity.class)));
+        this.addBottomSection(
+                newSection(
+                        "Settings",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_cog)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        new Intent(this, SettingsActivity.class)));
 
         // Close the drawer menu.
         this.disableLearningPattern();
