@@ -5,14 +5,14 @@
                 android:padding="8dp"
                 android:minHeight="?android:attr/listPreferredItemHeight"
                 android:orientation="vertical"
-                >
+    >
 
     <TextView
         android:id="@+id/notification_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/text_notification"
-        android:text = "Notification test:"
+        android:text="Notification test:"
         android:paddingLeft="@dimen/tv_horizontal_margin"/>
 
     <TextView
@@ -24,6 +24,6 @@
         android:layout_alignParentLeft="true"
         android:paddingLeft="@dimen/tv_horizontal_margin"
         style="@style/date_notification"
-        android:text = "text"/>
+        android:text="text"/>
 
 </RelativeLayout>

@@ -1,6 +1,6 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.receiptofi.checkout.MainPageActivity">
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="com.receiptofi.checkout.MainPageActivity">
     <item
         android:id="@+id/menu_search"
         android:icon="@drawable/ic_menu_find"

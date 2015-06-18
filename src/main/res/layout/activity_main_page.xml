@@ -1,7 +1,6 @@
 <android.support.v4.widget.DrawerLayout
     android:id="@+id/drawer_layout"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -23,7 +22,9 @@
         android:drawSelectorOnTop="false"
         android:isScrollContainer="true"
         >
-        <com.receiptofi.checkout.views.CircleImageView android:id="@+id/headImage"
+
+        <com.receiptofi.checkout.views.CircleImageView
+            android:id="@+id/headImage"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:layout_width="96dp"
             android:layout_height="96dp"
@@ -33,17 +34,19 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="@dimen/layout_marginleft"
             />
+
         <TextView
-            android:id = "@+id/userEmail"
-            android:layout_below = "@id/headImage"
-            android:layout_width = "wrap_content"
-            android:layout_height = "wrap_content"
+            android:id="@+id/userEmail"
+            android:layout_below="@id/headImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text = "xxxx@xxx.com"
+            android:text="xxxx@xxx.com"
             android:textSize="14sp"
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/layout_marginleft"
             />
+
         <TextView
             android:id="@+id/line1"
             style="?android:attr/listSeparatorTextViewStyle"
@@ -54,7 +57,8 @@
             android:layout_height="1dp"
             android:layout_marginLeft="@dimen/layout_marginleft"
             android:layout_marginRight="@dimen/layout_marginleft"
-            android:background="@color/gray_light" />
+            android:background="@color/gray_light"/>
+
         <com.gc.materialdesign.views.ButtonRectangle
             android:id="@+id/btn_Logout"
             android:layout_width="220dp"
@@ -67,6 +71,7 @@
             android:layout_alignParentBottom="true"
             android:layout_marginBottom="10dp"
             />
+
         <TextView
             android:id="@+id/line2"
             style="?android:attr/listSeparatorTextViewStyle"
@@ -78,7 +83,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginLeft="@dimen/layout_marginleft"
             android:layout_marginRight="@dimen/layout_marginleft"
-            android:background="@color/gray_light" />
+            android:background="@color/gray_light"/>
 
         <ListView
             android:id="@+id/navdrawer"

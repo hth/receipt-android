@@ -113,7 +113,7 @@
     </style>
 
     <style name="date_notification" parent="@android:style/TextAppearance.Small">
-      <!--  <item name="android:textColor">@color/app_theme_txt_color</item> -->
+        <!--  <item name="android:textColor">@color/app_theme_txt_color</item> -->
         <item name="android:textColor">@color/tv_black_second</item>
         <item name="android:paddingTop">@dimen/notification_list_vertical_padding</item>
         <item name="android:paddingBottom">@dimen/notification_list_vertical_padding</item>
@@ -155,7 +155,7 @@
 
     <!-- ActionBar styles -->
     <style name="MyActionBar11"
-        parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+           parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
         <item name="android:background">@color/app_theme_bg</item>
         <item name="android:textColor">@color/white</item>
     </style>

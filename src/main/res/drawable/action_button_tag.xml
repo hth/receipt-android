@@ -4,8 +4,8 @@
     </item>
     <item android:state_pressed="true" android:drawable="@drawable/button_bg_shadow_small_no_drop">
     </item>
-    <item android:state_pressed="false" >
-        <shape android:shape="rectangle" >
+    <item android:state_pressed="false">
+        <shape android:shape="rectangle">
             <corners
                 android:radius="6dp"
                 />

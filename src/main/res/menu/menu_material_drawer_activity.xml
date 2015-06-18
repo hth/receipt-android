@@ -1,7 +1,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:ReceiptofiApplication="http://schemas.android.com/apk/res-auto"
-    tools:context="com.receiptofi.checkout.MainMaterialDrawerActivity">
+      xmlns:tools="http://schemas.android.com/tools"
+      xmlns:ReceiptofiApplication="http://schemas.android.com/apk/res-auto"
+      tools:context="com.receiptofi.checkout.MainMaterialDrawerActivity">
     <!--
         Because we use different theme, and compact lib, we need to change the namespace to make this app
         menu works as expected. xmlns:ReceiptofiApplication="http://schemas.android.com/apk/res-auto"

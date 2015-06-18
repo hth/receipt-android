@@ -29,7 +29,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginLeft="30dp"
                 android:background="@drawable/cross_imagebutton_bg"
-              />
+                />
 
             <ImageView
                 android:id="@+id/logo_view"
@@ -82,7 +82,7 @@
                     android:background="@drawable/icon_facebook"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:scaleType ="centerInside"
+                    android:scaleType="centerInside"
                     android:contentDescription="@string/facebook_login_cnt_dscp"/>
 
                 <TextView
@@ -115,7 +115,7 @@
                     android:background="@drawable/icon_googleplus"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="5dp"
-                    android:scaleType ="centerInside"
+                    android:scaleType="centerInside"
                     android:layout_marginLeft="@dimen/social_google_image_margin_left"
                     android:contentDescription="@string/google_login_cnt_dscp"/>
 
