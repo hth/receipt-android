@@ -197,9 +197,9 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             case R.id.menu_changeTag:
                 ((ReceiptListActivity)getActivity()).openDrawer();
                 return true;
-            case R.id.menu_logout:
-                ((ReceiptListActivity)getActivity()).logout();
-                return true;
+//            case R.id.menu_logout:
+//                ((ReceiptListActivity)getActivity()).logout();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

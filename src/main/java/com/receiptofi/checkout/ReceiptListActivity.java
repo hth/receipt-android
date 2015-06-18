@@ -1,6 +1,8 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.Toast;
 
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
+import com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailImageFragment;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.http.API;
@@ -28,6 +31,7 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.JsonParseUtils;
@@ -295,19 +299,33 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     }
 
     public void showReceiptDetailImageFragment(String url){
-        // Create fragment and give it an argument for the selected article
-        ReceiptDetailImageFragment newFragment = new ReceiptDetailImageFragment();
-        Bundle args = new Bundle();
-        args.putString(Constants.ARG_IMAGE_URL, url);
-        newFragment.setArguments(args);
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        transaction.replace(R.id.fragment_container, newFragment);
-        transaction.addToBackStack(null);
-        // Commit the transaction
-        transaction.commit();
+        if (AppUtils.isTablet(this)) {
+            // Handle Table environment
+            Log.d(TAG, "Kevin in table environment.");
+
+            FragmentManager fm = getFragmentManager();
+            ReceiptDetailImageForTabletDialogFragment deailImage = new ReceiptDetailImageForTabletDialogFragment();
+            Bundle args_tablet = new Bundle();
+            args_tablet.putString(Constants.ARG_IMAGE_URL, url);
+            deailImage.setArguments(args_tablet);
+            deailImage.show(fm, "fragment_detail_image");
+
+        } else {
+            // Create fragment and give it an argument for the selected article
+            ReceiptDetailImageFragment newFragment = new ReceiptDetailImageFragment();
+            Bundle args = new Bundle();
+            args.putString(Constants.ARG_IMAGE_URL, url);
+            newFragment.setArguments(args);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            // Handle normal phone environment
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+            // Commit the transaction
+            transaction.commit();
+        }
+
     }
 
 }

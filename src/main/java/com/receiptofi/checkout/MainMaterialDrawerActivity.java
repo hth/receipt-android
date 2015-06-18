@@ -29,6 +29,7 @@ import com.receiptofi.checkout.fragments.BillingFragment;
 import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.NotificationFragment;
+import com.receiptofi.checkout.fragments.SettingFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -55,6 +56,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public NotificationFragment mNotificationFragment;
     public ExpenseTagFragment mExpenseTagFragment;
     public BillingFragment mBillingFragment;
+    public SettingFragment mSettingFragment;
     private Context mContext;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
@@ -71,6 +73,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         mNotificationFragment = NotificationFragment.newInstance("", "");
         mExpenseTagFragment = ExpenseTagFragment.newInstance("", "");
         mBillingFragment = new BillingFragment();
+        mSettingFragment = new SettingFragment();
 
         ProfileModel profileModel = ProfileUtils.getProfile();
         String name = profileModel != null ? profileModel.getName() : "";
@@ -116,7 +119,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                 }));
 
         // create bottom section
-        this.addBottomSection(newSection("Settings", R.drawable.ic_settings_black_24dp, new Intent(this, SettingsActivity.class)));
+        this.addBottomSection(newSection("Settings", R.drawable.ic_settings_black_24dp, mSettingFragment));
 
         // Close the drawer menu.
         this.disableLearningPattern();
