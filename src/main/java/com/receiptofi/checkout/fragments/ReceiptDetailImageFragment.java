@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.squareup.picasso.Picasso;
  * create an instance of this fragment.
  */
 public class ReceiptDetailImageFragment extends Fragment {
+    private static final String TAG = ReceiptDetailImageFragment.class.getSimpleName();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -40,7 +43,7 @@ public class ReceiptDetailImageFragment extends Fragment {
     private ImageView mReceiptImage;
 
     private OnFragmentInteractionListener mListener;
-    SuperActivityToast superActivityProgressToast;
+    private SuperActivityToast superActivityProgressToast;
     private static boolean inShowingProgress = false;
 
     /**
@@ -76,10 +79,9 @@ public class ReceiptDetailImageFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView =  inflater.inflate(R.layout.fragment_receipt_detail_image, container, false);
+        mView = inflater.inflate(R.layout.fragment_receipt_detail_image, container, false);
 
         mReceiptImage = (ImageView) mView.findViewById(R.id.receiptImage);
         mReceiptImage.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
@@ -102,19 +104,19 @@ public class ReceiptDetailImageFragment extends Fragment {
             }
         });
 
-        if (mUrl != "") {
+        if (!TextUtils.isEmpty(mUrl)) {
             this.showProgressDialog();
             Picasso.Builder builder = new Picasso.Builder(getActivity()).indicatorsEnabled(true);
             builder.listener(new Picasso.Listener() {
                 @Override
-                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                    exception.printStackTrace();
+                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
+                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 }
             });
             builder.build().load(mUrl).placeholder(R.drawable.receipt_loading).into(mReceiptImage, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
-                    Log.d("TAG", "onsuccess");
+                    Log.d(TAG, "on success");
                     mReceiptImage.setVisibility(View.VISIBLE);
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
@@ -122,14 +124,14 @@ public class ReceiptDetailImageFragment extends Fragment {
 
                 @Override
                 public void onError() {
-                    Log.d("TAG", "onerror");
+                    Log.e(TAG, "on error");
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
                 }
             });
         } else {
             SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-            superActivityToast.setText("No Receipt Image!");
+            superActivityToast.setText("Receipt image not found.");
             superActivityToast.setDuration(SuperToast.Duration.EXTRA_LONG);
             superActivityToast.setBackground(SuperToast.Background.BLUE);
             superActivityToast.setTextColor(Color.WHITE);
@@ -174,7 +176,7 @@ public class ReceiptDetailImageFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (superActivityProgressToast!=null && superActivityProgressToast.isShowing()) {
+        if (superActivityProgressToast != null && superActivityProgressToast.isShowing()) {
             superActivityProgressToast.dismiss();
             inShowingProgress = true;
         }
