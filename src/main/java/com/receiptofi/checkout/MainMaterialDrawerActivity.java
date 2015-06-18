@@ -141,9 +141,13 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         }));
 
         // create bottom section
-        this.addBottomSection(newSection("Settings", new IconDrawable(mContext, Iconify.IconValue.fa_cog)
-                .colorRes(R.color.white)
-                .actionBarSize(), mSettingFragment));
+        this.addBottomSection(
+                newSection(
+                        "Settings",
+                        new IconDrawable(mContext, Iconify.IconValue.fa_cogs)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        mSettingFragment));
 
         // Close the drawer menu.
         this.disableLearningPattern();
