@@ -69,10 +69,10 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
     @Override
     public void onDismiss(DialogInterface dialogInterface) {
         Log.d(TAG, "  -----------    onDismiss    -----------");
-        if(prefFragment != null){
-            ((PrefFragment)prefFragment).updateHandler.sendEmptyMessageDelayed(PrefFragment.EXPENSE_TAG_UPDATED,
-                    Constants.EXPANSE_TAG_UPDATE_DELAY);
-        }
+//        if(prefFragment != null){
+//            ((PrefFragment)prefFragment).updateHandler.sendEmptyMessageDelayed(PrefFragment.EXPENSE_TAG_UPDATED,
+//                    Constants.EXPANSE_TAG_UPDATE_DELAY);
+//        }
     }
 
     public class CollectionPagerAdapter extends FragmentPagerAdapter {
@@ -84,14 +84,15 @@ public class PreferencesTabActivity extends FragmentActivity implements ActionBa
 
         @Override
         public Fragment getItem(int i) {
-            if (i == 0) {
-                return new ProfileFragment();
-            } else if (i == 1) {
-                prefFragment = new PrefFragment();
-                return prefFragment;
-            } else {
-                return new BillingFragment();
-            }
+//            if (i == 0) {
+////                return new ProfileFragment();
+//            } else if (i == 1) {
+//                prefFragment = new PrefFragment();
+//                return prefFragment;
+//            } else {
+//                return new BillingFragment();
+//            }
+            return null;
         }
 
         @Override

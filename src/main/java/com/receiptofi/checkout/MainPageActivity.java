@@ -7,10 +7,15 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+//import android.support.v4.app.Fragment;
+//import android.support.v4.app.FragmentActivity;
+//import android.support.v4.app.FragmentManager;
+//import android.support.v4.app.FragmentTransaction;
+//import android.support.v4.widget.DrawerLayout;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.text.InputType;
 import android.util.Log;
@@ -249,7 +254,7 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
                         changeFragment(mExpenseTagFragment);
                         break;
                     case 5:
-                        changeFragment(new ProfileFragment());
+//                        changeFragment(new ProfileFragment());
                         break;
                 }
 
@@ -266,17 +271,17 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
     private void changeFragment(Fragment targetFragment) {
         if (targetFragment == null)
             Log.i(TAG, "targetFragment is null");
-        this.getSupportFragmentManager()
+        this.getFragmentManager()
                 .beginTransaction()
                 .replace(R.id.main_fragment, targetFragment, "fragment")
                 .setTransitionStyle(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
                 .addToBackStack("tag")
                 .commit();
 
-        getSupportFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
+        getFragmentManager().addOnBackStackChangedListener(new FragmentManager.OnBackStackChangedListener() {
             @Override
             public void onBackStackChanged() {
-                Fragment f = getSupportFragmentManager().findFragmentById(R.id.main_fragment);
+                Fragment f = getFragmentManager().findFragmentById(R.id.main_fragment);
                 if (f != null && ab != null) {
                     String fragmentName = f.getClass().getName();
                     if (fragmentName.equals(HomeFragment.class.getName())) {
@@ -295,7 +300,6 @@ public class MainPageActivity extends FragmentActivity implements HomeFragment.O
                     mDrawerLayout.closeDrawer(mDrawerLayout_L);
                 }
             }
-
         });
     }
 
