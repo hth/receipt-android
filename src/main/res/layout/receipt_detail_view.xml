@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/scroll_view"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:background="@color/app_light_bg"
-    android:fillViewport="true">
+<LinearLayout android:id="@+id/scroll_view"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:background="@color/app_light_bg"
+              android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,18 +28,18 @@
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/notify_empty_detail" />
+                android:text="@string/notify_empty_detail"/>
 
-            <include layout="@layout/rd_address_block" />
+            <include layout="@layout/rd_address_block"/>
 
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:orientation="horizontal"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                >
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+
                 <TextView
                     android:id="@+id/rd_biz_phone"
                     style="@style/action_text_small"
@@ -49,14 +49,15 @@
                     android:drawableLeft="@drawable/call_contact"
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical|left"
-                    android:text="(408)773-1304" />
+                    android:text="(000)000-0000"/>
+
                 <TextView
                     android:id="@+id/rd_date"
+                    style="@style/text_small_bold"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="center_vertical|right"
-                    style="@style/text_small_bold"/>
+                    android:gravity="center_vertical|right"/>
             </LinearLayout>
 
             <RelativeLayout
@@ -76,38 +77,38 @@
                         style="@style/rd_list_item_header_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
                         android:layout_weight="1"
                         android:gravity="left|center_vertical"
-                        android:text="@string/rd_item_header_title"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
+                        android:text="@string/rd_item_header_title"/>
 
                     <TextView
                         android:id="@+id/rd_list_item_header_amount"
                         style="@style/rd_list_item_header_text"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
                         android:layout_weight="1"
                         android:gravity="right|center_vertical"
-                        android:text="@string/rd_item_header_amount"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin" />
+                        android:text="@string/rd_item_header_amount"/>
                 </LinearLayout>
 
                 <ListView
                     android:id="@+id/rd_items_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_above="@+id/footer"
                     android:layout_below="@+id/header"
                     android:layout_marginBottom="10dp"
-                    android:layout_above="@+id/footer"
                     android:listSelector="@drawable/list_selector_app_theme"></ListView>
 
                 <LinearLayout
                     android:id="@+id/footer"
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_alignParentBottom="true"
                     android:layout_marginRight="@dimen/activity_horizontal_margin">
 
                     <TextView
@@ -116,7 +117,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/rd_item_header_total_title" />
+                        android:text="@string/rd_item_header_total_title"/>
 
                     <TextView
                         android:id="@+id/rd_item_list_footer_total_amount"
@@ -126,7 +127,7 @@
                         android:layout_alignParentRight="true"
                         android:layout_weight="1"
                         android:gravity="right"
-                        android:textColor="@color/app_theme_txt_color" />
+                        android:textColor="@color/app_theme_txt_color"/>
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
