@@ -306,11 +306,11 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             Log.d(TAG, "Kevin in table environment.");
 
             FragmentManager fm = getFragmentManager();
-            ReceiptDetailImageForTabletDialogFragment deailImage = new ReceiptDetailImageForTabletDialogFragment();
+            ReceiptDetailImageForTabletDialogFragment detailImage = new ReceiptDetailImageForTabletDialogFragment();
             Bundle args_tablet = new Bundle();
             args_tablet.putString(Constants.ARG_IMAGE_URL, url);
-            deailImage.setArguments(args_tablet);
-            deailImage.show(fm, "fragment_detail_image");
+            detailImage.setArguments(args_tablet);
+            detailImage.show(fm, "fragment_detail_image");
 
         } else {
             // Create fragment and give it an argument for the selected article

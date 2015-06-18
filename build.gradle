@@ -177,6 +177,7 @@ android {
             buildConfigField STRING, "RECEIPTOFI_MOBILE", debugEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLocal
             buildConfigField STRING, "AWSS3", debugEndpointAwsS3
+            buildConfigField STRING, "AWSS3_BUCKET", debugBucket
         }
 
         staging {
@@ -208,6 +209,7 @@ android {
             buildConfigField STRING, "RECEIPTOFI_MOBILE", stagingEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdStaging
             buildConfigField STRING, "AWSS3", debugEndpointAwsS3
+            buildConfigField STRING, "AWSS3_BUCKET", debugBucket
         }
 
         release {
@@ -239,6 +241,7 @@ android {
             buildConfigField STRING, "RECEIPTOFI_MOBILE", releaseEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLive
             buildConfigField STRING, "AWSS3", releaseEndpointAwsS3
+            buildConfigField STRING, "AWSS3_BUCKET", releaseBucket
         }
     }
 
