@@ -4,14 +4,15 @@
         <shape android:shape="rectangle">
             <solid android:color="@color/facebook_bg"/>
             <corners android:radius="10dp"/>
-        </shape></item>
+        </shape>
+    </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <solid android:color="@color/facebook_bg"/>
             <corners android:radius="10dp"/>
         </shape>
     </item>
-    <item >
+    <item>
         <shape android:shape="rectangle">
             <solid android:color="@color/facebook_bg_light"/>
             <corners android:radius="10dp"/>

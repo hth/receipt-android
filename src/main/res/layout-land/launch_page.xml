@@ -15,6 +15,7 @@
         android:layout_weight="1"
         android:contentDescription="@string/app_info_cnt_dscp"
         android:orientation="vertical">
+
         <ImageButton
             android:id="@+id/ib_splash"
             android:layout_width="35dp"

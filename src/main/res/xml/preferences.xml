@@ -2,12 +2,12 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
         android:title="Setting">
-    <SwitchPreference
-        android:id="@+id/pref_wifi_sync"
-        android:key="@string/key_pref_sync"
-        android:title="@string/pref_sync"
-        android:summaryOn="@string/pref_sync_on"
-        android:summaryOff="@string/pref_sync_off"/>
+        <SwitchPreference
+            android:id="@+id/pref_wifi_sync"
+            android:key="@string/key_pref_sync"
+            android:title="@string/pref_sync"
+            android:summaryOn="@string/pref_sync_on"
+            android:summaryOff="@string/pref_sync_off"/>
         <SwitchPreference
             android:id="@+id/pref_wifi_notification"
             android:key="@string/key_pref_notification"
@@ -18,26 +18,26 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="User Account">
-    <com.receiptofi.checkout.views.LoginIdPreference
-        android:id="@+id/pref_user_id"
-        android:key="@string/key_pref_login_id"
-        android:title="@string/pref_login_id"
-        android:inputType="textEmailAddress"/>
+        <com.receiptofi.checkout.views.LoginIdPreference
+            android:id="@+id/pref_user_id"
+            android:key="@string/key_pref_login_id"
+            android:title="@string/pref_login_id"
+            android:inputType="textEmailAddress"/>
 
-    <com.receiptofi.checkout.views.PasswordPreference
-        android:id="@+id/pref_password"
-        android:key="@string/key_pref_password"
-        android:title="@string/pref_password"
-        android:summary="@string/pref_password_text"
-        android:inputType="textPassword"
-        android:password="true"
-        />
+        <com.receiptofi.checkout.views.PasswordPreference
+            android:id="@+id/pref_password"
+            android:key="@string/key_pref_password"
+            android:title="@string/pref_password"
+            android:summary="@string/pref_password_text"
+            android:inputType="textPassword"
+            android:password="true"
+            />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Others">
-    <Preference
-        android:title="Check Update">
-    </Preference>
+        <Preference
+            android:title="Check Update">
+        </Preference>
         <Preference
             android:title="About">
         </Preference>

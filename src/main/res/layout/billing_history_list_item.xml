@@ -4,7 +4,7 @@
               android:layout_height="match_parent"
               android:minHeight="?android:attr/listPreferredItemHeight"
               android:orientation="horizontal"
-                android:gravity="center_vertical">
+              android:gravity="center_vertical">
 
     <TextView
         android:id="@+id/billing_history_list_item_month"
