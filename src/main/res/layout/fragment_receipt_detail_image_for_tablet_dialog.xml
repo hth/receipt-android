@@ -2,7 +2,8 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment">
+             tools:context="com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment"
+             android:background="@color/tv_black">
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -12,10 +13,10 @@
             android:id="@+id/receiptImage"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_gravity="center"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:scaleType="fitXY"
-            android:layout_gravity="center"/>
+            android:scaleType="fitXY"/>
     </ScrollView>
 
 </FrameLayout>
