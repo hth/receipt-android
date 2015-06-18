@@ -111,7 +111,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Billing History",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_shopping_cart)
+                        new IconDrawable(mContext, Iconify.IconValue.fa_history)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         mBillingFragment));
@@ -119,7 +119,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Subscription",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_money)
+                        new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         mBillingFragment));
@@ -141,7 +141,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addBottomSection(
                 newSection(
                         "Settings",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_cogs)
+                        new IconDrawable(mContext, Iconify.IconValue.fa_cog)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         new Intent(this, SettingsActivity.class)));
