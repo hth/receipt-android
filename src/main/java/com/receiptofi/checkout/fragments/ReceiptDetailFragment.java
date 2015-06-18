@@ -138,8 +138,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             @Override
             public void onClick(View view) {
                 if (!blobdIds.isEmpty() && blobdIds != "") {
-                    String url = BuildConfig.AWSS3 + "chk.test/" + blobdIds;
-                    ((ReceiptListActivity)getActivity()).showReceiptDetailImageFragment(url);
+                    String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobdIds;
+                    ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
                 } else {
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                     superActivityToast.setText("No Image for this receipt!");
@@ -213,8 +213,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_changeTag:
-                if (((ReceiptListActivity)getActivity()).isDrawerOpened()) {
-                    ((ReceiptListActivity)getActivity()).closeDrawer();
+                if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
+                    ((ReceiptListActivity) getActivity()).closeDrawer();
                 } else {
                     ((ReceiptListActivity) getActivity()).openDrawer();
                 }
@@ -235,7 +235,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             }
 
             ReceiptModel rdModel = null;
-            if(!isFilterList){
+            if (!isFilterList) {
                 rdModel = ReceiptListFragment.children.get(index).get(position);
             } else {
                 // Coming from FilterListActivity: we show and activate drawer view

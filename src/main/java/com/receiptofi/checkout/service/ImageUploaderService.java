@@ -86,13 +86,13 @@ public class ImageUploaderService {
                 if (AppUtils.getHomePageContext() != null) {
                     Log.d(TAG, "Unprocessed document count " + unprocessedCount);
                     Message msg = new Message();
-                    // KEVIN : Add to replace the HomeActivy by HomeFragment
+                    // KEVIN : Add to replace the HomeActivity by HomeFragment
 //                    msg.what = HomeActivity.IMAGE_UPLOAD_SUCCESS;
                     msg.what = HomeFragment.IMAGE_UPLOAD_SUCCESS;
                     msg.obj = response;
                     msg.arg1 = unprocessedCount;
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
-                        // KEVIN : Add to replace the HomeActivy by HomeFragment
+                        // KEVIN : Add to replace the HomeActivity by HomeFragment
 //                        ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
                         if (Constants.KEY_NEW_PAGE) {
                             ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
