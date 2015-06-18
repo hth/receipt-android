@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -25,6 +26,8 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.ExpenseTagAdapter;
 import com.receiptofi.checkout.http.API;
@@ -197,6 +200,11 @@ public class ExpenseTagFragment extends Fragment {
         tagModelList = new LinkedList<>(expTagMap.values());
         mAdapter = new ExpenseTagAdapter(getActivity(), tagModelList);
         mListView.setAdapter(mAdapter);
+
+        final Drawable mDrawEdit = new IconDrawable(getActivity(), Iconify.IconValue.fa_pencil_square_o)
+                .colorRes(R.color.white).sizePx(64);
+        final Drawable mDrawDelete = new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                .colorRes(R.color.white).sizePx(64);
         // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -208,12 +216,14 @@ public class ExpenseTagFragment extends Fragment {
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 // set item width
                 openItem.setWidth(dp2px(90));
+
+                openItem.setIcon(mDrawEdit);
                 // set item title
-                openItem.setTitle("Edit");
-                // set item title fontsize
-                openItem.setTitleSize(18);
+//                openItem.setTitle("Edit");
+//                // set item title fontsize
+//                openItem.setTitleSize(18);
                 // set item title font color
-                openItem.setTitleColor(Color.WHITE);
+//                openItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(openItem);
                 // create "delete" item
@@ -223,7 +233,7 @@ public class ExpenseTagFragment extends Fragment {
                 // set item width
                 deleteItem.setWidth(dp2px(90));
                 // set a icon
-                deleteItem.setIcon(R.drawable.ic_delete);
+                deleteItem.setIcon(mDrawDelete);
                 // add to menu
                 menu.addMenuItem(deleteItem);
             }
