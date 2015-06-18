@@ -1,4 +1,5 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
+
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -6,45 +7,49 @@
         android:layout_marginRight="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
+
             <TextView
                 android:id="@+id/rd_biz_name"
                 style="@style/text_larger"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="BIZ NAME" />
+                android:text="BIZ NAME"/>
+
             <android.widget.IconTextView
-                android:id = "@+id/tag_icon"
+                android:id="@+id/tag_icon"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
+                android:gravity="right|center_vertical"
                 android:shadowColor="#22000000"
                 android:shadowDx="3"
                 android:shadowDy="3"
                 android:shadowRadius="1"
                 android:text="{fa-tag}"
                 android:textColor="#FF33B5E5"
-                android:textSize="30dp"
-                android:gravity="right|center_vertical"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/activity_horizontal_margin"
-                />
+                android:textSize="30dp"/>
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             >
+
             <LinearLayout
                 android:id="@+id/rd_biz_address"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="2"
                 android:layout_marginTop="5dp"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <TextView
@@ -52,39 +57,40 @@
                     style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="324 EL Camino Real" />
+                    android:text="324 EL Camino Real"/>
 
                 <TextView
                     android:id="@+id/rd_biz_add_line2"
                     style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sunnyvale, CA 94087, USA" />
+                    android:text="Sunnyvale, CA 94087, USA"/>
 
                 <TextView
                     android:id="@+id/rd_biz_add_line3"
                     style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="California" />
+                    android:text="California"/>
 
             </LinearLayout>
+
             <android.widget.IconButton
-                android:id = "@+id/btn_download_receipt"
+                android:id="@+id/btn_download_receipt"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
                 android:layout_weight="1"
+                android:background="@color/transparent"
+                android:gravity="center_vertical|right"
                 android:shadowColor="#22000000"
                 android:shadowDx="3"
                 android:shadowDy="3"
                 android:shadowRadius="1"
                 android:text="{fa-download}"
                 android:textColor="#FF33B5E5"
-                android:textSize="30dp"
-                android:background="@color/transparent"
-                android:gravity="center_vertical|right"
-                android:layout_gravity="center_vertical"
-                android:layout_marginRight="@dimen/activity_horizontal_margin">
+                android:textSize="30dp">
             </android.widget.IconButton>
         </LinearLayout>
     </LinearLayout>
