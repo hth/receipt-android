@@ -32,7 +32,32 @@
 
             <include layout="@layout/rd_address_block" />
 
-            <include layout="@layout/rd_date_block" />
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                >
+                <TextView
+                    android:id="@+id/rd_biz_phone"
+                    style="@style/action_text_small"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:drawableLeft="@drawable/call_contact"
+                    android:drawablePadding="10dp"
+                    android:gravity="center_vertical|left"
+                    android:text="(408)773-1304" />
+                <TextView
+                    android:id="@+id/rd_date"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical|right"
+                    style="@style/text_small_bold"/>
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="fill_parent"
@@ -52,8 +77,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:text="@string/rd_item_header_title" />
+                        android:gravity="left|center_vertical"
+                        android:text="@string/rd_item_header_title"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
                     <TextView
                         android:id="@+id/rd_list_item_header_amount"
@@ -61,8 +87,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:gravity="center_horizontal"
-                        android:text="@string/rd_item_header_amount" />
+                        android:gravity="right|center_vertical"
+                        android:text="@string/rd_item_header_amount"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin" />
                 </LinearLayout>
 
                 <ListView

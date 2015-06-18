@@ -216,15 +216,9 @@ public class HomeActivity extends Activity implements OnChartValueSelectedListen
             case R.id.menu_refresh:
                 DeviceService.getNewUpdates(this);
                 return true;
-//            case R.id.menu_notofication:
-//                launchNotifications();
+//            case R.id.menu_logout:
+//                logout();
 //                return true;
-//            case R.id.menu_settings:
-//                launchSettings();
-//                return true;
-            case R.id.menu_logout:
-                logout();
-                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

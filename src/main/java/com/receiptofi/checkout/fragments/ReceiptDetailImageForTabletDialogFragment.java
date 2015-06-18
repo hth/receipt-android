@@ -1,10 +1,12 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
+import android.app.DialogFragment;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,29 +17,29 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.OnSwipeTouchListener;
 import com.squareup.picasso.Picasso;
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ReceiptDetailImageFragment.OnFragmentInteractionListener} interface
+ * {@link ReceiptDetailImageForTabletDialogFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ReceiptDetailImageFragment#newInstance} factory method to
+ * Use the {@link ReceiptDetailImageForTabletDialogFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ReceiptDetailImageFragment extends Fragment {
+public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
     private String mUrl = "";
     private View mView;
     private ImageView mReceiptImage;
+
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
     SuperActivityToast superActivityProgressToast;
@@ -49,11 +51,11 @@ public class ReceiptDetailImageFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ReceiptDetailImageFragment.
+     * @return A new instance of fragment ReceiptDetailImageForTabletDialogFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ReceiptDetailImageFragment newInstance(String param1, String param2) {
-        ReceiptDetailImageFragment fragment = new ReceiptDetailImageFragment();
+    public static ReceiptDetailImageForTabletDialogFragment newInstance(String param1, String param2) {
+        ReceiptDetailImageForTabletDialogFragment fragment = new ReceiptDetailImageForTabletDialogFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -61,7 +63,7 @@ public class ReceiptDetailImageFragment extends Fragment {
         return fragment;
     }
 
-    public ReceiptDetailImageFragment() {
+    public ReceiptDetailImageForTabletDialogFragment() {
         // Required empty public constructor
     }
 
@@ -73,35 +75,29 @@ public class ReceiptDetailImageFragment extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
             mUrl = getArguments().getString(Constants.ARG_IMAGE_URL);
         }
+        setStyle(DialogFragment.STYLE_NO_TITLE, android.R.style.Theme_Holo);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Update the dialog prompt size
+        int dialogWidth = getActivity().getResources().getDisplayMetrics().widthPixels-600; // specify a value here
+        int dialogHeight = getActivity().getResources().getDisplayMetrics().heightPixels-600; // specify a value here
+
+        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView =  inflater.inflate(R.layout.fragment_receipt_detail_image, container, false);
+        mView = inflater.inflate(R.layout.fragment_receipt_detail_image_for_tablet_dialog, container, false);
+
+        // Setup auto dismiss my dialog if user pressed outside of the screen.
+        getDialog().setCanceledOnTouchOutside(true);
 
         mReceiptImage = (ImageView) mView.findViewById(R.id.receiptImage);
-        mReceiptImage.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
-            public void onSwipeTop() {
-//                Toast.makeText(getActivity(), "top", Toast.LENGTH_SHORT).show();
-            }
-
-            public void onSwipeRight() {
-//                Toast.makeText(getActivity(), "right", Toast.LENGTH_SHORT).show();
-            }
-
-            public void onSwipeLeft() {
-//                Toast.makeText(getActivity(), "left", Toast.LENGTH_SHORT).show();
-                // Pop up self.
-                getFragmentManager().popBackStack();
-            }
-
-            public void onSwipeBottom() {
-//                Toast.makeText(getActivity(), "bottom", Toast.LENGTH_SHORT).show();
-            }
-        });
-
         if (mUrl != "") {
             this.showProgressDialog();
             Picasso.Builder builder = new Picasso.Builder(getActivity()).indicatorsEnabled(true);
@@ -152,8 +148,6 @@ public class ReceiptDetailImageFragment extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -164,16 +158,8 @@ public class ReceiptDetailImageFragment extends Fragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (inShowingProgress) {
-            showProgressDialog();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
+    public void onDismiss(DialogInterface dialog) {
+        super.onDismiss(dialog);
         if (superActivityProgressToast!=null && superActivityProgressToast.isShowing()) {
             superActivityProgressToast.dismiss();
             inShowingProgress = true;

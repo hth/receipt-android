@@ -219,9 +219,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                     ((ReceiptListActivity) getActivity()).openDrawer();
                 }
                 return true;
-            case R.id.menu_logout:
-                ((ReceiptListActivity)getActivity()).logout();
-                return true;
+//            case R.id.menu_logout:
+//                ((ReceiptListActivity)getActivity()).logout();
+//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
