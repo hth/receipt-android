@@ -56,21 +56,21 @@
                     style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="324 EL Camino Real"/>
+                    android:text="Street Address"/>
 
                 <TextView
                     android:id="@+id/rd_biz_add_line2"
                     style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sunnyvale, CA 94087, USA"/>
+                    android:text="City"/>
 
                 <TextView
                     android:id="@+id/rd_biz_add_line3"
                     style="@style/action_text_small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="California"/>
+                    android:text="State"/>
 
             </LinearLayout>
 
