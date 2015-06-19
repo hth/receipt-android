@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AutoCompleteTextView;
@@ -171,6 +172,15 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
+            // TODO: Contninue fix search View hidden keyboard.
+//            searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//                                                  @Override
+//                                                  public boolean onQueryTextSubmit(String query) {
+//                                                      InputMethodManager imm = (InputMethodManager)
+//                                                              getActivity().getSystemService(getActivity().INPUT_METHOD_SERVICE);
+//                                                      imm.hideSoftInputFromWindow(searchView.getApplicationWindowToken(), 0);
+//                                                  }
+//                                              });
             /**
              * Replace the default menu search image.
              */

@@ -28,6 +28,7 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
             } else {
                 // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
+                // TODO: Clean up below:
                 if (Constants.KEY_NEW_PAGE) {
                     ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
                 } else {

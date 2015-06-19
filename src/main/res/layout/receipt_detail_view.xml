@@ -98,38 +98,8 @@
                     android:id="@+id/rd_items_list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_above="@+id/footer"
                     android:layout_below="@+id/header"
-                    android:layout_marginBottom="10dp"
                     android:listSelector="@drawable/list_selector_app_theme"></ListView>
-
-                <LinearLayout
-                    android:id="@+id/footer"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginRight="@dimen/activity_horizontal_margin">
-
-                    <TextView
-                        android:id="@+id/rd_item_list_footer_total_title"
-                        style="@style/rd_list_item_total_footer_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/rd_item_header_total_title"/>
-
-                    <TextView
-                        android:id="@+id/rd_item_list_footer_total_amount"
-                        style="@style/rd_list_item_total_footer_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_weight="1"
-                        android:gravity="right"
-                        android:textColor="@color/app_theme_txt_color"/>
-                </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>

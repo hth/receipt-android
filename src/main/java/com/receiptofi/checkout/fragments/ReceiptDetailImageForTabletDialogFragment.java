@@ -107,7 +107,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
                     exception.printStackTrace();
                 }
             });
-            builder.build().load(mUrl).placeholder(R.drawable.receipt_loading).into(mReceiptImage, new com.squareup.picasso.Callback() {
+            builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
                     Log.d("TAG", "onsuccess");

@@ -1,27 +1,27 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:background="@drawable/rd_item_selector">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/footer"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="10dp">
 
     <TextView
         android:id="@+id/rd_item_list_footer_total_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         style="@style/rd_list_item_total_footer_text"
-        android:text="@string/rd_item_header_total_title"/>
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="@string/rd_item_header_total_title" />
 
     <TextView
         android:id="@+id/rd_item_list_footer_total_amount"
-        android:layout_width="wrap_content"
+        style="@style/rd_list_item_total_footer_text"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
+        android:layout_weight="1"
         android:gravity="right"
-        style="@style/rd_list_item_total_footer_text"
-        android:textColor="@color/app_theme_txt_color"/>
-
-</RelativeLayout>
+        android:textColor="@color/app_theme_txt_color" />
+</LinearLayout>

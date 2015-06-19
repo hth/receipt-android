@@ -118,6 +118,12 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdBizAddLine3 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line3);
         rdBizPhone = (TextView) receiptDetailView.findViewById(R.id.rd_biz_phone);
 
+        // Repalace the phone textview left drawable icon with FA-Phone.
+
+        Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_phone)
+                .colorRes(R.color.green_500)
+                .actionBarSize();
+        rdBizPhone.setCompoundDrawables(rdBizPhoneIcon, null, null, null);
         rdDate = (TextView) receiptDetailView.findViewById(R.id.rd_date);
 
         rdItemsList = (ListView) receiptDetailView.findViewById(R.id.rd_items_list);
@@ -129,7 +135,10 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         taxAmountView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_amount);
         rdItemsList.addFooterView(taxFooter);
 
-        totalAmountView = (TextView) receiptDetailView.findViewById(R.id.rd_item_list_footer_total_amount);
+        // Add total footer
+        View totalFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_total, null);
+        totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
+        rdItemsList.addFooterView(totalFooter);
 
         tagIcon = (IconTextView) receiptDetailView.findViewById(R.id.tag_icon);
         btnDownloadImage = (IconButton) receiptDetailView.findViewById(R.id.btn_download_receipt);
@@ -219,9 +228,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                     ((ReceiptListActivity) getActivity()).openDrawer();
                 }
                 return true;
-//            case R.id.menu_logout:
-//                ((ReceiptListActivity)getActivity()).logout();
-//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
