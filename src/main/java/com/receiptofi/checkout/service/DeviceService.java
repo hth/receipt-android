@@ -131,7 +131,7 @@ public class DeviceService {
 
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
-            ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels(), refreshView);
+            refreshView = ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
             // TODO: Clean up below: KEVIN : Add below solution for new tag modify page.
             if (Constants.KEY_NEW_PAGE) {
                 if (null != ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment) {

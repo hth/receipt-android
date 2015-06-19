@@ -8,6 +8,7 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -40,20 +41,28 @@ public class ExpenseTagUtils {
         return expenseTagModels;
     }
 
-    public static void insert(List<ExpenseTagModel> expensesTags, Boolean modified) {
-        List<ExpenseTagModel> expenseTagFromDB = getAll();
+    public static boolean insert(List<ExpenseTagModel> expensesTags) {
+        Boolean modified = false;
+        List<String> ids = getAllIds();
         for (ExpenseTagModel expenseTag : expensesTags) {
             if (expenseTag.isDeleted()) {
                 delete(expenseTag.getId());
                 modified = true;
-            } else if(!expenseTagFromDB.contains(expenseTag)) {
-                update(expenseTag);
-                modified = true;
+            } else {
+                if (ids.contains(expenseTag.getId())) {
+                    update(expenseTag);
+                    modified = true;
+                } else {
+                    insert(expenseTag);
+                    modified = true;
+                }
+
             }
         }
 
         expenseTagModels = null;
         populateExpenseTagModelMap();
+        return modified;
     }
 
     public static void deleteAll() {
@@ -96,6 +105,37 @@ public class ExpenseTagUtils {
                 DatabaseTable.ExpenseTag.ID + " = '" + expenseTagId + "'",
                 null
         );
+    }
+
+    private static List<String> getAllIds() {
+        Log.d(TAG, "Fetching all expense tag ids");
+        List<String> ids = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.ExpenseTag.TABLE_NAME,
+                    new String[]{DatabaseTable.ExpenseTag.ID},
+                    null,
+                    null,
+                    null,
+                    null,
+                    DatabaseTable.ExpenseTag.NAME
+            );
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ids.add(cursor.getString(0));
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting expense tag ids " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return ids;
     }
 
     private static void update(ExpenseTagModel expenseTag) {
