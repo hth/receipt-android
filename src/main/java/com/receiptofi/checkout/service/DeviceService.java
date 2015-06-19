@@ -115,6 +115,7 @@ public class DeviceService {
     }
 
     public static void onSuccess(Headers headers, String body) {
+        Boolean refreshView = false;
         // If HomePageContext has been cleared, then we should discard the http response.
         if (AppUtils.getHomePageContext() == null) {
             return;
@@ -130,7 +131,7 @@ public class DeviceService {
 
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
-            ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
+            ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels(), refreshView);
             // KEVIN : Add below solution for new tag modify page.
             if (Constants.KEY_NEW_PAGE) {
                 if (null != ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment) {
@@ -192,7 +193,11 @@ public class DeviceService {
                 }
             }
 
-            /** Populate data in advance for master/detail views */
+            refreshView = true;
+        }
+
+        if (refreshView) {
+            /** Populate data for detail views. */
             MonthlyReportUtils.fetchMonthly();
         }
     }
