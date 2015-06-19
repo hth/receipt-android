@@ -263,7 +263,6 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 selectedTagModel = tagModelList.get(position);
-                closeDrawer();
             }
         });
         if (!TextUtils.isEmpty(rModel.getNotes())) {
