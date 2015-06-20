@@ -92,7 +92,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private IconButton btnDownloadImage;
     private ImageView receiptImage;
 
-    private String blobdIds = "";
+    private String blobIds = "";
     private SearchView searchView;
 
     @Override
@@ -146,8 +146,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         btnDownloadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!TextUtils.isEmpty(blobdIds)) {
-                    String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobdIds;
+                if (!TextUtils.isEmpty(blobIds)) {
+                    String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobIds;
                     ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
                 } else {
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
@@ -367,7 +367,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 tagIcon.setVisibility(View.INVISIBLE);
             }
 
-            blobdIds = rdModel.getBlobIds();
+            blobIds = rdModel.getBlobIds();
 
         } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());
