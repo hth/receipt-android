@@ -447,20 +447,30 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     private Map<Long, String> getAllCalendars() {
         Map<Long, String> calendarMap = new LinkedHashMap<>();
-        String[] projection = new String[]{Calendars._ID,
+        String[] projection = new String[]{
+                Calendars._ID,
                 Calendars.NAME,
                 Calendars.ACCOUNT_NAME,
                 Calendars.ACCOUNT_TYPE}; // Keeping account name a type in case we want to use later.
 
-        Cursor calCursor = getActivity().getContentResolver().query(Calendars.CONTENT_URI,
-                projection,
-                Calendars.VISIBLE + " = 1",
-                null,
-                Calendars._ID + " ASC");
-        if (calCursor.moveToFirst()) {
-            do {
-                calendarMap.put(calCursor.getLong(0), calCursor.getString(1));
-            } while (calCursor.moveToNext());
+        Cursor cursor = null;
+        try {
+            cursor = getActivity().getContentResolver().query(Calendars.CONTENT_URI,
+                    projection,
+                    Calendars.VISIBLE + " = 1",
+                    null,
+                    Calendars._ID + " ASC");
+            if (cursor.moveToFirst()) {
+                do {
+                    calendarMap.put(cursor.getLong(0), cursor.getString(1));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting items for receipt " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
         }
         Log.d(TAG, "found calendars " + calendarMap.toString());
         return calendarMap;
