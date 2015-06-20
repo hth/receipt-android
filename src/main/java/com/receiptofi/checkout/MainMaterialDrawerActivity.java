@@ -80,10 +80,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
         int backgroundImage = profileModel != null ? profileModel.getProfileBackgroundImage() : R.drawable.bamboo;
         /**
-         * Add below checkt about the app already have resource of backgroundImage
+         * Check if the app already has a backgroundImage.
          */
         backgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage) != null ? backgroundImage : R.drawable.bamboo;
-
         MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, backgroundImage);
 
         this.addAccount(account);

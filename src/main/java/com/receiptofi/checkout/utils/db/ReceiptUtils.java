@@ -2,6 +2,7 @@ package com.receiptofi.checkout.utils.db;
 
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -218,28 +219,26 @@ public class ReceiptUtils {
         Cursor cursor = null;
 
         try {
+            String escapedBizName = DBUtils.sqlEscapeString(bizName);
             /**
              * select * from RECEIPT where bizName = 'Costco' and receiptDate LIKE '2015-01-%'
              */
-            cursor = RDH.getReadableDatabase().query(
-                    DatabaseTable.Receipt.TABLE_NAME,
-                    null,
-                    DatabaseTable.Receipt.BIZ_NAME + " = ? and " +
-                            DatabaseTable.Receipt.RECEIPT_DATE + " LIKE ?",
-                    new String[]{bizName, yearMonth + "%"},
-                    null,
-                    null,
-                    DatabaseTable.Receipt.RECEIPT_DATE + " DESC"
-            );
-
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "select * from " +
+                            DatabaseTable.Receipt.TABLE_NAME + " where " +
+                            DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " " +
+                            "and " +  DatabaseTable.Receipt.RECEIPT_DATE  + " LIKE '" + yearMonth + "%' " +
+                            "ORDER BY " + DatabaseTable.Receipt.RECEIPT_DATE + " DESC",
+                    null);
             receiptGroup.addReceiptGroup(retrieveReceiptModelFromCursor(cursor));
 
             cursor = RDH.getReadableDatabase().rawQuery(
                     "select " +
                             "total(total) total " +
                             "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                            "where " + DatabaseTable.Receipt.BIZ_NAME + " = '" + bizName + "' " +
-                            "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE  '" + SDF_YM.format(monthYear) + "%'", null);
+                            "where " + DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " " +
+                            "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE '" + SDF_YM.format(monthYear) + "%'",
+                    null);
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {

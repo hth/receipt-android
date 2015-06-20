@@ -34,8 +34,7 @@ public class ReceiptGroupObservable extends DataSetObservable {
     public static synchronized void setMonthlyReceiptGroup(ReceiptGroup monthlyReceiptGroup) {
         if (monthlyReceiptGroup != null) {
             ReceiptGroupObservable.monthlyReceiptGroup = monthlyReceiptGroup;
-            Log.d(TAG, "ReceiptGroup has changed");
-            Log.d(TAG, "Time to notify. Total number of observers: " + observerList.size());
+            Log.d(TAG, "ReceiptGroup changed, notify, number of observers=" + observerList.size());
             for (DataSetObserver observer : observerList) {
                 // TODO :fixme by fixing the trigger for update
                 observer.onChanged();
