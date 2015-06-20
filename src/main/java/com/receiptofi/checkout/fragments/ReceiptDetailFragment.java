@@ -146,7 +146,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         btnDownloadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!blobdIds.isEmpty() && blobdIds != "") {
+                if (!TextUtils.isEmpty(blobdIds)) {
                     String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobdIds;
                     ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
                 } else {
