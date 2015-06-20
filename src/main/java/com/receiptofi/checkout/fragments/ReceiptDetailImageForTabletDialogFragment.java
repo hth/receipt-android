@@ -17,6 +17,7 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.views.TouchImageView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -35,7 +36,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
 
     private String mUrl = "";
     private View mView;
-    private ImageView mReceiptImage;
+    private TouchImageView mReceiptImage;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -97,7 +98,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
         // Setup auto dismiss my dialog if user pressed outside of the screen.
         getDialog().setCanceledOnTouchOutside(true);
 
-        mReceiptImage = (ImageView) mView.findViewById(R.id.receiptImage);
+        mReceiptImage = (TouchImageView) mView.findViewById(R.id.receiptImage);
         if (mUrl != "") {
             this.showProgressDialog();
             Picasso.Builder builder = new Picasso.Builder(getActivity()).indicatorsEnabled(true);
@@ -105,6 +106,15 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
                     exception.printStackTrace();
+                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                    superActivityToast.setText("Load Image Failed by " + exception.getMessage());
+                    superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
+                    superActivityToast.setBackground(SuperToast.Background.BLUE);
+                    superActivityToast.setTextColor(Color.WHITE);
+                    superActivityToast.setTouchToDismiss(true);
+                    superActivityToast.show();
+                    // Pop up self.
+                    getFragmentManager().popBackStack();
                 }
             });
             builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {

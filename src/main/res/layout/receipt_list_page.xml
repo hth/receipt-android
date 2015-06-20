@@ -16,7 +16,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="end"
         android:background="@color/app_light_bg"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:onClick="handleEmpty">
 
         <include layout="@layout/receipt_action_layout"/>
 
