@@ -112,13 +112,14 @@ public class ReceiptDetailImageFragment extends Fragment {
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                    superActivityToast.setText("Load Image Failed by " + e.getMessage());
+                    superActivityToast.setText("Failed to load image.");
                     superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
                     superActivityToast.setBackground(SuperToast.Background.BLUE);
                     superActivityToast.setTextColor(Color.WHITE);
                     superActivityToast.setTouchToDismiss(true);
                     superActivityToast.show();
-                    // Pop up self.
+
+                    /** Popup previous detail stack since loading image has failed. */
                     getFragmentManager().popBackStack();
 
                 }
