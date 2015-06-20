@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.utils.db;
 
 import android.database.Cursor;
+import android.database.DatabaseUtils;
 import android.util.Log;
 
 import com.receiptofi.checkout.db.CreateTable;
@@ -105,5 +106,15 @@ public class DBUtils {
                 null,
                 null
         );
+    }
+
+    /**
+     * Escape business name like "St John's Bar & Grill" and replaces string with "'St John''s Bar & Grill'"
+     *
+     * @param value
+     * @return
+     */
+    public static String sqlEscapeString(String value) {
+        return DatabaseUtils.sqlEscapeString(value);
     }
 }
