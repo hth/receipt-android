@@ -101,7 +101,8 @@
     <string name="rd_item_header_total_title">Total</string>
 
     <!-- Receipt action String-->
-    <string name="receipt_action_recheck">Re-check Receipt</string>
+    <string name="receipt_action_recheck_label">Re-check Receipt</string>
+    <string name="receipt_action_recheck">Click to re-check</string>
     <string name="receipt_action_expense_tag_label">Expense Tag</string>
     <string name="receipt_action_note_label">Notes</string>
     <string name="receipt_action_note_hint">Add receipt notes here...</string>

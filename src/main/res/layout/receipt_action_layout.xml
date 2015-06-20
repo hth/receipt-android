@@ -1,25 +1,42 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/receipt_action_recheck_label"
+        style="@style/text_receipt_action_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|left|bottom"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:background="@android:color/holo_green_light"
+        android:text="@string/receipt_action_recheck_label"/>
+
     <CheckBox
         android:id="@+id/receipt_action_recheck"
         style="@style/text_large_with_blue_color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_gravity="center_horizontal|left"
         android:layout_margin="@dimen/activity_vertical_margin"
         android:layout_weight="1"
-        android:scaleX="1.0"
-        android:scaleY="1.0"
+        android:scaleX="0.85"
+        android:scaleY="0.85"
         android:text="@string/receipt_action_recheck"/>
 
     <TextView
         android:id="@+id/receipt_action_expense_tag_label"
         style="@style/text_receipt_action_label"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="end|left|bottom"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:background="@android:color/holo_green_light"
         android:text="@string/receipt_action_expense_tag_label"/>
 
     <ListView
@@ -34,17 +51,13 @@
     <TextView
         android:id="@+id/receipt_action_note_label"
         style="@style/text_receipt_action_label"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
         android:layout_gravity="end|left|bottom"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:background="@android:color/holo_green_light"
         android:text="@string/receipt_action_note_label"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/gray"/>
 
     <EditText
         android:id="@+id/receipt_action_note"
