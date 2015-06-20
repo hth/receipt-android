@@ -74,7 +74,7 @@ public class ReceiptItemUtils {
                     new String[]{receiptId},
                     null,
                     null,
-                    DatabaseTable.Item.SEQUENCE + " desc"
+                    DatabaseTable.Item.SEQUENCE + " ASC"
             );
 
             if (cursor != null && cursor.getCount() > 0) {
