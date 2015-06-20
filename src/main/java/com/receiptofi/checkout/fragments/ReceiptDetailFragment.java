@@ -240,7 +240,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 return;
             }
 
-            ReceiptModel rdModel = null;
+            ReceiptModel rdModel;
             if (!isFilterList) {
                 rdModel = ReceiptListFragment.children.get(index).get(position);
             } else {
