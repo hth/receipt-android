@@ -84,11 +84,12 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Update the dialog prompt size
-        int dialogWidth = getActivity().getResources().getDisplayMetrics().widthPixels - 600; // specify a value here
-        int dialogHeight = getActivity().getResources().getDisplayMetrics().heightPixels - 600; // specify a value here
 
-        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
+        /** Set the dialog size. */
+        float scaleFactor = getActivity().getResources().getDisplayMetrics().density;
+        float dialogWidth = getActivity().getResources().getDisplayMetrics().widthPixels / scaleFactor;
+        float dialogHeight = getActivity().getResources().getDisplayMetrics().heightPixels / scaleFactor;
+        getDialog().getWindow().setLayout(Math.round(dialogWidth), Math.round(dialogHeight));
     }
 
     @Override
