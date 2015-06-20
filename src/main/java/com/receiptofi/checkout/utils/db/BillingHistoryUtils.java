@@ -58,7 +58,7 @@ public class BillingHistoryUtils {
                     null,
                     null,
                     null,
-                    DatabaseTable.BillingHistory.BILLED_MONTH + " desc"
+                    DatabaseTable.BillingHistory.BILLED_MONTH + " DESC"
             );
 
             if (null != cursor && cursor.getCount() > 0) {

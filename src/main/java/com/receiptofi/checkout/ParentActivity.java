@@ -334,6 +334,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             public void run() {
                 // KEVIN add for test
 //                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                // TODO: Clean up below:
                 if (Constants.KEY_NEW_PAGE) {
                     Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);
                     i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

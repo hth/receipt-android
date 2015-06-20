@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.receiptofi.checkout.fragments.HomeFragment">
+
+    <in.srain.cube.views.ptr.PtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/material_style_ptr_frame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        cube_ptr:ptr_duration_to_close="300"
+        cube_ptr:ptr_duration_to_close_header="2000"
+        cube_ptr:ptr_keep_header_when_refresh="true"
+        cube_ptr:ptr_pull_to_fresh="false"
+        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+        cube_ptr:ptr_resistance="1.7">
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/scroll_view"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:background="@color/app_light_bg"
+            android:fillViewport="true">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/activity_horizontal_margin">
+
+                <RelativeLayout
+                    android:id="@+id/action_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:id="@+id/camera_action_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/action_button_height"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/action_button_bg"
+                        android:onClick="takePhoto"
+                        android:orientation="horizontal"
+                        android:paddingEnd="30dp"
+                        android:paddingLeft="40dp"
+                        android:paddingRight="30dp"
+                        android:paddingStart="40dp">
+
+                        <ImageView
+                            android:id="@+id/camera_image"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/action_icon_camera_bg" />
+
+                        <TextView
+                            android:id="@+id/textView1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginStart="60dp"
+                            android:text="@string/take_photo"
+                            android:textColor="@drawable/action_button_text_color"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/camera_action_layout_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp" />
+
+                    <LinearLayout
+                        android:id="@+id/gallery_action_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/camera_action_layout"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/action_button_bg"
+                        android:onClick="chooseImage"
+                        android:orientation="horizontal"
+                        android:paddingEnd="30dp"
+                        android:paddingLeft="40dp"
+                        android:paddingRight="30dp"
+                        android:paddingStart="40dp">
+
+                        <ImageView
+                            android:id="@+id/imageView2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/action_icon_gallery_bg" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="60dp"
+                            android:layout_marginStart="60dp"
+                            android:text="@string/choose_photo"
+                            android:textColor="@drawable/action_button_text_color"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/gallery_action_layout_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/camera_action_layout"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp" />
+
+                    <LinearLayout
+                        android:id="@+id/list_action_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/gallery_action_layout"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp"
+                        android:background="@drawable/action_button_bg"
+                        android:onClick="invokeReceiptList"
+                        android:orientation="horizontal"
+                        android:paddingEnd="30dp"
+                        android:paddingLeft="50dp"
+                        android:paddingRight="30dp"
+                        android:paddingStart="50dp">
+
+                        <ImageView
+                            android:id="@+id/imageView3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:background="@drawable/action_icon_list_bg" />
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/textView3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center_vertical"
+                                android:layout_marginLeft="70dp"
+                                android:layout_marginStart="70dp"
+                                android:text="@string/view_receipt"
+                                android:textColor="@drawable/action_button_text_color"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:id="@+id/processing_info"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="50dp"
+                                android:layout_marginStart="50dp"
+                                android:layout_marginTop="5dp"
+                                android:text="@string/processing_info"
+                                android:textColor="@color/common_signin_btn_dark_text_disabled" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <View
+                        android:id="@+id/list_action_layout_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="100dp"
+                        android:layout_below="@id/gallery_action_layout"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="5dp" />
+
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/current_amount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/action_layout"
+                    android:layout_marginTop="@dimen/activity_vertical_margin"
+                    android:padding="@dimen/activity_touch_padding"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@drawable/action_button_text_color"
+                    android:textStyle="bold" />
+
+
+                <com.github.mikephil.charting.charts.PieChart
+                    android:id="@+id/pie_chart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="400dp"
+                    android:layout_below="@+id/current_amount"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/activity_vertical_margin" />
+
+                <com.receiptofi.checkout.views.FlowLayout
+                    android:id="@+id/legend_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/pie_chart"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/empty_chart"
+                    style="@style/text_larger"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/current_amount"
+                    android:layout_marginBottom="@dimen/activity_vertical_margin_wide"
+                    android:layout_marginTop="@dimen/activity_vertical_margin_wide"
+                    android:gravity="center_horizontal"
+                    android:text="@string/empty_chart_text"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+        </ScrollView>
+    </in.srain.cube.views.ptr.PtrFrameLayout>
+</LinearLayout>

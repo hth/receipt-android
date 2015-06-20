@@ -18,6 +18,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AutoCompleteTextView;
@@ -170,7 +171,6 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
             searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
             searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
-
             /**
              * Replace the default menu search image.
              */
@@ -187,7 +187,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             searchAutoCompleteTextView.setHint("Search");
             searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
         }
-        super.onCreateOptionsMenu(menu,inflater);
+        super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
@@ -195,11 +195,12 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_changeTag:
-                ((ReceiptListActivity)getActivity()).openDrawer();
+                if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
+                    ((ReceiptListActivity) getActivity()).closeDrawer();
+                } else {
+                    ((ReceiptListActivity) getActivity()).openDrawer();
+                }
                 return true;
-//            case R.id.menu_logout:
-//                ((ReceiptListActivity)getActivity()).logout();
-//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -224,7 +225,10 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             public boolean onChildClick(ExpandableListView expandableListView, View view, int groupPosition, int childPosition, long id) {
                 int index = expandableListView.getFlatListPosition(ExpandableListView.getPackedPositionForChild(groupPosition, childPosition));
                 expandableListView.setItemChecked(index, true);
-
+                // If searchView is focused, we should clear up the focus to hidden the keyboard for the detail page.
+                if (null != searchView && checkFocusRec(searchView)) {
+                    searchView.clearFocus();
+                }
                 ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
                 return false;
             }
@@ -288,5 +292,19 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
          * Called by HeadlinesFragment when a list item is selected
          */
         public void onReceiptSelected(int index, int position);
+    }
+
+    private boolean checkFocusRec(View view) {
+        if (view.isFocused())
+            return true;
+
+        if (view instanceof ViewGroup) {
+            ViewGroup viewGroup = (ViewGroup) view;
+            for (int i = 0; i < viewGroup.getChildCount(); i++) {
+                if (checkFocusRec(viewGroup.getChildAt(i)))
+                    return true;
+            }
+        }
+        return false;
     }
 }

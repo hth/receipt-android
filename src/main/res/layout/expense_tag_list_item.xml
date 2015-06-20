@@ -13,7 +13,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginRight="@dimen/activity_horizontal_margin_narrow">
+        android:layout_marginRight="@dimen/activity_horizontal_margin_narrow"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin_narrow">
+
+        <View
+            android:id="@+id/receipt_action_tag_color"
+            android:layout_width="10dp"
+            android:layout_height="15dp"
+            android:layout_gravity="left|center_vertical"/>
 
         <ImageView
             android:layout_width="wrap_content"
@@ -27,11 +34,7 @@
             android:layout_weight="1"
             android:layout_gravity="center_vertical"/>
 
-        <View
-            android:id="@+id/receipt_action_tag_color"
-            android:layout_width="80dp"
-            android:layout_height="15dp"
-            android:layout_gravity="end|left|top"/>
+
 
     </LinearLayout>
 

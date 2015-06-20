@@ -148,7 +148,7 @@ public class ReceiptUtils {
                     new String[]{month, year},
                     null,
                     null,
-                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+                    DatabaseTable.Receipt.RECEIPT_DATE + " DESC"
             );
 
             list = retrieveReceiptModelFromCursor(cursor);
@@ -189,7 +189,7 @@ public class ReceiptUtils {
                     ids.toArray(new String[ids.size()]),
                     null,
                     null,
-                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+                    DatabaseTable.Receipt.RECEIPT_DATE + " DESC"
             );
 
             list = retrieveReceiptModelFromCursor(cursor);
@@ -229,7 +229,7 @@ public class ReceiptUtils {
                     new String[]{bizName, yearMonth + "%"},
                     null,
                     null,
-                    DatabaseTable.Receipt.RECEIPT_DATE + " desc"
+                    DatabaseTable.Receipt.RECEIPT_DATE + " DESC"
             );
 
             receiptGroup.addReceiptGroup(retrieveReceiptModelFromCursor(cursor));

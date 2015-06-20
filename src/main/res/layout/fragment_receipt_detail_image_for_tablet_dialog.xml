@@ -2,20 +2,22 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment"
-             android:background="@color/tv_black">
+             android:background="@color/tv_black"
+             tools:context="com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <ImageView
+        <com.receiptofi.checkout.views.TouchImageView
             android:id="@+id/receiptImage"
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
             android:scaleType="fitXY"/>
     </ScrollView>
 

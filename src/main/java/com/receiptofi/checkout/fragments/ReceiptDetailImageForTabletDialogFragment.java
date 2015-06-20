@@ -2,21 +2,22 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.views.TouchImageView;
 import com.squareup.picasso.Picasso;
 
 /**
@@ -28,6 +29,8 @@ import com.squareup.picasso.Picasso;
  * create an instance of this fragment.
  */
 public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
+    private static final String TAG = ReceiptDetailImageForTabletDialogFragment.class.getSimpleName();
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -35,7 +38,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
 
     private String mUrl = "";
     private View mView;
-    private ImageView mReceiptImage;
+    private TouchImageView mReceiptImage;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -81,36 +84,46 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     @Override
     public void onStart() {
         super.onStart();
-        // Update the dialog prompt size
-        int dialogWidth = getActivity().getResources().getDisplayMetrics().widthPixels-600; // specify a value here
-        int dialogHeight = getActivity().getResources().getDisplayMetrics().heightPixels-600; // specify a value here
 
-        getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
+        /** Set the dialog size. */
+        float scaleFactor = getActivity().getResources().getDisplayMetrics().density;
+        float dialogWidth = getActivity().getResources().getDisplayMetrics().widthPixels / scaleFactor;
+        float dialogHeight = getActivity().getResources().getDisplayMetrics().heightPixels / scaleFactor;
+        getDialog().getWindow().setLayout(Math.round(dialogWidth), Math.round(dialogHeight));
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_receipt_detail_image_for_tablet_dialog, container, false);
 
         // Setup auto dismiss my dialog if user pressed outside of the screen.
         getDialog().setCanceledOnTouchOutside(true);
 
-        mReceiptImage = (ImageView) mView.findViewById(R.id.receiptImage);
-        if (mUrl != "") {
+        mReceiptImage = (TouchImageView) mView.findViewById(R.id.receiptImage);
+        if (!TextUtils.isEmpty(mUrl)) {
             this.showProgressDialog();
             Picasso.Builder builder = new Picasso.Builder(getActivity()).indicatorsEnabled(true);
             builder.listener(new Picasso.Listener() {
                 @Override
-                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                    exception.printStackTrace();
+                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
+                    Log.e(TAG, "failed to load image=" + e.getLocalizedMessage(), e);
+                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                    superActivityToast.setText("Failed to load image.");
+                    superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
+                    superActivityToast.setBackground(SuperToast.Background.BLUE);
+                    superActivityToast.setTextColor(Color.WHITE);
+                    superActivityToast.setTouchToDismiss(true);
+                    superActivityToast.show();
+
+                    /** Popup previous detail stack since loading image has failed. */
+                    getFragmentManager().popBackStack();
                 }
             });
-            builder.build().load(mUrl).placeholder(R.drawable.receipt_loading).into(mReceiptImage, new com.squareup.picasso.Callback() {
+            builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
-                    Log.d("TAG", "onsuccess");
+                    Log.d(TAG, "on success");
                     mReceiptImage.setVisibility(View.VISIBLE);
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
@@ -118,7 +131,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
 
                 @Override
                 public void onError() {
-                    Log.d("TAG", "onerror");
+                    Log.d(TAG, "on error");
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
                 }
@@ -160,7 +173,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (superActivityProgressToast!=null && superActivityProgressToast.isShowing()) {
+        if (superActivityProgressToast != null && superActivityProgressToast.isShowing()) {
             superActivityProgressToast.dismiss();
             inShowingProgress = true;
         }

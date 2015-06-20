@@ -130,7 +130,7 @@ public class MonthlyReportUtils {
                     null,
                     null,
                     null,
-                    MonthlyReport.YEAR + " desc, " + MonthlyReport.MONTH + " desc"
+                    MonthlyReport.YEAR + " DESC, " + MonthlyReport.MONTH + " DESC"
             );
 
             if (cursor != null && cursor.getCount() > 0) {
@@ -147,6 +147,8 @@ public class MonthlyReportUtils {
                     receiptGroup.addReceiptGroup(ReceiptUtils.fetchReceipts(year, month));
                 }
             }
+
+            /** Update the group view here. */
             ReceiptGroupObservable.setMonthlyReceiptGroup(receiptGroup);
         } catch (Exception e) {
             Log.e(TAG, "Error getting monthly total " + e.getLocalizedMessage(), e);

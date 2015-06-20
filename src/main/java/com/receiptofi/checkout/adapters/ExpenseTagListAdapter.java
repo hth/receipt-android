@@ -73,6 +73,7 @@ public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
 
             ExpenseTagModel tagModel = getItem(position);
             holder.tagName.setText(tagModel.getName());
+            holder.tagName.setTextColor(Color.parseColor(tagModel.getColor()));
             holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
             if (!TextUtils.isEmpty(currTag) && currTag.equals(tagModel.getId())) {
                 ((ListView) parent).setItemChecked(position, true);

@@ -94,6 +94,7 @@ public class ImageUploaderService {
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
                         // KEVIN : Add to replace the HomeActivity by HomeFragment
 //                        ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                        // TODO: Clean up below:
                         if (Constants.KEY_NEW_PAGE) {
                             ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                         } else {
@@ -119,6 +120,7 @@ public class ImageUploaderService {
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    // TODO: Clean up below:
                     if (Constants.KEY_NEW_PAGE) {
                         ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                     } else {
@@ -142,6 +144,7 @@ public class ImageUploaderService {
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
+                    // TODO: Clean up below:
                     if (Constants.KEY_NEW_PAGE) {
                         ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                     } else {
@@ -183,6 +186,7 @@ public class ImageUploaderService {
         } else {
             // KEVIN : Add to replace the HomeActivy by HomeFragment
 //            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
+            // TODO: Clean up below:
             if (Constants.KEY_NEW_PAGE) {
                 ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
             } else {

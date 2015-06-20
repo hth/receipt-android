@@ -92,7 +92,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private IconButton btnDownloadImage;
     private ImageView receiptImage;
 
-    private String blobdIds = "";
+    private String blobIds = "";
     private SearchView searchView;
 
     @Override
@@ -118,6 +118,12 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdBizAddLine3 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line3);
         rdBizPhone = (TextView) receiptDetailView.findViewById(R.id.rd_biz_phone);
 
+        // Repalace the phone textview left drawable icon with FA-Phone.
+
+        Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_phone)
+                .colorRes(R.color.green_500)
+                .actionBarSize();
+        rdBizPhone.setCompoundDrawables(rdBizPhoneIcon, null, null, null);
         rdDate = (TextView) receiptDetailView.findViewById(R.id.rd_date);
 
         rdItemsList = (ListView) receiptDetailView.findViewById(R.id.rd_items_list);
@@ -129,7 +135,10 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         taxAmountView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_amount);
         rdItemsList.addFooterView(taxFooter);
 
-        totalAmountView = (TextView) receiptDetailView.findViewById(R.id.rd_item_list_footer_total_amount);
+        // Add total footer
+        View totalFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_total, null);
+        totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
+        rdItemsList.addFooterView(totalFooter);
 
         tagIcon = (IconTextView) receiptDetailView.findViewById(R.id.tag_icon);
         btnDownloadImage = (IconButton) receiptDetailView.findViewById(R.id.btn_download_receipt);
@@ -137,8 +146,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         btnDownloadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!blobdIds.isEmpty() && blobdIds != "") {
-                    String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobdIds;
+                if (!TextUtils.isEmpty(blobIds)) {
+                    String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobIds;
                     ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
                 } else {
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
@@ -181,7 +190,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_detail_receipt, menu);
         MenuItem changeTag = menu.findItem(R.id.menu_changeTag).setIcon(
-                new IconDrawable(getActivity(), Iconify.IconValue.fa_tags)
+                new IconDrawable(getActivity(), Iconify.IconValue.fa_tasks)
                         .colorRes(R.color.white)
                         .actionBarSize());
 
@@ -219,9 +228,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                     ((ReceiptListActivity) getActivity()).openDrawer();
                 }
                 return true;
-//            case R.id.menu_logout:
-//                ((ReceiptListActivity)getActivity()).logout();
-//                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -234,7 +240,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 return;
             }
 
-            ReceiptModel rdModel = null;
+            ReceiptModel rdModel;
             if (!isFilterList) {
                 rdModel = ReceiptListFragment.children.get(index).get(position);
             } else {
@@ -361,7 +367,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 tagIcon.setVisibility(View.INVISIBLE);
             }
 
-            blobdIds = rdModel.getBlobIds();
+            blobIds = rdModel.getBlobIds();
 
         } catch (ParseException e) {
             Log.d(TAG, "ParseException " + e.getMessage());
@@ -441,20 +447,30 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     private Map<Long, String> getAllCalendars() {
         Map<Long, String> calendarMap = new LinkedHashMap<>();
-        String[] projection = new String[]{Calendars._ID,
+        String[] projection = new String[]{
+                Calendars._ID,
                 Calendars.NAME,
                 Calendars.ACCOUNT_NAME,
                 Calendars.ACCOUNT_TYPE}; // Keeping account name a type in case we want to use later.
 
-        Cursor calCursor = getActivity().getContentResolver().query(Calendars.CONTENT_URI,
-                projection,
-                Calendars.VISIBLE + " = 1",
-                null,
-                Calendars._ID + " ASC");
-        if (calCursor.moveToFirst()) {
-            do {
-                calendarMap.put(calCursor.getLong(0), calCursor.getString(1));
-            } while (calCursor.moveToNext());
+        Cursor cursor = null;
+        try {
+            cursor = getActivity().getContentResolver().query(Calendars.CONTENT_URI,
+                    projection,
+                    Calendars.VISIBLE + " = 1",
+                    null,
+                    Calendars._ID + " ASC");
+            if (cursor.moveToFirst()) {
+                do {
+                    calendarMap.put(cursor.getLong(0), cursor.getString(1));
+                } while (cursor.moveToNext());
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting items for receipt " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
         }
         Log.d(TAG, "found calendars " + calendarMap.toString());
         return calendarMap;

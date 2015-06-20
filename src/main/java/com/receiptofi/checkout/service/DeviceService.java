@@ -115,6 +115,7 @@ public class DeviceService {
     }
 
     public static void onSuccess(Headers headers, String body) {
+        Boolean refreshView = false;
         // If HomePageContext has been cleared, then we should discard the http response.
         if (AppUtils.getHomePageContext() == null) {
             return;
@@ -130,8 +131,8 @@ public class DeviceService {
 
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
-            ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
-            // KEVIN : Add below solution for new tag modify page.
+            refreshView = ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
+            // TODO: Clean up below: KEVIN : Add below solution for new tag modify page.
             if (Constants.KEY_NEW_PAGE) {
                 if (null != ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment) {
                     ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
@@ -159,6 +160,7 @@ public class DeviceService {
 //            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
             // KEVIN : Add for new setting.
 //            HomeFragment.newInstance("", "").updateHandler.sendMessage(countMessage);
+            // TODO: Clean up below:
             if (Constants.KEY_NEW_PAGE) {
                 ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
             } else {
@@ -183,6 +185,7 @@ public class DeviceService {
                 // KEVIN : add for new setting page.
 //                HomeFragment.newInstance("", "").updateHandler.sendMessage(amountMessage);
 //                HomeFragment.newInstance("", "").updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+                // TODO: Clean up below:
                 if (Constants.KEY_NEW_PAGE) {
                     ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
                     ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
@@ -192,7 +195,11 @@ public class DeviceService {
                 }
             }
 
-            /** Populate data in advance for master/detail views */
+            refreshView = true;
+        }
+
+        if (refreshView) {
+            /** Populate data for detail views. */
             MonthlyReportUtils.fetchMonthly();
         }
     }

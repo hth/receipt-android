@@ -31,6 +31,7 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         super.onCreate(savedInstanceState);
         if (UserUtils.isValidAppUser()) {
             // KEVIN : Add to replace the HomeActivity with MainpageActivity
+            // TODO: Clean up below:
             if (Constants.KEY_NEW_PAGE) {
                 startActivity(new Intent(this, MainMaterialDrawerActivity.class));
             } else {

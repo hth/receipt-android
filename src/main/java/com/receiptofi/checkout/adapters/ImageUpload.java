@@ -46,6 +46,7 @@ public class ImageUpload {
                 Log.i("image added to queue", model.imgPath);
                 ImageUploaderService.start(context);
             } else {
+                // TODO: Clean up below:
                 if (Constants.KEY_NEW_PAGE) {
                     ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
                 }
@@ -54,13 +55,16 @@ public class ImageUpload {
         } catch (SQLiteConstraintException e) {
             Message msg = new Message();
             msg.what = HomeFragment.IMAGE_ALREADY_QUEUED;
+            // TODO: Clean up below:
 //            msg.what = HomeActivity.IMAGE_ALREADY_QUEUED;
             //TODO(hth) move this to XML file
             msg.obj = "This image already exists in upload queue.";
             if (ReceiptofiApplication.isHomeActivityVisible()) {
+                // TODO: Clean up below:
                 if (Constants.KEY_NEW_PAGE) {
                     ((MainMaterialDrawerActivity) context).mHomeFragment.updateHandler.sendMessage(msg);
                 }
+                // TODO: Clean up below:
 //                ((HomeActivity) context).updateHandler.sendMessage(msg);
             }
         }

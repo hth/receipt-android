@@ -1,25 +1,42 @@
 <merge xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"/>
+
+    <TextView
+        android:id="@+id/receipt_action_recheck_label"
+        style="@style/text_receipt_action_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|left|bottom"
+        android:layout_marginEnd="@dimen/activity_vertical_margin"
+        android:layout_marginRight="@dimen/activity_vertical_margin"
+        android:background="@android:color/holo_green_light"
+        android:text="@string/receipt_action_recheck_label"/>
+
     <CheckBox
         android:id="@+id/receipt_action_recheck"
+        style="@style/text_large_with_blue_color"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="1"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal|left"
         android:layout_margin="@dimen/activity_vertical_margin"
-        android:scaleX="1.2"
-        android:scaleY="1.2"
-        style="@style/text_large"
+        android:layout_weight="1"
+        android:scaleX="0.85"
+        android:scaleY="0.85"
         android:text="@string/receipt_action_recheck"/>
 
     <TextView
         android:id="@+id/receipt_action_expense_tag_label"
-        android:layout_width="wrap_content"
+        style="@style/text_receipt_action_label"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_gravity="end|right|bottom"
+        android:layout_gravity="end|left|bottom"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
-        style="@style/text_receipt_action_label"
+        android:background="@android:color/holo_green_light"
         android:text="@string/receipt_action_expense_tag_label"/>
 
     <ListView
@@ -33,29 +50,25 @@
 
     <TextView
         android:id="@+id/receipt_action_note_label"
-        android:layout_width="wrap_content"
+        style="@style/text_receipt_action_label"
+        android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_gravity="end|right|bottom"
+        android:layout_gravity="end|left|bottom"
         android:layout_marginEnd="@dimen/activity_vertical_margin"
         android:layout_marginRight="@dimen/activity_vertical_margin"
-        style="@style/text_receipt_action_label"
+        android:background="@android:color/holo_green_light"
         android:text="@string/receipt_action_note_label"/>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="@color/gray"/>
 
     <EditText
         android:id="@+id/receipt_action_note"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:minLines="3"
-        android:maxLines="4"
-        android:gravity="start|top"
-        android:layout_weight="3"
         android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_weight="3"
+        android:background="@drawable/text_view_rounded_border"
+        android:gravity="start|top"
         android:hint="@string/receipt_action_note_hint"
-        android:background="@drawable/text_view_rounded_border"/>
+        android:maxLines="4"
+        android:minLines="3"/>
 
 </merge>

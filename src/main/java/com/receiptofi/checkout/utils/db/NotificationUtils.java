@@ -77,7 +77,7 @@ public class NotificationUtils {
                     null,
                     null,
                     null,
-                    DatabaseTable.Notification.CREATED + " desc"
+                    DatabaseTable.Notification.CREATED + " DESC"
             );
 
             if (null != cursor && cursor.getCount() > 0) {

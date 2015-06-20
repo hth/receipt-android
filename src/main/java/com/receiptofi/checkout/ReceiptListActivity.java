@@ -192,50 +192,51 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             public void onDrawerClosed(View drawerView) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                if (groupIndex > 0 && childIndex > 0) {
+                    ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
-                ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
+                    // Assign values only if fields have been changed
+                    boolean reCheck = recheckBox.isChecked();
+                    String tagId = null;
+                    if (selectedTagModel != null && !selectedTagModel.getId().equals(rModel.getExpenseTagId())) {
+                        tagId = selectedTagModel.getId();
+                    }
+                    String notes = null;
+                    if (!TextUtils.isEmpty(noteText.getText().toString()) && !(noteText.getText().toString()).equals(rModel.getNotes())) {
+                        notes = noteText.getText().toString();
+                    }
+                    Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + " notes: " + notes);
 
-                // Assign values only if fields have been changed
-                boolean reCheck = recheckBox.isChecked();
-                String tagId = null;
-                if (selectedTagModel != null && !selectedTagModel.getId().equals(rModel.getExpenseTagId())) {
-                    tagId = selectedTagModel.getId();
-                }
-                String notes = null;
-                if (!TextUtils.isEmpty(noteText.getText().toString()) && !(noteText.getText().toString()).equals(rModel.getNotes())) {
-                    notes = noteText.getText().toString();
-                }
-                Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + " notes: " + notes);
+                    if (reCheck || null != tagId || !TextUtils.isEmpty(notes)) {
+                        JSONObject postData = new JSONObject();
+                        try {
+                            postData.put(ConstantsJson.EXPENSE_TAG_ID, tagId);
+                            postData.put(ConstantsJson.NOTES, notes);
+                            postData.put(ConstantsJson.RECHECK, reCheck ? "RECHECK" : "");
+                            postData.put(ConstantsJson.RECEIPT_ID, rModel.getId());
 
-                if (reCheck || null != tagId || !TextUtils.isEmpty(notes)) {
-                    JSONObject postData = new JSONObject();
-                    try {
-                        postData.put(ConstantsJson.EXPENSE_TAG_ID, tagId);
-                        postData.put(ConstantsJson.NOTES, notes);
-                        postData.put(ConstantsJson.RECHECK, reCheck ? "RECHECK" : "");
-                        postData.put(ConstantsJson.RECEIPT_ID, rModel.getId());
+                            ExternalCallWithOkHttp.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
+                                @Override
+                                public void onSuccess(Headers headers, String body) {
+                                    DeviceService.onSuccess(headers, body);
+                                }
 
-                        ExternalCallWithOkHttp.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
-                            @Override
-                            public void onSuccess(Headers headers, String body) {
-                                DeviceService.onSuccess(headers, body);
-                            }
+                                @Override
+                                public void onError(int statusCode, String error) {
+                                    Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
+                                    ToastBox.makeText(ReceiptListActivity.this, JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
+                                }
 
-                            @Override
-                            public void onError(int statusCode, String error) {
-                                Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
-                                ToastBox.makeText(ReceiptListActivity.this, JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
-                            }
+                                @Override
+                                public void onException(Exception exception) {
+                                    Log.d(TAG, "Executing onDrawerClosed: onException: " + exception.getMessage());
+                                    ToastBox.makeText(ReceiptListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
 
-                            @Override
-                            public void onException(Exception exception) {
-                                Log.d(TAG, "Executing onDrawerClosed: onException: " + exception.getMessage());
-                                ToastBox.makeText(ReceiptListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
-                        });
-
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Exception while adding data on drawer close: " + e.getMessage(), e);
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Exception while adding data on drawer close: " + e.getMessage(), e);
+                        }
                     }
                 }
             }
@@ -290,6 +291,15 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             return drawerLayout.isDrawerOpen(Gravity.END);
         }
         return false;
+    }
+
+    /**
+     * This function is important cannot be deleted.
+     * We use this function to handle th Drawer menu frame click function to avoid the behind button be clicked.
+     * @param view
+     */
+    public void handleEmpty(View view) {
+        Log.d(TAG, "handleEmpty View Click function");
     }
 
     public void logout() {
