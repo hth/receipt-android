@@ -10,7 +10,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -83,7 +82,7 @@ public class ReceiptDetailImageFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_receipt_detail_image, container, false);
 
-        mReceiptImage = (TouchImageView)mView.findViewById(R.id.receiptImage);
+        mReceiptImage = (TouchImageView) mView.findViewById(R.id.receiptImage);
         mReceiptImage.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             public void onSwipeTop() {
 //                Toast.makeText(getActivity(), "top", Toast.LENGTH_SHORT).show();
@@ -110,7 +109,7 @@ public class ReceiptDetailImageFragment extends Fragment {
             builder.listener(new Picasso.Listener() {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
-                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    Log.e(TAG, "failed to load image=" + e.getLocalizedMessage(), e);
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                     superActivityToast.setText("Failed to load image.");
                     superActivityToast.setDuration(SuperToast.Duration.MEDIUM);

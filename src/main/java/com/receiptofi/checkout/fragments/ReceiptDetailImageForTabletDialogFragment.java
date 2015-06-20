@@ -2,17 +2,16 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -86,8 +85,8 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     public void onStart() {
         super.onStart();
         // Update the dialog prompt size
-        int dialogWidth = getActivity().getResources().getDisplayMetrics().widthPixels-600; // specify a value here
-        int dialogHeight = getActivity().getResources().getDisplayMetrics().heightPixels-600; // specify a value here
+        int dialogWidth = getActivity().getResources().getDisplayMetrics().widthPixels - 600; // specify a value here
+        int dialogHeight = getActivity().getResources().getDisplayMetrics().heightPixels - 600; // specify a value here
 
         getDialog().getWindow().setLayout(dialogWidth, dialogHeight);
     }
@@ -106,8 +105,8 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
             Picasso.Builder builder = new Picasso.Builder(getActivity()).indicatorsEnabled(true);
             builder.listener(new Picasso.Listener() {
                 @Override
-                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception exception) {
-                    Log.e(TAG, "failed to load image=" + exception.getLocalizedMessage(), exception);
+                public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
+                    Log.e(TAG, "failed to load image=" + e.getLocalizedMessage(), e);
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                     superActivityToast.setText("Failed to load image.");
                     superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
@@ -173,7 +172,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (superActivityProgressToast!=null && superActivityProgressToast.isShowing()) {
+        if (superActivityProgressToast != null && superActivityProgressToast.isShowing()) {
             superActivityProgressToast.dismiss();
             inShowingProgress = true;
         }
