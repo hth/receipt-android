@@ -18,7 +18,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AbsListView.LayoutParams;
 import android.widget.AutoCompleteTextView;
@@ -194,7 +193,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
         switch (item.getItemId()) {
-            case R.id.menu_changeTag:
+            case R.id.menu_receipt_actions:
                 if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
                     ((ReceiptListActivity) getActivity()).closeDrawer();
                 } else {
