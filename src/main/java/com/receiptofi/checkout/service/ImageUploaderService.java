@@ -18,6 +18,7 @@ import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
 import java.util.ArrayList;
@@ -79,7 +80,8 @@ public class ImageUploaderService {
                 // TODO Auto-generated method stub
                 Bundle responseBundle = ResponseParser.getImageUploadResponse(response);
                 iModel.blobId = responseBundle.getString(DatabaseTable.ImageIndex.BLOB_ID);
-                int unprocessedCount = responseBundle.getInt("unprocessedCount");
+                String fileName = responseBundle.getString(ConstantsJson.UPLOADED_DOCUMENT_NAME);
+                int unprocessedCount = responseBundle.getInt(ConstantsJson.UNPROCESSED_COUNT);
 
                 iModel.updateStatus(true);
                 updateProcessStatus(iModel);
@@ -89,7 +91,7 @@ public class ImageUploaderService {
                     // KEVIN : Add to replace the HomeActivity by HomeFragment
 //                    msg.what = HomeActivity.IMAGE_UPLOAD_SUCCESS;
                     msg.what = HomeFragment.IMAGE_UPLOAD_SUCCESS;
-                    msg.obj = response;
+                    msg.obj = "Uploaded " + fileName + " successfully.";
                     msg.arg1 = unprocessedCount;
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
                         // KEVIN : Add to replace the HomeActivity by HomeFragment

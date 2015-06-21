@@ -189,8 +189,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main_detail_receipt, menu);
-        MenuItem changeTag = menu.findItem(R.id.menu_receipt_actions).setIcon(
-                new IconDrawable(getActivity(), Iconify.IconValue.fa_tasks)
+        MenuItem receiptAction = menu.findItem(R.id.menu_receipt_actions)
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_tasks)
                         .colorRes(R.color.white)
                         .actionBarSize());
 

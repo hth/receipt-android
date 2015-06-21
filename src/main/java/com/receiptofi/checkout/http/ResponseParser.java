@@ -46,6 +46,7 @@ public class ResponseParser {
 
             JSONObject unprocessedDocuments = imageResponse.getJSONObject(ConstantsJson.UNPROCESSED_DOCUMENTS);
             bundle.putInt(ConstantsJson.UNPROCESSED_COUNT, unprocessedDocuments.getInt(ConstantsJson.UNPROCESSED_COUNT));
+            bundle.putString(ConstantsJson.UPLOADED_DOCUMENT_NAME, imageResponse.getString(ConstantsJson.UPLOADED_DOCUMENT_NAME));
 
         } catch (JSONException e) {
             //TODO added log message
