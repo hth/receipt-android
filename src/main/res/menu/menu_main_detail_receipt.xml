@@ -4,13 +4,13 @@
       tools:context="com.receiptofi.checkout.ReceiptListActivity">
     <item
         android:id="@+id/menu_search"
-        android:icon="@drawable/ic_menu_login"
-        android:title="@string/menu_search"
+        android:actionViewClass="android.widget.SearchView"
         android:showAsAction="always"
-        android:actionViewClass="android.widget.SearchView"/>
+        android:text="{fa-search}"
+        android:title="@string/menu_search"/>
     <item
-        android:id="@+id/menu_changeTag"
-        android:icon="@drawable/ic_menu_settings"
-        android:title="@string/menu_settings"
-        android:showAsAction="always"/>
+        android:id="@+id/menu_receipt_actions"
+        android:showAsAction="always"
+        android:text="{fa-tasks}"
+        android:title="@string/menu_receipt_actions"/>
 </menu>
