@@ -22,6 +22,7 @@ import com.squareup.okhttp.Response;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.net.ConnectException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -67,7 +68,7 @@ public class ExternalCallWithOkHttp {
             final ResponseHandler responseHandler
     ) {
         if (!AppUtils.isNetworkConnected(context)) {
-            responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
+            responseHandler.onException(new RuntimeException(context.getString(R.string.no_network_available)));
             return;
         }
         new Thread() {
@@ -108,9 +109,12 @@ public class ExternalCallWithOkHttp {
                         Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
                     }
                     updateResponseHandler(statusCode, response, body, responseHandler);
+                } catch (ConnectException e) {
+                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    responseHandler.onException(new RuntimeException(context.getString(R.string.connect_to_server_failure)));
                 } catch (Exception e) {
-                    Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
-                    responseHandler.onException(e);
+                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    responseHandler.onException(new RuntimeException(context.getString(R.string.post_get_general_error)));
                 }
             }
         }.start();
@@ -125,7 +129,7 @@ public class ExternalCallWithOkHttp {
             final ResponseHandler responseHandler
     ) {
         if (!AppUtils.isNetworkConnected(context)) {
-            responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
+            responseHandler.onException(new RuntimeException(context.getString(R.string.no_network_available)));
             return;
         }
         new Thread() {
@@ -147,9 +151,12 @@ public class ExternalCallWithOkHttp {
                         Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
                     }
                     updateResponseHandler(statusCode, response, body, responseHandler);
+                } catch (ConnectException e) {
+                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    responseHandler.onException(new RuntimeException(context.getString(R.string.connect_to_server_failure)));
                 } catch (Exception e) {
-                    Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
-                    responseHandler.onException(e);
+                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    responseHandler.onException(new RuntimeException(context.getString(R.string.post_get_general_error)));
                 }
             }
         }.start();
@@ -166,7 +173,7 @@ public class ExternalCallWithOkHttp {
             final ResponseHandler responseHandler
     ) {
         if (!AppUtils.isNetworkConnected(context)) {
-            responseHandler.onException(new Exception(context.getString(R.string.no_network_available)));
+            responseHandler.onException(new RuntimeException(context.getString(R.string.no_network_available)));
             return;
         }
         new Thread() {
@@ -203,9 +210,12 @@ public class ExternalCallWithOkHttp {
                         Log.i(TAG, "get, statusCode=" + statusCode + ", body=" + body);
                     }
                     updateResponseHandler(statusCode, response, body, responseHandler);
+                } catch (ConnectException e) {
+                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    responseHandler.onException(new RuntimeException(context.getString(R.string.connect_to_server_failure)));
                 } catch (Exception e) {
-                    Log.e(TAG, "Fail reason=" + e.getLocalizedMessage(), e);
-                    responseHandler.onException(e);
+                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    responseHandler.onException(new RuntimeException(context.getString(R.string.post_get_general_error)));
                 }
             }
         }.start();
