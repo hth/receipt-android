@@ -16,6 +16,7 @@ public class ConstantsJson {
     public static final String NOTIFICATIONS = "notifications";
     public static final String BILLING = "billing";
     public static final String UNPROCESSED_COUNT = "unprocessedCount";
+    public static final String UPLOADED_DOCUMENT_NAME = "uploadedDocumentName";
 
     /** JSON data for Receipt Action. */
     public static final String EXPENSE_TAG_ID = "expenseTagId";
