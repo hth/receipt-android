@@ -9,14 +9,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="@dimen/activity_horizontal_margin">
-
+        >
         <RelativeLayout
             android:id="@+id/action_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:padding="@dimen/activity_horizontal_margin">
 
 
             <LinearLayout
@@ -203,6 +203,5 @@
             android:layout_marginTop="@dimen/activity_vertical_margin_wide"
             android:layout_marginBottom="@dimen/activity_vertical_margin_wide"
             android:visibility="gone"/>
-
     </RelativeLayout>
 </ScrollView>

@@ -162,6 +162,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        // We only add menu within Phone environment.
         if (!AppUtils.isTablet(getActivity())) {
             inflater.inflate(R.menu.menu_main, menu);
 
