@@ -88,7 +88,7 @@ android {
     def versionBuild = 0;
 
     if (versionPropsFile.canRead()) {
-        if (buildNumber.toInteger() > 0) {
+        if (!env.equals("debug")) {
             def Properties versionProps = new Properties()
             versionProps.load(new FileInputStream(versionPropsFile))
             versionMajor = versionProps['VERSION_MAJOR'].toInteger()
