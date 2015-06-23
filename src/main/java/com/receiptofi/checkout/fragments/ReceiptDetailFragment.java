@@ -118,11 +118,10 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdBizAddLine3 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line3);
         rdBizPhone = (TextView) receiptDetailView.findViewById(R.id.rd_biz_phone);
 
-        // Repalace the phone textview left drawable icon with FA-Phone.
-
-        Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_phone)
-                .colorRes(R.color.white)
-                .actionBarSize();
+        // Replace the phone textview left drawable icon with fa-phone.
+        Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_phone_square)
+                .colorRes(R.color.app_theme_txt_color)
+                .sizeDp(18);
         rdBizPhone.setCompoundDrawables(rdBizPhoneIcon, null, null, null);
         rdDate = (TextView) receiptDetailView.findViewById(R.id.rd_date);
 
