@@ -99,7 +99,7 @@ android {
         versionMajor = versionProps['VERSION_MAJOR'].toInteger()
         versionMinor = versionProps['VERSION_MINOR'].toInteger()
         versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
-        versionProps['VERSION_CODE'] = code.toString()
+        versionProps['VERSION_BUILD'] = versionBuild.toString()
         versionProps.store(versionPropsFile.newWriter(), null)
     } else {
         throw new GradleException("Could not read version.properties!")
