@@ -89,15 +89,11 @@ android {
     buildToolsVersion "22.0.1"
 
     def versionPropsFile = file('version.properties')
-    def versionMajor = 0;
-    def versionMinor = 0;
     def versionBuild = 0;
 
     if (versionPropsFile.canRead()) {
         def Properties versionProps = new Properties()
         versionProps.load(new FileInputStream(versionPropsFile))
-        versionMajor = versionProps['VERSION_MAJOR'].toInteger()
-        versionMinor = versionProps['VERSION_MINOR'].toInteger()
         versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
         versionProps['VERSION_BUILD'] = versionBuild.toString()
         versionProps.store(versionPropsFile.newWriter(), null)
@@ -112,14 +108,14 @@ android {
         testHandleProfiling true
         testFunctionalTest true
         versionCode versionBuild
-        versionName versionMajor + "." + versionMinor
+        versionName System.getenv("versionMajor") + "." + System.getenv("versionMinor")
 
         // For now we enable strict mode for all the configs
         buildConfigField 'boolean', 'STRICT_MODE', 'true'
         buildConfigField "String", "BUILD", "\"$buildNumber\""
 
         if (env == 'debug' || env == 'release' || env == 'staging') {
-            apkName = "-" + versionMajor + "." + versionMinor + "." + versionBuild + "-" + buildNumber + ".apk"
+            apkName = "-" System.getenv("versionMajor") + "." + System.getenv("versionMinor") + "." + versionBuild + "-" + buildNumber + ".apk"
         }
 
         applicationVariants.all { variant ->
