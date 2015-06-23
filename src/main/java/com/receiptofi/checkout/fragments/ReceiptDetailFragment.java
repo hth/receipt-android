@@ -121,7 +121,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         // Repalace the phone textview left drawable icon with FA-Phone.
 
         Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_phone)
-                .colorRes(R.color.green_500)
+                .colorRes(R.color.white)
                 .actionBarSize();
         rdBizPhone.setCompoundDrawables(rdBizPhoneIcon, null, null, null);
         rdDate = (TextView) receiptDetailView.findViewById(R.id.rd_date);
@@ -188,6 +188,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+
         inflater.inflate(R.menu.menu_main_detail_receipt, menu);
         MenuItem receiptAction = menu.findItem(R.id.menu_receipt_actions)
                 .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_tasks)
@@ -208,6 +209,22 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
         ImageView v = (ImageView) searchView.findViewById(searchImgId);
         v.setImageDrawable(mDraw);
+
+        /**
+         * Below if is designed for FilterListActivity.
+         * Because this fragment can be used by both normal ReceiptList Activity and FilterList Activity
+         */
+        if (null != getActivity().getIntent() && !TextUtils.isEmpty(getActivity().getIntent().getStringExtra(SearchManager.QUERY))) {
+            if (getActivity().getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
+                searchView.setIconifiedByDefault(false);
+                searchView.setQuery(getActivity().getIntent().getStringExtra(SearchManager.QUERY), false);
+            }
+            // Remove the default SearchView Icon
+            int magId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
+            ImageView magImage = (ImageView) searchView.findViewById(magId);
+            magImage.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+        }
+
 
         int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);

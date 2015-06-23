@@ -5,6 +5,8 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.InputType;
@@ -14,8 +16,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.AutoCompleteTextView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.http.API;
@@ -170,48 +176,6 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
 
     public boolean hideTotal() {
         return ReceiptFilter.FILTER_BY_KEYWORD == receiptFilter;
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        Log.d(TAG, "executing onCreateOptionsMenu");
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
-        setSearchConfig(menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
-        switch (item.getItemId()) {
-            case R.id.menu_refresh:
-                DeviceService.getNewUpdates(this);
-                return true;
-//            case R.id.menu_logout:
-//                logout();
-//                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    private SearchView setSearchConfig(Menu menu) {
-        // Associate searchable configuration with the SearchView
-        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-        searchView.setIconifiedByDefault(false);
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-
-        if (getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
-            searchView.setQuery(getIntent().getStringExtra(SearchManager.QUERY), false);
-        }
-
-        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
-        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
-        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-
-        return searchView;
     }
 
     /*

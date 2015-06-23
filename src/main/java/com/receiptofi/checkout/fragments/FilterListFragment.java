@@ -2,12 +2,25 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.SearchManager;
+import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SearchView;
 
 import com.receiptofi.checkout.FilterListActivity;
 import com.receiptofi.checkout.R;
@@ -15,6 +28,8 @@ import com.receiptofi.checkout.adapters.FilterListAdapter;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppUtils;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -42,8 +57,34 @@ public class FilterListFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "executing onCreateView");
         rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
+        // We only add menu within Phone environment.
+        if (!AppUtils.isTablet(getActivity())) {
+            // Must call below method to make the fragment menu works. REALLY IMPORTANT.
+            setHasOptionsMenu(true);
+        }
         return rootView;
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        Log.d(TAG, "executing onCreateOptionsMenu");
+        inflater.inflate(R.menu.menu_main, menu);
+        setSearchConfig(menu);
+        super.onCreateOptionsMenu(menu, inflater);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.menu_refresh:
+                DeviceService.getNewUpdates(getActivity());
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
@@ -94,5 +135,31 @@ public class FilterListFragment extends Fragment {
          * Called by HeadlinesFragment when a list item is selected
          */
         public void onReceiptSelected(int index, int position);
+    }
+
+    private SearchView setSearchConfig(Menu menu) {
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+
+        searchView.setIconifiedByDefault(false);
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        // Remove the default SearchView Icon
+        int magId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
+        ImageView magImage = (ImageView) searchView.findViewById(magId);
+        magImage.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
+
+        if (getActivity().getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
+            searchView.setQuery(getActivity().getIntent().getStringExtra(SearchManager.QUERY), false);
+        }
+
+        int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
+        AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
+        searchAutoCompleteTextView.setTextColor(Color.WHITE);
+        searchAutoCompleteTextView.setHint("Search");
+        searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+
+        return searchView;
     }
 }
