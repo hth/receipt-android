@@ -4,9 +4,9 @@ import com.receiptofi.checkout.model.ImageModel;
 
 public interface ImageResponseHandler {
 
-    public void onSuccess(ImageModel iModel, String response);
+    void onSuccess(ImageModel iModel, String response);
 
-    public void onError(ImageModel iModel, String Error);
+    void onError(ImageModel iModel, String Error);
 
-    public void onException(ImageModel iModel, Exception exception);
+    void onException(ImageModel iModel, Exception exception);
 }
