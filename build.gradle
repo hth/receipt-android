@@ -94,13 +94,15 @@ android {
     def versionBuild = 0;
 
     if (versionPropsFile.canRead()) {
-        def Properties versionProps = new Properties()
-        versionProps.load(new FileInputStream(versionPropsFile))
-        versionMajor = versionProps['VERSION_MAJOR'].toInteger()
-        versionMinor = versionProps['VERSION_MINOR'].toInteger()
-        versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
-        versionProps['VERSION_BUILD'] = versionBuild.toString()
-        versionProps.store(versionPropsFile.newWriter(), null)
+        if (buildNumber.toInteger() > 0) {
+            def Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionPropsFile))
+            versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+            versionMinor = versionProps['VERSION_MINOR'].toInteger()
+            versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+            versionProps['VERSION_BUILD'] = versionBuild.toString()
+            versionProps.store(versionPropsFile.newWriter(), null)
+        }
     } else {
         throw new GradleException("Could not read version.properties!")
     }
