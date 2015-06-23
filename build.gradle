@@ -108,14 +108,14 @@ android {
         testHandleProfiling true
         testFunctionalTest true
         versionCode versionBuild
-        versionName System.getenv("versionMajor") + "." + System.getenv("versionMinor")
+        versionName $versionMajor + "." + $versionMinor
 
         // For now we enable strict mode for all the configs
         buildConfigField 'boolean', 'STRICT_MODE', 'true'
         buildConfigField "String", "BUILD", "\"$buildNumber\""
 
         if (env == 'debug' || env == 'release' || env == 'staging') {
-            apkName = "-" System.getenv("versionMajor") + "." + System.getenv("versionMinor") + "." + versionBuild + "-" + buildNumber + ".apk"
+            apkName = "-" $versionMajor + "." + $versionMinor + "." + versionBuild + "-" + buildNumber + ".apk"
         }
 
         applicationVariants.all { variant ->
