@@ -85,18 +85,42 @@ android {
     def versionPropsFile = file('version.properties')
     def versionMajor = 0;
     def versionMinor = 0;
-    def versionBuild = 0;
 
     if (versionPropsFile.canRead()) {
-        def Properties versionProps = new Properties()
-        versionProps.load(new FileInputStream(versionPropsFile))
-        versionMajor = versionProps['VERSION_MAJOR'].toInteger()
-        versionMinor = versionProps['VERSION_MINOR'].toInteger()
-        versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
-        versionProps['VERSION_BUILD'] = versionBuild.toString()
-        versionProps.store(versionPropsFile.newWriter(), null)
+        if (env.equals("release") || env.equals("staging")) {
+            def Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionPropsFile))
+            versionMajor = versionProps['VERSION_MAJOR'].toInteger()
+            versionMinor = versionProps['VERSION_MINOR'].toInteger()
+        }
     } else {
         throw new GradleException("Could not read version.properties!")
+    }
+
+    def versionBuildPropsFile = file('version.build.properties')
+    def versionBuild = 0;
+
+    if (env.equals("release") || env.equals("staging")) {
+        if (buildVersionPropsFile.canRead()) {
+            def Properties versionProps = new Properties()
+            versionProps.load(new FileInputStream(versionBuildPropsFile))
+
+            if(versionProps['VERSION_MAJOR'].toInteger() != versionMajor || versionProps['VERSION_MINOR'].toInteger() != versionMinor) {
+                versionBuild = 0.toString()
+                versionProps['VERSION_BUILD'] = versionBuild.toString()
+                versionProps['VERSION_MAJOR'] = versionMajor.toString()
+                versionProps['VERSION_MINOR'] = versionMinor.toString()
+                versionProps.store(versionBuildPropsFile.newWriter(), null)
+            } else {
+                versionBuild = versionProps['VERSION_BUILD'].toInteger() + 1
+                versionProps['VERSION_BUILD'] = versionBuild.toString()
+                versionProps['VERSION_MAJOR'] = versionMajor.toString()
+                versionProps['VERSION_MINOR'] = versionMinor.toString()
+                versionProps.store(versionBuildPropsFile.newWriter(), null)
+            }
+        } else {
+            throw new GradleException("Could not read build.version.properties!")
+        }
     }
 
     defaultConfig {
