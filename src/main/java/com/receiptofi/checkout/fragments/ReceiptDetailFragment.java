@@ -179,6 +179,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             // Set article based on argument passed in
             updateReceiptDetailView(args.getInt(Constants.ARG_INDEX), args.getInt(Constants.ARG_POSITION),
                     args.getBoolean(Constants.ARG_TYPE_FILTER, false));
+            // Setup the local variable which will be used by onPrepareOptionsMenu function.
+            mTypeFilter = args.getBoolean(Constants.ARG_TYPE_FILTER, false);
         } else if (mCurrentIndex != -1 && mCurrentPosition != -1) {
             // Set article based on saved instance state defined during onCreateView
             updateReceiptDetailView(mCurrentIndex, mCurrentPosition, mTypeFilter);
@@ -215,7 +217,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
          */
         if (null != getActivity().getIntent() && !TextUtils.isEmpty(getActivity().getIntent().getStringExtra(SearchManager.QUERY))) {
             if (getActivity().getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
-                searchView.setIconifiedByDefault(false);
+                searchView.setIconified(false);
                 searchView.setQuery(getActivity().getIntent().getStringExtra(SearchManager.QUERY), false);
             }
             // Remove the default SearchView Icon
@@ -238,10 +240,12 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_receipt_actions:
-                if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
-                    ((ReceiptListActivity) getActivity()).closeDrawer();
-                } else {
-                    ((ReceiptListActivity) getActivity()).openDrawer();
+                if (getActivity() instanceof ReceiptListActivity) {
+                    if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
+                        ((ReceiptListActivity) getActivity()).closeDrawer();
+                    } else {
+                        ((ReceiptListActivity) getActivity()).openDrawer();
+                    }
                 }
                 return true;
             default:
@@ -249,8 +253,40 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         }
     }
 
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+        MenuItem rightDrawer = menu.findItem(R.id.menu_receipt_actions);
+        // We only change drawer show or not within Tablet environment.
+        if (AppUtils.isTablet(getActivity())) {
+            // We should hidden right drawer within filter page context.
+            if (mTypeFilter) {
+                rightDrawer.setVisible(false);
+            } else {
+                if (mCurrentPosition == -1) {
+                    rightDrawer.setVisible(false);
+                } else {
+                    rightDrawer.setVisible(true);
+                }
+            }
+        } else {
+            // Must hidden the left menu within Filter Activity Context since Filter Activity don't have left drawer menu.
+            if (mTypeFilter) {
+                rightDrawer.setVisible(false);
+            } else {
+                rightDrawer.setVisible(true);
+            }
+        }
+    }
+
     public void updateReceiptDetailView(int index, int position, boolean isFilterList) {
         Log.d(TAG, "executing updateReceiptDetailView");
+        // This Design only for Table Environment.
+        if (AppUtils.isTablet(getActivity())) {
+            this.mTypeFilter = isFilterList;
+            // User Select item, we should update the menu to show right drawer.
+            getActivity().invalidateOptionsMenu();
+        }
         try {
             if (index == -1 || position == -1) {
                 return;
