@@ -15,8 +15,10 @@ import com.receiptofi.checkout.fragments.PrefFragment;
 import com.receiptofi.checkout.fragments.ProfileFragment;
 import com.receiptofi.checkout.utils.Constants;
 
+//TODO : Delete this file.
 /**
  * Created by PT on 4/9/15.
+ * Deprecated Implemenation.
  */
 public class PreferencesTabActivity extends FragmentActivity implements ActionBar.TabListener, DialogInterface.OnDismissListener{
     private static final String TAG = PreferencesTabActivity.class.getSimpleName();
