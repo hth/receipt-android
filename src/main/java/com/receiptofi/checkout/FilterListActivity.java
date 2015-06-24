@@ -203,18 +203,4 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             filterListFragment.notifyDataChanged(receiptGroup);
         }
     }
-
-    private void launchNotifications() {
-        startActivity(new Intent(this, NotificationActivity.class));
-    }
-
-    private void launchSettings() {
-        startActivity(new Intent(this, PreferencesTabActivity.class));
-    }
-
-    private void logout() {
-        KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
-        startActivity(new Intent(this, LaunchActivity.class));
-        finish();
-    }
 }

@@ -5,6 +5,7 @@ import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -22,6 +23,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.FilterListActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.adapters.FilterListAdapter;
@@ -46,6 +49,7 @@ public class FilterListFragment extends Fragment {
     private View rootView;
     private ExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
+    SearchView searchView;
 
     public FilterListFragment() {
         super();
@@ -140,10 +144,20 @@ public class FilterListFragment extends Fragment {
     private SearchView setSearchConfig(Menu menu) {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
-
-        searchView.setIconifiedByDefault(false);
+        searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
+        searchView.setIconified(false);
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
+
+        /**
+         * Replace the default menu search image.
+         */
+        Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
+                .colorRes(R.color.white)
+                .actionBarSize();
+        int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+        ImageView v = (ImageView) searchView.findViewById(searchImgId);
+        v.setImageDrawable(mDraw);
+
 
         // Remove the default SearchView Icon
         int magId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
