@@ -48,7 +48,10 @@ public class ImageUpload {
             } else {
                 // TODO: Clean up below:
                 if (Constants.KEY_NEW_PAGE) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                    Message msg = new Message();
+                    msg.what = HomeFragment.IMAGE_ADDED_TO_QUEUED;
+                    msg.obj = "Image added to queue. Upload start automatically when network is available.";
+                    ((MainMaterialDrawerActivity) context).mHomeFragment.updateHandler.sendMessage(msg);
                 }
 //                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
             }

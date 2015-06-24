@@ -33,6 +33,7 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.Highlight;
 import com.receiptofi.checkout.FilterListActivity;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.service.ChartService;
@@ -112,18 +113,27 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     unprocessedValue = Integer.toString(msg.arg1);
                     setUnprocessedCount();
                     showErrorMsg((String) msg.obj);
-//                    endAnimation();
+                    if (getActivity() instanceof MainMaterialDrawerActivity) {
+                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    }
                     break;
                 case IMAGE_UPLOAD_FAILURE:
                     showErrorMsg((String) msg.obj);
-//                    endAnimation();
+                    if (getActivity() instanceof MainMaterialDrawerActivity) {
+                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    }
                     break;
                 case IMAGE_ADDED_TO_QUEUED:
-//                    endAnimation();
+                    if (getActivity() instanceof MainMaterialDrawerActivity) {
+                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    }
+                    showErrorMsg((String) msg.obj);
                     break;
                 case IMAGE_ALREADY_QUEUED:
+                    if (getActivity() instanceof MainMaterialDrawerActivity) {
+                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    }
                     showErrorMsg((String) msg.obj);
-//                    endAnimation();
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
                     unprocessedValue = (String) msg.obj;
@@ -487,15 +497,6 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 //                    ToastBox.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
-        }
-    }
-
-    private void endAnimation() {
-        MenuItem item = optionMenu.findItem(R.id.menu_refresh);
-        if (null != item.getActionView()) {
-            // Remove the animation.
-            item.getActionView().clearAnimation();
-            item.setActionView(null);
         }
     }
 

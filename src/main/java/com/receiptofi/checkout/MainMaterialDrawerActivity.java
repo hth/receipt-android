@@ -58,6 +58,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public BillingFragment mBillingFragment;
     public SettingFragment mSettingFragment;
     private Context mContext;
+    SuperActivityToast uploadImageToast;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
@@ -232,7 +233,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                 if ((pickerImage.length() / 1048576) >= 10) {
                     showErrorMsg("Image size of more than 10MB not supported.");
                 } else {
-//                    startAnimation();
+                    startProgressToken();
                     ImageUpload.process(this, imageAbsolutePath);
                 }
             }
@@ -249,7 +250,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                 mediaScanIntent.setData(contentUri);
                 this.sendBroadcast(mediaScanIntent);
 
-//                startAnimation();
+                startProgressToken();
                 ImageUpload.process(this, capturedImgFile);
             }
         }
@@ -291,8 +292,20 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         superActivityToast.setTextColor(Color.WHITE);
         superActivityToast.setTouchToDismiss(true);
         superActivityToast.show();
+    }
 
-//        ToastBox.makeText(MainMaterialDrawerActivity.this, msg, Toast.LENGTH_SHORT).show();
+    private void startProgressToken() {
+        uploadImageToast = new SuperActivityToast(this, SuperToast.Type.PROGRESS);
+        uploadImageToast.setText("Image Uploading!");
+        uploadImageToast.setIndeterminate(true);
+        uploadImageToast.setProgressIndeterminate(true);
+        uploadImageToast.show();
+    }
+
+    public void stopProgressToken() {
+        if (null != uploadImageToast && uploadImageToast.isShowing()) {
+            uploadImageToast.dismiss();
+        }
     }
 
 }
