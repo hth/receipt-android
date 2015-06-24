@@ -127,6 +127,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
+                    showErrorMsg((String) msg.obj);
                     break;
                 case IMAGE_ALREADY_QUEUED:
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
