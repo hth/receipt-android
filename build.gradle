@@ -119,7 +119,7 @@ android {
                 versionProps.store(versionBuildPropsFile.newWriter(), null)
             }
         } else {
-            throw new GradleException("Could not read build.version.properties!")
+            throw new GradleException("Could not read version.build.properties!")
         }
     }
 
