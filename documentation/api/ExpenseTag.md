@@ -41,22 +41,26 @@ Success Response
         {
           "color": "#0D060D",
           "id": "54cc7fdbd4c6bde31a31c978",
-          "tag": "BUSINESS"
+          "tag": "BUSINESS",
+          "d": false
         },
         {
           "color": "#CECECE",
           "id": "553b68d1bd2898546e65ede4",
-          "tag": "DADA"
+          "tag": "DADA",
+          "d": false
         },
         {
           "color": "#E625C9",
           "id": "54cd6896d4c6e568298c9dc1",
-          "tag": "HOME"
+          "tag": "HOME",
+          "d": false
         },
         {
           "color": "#463BE6",
           "id": "550cd248036487b4351ab869",
-          "tag": "QWE"
+          "tag": "QWE",
+          "d": false
         }
       ],
       "items": [],
@@ -118,22 +122,26 @@ Success Response
         {
           "color": "#0D060D",
           "id": "54cc7fdbd4c6bde31a31c978",
-          "tag": "BUSINESS"
+          "tag": "BUSINESS",
+          "d": false
         },
         {
           "color": "CCC",
           "id": "553b7196bd289854eb3dd8fc",
-          "tag": "DADA"
+          "tag": "DADA",
+          "d": false
         },
         {
           "color": "#E625C9",
           "id": "54cd6896d4c6e568298c9dc1",
-          "tag": "HOME"
+          "tag": "HOME",
+          "d": false,
         },
         {
           "color": "#463BE6",
           "id": "550cd248036487b4351ab869",
-          "tag": "QWE"
+          "tag": "QWE",
+          "d": false
         }
       ],
       "items": [],
@@ -182,17 +190,20 @@ Success Response
         {
           "color": "#0D060D",
           "id": "54cc7fdbd4c6bde31a31c978",
-          "tag": "BUSINESS"
+          "tag": "BUSINESS",
+          "d": false
         },
         {
           "color": "#E625C9",
           "id": "54cd6896d4c6e568298c9dc1",
-          "tag": "HOME"
+          "tag": "HOME",
+          "d": false
         },
         {
           "color": "#463BE6",
           "id": "550cd248036487b4351ab869",
-          "tag": "QWE"
+          "tag": "QWE",
+          "d": false
         }
       ],
       "items": [],
