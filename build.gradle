@@ -101,7 +101,7 @@ android {
     def versionBuild = 0;
 
     if (env.equals("release") || env.equals("staging")) {
-        if (buildVersionPropsFile.canRead()) {
+        if (versionBuildPropsFile.canRead()) {
             def Properties versionProps = new Properties()
             versionProps.load(new FileInputStream(versionBuildPropsFile))
 
