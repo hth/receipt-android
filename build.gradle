@@ -138,14 +138,14 @@ android {
         testHandleProfiling true
         testFunctionalTest true
         versionCode versionBuild
-        versionName versionMajor + "." + versionMinor + "." + versionBuild
+        versionName versionMajor + "." + versionMinor + "." + versionPatch + "." + versionBuild
 
         // For now we enable strict mode for all the configs
         buildConfigField 'boolean', 'STRICT_MODE', 'true'
         buildConfigField "String", "BUILD", "\"$buildNumber\""
 
         if (env == 'debug' || env == 'release' || env == 'staging') {
-            apkName = "-" + versionMajor + "." + versionMinor + "." + versionBuild + "-" + buildNumber + ".apk"
+            apkName = "-" + versionMajor + "." + versionMinor + "." + versionPatch + "." + versionBuild + "-" + buildNumber + ".apk"
         }
 
         ext.versionName = manifestVersionName()
