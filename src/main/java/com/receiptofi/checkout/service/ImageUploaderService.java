@@ -118,7 +118,7 @@ public class ImageUploaderService {
                 // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
-                msg.obj = "Image upload failed " + exception.getLocalizedMessage() + ".";
+                msg.obj = exception.getLocalizedMessage();
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
                     // KEVIN : Add to replace the HomeActivy by HomeFragment
 //                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);

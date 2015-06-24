@@ -274,7 +274,7 @@ public class ExternalCallWithOkHttp {
                     handler.onSuccess(imageModel, response.body().string());
                 } catch (Exception e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
-                    handler.onException(imageModel, new RuntimeException(context.getString(R.string.post_get_general_error)));
+                    handler.onException(imageModel, new RuntimeException(context.getString(R.string.post_image_upload_error)));
                 }
             }
         };
