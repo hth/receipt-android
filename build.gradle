@@ -108,7 +108,7 @@ android {
         testHandleProfiling true
         testFunctionalTest true
         versionCode versionBuild
-        versionName versionMajor + "." + versionMinor
+        versionName versionMajor + "." + versionMinor + "." + versionBuild
 
         // For now we enable strict mode for all the configs
         buildConfigField 'boolean', 'STRICT_MODE', 'true'
