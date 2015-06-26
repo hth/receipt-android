@@ -258,7 +258,7 @@ public class ExpenseTagDialog extends DialogFragment {
     public void onDismiss(final DialogInterface dialog) {
         super.onDismiss(dialog);
         final MainMaterialDrawerActivity activity = (MainMaterialDrawerActivity) getActivity();
-        if (activity.mExpenseTagFragment instanceof DialogInterface.OnDismissListener) {
+        if (activity.mExpenseTagFragment != null) {
             (activity.mExpenseTagFragment).onDismiss(dialog);
         }
     }
