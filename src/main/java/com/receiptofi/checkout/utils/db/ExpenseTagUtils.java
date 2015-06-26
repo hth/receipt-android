@@ -80,6 +80,12 @@ public class ExpenseTagUtils {
         }
     }
 
+    public static void updateExpenseTag(String id, String name, String color) {
+        Log.d(TAG, "Updating expense tag before updating on server");
+        update(new ExpenseTagModel(id, name, color, false));
+        populateExpenseTagModelMap();
+    }
+
     /**
      * Insert expense tags in table.
      *
