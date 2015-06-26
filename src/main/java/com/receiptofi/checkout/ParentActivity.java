@@ -214,7 +214,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             postData.put(API.key.PID, data.getString(API.key.PID));
             postData.put(API.key.ACCESS_TOKEN, data.getString(API.key.ACCESS_TOKEN));
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
 
 
