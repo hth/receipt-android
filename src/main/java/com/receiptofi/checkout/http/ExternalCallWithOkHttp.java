@@ -23,6 +23,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.net.ConnectException;
+import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -272,6 +273,9 @@ public class ExternalCallWithOkHttp {
 
                     Response response = new OkHttpClient().newCall(request).execute();
                     handler.onSuccess(imageModel, response.body().string());
+                } catch(UnknownHostException e) {
+                    Log.e(TAG, "failed connection reason=" + e.getLocalizedMessage(), e);
+                    handler.onException(imageModel, new RuntimeException(context.getString(R.string.post_image_upload_error)));
                 } catch (Exception e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                     handler.onException(imageModel, new RuntimeException(context.getString(R.string.post_image_upload_error)));
