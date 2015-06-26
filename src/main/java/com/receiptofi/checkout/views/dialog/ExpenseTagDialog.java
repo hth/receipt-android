@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
@@ -29,6 +30,7 @@ import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.Constants.DialogMode;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
+import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
 import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;
@@ -182,6 +184,12 @@ public class ExpenseTagDialog extends DialogFragment {
                                         postData.put("tagName", tagName);
                                         postData.put("tagColor", tagColor);
 
+                                        /**
+                                         * Update DB before sending to server. being pro-active about it. Will update
+                                         * once again after receiving response from server.
+                                         */
+                                        ExpenseTagUtils.updateExpenseTag(tagModel.getId(), tagName, tagColor);
+
                                         ExternalCallWithOkHttp.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                                             @Override
                                             public void onSuccess(Headers headers, String body) {
@@ -207,6 +215,7 @@ public class ExpenseTagDialog extends DialogFragment {
                                 }
                                 break;
                             default:
+                                Log.e(TAG, "Reached unsupported condition, expense tag dialog=" + dialogMode);
                                 throw new RuntimeException("Reached unreachable condition");
                         }
                     }
@@ -215,171 +224,6 @@ public class ExpenseTagDialog extends DialogFragment {
 
         builder.setView(rootView);
         return builder.create();
-    }
-
-    private AlertDialog.Builder createTag(final ColorPickerView colorPicker) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
-        //builder.setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()));
-        builder.setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-
-        builder.setPositiveButton(getString(R.string.expense_tag_dialog_button_add), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                JSONObject postData = new JSONObject();
-
-                String tagName = label.getText().toString();
-                String tagColor = String.format("#%06X", (0xFFFFFF & colorPicker.getColor()));
-
-                try {
-                    postData.put("tagName", tagName);
-                    postData.put("tagColor", tagColor);
-
-                    ExternalCallWithOkHttp.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-                        @Override
-                        public void onSuccess(Headers headers, String body) {
-                            DeviceService.onSuccess(headers, body);
-                        }
-
-                        @Override
-                        public void onError(int statusCode, String error) {
-                            Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
-                            if (null != getActivity()) {
-                                final String errorMessage = error;
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                                        superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
-                                        superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                                        superActivityToast.setBackground(SuperToast.Background.BLUE);
-                                        superActivityToast.setTextColor(Color.WHITE);
-                                        superActivityToast.setTouchToDismiss(true);
-                                        superActivityToast.show();
-                                        // ToastBox.makeText(getActivity(), JsonParseUtils.parseError(errorMessage), Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onException(Exception exception) {
-                            Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
-                            if (null != getActivity()) {
-                                final String exceptionMessage = exception.getMessage();
-                                getActivity().runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                                        superActivityToast.setText(exceptionMessage);
-                                        superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                                        superActivityToast.setBackground(SuperToast.Background.BLUE);
-                                        superActivityToast.setTextColor(Color.WHITE);
-                                        superActivityToast.setTouchToDismiss(true);
-                                        superActivityToast.show();
-                                        // ToastBox.makeText(getActivity(), exceptionMessage, Toast.LENGTH_SHORT).show();
-                                    }
-                                });
-                            }
-
-                        }
-                    });
-
-                } catch (JSONException e) {
-                    Log.e(TAG, "Exception while deleting expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-                }
-            }
-        });
-
-        return builder;
-    }
-
-    private AlertDialog.Builder updateTag(final ColorPickerView colorPicker) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
-        //builder.setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()));
-        builder.setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel),
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-
-                    }
-                });
-
-        builder.setPositiveButton(getString(R.string.expense_tag_dialog_button_update), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                String tagName = label.getText().toString();
-                String tagColor = String.format("#%06X", (0xFFFFFF & colorPicker.getColor()));
-
-                if (!tagModel.getName().equals(tagName) || !tagModel.getColor().equals(tagColor)) {
-                    JSONObject postData = new JSONObject();
-                    try {
-                        postData.put("tagId", tagId);
-                        postData.put("tagName", tagName);
-                        postData.put("tagColor", tagColor);
-
-                        ExternalCallWithOkHttp.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-                            @Override
-                            public void onSuccess(Headers headers, String body) {
-                                DeviceService.onSuccess(headers, body);
-                            }
-
-                            @Override
-                            public void onError(int statusCode, String error) {
-                                Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
-                                if (null != getActivity()) {
-                                    final String errorMessage = error;
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                                            superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
-                                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                                            superActivityToast.setTextColor(Color.WHITE);
-                                            superActivityToast.setTouchToDismiss(true);
-                                            superActivityToast.show();
-                                            // ToastBox.makeText(getActivity(), JsonParseUtils.parseError(errorMessage), Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-                            }
-
-                            @Override
-                            public void onException(Exception exception) {
-                                Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onException: " + exception.getMessage());
-                                if (null != getActivity()) {
-                                    final String exceptionMessage = exception.getMessage();
-                                    getActivity().runOnUiThread(new Runnable() {
-                                        @Override
-                                        public void run() {
-                                            SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                                            superActivityToast.setText(exceptionMessage);
-                                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                                            superActivityToast.setTextColor(Color.WHITE);
-                                            superActivityToast.setTouchToDismiss(true);
-                                            superActivityToast.show();
-                                            // ToastBox.makeText(getActivity(), exceptionMessage, Toast.LENGTH_SHORT).show();
-                                        }
-                                    });
-                                }
-
-                            }
-                        });
-
-                    } catch (JSONException e) {
-                        Log.e(TAG, "Exception while deleting expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-                    }
-                }
-            }
-        });
-
-        return builder;
     }
 
     @Override
@@ -413,9 +257,9 @@ public class ExpenseTagDialog extends DialogFragment {
     @Override
     public void onDismiss(final DialogInterface dialog) {
         super.onDismiss(dialog);
-        final Activity activity = getActivity();
-        if (activity instanceof DialogInterface.OnDismissListener) {
-            ((DialogInterface.OnDismissListener) activity).onDismiss(dialog);
+        final MainMaterialDrawerActivity activity = (MainMaterialDrawerActivity) getActivity();
+        if (activity.mExpenseTagFragment instanceof DialogInterface.OnDismissListener) {
+            (activity.mExpenseTagFragment).onDismiss(dialog);
         }
     }
 }

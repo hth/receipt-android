@@ -36,6 +36,7 @@ import com.receiptofi.checkout.adapters.ExpenseTagAdapter;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.http.types.ExpenseTagSwipe;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
@@ -43,6 +44,8 @@ import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 import com.squareup.okhttp.Headers;
+
+import junit.framework.Assert;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -59,7 +62,7 @@ import java.util.Map;
  * Use the {@link ExpenseTagFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ExpenseTagFragment extends Fragment {
+public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDismissListener {
     /**
      * List Style implementation
      */
@@ -154,7 +157,7 @@ public class ExpenseTagFragment extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            e.printStackTrace();
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
     }
 
@@ -247,14 +250,14 @@ public class ExpenseTagFragment extends Fragment {
         mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+                ExpenseTagSwipe expenseTagSwipe = ExpenseTagSwipe.findSwipeTypeByCode(index);
+                Assert.assertNotNull(expenseTagSwipe);
+                Log.d(TAG, "Selected swipe action is: " + expenseTagSwipe.name());
 
                 final ExpenseTagModel tagModel = tagModelList.get(position);
                 Log.d(TAG, "Selected tag name is: " + tagModel.getName());
-                switch (index) {
-                    case 0:
-                        /**
-                         * Edit Tag.
-                         */
+                switch (expenseTagSwipe) {
+                    case EDIT:
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
                         Fragment prev = getFragmentManager().findFragmentByTag("dialog");
                         if (prev != null) {
@@ -262,17 +265,13 @@ public class ExpenseTagFragment extends Fragment {
                         }
                         ft.addToBackStack(null);
 
-                        // Create and show the dialog.
+                        /** Create and show the dialog.*/
                         DialogFragment editTagDialog = ExpenseTagDialog.newInstance(tagModel.getId());
                         editTagDialog.show(ft, "dialog");
 
-
                         break;
-                    case 1:
-                        /**
-                         * Delete tag.
-                         */
-// TODO: Replace DialogFragment with PostOffice dialog.
+                    case DELETE:
+                        // TODO: Replace DialogFragment with PostOffice dialog.
                         new AlertDialog.Builder(getActivity())
                                 .setTitle(getString(R.string.expense_tag_dialog_delete_label))
                                 .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
@@ -352,6 +351,9 @@ public class ExpenseTagFragment extends Fragment {
                                 .setIcon(android.R.drawable.ic_dialog_alert)
                                 .show();
                         break;
+                    default:
+                        Log.e(TAG, "Reached unsupported condition, expense tag swipe index=" + index);
+                        throw new RuntimeException("Reached unreachable condition");
                 }
                 return false;
             }
@@ -372,6 +374,10 @@ public class ExpenseTagFragment extends Fragment {
         }
     }
 
+    @Override
+    public void onDismiss(final DialogInterface dialog) {
+        updateHandler.sendEmptyMessage(EXPENSE_TAG_UPDATED);
+    }
 
     /**
      * Button Style implementation
