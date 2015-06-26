@@ -25,7 +25,7 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
         
         ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
         if (queue.isEmpty()) {
-            Log.d(TAG, "upload image queue is empty");
+            Log.d(TAG, "image upload queue is empty");
         } else {
             if (context != null && UserUtils.UserSettings.isStartImageUploadProcess(context)) {
                 Log.d(TAG, "starting image upload for count=" + queue.size());
