@@ -1,10 +1,10 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
@@ -15,10 +15,13 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment;
@@ -74,7 +77,14 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receipt_list_page);
 
-        // Setup back up button.
+        /** Setup back up button with its own icon. */
+        int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+        if (upId > 0) {
+            ImageView up = (ImageView) findViewById(upId);
+            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_angle_left)
+                    .colorRes(R.color.white)
+                    .actionBarSize());
+        }
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         initDrawerView();
@@ -174,7 +184,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     }
 
     private void initDrawerView() {
-        drawerLayout = (DrawerLayout)findViewById(R.id.receipt_drawer_layout);
+        drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
         // set the drawer to remain closed until a receipt is selected
         drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
         recheckBox = (CheckBox) findViewById(R.id.receipt_action_recheck);
@@ -300,6 +310,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     /**
      * This function is important cannot be deleted.
      * We use this function to handle th Drawer menu frame click function to avoid the behind button be clicked.
+     *
      * @param view
      */
     public void handleEmpty(View view) {
@@ -312,7 +323,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         finish();
     }
 
-    public void showReceiptDetailImageFragment(String url){
+    public void showReceiptDetailImageFragment(String url) {
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
         if (AppUtils.isTablet(this)) {
