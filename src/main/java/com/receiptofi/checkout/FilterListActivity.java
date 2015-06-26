@@ -3,34 +3,21 @@ package com.receiptofi.checkout;
 import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.InputType;
-import android.text.TextUtils;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.SearchView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
-import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ReceiptGroup;
-import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.Constants.ReceiptFilter;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 
 import java.util.Date;
@@ -57,7 +44,14 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         Log.d(TAG, "executing onCreate");
         setContentView(R.layout.filter_list_page);
 
-        // Setup back up button.
+        /** Setup back up button with its own icon. */
+        int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+        if (upId > 0) {
+            ImageView up = (ImageView) findViewById(upId);
+            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_angle_left)
+                    .colorRes(R.color.white)
+                    .actionBarSize());
+        }
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Run query to fetch data
@@ -89,10 +83,10 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             // use the query to search your data somehow
             new FilterDataTask().execute(ReceiptFilter.FILTER_BY_KEYWORD.getValue(), intent.getStringExtra(SearchManager.QUERY));
-            if(filterListFragment == null){
+            if (filterListFragment == null) {
                 addFragments(null);
             }
-            if(!AppUtils.isTablet(this)){
+            if (!AppUtils.isTablet(this)) {
                 FragmentTransaction transaction = getFragmentManager().beginTransaction();
                 transaction.replace(R.id.fragment_container, filterListFragment);
 
