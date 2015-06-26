@@ -88,7 +88,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         /**
          * Add underline of forgot Password to make it looks more hybird link.
          */
-        forgotPassword.setPaintFlags(forgotPassword.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        forgotPassword.setPaintFlags(forgotPassword.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         forgotPassword.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -115,7 +115,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         /**
          * We add below to avoid window link exception during orientation change.
          */
-        if(super.loader != null) {
+        if (super.loader != null) {
             super.loader.dismiss();
         }
         isLeftButtonClicked = false;
@@ -123,8 +123,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     }
 
     @Override
-    public void onResume()
-    {
+    public void onResume() {
         super.onResume();
         /**
          * We add this process.
