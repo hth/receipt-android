@@ -102,11 +102,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
-
-        // TODO: DELETE ME
-        if (Constants.KEVIN_DEBUG) {
-            logIn.setEnabled(true);
-        }
     }
 
     @Override
@@ -181,14 +176,14 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
     // TODO: DELETE ME
     private void setFieldsToS() {
-        email.setText("s@r.com");
+        email.setText("blank@r.com");
         password.setText("testtest");
     }
 
     // TODO: DELETE ME
     private void setFieldsToR() {
-        email.setText("test@receiptofi.com");
-        password.setText("testtest");
+        email.setText("li@receiptofi.com");
+        password.setText("Chongzhi");
     }
 
     private boolean areFieldsSet() {
@@ -205,12 +200,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         // getting username and password
         emailStr = email.getText().toString();
         passwordStr = password.getText().toString();
-        // TODO: DELETE ME
-        // KEVIN: Add this for debug.
-        if (Constants.KEVIN_DEBUG) {
-            emailStr = "li@receiptofi.com";
-            passwordStr = "Chongzhi";
-        }
 
         if (TextUtils.isEmpty(emailStr)) {
             errors.append(this.getResources().getString(R.string.err_str_enter_email));
