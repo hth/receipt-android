@@ -3,6 +3,8 @@ package com.receiptofi.checkout.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
@@ -22,13 +24,23 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        if (null != networkInfo && networkInfo.isConnectedOrConnecting()) {
+            Log.d(TAG, "Has net connection");
+            whenConnected(context);
+        } else {
+            Log.d(TAG, "No net connection");
+        }
+    }
+
+    private void whenConnected(Context context) {
         ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
         if (queue.isEmpty()) {
-            Log.d(TAG, "image upload queue is empty");
+            Log.d(TAG, "Image upload queue is empty");
         } else {
-            if (context != null && UserUtils.UserSettings.isStartImageUploadProcess(context)) {
-                Log.d(TAG, "starting image upload for count=" + queue.size());
+            if (null != context && UserUtils.UserSettings.isStartImageUploadProcess(context)) {
+                Log.d(TAG, "Starting image upload for count=" + queue.size());
                 ImageUploaderService.start(context);
             } else {
                 // KEVIN : Add to replace the HomeActivy by HomeFragment
