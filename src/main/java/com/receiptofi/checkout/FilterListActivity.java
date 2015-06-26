@@ -54,9 +54,12 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         Log.d(TAG, "executing onCreate");
         setContentView(R.layout.filter_list_page);
+
+        // Setup back up button.
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Run query to fetch data
         if (getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)) {
             String filterType = getIntent().getStringExtra(Constants.INTENT_EXTRA_FILTER_TYPE);

@@ -32,6 +32,7 @@ import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.SettingFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ProfileModel;
+import com.receiptofi.checkout.model.ReceiptGroupObservable;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -280,7 +281,11 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     }
 
     public void invokeReceiptList(View view) {
-        startActivity(new Intent(MainMaterialDrawerActivity.this, ReceiptListActivity.class));
+        if ( ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders().size() == 0) {
+            this.showErrorMsg("No receipt for current month!");
+        } else {
+            startActivity(new Intent(MainMaterialDrawerActivity.this, ReceiptListActivity.class));
+        }
     }
 
 

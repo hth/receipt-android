@@ -108,16 +108,18 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
                     Log.e(TAG, "failed to load image=" + e.getLocalizedMessage(), e);
-                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                    superActivityToast.setText("Failed to load image.");
-                    superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
-                    superActivityToast.setBackground(SuperToast.Background.BLUE);
-                    superActivityToast.setTextColor(Color.WHITE);
-                    superActivityToast.setTouchToDismiss(true);
-                    superActivityToast.show();
+                    if (null != getActivity()) {
+                        SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                        superActivityToast.setText("Failed to load image.");
+                        superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
+                        superActivityToast.setBackground(SuperToast.Background.BLUE);
+                        superActivityToast.setTextColor(Color.WHITE);
+                        superActivityToast.setTouchToDismiss(true);
+                        superActivityToast.show();
 
-                    /** Popup previous detail stack since loading image has failed. */
-                    getFragmentManager().popBackStack();
+                        /** Popup previous detail stack since loading image has failed. */
+                        getFragmentManager().popBackStack();
+                    }
                 }
             });
             builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {

@@ -73,6 +73,10 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.receipt_list_page);
+
+        // Setup back up button.
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+
         initDrawerView();
 
         // Check whether the activity is using the layout version with

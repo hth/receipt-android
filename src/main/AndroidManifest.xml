@@ -73,25 +73,35 @@
             android:label="@string/settings"/>
         <activity
             android:name=".ReceiptListActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName="com.receiptofi.checkout.MainMaterialDrawerActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".FilterListActivity"/>
+                android:value=".FilterListActivity"
+                />
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.receiptofi.checkout.MainMaterialDrawerActivity" />
         </activity>
         <activity
             android:name=".FilterListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
-            android:noHistory="true">
+            android:noHistory="true"
+            android:parentActivityName="com.receiptofi.checkout.MainMaterialDrawerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
-
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
+            <!-- Parent activity meta-data to support 4.0 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.receiptofi.checkout.MainMaterialDrawerActivity" />
         </activity>
         <activity
             android:name=".NotificationActivity"

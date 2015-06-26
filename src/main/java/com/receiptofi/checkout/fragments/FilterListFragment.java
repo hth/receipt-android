@@ -7,6 +7,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -86,6 +87,9 @@ public class FilterListFragment extends Fragment {
             case R.id.menu_refresh:
                 DeviceService.getNewUpdates(getActivity());
                 return true;
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(getActivity());
             default:
                 return super.onOptionsItemSelected(item);
         }
