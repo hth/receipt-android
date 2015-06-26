@@ -8,12 +8,15 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.ReceiptListActivity;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.OnSwipeTouchListener;
 import com.receiptofi.checkout.views.TouchImageView;
@@ -82,6 +85,9 @@ public class ReceiptDetailImageFragment extends Fragment {
         // Inflate the layout for this fragment
         mView = inflater.inflate(R.layout.fragment_receipt_detail_image, container, false);
 
+        // Must call below method to make the fragment menu works.
+        setHasOptionsMenu(true);
+
         mReceiptImage = (TouchImageView) mView.findViewById(R.id.receiptImage);
         mReceiptImage.setOnTouchListener(new OnSwipeTouchListener(getActivity()) {
             public void onSwipeTop() {
@@ -110,17 +116,18 @@ public class ReceiptDetailImageFragment extends Fragment {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
                     Log.e(TAG, "failed to load image=" + e.getLocalizedMessage(), e);
-                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                    superActivityToast.setText("Failed to load image.");
-                    superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
-                    superActivityToast.setBackground(SuperToast.Background.BLUE);
-                    superActivityToast.setTextColor(Color.WHITE);
-                    superActivityToast.setTouchToDismiss(true);
-                    superActivityToast.show();
+                    if (null != getActivity()) {
+                        SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                        superActivityToast.setText("Failed to load image.");
+                        superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
+                        superActivityToast.setBackground(SuperToast.Background.BLUE);
+                        superActivityToast.setTextColor(Color.WHITE);
+                        superActivityToast.setTouchToDismiss(true);
+                        superActivityToast.show();
 
-                    /** Popup previous detail stack since loading image has failed. */
-                    getFragmentManager().popBackStack();
-
+                        /** Popup previous detail stack since loading image has failed. */
+                        getFragmentManager().popBackStack();
+                    }
                 }
             });
             builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {
@@ -166,6 +173,19 @@ public class ReceiptDetailImageFragment extends Fragment {
         } catch (ClassCastException e) {
 //            throw new ClassCastException(activity.toString()
 //                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                getFragmentManager().popBackStack();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 

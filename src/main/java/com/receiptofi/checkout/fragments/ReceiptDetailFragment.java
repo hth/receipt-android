@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
+import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;
@@ -248,6 +249,15 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                     }
                 }
                 return true;
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                if (!AppUtils.isTablet(getActivity())) {
+                    getFragmentManager().popBackStack();
+                    return true;
+                } else {
+                    // Allow the FilterListFragment to handle the Up button within Tablet Environment.
+                    return false;
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
