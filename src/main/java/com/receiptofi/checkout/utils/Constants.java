@@ -38,7 +38,7 @@ public class Constants {
     // TODO: Clean up below:
     public static final boolean KEY_NEW_PAGE = true;
 
-    public static final boolean KEVIN_DEBUG = true;
+    public static final boolean KEVIN_DEBUG = false;
 
     public enum ReceiptFilter {
         FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),

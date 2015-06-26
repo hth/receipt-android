@@ -217,7 +217,6 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
 
         Log.d(TAG, "****************************        receiptGroupObserver registered");
 
-
         adapter = new ReceiptListAdapter(getActivity());
         explv.setAdapter(adapter);
         explv.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
