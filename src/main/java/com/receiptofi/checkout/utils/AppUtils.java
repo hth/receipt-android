@@ -71,22 +71,28 @@ public class AppUtils {
     }
 
     public static boolean isNetworkConnectedOrConnecting(Context context) {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        if(networkInfo != null) {
-            Log.d(TAG, "Network status connected=" + networkInfo.isConnectedOrConnecting());
-        } else {
+        NetworkInfo networkInfo = getNetworkInfo(context);
+        if (null == networkInfo) {
             Log.d(TAG, "Network status not connected");
+        } else {
+            Log.d(TAG, "Network status connected=" + networkInfo.isConnectedOrConnecting());
         }
         return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 
     public static boolean isWifiConnected(Context context) {
-        ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo networkInfo = getNetworkInfo(context);
+        if (null == networkInfo) {
+            Log.d(TAG, "Network status not connected");
+        } else {
+            Log.d(TAG, ConnectivityManager.TYPE_WIFI + " connected=" + (networkInfo.getType() == ConnectivityManager.TYPE_WIFI));
+        }
+        return networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+    }
 
-        Log.d(TAG, ConnectivityManager.TYPE_WIFI + " connected=" + networkInfo.isConnectedOrConnecting());
-        return networkInfo.isConnectedOrConnecting();
+    private static NetworkInfo getNetworkInfo(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo();
     }
 
     public static void createImageDir() {
