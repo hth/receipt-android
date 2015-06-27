@@ -3,8 +3,6 @@ package com.receiptofi.checkout.receivers;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.util.Log;
 
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
@@ -24,9 +22,7 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
-        if (null != networkInfo && networkInfo.isConnectedOrConnecting()) {
+        if (AppUtils.isNetworkConnectedOrConnecting(context)) {
             Log.d(TAG, "Has net connection");
             whenConnected(context);
         } else {

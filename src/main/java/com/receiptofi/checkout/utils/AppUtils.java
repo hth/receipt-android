@@ -70,18 +70,20 @@ public class AppUtils {
         homePageContext = context;
     }
 
-    public static boolean isNetworkConnected(Context context) {
+    public static boolean isNetworkConnectedOrConnecting(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-        return null != networkInfo;
+
+        Log.d(TAG, "Network status connected=" + networkInfo.isConnectedOrConnecting());
+        return networkInfo.isConnectedOrConnecting();
     }
 
     public static boolean isWifiConnected(Context context) {
         ConnectivityManager connManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiNetwork = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        NetworkInfo networkInfo = connManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
 
-        Log.d(TAG, "Wi-Fi is connected: " + wifiNetwork.isConnected());
-        return wifiNetwork.isConnected();
+        Log.d(TAG, ConnectivityManager.TYPE_WIFI + " connected=" + networkInfo.isConnectedOrConnecting());
+        return networkInfo.isConnectedOrConnecting();
     }
 
     public static void createImageDir() {
