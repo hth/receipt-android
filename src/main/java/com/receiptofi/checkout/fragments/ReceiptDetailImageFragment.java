@@ -154,7 +154,7 @@ public class ReceiptDetailImageFragment extends Fragment {
                 if (!hasConnection) {
                     Log.w(TAG, "No network available.");
                     superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.no_network_available));
-                } else if(!TextUtils.isEmpty(mUrl)) {
+                } else {
                     Log.w(TAG, "Receipt has no image.");
                     superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.image_location_is_blank));
                 }
