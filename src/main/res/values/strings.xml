@@ -2,8 +2,8 @@
 <resources>
     <!--App-->
     <string name="app_name">Checkout</string>
-    <string name="no_network_available">Network connection unavailable, \n please connect Wi-Fi/Data plan.</string>
-    <string name="connect_to_server_failure">The server you are trying to connect is down. We apologize and are working on fixing the issue.</string>
+    <string name="no_network_available">Network connection unavailable,\n please connect Wi-Fi/Data plan.</string>
+    <string name="connect_to_server_failure">The server you are trying to connect is down.\n We apologize and are working on fixing the issue.</string>
     <string name="post_get_general_error">Could not complete action successfully.</string>
     <string name="post_image_upload_error">Image upload failed.</string>
 
