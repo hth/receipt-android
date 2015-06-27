@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.R;
-import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.OnSwipeTouchListener;
@@ -109,7 +108,8 @@ public class ReceiptDetailImageFragment extends Fragment {
             }
         });
 
-        if (!TextUtils.isEmpty(mUrl)) {
+        boolean hasConnection = AppUtils.isNetworkConnectedOrConnecting(getActivity().getApplicationContext());
+        if (!TextUtils.isEmpty(mUrl) && hasConnection) {
             this.showProgressDialog();
             Picasso.Builder builder = new Picasso.Builder(getActivity()).indicatorsEnabled(true);
             builder.listener(new Picasso.Listener() {
@@ -149,15 +149,23 @@ public class ReceiptDetailImageFragment extends Fragment {
                 }
             });
         } else {
-            Log.w(TAG, "Receipt has no image.");
             if (null != getActivity()) {
                 SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.image_location_is_blank));
+                if (!hasConnection) {
+                    Log.w(TAG, "No network available.");
+                    superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.no_network_available));
+                } else if(!TextUtils.isEmpty(mUrl)) {
+                    Log.w(TAG, "Receipt has no image.");
+                    superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.image_location_is_blank));
+                }
                 superActivityToast.setDuration(SuperToast.Duration.EXTRA_LONG);
                 superActivityToast.setBackground(SuperToast.Background.BLUE);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();
+
+                /** Popup previous detail stack since loading image has failed. */
+                getFragmentManager().popBackStack();
             } else {
                 Log.e(TAG, "getActivity() is null");
             }
