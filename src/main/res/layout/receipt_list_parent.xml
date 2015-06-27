@@ -14,6 +14,7 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:text="OOO 0000 (000)"
         android:textColor="@color/white"/>
 
     <TextView
@@ -21,8 +22,10 @@
         style="@style/exp_list_parent_text_right_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:gravity="right|center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:minWidth="90dp"
+        android:text="$00,000.00"
         android:textColor="@color/white"/>
 
 </LinearLayout>
