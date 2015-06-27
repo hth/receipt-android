@@ -281,7 +281,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     }
 
     public void invokeReceiptList(View view) {
-        if ( ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders().size() == 0) {
+        if (ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders().size() == 0) {
             this.showErrorMsg("No receipt for current month!");
         } else {
             startActivity(new Intent(MainMaterialDrawerActivity.this, ReceiptListActivity.class));

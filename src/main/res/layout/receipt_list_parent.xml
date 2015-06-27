@@ -1,28 +1,31 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:paddingLeft="@dimen/expandable_list_parent_padding_left"
-              android:paddingRight="@dimen/expandable_list_parent_padding_right"
+              android:background="@color/father_bg"
               android:orientation="horizontal"
-              android:background="@color/father_bg">
+              android:paddingLeft="@dimen/expandable_list_parent_padding_left"
+              android:paddingRight="@dimen/expandable_list_parent_padding_right">
 
     <TextView
         android:id="@+id/exp_list_header_month"
+        style="@style/exp_list_parent_text_left_style"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        style="@style/exp_list_parent_text_left_style"
+        android:text="OOO 0000 (000)"
         android:textColor="@color/white"/>
 
     <TextView
         android:id="@+id/exp_list_header_amount"
+        style="@style/exp_list_parent_text_right_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_vertical"
+        android:gravity="right|center_vertical"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
-        style="@style/exp_list_parent_text_right_style"
+        android:minWidth="90dp"
+        android:text="$00,000.00"
         android:textColor="@color/white"/>
 
 </LinearLayout>
