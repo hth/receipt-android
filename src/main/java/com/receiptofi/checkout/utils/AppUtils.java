@@ -81,13 +81,15 @@ public class AppUtils {
     }
 
     public static boolean isWifiConnected(Context context) {
+        boolean isWifi = false;
         NetworkInfo networkInfo = getNetworkInfo(context);
         if (null == networkInfo) {
             Log.d(TAG, "Network status not connected");
         } else {
-            Log.d(TAG, ConnectivityManager.TYPE_WIFI + " connected=" + (networkInfo.getType() == ConnectivityManager.TYPE_WIFI));
+            isWifi = networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+            Log.d(TAG, ConnectivityManager.TYPE_WIFI + " connected=" + isWifi);
         }
-        return networkInfo != null && networkInfo.getType() == ConnectivityManager.TYPE_WIFI;
+        return networkInfo != null && isWifi;
     }
 
     private static NetworkInfo getNetworkInfo(Context context) {
