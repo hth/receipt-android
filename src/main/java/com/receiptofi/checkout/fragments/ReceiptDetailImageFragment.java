@@ -115,10 +115,10 @@ public class ReceiptDetailImageFragment extends Fragment {
             builder.listener(new Picasso.Listener() {
                 @Override
                 public void onImageLoadFailed(Picasso picasso, Uri uri, Exception e) {
-                    Log.e(TAG, "failed to load image=" + e.getLocalizedMessage(), e);
+                    Log.e(TAG, "Failed to download image=" + e.getLocalizedMessage(), e);
                     if (null != getActivity()) {
                         SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                        superActivityToast.setText("Failed to load image.");
+                        superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.get_image_download_error));
                         superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
                         superActivityToast.setBackground(SuperToast.Background.BLUE);
                         superActivityToast.setTextColor(Color.WHITE);
@@ -127,6 +127,8 @@ public class ReceiptDetailImageFragment extends Fragment {
 
                         /** Popup previous detail stack since loading image has failed. */
                         getFragmentManager().popBackStack();
+                    } else {
+                        Log.e(TAG, "getActivity() is null");
                     }
                 }
             });
@@ -147,13 +149,18 @@ public class ReceiptDetailImageFragment extends Fragment {
                 }
             });
         } else {
-            SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-            superActivityToast.setText("Receipt image not found.");
-            superActivityToast.setDuration(SuperToast.Duration.EXTRA_LONG);
-            superActivityToast.setBackground(SuperToast.Background.BLUE);
-            superActivityToast.setTextColor(Color.WHITE);
-            superActivityToast.setTouchToDismiss(true);
-            superActivityToast.show();
+            Log.w(TAG, "Receipt has no image.");
+            if (null != getActivity()) {
+                SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
+                superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.image_location_is_blank));
+                superActivityToast.setDuration(SuperToast.Duration.EXTRA_LONG);
+                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setTextColor(Color.WHITE);
+                superActivityToast.setTouchToDismiss(true);
+                superActivityToast.show();
+            } else {
+                Log.e(TAG, "getActivity() is null");
+            }
         }
         return mView;
     }
