@@ -73,9 +73,12 @@ public class AppUtils {
     public static boolean isNetworkConnectedOrConnecting(Context context) {
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
-
-        Log.d(TAG, "Network status connected=" + networkInfo.isConnectedOrConnecting());
-        return networkInfo.isConnectedOrConnecting();
+        if(networkInfo != null) {
+            Log.d(TAG, "Network status connected=" + networkInfo.isConnectedOrConnecting());
+        } else {
+            Log.d(TAG, "Network status not connected");
+        }
+        return networkInfo != null && networkInfo.isConnectedOrConnecting();
     }
 
     public static boolean isWifiConnected(Context context) {
