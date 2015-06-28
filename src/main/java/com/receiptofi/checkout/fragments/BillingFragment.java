@@ -124,8 +124,7 @@ public class BillingFragment extends Fragment {
                 }
                 return convertView;
             } catch (Exception e) {
-                Log.d(TAG, "Exception " + e.getMessage());
-                e.printStackTrace();
+                Log.d(TAG, "reason=" + e.getMessage(), e);
             }
             return null;
         }
