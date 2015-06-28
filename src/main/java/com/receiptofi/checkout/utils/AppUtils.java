@@ -17,10 +17,10 @@ public class AppUtils {
     private static final String TAG = AppUtils.class.getSimpleName();
     private static final String APP_CONFIG = "config";
     public static final String CONF_FRIST_START = "isFristStart";
-    private static final int RANDOM_STRING_SIZE = 4;
+    private static final int RANDOM_STRING_SIZE = 6;
 
-    static File image;
-    static File receiptofiImgDir;
+    private static File image;
+    private static File receiptofiImgDir;
     private static Context homePageContext;
 
     public static String getImageFileFromURI(Context context, Uri uri) {
@@ -35,13 +35,7 @@ public class AppUtils {
      */
     public static File createImageFile() {
         try {
-            image = File.createTempFile(
-                    "Receipt_" + RandomString.newInstance(RANDOM_STRING_SIZE).nextString(), ".jpg",
-                    getImageDir());
-
-            // Save a file: path for use with ACTION_VIEW intents
-            String mCurrentPhotoPath = "file:" + image.getAbsolutePath().replace("--", "-");
-
+            image = new File(getImageDir() + File.separator + randomJPGFilename());
             return image;
         } catch (Exception e) {
             Log.e(TAG, "Failed to create image file");
@@ -52,6 +46,10 @@ public class AppUtils {
             }
             return null;
         }
+    }
+
+    private static String randomJPGFilename() {
+        return "Receipt_" + RandomString.newInstance(RANDOM_STRING_SIZE).nextString() + ".jpg";
     }
 
     public static String getImageFilePath() {

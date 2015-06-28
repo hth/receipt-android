@@ -223,9 +223,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
-
         if (requestCode == RESULT_IMAGE_GALLERY && resultCode == RESULT_OK && null != data) {
-
             Uri imageGallery = data.getData();
             String imageAbsolutePath = AppUtils.getImageFileFromURI(this, imageGallery);
 
@@ -238,11 +236,8 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                     ImageUpload.process(this, imageAbsolutePath);
                 }
             }
-
         } else if (requestCode == RESULT_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-
             String capturedImgFile = AppUtils.getImageFilePath();
             if (null != capturedImgFile) {
 
@@ -254,8 +249,18 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                 startProgressToken();
                 ImageUpload.process(this, capturedImgFile);
             }
+        } else if (resultCode == RESULT_CANCELED) {
+            String capturedImgFile = AppUtils.getImageFilePath();
+            if (null != capturedImgFile) {
+                File capturedFile = new File(capturedImgFile);
+                if (capturedFile.exists()) {
+                    boolean deleteStatus = capturedFile.delete();
+                    Log.d(TAG, "Cancelled, deleted=" + deleteStatus + " file=" + capturedImgFile);
+                } else {
+                    Log.d(TAG, "Cancelled, does not exists file=" + capturedImgFile);
+                }
+            }
         }
-
     }
 
     /**
