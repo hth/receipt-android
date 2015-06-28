@@ -115,7 +115,7 @@ public class UserUtils {
             if(isWifiSyncOnly() && wifiConnected){
                 Log.d(TAG, "isWifiSyncOnly: " + true + " and wifi is connected: " + wifiConnected);
                 return true;
-            } else if (!isWifiSyncOnly() && AppUtils.isNetworkConnected(context)) {
+            } else if (!isWifiSyncOnly() && AppUtils.isNetworkConnectedOrConnecting(context)) {
                 Log.d(TAG, "isWifiSyncOnly: " + false + " and wifi/mobile is connected: " + true);
                 return true;
             } else {

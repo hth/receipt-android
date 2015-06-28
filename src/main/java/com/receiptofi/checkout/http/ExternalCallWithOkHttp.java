@@ -68,7 +68,7 @@ public class ExternalCallWithOkHttp {
             final IncludeDevice includeDevice,
             final ResponseHandler responseHandler
     ) {
-        if (!AppUtils.isNetworkConnected(context)) {
+        if (!AppUtils.isNetworkConnectedOrConnecting(context)) {
             responseHandler.onException(new RuntimeException(context.getString(R.string.no_network_available)));
             return;
         }
@@ -129,7 +129,7 @@ public class ExternalCallWithOkHttp {
             final RequestBody formBody,
             final ResponseHandler responseHandler
     ) {
-        if (!AppUtils.isNetworkConnected(context)) {
+        if (!AppUtils.isNetworkConnectedOrConnecting(context)) {
             responseHandler.onException(new RuntimeException(context.getString(R.string.no_network_available)));
             return;
         }
@@ -173,7 +173,7 @@ public class ExternalCallWithOkHttp {
             final String api,
             final ResponseHandler responseHandler
     ) {
-        if (!AppUtils.isNetworkConnected(context)) {
+        if (!AppUtils.isNetworkConnectedOrConnecting(context)) {
             responseHandler.onException(new RuntimeException(context.getString(R.string.no_network_available)));
             return;
         }
