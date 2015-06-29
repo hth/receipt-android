@@ -28,6 +28,9 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
     private final LayoutInflater inflater;
     private Context context;
 
+    private DateFormat inputDF = new SimpleDateFormat("M yyyy");
+    private DateFormat outputDF = new SimpleDateFormat("MMM yyyy");
+
     public FilterListAdapter(Context context) {
         super();
         this.context = context;
@@ -87,22 +90,17 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
-            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate()));
-
             holder.bizName.setText(receiptData.getBizName());
-            holder.date.setText(formattedDate);
+            holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {
-            Log.d(TAG, "IndexOutOfBoundsException " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "IndexOutOfBoundsException " + e.getLocalizedMessage(), e);
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -110,7 +108,6 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         ParentViewHolder holder;
-
         try {
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.receipt_list_parent, parent, false);
@@ -124,12 +121,7 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptGroupHeader headerData = (ReceiptGroupHeader) getGroup(groupPosition);
-            String year = headerData.getYear();
-            String month = headerData.getMonth();
-            DateFormat inputDF = new SimpleDateFormat("M yyyy");
-            DateFormat outputDF = new SimpleDateFormat("MMM yyyy");
-            String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
-
+            String formattedMonth = outputDF.format(inputDF.parse(headerData.getMonth() + " " + headerData.getYear()));
             holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));
             if (FilterListFragment.hideTotal) {
                 holder.amount.setVisibility(View.GONE);
@@ -138,20 +130,17 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
                 holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
             }
 
-            // Set the group 0 to be always expanded
+            /** Set the group 0 to be always expanded. */
             if (groupPosition == 0) {
-                ExpandableListView explv = (ExpandableListView) parent;
-                explv.expandGroup(groupPosition);
+                ExpandableListView expandableListView = (ExpandableListView) parent;
+                expandableListView.expandGroup(groupPosition);
             }
 
             return convertView;
-
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "ParseException reason=" + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
         return null;
     }
