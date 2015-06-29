@@ -76,8 +76,7 @@ public class NotificationFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         mView =  inflater.inflate(R.layout.fragment_notification, container, false);
         setupView();
@@ -98,7 +97,7 @@ public class NotificationFragment extends Fragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            Log.d(TAG, e.getMessage());
+            Log.e(TAG, e.getMessage(), e);
         }
     }
 
