@@ -40,7 +40,7 @@ public class MenuListAdapter extends BaseAdapter {
         inflater = LayoutInflater.from(activity);
     }
 
-    private void setupData(){
+    private void setupData() {
         icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_home)
                 .colorRes(R.color.white)
                 .actionBarSize());
@@ -88,7 +88,7 @@ public class MenuListAdapter extends BaseAdapter {
         } else {
             mHolder = (ViewHolder) view.getTag();
         }
-        mHolder.menu_name.setText((CharSequence)titles[i]);
+        mHolder.menu_name.setText((CharSequence) titles[i]);
 //        mHolder.menu_icon.setBackgroundResource(icon[i]);
         mHolder.menu_icon.setImageDrawable(icons_array.get(i));
         return view;
