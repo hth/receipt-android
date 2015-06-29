@@ -36,7 +36,7 @@ import java.util.Set;
 public class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = SettingFragment.class.getSimpleName();
     protected static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
-    
+
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
