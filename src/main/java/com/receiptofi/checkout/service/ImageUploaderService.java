@@ -6,7 +6,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
-import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.db.DatabaseTable;
@@ -37,7 +36,6 @@ public class ImageUploaderService {
     }
 
     public static void start(Context context) {
-        // TODO Auto-generated method stub
         ImageUploaderService.context = context;
         ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
 
@@ -77,7 +75,6 @@ public class ImageUploaderService {
 
             @Override
             public void onSuccess(ImageModel iModel, String response) {
-                // TODO Auto-generated method stub
                 Bundle responseBundle = ResponseParser.getImageUploadResponse(response);
                 iModel.blobId = responseBundle.getString(DatabaseTable.ImageIndex.BLOB_ID);
                 String fileName = responseBundle.getString(ConstantsJson.UPLOADED_DOCUMENT_NAME);
@@ -88,20 +85,11 @@ public class ImageUploaderService {
                 if (AppUtils.getHomePageContext() != null) {
                     Log.d(TAG, "Unprocessed document count " + unprocessedCount);
                     Message msg = new Message();
-                    // KEVIN : Add to replace the HomeActivity by HomeFragment
-//                    msg.what = HomeActivity.IMAGE_UPLOAD_SUCCESS;
                     msg.what = HomeFragment.IMAGE_UPLOAD_SUCCESS;
                     msg.obj = "Uploaded " + fileName + " successfully.";
                     msg.arg1 = unprocessedCount;
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
-                        // KEVIN : Add to replace the HomeActivity by HomeFragment
-//                        ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                        // TODO: Clean up below:
-                        if (Constants.KEY_NEW_PAGE) {
-                            ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                        } else {
-                            ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                        }
+                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                     }
                 }
 
@@ -115,43 +103,24 @@ public class ImageUploaderService {
                 Log.e(TAG, "Image upload failed due to exception " + iModel.imgPath + " reason " + exception.getLocalizedMessage(), exception);
 
                 Message msg = new Message();
-                // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
                 msg.obj = exception.getLocalizedMessage();
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    // TODO: Clean up below:
-                    if (Constants.KEY_NEW_PAGE) {
-                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    } else {
-                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    }
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                 }
             }
 
             @Override
             public void onError(ImageModel iModel, String Error) {
-                // TODO Auto-generated method stub
                 iModel.updateStatus(false);
                 updateProcessStatus(iModel);
                 Log.d("Image upload failed  ", iModel.imgPath);
 
                 Message msg = new Message();
-                // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                msg.what = HomeActivity.IMAGE_UPLOAD_FAILURE;
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "Image upload failed. " + Error;
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                    ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(msg);
-                    // TODO: Clean up below:
-                    if (Constants.KEY_NEW_PAGE) {
-                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    } else {
-                        ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
-                    }
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
                 }
             }
         });
@@ -186,14 +155,8 @@ public class ImageUploaderService {
         if (UserSettings.isStartImageUploadProcess(context)) {
             start(context);
         } else {
-            // KEVIN : Add to replace the HomeActivy by HomeFragment
-//            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
-            // TODO: Clean up below:
-            if (Constants.KEY_NEW_PAGE) {
-                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
-            } else {
-                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
-            }
+            ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+
         }
     }
 

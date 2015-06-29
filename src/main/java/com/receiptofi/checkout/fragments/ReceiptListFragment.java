@@ -232,12 +232,14 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
                 return false;
             }
         });
-
-        // expand all group
-        for (int i = 0, count = explv.getCount(); i < count; i++) {
-            explv.expandGroup(i);
+        // We only expand group when the user have receipts.
+        if (adapter.getGroupCount() > 0) {
+            // expand all group
+            for (int i = 0, count = explv.getCount(); i < count; i++) {
+                explv.expandGroup(i);
+            }
+            explv.setOnHeaderUpdateListener(this);
         }
-        explv.setOnHeaderUpdateListener(this);
 
     }
 

@@ -34,8 +34,6 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
-import com.receiptofi.checkout.utils.AppConfig;
-import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -177,7 +175,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();
-//                ToastBox.makeText(ParentActivity.this, msg, length).show();
             }
         });
     }
@@ -292,27 +289,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         }
     }
 
-    public void setProperty(String key, String value) {
-        AppConfig.getAppConfig(this).set(key, value);
-    }
-
-    public String getProperty(String key) {
-        String res = AppConfig.getAppConfig(this).get(key);
-        return res;
-    }
-
-    public boolean isFristStart() {
-        boolean res = false;
-        String perf_frist = getProperty(AppConfig.CONF_FRIST_START);
-        // default is http
-        if (isEmpty(perf_frist)) {
-            res = true;
-            setProperty(AppConfig.CONF_FRIST_START, "false");
-        }
-
-        return res;
-    }
-
     public static boolean isEmpty(String input) {
         if (input == null || "".equals(input))
             return true;
@@ -332,19 +308,9 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
             @Override
             public void run() {
-                // KEVIN add for test
-//                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
-                // TODO: Clean up below:
-                if (Constants.KEY_NEW_PAGE) {
-                    Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(i);
-                } else {
-                    Intent i = new Intent(ParentActivity.this, MainPageActivity.class);
-                    i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                    startActivity(i);
-                }
-
+                Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);
+                i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(i);
                 finish();
             }
         });
@@ -357,8 +323,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
             @Override
             public void run() {
-                // KEVIN add for test
-//                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
                 Intent i = new Intent(ParentActivity.this, SplashActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);

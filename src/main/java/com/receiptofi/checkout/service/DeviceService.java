@@ -5,7 +5,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
-import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
@@ -132,15 +131,8 @@ public class DeviceService {
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
             refreshView = ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
-            // TODO: Clean up below: KEVIN : Add below solution for new tag modify page.
-            if (Constants.KEY_NEW_PAGE) {
-                if (null != ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
-                }
-            } else {
-                if (null != ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment) {
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mTagModifyFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
-                }
+            if (null != ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment) {
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mExpenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
             }
         }
 
@@ -153,46 +145,21 @@ public class DeviceService {
 
         Message countMessage = new Message();
         countMessage.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
-//        countMessage.what = HomeActivity.UPDATE_UNPROCESSED_COUNT;
-        // KEVIN : Add for new setting.
         countMessage.what = HomeFragment.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
-//            ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(countMessage);
-            // KEVIN : Add for new setting.
-//            HomeFragment.newInstance("", "").updateHandler.sendMessage(countMessage);
-            // TODO: Clean up below:
-            if (Constants.KEY_NEW_PAGE) {
-                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
-            } else {
-                ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
-            }
+            ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(countMessage);
+
         }
 
         if (!dataWrapper.getReceiptModels().isEmpty()) {
             MonthlyReportUtils.computeMonthlyReceiptReport();
-
-//            String[] monthDay = HomeActivity.DF_YYYY_MM.format(new Date()).split(" ");
-            // KEVIN : Replace the DF_YYYY_MM with HomeFragment
             String[] monthDay = HomeFragment.DF_YYYY_MM.format(new Date()).split(" ");
             Message amountMessage = new Message();
             amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
-//            amountMessage.what = HomeActivity.UPDATE_MONTHLY_EXPENSE;
-            // KEVIN : Add for new setting page.
             amountMessage.what = HomeFragment.UPDATE_MONTHLY_EXPENSE;
             if (ReceiptofiApplication.isHomeActivityVisible()) {
-//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendMessage(amountMessage);
-//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.UPDATE_EXP_BY_BIZ_CHART);
-                // KEVIN : add for new setting page.
-//                HomeFragment.newInstance("", "").updateHandler.sendMessage(amountMessage);
-//                HomeFragment.newInstance("", "").updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
-                // TODO: Clean up below:
-                if (Constants.KEY_NEW_PAGE) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
-                } else {
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
-                }
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(amountMessage);
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
             }
 
             refreshView = true;

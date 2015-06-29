@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
-import com.receiptofi.checkout.MainPageActivity;
 import com.receiptofi.checkout.adapters.ImageUpload;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.model.ImageModel;
@@ -39,14 +38,7 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
                 Log.d(TAG, "Starting image upload for count=" + queue.size());
                 ImageUploaderService.start(context);
             } else {
-                // KEVIN : Add to replace the HomeActivy by HomeFragment
-//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
-                // TODO: Clean up below:
-                if (Constants.KEY_NEW_PAGE) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
-                } else {
-                    ((MainPageActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
-                }
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
             }
         }
     }
