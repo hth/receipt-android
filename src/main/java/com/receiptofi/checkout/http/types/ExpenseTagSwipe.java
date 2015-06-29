@@ -19,8 +19,8 @@ public enum ExpenseTagSwipe {
     }
 
     public static ExpenseTagSwipe findSwipeTypeByCode(int code) {
-        for(ExpenseTagSwipe t : ExpenseTagSwipe.values()) {
-            if(t.getCode() == code) {
+        for (ExpenseTagSwipe t : ExpenseTagSwipe.values()) {
+            if (t.getCode() == code) {
                 return t;
             }
         }
