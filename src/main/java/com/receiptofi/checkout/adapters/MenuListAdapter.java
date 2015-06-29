@@ -20,10 +20,12 @@ import java.util.List;
  */
 public class MenuListAdapter extends BaseAdapter {
     private Activity activity;
-    private LayoutInflater inflater = null;
+    private LayoutInflater inflater;
 
-    // create menu items;
-    private String titles[] = {
+    /**
+     * Create menu items.
+     */
+    private String[] titles = {
             "Home",
             "Notification",
             "Tag Expenses",
@@ -79,7 +81,7 @@ public class MenuListAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder mHolder;
-        if (view == null) {
+        if (null == view) {
             view = inflater.inflate(R.layout.menu_list_item, null);
             mHolder = new ViewHolder();
             mHolder.menu_icon = (ImageView) view.findViewById(R.id.menu_ic);
@@ -88,8 +90,7 @@ public class MenuListAdapter extends BaseAdapter {
         } else {
             mHolder = (ViewHolder) view.getTag();
         }
-        mHolder.menu_name.setText((CharSequence) titles[i]);
-//        mHolder.menu_icon.setBackgroundResource(icon[i]);
+        mHolder.menu_name.setText(titles[i]);
         mHolder.menu_icon.setImageDrawable(icons_array.get(i));
         return view;
     }
