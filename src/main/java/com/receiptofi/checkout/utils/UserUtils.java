@@ -105,7 +105,7 @@ public class UserUtils {
 
         public static boolean isStartImageUploadProcess(Context context) {
             boolean wifiConnected = AppUtils.isWifiConnected(context);
-            if(isWifiSyncOnly() && wifiConnected){
+            if (isWifiSyncOnly() && wifiConnected) {
                 Log.d(TAG, "isWifiSyncOnly: " + true + " and wifi is connected: " + wifiConnected);
                 return true;
             } else if (!isWifiSyncOnly() && AppUtils.isNetworkConnectedOrConnecting(context)) {

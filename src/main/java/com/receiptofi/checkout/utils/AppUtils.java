@@ -23,11 +23,25 @@ public class AppUtils {
     private static File receiptofiImgDir;
     private static Context homePageContext;
 
+    private AppUtils() {
+    }
+
     public static String getImageFileFromURI(Context context, Uri uri) {
         String[] filePathColumn = {MediaStore.Images.Media.DATA};
-        Cursor c = context.getContentResolver().query(uri, filePathColumn, null, null, null);
-        c.moveToFirst();
-        return c.getString(c.getColumnIndex(filePathColumn[0]));
+        String imageAbsolutePath = null;
+        Cursor cursor = null;
+        try {
+            cursor = context.getContentResolver().query(uri, filePathColumn, null, null, null);
+            cursor.moveToFirst();
+            imageAbsolutePath = cursor.getString(cursor.getColumnIndex(filePathColumn[0]));
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting image absolute path " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+        return imageAbsolutePath;
     }
 
     /**

@@ -58,7 +58,7 @@ public class BillingAccountUtils {
 
             if (null != cursor && cursor.getCount() > 0) {
                 cursor.moveToNext();
-                
+
                 billingAccountModel = new BillingAccountModel(cursor.getString(0));
                 if (BillingHistoryUtils.getAll() != null) {
                     billingAccountModel.setBillingHistories(BillingHistoryUtils.getAll());
