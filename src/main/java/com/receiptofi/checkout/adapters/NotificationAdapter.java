@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.NotificationModel;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 
 import org.joda.time.DateTime;
@@ -72,14 +73,13 @@ public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
             }
 
             NotificationModel notification = getItem(position);
-            DateTime dateTime = Constants.ISO_J_DF.parseDateTime(notification.getUpdated()).withZone(DateTimeZone.getDefault());
+            DateTime dateTime = AppUtils.getDateTime(notification.getUpdated());
             holder.notificationText.setText(notification.getMessage());
             holder.notificationTime.setText(prettyTime.format(dateTime.toDate()));
 
             return convertView;
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "reason= " + e.getLocalizedMessage(), e);
         }
         return null;
     }
