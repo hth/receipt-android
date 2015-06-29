@@ -22,7 +22,6 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 import com.squareup.okhttp.FormEncodingBuilder;

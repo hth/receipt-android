@@ -32,7 +32,6 @@ import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.SettingFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ProfileModel;
-import com.receiptofi.checkout.model.ReceiptGroupObservable;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
