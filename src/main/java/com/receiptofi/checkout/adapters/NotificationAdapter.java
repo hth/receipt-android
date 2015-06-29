@@ -11,10 +11,8 @@ import android.widget.TextView;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.NotificationModel;
 import com.receiptofi.checkout.utils.AppUtils;
-import com.receiptofi.checkout.utils.Constants;
 
 import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.util.List;
