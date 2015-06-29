@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
@@ -61,19 +62,7 @@ public class DeviceService {
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    final String errorMessage = error;
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
-                            superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
-                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                            superActivityToast.setTextColor(Color.WHITE);
-                            superActivityToast.setTouchToDismiss(true);
-                            superActivityToast.show();
-                        }
-                    });
+                    showMessage(JsonParseUtils.parseError(error), (Activity) context);
                 }
             }
 
@@ -81,19 +70,7 @@ public class DeviceService {
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 if (null != context) {
-                    final String exceptionMessage = e.getMessage();
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
-                            superActivityToast.setText(exceptionMessage);
-                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                            superActivityToast.setTextColor(Color.WHITE);
-                            superActivityToast.setTouchToDismiss(true);
-                            superActivityToast.show();
-                        }
-                    });
+                    showMessage(e.getMessage(), (Activity) context);
                 }
             }
         });
@@ -116,19 +93,7 @@ public class DeviceService {
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    final String errorMessage = error;
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
-                            superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
-                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                            superActivityToast.setTextColor(Color.WHITE);
-                            superActivityToast.setTouchToDismiss(true);
-                            superActivityToast.show();
-                        }
-                    });
+                    showMessage(JsonParseUtils.parseError(error), (Activity) context);
                 }
             }
 
@@ -136,19 +101,7 @@ public class DeviceService {
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 if (null != context) {
-                    final String exceptionMessage = e.getMessage();
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
-                            superActivityToast.setText(exceptionMessage);
-                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                            superActivityToast.setTextColor(Color.WHITE);
-                            superActivityToast.setTouchToDismiss(true);
-                            superActivityToast.show();
-                        }
-                    });
+                    showMessage(e.getMessage(), (Activity) context);
                 }
             }
         });
@@ -168,7 +121,7 @@ public class DeviceService {
             public void onSuccess(Headers headers, String body) {
                 boolean registration = JsonParseUtils.parseDeviceRegistration(body);
                 if (!registration) {
-                    Log.d(TAG, "register device failed");
+                    Log.d(TAG, "Registration of device failed");
                     KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 }
             }
@@ -178,19 +131,7 @@ public class DeviceService {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    final String errorMessage = error;
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
-                            superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
-                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                            superActivityToast.setTextColor(Color.WHITE);
-                            superActivityToast.setTouchToDismiss(true);
-                            superActivityToast.show();
-                        }
-                    });
+                    showMessage(JsonParseUtils.parseError(error), (Activity) context);
                 }
             }
 
@@ -199,19 +140,7 @@ public class DeviceService {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 if (null != context) {
-                    final String exceptionMessage = e.getMessage();
-                    ((Activity) context).runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
-                            superActivityToast.setText(exceptionMessage);
-                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                            superActivityToast.setBackground(SuperToast.Background.BLUE);
-                            superActivityToast.setTextColor(Color.WHITE);
-                            superActivityToast.setTouchToDismiss(true);
-                            superActivityToast.show();
-                        }
-                    });
+                    showMessage(e.getMessage(), (Activity) context);
                 }
             }
         });
@@ -273,5 +202,29 @@ public class DeviceService {
             /** Populate data for detail views. */
             MonthlyReportUtils.fetchMonthly();
         }
+    }
+
+    /**
+     * Show Toast message.
+     *
+     * @param message
+     * @param context
+     */
+    private static void showMessage(final String message, final Activity context) {
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                SuperActivityToast superActivityToast = new SuperActivityToast(context);
+                superActivityToast.setText(message);
+                superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setTextColor(Color.WHITE);
+                superActivityToast.setTouchToDismiss(true);
+                superActivityToast.show();
+            }
+        });
     }
 }

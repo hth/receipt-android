@@ -188,17 +188,17 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+
+        /** Inflate the layout for this fragment. */
         view = inflater.inflate(R.layout.fragment_home, container, false);
         final ScrollView scrollView = (ScrollView) view.findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
-        /**
-         * Setup Material design pull to refresh
-         */
+
+        /** Setup Material design pull to refresh. */
         mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.material_style_ptr_frame);
-        // header
+
+        /** Header. */
         final MaterialHeader header = new MaterialHeader(getActivity());
         int[] colors = getResources().getIntArray(R.array.google_colors);
         header.setColorSchemeColors(colors);
@@ -214,10 +214,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         mPtrFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                if (scrollView.getScrollY() == 0)
-                    return true;
-                else
-                    return false;
+                return scrollView.getScrollY() == 0;
             }
 
             @Override
@@ -281,7 +278,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
     private void instantiateViews() {
