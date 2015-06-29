@@ -16,7 +16,6 @@ import android.os.Bundle;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
-import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.util.Log;

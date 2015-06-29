@@ -11,7 +11,6 @@ import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.service.ImageUploaderService;
 import com.receiptofi.checkout.utils.AppUtils;
-import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils;
 
 import java.util.ArrayList;

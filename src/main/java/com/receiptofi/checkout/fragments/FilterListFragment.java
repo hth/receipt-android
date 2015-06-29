@@ -32,7 +32,6 @@ import com.receiptofi.checkout.adapters.FilterListAdapter;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
-import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 
 import java.util.LinkedList;

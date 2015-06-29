@@ -15,7 +15,6 @@ import com.receiptofi.checkout.model.DataWrapper;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;
-import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.BillingAccountUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;

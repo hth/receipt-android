@@ -1,6 +1,5 @@
 package com.receiptofi.checkout.views.dialog;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -17,8 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
-import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
@@ -30,7 +27,6 @@ import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.Constants.DialogMode;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
-import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
 import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;

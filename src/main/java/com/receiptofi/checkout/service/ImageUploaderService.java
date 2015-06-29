@@ -16,7 +16,6 @@ import com.receiptofi.checkout.http.ImageResponseHandler;
 import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.AppUtils;
-import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 

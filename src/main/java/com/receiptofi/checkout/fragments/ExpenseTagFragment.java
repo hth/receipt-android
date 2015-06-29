@@ -2,6 +2,9 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -10,12 +13,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-//import android.support.v4.app.DialogFragment;
-//import android.support.v4.app.Fragment;
-//import android.support.v4.app.FragmentTransaction;
-import android.app.Fragment;
-import android.app.DialogFragment;
-import android.app.FragmentTransaction;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -217,14 +214,8 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 // set item width
                 openItem.setWidth(dp2px(90));
-
+                // set a icon
                 openItem.setIcon(mDrawEdit);
-                // set item title
-//                openItem.setTitle("Edit");
-//                // set item title fontsize
-//                openItem.setTitleSize(18);
-                // set item title font color
-//                openItem.setTitleColor(Color.WHITE);
                 // add to menu
                 menu.addMenuItem(openItem);
                 // create "delete" item
