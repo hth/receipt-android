@@ -63,7 +63,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         setContentView(R.layout.activity_splash);
 
 		/*// Auto change feature
-		new Thread(new Runnable() {
+        new Thread(new Runnable() {
 
 			@Override
 			public void run() {
@@ -190,8 +190,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
     public void onPageSelected(int position) {
         // 改变图片的描述信息
         Log.i("OSChina", "position is:" + position);
-        if(position % imageViewList.size() == imageViewList.size()-1)
-        {
+        if (position % imageViewList.size() == imageViewList.size() - 1) {
 
             Intent i = new Intent(SplashActivity.this, LaunchActivity.class);
             i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -200,9 +199,9 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         }
         tvDescription.setText(imageDescriptions[position % imageViewList.size()]);
         // 切换选中的点
-        llPoints.getChildAt(previousSelectPosition).setEnabled(false);	// 把前一个点置为normal状态
-        llPoints.getChildAt(position % imageViewList.size()).setEnabled(true);		// 把当前选中的position对应的点置为enabled状态
-        previousSelectPosition = position  % imageViewList.size();
+        llPoints.getChildAt(previousSelectPosition).setEnabled(false);    // 把前一个点置为normal状态
+        llPoints.getChildAt(position % imageViewList.size()).setEnabled(true);        // 把当前选中的position对应的点置为enabled状态
+        previousSelectPosition = position % imageViewList.size();
     }
 
     @Override
