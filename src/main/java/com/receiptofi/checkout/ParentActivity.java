@@ -156,13 +156,16 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     }
 
     /**
-     * ********    Toast and loader for login status    ***********
+     * Toast and loader for login status.
+     *
+     * @param msg
      */
-    public void showErrorMsg(final String msg){
+    public void showErrorMsg(final String msg) {
         showErrorMsg(msg, Toast.LENGTH_SHORT);
     }
+
     public void showErrorMsg(final String msg, final int length) {
-        if(TextUtils.isEmpty(msg)){
+        if (TextUtils.isEmpty(msg)) {
             return;
         }
         uiThread.post(new Runnable() {
@@ -170,7 +173,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             public void run() {
                 SuperActivityToast superActivityToast = new SuperActivityToast(ParentActivity.this);
                 superActivityToast.setText(msg);
-                superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                superActivityToast.setDuration(length);
                 superActivityToast.setBackground(SuperToast.Background.BLUE);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
@@ -199,14 +202,13 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     }
 
     /**
-     * ********    Authenticate social login    ***********
+     * Authenticate social login.
      */
     protected void authenticateSocialAccount(Bundle data) {
         Log.d(TAG, "Parent executing authenticateSocialAccount");
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         JSONObject postData = new JSONObject();
-
         try {
             postData.put(API.key.PID, data.getString(API.key.PID));
             postData.put(API.key.ACCESS_TOKEN, data.getString(API.key.ACCESS_TOKEN));
@@ -214,9 +216,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
 
-
         Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
-
         ExternalCallWithOkHttp.doPost(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
             @Override
             public void onSuccess(Headers headers, String body) {
@@ -285,7 +285,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 DeviceService.getNewUpdates(this);
             }
         } else {
-            showErrorMsg("Login Failed !!!");
+            showErrorMsg("Login Failed.");
         }
     }
 
@@ -330,10 +330,10 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             }
         });
     }
-    /**
-     * ********    for Facebook login    ***********
-     */
 
+    /**
+     * Facebook login.
+     */
     protected void openFacebookSession() {
         Log.d(TAG, "Parent executing openFacebookSession");
         openActiveSession(this, true, Arrays.asList("email", "public_profile"), new Session.StatusCallback() {
@@ -367,9 +367,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     }
 
     /**
-     * ********    for Google login    ***********
+     * Google login.
      */
-
     protected void signInWithGplus() {
         Log.d(TAG, "executing signInWithGplus");
         Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
@@ -446,10 +445,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     }
 
     /**
-     * ********    Async task to fetch Google auth-key    ***********
+     * Async task to fetch Google auth-key.
      */
-
-
     public class AccessTokenGooglePlus extends AsyncTask<Void, Void, Void> {
 
         String token = null;
@@ -525,5 +522,4 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             }
         }
     }
-
 }
