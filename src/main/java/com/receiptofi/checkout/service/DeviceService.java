@@ -1,9 +1,14 @@
 package com.receiptofi.checkout.service;
 
+import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.ExpenseTagFragment;
@@ -44,7 +49,7 @@ public class DeviceService {
      *
      * @param context
      */
-    public static void getNewUpdates(Context context) {
+    public static void getNewUpdates(final Context context) {
         Log.d(TAG, "get new update for device");
         ExternalCallWithOkHttp.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
             @Override
@@ -55,11 +60,41 @@ public class DeviceService {
             @Override
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
+                if (null != context) {
+                    final String errorMessage = error;
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
+                            superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
+                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                            superActivityToast.setBackground(SuperToast.Background.BLUE);
+                            superActivityToast.setTextColor(Color.WHITE);
+                            superActivityToast.setTouchToDismiss(true);
+                            superActivityToast.show();
+                        }
+                    });
+                }
             }
 
             @Override
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                if (null != context) {
+                    final String exceptionMessage = e.getMessage();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
+                            superActivityToast.setText(exceptionMessage);
+                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                            superActivityToast.setBackground(SuperToast.Background.BLUE);
+                            superActivityToast.setTextColor(Color.WHITE);
+                            superActivityToast.setTouchToDismiss(true);
+                            superActivityToast.show();
+                        }
+                    });
+                }
             }
         });
     }
@@ -69,7 +104,7 @@ public class DeviceService {
      *
      * @param context
      */
-    public static void getAll(Context context) {
+    public static void getAll(final Context context) {
         Log.d(TAG, "get all data for new device");
         ExternalCallWithOkHttp.doGet(context, API.ALL_FROM_BEGINNING, new ResponseHandler() {
             @Override
@@ -80,11 +115,41 @@ public class DeviceService {
             @Override
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
+                if (null != context) {
+                    final String errorMessage = error;
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
+                            superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
+                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                            superActivityToast.setBackground(SuperToast.Background.BLUE);
+                            superActivityToast.setTextColor(Color.WHITE);
+                            superActivityToast.setTouchToDismiss(true);
+                            superActivityToast.show();
+                        }
+                    });
+                }
             }
 
             @Override
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                if (null != context) {
+                    final String exceptionMessage = e.getMessage();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
+                            superActivityToast.setText(exceptionMessage);
+                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                            superActivityToast.setBackground(SuperToast.Background.BLUE);
+                            superActivityToast.setTextColor(Color.WHITE);
+                            superActivityToast.setTouchToDismiss(true);
+                            superActivityToast.show();
+                        }
+                    });
+                }
             }
         });
     }
@@ -93,7 +158,7 @@ public class DeviceService {
      * Create new device identity and insert to database. Then register the device id. In case of failure, remove the
      * the device id.
      */
-    public static void registerDevice(Context context) {
+    public static void registerDevice(final Context context) {
         Log.d(TAG, "register device");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
@@ -112,12 +177,42 @@ public class DeviceService {
             public void onError(int statusCode, String error) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 Log.e(TAG, "error=" + error);
+                if (null != context) {
+                    final String errorMessage = error;
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
+                            superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
+                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                            superActivityToast.setBackground(SuperToast.Background.BLUE);
+                            superActivityToast.setTextColor(Color.WHITE);
+                            superActivityToast.setTouchToDismiss(true);
+                            superActivityToast.show();
+                        }
+                    });
+                }
             }
 
             @Override
             public void onException(Exception e) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                if (null != context) {
+                    final String exceptionMessage = e.getMessage();
+                    ((Activity) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            SuperActivityToast superActivityToast = new SuperActivityToast(((Activity) context));
+                            superActivityToast.setText(exceptionMessage);
+                            superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                            superActivityToast.setBackground(SuperToast.Background.BLUE);
+                            superActivityToast.setTextColor(Color.WHITE);
+                            superActivityToast.setTouchToDismiss(true);
+                            superActivityToast.show();
+                        }
+                    });
+                }
             }
         });
     }

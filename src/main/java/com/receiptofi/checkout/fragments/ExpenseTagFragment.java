@@ -285,7 +285,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
 
                                                     @Override
                                                     public void onError(int statusCode, String error) {
-                                                        Log.d(TAG, "executing DELETE_EXPENSE_TAG: onError: " + error);
+                                                        Log.d(TAG, "onError=" + error);
                                                         if (null != getActivity()) {
                                                             final String errorMessage = error;
                                                             getActivity().runOnUiThread(new Runnable() {
@@ -298,17 +298,16 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                                                                     superActivityToast.setTextColor(Color.WHITE);
                                                                     superActivityToast.setTouchToDismiss(true);
                                                                     superActivityToast.show();
-//                                                                    ToastBox.makeText(getActivity(), JsonParseUtils.parseError(errorMessage), Toast.LENGTH_SHORT).show();
                                                                 }
                                                             });
                                                         }
                                                     }
 
                                                     @Override
-                                                    public void onException(Exception exception) {
-                                                        Log.d(TAG, "executing DELETE_EXPENSE_TAG: onException: " + exception.getMessage());
+                                                    public void onException(Exception e) {
+                                                        Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
                                                         if (null != getActivity()) {
-                                                            final String exceptionMessage = exception.getMessage();
+                                                            final String exceptionMessage = e.getMessage();
                                                             getActivity().runOnUiThread(new Runnable() {
                                                                 @Override
                                                                 public void run() {
@@ -319,11 +318,9 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                                                                     superActivityToast.setTextColor(Color.WHITE);
                                                                     superActivityToast.setTouchToDismiss(true);
                                                                     superActivityToast.show();
-//                                                                    ToastBox.makeText(getActivity(), exceptionMessage, Toast.LENGTH_SHORT).show();
                                                                 }
                                                             });
                                                         }
-
                                                     }
                                                 });
 
