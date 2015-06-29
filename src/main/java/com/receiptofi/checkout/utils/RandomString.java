@@ -19,6 +19,7 @@ public class RandomString {
             SYMBOLS[idx] = (char) ('a' + idx - 10);
         }
     }
+
     private final Random random = new Random();
     private final char[] buf;
 

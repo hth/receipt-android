@@ -1,10 +1,12 @@
 package com.receiptofi.checkout.utils;
+
 import android.content.Context;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+
 /**
  * Created by kevin on 6/16/15.
  */
@@ -12,7 +14,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
 
     private final GestureDetector gestureDetector;
 
-    public OnSwipeTouchListener (Context ctx){
+    public OnSwipeTouchListener(Context ctx) {
         gestureDetector = new GestureDetector(ctx, new GestureListener());
     }
 
@@ -41,8 +43,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
                         }
                     }
                     result = true;
-                }
-                else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                } else if (Math.abs(diffY) > SWIPE_THRESHOLD && Math.abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
                     if (diffY > 0) {
                         onSwipeBottom();
                     } else {
@@ -58,7 +59,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
         }
     }
 
-    public boolean onTouch(View var1, MotionEvent var2){
+    public boolean onTouch(View var1, MotionEvent var2) {
         return gestureDetector.onTouchEvent(var2);
     }
 

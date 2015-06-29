@@ -226,7 +226,7 @@ public class ReceiptUtils {
                     "select * from " +
                             DatabaseTable.Receipt.TABLE_NAME + " where " +
                             DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " " +
-                            "and " +  DatabaseTable.Receipt.RECEIPT_DATE  + " LIKE '" + yearMonth + "%' " +
+                            "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE '" + yearMonth + "%' " +
                             "ORDER BY " + DatabaseTable.Receipt.RECEIPT_DATE + " DESC",
                     null);
             receiptGroup.addReceiptGroup(retrieveReceiptModelFromCursor(cursor));
