@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.http;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.receiptofi.checkout.db.DatabaseTable;
 import com.receiptofi.checkout.model.ReceiptModel;
@@ -14,14 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ResponseParser {
+    private static final String TAG = ResponseParser.class.getSimpleName();
+
+    private ResponseParser() {
+    }
 
     public static void getLoginDetails(String response) {
         try {
             JSONObject loginResponseJson = new JSONObject(response);
-
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            Log.d(TAG, "reason=" + e.getMessage(), e);
         }
     }
 
@@ -29,16 +32,14 @@ public class ResponseParser {
         try {
             JSONObject loginResponseJson = new JSONObject(response);
             JSONObject error = loginResponseJson.getJSONObject("error");
-            String errorMsg = error.getString("reason");
-            return errorMsg;
+            return error.getString("reason");
         } catch (JSONException e) {
-            // TODO Auto-generated catch block
+            Log.d(TAG, "reason=" + e.getMessage(), e);
             return null;
         }
     }
 
     public synchronized static Bundle getImageUploadResponse(String response) {
-
         Bundle bundle = new Bundle();
         try {
             JSONObject imageResponse = new JSONObject(response);
@@ -49,14 +50,13 @@ public class ResponseParser {
             bundle.putString(ConstantsJson.UPLOADED_DOCUMENT_NAME, imageResponse.getString(ConstantsJson.UPLOADED_DOCUMENT_NAME));
 
         } catch (JSONException e) {
-            //TODO added log message
+            Log.d(TAG, "reason=" + e.getMessage(), e);
         }
         return bundle;
     }
 
     public static List<ReceiptModel> getReceipts(String response) {
         List<ReceiptModel> models = new ArrayList<>();
-        // ArrayList<Rec>
         try {
             JSONArray array = new JSONArray(response);
             for (int i = 0; i < array.length(); i++) {
@@ -94,7 +94,7 @@ public class ResponseParser {
                 models.add(model);
             }
         } catch (Exception e) {
-            // TODO: handle exception
+            Log.d(TAG, "reason=" + e.getMessage(), e);
         }
 
         return models;

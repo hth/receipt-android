@@ -52,8 +52,6 @@ import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
 import in.srain.cube.views.ptr.header.MaterialHeader;
 
-//import android.support.v4.app.Fragment;
-
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
@@ -216,7 +214,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         mPtrFrameLayout.setPtrHandler(new PtrHandler() {
             @Override
             public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                if(scrollView.getScrollY() == 0)
+                if (scrollView.getScrollY() == 0)
                     return true;
                 else
                     return false;
@@ -226,7 +224,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             public void onRefreshBegin(final PtrFrameLayout frame) {
                 // Below is the real refresh event.
                 DeviceService.getNewUpdates(getActivity());
-                long delay = (long)10000;
+                long delay = (long) 10000;
                 frame.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -399,7 +397,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private void setUnprocessedCount() {
         Log.d(TAG, "executing setUnprocessedCount");
         Activity activity = getActivity();
-        if(activity != null) {
+        if (activity != null) {
             unprocessedDocumentCount.setText(getString(R.string.processing_info, unprocessedValue));
         } else {
             Log.d(TAG, "setUnprocessedCount the response of getActivity() is null.");
@@ -409,10 +407,9 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private void setMonthlyExpense() {
         Log.d(TAG, "executing setMonthlyExpense");
         Activity activity = getActivity();
-        if(activity != null) {
+        if (activity != null) {
             currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), currentMonthExpValue));
-        }
-        else {
+        } else {
             Log.d(TAG, "setMonthlyExpense the response of getActivity() is null.");
         }
     }

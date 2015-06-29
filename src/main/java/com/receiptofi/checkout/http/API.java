@@ -1,6 +1,10 @@
 package com.receiptofi.checkout.http;
 
 public class API {
+
+    private API() {
+    }
+
     // Account api
     public static final String LOGIN_API = "/j_spring_security_check";
     public static final String SIGNUP_API = "/registration.json";
