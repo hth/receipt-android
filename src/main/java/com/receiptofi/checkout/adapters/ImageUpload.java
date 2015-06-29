@@ -1,6 +1,5 @@
 package com.receiptofi.checkout.adapters;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteConstraintException;
 import android.os.Message;
@@ -45,9 +44,9 @@ public class ImageUpload {
             isAddedToDB = model.addToQueue();
             imageQueue.add(model);
 
-            if (!ImageUploaderService.isServiceConnected() &&
-                    isAddedToDB &&
-                    UserSettings.isStartImageUploadProcess(context)) {
+            if (!ImageUploaderService.isServiceConnected()
+                    && isAddedToDB
+                    && UserSettings.isStartImageUploadProcess(context)) {
                 Log.i("image added to queue", model.imgPath);
                 ImageUploaderService.start(context);
             } else {

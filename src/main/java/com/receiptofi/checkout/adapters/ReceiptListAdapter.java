@@ -28,6 +28,9 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
     private final LayoutInflater inflater;
     private Context context;
 
+    private DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);
+    private DateFormat outputDF = new SimpleDateFormat("MMM yyyy", Locale.US);
+
     public ReceiptListAdapter(Context context) {
         super();
         this.context = context;
@@ -70,8 +73,13 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
+    public View getChildView(
+            int groupPosition,
+            final int childPosition,
+            boolean isLastChild,
+            View convertView,
+            ViewGroup parent
+    ) {
         try {
             ChildViewHolder holder;
             if (convertView == null) {
@@ -88,10 +96,9 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
-            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate()));
 
             holder.bizName.setText(receiptData.getBizName());
-            holder.date.setText(formattedDate);
+            holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
             /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
             if (!TextUtils.isEmpty(receiptData.getExpenseTagId()) && null != receiptData.getExpenseTagModel()) {
@@ -129,12 +136,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptGroupHeader headerData = (ReceiptGroupHeader) getGroup(groupPosition);
-            String year = headerData.getYear();
-            String month = headerData.getMonth();
-            DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);
-            DateFormat outputDF = new SimpleDateFormat("MMM yyyy", Locale.US);
-            String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
-
+            String formattedMonth = outputDF.format(inputDF.parse(headerData.getMonth() + " " + headerData.getYear()));
             holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));
             holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
             return convertView;
