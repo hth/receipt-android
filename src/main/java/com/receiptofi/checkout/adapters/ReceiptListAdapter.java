@@ -103,14 +103,11 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {
-            Log.d(TAG, "IndexOutOfBoundsException " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "IndexOutOfBoundsException " + e.getLocalizedMessage(), e);
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -143,11 +140,9 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             return convertView;
 
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
         return null;
     }

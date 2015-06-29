@@ -10,6 +10,9 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+
 import java.io.File;
 
 public class AppUtils {
@@ -125,5 +128,15 @@ public class AppUtils {
         return (context.getResources().getConfiguration().screenLayout
                 & Configuration.SCREENLAYOUT_SIZE_MASK)
                 >= Configuration.SCREENLAYOUT_SIZE_LARGE;
+    }
+
+    /**
+     * Gets time for local time zone.
+     *
+     * @param date
+     * @return
+     */
+    public static DateTime getDateTime(String date) {
+        return Constants.ISO_J_DF.parseDateTime(date).withZone(DateTimeZone.getDefault());
     }
 }
