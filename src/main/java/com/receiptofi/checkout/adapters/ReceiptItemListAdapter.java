@@ -18,8 +18,8 @@ import java.util.List;
  * Date: 1/18/15 11:11 PM
  */
 public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
-
     private static final String TAG = ReceiptItemListAdapter.class.getSimpleName();
+
     private final LayoutInflater inflater;
     private Context context;
     private List<ReceiptItemModel> rdItems;
@@ -80,8 +80,7 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
             return convertView;
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
         return null;
     }
