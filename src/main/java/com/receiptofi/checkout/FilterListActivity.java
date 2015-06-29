@@ -48,7 +48,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
             ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_angle_left)
+            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_chevron_left)
                     .colorRes(R.color.white)
                     .actionBarSize());
         }
