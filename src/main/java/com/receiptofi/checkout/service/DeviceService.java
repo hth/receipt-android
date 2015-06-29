@@ -39,6 +39,11 @@ public class DeviceService {
     private DeviceService() {
     }
 
+    /**
+     * Gets new updates for this device.
+     *
+     * @param context
+     */
     public static void getNewUpdates(Context context) {
         Log.d(TAG, "get new update for device");
         ExternalCallWithOkHttp.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
@@ -49,16 +54,21 @@ public class DeviceService {
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing getNewUpdates: onError: " + error);
+                Log.e(TAG, "error=" + error);
             }
 
             @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "executing getNewUpdates: onException: " + exception.getMessage());
+            public void onException(Exception e) {
+                Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             }
         });
     }
 
+    /**
+     * Get all data for the user.
+     *
+     * @param context
+     */
     public static void getAll(Context context) {
         Log.d(TAG, "get all data for new device");
         ExternalCallWithOkHttp.doGet(context, API.ALL_FROM_BEGINNING, new ResponseHandler() {
@@ -69,12 +79,12 @@ public class DeviceService {
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing getAll: onError: " + error);
+                Log.e(TAG, "error=" + error);
             }
 
             @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "executing getAll: onException: " + exception.getMessage());
+            public void onException(Exception e) {
+                Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             }
         });
     }
@@ -101,13 +111,13 @@ public class DeviceService {
             @Override
             public void onError(int statusCode, String error) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
-                Log.d(TAG, "executing registerDevice: onError: " + error);
+                Log.e(TAG, "error=" + error);
             }
 
             @Override
-            public void onException(Exception exception) {
+            public void onException(Exception e) {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
-                Log.d(TAG, "executing registerDevice: onException: " + exception.getMessage());
+                Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             }
         });
     }
