@@ -30,16 +30,6 @@ public class Constants {
     public static final DateTimeFormatter ISO_J_DF = ISODateTimeFormat.dateTime();
     public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a", Locale.US);
 
-    /**
-     * Kevin add
-     */
-    public static final String PROP_KEY_PRIVATE_TOKEN = "private_token";
-
-    // TODO: Clean up below:
-    public static final boolean KEY_NEW_PAGE = true;
-
-    public static final boolean KEVIN_DEBUG = false;
-
     public enum ReceiptFilter {
         FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),
         FILTER_BY_KEYWORD("filter_by_keyword"),

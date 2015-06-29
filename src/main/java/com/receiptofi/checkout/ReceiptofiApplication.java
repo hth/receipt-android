@@ -34,7 +34,6 @@ public class ReceiptofiApplication extends Application {
 
     @Override
     public void onCreate() {
-        // TODO Auto-generated method stub
         super.onCreate();
         Log.d(TAG, "ReceiptofiApplication onCreate");
 

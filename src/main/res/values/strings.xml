@@ -168,12 +168,8 @@
     <string name="app_id">567914876645251</string>
     <string name="title_activity_main_page">MainPageActivity</string>
 
-    <!-- Kevin add for MainPageActivity -->
-    <string name="app_description">mainpage activity</string>
-    <string name="drawer_open">drawer_open</string>
-    <string name="drawer_close">drawer_close</string>
+    <!-- Used by fragment_expense_tag_style_listview.xml -->
     <string name="tag_modify_note">Swipe from right side to edit or delete a tag.</string>
-    <string name="tag_modify_note_new">Select any tag to modify.</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

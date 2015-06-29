@@ -3,17 +3,13 @@ package com.receiptofi.checkout.fragments;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.Fragment;
 import android.os.Handler;
 import android.os.Message;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.receiptofi.checkout.R;
@@ -116,7 +112,6 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             updatePassword(key, password);
         } else if (key.equals(getString(R.string.key_pref_notification))) {
             Log.d(TAG, "notification setting changed- new value: " + sharedPreferences.getBoolean(key, false));
-            //TODO add this
         } else {
             Log.d(TAG, "No match for key: " + key);
         }

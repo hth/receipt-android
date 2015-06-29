@@ -66,13 +66,10 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     /**
      * List Style implementation
      */
-
-    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -113,7 +110,6 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
      * @param param2 Parameter 2.
      * @return A new instance of fragment TagModifyFragment.
      */
-    // TODO: Rename and change types and number of parameters
     public static ExpenseTagFragment newInstance(String param1, String param2) {
         ExpenseTagFragment fragment = new ExpenseTagFragment();
         Bundle args = new Bundle();
@@ -178,7 +174,6 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         public void onFragmentInteraction(Uri uri);
     }
 
@@ -271,7 +266,6 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
 
                         break;
                     case DELETE:
-                        // TODO: Replace DialogFragment with PostOffice dialog.
                         new AlertDialog.Builder(getActivity())
                                 .setTitle(getString(R.string.expense_tag_dialog_delete_label))
                                 .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
@@ -378,248 +372,4 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     public void onDismiss(final DialogInterface dialog) {
         updateHandler.sendEmptyMessage(EXPENSE_TAG_UPDATED);
     }
-
-    /**
-     * Button Style implementation
-     * We clear up bleow codes soon.
-     */
-//    // TODO: Rename parameter arguments, choose names that match
-//    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//    private static final String ARG_PARAM1 = "param1";
-//    private static final String ARG_PARAM2 = "param2";
-//    private static final String TAG = ExpenseTagFragment.class.getSimpleName();
-//
-//    // TODO: Rename and change types of parameters
-//    private String mParam1;
-//    private String mParam2;
-//    private GridView gridView;
-//    private List<ExpenseTagModel> tagModelList;
-//    private ExpenseTagAdapter mAdapter;
-//    private ButtonFloat fbAddTag;
-//
-//    private OnFragmentInteractionListener mListener;
-//
-//    public static final int EXPENSE_TAG_DELETED = 0x1561;
-//    public static final int EXPENSE_TAG_UPDATED = 0x1562;
-//
-//    public final Handler updateHandler = new Handler(new Handler.Callback() {
-//        @Override
-//        public boolean handleMessage(Message msg) {
-//            final int what = msg.what;
-//            switch (what) {
-//                case EXPENSE_TAG_DELETED:
-//                    notifyList();
-//                    break;
-//                case EXPENSE_TAG_UPDATED:
-//                    notifyList();
-//                    break;
-//                default:
-//                    Log.e(TAG, "Update handler not defined for: " + what);
-//            }
-//            return true;
-//        }
-//    });
-//
-//    /**
-//     * Use this factory method to create a new instance of
-//     * this fragment using the provided parameters.
-//     *
-//     * @param param1 Parameter 1.
-//     * @param param2 Parameter 2.
-//     * @return A new instance of fragment ExpenseTagFragment.
-//     */
-//    // TODO: Rename and change types and number of parameters
-//    public static ExpenseTagFragment newInstance(String param1, String param2) {
-//        ExpenseTagFragment fragment = new ExpenseTagFragment();
-//        Bundle args = new Bundle();
-//        args.putString(ARG_PARAM1, param1);
-//        args.putString(ARG_PARAM2, param2);
-//        fragment.setArguments(args);
-//        return fragment;
-//    }
-//
-//    public ExpenseTagFragment() {
-//        // Required empty public constructor
-//    }
-//
-//    @Override
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        if (getArguments() != null) {
-//            mParam1 = getArguments().getString(ARG_PARAM1);
-//            mParam2 = getArguments().getString(ARG_PARAM2);
-//        }
-//    }
-//
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        // Inflate the layout for this fragment
-//        View rootView =  inflater.inflate(R.layout.fragment_expense_tag, container, false);
-//        gridView = (GridView)rootView.findViewById(R.id.gv_tag);
-//        fbAddTag = (ButtonFloat)rootView.findViewById(R.id.buttonFloat);
-//        fbAddTag.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-//                if (prev != null) {
-//                    ft.remove(prev);
-//                }
-//                ft.addToBackStack(null);
-//
-//                // Create and show the dialog.
-//                DialogFragment editTagDialog = ExpenseTagDialog.newInstance(null);
-//                editTagDialog.show(ft, "dialog");
-//            }
-//        });
-//
-//        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
-//        tagModelList = new LinkedList<>(expTagMap.values());
-//        mAdapter = new ExpenseTagAdapter(getActivity(), tagModelList);
-//        gridView.setAdapter(mAdapter);
-//
-//        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                final ExpenseTagModel tagModel = tagModelList.get(i);
-//                Delivery delivery = null;
-//                String tag = "";
-//                delivery = PostOffice.newMail(getActivity())
-//                        .setTitle("Edit or Delete this tag:")
-//                        .setThemeColor(Color.BLUE)
-//                        .setDesign(Design.MATERIAL_LIGHT)
-//                        .showKeyboardOnDisplay(true)
-//                        .setButton(Dialog.BUTTON_POSITIVE, "Edit", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                FragmentTransaction ft = getFragmentManager().beginTransaction();
-//                                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-//                                if (prev != null) {
-//                                    ft.remove(prev);
-//                                }
-//                                ft.addToBackStack(null);
-//
-//                                // Create and show the dialog.
-//                                DialogFragment editTagDialog = ExpenseTagDialog.newInstance(tagModel.getId());
-//                                editTagDialog.show(ft, "dialog");
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setButton(Dialog.BUTTON_NEUTRAL, "Delete", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                new AlertDialog.Builder(getActivity())
-//                                        .setTitle(getString(R.string.expense_tag_dialog_delete_label))
-//                                        .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
-//                                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
-//                                            public void onClick(DialogInterface dialog, int which) {
-//                                                // do nothing
-//                                            }
-//                                        })
-//                                        .setPositiveButton(getString(R.string.expense_tag_dialog_button_delete), new DialogInterface.OnClickListener() {
-//                                            public void onClick(DialogInterface dialog, int which) {
-//                                                String tagId = tagModel.getId();
-//                                                String tagName = tagModel.getName();
-//
-//                                                if (null != tagId || null != tagName) {
-//                                                    JSONObject postData = new JSONObject();
-//                                                    try {
-//                                                        postData.put("tagId", tagId);
-//                                                        postData.put("tagName", tagName);
-//
-//                                                        ExternalCallWithOkHttp.doPost(getActivity(), postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-//                                                            @Override
-//                                                            public void onSuccess(Headers headers, String body) {
-//                                                                DeviceService.onSuccess(headers, body);
-//                                                                updateHandler.sendEmptyMessage(EXPENSE_TAG_DELETED);
-//                                                            }
-//
-//                                                            @Override
-//                                                            public void onError(int statusCode, String error) {
-//                                                                Log.d(TAG, "executing DELETE_EXPENSE_TAG: onError: " + error);
-//                                                                ToastBox.makeText(getActivity(), JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
-//                                                            }
-//
-//                                                            @Override
-//                                                            public void onException(Exception exception) {
-//                                                                Log.d(TAG, "executing DELETE_EXPENSE_TAG: onException: " + exception.getMessage());
-//                                                                ToastBox.makeText(getActivity(), exception.getMessage(), Toast.LENGTH_SHORT).show();
-//                                                            }
-//                                                        });
-//
-//                                                    } catch (JSONException e) {
-//                                                        Log.e(TAG, "Exception while deleting expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-//                                                    }
-//                                                }
-//                                            }
-//                                        })
-//                                        .setIcon(android.R.drawable.ic_dialog_alert)
-//                                        .show();
-//                                dialog.dismiss();
-//                            }
-//                        })
-//                        .setButton(Dialog.BUTTON_NEGATIVE, "Cancel", new DialogInterface.OnClickListener() {
-//                            @Override
-//                            public void onClick(DialogInterface dialog, int which) {
-//                                dialog.cancel();
-//                            }
-//                        })
-//                        .build();
-//                if(delivery != null)
-//                    delivery.show(getFragmentManager(), tag);
-//            }
-//        });
-//        return rootView;
-//    }
-//
-//    // TODO: Rename method, update argument and hook method into UI event
-//    public void onButtonPressed(Uri uri) {
-//        if (mListener != null) {
-//            mListener.onFragmentInteraction(uri);
-//        }
-//    }
-//
-//    @Override
-//    public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//        try {
-//            mListener = (OnFragmentInteractionListener) activity;
-//        } catch (ClassCastException e) {
-////            throw new ClassCastException(activity.toString()
-////                    + " must implement OnFragmentInteractionListener");
-//        }
-//    }
-//
-//    @Override
-//    public void onDetach() {
-//        super.onDetach();
-//        mListener = null;
-//    }
-//
-//    /**
-//     * This interface must be implemented by activities that contain this
-//     * fragment to allow an interaction in this fragment to be communicated
-//     * to the activity and potentially other fragments contained in that
-//     * activity.
-//     * <p/>
-//     * See the Android Training lesson <a href=
-//     * "http://developer.android.com/training/basics/fragments/communicating.html"
-//     * >Communicating with Other Fragments</a> for more information.
-//     */
-//    public interface OnFragmentInteractionListener {
-//        // TODO: Update argument type and name
-//        public void onFragmentInteraction(Uri uri);
-//    }
-//
-//    private void notifyList() {
-//        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
-//        tagModelList = new LinkedList<>(expTagMap.values());
-//        if (mAdapter != null) {
-//            mAdapter.updateList(tagModelList);
-//            mAdapter.notifyDataSetChanged();
-//            mAdapter.notifyDataSetChanged();
-//        }
-//    }
-
 }

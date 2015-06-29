@@ -328,8 +328,6 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         // and add the transaction to the back stack so the user can navigate back
         if (AppUtils.isTablet(this)) {
             // Handle Table environment
-            Log.d(TAG, "Kevin in table environment.");
-
             FragmentManager fm = getFragmentManager();
             ReceiptDetailImageForTabletDialogFragment detailImage = new ReceiptDetailImageForTabletDialogFragment();
             Bundle args_tablet = new Bundle();

@@ -10,8 +10,6 @@ import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.service.ImageUploaderService;
-import com.receiptofi.checkout.utils.AppUtils;
-import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
 
 import java.util.ArrayList;
@@ -46,29 +44,18 @@ public class ImageUpload {
                 Log.i("image added to queue", model.imgPath);
                 ImageUploaderService.start(context);
             } else {
-                // TODO: Clean up below:
-                if (Constants.KEY_NEW_PAGE) {
                     Message msg = new Message();
                     msg.what = HomeFragment.IMAGE_ADDED_TO_QUEUED;
                     msg.obj = "Image added to queue. Upload start automatically when network is available.";
                     ((MainMaterialDrawerActivity) context).mHomeFragment.updateHandler.sendMessage(msg);
-                }
-//                ((HomeActivity) AppUtils.getHomePageContext()).updateHandler.sendEmptyMessage(HomeActivity.IMAGE_ADDED_TO_QUEUED);
             }
         } catch (SQLiteConstraintException e) {
             Message msg = new Message();
             msg.what = HomeFragment.IMAGE_ALREADY_QUEUED;
-            // TODO: Clean up below:
-//            msg.what = HomeActivity.IMAGE_ALREADY_QUEUED;
             //TODO(hth) move this to XML file
             msg.obj = "This image already exists in upload queue.";
             if (ReceiptofiApplication.isHomeActivityVisible()) {
-                // TODO: Clean up below:
-                if (Constants.KEY_NEW_PAGE) {
                     ((MainMaterialDrawerActivity) context).mHomeFragment.updateHandler.sendMessage(msg);
-                }
-                // TODO: Clean up below:
-//                ((HomeActivity) context).updateHandler.sendMessage(msg);
             }
         }
     }

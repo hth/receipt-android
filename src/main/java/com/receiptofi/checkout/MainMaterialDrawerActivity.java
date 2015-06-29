@@ -221,7 +221,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // TODO Auto-generated method stub
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == RESULT_IMAGE_GALLERY && resultCode == RESULT_OK && null != data) {
             Uri imageGallery = data.getData();
