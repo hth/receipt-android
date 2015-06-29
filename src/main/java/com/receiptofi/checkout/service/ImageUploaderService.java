@@ -18,6 +18,8 @@ import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
+import com.receiptofi.checkout.utils.db.DBUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import java.util.ArrayList;
 
@@ -78,6 +80,7 @@ public class ImageUploaderService {
                 iModel.blobId = responseBundle.getString(DatabaseTable.ImageIndex.BLOB_ID);
                 String fileName = responseBundle.getString(ConstantsJson.UPLOADED_DOCUMENT_NAME);
                 int unprocessedCount = responseBundle.getInt(ConstantsJson.UNPROCESSED_COUNT);
+                KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, String.valueOf(unprocessedCount));
 
                 iModel.updateStatus(true);
                 updateProcessStatus(iModel);
