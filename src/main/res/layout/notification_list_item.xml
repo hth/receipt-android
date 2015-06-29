@@ -2,28 +2,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:padding="8dp"
                 android:minHeight="?android:attr/listPreferredItemHeight"
                 android:orientation="vertical"
-    >
+                android:padding="8dp">
 
     <TextView
         android:id="@+id/notification_text"
+        style="@style/text_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/text_notification"
-        android:text="Notification test:"
-        android:paddingLeft="@dimen/tv_horizontal_margin"/>
+        android:paddingLeft="@dimen/tv_horizontal_margin"
+        android:text="Notification test:"/>
 
     <TextView
         android:id="@+id/notification_time"
+        style="@style/date_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/notification_text"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
+        android:layout_below="@id/notification_text"
         android:paddingLeft="@dimen/tv_horizontal_margin"
-        style="@style/date_notification"
         android:text="text"/>
 
 </RelativeLayout>
