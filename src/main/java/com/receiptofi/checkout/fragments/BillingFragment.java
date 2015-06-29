@@ -54,7 +54,7 @@ public class BillingFragment extends Fragment {
     }
 
     private void setupView() {
-        billingTitle.setPaintFlags(billingTitle.getPaintFlags()| Paint.UNDERLINE_TEXT_FLAG);
+        billingTitle.setPaintFlags(billingTitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         billingHistoryTitle.setPaintFlags(billingHistoryTitle.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
     }
 

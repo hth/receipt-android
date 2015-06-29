@@ -78,7 +78,7 @@ public class NotificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        mView =  inflater.inflate(R.layout.fragment_notification, container, false);
+        mView = inflater.inflate(R.layout.fragment_notification, container, false);
         setupView();
         // start query
         new NotificationDataTask().execute();
@@ -194,7 +194,7 @@ public class NotificationFragment extends Fragment {
     }
 
     private boolean listIsAtTop() {
-        if(listView.getChildCount() == 0) return true;
+        if (listView.getChildCount() == 0) return true;
         return listView.getChildAt(0).getTop() == 0;
     }
 }

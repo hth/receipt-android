@@ -49,7 +49,7 @@ import java.util.Locale;
  * User: PT
  * Date: 1/1/15 12:44 PM
  */
-public class ReceiptListFragment extends Fragment implements PinnedHeaderExpandableListView.OnHeaderUpdateListener{
+public class ReceiptListFragment extends Fragment implements PinnedHeaderExpandableListView.OnHeaderUpdateListener {
 
     public static final int RECEIPT_MODEL_UPDATED = 0x2436;
     private static final String TAG = ReceiptListFragment.class.getSimpleName();
@@ -116,7 +116,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             return true;
         }
     });
-    
+
     public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
     private PinnedHeaderExpandableListView explv;
     private OnReceiptSelectedListener mCallback;

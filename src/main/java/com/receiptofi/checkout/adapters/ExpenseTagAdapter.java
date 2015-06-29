@@ -23,12 +23,13 @@ public class ExpenseTagAdapter extends BaseAdapter {
      */
     private List<ExpenseTagModel> mList;
     private Context mContext;
+
     public ExpenseTagAdapter(Context context, List<ExpenseTagModel> tags) {
         this.mContext = context;
         this.mList = tags;
     }
 
-    public void updateList( List<ExpenseTagModel> mlistHashMaps) {
+    public void updateList(List<ExpenseTagModel> mlistHashMaps) {
         this.mList = mlistHashMaps;
     }
 
@@ -55,7 +56,7 @@ public class ExpenseTagAdapter extends BaseAdapter {
             new ViewHolder(view);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        ExpenseTagModel tagModel = (ExpenseTagModel)getItem(i);
+        ExpenseTagModel tagModel = (ExpenseTagModel) getItem(i);
         holder.tv_content.setText(tagModel.getName());
         holder.tv_content.setTextColor(Color.parseColor(tagModel.getColor()));
         holder.iv_label.setBackgroundColor(Color.parseColor(tagModel.getColor()));
