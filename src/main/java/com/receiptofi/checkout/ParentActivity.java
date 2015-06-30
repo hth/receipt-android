@@ -282,7 +282,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 DeviceService.registerDevice(this);
                 DeviceService.getAll(this);
             } else {
-                DeviceService.getNewUpdates(this);
+                String getAllComplete = KeyValueUtils.getValue(KeyValueUtils.KEYS.GET_ALL_COMPLETE);
+                Log.d(TAG, "Status of getAllComplete=" + getAllComplete);
+                if (TextUtils.isEmpty(getAllComplete) || Boolean.toString(false).equals(getAllComplete)) {
+                    Log.i(TAG, "Failed previously to complete " + KeyValueUtils.KEYS.GET_ALL_COMPLETE);
+                    DeviceService.getAll(this);
+                } else {
+                    DeviceService.getUpdates(this);
+                }
             }
         } else {
             showErrorMsg("Login Failed.");

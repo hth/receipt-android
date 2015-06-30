@@ -46,11 +46,11 @@ public class DeviceService {
     }
 
     /**
-     * Gets new updates for this device.
+     * Gets updates for this device.
      *
      * @param context
      */
-    public static void getNewUpdates(final Context context) {
+    public static void getUpdates(final Context context) {
         Log.d(TAG, "get new update for device");
         ExternalCallWithOkHttp.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
             @Override
@@ -87,6 +87,9 @@ public class DeviceService {
             @Override
             public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
+
+                /** Update DB if successful in getting all the data and update the DB. */
+                KeyValueUtils.updateInsert(KeyValueUtils.KEYS.GET_ALL_COMPLETE, Boolean.toString(true));
             }
 
             @Override
