@@ -45,5 +45,7 @@
 
     <!--      For receipt list view -->
     <color name="father_bg">#4CAF50</color>
+    <color name="teal_500">#009688</color>
+    <color name="light_blue_500">#03A9F4</color>
 
 </resources>

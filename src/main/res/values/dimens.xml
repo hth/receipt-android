@@ -44,6 +44,9 @@
     <dimen name="tagColorMargin">10dp</dimen>
     <dimen name="tagColorMargin_left">1dp</dimen>
     <dimen name="tagTextMargin">30dp</dimen>
+    <dimen name="text_paddingleft">10dp</dimen>
+    <dimen name="icontextviewsize">28sp</dimen>
+    <dimen name="linearlayout_padding">5dp</dimen>
 
     <!--   For TextView in fragment  -->
     <dimen name="tv_horizontal_margin">16dp</dimen>
