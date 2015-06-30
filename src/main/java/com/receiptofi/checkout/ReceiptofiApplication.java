@@ -9,6 +9,7 @@ import com.receiptofi.checkout.db.DatabaseHandler;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.MonthlyReportUtils;
 
 import net.danlew.android.joda.JodaTimeAndroid;
@@ -39,7 +40,9 @@ public class ReceiptofiApplication extends Application {
 
         JodaTimeAndroid.init(this);
         RDH = DatabaseHandler.getsInstance(this);
-        if (TextUtils.isEmpty(UserUtils.getAuth()) && TextUtils.isEmpty(UserUtils.getEmail())) {
+        if (KeyValueUtils.doesTableExists() &&
+                TextUtils.isEmpty(UserUtils.getAuth()) &&
+                TextUtils.isEmpty(UserUtils.getEmail())) {
             Log.d(TAG, "Found authId empty, re-set data");
             DBUtils.initializeDefaults();
         } else {
