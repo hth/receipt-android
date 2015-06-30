@@ -106,7 +106,7 @@
 
     <!--    Receipt drawer view    -->
     <style name="text_receipt_action_label" parent="@android:style/TextAppearance.Large">
-        <item name="android:textColor">@color/tv_black_second</item>
+        <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">bold</item>
     </style>
 

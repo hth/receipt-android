@@ -44,8 +44,8 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
 
     public interface OnHeaderUpdateListener {
         /**
-         * 返回一个view对象即可
-         * 注意：view必须要有LayoutParams
+         * Must return a view.
+         * Note: view must have LayoutParams attribuates.
          */
         public View getPinnedHeader();
 
@@ -96,11 +96,9 @@ public class PinnedHeaderExpandableListView extends ExpandableListView implement
     }
 
     /**
-     * 给group添加点击事件监听
-     * @param onGroupClickListener 监听
-     * @param isHeaderGroupClickable 表示header是否可点击<br/>
-     * note : 当不想group可点击的时候，需要在OnGroupClickListener#onGroupClick中返回true，
-     * 并将isHeaderGroupClickable设为false即可
+     *  Add group Listener
+     * @param onGroupClickListener Listener
+     * @param isHeaderGroupClickable
      */
     public void setOnGroupClickListener(OnGroupClickListener onGroupClickListener, boolean isHeaderGroupClickable) {
         mIsHeaderGroupClickable = isHeaderGroupClickable;

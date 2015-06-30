@@ -110,7 +110,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
             iv.setBackgroundResource(imageResIDs[i]);
             imageViewList.add(iv);
 
-            // 添加点view对象
+            // Add new View.
             view = new View(this);
             view.setBackgroundDrawable(getResources().getDrawable(R.drawable.point_background));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(5, 5);
@@ -149,7 +149,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         }
 
         /**
-         * 判断出去的view是否等于进来的view 如果为true直接复用
+         * Judge the output view is same as input view
          */
         @Override
         public boolean isViewFromObject(View arg0, Object arg1) {
@@ -157,7 +157,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         }
 
         /**
-         * 销毁预加载以外的view对象, 会把需要销毁的对象的索引位置传进来就是position
+         * Destroy the item.
          */
         @Override
         public void destroyItem(ViewGroup container, int position, Object object) {
@@ -165,7 +165,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         }
 
         /**
-         * 创建一个view
+         * Create a new view
          */
         @Override
         public Object instantiateItem(ViewGroup container, int position) {
@@ -188,7 +188,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
 
     @Override
     public void onPageSelected(int position) {
-        // 改变图片的描述信息
+        // Update the description of image information.
         Log.i("OSChina", "position is:" + position);
         if (position % imageViewList.size() == imageViewList.size() - 1) {
 
@@ -198,9 +198,9 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
             finish();
         }
         tvDescription.setText(imageDescriptions[position % imageViewList.size()]);
-        // 切换选中的点
-        llPoints.getChildAt(previousSelectPosition).setEnabled(false);    // 把前一个点置为normal状态
-        llPoints.getChildAt(position % imageViewList.size()).setEnabled(true);        // 把当前选中的position对应的点置为enabled状态
+        // switch the choice point
+        llPoints.getChildAt(previousSelectPosition).setEnabled(false);    // set the former pointer state as normal
+        llPoints.getChildAt(position % imageViewList.size()).setEnabled(true);        // set the selected view state.
         previousSelectPosition = position % imageViewList.size();
     }
 

@@ -3,18 +3,37 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/white"/>
+        android:background="@color/white" />
 
-    <TextView
-        android:id="@+id/receipt_action_recheck_label"
-        style="@style/text_receipt_action_label"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="end|left|bottom"
-        android:layout_marginEnd="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:background="@android:color/holo_green_light"
-        android:text="@string/receipt_action_recheck_label"/>
+        android:background="@color/light_blue_500"
+        android:padding="@dimen/linearlayout_padding">
+
+        <IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:shadowColor="#22000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1"
+            android:text="{fa-hand-o-up}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/icontextviewsize" />
+
+        <TextView
+            android:id="@+id/receipt_action_recheck_label"
+            style="@style/text_receipt_action_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/text_paddingleft"
+            android:text="@string/receipt_action_recheck_label" />
+    </LinearLayout>
 
     <CheckBox
         android:id="@+id/receipt_action_recheck"
@@ -26,18 +45,37 @@
         android:layout_weight="1"
         android:scaleX="0.85"
         android:scaleY="0.85"
-        android:text="@string/receipt_action_recheck"/>
+        android:text="@string/receipt_action_recheck" />
 
-    <TextView
-        android:id="@+id/receipt_action_expense_tag_label"
-        style="@style/text_receipt_action_label"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="end|left|bottom"
-        android:layout_marginEnd="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:background="@android:color/holo_green_light"
-        android:text="@string/receipt_action_expense_tag_label"/>
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue_500"
+        android:padding="@dimen/linearlayout_padding">
+
+        <IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:shadowColor="#22000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1"
+            android:text="{fa-hand-o-up}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/icontextviewsize" />
+
+        <TextView
+            android:id="@+id/receipt_action_expense_tag_label"
+            style="@style/text_receipt_action_label"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/text_paddingleft"
+            android:text="@string/receipt_action_expense_tag_label" />
+    </LinearLayout>
 
     <ListView
         android:id="@+id/receipt_action_expense_tag_list"
@@ -46,18 +84,37 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_weight="4"
         android:choiceMode="singleChoice"
-        android:divider="@null"/>
+        android:divider="@null" />
 
-    <TextView
-        android:id="@+id/receipt_action_note_label"
-        style="@style/text_receipt_action_label"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:layout_gravity="end|left|bottom"
-        android:layout_marginEnd="@dimen/activity_vertical_margin"
-        android:layout_marginRight="@dimen/activity_vertical_margin"
-        android:background="@android:color/holo_green_light"
-        android:text="@string/receipt_action_note_label"/>
+        android:layout_height="wrap_content"
+        android:background="@color/light_blue_500"
+        android:padding="@dimen/linearlayout_padding">
+
+        <IconTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:shadowColor="#22000000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="1"
+            android:text="{fa-hand-o-up}"
+            android:textColor="@color/white"
+            android:textSize="@dimen/icontextviewsize" />
+
+        <TextView
+            android:id="@+id/receipt_action_note_label"
+            style="@style/text_receipt_action_label"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginEnd="@dimen/activity_vertical_margin"
+            android:layout_marginRight="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/text_paddingleft"
+            android:text="@string/receipt_action_note_label" />
+    </LinearLayout>
 
     <EditText
         android:id="@+id/receipt_action_note"
@@ -69,6 +126,5 @@
         android:gravity="start|top"
         android:hint="@string/receipt_action_note_hint"
         android:maxLines="4"
-        android:minLines="3"/>
-
+        android:minLines="3" />
 </merge>
