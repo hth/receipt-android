@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rd_item_selector"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin">
+
+    <LinearLayout
+        android:id="@+id/rd_list_item_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/subscription_plan_list_item_plan_name"
+            style="@style/rd_list_item_text_left_primary_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="35dp"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/subscription_plan_list_item_plan_description"
+            style="@style/rd_list_item_text_left_secondary_style"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:height="35dp"
+            android:paddingLeft="10dp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/subscription_plan_list_item_next_arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_gravity="right"
+        android:paddingLeft="10dp"/>
+
+    <TextView
+        android:id="@+id/subscription_plan_list_item_plan_price"
+        style="@style/rd_list_item_price_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/subscription_plan_list_item_next_arrow"
+        android:layout_toRightOf="@id/rd_list_item_left"
+        android:gravity="right"
+        android:paddingRight="10dp"/>
+
+</RelativeLayout>

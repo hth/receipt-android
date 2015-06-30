@@ -30,6 +30,7 @@ import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.SettingFragment;
+import com.receiptofi.checkout.fragments.SubscriptionFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -56,6 +57,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public NotificationFragment mNotificationFragment;
     public ExpenseTagFragment mExpenseTagFragment;
     public BillingFragment mBillingFragment;
+    public SubscriptionFragment subscriptionFragment;
     public SettingFragment mSettingFragment;
     private Context mContext;
     SuperActivityToast uploadImageToast;
@@ -74,6 +76,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         mNotificationFragment = NotificationFragment.newInstance("", "");
         mExpenseTagFragment = ExpenseTagFragment.newInstance("", "");
         mBillingFragment = new BillingFragment();
+        subscriptionFragment = new SubscriptionFragment();
         mSettingFragment = new SettingFragment();
 
         ProfileModel profileModel = ProfileUtils.getProfile();
@@ -125,7 +128,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        mBillingFragment));
+                        subscriptionFragment));
 
         this.addSection(
                 newSection(
