@@ -3,7 +3,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/white" />
+        android:background="@color/white"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,9 +19,9 @@
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="1"
-            android:text="{fa-hand-o-up}"
+            android:text="{fa-repeat}"
             android:textColor="@color/white"
-            android:textSize="@dimen/icontextviewsize" />
+            android:textSize="@dimen/icontextviewsize"/>
 
         <TextView
             android:id="@+id/receipt_action_recheck_label"
@@ -32,7 +32,7 @@
             android:layout_marginEnd="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/text_paddingleft"
-            android:text="@string/receipt_action_recheck_label" />
+            android:text="@string/receipt_action_recheck_label"/>
     </LinearLayout>
 
     <CheckBox
@@ -45,7 +45,7 @@
         android:layout_weight="1"
         android:scaleX="0.85"
         android:scaleY="0.85"
-        android:text="@string/receipt_action_recheck" />
+        android:text="@string/receipt_action_recheck"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,9 +61,9 @@
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="1"
-            android:text="{fa-hand-o-up}"
+            android:text="{fa-tag}"
             android:textColor="@color/white"
-            android:textSize="@dimen/icontextviewsize" />
+            android:textSize="@dimen/icontextviewsize"/>
 
         <TextView
             android:id="@+id/receipt_action_expense_tag_label"
@@ -74,7 +74,7 @@
             android:layout_marginEnd="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/text_paddingleft"
-            android:text="@string/receipt_action_expense_tag_label" />
+            android:text="@string/receipt_action_expense_tag_label"/>
     </LinearLayout>
 
     <ListView
@@ -84,7 +84,7 @@
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_weight="4"
         android:choiceMode="singleChoice"
-        android:divider="@null" />
+        android:divider="@null"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -100,9 +100,9 @@
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="1"
-            android:text="{fa-hand-o-up}"
+            android:text="{fa-pencil-square-o}"
             android:textColor="@color/white"
-            android:textSize="@dimen/icontextviewsize" />
+            android:textSize="@dimen/icontextviewsize"/>
 
         <TextView
             android:id="@+id/receipt_action_note_label"
@@ -113,7 +113,7 @@
             android:layout_marginEnd="@dimen/activity_vertical_margin"
             android:layout_marginRight="@dimen/activity_vertical_margin"
             android:paddingLeft="@dimen/text_paddingleft"
-            android:text="@string/receipt_action_note_label" />
+            android:text="@string/receipt_action_note_label"/>
     </LinearLayout>
 
     <EditText
@@ -126,5 +126,5 @@
         android:gravity="start|top"
         android:hint="@string/receipt_action_note_hint"
         android:maxLines="4"
-        android:minLines="3" />
+        android:minLines="3"/>
 </merge>
