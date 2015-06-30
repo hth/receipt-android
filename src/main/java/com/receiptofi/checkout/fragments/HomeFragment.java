@@ -219,8 +219,14 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
             @Override
             public void onRefreshBegin(final PtrFrameLayout frame) {
-                // Below is the real refresh event.
-                DeviceService.getNewUpdates(getActivity());
+                /** Pull down refresh gets latest updates. */
+                String getAllComplete = KeyValueUtils.getValue(KeyValueUtils.KEYS.GET_ALL_COMPLETE);
+                if (TextUtils.isEmpty(getAllComplete) || Boolean.toString(false).equals(getAllComplete)) {
+                    Log.i(TAG, "Failed previously to complete " + KeyValueUtils.KEYS.GET_ALL_COMPLETE);
+                    DeviceService.getAll(getActivity());
+                } else {
+                    DeviceService.getUpdates(getActivity());
+                }
                 long delay = (long) 10000;
                 frame.postDelayed(new Runnable() {
                     @Override
