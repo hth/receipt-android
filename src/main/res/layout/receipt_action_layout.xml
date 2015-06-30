@@ -19,7 +19,7 @@
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="1"
-            android:text="{fa-hand-o-up}"
+            android:text="{fa-repeat}"
             android:textColor="@color/white"
             android:textSize="@dimen/icontextviewsize"/>
 
@@ -61,7 +61,7 @@
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="1"
-            android:text="{fa-hand-o-up}"
+            android:text="{fa-tag}"
             android:textColor="@color/white"
             android:textSize="@dimen/icontextviewsize"/>
 
@@ -100,7 +100,7 @@
             android:shadowDx="3"
             android:shadowDy="3"
             android:shadowRadius="1"
-            android:text="{fa-hand-o-up}"
+            android:text="{fa-pencil-square-o}"
             android:textColor="@color/white"
             android:textSize="@dimen/icontextviewsize"/>
 
