@@ -32,6 +32,8 @@ import in.srain.cube.views.ptr.header.MaterialHeader;
  * create an instance of this fragment.
  */
 public class NotificationFragment extends Fragment {
+    private static final String TAG = NotificationFragment.class.getSimpleName();
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -40,9 +42,7 @@ public class NotificationFragment extends Fragment {
     private String mParam2;
     private View mView;
     protected PtrFrameLayout mPtrFrameLayout;
-    ListView listView;
-    private static final String TAG = NotificationFragment.class.getSimpleName();
-
+    private ListView listView;
     private OnFragmentInteractionListener mListener;
 
     /**
@@ -119,7 +119,7 @@ public class NotificationFragment extends Fragment {
      */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
     private void setupView() {
