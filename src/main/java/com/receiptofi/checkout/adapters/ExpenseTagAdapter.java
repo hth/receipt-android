@@ -14,7 +14,8 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import java.util.List;
 
 /**
- * Created by kevin on 5/26/15.
+ * User: kevin
+ * Date: 5/26/15 3:57 PM
  */
 public class ExpenseTagAdapter extends BaseAdapter {
 
@@ -50,9 +51,8 @@ public class ExpenseTagAdapter extends BaseAdapter {
 
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
-        if (view == null) {
-            view = View.inflate(mContext,
-                    R.layout.fragment_expense_tag_style_listview_item, null);
+        if (null == view) {
+            view = View.inflate(mContext, R.layout.fragment_expense_tag_style_listview_item, null);
             new ViewHolder(view);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
