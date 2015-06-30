@@ -51,7 +51,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by PT on 1/3/15.
+ * User: PT
+ * Date: 1/3/15 4:17 PM
  */
 public class ReceiptListActivity extends Activity implements ReceiptListFragment.OnReceiptSelectedListener {
 
