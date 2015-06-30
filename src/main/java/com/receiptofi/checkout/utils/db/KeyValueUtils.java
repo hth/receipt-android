@@ -107,4 +107,29 @@ public class KeyValueUtils {
         private KEYS() {
         }
     }
+
+    public static boolean doesTableExists() {
+        int count = 0;
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().rawQuery(
+                    "SELECT count(*) FROM sqlite_master WHERE " +
+                            "type = 'table' AND " +
+                            "name = '" + DatabaseTable.KeyValue.TABLE_NAME + "'",
+                    null);
+
+            if (cursor.moveToNext()) {
+                count = cursor.getInt(0);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error counting tables " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        Log.d(TAG, DatabaseTable.KeyValue.TABLE_NAME + " exists=" + (count > 0));
+        return count > 0;
+    }
 }
