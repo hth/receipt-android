@@ -38,6 +38,10 @@ public class API {
     public static final String DOWNLOAD_IMAGE = "/api/image/";
     public static final String RECEIPT_ACTION = "/api/receiptAction.json";
 
+    // Braintree Payment
+    public static final String TOKEN_API = "/api/token.json";
+    public static final String PLANS_API = "/api/plans.json";
+
     public static class key {
         // Header
         public static final String XR_MAIL = "X-R-MAIL";
