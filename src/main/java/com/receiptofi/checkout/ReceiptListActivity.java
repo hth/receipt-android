@@ -318,12 +318,6 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
         Log.d(TAG, "handleEmpty View Click function");
     }
 
-    public void logout() {
-        KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
-        startActivity(new Intent(this, LaunchActivity.class));
-        finish();
-    }
-
     public void showReceiptDetailImageFragment(String url) {
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
