@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
@@ -58,6 +57,7 @@ public class DeviceService {
             @Override
             public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
+                showMessage("Syncing complete with latest data.", (Activity) context);
             }
 
             @Override
@@ -92,6 +92,7 @@ public class DeviceService {
 
                 /** Update DB if successful in getting all the data and update the DB. */
                 KeyValueUtils.updateInsert(KeyValueUtils.KEYS.GET_ALL_COMPLETE, Boolean.toString(true));
+                showMessage("Synced all data.", (Activity) context);
             }
 
             @Override
