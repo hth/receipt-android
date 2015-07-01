@@ -19,6 +19,7 @@ import java.util.List;
 
 
 public class SplashActivity extends Activity implements ViewPager.OnPageChangeListener {
+    private static final String TAG = SplashActivity.class.getSimpleName();
 
     private List<ImageView> imageViewList;
     private TextView tvDescription;
@@ -99,15 +100,15 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
     }
 
     private void prepareData() {
-        imageViewList = new ArrayList<ImageView>();
+        imageViewList = new ArrayList<>();
         int[] imageResIDs = getImageResIDs();
         imageDescriptions = getImageDescription();
 
         ImageView iv;
         View view;
-        for (int i = 0; i < imageResIDs.length; i++) {
+        for (int imageResID : imageResIDs) {
             iv = new ImageView(this);
-            iv.setBackgroundResource(imageResIDs[i]);
+            iv.setBackgroundResource(imageResID);
             imageViewList.add(iv);
 
             // Add new View.
@@ -189,7 +190,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
     @Override
     public void onPageSelected(int position) {
         // Update the description of image information.
-        Log.i("OSChina", "position is:" + position);
+        Log.i(TAG, "position is:" + position);
         if (position % imageViewList.size() == imageViewList.size() - 1) {
 
             Intent i = new Intent(SplashActivity.this, LaunchActivity.class);
