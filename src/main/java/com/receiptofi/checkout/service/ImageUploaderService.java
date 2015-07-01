@@ -18,7 +18,6 @@ import com.receiptofi.checkout.model.ImageModel;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.UserUtils.UserSettings;
-import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import java.util.ArrayList;
@@ -91,7 +90,7 @@ public class ImageUploaderService {
                     msg.obj = "Uploaded " + fileName + " successfully.";
                     msg.arg1 = unprocessedCount;
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
-                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                     }
                 }
 
@@ -108,7 +107,7 @@ public class ImageUploaderService {
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
                 msg.obj = exception.getLocalizedMessage();
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                 }
             }
 
@@ -122,7 +121,7 @@ public class ImageUploaderService {
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "Image upload failed. " + Error;
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendMessage(msg);
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                 }
             }
         });
@@ -157,7 +156,7 @@ public class ImageUploaderService {
         if (UserSettings.isStartImageUploadProcess(context)) {
             start(context);
         } else {
-            ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+            ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
 
         }
     }

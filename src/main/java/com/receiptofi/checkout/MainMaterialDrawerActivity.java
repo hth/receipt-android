@@ -53,12 +53,12 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     private SearchView searchView;
     private static final String TAG = MainMaterialDrawerActivity.class.getSimpleName();
     private ActionBar ab;
-    public HomeFragment mHomeFragment;
-    public NotificationFragment mNotificationFragment;
-    public ExpenseTagFragment mExpenseTagFragment;
-    public BillingFragment mBillingFragment;
+    public HomeFragment homeFragment;
+    public NotificationFragment notificationFragment;
+    public ExpenseTagFragment expenseTagFragment;
+    public BillingFragment billingFragment;
     public SubscriptionFragment subscriptionFragment;
-    public SettingFragment mSettingFragment;
+    public SettingFragment settingFragment;
     private Context mContext;
     private SuperActivityToast uploadImageToast;
 
@@ -72,12 +72,12 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         mContext = getApplicationContext();
         AppUtils.setHomePageContext(this);
 
-        mHomeFragment = HomeFragment.newInstance("", "");
-        mNotificationFragment = NotificationFragment.newInstance("", "");
-        mExpenseTagFragment = ExpenseTagFragment.newInstance("", "");
-        mBillingFragment = new BillingFragment();
+        homeFragment = HomeFragment.newInstance("", "");
+        notificationFragment = NotificationFragment.newInstance("", "");
+        expenseTagFragment = ExpenseTagFragment.newInstance("", "");
+        billingFragment = new BillingFragment();
         subscriptionFragment = new SubscriptionFragment();
-        mSettingFragment = new SettingFragment();
+        settingFragment = new SettingFragment();
 
         ProfileModel profileModel = ProfileUtils.getProfile();
         String name = profileModel != null ? profileModel.getName() : "";
@@ -96,7 +96,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_home)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        mHomeFragment));
+                        homeFragment));
 
         this.addSection(
                 newSection(
@@ -104,7 +104,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_bell_o)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        mNotificationFragment));
+                        notificationFragment));
 
         this.addSection(
                 newSection(
@@ -112,7 +112,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_tags)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        mExpenseTagFragment));
+                        expenseTagFragment));
 
         this.addSection(
                 newSection(
@@ -120,7 +120,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_history)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        mBillingFragment));
+                        billingFragment));
 
         this.addSection(
                 newSection(
@@ -150,7 +150,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_cogs)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        mSettingFragment));
+                        settingFragment));
 
         // Close the drawer menu.
         this.disableLearningPattern();

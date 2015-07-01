@@ -53,14 +53,14 @@ public class ImageUpload {
                 Message msg = new Message();
                 msg.what = HomeFragment.IMAGE_ADDED_TO_QUEUED;
                 msg.obj = context.getApplicationContext().getString(R.string.image_added_to_queue);
-                ((MainMaterialDrawerActivity) context).mHomeFragment.updateHandler.sendMessage(msg);
+                ((MainMaterialDrawerActivity) context).homeFragment.updateHandler.sendMessage(msg);
             }
         } catch (SQLiteConstraintException e) {
             Message msg = new Message();
             msg.what = HomeFragment.IMAGE_ALREADY_QUEUED;
             msg.obj = context.getApplicationContext().getString(R.string.image_exists_in_queue);
             if (ReceiptofiApplication.isHomeActivityVisible()) {
-                ((MainMaterialDrawerActivity) context).mHomeFragment.updateHandler.sendMessage(msg);
+                ((MainMaterialDrawerActivity) context).homeFragment.updateHandler.sendMessage(msg);
             }
         }
     }
