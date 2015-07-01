@@ -432,11 +432,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             blobIds = rdModel.getBlobIds();
 
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "ParseException=" + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
     }
 
@@ -537,5 +535,4 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         Log.d(TAG, "found calendars " + calendarMap.toString());
         return calendarMap;
     }
-
 }
