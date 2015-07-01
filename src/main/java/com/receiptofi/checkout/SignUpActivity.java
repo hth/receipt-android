@@ -35,7 +35,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 /**
- * Created by PT on 12/8/14.
+ * User: PT
+ * Date: 12/8/14 7:34 AM
  */
 public class SignUpActivity extends ParentActivity implements View.OnClickListener {
 
