@@ -14,6 +14,7 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.io.File;
+import java.util.Date;
 
 public class AppUtils {
 
@@ -138,5 +139,9 @@ public class AppUtils {
      */
     public static DateTime getDateTime(String date) {
         return Constants.ISO_J_DF.parseDateTime(date).withZone(DateTimeZone.getDefault());
+    }
+
+    public static String getDateTime(DateTime date) {
+        return date.withZone(DateTimeZone.getDefault()).toString();
     }
 }

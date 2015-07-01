@@ -50,14 +50,20 @@ import java.util.Locale;
  * Date: 1/1/15 12:44 PM
  */
 public class ReceiptListFragment extends Fragment implements PinnedHeaderExpandableListView.OnHeaderUpdateListener {
+    private static final String TAG = ReceiptListFragment.class.getSimpleName();
 
     public static final int RECEIPT_MODEL_UPDATED = 0x2436;
-    private static final String TAG = ReceiptListFragment.class.getSimpleName();
+
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
+
     public ReceiptListAdapter adapter = null;
     private StickyLayout stickyLayout;
     private SearchView searchView;
+
+    private DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);
+    private DateFormat outputDF = new SimpleDateFormat("MMM yyyy", Locale.US);
+
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
@@ -209,8 +215,6 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         explv = (PinnedHeaderExpandableListView) view.findViewById(R.id.exp_list_view);
         explv.setEmptyView(view.findViewById(R.id.empty_view));
         explv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -259,9 +263,8 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
 
     @Override
     public View getPinnedHeader() {
-        View headerView = (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.receipt_list_parent, null);
-        headerView.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        View headerView = getActivity().getLayoutInflater().inflate(R.layout.receipt_list_parent, null);
+        headerView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         return headerView;
     }
 
@@ -270,29 +273,23 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
         ReceiptGroupHeader firstVisibleGroup = (ReceiptGroupHeader) adapter.getGroup(firstVisibleGroupPos);
         TextView header_month = (TextView) headerView.findViewById(R.id.exp_list_header_month);
         TextView header_amount = (TextView) headerView.findViewById(R.id.exp_list_header_amount);
-        String year = firstVisibleGroup.getYear();
-        String month = firstVisibleGroup.getMonth();
-        DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);
-        DateFormat outputDF = new SimpleDateFormat("MMM yyyy", Locale.US);
         try {
-            String formattedMonth = outputDF.format(inputDF.parse(month + " " + year));
-            header_month.setText(getActivity().getString(R.string.receipt_list_header_month, formattedMonth, firstVisibleGroup.getCount()));
+            header_month.setText(getActivity().getString(R.string.receipt_list_header_month,
+                    outputDF.format(inputDF.parse(firstVisibleGroup.getMonth() + " " + firstVisibleGroup.getYear())),
+                    firstVisibleGroup.getCount()));
+
             header_amount.setText(getActivity().getString(R.string.receipt_list_header_amount, firstVisibleGroup.getTotal()));
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getMessage());
-            e.printStackTrace();
+            Log.e(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.e(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
     }
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnReceiptSelectedListener {
-        /**
-         * Called by HeadlinesFragment when a list item is selected
-         */
-        public void onReceiptSelected(int index, int position);
+        /** Called by HeadlinesFragment when a list item is selected. */
+        void onReceiptSelected(int index, int position);
     }
 
     private boolean checkFocusRec(View view) {

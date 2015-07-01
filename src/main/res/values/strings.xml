@@ -114,7 +114,7 @@
     <string name="receipt_action_recheck">Verify receipt again</string>
     <string name="receipt_action_expense_tag_label">Expense Tag</string>
     <string name="receipt_action_note_label">Notes</string>
-    <string name="receipt_action_note_hint">Add receipt notes here...</string>
+    <string name="receipt_action_note_hint">Add receipt notes here…</string>
 
     <!-- Filter list String-->
     <string name="search_hint">Search by biz/item</string>
