@@ -39,9 +39,7 @@
         android:id="@+id/receipt_action_recheck"
         style="@style/text_large_with_blue_color"
         android:layout_width="wrap_content"
-        android:layout_height="50dp"
-        android:layout_gravity="center_horizontal|left"
-        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_height="40dp"
         android:layout_weight="1"
         android:scaleX="0.85"
         android:scaleY="0.85"
@@ -82,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:layout_weight="4"
+        android:layout_weight="3"
         android:choiceMode="singleChoice"
         android:divider="@null"/>
 
