@@ -215,8 +215,6 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
         explv = (PinnedHeaderExpandableListView) view.findViewById(R.id.exp_list_view);
         explv.setEmptyView(view.findViewById(R.id.empty_view));
         explv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -265,9 +263,8 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
 
     @Override
     public View getPinnedHeader() {
-        View headerView = (ViewGroup) getActivity().getLayoutInflater().inflate(R.layout.receipt_list_parent, null);
-        headerView.setLayoutParams(new LayoutParams(
-                LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
+        View headerView = getActivity().getLayoutInflater().inflate(R.layout.receipt_list_parent, null);
+        headerView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
         return headerView;
     }
 
@@ -291,10 +288,8 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnReceiptSelectedListener {
-        /**
-         * Called by HeadlinesFragment when a list item is selected
-         */
-        public void onReceiptSelected(int index, int position);
+        /** Called by HeadlinesFragment when a list item is selected. */
+        void onReceiptSelected(int index, int position);
     }
 
     private boolean checkFocusRec(View view) {
