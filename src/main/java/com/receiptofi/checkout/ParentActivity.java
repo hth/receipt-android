@@ -486,7 +486,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 // network or server error, the call is expected to succeed if you try again later.
                 // Don't attempt to call again immediately - the request is likely to
                 // fail, you'll hit quotas or back-off.
-                Log.d(TAG, "executing AccessTokenGooglePlus: got IOException: " + transientEx.getMessage());
+                Log.e(TAG, "executing AccessTokenGooglePlus: got IOException: " + transientEx.getMessage(), transientEx);
                 return null;
             } catch (UserRecoverableAuthException e) {
                 // Requesting an authorization code will always throw
@@ -494,16 +494,16 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 // because the user must consent to offline access to their data.  After
                 // consent is granted control is returned to your activity in onActivityResult
                 // and the second call to GoogleAuthUtil.getToken will succeed.
-                Log.d(TAG, "executing AccessTokenGooglePlus: got UserRecoverableAuthException: " + e.getMessage());
+                Log.e(TAG, "executing AccessTokenGooglePlus: got UserRecoverableAuthException: " + e.getMessage(), e);
                 startActivityForResult(e.getIntent(), GOOGLE_PLUS_SIGN_IN);
                 return null;
             } catch (GoogleAuthException authEx) {
                 // Failure. The call is not expected to ever succeed so it should not be
                 // retried.
-                Log.d(TAG, "executing AccessTokenGooglePlus: got GoogleAuthException: " + authEx.getMessage());
+                Log.e(TAG, "executing AccessTokenGooglePlus: got GoogleAuthException: " + authEx.getMessage(), authEx);
                 return null;
             } catch (Exception e) {
-                Log.d(TAG, "executing AccessTokenGooglePlus: got Exception: " + e.getMessage());
+                Log.e(TAG, "executing AccessTokenGooglePlus: got Exception: " + e.getMessage(), e);
 
             }
             return null;

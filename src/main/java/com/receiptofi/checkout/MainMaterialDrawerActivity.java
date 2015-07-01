@@ -58,7 +58,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public BillingFragment mBillingFragment;
     public SettingFragment mSettingFragment;
     private Context mContext;
-    SuperActivityToast uploadImageToast;
+    private SuperActivityToast uploadImageToast;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
