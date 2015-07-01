@@ -11,6 +11,9 @@ import com.receiptofi.checkout.model.ChartModel;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.AppUtils;
+
+import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,16 +107,16 @@ public class ReceiptUtils {
         ChartModel chartModel = new ChartModel();
         Cursor cursor = null;
         try {
+            String nowTimeString = AppUtils.getDateTime(DateTime.now());
             cursor = RDH.getReadableDatabase().rawQuery(
                     "select " +
                             "bizName," +
                             "total(total) total " +
                             "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
                             "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
-                            "datetime('now', 'start of month') AND " +
-                            "datetime('now', 'start of month','+1 month','-1 day') " +
+                            "datetime('" + nowTimeString + "', 'localtime', 'start of month') AND " +
+                            "datetime('" + nowTimeString + "', 'localtime', 'start of month','+1 month','-1 day') " +
                             "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
-
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
