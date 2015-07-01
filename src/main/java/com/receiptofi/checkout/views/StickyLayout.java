@@ -235,7 +235,7 @@ public class StickyLayout extends LinearLayout {
                     try {
                         sleep(10);
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                     }
                 }
 

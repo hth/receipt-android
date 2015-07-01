@@ -1,6 +1,7 @@
 package com.receiptofi.checkout.utils;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.MotionEvent;
@@ -8,9 +9,11 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 
 /**
- * Created by kevin on 6/16/15.
+ * User: kevin
+ * Date: 6/16/15 9:02 AM
  */
 public class OnSwipeTouchListener implements OnTouchListener {
+    private static final String TAG = OnSwipeTouchListener.class.getSimpleName();
 
     private final GestureDetector gestureDetector;
 
@@ -52,8 +55,8 @@ public class OnSwipeTouchListener implements OnTouchListener {
                 }
                 result = true;
 
-            } catch (Exception exception) {
-                exception.printStackTrace();
+            } catch (Exception e) {
+                Log.e(TAG, "reason=", e.getLocalizedMessage(), e);
             }
             return result;
         }
