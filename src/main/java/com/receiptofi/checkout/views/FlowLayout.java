@@ -10,7 +10,7 @@ import java.util.LinkedList;
 /**
  * Created by PT on 4/25/15.
  */
-public class  FlowLayout extends ViewGroup {
+public class FlowLayout extends ViewGroup {
 
     private int paddingHorizontal;
     private int paddingVertical;
@@ -150,7 +150,7 @@ public class  FlowLayout extends ViewGroup {
                 }
 
                 row.add(new MyView(child, childRight - childWidth, childTop, childRight, childTop + childHeight));
-                child.layout(childRight-childWidth, childTop, childRight, childTop + childHeight);
+                child.layout(childRight - childWidth, childTop, childRight, childTop + childHeight);
                 childRight -= childWidth + paddingHorizontal;
             }
         } else {
