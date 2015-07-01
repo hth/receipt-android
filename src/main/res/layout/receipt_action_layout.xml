@@ -37,12 +37,11 @@
 
     <CheckBox
         android:id="@+id/receipt_action_recheck"
-        style="@style/text_large_with_blue_color"
         android:layout_width="wrap_content"
-        android:layout_height="40dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:layout_height="35dp"
         android:layout_weight="1"
-        android:scaleX="0.85"
-        android:scaleY="0.85"
+        android:textColor="@color/tv_black"
         android:text="@string/receipt_action_recheck"/>
 
     <LinearLayout
@@ -80,6 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin_narrow"
         android:layout_weight="3"
         android:choiceMode="singleChoice"
         android:divider="@null"/>
@@ -124,5 +124,6 @@
         android:gravity="start|top"
         android:hint="@string/receipt_action_note_hint"
         android:maxLines="4"
+        android:textColor="@color/tv_black"
         android:minLines="3"/>
 </merge>
