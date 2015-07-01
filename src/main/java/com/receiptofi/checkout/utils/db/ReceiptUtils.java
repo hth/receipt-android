@@ -11,9 +11,6 @@ import com.receiptofi.checkout.model.ChartModel;
 import com.receiptofi.checkout.model.ReceiptGroup;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
-import com.receiptofi.checkout.utils.AppUtils;
-
-import org.joda.time.DateTime;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -107,16 +104,15 @@ public class ReceiptUtils {
         ChartModel chartModel = new ChartModel();
         Cursor cursor = null;
         try {
-            String nowTimeString = AppUtils.getDateTime(DateTime.now());
             cursor = RDH.getReadableDatabase().rawQuery(
-                    "select " +
-                            "bizName," +
-                            "total(total) total " +
-                            "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                            "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between " +
-                            "datetime('" + nowTimeString + "', 'localtime', 'start of month') AND " +
-                            "datetime('" + nowTimeString + "', 'localtime', 'start of month','+1 month','-1 day') " +
-                            "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
+                    "select "
+                            + "bizName,"
+                            + "total(total) total "
+                            + "from " + DatabaseTable.Receipt.TABLE_NAME + " "
+                            + "where " + DatabaseTable.Receipt.RECEIPT_DATE + " between "
+                            + "datetime('now', 'localtime', 'start of month') AND "
+                            + "datetime('now', 'localtime', 'start of month','+1 month','-1 day') "
+                            + "group by " + DatabaseTable.Receipt.BIZ_NAME, null);
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
@@ -147,7 +143,8 @@ public class ReceiptUtils {
             cursor = RDH.getReadableDatabase().query(
                     DatabaseTable.Receipt.TABLE_NAME,
                     null,
-                    "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
+                    "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) = ? and " +
+                            "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) = ? ",
                     new String[]{month, year},
                     null,
                     null,
@@ -226,20 +223,20 @@ public class ReceiptUtils {
              * select * from RECEIPT where bizName = 'Costco' and receiptDate LIKE '2015-01-%'
              */
             cursor = RDH.getReadableDatabase().rawQuery(
-                    "select * from " +
-                            DatabaseTable.Receipt.TABLE_NAME + " where " +
-                            DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " " +
-                            "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE '" + yearMonth + "%' " +
-                            "ORDER BY " + DatabaseTable.Receipt.RECEIPT_DATE + " DESC",
+                    "select * from "
+                            + DatabaseTable.Receipt.TABLE_NAME + " where "
+                            + DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " "
+                            + "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE '" + yearMonth + "%' "
+                            + "ORDER BY " + DatabaseTable.Receipt.RECEIPT_DATE + " DESC",
                     null);
             receiptGroup.addReceiptGroup(retrieveReceiptModelFromCursor(cursor));
 
             cursor = RDH.getReadableDatabase().rawQuery(
-                    "select " +
-                            "total(total) total " +
-                            "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                            "where " + DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " " +
-                            "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE '" + SDF_YM.format(monthYear) + "%'",
+                    "select "
+                            + "total(total) total "
+                            + "from " + DatabaseTable.Receipt.TABLE_NAME + " "
+                            + "where " + DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " "
+                            + "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE '" + SDF_YM.format(monthYear) + "%'",
                     null);
 
             if (cursor != null && cursor.getCount() > 0) {
@@ -314,10 +311,12 @@ public class ReceiptUtils {
 
             if (ids.length() > 0) {
                 cursor = RDH.getReadableDatabase().rawQuery(
-                        "select " +
-                                "* " +
-                                "from " + DatabaseTable.Receipt.TABLE_NAME + " " +
-                                "where " + DatabaseTable.Receipt.ID + " IN (" + ids.substring(0, ids.length() - 1) + ")", null);
+                        "select "
+                                + "* "
+                                + "from " + DatabaseTable.Receipt.TABLE_NAME + " "
+                                + "where " + DatabaseTable.Receipt.ID
+                                + " IN (" + ids.substring(0, ids.length() - 1) + ")",
+                        null);
 
                 receiptGroup = convertToReceiptGroup(retrieveReceiptModelFromCursor(cursor));
 
