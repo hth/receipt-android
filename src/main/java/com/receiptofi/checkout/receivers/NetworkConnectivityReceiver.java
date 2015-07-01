@@ -38,7 +38,7 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
                 ImageUploaderService.start(context);
             } else {
                 ((MainMaterialDrawerActivity) AppUtils.getHomePageContext())
-                        .mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                        .homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
             }
         }
     }

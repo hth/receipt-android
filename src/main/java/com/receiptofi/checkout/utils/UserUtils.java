@@ -98,7 +98,7 @@ public class UserUtils {
             if (context != null && UserUtils.UserSettings.isStartImageUploadProcess(context)) {
                 ImageUploaderService.start(context);
             } else {
-                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
 
             }
         }

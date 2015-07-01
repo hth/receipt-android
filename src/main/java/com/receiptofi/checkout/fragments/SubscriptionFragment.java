@@ -135,8 +135,8 @@ public class SubscriptionFragment extends Fragment {
 
 
 
-            PlanModel planModel = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$10");
-            PlanModel planModel2 = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$120");
+            PlanModel planModel = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.10");
+            PlanModel planModel2 = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.20");
             List<PlanModel> planModels = new ArrayList<>();
             planModels.add(planModel);
             planModels.add(planModel2);

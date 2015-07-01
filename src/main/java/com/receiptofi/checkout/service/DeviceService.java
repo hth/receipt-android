@@ -171,8 +171,8 @@ public class DeviceService {
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
             refreshView = ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
-            if (null != mainMaterialDrawer.mExpenseTagFragment) {
-                mainMaterialDrawer.mExpenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
+            if (null != mainMaterialDrawer.expenseTagFragment) {
+                mainMaterialDrawer.expenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
             }
         }
 
@@ -189,7 +189,7 @@ public class DeviceService {
         countMessage.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
         countMessage.what = HomeFragment.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
-            mainMaterialDrawer.mHomeFragment.updateHandler.sendMessage(countMessage);
+            mainMaterialDrawer.homeFragment.updateHandler.sendMessage(countMessage);
         }
 
         if (!dataWrapper.getReceiptModels().isEmpty()) {
@@ -199,8 +199,8 @@ public class DeviceService {
             amountMessage.obj = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
             amountMessage.what = HomeFragment.UPDATE_MONTHLY_EXPENSE;
             if (ReceiptofiApplication.isHomeActivityVisible()) {
-                mainMaterialDrawer.mHomeFragment.updateHandler.sendMessage(amountMessage);
-                mainMaterialDrawer.mHomeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
+                mainMaterialDrawer.homeFragment.updateHandler.sendMessage(amountMessage);
+                mainMaterialDrawer.homeFragment.updateHandler.sendEmptyMessage(HomeFragment.UPDATE_EXP_BY_BIZ_CHART);
             }
 
             refreshView = true;
