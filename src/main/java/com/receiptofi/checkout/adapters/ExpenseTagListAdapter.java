@@ -80,8 +80,7 @@ public class ExpenseTagListAdapter extends ArrayAdapter<ExpenseTagModel> {
             }
             return convertView;
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getMessage());
-            e.printStackTrace();
+            Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
         return null;
     }
