@@ -81,48 +81,6 @@ public class NotificationFragment extends Fragment {
     private void setupView() {
         listView = (ListView) mView.findViewById(R.id.notification_list);
         mEmptyTextview = (TextView) mView.findViewById(R.id.empty_view);
-        /**
-         * Setup Material design pull to refresh
-         */
-        mPtrFrameLayout = (PtrFrameLayout) mView.findViewById(R.id.material_style_ptr_frame);
-        // header
-        final MaterialHeader header = new MaterialHeader(getActivity());
-        int[] colors = getResources().getIntArray(R.array.google_colors);
-        header.setColorSchemeColors(colors);
-        header.setLayoutParams(new PtrFrameLayout.LayoutParams(-1, -2));
-        header.setPadding(0, dp2px(15), 0, dp2px(10));
-        header.setPtrFrameLayout(mPtrFrameLayout);
-
-        mPtrFrameLayout.setLoadingMinTime(1000);
-        mPtrFrameLayout.setDurationToCloseHeader(1500);
-        mPtrFrameLayout.setHeaderView(header);
-        mPtrFrameLayout.addPtrUIHandler(header);
-
-        mPtrFrameLayout.setPtrHandler(new PtrHandler() {
-            @Override
-            public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
-                if (listIsAtTop())
-                    return true;
-                else
-                    return false;
-            }
-
-            @Override
-            public void onRefreshBegin(final PtrFrameLayout frame) {
-                // Below is the real refresh event.
-                new NotificationDataTask().execute();
-                // We make a deley 10s in case on internet resposne during the refresh.
-//                long delay = (long) (1000 + Math.random() * 1000);
-//                    delay = Math.max(0, delay);
-                long delay = (long) 10000;
-                frame.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        frame.refreshComplete();
-                    }
-                }, delay);
-            }
-        });
     }
 
     private void setListData(List<NotificationModel> notificationModels) {

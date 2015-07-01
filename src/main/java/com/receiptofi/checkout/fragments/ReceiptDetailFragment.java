@@ -42,6 +42,7 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.BuildConfig;
+import com.receiptofi.checkout.FilterListActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.adapters.ReceiptItemListAdapter;
@@ -147,7 +148,11 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(blobIds)) {
                     String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobIds;
-                    ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
+                    if (getActivity() instanceof  ReceiptListActivity) {
+                        ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
+                    } else if (getActivity() instanceof FilterListActivity) {
+                        ((FilterListActivity) getActivity()).showReceiptDetailImageFragment(url);
+                    }
                 } else {
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                     superActivityToast.setText("No Image for this receipt!");
@@ -246,6 +251,12 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                     } else {
                         ((ReceiptListActivity) getActivity()).openDrawer();
                     }
+                } else if (getActivity() instanceof FilterListActivity) {
+                    if (((FilterListActivity) getActivity()).isDrawerOpened()) {
+                        ((FilterListActivity) getActivity()).closeDrawer();
+                    } else {
+                        ((FilterListActivity) getActivity()).openDrawer();
+                    }
                 }
                 return true;
             // Respond to the action bar's Up/Home button
@@ -268,23 +279,13 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         MenuItem rightDrawer = menu.findItem(R.id.menu_receipt_actions);
         // We only change drawer show or not within Tablet environment.
         if (AppUtils.isTablet(getActivity())) {
-            // We should hidden right drawer within filter page context.
-            if (mTypeFilter) {
-                rightDrawer.setVisible(false);
-            } else {
-                if (mCurrentPosition == -1) {
-                    rightDrawer.setVisible(false);
-                } else {
-                    rightDrawer.setVisible(true);
-                }
-            }
-        } else {
-            // Must hidden the left menu within Filter Activity Context since Filter Activity don't have left drawer menu.
-            if (mTypeFilter) {
+            if (mCurrentPosition == -1) {
                 rightDrawer.setVisible(false);
             } else {
                 rightDrawer.setVisible(true);
             }
+        } else {
+            rightDrawer.setVisible(true);
         }
     }
 

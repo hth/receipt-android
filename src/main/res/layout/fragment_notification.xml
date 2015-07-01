@@ -5,39 +5,25 @@
     android:background="@color/white"
     tools:context="com.receiptofi.checkout.fragments.NotificationFragment">
 
-    <in.srain.cube.views.ptr.PtrFrameLayout
-        xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/material_style_ptr_frame"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        cube_ptr:ptr_duration_to_close="300"
-        cube_ptr:ptr_duration_to_close_header="2000"
-        cube_ptr:ptr_keep_header_when_refresh="true"
-        cube_ptr:ptr_pull_to_fresh="false"
-        cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
-        cube_ptr:ptr_resistance="1.7">
+        android:orientation="vertical">
 
-        <LinearLayout
+        <ListView
+            android:id="@+id/notification_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:listSelector="@drawable/list_selector_app_theme" />
 
-            <ListView
-                android:id="@+id/notification_list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:listSelector="@drawable/list_selector_app_theme" />
-
-            <TextView
-                android:id="@+id/empty_view"
-                style="@style/text_larger"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_gravity="center"
-                android:gravity="center"
-                android:text="@string/notify_empty_notification_list"
-                android:visibility="invisible" />
-        </LinearLayout>
-    </in.srain.cube.views.ptr.PtrFrameLayout>
-
+        <TextView
+            android:id="@+id/empty_view"
+            style="@style/text_larger"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/notify_empty_notification_list"
+            android:visibility="invisible" />
+    </LinearLayout>
 </FrameLayout>
