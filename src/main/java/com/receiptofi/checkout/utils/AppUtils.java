@@ -14,7 +14,6 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.io.File;
-import java.util.Date;
 
 public class AppUtils {
 
