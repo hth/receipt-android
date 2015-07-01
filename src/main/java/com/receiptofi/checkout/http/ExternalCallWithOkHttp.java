@@ -273,7 +273,7 @@ public class ExternalCallWithOkHttp {
 
                     Response response = new OkHttpClient().newCall(request).execute();
                     handler.onSuccess(imageModel, response.body().string());
-                } catch(UnknownHostException e) {
+                } catch (UnknownHostException e) {
                     Log.e(TAG, "failed connection reason=" + e.getLocalizedMessage(), e);
                     handler.onException(imageModel, new RuntimeException(context.getString(R.string.post_image_upload_error)));
                 } catch (Exception e) {
