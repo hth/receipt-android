@@ -1,12 +1,8 @@
 package com.receiptofi.checkout.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,10 +16,6 @@ import com.receiptofi.checkout.utils.db.NotificationUtils;
 
 import java.util.List;
 
-import in.srain.cube.views.ptr.PtrFrameLayout;
-import in.srain.cube.views.ptr.PtrHandler;
-import in.srain.cube.views.ptr.header.MaterialHeader;
-
 public class NotificationFragment extends Fragment {
     private static final String TAG = NotificationFragment.class.getSimpleName();
 
@@ -34,7 +26,6 @@ public class NotificationFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private View mView;
-    protected PtrFrameLayout mPtrFrameLayout;
     private ListView listView;
     private TextView mEmptyTextview;
 
@@ -96,24 +87,11 @@ public class NotificationFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<NotificationModel> notificationModels) {
-            if (mPtrFrameLayout != null) {
-                mPtrFrameLayout.refreshComplete();
-            }
             setListData(notificationModels);
             // Show up the empty view when this user has empty notification.
             if (notificationModels.size() == 0) {
                 mEmptyTextview.setVisibility(View.VISIBLE);
             }
         }
-    }
-
-    private int dp2px(int dp) {
-        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
-                getActivity().getResources().getDisplayMetrics());
-    }
-
-    private boolean listIsAtTop() {
-        if (listView.getChildCount() == 0) return true;
-        return listView.getChildAt(0).getTop() == 0;
     }
 }
