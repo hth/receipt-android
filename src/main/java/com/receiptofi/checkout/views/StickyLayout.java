@@ -50,7 +50,7 @@ public class StickyLayout extends LinearLayout {
     private View mContent;
     private OnGiveUpTouchEventListener mGiveUpTouchEventListener;
 
-    // header的高度  单位：px
+    // header's height must be set as px
     private int mOriginalHeaderHeight;
     private int mHeaderHeight;
 
@@ -60,15 +60,15 @@ public class StickyLayout extends LinearLayout {
 
     private int mTouchSlop;
 
-    // 分别记录上次滑动的坐标
+    // remark the former moved location
     private int mLastX = 0;
     private int mLastY = 0;
 
-    // 分别记录上次滑动的坐标(onInterceptTouchEvent)
+    // remark the former swipe moved location(onInterceptTouchEvent)
     private int mLastXIntercept = 0;
     private int mLastYIntercept = 0;
 
-    // 用来控制滑动角度，仅当角度a满足如下条件才进行滑动：tan a = deltaX / deltaY > 2
+    // Use this variable to control the direction, only auto moved when it cannot meet this condiction：tan a = deltaX / deltaY > 2
     private static final int TAN = 2;
 
     private boolean mIsSticky = true;
@@ -188,7 +188,7 @@ public class StickyLayout extends LinearLayout {
                 break;
             }
             case MotionEvent.ACTION_UP: {
-                // 这里做了下判断，当松开手的时候，会自动向两边滑动，具体向哪边滑，要看当前所处的位置
+                // Make a decision which direction can move when release the touch
                 int destHeight = 0;
                 if (mHeaderHeight <= mOriginalHeaderHeight * 0.5) {
                     destHeight = 0;
@@ -197,7 +197,7 @@ public class StickyLayout extends LinearLayout {
                     destHeight = mOriginalHeaderHeight;
                     mStatus = STATUS_EXPANDED;
                 }
-                // 慢慢滑向终点
+                // Slowly smooth to the end point.
                 this.smoothSetHeaderHeight(mHeaderHeight, destHeight, 500);
                 break;
             }

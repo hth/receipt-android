@@ -142,6 +142,7 @@
 
     <!--Common notifications String-->
     <string name="notify_empty_list">No receipts</string>
+    <string name="notify_empty_notification_list">No notifications</string>
     <string name="notify_empty_detail">Choose month to view receipts</string>
 
     <!--Error String-->
