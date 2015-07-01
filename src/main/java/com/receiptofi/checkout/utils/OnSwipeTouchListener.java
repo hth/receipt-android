@@ -56,7 +56,7 @@ public class OnSwipeTouchListener implements OnTouchListener {
                 result = true;
 
             } catch (Exception e) {
-                Log.e(TAG, "reason=", e.getLocalizedMessage(), e);
+                Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             }
             return result;
         }
