@@ -1,26 +1,59 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.adapters.ExpenseTagListAdapter;
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.fragments.ReceiptDetailFragment;
+import com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment;
+import com.receiptofi.checkout.fragments.ReceiptDetailImageFragment;
+import com.receiptofi.checkout.fragments.ReceiptListFragment;
+import com.receiptofi.checkout.http.API;
+import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
+import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.ReceiptGroup;
+import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.Constants.ReceiptFilter;
+import com.receiptofi.checkout.utils.ConstantsJson;
+import com.receiptofi.checkout.utils.JsonParseUtils;
+import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
+import com.receiptofi.checkout.views.ToastBox;
+import com.squareup.okhttp.Headers;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by PT on 3/28/15.
@@ -34,6 +67,11 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
 
     private FilterListFragment filterListFragment = null;
     private ReceiptFilter receiptFilter;
+    public DrawerLayout drawerLayout;
+    private CheckBox recheckBox;
+    private ListView tagList;
+    private EditText noteText;
+    private ExpenseTagModel selectedTagModel;
 
     /**
      * Called when the activity is first created.
@@ -53,6 +91,8 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
                     .actionBarSize());
         }
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        initDrawerView();
 
         // Run query to fetch data
         if (getIntent().hasExtra(Constants.INTENT_EXTRA_FILTER_TYPE)) {
@@ -161,6 +201,9 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             // Commit the transaction
             transaction.commit();
         }
+        if (groupIndex > -1 && childIndex > -1) {
+            setDrawerView();
+        }
     }
 
     public int getGroupIndex() {
@@ -199,5 +242,168 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
             filterListFragment.notifyDataChanged(receiptGroup);
         }
+    }
+
+    // Kevin add
+    private void initDrawerView() {
+        drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        // set the drawer to remain closed until a receipt is selected
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+        recheckBox = (CheckBox) findViewById(R.id.receipt_action_recheck);
+        tagList = (ListView) findViewById(R.id.receipt_action_expense_tag_list);
+        noteText = (EditText) findViewById(R.id.receipt_action_note);
+
+        drawerLayout.setDrawerListener(new DrawerLayout.DrawerListener() {
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+                inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                if (groupIndex > 0 && childIndex > 0) {
+                    ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
+
+                    // Assign values only if fields have been changed
+                    boolean reCheck = recheckBox.isChecked();
+                    String tagId = null;
+                    if (selectedTagModel != null && !selectedTagModel.getId().equals(rModel.getExpenseTagId())) {
+                        tagId = selectedTagModel.getId();
+                    }
+                    String notes = null;
+                    if (!TextUtils.isEmpty(noteText.getText().toString()) && !(noteText.getText().toString()).equals(rModel.getNotes())) {
+                        notes = noteText.getText().toString();
+                    }
+                    Log.d(TAG, "reCheck: " + reCheck + " tagId: " + tagId + " notes: " + notes);
+
+                    if (reCheck || null != tagId || !TextUtils.isEmpty(notes)) {
+                        JSONObject postData = new JSONObject();
+                        try {
+                            postData.put(ConstantsJson.EXPENSE_TAG_ID, tagId);
+                            postData.put(ConstantsJson.NOTES, notes);
+                            postData.put(ConstantsJson.RECHECK, reCheck ? "RECHECK" : "");
+                            postData.put(ConstantsJson.RECEIPT_ID, rModel.getId());
+
+                            ExternalCallWithOkHttp.doPost(FilterListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
+                                @Override
+                                public void onSuccess(Headers headers, String body) {
+                                    DeviceService.onSuccess(headers, body);
+                                }
+
+                                @Override
+                                public void onError(int statusCode, String error) {
+                                    Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
+                                    ToastBox.makeText(FilterListActivity.this, JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
+                                }
+
+                                @Override
+                                public void onException(Exception exception) {
+                                    Log.d(TAG, "Executing onDrawerClosed: onException: " + exception.getMessage());
+                                    ToastBox.makeText(FilterListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                }
+                            });
+
+                        } catch (JSONException e) {
+                            Log.e(TAG, "Exception while adding data on drawer close: " + e.getMessage(), e);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+
+            }
+        });
+    }
+
+    private void setDrawerView() {
+        // unlock the drawer
+//        DrawerLayout drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+        drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED);
+        Map<String, ExpenseTagModel> expTagMap = ExpenseTagUtils.getExpenseTagModels();
+        final List<ExpenseTagModel> tagModelList = new LinkedList<>(expTagMap.values());
+        ReceiptModel rModel = FilterListFragment.children.get(groupIndex).get(childIndex);
+
+        recheckBox.setChecked(false);
+        String tagId = rModel.getExpenseTagId();
+        Log.d(TAG, "Current tag is: " + tagId);
+        tagList.setAdapter(new ExpenseTagListAdapter(this, tagModelList, tagId));
+        tagList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                selectedTagModel = tagModelList.get(position);
+            }
+        });
+        if (!TextUtils.isEmpty(rModel.getNotes())) {
+            noteText.setText(rModel.getNotes());
+        } else {
+            noteText.setText("");
+        }
+    }
+
+    public void openDrawer() {
+        drawerLayout.openDrawer(Gravity.END);
+    }
+
+    public void closeDrawer() {
+        if (drawerLayout != null) {
+            if (drawerLayout.isDrawerOpen(Gravity.END)) {
+                drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
+                drawerLayout.closeDrawer(Gravity.END);
+            }
+        }
+    }
+
+    public boolean isDrawerOpened() {
+        if (drawerLayout != null) {
+            return drawerLayout.isDrawerOpen(Gravity.END);
+        }
+        return false;
+    }
+
+    /**
+     * This function is important cannot be deleted.
+     * We use this function to handle th Drawer menu frame click function to avoid the behind button be clicked.
+     *
+     * @param view
+     */
+    public void handleEmpty(View view) {
+        Log.d(TAG, "handleEmpty View Click function");
+    }
+
+    public void showReceiptDetailImageFragment(String url) {
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        if (AppUtils.isTablet(this)) {
+            // Handle Table environment
+            FragmentManager fm = getFragmentManager();
+            ReceiptDetailImageForTabletDialogFragment detailImage = new ReceiptDetailImageForTabletDialogFragment();
+            Bundle args_tablet = new Bundle();
+            args_tablet.putString(Constants.ARG_IMAGE_URL, url);
+            detailImage.setArguments(args_tablet);
+            detailImage.show(fm, "fragment_detail_image");
+
+        } else {
+            // Create fragment and give it an argument for the selected article
+            ReceiptDetailImageFragment newFragment = new ReceiptDetailImageFragment();
+            Bundle args = new Bundle();
+            args.putString(Constants.ARG_IMAGE_URL, url);
+            newFragment.setArguments(args);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            // Handle normal phone environment
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+            // Commit the transaction
+            transaction.commit();
+        }
+
     }
 }
