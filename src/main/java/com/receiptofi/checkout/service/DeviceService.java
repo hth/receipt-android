@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
+import android.os.HandlerThread;
+import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -219,7 +221,8 @@ public class DeviceService {
         if (TextUtils.isEmpty(message)) {
             return;
         }
-        new Handler().post(new Runnable() {
+        /** getMainLooper() function of Looper class, which will provide you the Looper against the Main UI thread. */
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 SuperActivityToast superActivityToast = new SuperActivityToast(context);
