@@ -12,7 +12,9 @@ import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -37,6 +39,7 @@ import com.receiptofi.checkout.http.types.ExpenseTagSwipe;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
@@ -287,19 +290,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                                                     public void onError(int statusCode, String error) {
                                                         Log.d(TAG, "onError=" + error);
                                                         if (null != getActivity()) {
-                                                            final String errorMessage = error;
-                                                            getActivity().runOnUiThread(new Runnable() {
-                                                                @Override
-                                                                public void run() {
-                                                                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                                                                    superActivityToast.setText(JsonParseUtils.parseError(errorMessage));
-                                                                    superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                                                                    superActivityToast.setBackground(SuperToast.Background.BLUE);
-                                                                    superActivityToast.setTextColor(Color.WHITE);
-                                                                    superActivityToast.setTouchToDismiss(true);
-                                                                    superActivityToast.show();
-                                                                }
-                                                            });
+                                                            showMessage(error, getActivity());
                                                         }
                                                     }
 
@@ -307,19 +298,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                                                     public void onException(Exception e) {
                                                         Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
                                                         if (null != getActivity()) {
-                                                            final String exceptionMessage = e.getMessage();
-                                                            getActivity().runOnUiThread(new Runnable() {
-                                                                @Override
-                                                                public void run() {
-                                                                    SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                                                                    superActivityToast.setText(exceptionMessage);
-                                                                    superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                                                                    superActivityToast.setBackground(SuperToast.Background.BLUE);
-                                                                    superActivityToast.setTextColor(Color.WHITE);
-                                                                    superActivityToast.setTouchToDismiss(true);
-                                                                    superActivityToast.show();
-                                                                }
-                                                            });
+                                                            showMessage(e.getMessage(), (Activity) AppUtils.getHomePageContext());
                                                         }
                                                     }
                                                 });
@@ -359,5 +338,31 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     @Override
     public void onDismiss(final DialogInterface dialog) {
         updateHandler.sendEmptyMessage(EXPENSE_TAG_UPDATED);
+    }
+
+    /**
+     * Show Toast message.
+     *
+     * @param message
+     * @param context
+     */
+    private static void showMessage(final String message, final Activity context) {
+        Assert.assertNotNull("Context should not be null", context);
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
+        /** getMainLooper() function of Looper class, which will provide you the Looper against the Main UI thread. */
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                SuperActivityToast superActivityToast = new SuperActivityToast(context);
+                superActivityToast.setText(message);
+                superActivityToast.setDuration(SuperToast.Duration.SHORT);
+                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setTextColor(Color.WHITE);
+                superActivityToast.setTouchToDismiss(true);
+                superActivityToast.show();
+            }
+        });
     }
 }
