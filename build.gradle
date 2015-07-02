@@ -38,8 +38,6 @@ repositories {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    /** Menu. */
-    compile project(':fatlibs:library_ldrawer')
     /** Expense Tag Swipe. */
     compile project(':fatlibs:library_swipt')
     /** Pretty messages. */
