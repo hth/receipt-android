@@ -171,7 +171,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
      * >Communicating with Other Fragments</a> for more information.
      */
     public interface OnFragmentInteractionListener {
-        public void onFragmentInteraction(Uri uri);
+        void onFragmentInteraction(Uri uri);
     }
 
     private void setupView() {

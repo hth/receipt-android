@@ -58,7 +58,7 @@ public class ExpenseTagAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
         ExpenseTagModel tagModel = (ExpenseTagModel) getItem(i);
         holder.tagName.setText(tagModel.getName());
-        holder.tagName.setTextColor(Color.parseColor(tagModel.getColor()));
+        holder.tagName.setTextColor(context.getResources().getColor(R.color.tv_black));
         holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
         return view;
     }
