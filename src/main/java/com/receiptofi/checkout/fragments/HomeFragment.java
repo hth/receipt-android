@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -109,13 +110,13 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 case IMAGE_UPLOAD_SUCCESS:
                     unprocessedValue = Integer.toString(msg.arg1);
                     setUnprocessedCount();
-                    showErrorMsg((String) msg.obj);
+                    showMessage((String) msg.obj);
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
                     break;
                 case IMAGE_UPLOAD_FAILURE:
-                    showErrorMsg((String) msg.obj);
+                    showMessage((String) msg.obj);
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
@@ -124,13 +125,13 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
-                    showErrorMsg((String) msg.obj);
+                    showMessage((String) msg.obj);
                     break;
                 case IMAGE_ALREADY_QUEUED:
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
-                    showErrorMsg((String) msg.obj);
+                    showMessage((String) msg.obj);
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
                     unprocessedValue = (String) msg.obj;
@@ -447,7 +448,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
-            showErrorMsg("We seemed to have encountered issue saving your image.");
+            showMessage("We seemed to have encountered issue saving your image.");
         }
     }
 
@@ -461,21 +462,22 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         startActivity(new Intent(getActivity(), ReceiptListActivity.class));
     }
 
-
-    private void showErrorMsg(String msg) {
+    private void showMessage(final String message) {
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
         if (null != getActivity()) {
-            final String errorMessage = msg;
-            getActivity().runOnUiThread(new Runnable() {
+            /** getMainLooper() function of Looper class, which will provide you the Looper against the Main UI thread. */
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                    superActivityToast.setText(errorMessage);
+                    superActivityToast.setText(message);
                     superActivityToast.setDuration(SuperToast.Duration.SHORT);
                     superActivityToast.setBackground(SuperToast.Background.BLUE);
                     superActivityToast.setTextColor(Color.WHITE);
                     superActivityToast.setTouchToDismiss(true);
                     superActivityToast.show();
-//                    ToastBox.makeText(getActivity(), errorMessage, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -485,5 +487,4 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getActivity().getResources().getDisplayMetrics());
     }
-
 }
