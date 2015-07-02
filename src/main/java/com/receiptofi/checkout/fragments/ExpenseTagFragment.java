@@ -260,57 +260,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
 
                         break;
                     case DELETE:
-                        new AlertDialog.Builder(getActivity())
-                                .setTitle(getString(R.string.expense_tag_dialog_delete_label))
-                                .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
-                                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        // do nothing
-                                    }
-                                })
-                                .setPositiveButton(getString(R.string.expense_tag_dialog_button_delete), new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        String tagId = tagModel.getId();
-                                        String tagName = tagModel.getName();
-
-                                        if (null != tagId || null != tagName) {
-                                            JSONObject postData = new JSONObject();
-                                            try {
-                                                postData.put("tagId", tagId);
-                                                postData.put("tagName", tagName);
-
-                                                ExternalCallWithOkHttp.doPost(getActivity(), postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-                                                    @Override
-                                                    public void onSuccess(Headers headers, String body) {
-                                                        DeviceService.onSuccess(headers, body);
-                                                        updateHandler.sendEmptyMessage(EXPENSE_TAG_DELETED);
-                                                    }
-
-                                                    @Override
-                                                    public void onError(int statusCode, String error) {
-                                                        Log.d(TAG, "onError=" + error);
-                                                        if (null != getActivity()) {
-                                                            showMessage(error, getActivity());
-                                                        }
-                                                    }
-
-                                                    @Override
-                                                    public void onException(Exception e) {
-                                                        Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
-                                                        if (null != getActivity()) {
-                                                            showMessage(e.getMessage(), (Activity) AppUtils.getHomePageContext());
-                                                        }
-                                                    }
-                                                });
-
-                                            } catch (JSONException e) {
-                                                Log.e(TAG, "Exception while deleting expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-                                            }
-                                        }
-                                    }
-                                })
-                                .setIcon(android.R.drawable.ic_dialog_alert)
-                                .show();
+                        deleteExpenseTag(tagModel);
                         break;
                     default:
                         Log.e(TAG, "Reached unsupported condition, expense tag swipe index=" + index);
@@ -319,6 +269,60 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 return false;
             }
         });
+    }
+
+    private void deleteExpenseTag(final ExpenseTagModel tagModel) {
+        new AlertDialog.Builder(getActivity())
+                .setTitle(getString(R.string.expense_tag_dialog_delete_label))
+                .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
+                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setPositiveButton(getString(R.string.expense_tag_dialog_button_delete), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        String tagId = tagModel.getId();
+                        String tagName = tagModel.getName();
+
+                        if (null != tagId || null != tagName) {
+                            JSONObject postData = new JSONObject();
+                            try {
+                                postData.put("tagId", tagId);
+                                postData.put("tagName", tagName);
+
+                                ExternalCallWithOkHttp.doPost(getActivity(), postData, API.DELETE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                                    @Override
+                                    public void onSuccess(Headers headers, String body) {
+                                        DeviceService.onSuccess(headers, body);
+                                        updateHandler.sendEmptyMessage(EXPENSE_TAG_DELETED);
+                                    }
+
+                                    @Override
+                                    public void onError(int statusCode, String error) {
+                                        Log.d(TAG, "onError=" + error);
+                                        if (null != getActivity()) {
+                                            showMessage(error, getActivity());
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onException(Exception e) {
+                                        Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
+                                        if (null != getActivity()) {
+                                            showMessage(e.getMessage(), (Activity) AppUtils.getHomePageContext());
+                                        }
+                                    }
+                                });
+
+                            } catch (JSONException e) {
+                                Log.e(TAG, "Exception while deleting expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+                            }
+                        }
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     private int dp2px(int dp) {

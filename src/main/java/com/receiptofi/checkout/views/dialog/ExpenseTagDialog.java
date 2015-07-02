@@ -123,74 +123,10 @@ public class ExpenseTagDialog extends DialogFragment {
 
                         switch (dialogMode) {
                             case MODE_CREATE:
-                                try {
-                                    postData.put("tagName", tagName);
-                                    postData.put("tagColor", tagColor);
-
-                                    ExternalCallWithOkHttp.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-                                        @Override
-                                        public void onSuccess(Headers headers, String body) {
-                                            DeviceService.onSuccess(headers, body);
-                                        }
-
-                                        @Override
-                                        public void onError(int statusCode, String error) {
-                                            Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
-                                            if (null != AppUtils.getHomePageContext()) {
-                                                showMessage(error, (Activity) AppUtils.getHomePageContext());
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onException(Exception exception) {
-                                            Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
-                                            if (null != AppUtils.getHomePageContext()) {
-                                                showMessage(exception.getMessage(), (Activity) AppUtils.getHomePageContext());
-                                            }
-                                        }
-                                    });
-
-                                } catch (JSONException e) {
-                                    Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-                                }
+                                createExpenseTag(tagName, tagColor, postData);
                                 break;
                             case MODE_UPDATE:
-                                Log.d(TAG, "After dialog dismiss: " + tagColor);
-                                if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
-                                    try {
-                                        postData.put("tagId", tagModel.getId());
-                                        postData.put("tagName", tagName);
-                                        postData.put("tagColor", tagColor);
-
-                                        /**
-                                         * Update DB before sending to server. being pro-active about it. Will update
-                                         * once again after receiving response from server.
-                                         */
-                                        ExpenseTagUtils.updateExpenseTag(tagModel.getId(), tagName, tagColor);
-
-                                        ExternalCallWithOkHttp.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
-                                            @Override
-                                            public void onSuccess(Headers headers, String body) {
-                                                DeviceService.onSuccess(headers, body);
-                                            }
-
-                                            @Override
-                                            public void onError(int statusCode, String error) {
-                                                Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
-                                                showMessage(error, (Activity) AppUtils.getHomePageContext());
-                                            }
-
-                                            @Override
-                                            public void onException(Exception exception) {
-                                                Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onException: " + exception.getMessage());
-                                                showMessage(exception.getMessage(), (Activity) AppUtils.getHomePageContext());
-                                            }
-                                        });
-
-                                    } catch (JSONException e) {
-                                        Log.e(TAG, "Exception while updating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
-                                    }
-                                }
+                                updateExpenseTag(tagName, tagColor, postData);
                                 break;
                             default:
                                 Log.e(TAG, "Reached unsupported condition, expense tag dialog=" + dialogMode);
@@ -202,6 +138,78 @@ public class ExpenseTagDialog extends DialogFragment {
 
         builder.setView(rootView);
         return builder.create();
+    }
+
+    private void createExpenseTag(String tagName, String tagColor, JSONObject postData) {
+        try {
+            postData.put("tagName", tagName);
+            postData.put("tagColor", tagColor);
+
+            ExternalCallWithOkHttp.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                @Override
+                public void onSuccess(Headers headers, String body) {
+                    DeviceService.onSuccess(headers, body);
+                }
+
+                @Override
+                public void onError(int statusCode, String error) {
+                    Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
+                    if (null != AppUtils.getHomePageContext()) {
+                        showMessage(error, (Activity) AppUtils.getHomePageContext());
+                    }
+                }
+
+                @Override
+                public void onException(Exception exception) {
+                    Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
+                    if (null != AppUtils.getHomePageContext()) {
+                        showMessage(exception.getMessage(), (Activity) AppUtils.getHomePageContext());
+                    }
+                }
+            });
+
+        } catch (JSONException e) {
+            Log.e(TAG, "Exception while creating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+        }
+    }
+
+    private void updateExpenseTag(String tagName, String tagColor, JSONObject postData) {
+        Log.d(TAG, "After dialog dismiss: " + tagColor);
+        if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
+            try {
+                postData.put("tagId", tagModel.getId());
+                postData.put("tagName", tagName);
+                postData.put("tagColor", tagColor);
+
+                /**
+                 * Update DB before sending to server. being pro-active about it. Will update
+                 * once again after receiving response from server.
+                 */
+                ExpenseTagUtils.updateExpenseTag(tagModel.getId(), tagName, tagColor);
+
+                ExternalCallWithOkHttp.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
+                    @Override
+                    public void onSuccess(Headers headers, String body) {
+                        DeviceService.onSuccess(headers, body);
+                    }
+
+                    @Override
+                    public void onError(int statusCode, String error) {
+                        Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
+                        showMessage(error, (Activity) AppUtils.getHomePageContext());
+                    }
+
+                    @Override
+                    public void onException(Exception exception) {
+                        Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onException: " + exception.getMessage());
+                        showMessage(exception.getMessage(), (Activity) AppUtils.getHomePageContext());
+                    }
+                });
+
+            } catch (JSONException e) {
+                Log.e(TAG, "Exception while updating expense Tag=" + tagName + "reason=" + e.getMessage(), e);
+            }
+        }
     }
 
     @Override
