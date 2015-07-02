@@ -33,6 +33,8 @@ import com.receiptofi.checkout.utils.db.ReceiptItemUtils;
 import com.receiptofi.checkout.utils.db.ReceiptUtils;
 import com.squareup.okhttp.Headers;
 
+import junit.framework.Assert;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -219,6 +221,7 @@ public class DeviceService {
      * @param context
      */
     private static void showMessage(final String message, final Activity context) {
+        Assert.assertNotNull("Context should not be null", context);
         if (TextUtils.isEmpty(message)) {
             return;
         }
