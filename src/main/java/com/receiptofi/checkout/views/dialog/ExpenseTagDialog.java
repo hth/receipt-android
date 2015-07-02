@@ -34,10 +34,9 @@ import com.squareup.okhttp.Headers;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//import android.support.v4.app.DialogFragment;
-
 /**
- * Created by PT on 4/9/15.
+ * User: PT
+ * Date: 4/9/15 1:53 AM
  */
 public class ExpenseTagDialog extends DialogFragment {
     private static final String TAG = ExpenseTagDialog.class.getSimpleName();
@@ -90,20 +89,6 @@ public class ExpenseTagDialog extends DialogFragment {
             colorPicker.setColor(Color.parseColor(tagModel.getColor()));
         }
 
-//        Remove me later
-//        AlertDialog.Builder builder;
-//        switch (dialogMode) {
-//            case MODE_CREATE:
-//                builder = createTag(colorPicker);
-//                break;
-//            case MODE_UPDATE:
-//                builder = updateTag(colorPicker);
-//                break;
-//            default:
-//                throw new RuntimeException("Reached unreachable condition");
-//        }
-
-
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
         builder.setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel),
@@ -113,6 +98,7 @@ public class ExpenseTagDialog extends DialogFragment {
                     }
                 }
         );
+
         String positiveButtonText;
         if (DialogMode.MODE_UPDATE == dialogMode) {
             positiveButtonText = getString(R.string.expense_tag_dialog_button_update);

@@ -40,7 +40,7 @@ public class Constants {
         /**
          * @param filterType
          */
-        private ReceiptFilter(final String filterType) {
+        ReceiptFilter(final String filterType) {
             this.filterType = filterType;
         }
 
