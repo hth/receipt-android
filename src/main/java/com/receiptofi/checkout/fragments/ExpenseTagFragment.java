@@ -40,7 +40,6 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
-import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 import com.squareup.okhttp.Headers;
@@ -83,6 +82,10 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     private View view;
     public static final int EXPENSE_TAG_DELETED = 0x1561;
     public static final int EXPENSE_TAG_UPDATED = 0x1562;
+
+    private Drawable edit;
+    private Drawable delete;
+    private Drawable alert;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -202,10 +205,18 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
         mAdapter = new ExpenseTagAdapter(getActivity(), tagModelList);
         mListView.setAdapter(mAdapter);
 
-        final Drawable mDrawEdit = new IconDrawable(getActivity(), Iconify.IconValue.fa_pencil_square_o)
-                .colorRes(R.color.white).sizePx(64);
-        final Drawable mDrawDelete = new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
-                .colorRes(R.color.white).sizePx(64);
+        edit = new IconDrawable(getActivity(), Iconify.IconValue.fa_pencil_square_o)
+                .colorRes(R.color.white)
+                .sizePx(64);
+
+        delete = new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                .colorRes(R.color.white)
+                .sizePx(64);
+
+        alert = new IconDrawable(getActivity(), Iconify.IconValue.fa_exclamation_triangle)
+                .colorRes(R.color.white)
+                .sizePx(64);
+
         // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
 
@@ -218,7 +229,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 // set item width
                 openItem.setWidth(dp2px(90));
                 // set a icon
-                openItem.setIcon(mDrawEdit);
+                openItem.setIcon(edit);
                 // add to menu
                 menu.addMenuItem(openItem);
                 // create "delete" item
@@ -228,7 +239,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 // set item width
                 deleteItem.setWidth(dp2px(90));
                 // set a icon
-                deleteItem.setIcon(mDrawDelete);
+                deleteItem.setIcon(delete);
                 // add to menu
                 menu.addMenuItem(deleteItem);
             }
@@ -321,7 +332,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                         }
                     }
                 })
-                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setIcon(alert)
                 .show();
     }
 
