@@ -214,8 +214,8 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 .sizePx(64);
 
         alert = new IconDrawable(getActivity(), Iconify.IconValue.fa_exclamation_triangle)
-                .colorRes(R.color.white)
-                .sizePx(64);
+                .colorRes(R.color.red)
+                .actionBarSize();
 
         // step 1. create a MenuCreator
         SwipeMenuCreator creator = new SwipeMenuCreator() {
