@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -460,15 +461,18 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         Log.d(TAG, "InvokeReceiptList getActivity is: " + getActivity());
         startActivity(new Intent(getActivity(), ReceiptListActivity.class));
     }
-    
-    private void showMessage(String msg) {
+
+    private void showMessage(final String message) {
+        if (TextUtils.isEmpty(message)) {
+            return;
+        }
         if (null != getActivity()) {
-            final String errorMessage = msg;
-            getActivity().runOnUiThread(new Runnable() {
+            /** getMainLooper() function of Looper class, which will provide you the Looper against the Main UI thread. */
+            new Handler(Looper.getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                    superActivityToast.setText(errorMessage);
+                    superActivityToast.setText(message);
                     superActivityToast.setDuration(SuperToast.Duration.SHORT);
                     superActivityToast.setBackground(SuperToast.Background.BLUE);
                     superActivityToast.setTextColor(Color.WHITE);
