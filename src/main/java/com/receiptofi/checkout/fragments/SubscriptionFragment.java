@@ -2,34 +2,27 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.google.android.gms.fitness.data.Subscription;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
-import com.receiptofi.checkout.http.API;
-import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
-import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.PlanModel;
-import com.receiptofi.checkout.model.types.IncludeAuthentication;
-import com.squareup.okhttp.Headers;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * User: hitender
@@ -40,6 +33,7 @@ public class SubscriptionFragment extends Fragment {
 
     private ListView plans;
     private List<PlanModel> planModels = new ArrayList<>();
+    private PlanModel planModel;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,6 +45,17 @@ public class SubscriptionFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.subscription_fragment, container, false);
         plans = (ListView) rootView.findViewById(R.id.plans);
         plans.setAdapter(new PlanListAdapter(getActivity()));
+        plans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                planModel = planModels.get(position);
+                SubscriptionUserFragment fragment = (SubscriptionUserFragment) getFragmentManager().findFragmentById(R.layout.subscription_user_fragment);
+
+                SubscriptionUserFragment subscriptionUserFragment = new SubscriptionUserFragment();
+                subscriptionUserFragment.setArguments(planModel.getAsBundle());
+                subscriptionUserFragment.isVisible();
+            }
+        });
 
         new PlanTask().execute();
         return rootView;
@@ -132,7 +137,6 @@ public class SubscriptionFragment extends Fragment {
 
         @Override
         protected List<PlanModel> doInBackground(Void... args) {
-
 
 
             PlanModel planModel = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.10");

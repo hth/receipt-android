@@ -39,17 +39,17 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.ExpandableListView;
 
 public class PinnedHeaderExpandableListView extends ExpandableListView implements OnScrollListener {
-    private static final String TAG = "PinnedHeaderExpandable";
+    private static final String TAG = PinnedHeaderExpandableListView.class.getSimpleName();
     private static final boolean DEBUG = true;
 
     public interface OnHeaderUpdateListener {
         /**
          * Must return a view.
-         * Note: view must have LayoutParams attribuates.
+         * Note: view must have LayoutParams attributes.
          */
-        public View getPinnedHeader();
+        View getPinnedHeader();
 
-        public void updatePinnedHeader(View headerView, int firstVisibleGroupPos);
+        void updatePinnedHeader(View headerView, int firstVisibleGroupPos);
     }
 
     private View mHeaderView;

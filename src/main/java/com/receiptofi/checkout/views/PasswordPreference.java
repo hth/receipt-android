@@ -13,14 +13,14 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.utils.Validation;
 
 /**
- * Created by PT on 12/26/14.
+ * User: PT
+ * Date: 12/26/14 11:44 AM
  */
 public class PasswordPreference extends EditTextPreference {
 
     public PasswordPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
 
     @Override
     protected void showDialog(Bundle state) {
@@ -50,7 +50,5 @@ public class PasswordPreference extends EditTextPreference {
         text.setText("");
         text.setHint(R.string.hint_password);
         text.addTextChangedListener(textWatcher);
-
     }
-
 }

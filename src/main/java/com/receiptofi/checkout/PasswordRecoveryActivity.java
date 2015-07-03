@@ -109,6 +109,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
+            //TODO(hth) change toast
             Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
@@ -123,6 +124,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         if (TextUtils.isEmpty(email)) {
+            //TODO(hth) change toast
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
             Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
@@ -156,6 +158,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             public void onException(Exception exception) {
                 Log.d(TAG, "executing sendRecoveryInfo: onException: " + exception.getMessage());
                 updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
+                //TODO(hth) change toast
                 ToastBox.makeText(PasswordRecoveryActivity.this, exception.getMessage(), Toast.LENGTH_SHORT);
             }
         });

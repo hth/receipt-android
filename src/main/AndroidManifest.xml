@@ -1,18 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    package="com.receiptofi.checkout"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest package="com.receiptofi.checkout"
+          xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
     <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.INTERNET"/>
-
     <uses-permission android:name="android.permission.TIMEZONE_CHANGED"/>
 
     <uses-feature
@@ -20,7 +17,7 @@
         android:required="true"/>
 
     <application
-        android:name="ReceiptofiApplication"
+        android:name=".ReceiptofiApplication"
         android:allowBackup="true"
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
@@ -75,11 +72,10 @@
         <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName="com.receiptofi.checkout.MainMaterialDrawerActivity">
+            android:parentActivityName=".MainMaterialDrawerActivity">
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".FilterListActivity"
-                />
+                android:value=".FilterListActivity"/>
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -90,9 +86,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:parentActivityName="com.receiptofi.checkout.MainMaterialDrawerActivity">
+            android:parentActivityName=".MainMaterialDrawerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
+
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
 
@@ -124,7 +121,6 @@
         <activity
             android:name=".SplashActivity"
             android:label="@string/title_activity_splash"/>
-
         <activity
             android:name=".MainMaterialDrawerActivity"
             android:label="@string/title_activity_main_page"

@@ -13,14 +13,14 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.utils.UserUtils;
 
 /**
- * Created by PT on 12/26/14.
+ * User: PT
+ * Date: 12/26/14 11:43 AM
  */
 public class LoginIdPreference extends EditTextPreference {
 
     public LoginIdPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
-
 
     @Override
     protected void showDialog(Bundle state) {
@@ -50,7 +50,5 @@ public class LoginIdPreference extends EditTextPreference {
         text.setText("");
         text.setHint(R.string.hint_email);
         text.addTextChangedListener(textWatcher);
-
     }
-
 }

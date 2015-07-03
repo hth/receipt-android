@@ -1,5 +1,7 @@
 package com.receiptofi.checkout.model;
 
+import android.os.Bundle;
+
 /**
  * User: hitender
  * Date: 6/28/15 9:46 AM
@@ -61,5 +63,19 @@ public class PlanModel {
 
     public String getPrice() {
         return price;
+    }
+
+    public Bundle getAsBundle() {
+        Bundle bundle = new Bundle();
+        bundle.putString("accountBillingType", accountBillingType);
+        bundle.putString("billingDayOfMonth", billingDayOfMonth);
+        bundle.putString("billingFrequency", billingFrequency);
+        bundle.putString("planDescription", planDescription);
+        bundle.putString("planId", planId);
+        bundle.putString("name", name);
+        bundle.putString("paymentGateway", paymentGateway);
+        bundle.putString("price", price);
+
+        return bundle;
     }
 }
