@@ -2,7 +2,6 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.fitness.data.Subscription;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
@@ -42,14 +40,14 @@ public class SubscriptionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.subscription_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_subscription, container, false);
         plans = (ListView) rootView.findViewById(R.id.plans);
         plans.setAdapter(new PlanListAdapter(getActivity()));
         plans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 planModel = planModels.get(position);
-                SubscriptionUserFragment fragment = (SubscriptionUserFragment) getFragmentManager().findFragmentById(R.layout.subscription_user_fragment);
+                SubscriptionUserFragment fragment = (SubscriptionUserFragment) getFragmentManager().findFragmentById(R.layout.fragment_subscription_user);
 
                 SubscriptionUserFragment subscriptionUserFragment = new SubscriptionUserFragment();
                 subscriptionUserFragment.setArguments(planModel.getAsBundle());
