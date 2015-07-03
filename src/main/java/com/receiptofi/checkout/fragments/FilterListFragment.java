@@ -138,7 +138,7 @@ public class FilterListFragment extends Fragment {
         /**
          * Called by HeadlinesFragment when a list item is selected
          */
-        public void onReceiptSelected(int index, int position);
+        void onReceiptSelected(int index, int position);
     }
 
     private SearchView setSearchConfig(Menu menu) {

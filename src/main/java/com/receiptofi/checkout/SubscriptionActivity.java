@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,8 +24,6 @@ import com.joanzapata.android.iconify.Iconify;
  */
 public class SubscriptionActivity extends Activity {
     private static final String TAG = SubscriptionActivity.class.getSimpleName();
-
-    private Menu optionMenu;
     private SearchView searchView;
 
     @Override
@@ -33,14 +32,15 @@ public class SubscriptionActivity extends Activity {
         setContentView(R.layout.activity_subscription);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_subscription, menu);
+        setSearchConfig(menu);
+        return super.onCreateOptionsMenu(menu);
+    }
 
-        optionMenu = menu;
-
+    private void setSearchConfig(Menu menu) {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -61,7 +61,6 @@ public class SubscriptionActivity extends Activity {
         searchAutoCompleteTextView.setTextColor(Color.WHITE);
         searchAutoCompleteTextView.setHint("Search");
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
