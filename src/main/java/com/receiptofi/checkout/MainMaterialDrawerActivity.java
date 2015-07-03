@@ -46,12 +46,14 @@ import it.neokree.materialnavigationdrawer.elements.MaterialSection;
 import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionListener;
 
 /**
- * Created by kevin on 6/4/15.
+ * User: kevin
+ * Date: 6/4/15 6:47 PM
  */
 public class MainMaterialDrawerActivity extends MaterialNavigationDrawer implements HomeFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
+    private static final String TAG = MainMaterialDrawerActivity.class.getSimpleName();
+
     private Menu optionMenu;
     private SearchView searchView;
-    private static final String TAG = MainMaterialDrawerActivity.class.getSimpleName();
     private ActionBar ab;
     public HomeFragment homeFragment;
     public NotificationFragment notificationFragment;
