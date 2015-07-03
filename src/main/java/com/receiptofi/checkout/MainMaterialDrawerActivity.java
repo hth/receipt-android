@@ -60,6 +60,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public NotificationFragment notificationFragment;
     public ExpenseTagFragment expenseTagFragment;
     public BillingFragment billingFragment;
+    public SubscriptionFragment subscriptionFragment;
     public SettingFragment settingFragment;
     private Context mContext;
     private SuperActivityToast uploadImageToast;
@@ -78,6 +79,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         notificationFragment = NotificationFragment.newInstance("", "");
         expenseTagFragment = ExpenseTagFragment.newInstance("", "");
         billingFragment = new BillingFragment();
+        subscriptionFragment = new SubscriptionFragment();
         settingFragment = new SettingFragment();
 
         ProfileModel profileModel = ProfileUtils.getProfile();
@@ -129,12 +131,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        new MaterialSectionListener() {
-                            @Override
-                            public void onClick(MaterialSection materialSection) {
-                                subscription();
-                            }
-                        }));
+                        subscriptionFragment));
 
         this.addSection(
                 newSection(
@@ -225,10 +222,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
-    }
-
-    private void subscription() {
-        startActivity(new Intent(this, SubscriptionActivity.class));
     }
 
     @Override
