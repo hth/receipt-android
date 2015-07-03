@@ -126,17 +126,22 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         billingFragment));
 
         this.addSection(
+//                newSection(
+//                        "Subscription",
+//                        new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
+//                                .colorRes(R.color.white)
+//                                .actionBarSize(),
+//                        new MaterialSectionListener() {
+//                            @Override
+//                            public void onClick(MaterialSection materialSection) {
+//                                subscription();
+//                            }
+//                        }));
                 newSection(
                         "Subscription",
                         new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
-                                .actionBarSize(),
-                        new MaterialSectionListener() {
-                            @Override
-                            public void onClick(MaterialSection materialSection) {
-                                subscription();
-                            }
-                        }));
+                                .actionBarSize(), subscriptionFragment));
 
         this.addSection(
                 newSection(
@@ -229,9 +234,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         finish();
     }
 
-    private void subscription() {
-        startActivity(new Intent(this, SubscriptionActivity.class));
-    }
+//    private void subscription() {
+//        startActivity(new Intent(this, SubscriptionActivity.class));
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

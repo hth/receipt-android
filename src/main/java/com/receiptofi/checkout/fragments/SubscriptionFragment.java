@@ -53,12 +53,6 @@ public class SubscriptionFragment extends Fragment {
         plans.setAdapter(new PlanListAdapter(getActivity()));
         plans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                planModel = planModels.get(position);
-                SubscriptionUserFragment fragment = (SubscriptionUserFragment) getFragmentManager().findFragmentById(R.layout.fragment_subscription_user);
-
-        plans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 onBraintreeSubmit();
             }
