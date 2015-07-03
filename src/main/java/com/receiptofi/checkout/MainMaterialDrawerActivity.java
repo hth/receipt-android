@@ -31,6 +31,7 @@ import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.SettingFragment;
 import com.receiptofi.checkout.fragments.SubscriptionFragment;
+import com.receiptofi.checkout.fragments.SubscriptionUserFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -59,7 +60,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public NotificationFragment notificationFragment;
     public ExpenseTagFragment expenseTagFragment;
     public BillingFragment billingFragment;
-    public SubscriptionFragment subscriptionFragment;
     public SettingFragment settingFragment;
     private Context mContext;
     private SuperActivityToast uploadImageToast;
@@ -78,7 +78,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         notificationFragment = NotificationFragment.newInstance("", "");
         expenseTagFragment = ExpenseTagFragment.newInstance("", "");
         billingFragment = new BillingFragment();
-        subscriptionFragment = new SubscriptionFragment();
         settingFragment = new SettingFragment();
 
         ProfileModel profileModel = ProfileUtils.getProfile();
