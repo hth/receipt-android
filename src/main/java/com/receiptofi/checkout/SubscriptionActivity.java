@@ -5,6 +5,10 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+/**
+ * User: hitender
+ * Date: 7/2/15 6:33 PM
+ */
 public class SubscriptionActivity extends Activity {
 
     @Override
