@@ -129,6 +129,10 @@
                 android:name="android.app.default_searchable"
                 android:value=".FilterListActivity"/>
         </activity>
+        <activity
+            android:name=".SubscriptionActivity"
+            android:label="@string/title_activity_subscription">
+        </activity>
     </application>
 
 </manifest>

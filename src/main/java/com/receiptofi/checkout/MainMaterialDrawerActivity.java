@@ -128,7 +128,12 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        subscriptionFragment));
+                        new MaterialSectionListener() {
+                            @Override
+                            public void onClick(MaterialSection materialSection) {
+                                subscription();
+                            }
+                        }));
 
         this.addSection(
                 newSection(
@@ -219,6 +224,10 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         KeyValueUtils.updateValuesForKeyWithBlank(API.key.XR_AUTH);
         startActivity(new Intent(this, LaunchActivity.class));
         finish();
+    }
+
+    private void subscription() {
+        startActivity(new Intent(this, SubscriptionActivity.class));
     }
 
     @Override
