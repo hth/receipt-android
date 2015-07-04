@@ -12,6 +12,7 @@
               tools:context="com.receiptofi.checkout.fragments.SubscriptionUserFragment">
 
     <LinearLayout
+        android:id="@+id/subscription_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
