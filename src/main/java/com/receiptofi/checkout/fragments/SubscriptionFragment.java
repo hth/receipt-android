@@ -153,7 +153,7 @@ public class SubscriptionFragment extends Fragment {
         @Override
         protected void onPostExecute(List<PlanModel> plans) {
             planModels = plans;
-            Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
+            Log.d(TAG, "Completed querying, sending notification to fragment");
             showData();
         }
     }

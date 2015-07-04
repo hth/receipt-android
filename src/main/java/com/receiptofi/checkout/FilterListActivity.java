@@ -239,7 +239,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
 
         @Override
         protected void onPostExecute(ReceiptGroup receiptGroup) {
-            Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
+            Log.d(TAG, "Completed querying, sending notification to fragment");
             filterListFragment.notifyDataChanged(receiptGroup);
         }
     }
