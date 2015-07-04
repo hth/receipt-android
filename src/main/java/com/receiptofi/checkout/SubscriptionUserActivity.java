@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -41,12 +40,15 @@ public class SubscriptionUserActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_subscription_user, menu);
+        setSearchConfig(menu);
+        return true;
+    }
 
+    private void setSearchConfig(Menu menu) {
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
@@ -83,7 +85,6 @@ public class SubscriptionUserActivity extends Activity {
         searchAutoCompleteTextView.setTextColor(Color.WHITE);
         searchAutoCompleteTextView.setHint("Search");
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        return true;
     }
 
     @Override

@@ -42,7 +42,7 @@ public class SubscriptionUserFragment extends Fragment {
         subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
         subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
 
-        LinearLayout subscriptionPlanLinearLayout = (LinearLayout)rootView.findViewById(R.id.subscription_user);
+        LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
         View child = inflater.inflate(R.layout.subscription_plan_list_item, null);
         subscriptionPlanLinearLayout.addView(child);
 
@@ -54,7 +54,6 @@ public class SubscriptionUserFragment extends Fragment {
 
         planPrice = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_price);
         planPrice.setText("$10");
-
 
 
 //
