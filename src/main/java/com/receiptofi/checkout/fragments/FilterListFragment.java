@@ -38,7 +38,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by PT on 3/28/15.
+ * User: PT
+ * Date: 3/28/15 7:11 AM
  */
 public class FilterListFragment extends Fragment {
 
@@ -121,8 +122,7 @@ public class FilterListFragment extends Fragment {
         try {
             mCallback = (OnReceiptSelectedListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnReceiptSelectedListener");
+            throw new ClassCastException(activity.toString() + " must implement OnReceiptSelectedListener");
         }
     }
 
@@ -157,7 +157,6 @@ public class FilterListFragment extends Fragment {
         int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
         ImageView v = (ImageView) searchView.findViewById(searchImgId);
         v.setImageDrawable(mDraw);
-
 
         // Remove the default SearchView Icon
         int magId = getResources().getIdentifier("android:id/search_mag_icon", null, null);
