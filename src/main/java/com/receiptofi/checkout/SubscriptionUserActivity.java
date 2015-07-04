@@ -79,7 +79,6 @@ public class SubscriptionUserActivity extends Activity {
             magImage.setLayoutParams(new LinearLayout.LayoutParams(0, 0));
         }
 
-
         int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
         AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
         searchAutoCompleteTextView.setTextColor(Color.WHITE);
