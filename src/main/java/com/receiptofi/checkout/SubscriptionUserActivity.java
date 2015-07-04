@@ -19,7 +19,10 @@ import android.widget.SearchView;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 
-
+/**
+ * User: hitender
+ * Date: 07/04/15 1:57 AM
+ */
 public class SubscriptionUserActivity extends Activity {
 
     private SearchView searchView;
