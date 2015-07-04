@@ -176,7 +176,7 @@
     <!-- Used by fragment_expense_tag_style_listview.xml -->
     <string name="tag_modify_note">Swipe from right side to edit or delete a tag.</string>
 
-    <!-- User Subscription hint -->
+    <!-- Subscription user hint -->
     <string name="subscription_user_firstName">First Name</string>
     <string name="subscription_user_lastName">Last Name</string>
     <string name="subscription_user_postal">Zip Code</string>
