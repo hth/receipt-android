@@ -64,12 +64,6 @@
                 android:value=".FilterListActivity"/>
         </activity>
         <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings"/>
-        <activity
-            android:name=".PreferencesTabActivity"
-            android:label="@string/settings"/>
-        <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".MainMaterialDrawerActivity">
@@ -101,9 +95,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.receiptofi.checkout.MainMaterialDrawerActivity"/>
         </activity>
-        <activity
-            android:name=".NotificationActivity"
-            android:label="@string/notifications"/>
 
         <receiver android:name=".receivers.NetworkConnectivityReceiver">
             <intent-filter>
@@ -112,18 +103,12 @@
         </receiver>
 
         <activity
-            android:name=".MainPageActivity"
-            android:label="@string/title_activity_main_page">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".FilterListActivity"/>
-        </activity>
-        <activity
             android:name=".SplashActivity"
             android:label="@string/title_activity_splash"/>
         <activity
             android:name=".MainMaterialDrawerActivity"
             android:label="@string/title_activity_main_page"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:theme="@style/KitkatStatusBar">
             <meta-data
                 android:name="android.app.default_searchable"
