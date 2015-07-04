@@ -2,6 +2,7 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
 
 import java.util.ArrayList;
@@ -47,11 +49,14 @@ public class SubscriptionFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 planModel = planModels.get(position);
-                SubscriptionUserFragment fragment = (SubscriptionUserFragment) getFragmentManager().findFragmentById(R.layout.fragment_subscription_user);
-
-                SubscriptionUserFragment subscriptionUserFragment = new SubscriptionUserFragment();
-                subscriptionUserFragment.setArguments(planModel.getAsBundle());
-                subscriptionUserFragment.isVisible();
+                onPlanSelection(planModel);
+//
+//
+//                SubscriptionUserFragment fragment = (SubscriptionUserFragment) getFragmentManager().findFragmentById(R.layout.fragment_subscription_user);
+//
+//                SubscriptionUserFragment subscriptionUserFragment = new SubscriptionUserFragment();
+//                subscriptionUserFragment.setArguments(planModel.getAsBundle());
+//                subscriptionUserFragment.isVisible();
             }
         });
 
@@ -119,7 +124,7 @@ public class SubscriptionFragment extends Fragment {
                 holder.planPrice.setText(getItem(position).getPrice());
                 return convertView;
             } catch (Exception e) {
-                Log.d(TAG, "reason=" + e.getMessage(), e);
+                Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
             }
             return null;
         }
@@ -151,5 +156,11 @@ public class SubscriptionFragment extends Fragment {
             Log.d(TAG, "!!!!! query finished - sending notification to fragment ");
             showData();
         }
+    }
+
+    private void onPlanSelection(PlanModel planModel) {
+        Intent intent = new Intent(getActivity(), SubscriptionUserActivity.class);
+        intent.putExtras(planModel.getAsBundle());
+        startActivity(intent);
     }
 }
