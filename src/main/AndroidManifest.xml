@@ -58,13 +58,6 @@
             android:label="@string/label_password_recovery"
             android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
-            android:name=".HomeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".FilterListActivity"/>
-        </activity>
-        <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".MainMaterialDrawerActivity">
@@ -118,6 +111,9 @@
         <activity
             android:name=".SubscriptionUserActivity"
             android:label="@string/title_activity_subscription_user">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".FilterListActivity"/>
         </activity>
     </application>
 
