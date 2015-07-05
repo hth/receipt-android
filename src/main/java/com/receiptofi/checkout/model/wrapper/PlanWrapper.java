@@ -1,4 +1,4 @@
-package com.receiptofi.checkout.utils.wrapper;
+package com.receiptofi.checkout.model.wrapper;
 
 /**
  * User: hitender
