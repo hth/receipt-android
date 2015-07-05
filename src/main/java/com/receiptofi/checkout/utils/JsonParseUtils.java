@@ -343,15 +343,11 @@ public class JsonParseUtils {
         PlanWrapper planWrapper = new PlanWrapper();
         try {
             JSONArray jsonArray = new JSONArray(jsonResponse);
-
             List<PlanModel> planModels = new LinkedList<>();
-            try {
-                for (int i = 0; i < jsonArray.length(); i++) {
-                    planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
+            for (int i = 0; i < jsonArray.length(); i++) {
+                planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
             }
+            planWrapper.setPlanModels(planModels);
             return planWrapper;
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
