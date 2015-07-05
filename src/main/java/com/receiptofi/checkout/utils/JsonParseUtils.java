@@ -348,11 +348,10 @@ public class JsonParseUtils {
                 planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
             }
             planWrapper.setPlanModels(planModels);
-            return planWrapper;
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
-        return null;
+        return planWrapper;
     }
 
     private static PlanModel parsePlanModel(JSONObject jsonObject) {
