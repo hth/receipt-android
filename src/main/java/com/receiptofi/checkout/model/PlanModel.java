@@ -8,14 +8,14 @@ import android.os.Bundle;
  */
 public class PlanModel {
 
-    private String accountBillingType;
-    private String billingDayOfMonth;
+    private String id;
+    private String price;
     private String billingFrequency;
-    private String planDescription;
-    private String planId;
+    private String description;
+    private String billingDayOfMonth;
     private String name;
     private String paymentGateway;
-    private String price;
+    private String billingPlan;
 
     // needed for view
     public PlanModel() {
@@ -23,43 +23,43 @@ public class PlanModel {
     }
 
     public PlanModel(
-            String accountBillingType,
-            String billingDayOfMonth,
+            String id,
+            String price,
             String billingFrequency,
-            String planDescription,
-            String planId,
+            String description,
+            String billingDayOfMonth,
             String name,
             String paymentGateway,
-            String price
+            String billingPlan
     ) {
-        this.accountBillingType = accountBillingType;
-        this.billingDayOfMonth = billingDayOfMonth;
+        this.id = id;
+        this.price = price;
         this.billingFrequency = billingFrequency;
-        this.planDescription = planDescription;
-        this.planId = planId;
+        this.description = description;
+        this.billingDayOfMonth = billingDayOfMonth;
         this.name = name;
         this.paymentGateway = paymentGateway;
-        this.price = price;
+        this.billingPlan = billingPlan;
     }
 
-    public String getAccountBillingType() {
-        return accountBillingType;
+    public String getId() {
+        return id;
     }
 
-    public String getBillingDayOfMonth() {
-        return billingDayOfMonth;
+    public String getPrice() {
+        return price;
     }
 
     public String getBillingFrequency() {
         return billingFrequency;
     }
 
-    public String getPlanDescription() {
-        return planDescription;
+    public String getDescription() {
+        return description;
     }
 
-    public String getPlanId() {
-        return planId;
+    public String getBillingDayOfMonth() {
+        return billingDayOfMonth;
     }
 
     public String getName() {
@@ -70,20 +70,20 @@ public class PlanModel {
         return paymentGateway;
     }
 
-    public String getPrice() {
-        return price;
+    public String getBillingPlan() {
+        return billingPlan;
     }
 
     public Bundle getAsBundle() {
         Bundle bundle = new Bundle();
-        bundle.putString("accountBillingType", accountBillingType);
-        bundle.putString("billingDayOfMonth", billingDayOfMonth);
-        bundle.putString("billingFrequency", billingFrequency);
-        bundle.putString("planDescription", planDescription);
-        bundle.putString("planId", planId);
+        bundle.putString("id", id);
+        bundle.putString("price", String.valueOf(price));
+        bundle.putString("billingFrequency", String.valueOf(billingFrequency));
+        bundle.putString("description", description);
+        bundle.putString("billingDayOfMonth", String.valueOf(billingDayOfMonth));
         bundle.putString("name", name);
         bundle.putString("paymentGateway", paymentGateway);
-        bundle.putString("price", price);
+        bundle.putString("billingPlan", billingPlan);
 
         return bundle;
     }

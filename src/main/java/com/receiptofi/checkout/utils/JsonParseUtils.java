@@ -348,24 +348,23 @@ public class JsonParseUtils {
                 planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
             }
             planWrapper.setPlanModels(planModels);
-            return planWrapper;
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
-        return null;
+        return planWrapper;
     }
 
     private static PlanModel parsePlanModel(JSONObject jsonObject) {
         try {
             return new PlanModel(
-                    jsonObject.getString("accountBillingType"),
-                    jsonObject.getString("billingDayOfMonth"),
+                    jsonObject.getString("id"),
+                    jsonObject.getString("price"),
                     jsonObject.getString("billingFrequency"),
-                    jsonObject.getString("planDescription"),
-                    jsonObject.getString("planId"),
+                    jsonObject.getString("description"),
+                    jsonObject.getString("billingDayOfMonth"),
                     jsonObject.getString("name"),
                     jsonObject.getString("paymentGateway"),
-                    jsonObject.getString("price"));
+                    jsonObject.getString("billingPlan"));
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing billing account response=" + jsonObject + "reason=" + e.getLocalizedMessage(), e);
             return null;

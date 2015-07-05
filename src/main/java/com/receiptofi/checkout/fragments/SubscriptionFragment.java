@@ -1,11 +1,12 @@
 package com.receiptofi.checkout.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,15 +17,17 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.service.SubscriptionService;
 import com.receiptofi.checkout.utils.AppUtils;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -124,7 +127,7 @@ public class SubscriptionFragment extends Fragment {
                 }
 
                 holder.planName.setText(getItem(position).getName());
-                holder.planDescription.setText(getItem(position).getPlanDescription());
+                holder.planDescription.setText(getItem(position).getDescription());
                 holder.planPrice.setText(getItem(position).getPrice());
                 return convertView;
             } catch (Exception e) {
@@ -144,7 +147,6 @@ public class SubscriptionFragment extends Fragment {
 
         @Override
         protected List<PlanModel> doInBackground(Void... args) {
-            SubscriptionService.getPlans(AppUtils.getHomePageContext());
 
 //            PlanModel planModel = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.10");
 //            PlanModel planModel2 = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.20");
