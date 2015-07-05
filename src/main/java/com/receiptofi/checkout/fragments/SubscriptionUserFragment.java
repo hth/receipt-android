@@ -55,11 +55,8 @@ public class SubscriptionUserFragment extends Fragment {
         planPrice = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_price);
         planPrice.setText("$10");
 
-
-//
-//        plans.setAdapter(new PlanListAdapter(getActivity()));
-//
-//        new PlanTask().execute();
+        /** Must call below method to make the fragment menu works. */
+        setHasOptionsMenu(true);
         return rootView;
     }
 }
