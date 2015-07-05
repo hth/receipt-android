@@ -17,7 +17,6 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -31,10 +30,8 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants.DialogMode;
-import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
-import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;

@@ -16,8 +16,8 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.PlanModel;
-import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;

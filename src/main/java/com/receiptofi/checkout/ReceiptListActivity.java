@@ -3,7 +3,6 @@ package com.receiptofi.checkout;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
-import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -39,7 +38,6 @@ import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
