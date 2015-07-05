@@ -21,7 +21,6 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
-import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
@@ -41,10 +40,42 @@ public class SubscriptionFragment extends Fragment {
     private ListView plans;
     private List<PlanModel> planModels = new LinkedList<>();
     private PlanModel planModel;
+    private SuperActivityToast progressToast;
+
+    public static final int PLAN_FETCH_SUCCESS = 0x2660;
+    public static final int PLAN_FETCH_FAILURE = 0x2662;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case PLAN_FETCH_SUCCESS:
+                    stopProgressToken();
+                    showData();
+                    break;
+                case PLAN_FETCH_FAILURE:
+                    stopProgressToken();
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //TODO(hth) cache plans result for a short while
+        if (SubscriptionService.getPlanModels().isEmpty()) {
+            SubscriptionService.getPlans(AppUtils.getHomePageContext());
+            startProgressToken();
+        } else {
+            SubscriptionService.getPlans(AppUtils.getHomePageContext());
+            startProgressToken();
+        }
     }
 
     @Override
@@ -131,7 +162,7 @@ public class SubscriptionFragment extends Fragment {
                 holder.planPrice.setText(getItem(position).getPrice());
                 return convertView;
             } catch (Exception e) {
-                Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
+                Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             }
             return null;
         }
@@ -147,13 +178,6 @@ public class SubscriptionFragment extends Fragment {
 
         @Override
         protected List<PlanModel> doInBackground(Void... args) {
-
-//            PlanModel planModel = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.10");
-//            PlanModel planModel2 = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.20");
-//            List<PlanModel> planModels = new ArrayList<>();
-//            planModels.add(planModel);
-//            planModels.add(planModel2);
-
             return SubscriptionService.getPlanModels();
         }
 
@@ -169,5 +193,19 @@ public class SubscriptionFragment extends Fragment {
         Intent intent = new Intent(getActivity(), SubscriptionUserActivity.class);
         intent.putExtras(planModel.getAsBundle());
         startActivity(intent);
+    }
+
+    private void startProgressToken() {
+        progressToast = new SuperActivityToast(getActivity(), SuperToast.Type.PROGRESS);
+        progressToast.setText("Fetching available plans.");
+        progressToast.setIndeterminate(true);
+        progressToast.setProgressIndeterminate(true);
+        progressToast.show();
+    }
+
+    public void stopProgressToken() {
+        if (null != progressToast && progressToast.isShowing()) {
+            progressToast.dismiss();
+        }
     }
 }
