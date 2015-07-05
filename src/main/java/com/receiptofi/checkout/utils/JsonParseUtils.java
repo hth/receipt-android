@@ -6,7 +6,7 @@ import android.util.Log;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.BillingAccountModel;
 import com.receiptofi.checkout.model.BillingHistoryModel;
-import com.receiptofi.checkout.model.DataWrapper;
+import com.receiptofi.checkout.model.wrapper.DataWrapper;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.NotificationModel;
 import com.receiptofi.checkout.model.PlanModel;

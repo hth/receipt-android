@@ -18,7 +18,7 @@ import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.model.DataWrapper;
+import com.receiptofi.checkout.model.wrapper.DataWrapper;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.utils.AppUtils;

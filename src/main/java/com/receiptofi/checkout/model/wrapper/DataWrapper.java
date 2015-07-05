@@ -1,4 +1,12 @@
-package com.receiptofi.checkout.model;
+package com.receiptofi.checkout.model.wrapper;
+
+import com.receiptofi.checkout.model.BillingAccountModel;
+import com.receiptofi.checkout.model.ExpenseTagModel;
+import com.receiptofi.checkout.model.NotificationModel;
+import com.receiptofi.checkout.model.ProfileModel;
+import com.receiptofi.checkout.model.ReceiptItemModel;
+import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 
 import java.util.ArrayList;
 import java.util.List;
