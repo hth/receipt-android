@@ -266,17 +266,17 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             }
 
             @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "Executing authenticateLogIn: onException: " + exception.getMessage());
-                hideLoader();
-                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
-            }
-
-            @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Executing authenticateLogIn: onError: " + error);
                 hideLoader();
                 showErrorMsg(error, Toast.LENGTH_LONG);
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                Log.d(TAG, "Executing authenticateLogIn: onException: " + exception.getMessage());
+                hideLoader();
+                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
             }
         });
     }
