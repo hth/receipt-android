@@ -61,7 +61,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public BillingFragment billingFragment;
     public SubscriptionFragment subscriptionFragment;
     public SettingFragment settingFragment;
-    private Context mContext;
+    private Context context;
     private SuperActivityToast uploadImageToast;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
@@ -71,7 +71,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public void init(Bundle savedInstanceState) {
 
         ReceiptofiApplication.homeActivityResumed();
-        mContext = getApplicationContext();
+        context = getApplicationContext();
         AppUtils.setHomePageContext(this);
 
         homeFragment = HomeFragment.newInstance("", "");
@@ -95,7 +95,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Home",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_home)
+                        new IconDrawable(context, Iconify.IconValue.fa_home)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         homeFragment));
@@ -103,7 +103,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Notification",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_bell_o)
+                        new IconDrawable(context, Iconify.IconValue.fa_bell_o)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         notificationFragment));
@@ -111,7 +111,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Tag Expenses",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_tags)
+                        new IconDrawable(context, Iconify.IconValue.fa_tags)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         expenseTagFragment));
@@ -119,7 +119,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Billing History",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_history)
+                        new IconDrawable(context, Iconify.IconValue.fa_history)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         billingFragment));
@@ -127,7 +127,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Subscription",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
+                        new IconDrawable(context, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         subscriptionFragment));
@@ -135,7 +135,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Log Out",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_sign_out)
+                        new IconDrawable(context, Iconify.IconValue.fa_sign_out)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         new MaterialSectionListener() {
@@ -149,7 +149,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addBottomSection(
                 newSection(
                         "Settings",
-                        new IconDrawable(mContext, Iconify.IconValue.fa_cogs)
+                        new IconDrawable(context, Iconify.IconValue.fa_cogs)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         settingFragment));
