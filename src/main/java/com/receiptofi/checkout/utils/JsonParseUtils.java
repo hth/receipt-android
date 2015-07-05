@@ -344,7 +344,7 @@ public class JsonParseUtils {
         try {
             JSONArray jsonArray = new JSONArray(jsonResponse);
 
-            List<PlanModel> planModels = new ArrayList<>();
+            List<PlanModel> planModels = new LinkedList<>();
             try {
                 for (int i = 0; i < jsonArray.length(); i++) {
                     planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
@@ -360,7 +360,19 @@ public class JsonParseUtils {
     }
 
     private static PlanModel parsePlanModel(JSONObject jsonObject) {
-        PlanModel planModel = new PlanModel();
-        return planModel;
+        try {
+            return new PlanModel(
+                    jsonObject.getString("accountBillingType"),
+                    jsonObject.getString("billingDayOfMonth"),
+                    jsonObject.getString("billingFrequency"),
+                    jsonObject.getString("planDescription"),
+                    jsonObject.getString("planId"),
+                    jsonObject.getString("name"),
+                    jsonObject.getString("paymentGateway"),
+                    jsonObject.getString("price"));
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject + "reason=" + e.getLocalizedMessage(), e);
+            return null;
+        }
     }
 }

@@ -65,6 +65,7 @@ public class SubscriptionService {
 
     public static void parsePlans(Headers headers, String body) {
         PlanWrapper planWrapper = JsonParseUtils.parsePlan(body);
+        planModels = planWrapper.getPlanModels();
     }
 
     public static List<PlanModel> getPlanModels() {

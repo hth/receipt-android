@@ -22,7 +22,16 @@ public class PlanModel {
 
     }
 
-    public PlanModel(String accountBillingType, String billingDayOfMonth, String billingFrequency, String planDescription, String planId, String name, String paymentGateway, String price) {
+    public PlanModel(
+            String accountBillingType,
+            String billingDayOfMonth,
+            String billingFrequency,
+            String planDescription,
+            String planId,
+            String name,
+            String paymentGateway,
+            String price
+    ) {
         this.accountBillingType = accountBillingType;
         this.billingDayOfMonth = billingDayOfMonth;
         this.billingFrequency = billingFrequency;
