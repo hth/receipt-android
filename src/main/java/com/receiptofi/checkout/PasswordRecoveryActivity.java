@@ -32,7 +32,8 @@ import org.json.JSONObject;
 
 
 /**
- * Created by PT on 12/11/14.
+ * User: PT
+ * Date: 12/11/14 3:20 PM
  */
 public class PasswordRecoveryActivity extends Activity implements View.OnClickListener {
 

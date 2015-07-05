@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 import java.util.LinkedList;
 
 /**
- * Created by PT on 4/25/15.
+ * User: PT
+ * Date: 4/25/15 3:22 PM
  */
 public class FlowLayout extends ViewGroup {
 

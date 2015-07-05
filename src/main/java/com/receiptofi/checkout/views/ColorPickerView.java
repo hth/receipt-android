@@ -24,7 +24,8 @@ import android.view.MotionEvent;
 import android.view.View;
 
 /**
- * Created by PT on 4/9/15.
+ * User: PT
+ * Date: 4/9/15 3:22 PM
  */
 public class ColorPickerView extends View {
 
