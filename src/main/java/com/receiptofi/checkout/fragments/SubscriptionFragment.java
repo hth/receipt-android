@@ -1,5 +1,6 @@
 package com.receiptofi.checkout.fragments;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -20,8 +21,11 @@ import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
+import com.receiptofi.checkout.service.SubscriptionService;
+import com.receiptofi.checkout.utils.AppUtils;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -32,7 +36,7 @@ public class SubscriptionFragment extends Fragment {
     private static final String TAG = SubscriptionFragment.class.getSimpleName();
 
     private ListView plans;
-    private List<PlanModel> planModels = new ArrayList<>();
+    private List<PlanModel> planModels = new LinkedList<>();
     private PlanModel planModel;
 
     @Override
@@ -140,14 +144,15 @@ public class SubscriptionFragment extends Fragment {
 
         @Override
         protected List<PlanModel> doInBackground(Void... args) {
+            SubscriptionService.getPlans(AppUtils.getHomePageContext());
 
+//            PlanModel planModel = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.10");
+//            PlanModel planModel2 = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.20");
+//            List<PlanModel> planModels = new ArrayList<>();
+//            planModels.add(planModel);
+//            planModels.add(planModel2);
 
-            PlanModel planModel = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.10");
-            PlanModel planModel2 = new PlanModel("A", "B", "C", "Plan Description", "E", "Plan Name", "G", "$0.20");
-            List<PlanModel> planModels = new ArrayList<>();
-            planModels.add(planModel);
-            planModels.add(planModel2);
-            return planModels;
+            return SubscriptionService.getPlanModels();
         }
 
         @Override
