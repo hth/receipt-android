@@ -5,11 +5,13 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Looper;
+import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.receiptofi.checkout.fragments.SubscriptionFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -43,6 +45,12 @@ public class SubscriptionService {
             @Override
             public void onSuccess(Headers headers, String body) {
                 SubscriptionService.parsePlans(headers, body);
+
+                Message countMessage = new Message();
+                countMessage.obj = "";
+                countMessage.what = SubscriptionFragment.PLAN_FETCH_SUCCESS;
+
+                new SubscriptionFragment().updateHandler.sendMessage(countMessage);
             }
 
             @Override
@@ -50,6 +58,12 @@ public class SubscriptionService {
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
                     showMessage(JsonParseUtils.parseError(error), (Activity) context);
+
+                    Message countMessage = new Message();
+                    countMessage.obj = "";
+                    countMessage.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
+
+                    new SubscriptionFragment().updateHandler.sendMessage(countMessage);
                 }
             }
 
@@ -58,6 +72,12 @@ public class SubscriptionService {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 if (null != context) {
                     showMessage(e.getMessage(), (Activity) context);
+
+                    Message countMessage = new Message();
+                    countMessage.obj = "";
+                    countMessage.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
+
+                    new SubscriptionFragment().updateHandler.sendMessage(countMessage);
                 }
             }
         });
