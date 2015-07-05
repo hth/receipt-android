@@ -6,14 +6,15 @@ import android.util.Log;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.BillingAccountModel;
 import com.receiptofi.checkout.model.BillingHistoryModel;
-import com.receiptofi.checkout.model.DataWrapper;
+import com.receiptofi.checkout.model.wrapper.DataWrapper;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.NotificationModel;
+import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
-import com.receiptofi.checkout.utils.wrapper.PlanWrapper;
+import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -339,6 +340,39 @@ public class JsonParseUtils {
     }
 
     public static PlanWrapper parsePlan(String jsonResponse) {
+        PlanWrapper planWrapper = new PlanWrapper();
+        try {
+            JSONArray jsonArray = new JSONArray(jsonResponse);
+
+            List<PlanModel> planModels = new LinkedList<>();
+            try {
+                for (int i = 0; i < jsonArray.length(); i++) {
+                    planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            return planWrapper;
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
+        }
         return null;
+    }
+
+    private static PlanModel parsePlanModel(JSONObject jsonObject) {
+        try {
+            return new PlanModel(
+                    jsonObject.getString("accountBillingType"),
+                    jsonObject.getString("billingDayOfMonth"),
+                    jsonObject.getString("billingFrequency"),
+                    jsonObject.getString("planDescription"),
+                    jsonObject.getString("planId"),
+                    jsonObject.getString("name"),
+                    jsonObject.getString("paymentGateway"),
+                    jsonObject.getString("price"));
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing billing account response=" + jsonObject + "reason=" + e.getLocalizedMessage(), e);
+            return null;
+        }
     }
 }
