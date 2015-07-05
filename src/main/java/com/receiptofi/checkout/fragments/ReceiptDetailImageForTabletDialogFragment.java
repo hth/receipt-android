@@ -108,7 +108,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
                     Log.e(TAG, "failed to load image=" + e.getLocalizedMessage(), e);
                     if (null != getActivity()) {
                         SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                        superActivityToast.setText("Failed to load image.");
+                        superActivityToast.setText(getResources().getString(R.string.receipt_image_failed_to_load));
                         superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
                         superActivityToast.setBackground(SuperToast.Background.BLUE);
                         superActivityToast.setTextColor(Color.WHITE);
@@ -138,7 +138,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
             });
         } else {
             SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-            superActivityToast.setText("No Receipt Image!");
+            superActivityToast.setText(getResources().getString(R.string.receipt_image_not_available));
             superActivityToast.setDuration(SuperToast.Duration.EXTRA_LONG);
             superActivityToast.setBackground(SuperToast.Background.BLUE);
             superActivityToast.setTextColor(Color.WHITE);

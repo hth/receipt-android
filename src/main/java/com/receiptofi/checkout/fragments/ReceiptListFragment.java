@@ -161,7 +161,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
-        // Must call below method to make the fragment menu works.
+        /** Must call below method to make the fragment menu works. */
         setHasOptionsMenu(true);
         return rootView;
     }
@@ -256,8 +256,8 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
         try {
             mCallback = (OnReceiptSelectedListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnReceiptSelectedListener");
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+            throw new ClassCastException(activity.toString() + " must implement OnReceiptSelectedListener");
         }
     }
 

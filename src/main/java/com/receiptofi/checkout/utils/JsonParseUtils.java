@@ -13,6 +13,7 @@ import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
+import com.receiptofi.checkout.utils.wrapper.PlanWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -334,6 +335,10 @@ public class JsonParseUtils {
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
+        return null;
+    }
+
+    public static PlanWrapper parsePlan(String jsonResponse) {
         return null;
     }
 }

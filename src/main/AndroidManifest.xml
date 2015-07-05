@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest package="com.receiptofi.checkout"
-          xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    package="com.receiptofi.checkout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
@@ -57,19 +58,6 @@
             android:label="@string/label_password_recovery"
             android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
-            android:name=".HomeActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".FilterListActivity"/>
-        </activity>
-        <activity
-            android:name=".SettingsActivity"
-            android:label="@string/settings"/>
-        <activity
-            android:name=".PreferencesTabActivity"
-            android:label="@string/settings"/>
-        <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".MainMaterialDrawerActivity">
@@ -101,9 +89,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.receiptofi.checkout.MainMaterialDrawerActivity"/>
         </activity>
-        <activity
-            android:name=".NotificationActivity"
-            android:label="@string/notifications"/>
 
         <receiver android:name=".receivers.NetworkConnectivityReceiver">
             <intent-filter>
@@ -112,17 +97,11 @@
         </receiver>
 
         <activity
-            android:name=".MainPageActivity"
-            android:label="@string/title_activity_main_page">
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".FilterListActivity"/>
-        </activity>
-        <activity
             android:name=".SplashActivity"
             android:label="@string/title_activity_splash"/>
         <activity
             android:name=".MainMaterialDrawerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_main_page"
             android:theme="@style/KitkatStatusBar">
             <meta-data
@@ -130,8 +109,11 @@
                 android:value=".FilterListActivity"/>
         </activity>
         <activity
-            android:name=".SubscriptionActivity"
-            android:label="@string/title_activity_subscription">
+            android:name=".SubscriptionUserActivity"
+            android:label="@string/title_activity_subscription_user">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".FilterListActivity"/>
         </activity>
     </application>
 

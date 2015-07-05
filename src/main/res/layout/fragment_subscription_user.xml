@@ -1,11 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="fill_parent"
-              android:layout_height="fill_parent"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
               android:background="@color/app_light_bg"
-              android:fillViewport="true">
+              android:fillViewport="true"
+              android:paddingBottom="@dimen/activity_vertical_margin"
+              android:paddingLeft="@dimen/activity_horizontal_margin"
+              android:paddingRight="@dimen/activity_horizontal_margin"
+              android:paddingTop="@dimen/activity_vertical_margin"
+              tools:context="com.receiptofi.checkout.fragments.SubscriptionUserFragment">
 
     <LinearLayout
+        android:id="@+id/subscription_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -14,69 +21,83 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_button_height"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:addStatesFromChildren="true"
             android:background="@drawable/linearlayout_withborder"
-            android:padding="5dp"
-            android:paddingLeft="10dp"
             android:focusable="true"
-            android:addStatesFromChildren="true">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:paddingLeft="10dp">
 
             <EditText
                 android:id="@+id/subscription_user_first_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
-                android:maxLength="@integer/email_max_length"
                 android:layout_marginLeft="@dimen/edittext_margin_left"
-                android:background="@null"/>
+                android:background="@null"
+                android:hint="@string/subscription_user_firstName"
+                android:inputType="text|textAutoComplete"
+                android:maxLength="@integer/name_max_length"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_button_height"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:addStatesFromChildren="true"
             android:background="@drawable/linearlayout_withborder"
-            android:padding="5dp"
-            android:paddingLeft="10dp"
             android:focusable="true"
-            android:addStatesFromChildren="true">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:paddingLeft="10dp">
 
             <EditText
                 android:id="@+id/subscription_user_last_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
-                android:maxLength="@integer/email_max_length"
                 android:layout_marginLeft="@dimen/edittext_margin_left"
-                android:background="@null"/>
+                android:background="@null"
+                android:hint="@string/subscription_user_lastName"
+                android:inputType="text|textAutoComplete"
+                android:maxLength="@integer/name_max_length"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/app_button_height"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
+            android:layout_marginTop="5dp"
+            android:addStatesFromChildren="true"
             android:background="@drawable/linearlayout_withborder"
-            android:padding="5dp"
-            android:paddingLeft="10dp"
             android:focusable="true"
-            android:addStatesFromChildren="true">
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            android:paddingLeft="10dp">
 
             <EditText
                 android:id="@+id/subscription_user_postal_code"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
-                android:maxLength="@integer/email_max_length"
                 android:layout_marginLeft="@dimen/edittext_margin_left"
-                android:background="@null"/>
+                android:background="@null"
+                android:hint="@string/subscription_user_postal"
+                android:inputType="number"
+                android:maxLength="@integer/postal_code_max_length"/>
         </LinearLayout>
 
-    </LinearLayout>
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="40dp"/>
 
+        <TextView
+            android:id="@+id/subscription_title_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edittext_margin_left"
+            android:background="@null"
+            android:text="{subscription-status}"/>
+
+    </LinearLayout>
 </LinearLayout>

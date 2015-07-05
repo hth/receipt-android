@@ -31,6 +31,7 @@ import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.NotificationFragment;
 import com.receiptofi.checkout.fragments.SettingFragment;
 import com.receiptofi.checkout.fragments.SubscriptionFragment;
+import com.receiptofi.checkout.fragments.SubscriptionUserFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.utils.AppUtils;
@@ -130,12 +131,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(mContext, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        new MaterialSectionListener() {
-                            @Override
-                            public void onClick(MaterialSection materialSection) {
-                                subscription();
-                            }
-                        }));
+                        subscriptionFragment));
 
         this.addSection(
                 newSection(
@@ -228,10 +224,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         finish();
     }
 
-    private void subscription() {
-        startActivity(new Intent(this, SubscriptionActivity.class));
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -314,7 +306,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
     private void startProgressToken() {
         uploadImageToast = new SuperActivityToast(this, SuperToast.Type.PROGRESS);
-        uploadImageToast.setText("Image Uploading!");
+        uploadImageToast.setText("Image Uploading");
         uploadImageToast.setIndeterminate(true);
         uploadImageToast.setProgressIndeterminate(true);
         uploadImageToast.show();

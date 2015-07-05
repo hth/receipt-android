@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 
@@ -20,6 +22,11 @@ public class SubscriptionUserFragment extends Fragment {
     private EditText lastName;
     private EditText postalCode;
 
+    private TextView subscriptionTitle;
+    private TextView planName;
+    private TextView planDescription;
+    private TextView planPrice;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,6 +38,22 @@ public class SubscriptionUserFragment extends Fragment {
         firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
         lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
         postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
+
+        subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
+        subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+
+        LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
+        View child = inflater.inflate(R.layout.subscription_plan_list_item, null);
+        subscriptionPlanLinearLayout.addView(child);
+
+        planName = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_name);
+        planName.setText("hello");
+
+        planDescription = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_description);
+        planDescription.setText("Description");
+
+        planPrice = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_price);
+        planPrice.setText("$10");
 
 
 //

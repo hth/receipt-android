@@ -171,14 +171,25 @@
     <string name="action_settings">Settings</string>
     <string name="login_auth_msg">Please wait ...</string>
     <string name="app_id">567914876645251</string>
-    <string name="title_activity_main_page">MainPageActivity</string>
+    <string name="title_activity_main_page">MainMaterialDrawerActivity</string>
 
     <!-- Used by fragment_expense_tag_style_listview.xml -->
     <string name="tag_modify_note">Swipe from right side to edit or delete a tag.</string>
 
+    <!-- Subscription user hint -->
+    <string name="subscription_user_firstName">First Name</string>
+    <string name="subscription_user_lastName">Last Name</string>
+    <string name="subscription_user_postal">Zip Code</string>
+    <string name="subscription_status_subscribe">Subscribe</string>
+    <string name="subscription_status_unSubscribe">Un Subscribe</string>
+
+    <!-- Load image -->
+    <string name="receipt_image_failed_to_load">Failed to load image.</string>
+    <string name="receipt_image_not_available">No Receipt Image.</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_splash">SplashActivity</string>
-    <string name="title_activity_subscription">Subscription</string>
+    <string name="title_activity_subscription_user">Subscribe</string>
 
 </resources>
