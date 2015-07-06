@@ -24,6 +24,7 @@ import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
+import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.wrapper.SubscriptionWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
 
@@ -40,14 +41,21 @@ public class SubscriptionFragment extends Fragment {
     private PlanModel planModel;
     private SuperActivityToast progressToast;
 
-    public static final int PLAN_FETCH_SUCCESS = 0x2660;
-    public static final int PLAN_FETCH_FAILURE = 0x2662;
+    public static final int TOKEN_SUCCESS = 0x2880;
+    public static final int TOKEN_FAILURE = 0x2882;
+    public static final int PLAN_FETCH_SUCCESS = 0x2884;
+    public static final int PLAN_FETCH_FAILURE = 0x2886;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             final int what = msg.what;
             switch (what) {
+                case TOKEN_SUCCESS:
+                    Log.d(TAG, "token=" + ((TokenModel) msg.obj).getToken());
+                    break;
+                case TOKEN_FAILURE:
+                    break;
                 case PLAN_FETCH_SUCCESS:
                     stopProgressToken();
                     getActivity().runOnUiThread(new Runnable() {
@@ -70,6 +78,7 @@ public class SubscriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SubscriptionService.getToken(getActivity());
 
         if (SubscriptionWrapper.getPlanModels().isEmpty()) {
             Log.d(TAG, "Cache containing Plans is empty, fetching fresh");
