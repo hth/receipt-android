@@ -59,10 +59,10 @@
         <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".MainMaterialDrawerActivity">
+            android:parentActivityName=".MainMaterialDrawerActivity" >
             <meta-data
                 android:name="android.app.default_searchable"
-                android:value=".FilterListActivity"/>
+                android:value=".FilterListActivity" />
             <!-- Parent activity meta-data to support 4.0 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -74,9 +74,9 @@
             android:launchMode="singleTop"
             android:parentActivityName=".MainMaterialDrawerActivity" >
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
+                <action android:name="android.intent.action.SEARCH" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
@@ -96,7 +96,7 @@
 
         <activity
             android:name=".SplashActivity"
-            android:label="@string/title_activity_splash"/>
+            android:label="@string/title_activity_splash" />
         <activity
             android:name=".MainMaterialDrawerActivity"
             android:label="@string/title_activity_main_page"
