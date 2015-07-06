@@ -49,7 +49,12 @@ public class SubscriptionFragment extends Fragment {
             switch (what) {
                 case PLAN_FETCH_SUCCESS:
                     stopProgressToken();
-                    showData();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showData();
+                        }
+                    });
                     break;
                 case PLAN_FETCH_FAILURE:
                     stopProgressToken();
