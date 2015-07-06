@@ -16,15 +16,11 @@ import com.receiptofi.checkout.fragments.SubscriptionFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
-
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * User: hitender
@@ -32,8 +28,6 @@ import java.util.List;
  */
 public class SubscriptionService {
     private static final String TAG = DeviceService.class.getSimpleName();
-
-    private static List<PlanModel> planModels = new LinkedList<>();
 
     private SubscriptionService() {
     }
@@ -45,7 +39,7 @@ public class SubscriptionService {
         ExternalCallWithOkHttp.doGet(context, API.PLANS_API, new ResponseHandler() {
             @Override
             public void onSuccess(Headers headers, String body) {
-                SubscriptionService.parsePlans(headers, body);
+                JsonParseUtils.parsePlan(body);
 
                 Message message = new Message();
                 message.obj = "";
@@ -75,15 +69,6 @@ public class SubscriptionService {
                 showMessage(e.getMessage(), (Activity) context);
             }
         });
-    }
-
-    public static void parsePlans(Headers headers, String body) {
-        PlanWrapper planWrapper = JsonParseUtils.parsePlan(body);
-        planModels = planWrapper.getPlanModels();
-    }
-
-    public static List<PlanModel> getPlanModels() {
-        return planModels;
     }
 
     /**
