@@ -12,9 +12,11 @@ import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.model.wrapper.DataWrapper;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
+import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -366,6 +368,22 @@ public class JsonParseUtils {
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing billing account response=" + jsonObject + "reason=" + e.getLocalizedMessage(), e);
             return null;
+        }
+    }
+
+    public static void parseToken(String jsonResponse) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            TokenWrapper.setTokenModel(
+                    new TokenModel(
+                            jsonObject.getString("token"),
+                            jsonObject.getBoolean("hasCustomerInfo"),
+                            jsonObject.getString("firstName"),
+                            jsonObject.getString("lastName"),
+                            jsonObject.getString("postalCode"),
+                            jsonObject.getString("planId")));
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
     }
 }
