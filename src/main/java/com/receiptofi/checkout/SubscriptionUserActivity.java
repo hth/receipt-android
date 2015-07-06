@@ -95,6 +95,11 @@ public class SubscriptionUserActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        switch (id) {
+            case android.R.id.home:
+                this.finish();
+
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
