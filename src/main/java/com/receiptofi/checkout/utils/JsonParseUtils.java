@@ -15,7 +15,7 @@ import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.model.wrapper.DataWrapper;
-import com.receiptofi.checkout.model.wrapper.SubscriptionWrapper;
+import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -347,7 +347,7 @@ public class JsonParseUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
             }
-            SubscriptionWrapper.setPlanCache(planModels);
+            PlanWrapper.setPlanCache(planModels);
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }

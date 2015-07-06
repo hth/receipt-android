@@ -15,7 +15,7 @@ import java.util.concurrent.TimeUnit;
  * User: hitender
  * Date: 7/5/15 9:50 AM
  */
-public class SubscriptionWrapper {
+public class PlanWrapper {
     private static final int SIZE_1 = 1;
     private static final int planCacheMinutes = 30;
     public static final String PLANS = "PLANS";
@@ -31,7 +31,7 @@ public class SubscriptionWrapper {
         }
     };
 
-    private SubscriptionWrapper() {
+    private PlanWrapper() {
     }
 
     public static List<PlanModel> getPlanModels() {
