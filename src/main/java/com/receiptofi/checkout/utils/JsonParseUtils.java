@@ -16,6 +16,7 @@ import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.model.wrapper.DataWrapper;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
+import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -370,19 +371,19 @@ public class JsonParseUtils {
         }
     }
 
-    public static TokenModel parseToken(String jsonResponse) {
+    public static void parseToken(String jsonResponse) {
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            return new TokenModel(
-                    jsonObject.getString("token"),
-                    jsonObject.getBoolean("hasCustomerInfo"),
-                    jsonObject.getString("firstName"),
-                    jsonObject.getString("lastName"),
-                    jsonObject.getString("postalCode"),
-                    jsonObject.getString("planId"));
+            TokenWrapper.setTokenModel(
+                    new TokenModel(
+                            jsonObject.getString("token"),
+                            jsonObject.getBoolean("hasCustomerInfo"),
+                            jsonObject.getString("firstName"),
+                            jsonObject.getString("lastName"),
+                            jsonObject.getString("postalCode"),
+                            jsonObject.getString("planId")));
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
-            return null;
         }
     }
 }

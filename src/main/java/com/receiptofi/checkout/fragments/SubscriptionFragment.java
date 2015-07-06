@@ -52,7 +52,6 @@ public class SubscriptionFragment extends Fragment {
             final int what = msg.what;
             switch (what) {
                 case TOKEN_SUCCESS:
-                    Log.d(TAG, "token=" + ((TokenModel) msg.obj).getToken());
                     break;
                 case TOKEN_FAILURE:
                     break;

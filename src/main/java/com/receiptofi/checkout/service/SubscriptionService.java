@@ -19,6 +19,7 @@ import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
+import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.squareup.okhttp.Headers;
@@ -41,11 +42,14 @@ public class SubscriptionService {
      * @param context
      */
     public static void getToken(final Context context) {
+        Log.d(TAG, "Fetching token");
+
         ExternalCallWithOkHttp.doPost(context, API.TOKEN_API, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
             @Override
             public void onSuccess(Headers headers, String body) {
+                JsonParseUtils.parseToken(body);
                 Message message = new Message();
-                message.obj = JsonParseUtils.parseToken(body);
+                message.obj = "";
                 message.what = SubscriptionFragment.TOKEN_SUCCESS;
                 ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
             }
