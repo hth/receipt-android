@@ -25,9 +25,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.service.SubscriptionService;
-import com.receiptofi.checkout.utils.AppUtils;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -38,7 +36,6 @@ public class SubscriptionFragment extends Fragment {
     private static final String TAG = SubscriptionFragment.class.getSimpleName();
 
     private ListView plans;
-    private List<PlanModel> planModels = new LinkedList<>();
     private PlanModel planModel;
     private SuperActivityToast progressToast;
 
@@ -70,10 +67,10 @@ public class SubscriptionFragment extends Fragment {
 
         //TODO(hth) cache plans result for a short while
         if (SubscriptionService.getPlanModels().isEmpty()) {
-            SubscriptionService.getPlans(AppUtils.getHomePageContext());
+            SubscriptionService.getPlans(getActivity());
             startProgressToken();
         } else {
-            SubscriptionService.getPlans(AppUtils.getHomePageContext());
+            SubscriptionService.getPlans(getActivity());
             startProgressToken();
         }
     }
@@ -86,7 +83,7 @@ public class SubscriptionFragment extends Fragment {
         plans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                planModel = planModels.get(position);
+                planModel = SubscriptionService.getPlanModels().get(position);
                 onPlanSelection(planModel);
 //
 //
@@ -103,7 +100,7 @@ public class SubscriptionFragment extends Fragment {
     }
 
     private void showData() {
-        if (!planModels.isEmpty()) {
+        if (!SubscriptionService.getPlanModels().isEmpty()) {
             ((PlanListAdapter) plans.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -113,18 +110,18 @@ public class SubscriptionFragment extends Fragment {
         private final LayoutInflater inflater;
 
         public PlanListAdapter(Context context) {
-            super(context, R.layout.subscription_plan_list_item, planModels);
+            super(context, R.layout.subscription_plan_list_item, SubscriptionService.getPlanModels());
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return planModels.size();
+            return SubscriptionService.getPlanModels().size();
         }
 
         @Override
         public PlanModel getItem(int position) {
-            return planModels.get(position);
+            return SubscriptionService.getPlanModels().get(position);
         }
 
         @Override
@@ -183,7 +180,6 @@ public class SubscriptionFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<PlanModel> plans) {
-            planModels = plans;
             Log.d(TAG, "Completed querying, sending notification to fragment");
             showData();
         }

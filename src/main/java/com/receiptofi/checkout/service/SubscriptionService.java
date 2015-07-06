@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.fragments.SubscriptionFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
@@ -46,39 +47,32 @@ public class SubscriptionService {
             public void onSuccess(Headers headers, String body) {
                 SubscriptionService.parsePlans(headers, body);
 
-                Message countMessage = new Message();
-                countMessage.obj = "";
-                countMessage.what = SubscriptionFragment.PLAN_FETCH_SUCCESS;
-
-                new SubscriptionFragment().updateHandler.sendMessage(countMessage);
+                Message message = new Message();
+                message.obj = "";
+                message.what = SubscriptionFragment.PLAN_FETCH_SUCCESS;
+                ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
-                if (null != context) {
-                    showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                Message message = new Message();
+                message.obj = "";
+                message.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
+                ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
 
-                    Message countMessage = new Message();
-                    countMessage.obj = "";
-                    countMessage.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
-
-                    new SubscriptionFragment().updateHandler.sendMessage(countMessage);
-                }
+                showMessage(JsonParseUtils.parseError(error), (Activity) context);
             }
 
             @Override
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
-                if (null != context) {
-                    showMessage(e.getMessage(), (Activity) context);
+                Message message = new Message();
+                message.obj = "";
+                message.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
+                ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
 
-                    Message countMessage = new Message();
-                    countMessage.obj = "";
-                    countMessage.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
-
-                    new SubscriptionFragment().updateHandler.sendMessage(countMessage);
-                }
+                showMessage(e.getMessage(), (Activity) context);
             }
         });
     }
