@@ -97,13 +97,6 @@ public class SubscriptionFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 planModel = PlanWrapper.getPlanModels().get(position);
                 onPlanSelection(planModel);
-//
-//
-//                SubscriptionUserFragment fragment = (SubscriptionUserFragment) getFragmentManager().findFragmentById(R.layout.fragment_subscription_user);
-//
-//                SubscriptionUserFragment subscriptionUserFragment = new SubscriptionUserFragment();
-//                subscriptionUserFragment.setArguments(planModel.getAsBundle());
-//                subscriptionUserFragment.isVisible();
             }
         });
 
