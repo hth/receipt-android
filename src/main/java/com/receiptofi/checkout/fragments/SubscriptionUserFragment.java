@@ -10,6 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.model.wrapper.TokenWrapper;
+import com.receiptofi.checkout.utils.AppUtils;
 
 /**
  * User: hitender
@@ -38,6 +40,20 @@ public class SubscriptionUserFragment extends Fragment {
         firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
         lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
         postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
+
+        if (TokenWrapper.getTokenModel() != null) {
+            if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
+                firstName.setText(TokenWrapper.getTokenModel().getFirstName());
+            }
+
+            if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getLastName())) {
+                lastName.setText(TokenWrapper.getTokenModel().getLastName());
+            }
+
+            if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getPostalCode())) {
+                postalCode.setText(TokenWrapper.getTokenModel().getPostalCode());
+            }
+        }
 
         subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
         subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
