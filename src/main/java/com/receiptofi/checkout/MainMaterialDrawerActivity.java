@@ -292,6 +292,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         startActivity(new Intent(MainMaterialDrawerActivity.this, ReceiptListActivity.class));
     }
 
+    public SubscriptionFragment getSubscriptionFragment() {
+        return subscriptionFragment;
+    }
 
     private void showErrorMsg(String msg) {
         SuperActivityToast superActivityToast = new SuperActivityToast(MainMaterialDrawerActivity.this);
