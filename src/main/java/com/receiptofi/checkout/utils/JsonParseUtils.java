@@ -339,26 +339,24 @@ public class JsonParseUtils {
         return null;
     }
 
-    public static PlanWrapper parsePlan(String jsonResponse) {
-        PlanWrapper planWrapper = new PlanWrapper();
+    public static void parsePlan(String jsonResponse) {
         try {
             JSONArray jsonArray = new JSONArray(jsonResponse);
             List<PlanModel> planModels = new LinkedList<>();
             for (int i = 0; i < jsonArray.length(); i++) {
                 planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
             }
-            planWrapper.setPlanModels(planModels);
+            PlanWrapper.setPlanCache(planModels);
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
-        return planWrapper;
     }
 
     private static PlanModel parsePlanModel(JSONObject jsonObject) {
         try {
             return new PlanModel(
                     jsonObject.getString("id"),
-                    jsonObject.getString("price"),
+                    jsonObject.getDouble("price"),
                     jsonObject.getString("billingFrequency"),
                     jsonObject.getString("description"),
                     jsonObject.getString("billingDayOfMonth"),

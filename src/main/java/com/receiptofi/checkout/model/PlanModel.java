@@ -9,7 +9,7 @@ import android.os.Bundle;
 public class PlanModel {
 
     private String id;
-    private String price;
+    private Double price;
     private String billingFrequency;
     private String description;
     private String billingDayOfMonth;
@@ -24,7 +24,7 @@ public class PlanModel {
 
     public PlanModel(
             String id,
-            String price,
+            Double price,
             String billingFrequency,
             String description,
             String billingDayOfMonth,
@@ -46,7 +46,7 @@ public class PlanModel {
         return id;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -77,7 +77,7 @@ public class PlanModel {
     public Bundle getAsBundle() {
         Bundle bundle = new Bundle();
         bundle.putString("id", id);
-        bundle.putString("price", String.valueOf(price));
+        bundle.putDouble("price", price);
         bundle.putString("billingFrequency", String.valueOf(billingFrequency));
         bundle.putString("description", description);
         bundle.putString("billingDayOfMonth", String.valueOf(billingDayOfMonth));
