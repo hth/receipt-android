@@ -29,7 +29,6 @@ import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
 
 import org.joda.time.DateTime;
-import org.joda.time.Minutes;
 import org.joda.time.Seconds;
 
 import java.util.List;
