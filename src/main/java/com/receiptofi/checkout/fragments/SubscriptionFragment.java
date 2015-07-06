@@ -202,11 +202,11 @@ public class SubscriptionFragment extends Fragment {
     public void stopProgressToken() {
         if (null != progressToast && progressToast.isShowing()) {
             getActivity().runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                progressToast.dismiss();
-                                            }
-                                        });
+                @Override
+                public void run() {
+                    progressToast.dismiss();
+                }
+            });
         }
     }
 }
