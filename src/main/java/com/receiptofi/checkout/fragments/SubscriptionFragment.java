@@ -24,9 +24,13 @@ import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
-import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
+import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
+
+import org.joda.time.DateTime;
+import org.joda.time.Minutes;
+import org.joda.time.Seconds;
 
 import java.util.List;
 
@@ -36,6 +40,8 @@ import java.util.List;
  */
 public class SubscriptionFragment extends Fragment {
     private static final String TAG = SubscriptionFragment.class.getSimpleName();
+
+    private static final int CACHE_TOKEN_SECONDS = 59;
 
     private ListView plans;
     private PlanModel planModel;
@@ -52,10 +58,13 @@ public class SubscriptionFragment extends Fragment {
             final int what = msg.what;
             switch (what) {
                 case TOKEN_SUCCESS:
+                    Log.d(TAG, "Token received=" + what);
                     break;
                 case TOKEN_FAILURE:
+                    Log.d(TAG, "Token received=" + what);
                     break;
                 case PLAN_FETCH_SUCCESS:
+                    Log.d(TAG, "Plans fetched=" + what);
                     stopProgressToken();
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
@@ -65,6 +74,7 @@ public class SubscriptionFragment extends Fragment {
                     });
                     break;
                 case PLAN_FETCH_FAILURE:
+                    Log.d(TAG, "Plans fetched=" + what);
                     stopProgressToken();
                     break;
                 default:
@@ -77,7 +87,15 @@ public class SubscriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SubscriptionService.getToken(getActivity());
+
+        //TODO(hth) may be remove token cache and instead fetch every time user comes to this screen
+        if (null == TokenWrapper.getLastUpdated() ||
+                Seconds.secondsBetween(
+                        TokenWrapper.getLastUpdated(),
+                        DateTime.now()
+                ).getSeconds() > CACHE_TOKEN_SECONDS) {
+            SubscriptionService.getToken(getActivity());
+        }
 
         if (PlanWrapper.getPlanModels().isEmpty()) {
             Log.d(TAG, "Cache containing Plans is empty, fetching fresh");
