@@ -24,7 +24,7 @@ import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
-import com.receiptofi.checkout.model.wrapper.PlanWrapper;
+import com.receiptofi.checkout.model.wrapper.SubscriptionWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
 
 import java.util.List;
@@ -71,7 +71,7 @@ public class SubscriptionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (PlanWrapper.getPlanModels().isEmpty()) {
+        if (SubscriptionWrapper.getPlanModels().isEmpty()) {
             Log.d(TAG, "Cache containing Plans is empty, fetching fresh");
             SubscriptionService.getPlans(getActivity());
             startProgressToken();
@@ -86,7 +86,7 @@ public class SubscriptionFragment extends Fragment {
         plans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                planModel = PlanWrapper.getPlanModels().get(position);
+                planModel = SubscriptionWrapper.getPlanModels().get(position);
                 onPlanSelection(planModel);
 //
 //
@@ -103,7 +103,7 @@ public class SubscriptionFragment extends Fragment {
     }
 
     private void showData() {
-        if (!PlanWrapper.getPlanModels().isEmpty()) {
+        if (!SubscriptionWrapper.getPlanModels().isEmpty()) {
             ((PlanListAdapter) plans.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -113,18 +113,18 @@ public class SubscriptionFragment extends Fragment {
         private final LayoutInflater inflater;
 
         public PlanListAdapter(Context context) {
-            super(context, R.layout.subscription_plan_list_item, PlanWrapper.getPlanModels());
+            super(context, R.layout.subscription_plan_list_item, SubscriptionWrapper.getPlanModels());
             inflater = LayoutInflater.from(context);
         }
 
         @Override
         public int getCount() {
-            return PlanWrapper.getPlanModels().size();
+            return SubscriptionWrapper.getPlanModels().size();
         }
 
         @Override
         public PlanModel getItem(int position) {
-            return PlanWrapper.getPlanModels().get(position);
+            return SubscriptionWrapper.getPlanModels().get(position);
         }
 
         @Override
@@ -178,7 +178,7 @@ public class SubscriptionFragment extends Fragment {
 
         @Override
         protected List<PlanModel> doInBackground(Void... args) {
-            return PlanWrapper.getPlanModels();
+            return SubscriptionWrapper.getPlanModels();
         }
 
         @Override
