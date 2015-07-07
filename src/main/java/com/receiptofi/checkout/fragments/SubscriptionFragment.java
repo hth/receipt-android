@@ -59,13 +59,14 @@ public class SubscriptionFragment extends Fragment {
             switch (what) {
                 case TOKEN_SUCCESS:
                     Log.d(TAG, "Token received=" + what);
+                    stopProgressToken();
                     break;
                 case TOKEN_FAILURE:
                     Log.d(TAG, "Token received=" + what);
+                    stopProgressToken();
                     break;
                 case PLAN_FETCH_SUCCESS:
                     Log.d(TAG, "Plans fetched=" + what);
-                    stopProgressToken();
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -87,20 +88,19 @@ public class SubscriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean yes = fetchToken();
 
         //TODO(hth) may be remove token cache and instead fetch every time user comes to this screen
-        if (null == TokenWrapper.getLastUpdated() ||
-                Seconds.secondsBetween(
-                        TokenWrapper.getLastUpdated(),
-                        DateTime.now()
-                ).getSeconds() > CACHE_TOKEN_SECONDS) {
+        if (yes && PlanWrapper.getPlanModels().isEmpty()) {
+            Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
             SubscriptionService.getToken(getActivity());
-        }
-
-        if (PlanWrapper.getPlanModels().isEmpty()) {
-            Log.d(TAG, "Cache containing Plans is empty, fetching fresh");
             SubscriptionService.getPlans(getActivity());
-            startProgressToken();
+            startProgressToken("Fetching available plans.");
+
+        } else if(yes) {
+            Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
+            SubscriptionService.getToken(getActivity());
+            startProgressToken("Refreshing plans.");
         }
     }
 
@@ -119,6 +119,11 @@ public class SubscriptionFragment extends Fragment {
 
         new PlanTask().execute();
         return rootView;
+    }
+
+    private boolean fetchToken() {
+        return null == TokenWrapper.getLastUpdated() ||
+                Seconds.secondsBetween(TokenWrapper.getLastUpdated(), DateTime.now()).getSeconds() > CACHE_TOKEN_SECONDS;
     }
 
     private void showData() {
@@ -214,9 +219,9 @@ public class SubscriptionFragment extends Fragment {
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void startProgressToken() {
+    private void startProgressToken(String message) {
         progressToast = new SuperActivityToast(getActivity(), SuperToast.Type.PROGRESS);
-        progressToast.setText("Fetching available plans.");
+        progressToast.setText(message);
         progressToast.setIndeterminate(true);
         progressToast.setProgressIndeterminate(true);
         progressToast.show();
