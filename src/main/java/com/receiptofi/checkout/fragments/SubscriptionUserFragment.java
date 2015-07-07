@@ -1,17 +1,13 @@
 package com.receiptofi.checkout.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -24,7 +20,6 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscribeConfirmationActivity;
 import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
-import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 
 /**
