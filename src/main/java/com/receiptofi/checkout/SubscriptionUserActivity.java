@@ -1,6 +1,7 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.res.Resources;
@@ -11,6 +12,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +20,7 @@ import android.widget.SearchView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.fragments.SubscriptionUserFragment;
 
 /**
  * User: hitender
@@ -26,6 +29,7 @@ import com.joanzapata.android.iconify.Iconify;
 public class SubscriptionUserActivity extends Activity {
 
     private SearchView searchView;
+    private SubscriptionUserFragment fragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

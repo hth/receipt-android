@@ -27,6 +27,7 @@ import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
+import com.receiptofi.checkout.utils.Constants;
 
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
@@ -208,8 +209,9 @@ public class SubscriptionFragment extends Fragment {
 
     private void onPlanSelection(PlanModel planModel) {
         Intent intent = new Intent(getActivity(), SubscriptionUserActivity.class);
-        intent.putExtras(planModel.getAsBundle());
+        intent.putExtra(Constants.INTENT_EXTRA_PLAN_MODEL, planModel);
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
     private void startProgressToken() {

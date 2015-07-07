@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/app_light_bg"
-              android:fillViewport="true"
-              android:paddingBottom="@dimen/activity_vertical_margin"
-              android:paddingLeft="@dimen/activity_horizontal_margin"
-              android:paddingRight="@dimen/activity_horizontal_margin"
-              android:paddingTop="@dimen/activity_vertical_margin"
-              tools:context="com.receiptofi.checkout.fragments.SubscriptionUserFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/app_light_bg"
+    android:fillViewport="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.receiptofi.checkout.fragments.SubscriptionUserFragment">
 
     <LinearLayout
         android:id="@+id/subscription_user"
@@ -38,7 +38,7 @@
                 android:background="@null"
                 android:hint="@string/subscription_user_firstName"
                 android:inputType="text|textAutoComplete"
-                android:maxLength="@integer/name_max_length"/>
+                android:maxLength="@integer/name_max_length" />
         </LinearLayout>
 
         <LinearLayout
@@ -61,7 +61,7 @@
                 android:background="@null"
                 android:hint="@string/subscription_user_lastName"
                 android:inputType="text|textAutoComplete"
-                android:maxLength="@integer/name_max_length"/>
+                android:maxLength="@integer/name_max_length" />
         </LinearLayout>
 
         <LinearLayout
@@ -84,12 +84,12 @@
                 android:background="@null"
                 android:hint="@string/subscription_user_postal"
                 android:inputType="number"
-                android:maxLength="@integer/postal_code_max_length"/>
+                android:maxLength="@integer/postal_code_max_length" />
         </LinearLayout>
 
         <Space
             android:layout_width="1dp"
-            android:layout_height="40dp"/>
+            android:layout_height="40dp" />
 
         <TextView
             android:id="@+id/subscription_title_id"
@@ -97,7 +97,58 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/edittext_margin_left"
             android:background="@null"
-            android:text="{subscription-status}"/>
+            android:text="{subscription-status}" />
+        <LinearLayout
+            android:id="@+id/rd_list_item_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/subscription_plan_list_item_plan_name"
+                style="@style/rd_list_item_text_left_primary_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="35dp"
+                android:paddingLeft="10dp"/>
+
+            <TextView
+                android:id="@+id/subscription_plan_list_item_plan_description"
+                style="@style/rd_list_item_text_left_secondary_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:height="35dp"
+                android:paddingLeft="10dp"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/subscription_plan_list_item_next_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="right"
+            android:paddingLeft="10dp"/>
+
+        <TextView
+            android:id="@+id/subscription_plan_list_item_plan_price"
+            style="@style/rd_list_item_price_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/subscription_plan_list_item_next_arrow"
+            android:layout_toRightOf="@id/rd_list_item_left"
+            android:gravity="right"
+            android:paddingRight="10dp"/>
+
+        <Button
+            android:id="@+id/btn_subscribe"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Subscribe" />
 
     </LinearLayout>
 </LinearLayout>
