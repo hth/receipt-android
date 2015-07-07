@@ -55,14 +55,28 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscription_user, container, false);
+
+        //TODO(hth) this text can be change to un-subscribed too.
+        subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
+        subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+
+        LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
+        View childPlan = inflater.inflate(R.layout.subscription_plan_list_item, null);
+        subscriptionPlanLinearLayout.addView(childPlan, 1);
+
+        pm = getActivity().getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
+        planName = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_name);
+        planName.setText(pm.getName());
+
+        planDescription = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_description);
+        planDescription.setText(pm.getDescription());
+
+        planPrice = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_price);
+        planPrice.setText("$" + String.valueOf(pm.getPrice()));
+
         firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
         lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
         postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
-        btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
-
-        btnSubscribe.setOnClickListener(this);
-
-        pm = getActivity().getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
 
         if (TokenWrapper.getTokenModel() != null) {
             if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
@@ -80,11 +94,13 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             }
         }
 
-        planName = (TextView) rootView.findViewById(R.id.subscription_plan_list_item_plan_name);
-        planName.setText(pm.getName() + " - $" + pm.getPrice());
+        View childSubmission = inflater.inflate(R.layout.subscription_submission, null);
+        subscriptionPlanLinearLayout.addView(childSubmission);
 
-        planDescription = (TextView) rootView.findViewById(R.id.subscription_plan_list_item_plan_description);
-        planDescription.setText(pm.getDescription());
+        btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
+        //TODO(hth) can be un-subscribe too
+        btnSubscribe.setText("SUBSCRIBE");
+        btnSubscribe.setOnClickListener(this);
 
         /** Must call below method to make the fragment menu works. */
         setHasOptionsMenu(true);

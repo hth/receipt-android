@@ -178,7 +178,7 @@ public class SubscriptionFragment extends Fragment {
 
                 holder.planName.setText(getItem(position).getName());
                 holder.planDescription.setText(getItem(position).getDescription());
-                holder.planPrice.setText(String.valueOf(getItem(position).getPrice()));
+                holder.planPrice.setText("$" + String.valueOf(getItem(position).getPrice()));
                 return convertView;
             } catch (Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);

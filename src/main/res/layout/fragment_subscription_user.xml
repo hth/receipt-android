@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -17,6 +17,20 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/subscription_title_id"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/edittext_margin_left"
+            android:textStyle="bold"
+            android:background="@null"
+            android:textSize="20sp"
+            android:text="{subscription-status}"/>
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="20dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -87,47 +101,23 @@
                 android:maxLength="@integer/postal_code_max_length" />
         </LinearLayout>
 
-        <Space
-            android:layout_width="1dp"
-            android:layout_height="40dp" />
+        <!--<TextView-->
+            <!--android:id="@+id/subscription_plan_list_item_plan_name"-->
+            <!--style="@style/rd_list_item_text_left_primary_style"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:height="35dp"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:text = "Monthly 50"/>-->
 
-        <TextView
-            android:id="@+id/subscription_title_id"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/edittext_margin_left"
-            android:textStyle="bold"
-            android:background="@null"
-            android:textSize="20sp"
-            android:text="@string/subscription_purchase_selected_plan" />
-
-        <TextView
-            android:id="@+id/subscription_plan_list_item_plan_name"
-            style="@style/rd_list_item_text_left_primary_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:height="35dp"
-            android:paddingLeft="10dp"
-            android:text = "Monthly 50"/>
-
-        <TextView
-            android:id="@+id/subscription_plan_list_item_plan_description"
-            style="@style/rd_list_item_text_left_secondary_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:height="35dp"
-            android:paddingLeft="10dp"
-            android:text = "Monthly 10"/>
-
-        <com.gc.materialdesign.views.ButtonRectangle
-            android:id="@+id/btn_subscribe"
-            android:layout_width="fill_parent"
-            android:layout_height="60dp"
-            android:background= "@color/app_theme_bg"
-            android:text="Subscribe"
-            android:layout_marginTop="30dp"
-            />
-
+        <!--<TextView-->
+            <!--android:id="@+id/subscription_plan_list_item_plan_description"-->
+            <!--style="@style/rd_list_item_text_left_secondary_style"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:height="35dp"-->
+            <!--android:paddingLeft="10dp"-->
+            <!--android:text = "Monthly 10"/>-->
     </LinearLayout>
-</LinearLayout>
+</ScrollView>

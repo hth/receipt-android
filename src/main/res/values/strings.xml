@@ -180,9 +180,8 @@
     <string name="subscription_user_firstName">First Name</string>
     <string name="subscription_user_lastName">Last Name</string>
     <string name="subscription_user_postal">Zip Code</string>
-    <string name="subscription_status_subscribe">Subscribe</string>
-    <string name="subscription_status_unSubscribe">Un Subscribe</string>
-    <string name="subscription_purchase_selected_plan">Selected Plan:</string>
+    <string name="subscription_status_subscribe">Subscribing to plan</string>
+    <string name="subscription_status_unSubscribe">Unsubscribe from plan</string>
 
     <!-- Load image -->
     <string name="receipt_image_failed_to_load">Failed to load image.</string>
