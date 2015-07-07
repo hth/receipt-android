@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.InputType;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +20,12 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
+import com.braintreepayments.api.dropin.BraintreePaymentActivity;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.fragments.SubscriptionUserFragment;
+import com.receiptofi.checkout.utils.Constants;
 
 /**
  * User: hitender
@@ -28,8 +33,9 @@ import com.receiptofi.checkout.fragments.SubscriptionUserFragment;
  */
 public class SubscriptionUserActivity extends Activity {
 
+    private static final String TAG = SubscriptionUserActivity.class.getSimpleName();
     private SearchView searchView;
-    private SubscriptionUserFragment fragment;
+    private SubscriptionUserFragment subscriptionUserFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +51,28 @@ public class SubscriptionUserActivity extends Activity {
                     .actionBarSize());
         }
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        // Check whether the activity is using the layout version with
+        // the fragment_container FrameLayout. If so, we must add the first fragment
+        if (findViewById(R.id.fragment_container) != null) {
+
+            // However, if we're being restored from a previous state,
+            // then we don't need to do anything and should return or else
+            // we could end up with overlapping fragments.
+            if (savedInstanceState != null) {
+                return;
+            }
+
+            // Create an instance of ExampleFragment
+            subscriptionUserFragment = new SubscriptionUserFragment();
+
+            // In case this activity was started with special instructions from an Intent,
+            // pass the Intent's extras to the fragment as arguments
+            subscriptionUserFragment.setArguments(getIntent().getExtras());
+
+            // Add the fragment to the 'fragment_container' FrameLayout
+            getFragmentManager().beginTransaction().add(R.id.fragment_container, subscriptionUserFragment).commit();
+        }
     }
 
     @Override

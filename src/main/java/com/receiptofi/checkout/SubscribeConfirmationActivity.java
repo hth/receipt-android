@@ -80,42 +80,18 @@ public class SubscribeConfirmationActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d(TAG, "onActivityResult, requestCode:" + requestCode + ". resultCode is:" + resultCode);
-        if (requestCode == 100) {
-            if (resultCode == BraintreePaymentActivity.RESULT_OK) {
-                String paymentMethodNonce = data.getStringExtra(BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE);
-//                               Intent intent = new Intent(this, SubscribeActivity.class);
-//                               intent.putExtra(BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE, paymentMethodNonce);
-//                                startActivityForResult(intent, 200);
-                postNonceToServer(paymentMethodNonce);
-            }
-        }
-    }
-
-    public void postNonceToServer(String nonce) {
-        Log.d(TAG, "kevin in postNonceToServer, the nonce is: " + nonce);
-
-    }
-
     public void onOkPressed(View button) {
         onBraintreeSubmit();
     }
 
     public void onBraintreeSubmit() {
-        if (TokenWrapper.getTokenModel() != null) {
-            if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken())) {
-                Intent intent = new Intent(this, BraintreePaymentActivity.class);
-                String token = TokenWrapper.getTokenModel().getFirstName();
-                intent.putExtra(BraintreePaymentActivity.EXTRA_CLIENT_TOKEN, token);
-                startActivityForResult(intent, 100);
-            }
-        } else {
-            SuperToast.create(this, "No any valid token!", SuperToast.Duration.LONG,
-                    Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN)).show();
-        }
+
 
     }
 
+
+    public void postNonceToServer(String nonce) {
+        Log.d(TAG, "kevin in postNonceToServer, the nonce is: " + nonce);
+
+    }
 }
