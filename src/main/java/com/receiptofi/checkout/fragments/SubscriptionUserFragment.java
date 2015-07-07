@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscribeConfirmationActivity;
 import com.receiptofi.checkout.model.PlanModel;
@@ -37,7 +38,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     private TextView planName;
     private TextView planDescription;
     private TextView planPrice;
-    private Button btnSubscribe;
+    private ButtonRectangle btnSubscribe;
     private PlanModel pm;
     private String mFirstName;
     private String mLastName;
@@ -53,7 +54,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
         lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
         postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
-        btnSubscribe = (Button) rootView.findViewById(R.id.btn_subscribe);
+        btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
 
         btnSubscribe.setOnClickListener(this);
 
@@ -75,21 +76,11 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             }
         }
 
-        subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
-        subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
-
-//        LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
-//        View child = inflater.inflate(R.layout.subscription_plan_list_item, null);
-//        subscriptionPlanLinearLayout.addView(child);
-
         planName = (TextView) rootView.findViewById(R.id.subscription_plan_list_item_plan_name);
-        planName.setText(pm.getName());
+        planName.setText(pm.getName() + " - $" + pm.getPrice());
 
         planDescription = (TextView) rootView.findViewById(R.id.subscription_plan_list_item_plan_description);
         planDescription.setText(pm.getDescription());
-
-        planPrice = (TextView) rootView.findViewById(R.id.subscription_plan_list_item_plan_price);
-        planPrice.setText("" + pm.getPrice());
 
         /** Must call below method to make the fragment menu works. */
         setHasOptionsMenu(true);

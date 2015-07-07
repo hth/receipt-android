@@ -11,13 +11,15 @@
         android:text="@string/hello_world" android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
-        style="@style/exp_list_child_text_left_primary_style"/>
-    <Button
+        style="@style/exp_list_child_text_left_primary_style"
+        android:gravity="center"/>
+    <com.gc.materialdesign.views.ButtonRectangle
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_below="@+id/tv_message"
+        android:background= "@color/app_theme_bg"
         android:text="OK"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="30dp"
         android:onClick="onOkPressed"/>
 
 </RelativeLayout>

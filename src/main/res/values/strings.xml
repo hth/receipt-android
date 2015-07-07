@@ -182,6 +182,7 @@
     <string name="subscription_user_postal">Zip Code</string>
     <string name="subscription_status_subscribe">Subscribe</string>
     <string name="subscription_status_unSubscribe">Un Subscribe</string>
+    <string name="subscription_purchase_selected_plan">Selected Plan:</string>
 
     <!-- Load image -->
     <string name="receipt_image_failed_to_load">Failed to load image.</string>

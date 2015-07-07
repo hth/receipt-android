@@ -76,20 +76,6 @@ public class PlanModel implements Parcelable {
         return billingPlan;
     }
 
-//    public Bundle getAsBundle() {
-//        Bundle bundle = new Bundle();
-//        bundle.putString("id", id);
-//        bundle.putDouble("price", price);
-//        bundle.putString("billingFrequency", String.valueOf(billingFrequency));
-//        bundle.putString("description", description);
-//        bundle.putString("billingDayOfMonth", String.valueOf(billingDayOfMonth));
-//        bundle.putString("name", name);
-//        bundle.putString("paymentGateway", paymentGateway);
-//        bundle.putString("billingPlan", billingPlan);
-//
-//        return bundle;
-//    }
-
     @Override
     public int describeContents() {
         return 0;
