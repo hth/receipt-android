@@ -110,7 +110,9 @@ public class SubscribeConfirmationActivity extends Activity {
             postData.put(ConstantsJson.COMPANY, "Some Company");
             postData.put(ConstantsJson.PAYMENT_NONCE, nonce);
             SubscriptionService.doPayment(this, postData);
-
+            Intent intent = new Intent(this, MainMaterialDrawerActivity.class);
+            startActivity(intent);
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
         }  catch (JSONException e) {
             e.printStackTrace();
         }
