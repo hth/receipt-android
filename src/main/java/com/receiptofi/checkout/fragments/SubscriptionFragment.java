@@ -3,6 +3,7 @@ package com.receiptofi.checkout.fragments;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,7 +29,6 @@ import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
-import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 
 import org.joda.time.DateTime;
@@ -136,14 +136,6 @@ public class SubscriptionFragment extends Fragment {
 
     private void showData() {
         if (!PlanWrapper.getPlanModels().isEmpty()) {
-            if (null != TokenWrapper.getTokenModel() && !TextUtils.isEmpty(TokenWrapper.getTokenModel().getPlanId())) {
-                int position = PlanWrapper.findPosition(TokenWrapper.getTokenModel().getPlanId());
-                if (AppUtils.isPositive(position)) {
-                    //TODO(hth) set pre-selection of the list if user is already enrolled in a plan
-                    plans.setSelection(position + 1);
-                    plans.getChildAt(position + 1).requestFocus();
-                }
-            }
             ((PlanListAdapter) plans.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -196,10 +188,17 @@ public class SubscriptionFragment extends Fragment {
                 } else {
                     holder = (ViewHolder) convertView.getTag();
                 }
-
-                holder.planName.setText(getItem(position).getName());
-                holder.planDescription.setText(getItem(position).getDescription());
-                holder.planPrice.setText("$" + String.valueOf(getItem(position).getPrice()));
+                PlanModel pm = getItem(position);
+                if (null != pm) {
+                    if (null != TokenWrapper.getTokenModel() && !TextUtils.isEmpty(TokenWrapper.getTokenModel().getPlanId())) {
+                        if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+                            convertView.setBackgroundColor(Color.LTGRAY);
+                        }
+                    }
+                    holder.planName.setText(pm.getName());
+                    holder.planDescription.setText(pm.getDescription());
+                    holder.planPrice.setText("$" + String.valueOf(pm.getPrice()));
+                }
                 return convertView;
             } catch (Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
