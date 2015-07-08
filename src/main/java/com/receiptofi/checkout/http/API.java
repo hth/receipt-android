@@ -73,10 +73,6 @@ public class API {
         // Password recovery
         public static final String PASSWORD_RECOVERY_EMAIL = "EM";
 
-        // Update Login Id
-        public static final String SETTING_UPDATE_LOGIN_ID = "UID";
-        public static final String SETTING_UPDATE_PASSWORD = "PA";
-
         // Unprocessed
         public static final String UNPROCESSEDCOUNT = "unprocessedCount";
 
