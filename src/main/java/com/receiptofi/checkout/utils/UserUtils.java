@@ -17,11 +17,7 @@ public class UserUtils {
     private static final String TAG = UserUtils.class.getSimpleName();
 
     public static boolean isValidEmail(String email) {
-        if (TextUtils.isEmpty(email)) {
-            return false;
-        } else {
-            return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
-        }
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 
     public static String getEmail() {
