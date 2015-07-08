@@ -296,7 +296,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         return subscriptionFragment;
     }
 
-    private void showErrorMsg(String msg) {
+    public void showErrorMsg(String msg) {
         SuperActivityToast superActivityToast = new SuperActivityToast(MainMaterialDrawerActivity.this);
         superActivityToast.setText(msg);
         superActivityToast.setDuration(SuperToast.Duration.SHORT);

@@ -82,6 +82,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     public static final int UPDATE_MONTHLY_EXPENSE = 0x2568;
     public static final int UPDATE_EXP_BY_BIZ_CHART = 0x2569;
     public static final int GET_ALL_RECEIPTS = 0x2570;
+    public static final int SUBSCRIPTION_PAYMENT_FAILED = 0X2571;
 
     private SearchView searchView;
 

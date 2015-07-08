@@ -12,6 +12,7 @@ import android.util.Log;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
+import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.SubscriptionFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
@@ -20,11 +21,14 @@ import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
+import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
+
+import org.json.JSONObject;
 
 /**
  * User: hitender
@@ -114,6 +118,46 @@ public class SubscriptionService {
                 message.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
                 ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
 
+                showMessage(e.getMessage(), (Activity) context);
+            }
+        });
+    }
+
+    /**
+     * Do the payment.
+     * @param context
+     */
+    public static void doPayment(final Context context, final JSONObject jsonObject) {
+        Log.d(TAG, "Do Payment " + jsonObject.toString());
+
+        ExternalCallWithOkHttp.doPost(context, jsonObject, API.PAYMENT_API, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
+            @Override
+            public void onSuccess(Headers headers, String body) {
+                JsonParseUtils.parseToken(body);
+//                Message message = new Message();
+//                message.obj = "";
+//                message.what = SubscriptionFragment.TOKEN_SUCCESS;
+//                ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+                Log.e(TAG, "error=" + error);
+//                Message message = new Message();
+//                message.obj = "";
+//                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
+//                context.getApplicationContext().homeFragment.updateHandler.dispatchMessage(message);
+
+                showMessage(JsonParseUtils.parseError(error), (Activity) context);
+            }
+
+            @Override
+            public void onException(Exception e) {
+                Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+//                Message message = new Message();
+//                message.obj = "";
+//                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
+//                ((MainMaterialDrawerActivity) context).homeFragment.updateHandler.dispatchMessage(message);
                 showMessage(e.getMessage(), (Activity) context);
             }
         });
