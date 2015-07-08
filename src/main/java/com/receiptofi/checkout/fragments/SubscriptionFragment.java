@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,8 @@ import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
+import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.Constants;
 
 import org.joda.time.DateTime;
 import org.joda.time.Seconds;
@@ -58,13 +61,20 @@ public class SubscriptionFragment extends Fragment {
             switch (what) {
                 case TOKEN_SUCCESS:
                     Log.d(TAG, "Token received=" + what);
+                    stopProgressToken();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showData();
+                        }
+                    });
                     break;
                 case TOKEN_FAILURE:
                     Log.d(TAG, "Token received=" + what);
+                    stopProgressToken();
                     break;
                 case PLAN_FETCH_SUCCESS:
                     Log.d(TAG, "Plans fetched=" + what);
-                    stopProgressToken();
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -86,20 +96,19 @@ public class SubscriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        boolean yes = fetchToken();
 
         //TODO(hth) may be remove token cache and instead fetch every time user comes to this screen
-        if (null == TokenWrapper.getLastUpdated() ||
-                Seconds.secondsBetween(
-                        TokenWrapper.getLastUpdated(),
-                        DateTime.now()
-                ).getSeconds() > CACHE_TOKEN_SECONDS) {
+        if (yes && PlanWrapper.getPlanModels().isEmpty()) {
+            Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
             SubscriptionService.getToken(getActivity());
-        }
-
-        if (PlanWrapper.getPlanModels().isEmpty()) {
-            Log.d(TAG, "Cache containing Plans is empty, fetching fresh");
             SubscriptionService.getPlans(getActivity());
-            startProgressToken();
+            startProgressToken("Fetching available plans.");
+
+        } else if (yes) {
+            Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
+            SubscriptionService.getToken(getActivity());
+            startProgressToken("Refreshing plans.");
         }
     }
 
@@ -120,8 +129,21 @@ public class SubscriptionFragment extends Fragment {
         return rootView;
     }
 
+    private boolean fetchToken() {
+        return null == TokenWrapper.getLastUpdated() ||
+                Seconds.secondsBetween(TokenWrapper.getLastUpdated(), DateTime.now()).getSeconds() > CACHE_TOKEN_SECONDS;
+    }
+
     private void showData() {
         if (!PlanWrapper.getPlanModels().isEmpty()) {
+            if (null != TokenWrapper.getTokenModel() && !TextUtils.isEmpty(TokenWrapper.getTokenModel().getPlanId())) {
+                int position = PlanWrapper.findPosition(TokenWrapper.getTokenModel().getPlanId());
+                if (AppUtils.isPositive(position)) {
+                    //TODO(hth) set pre-selection of the list if user is already enrolled in a plan
+                    plans.setSelection(position + 1);
+                    plans.getChildAt(position + 1).requestFocus();
+                }
+            }
             ((PlanListAdapter) plans.getAdapter()).notifyDataSetChanged();
         }
     }
@@ -177,7 +199,7 @@ public class SubscriptionFragment extends Fragment {
 
                 holder.planName.setText(getItem(position).getName());
                 holder.planDescription.setText(getItem(position).getDescription());
-                holder.planPrice.setText(String.valueOf(getItem(position).getPrice()));
+                holder.planPrice.setText("$" + String.valueOf(getItem(position).getPrice()));
                 return convertView;
             } catch (Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
@@ -208,13 +230,14 @@ public class SubscriptionFragment extends Fragment {
 
     private void onPlanSelection(PlanModel planModel) {
         Intent intent = new Intent(getActivity(), SubscriptionUserActivity.class);
-        intent.putExtras(planModel.getAsBundle());
+        intent.putExtra(Constants.INTENT_EXTRA_PLAN_MODEL, planModel);
         startActivity(intent);
+        getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void startProgressToken() {
+    private void startProgressToken(String message) {
         progressToast = new SuperActivityToast(getActivity(), SuperToast.Type.PROGRESS);
-        progressToast.setText("Fetching available plans.");
+        progressToast.setText(message);
         progressToast.setIndeterminate(true);
         progressToast.setProgressIndeterminate(true);
         progressToast.show();

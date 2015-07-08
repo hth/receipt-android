@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/subscription_user_submit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/subscription_user"
+        android:orientation="vertical"
+        android:padding="@dimen/activity_horizontal_margin">
+
+        <com.gc.materialdesign.views.ButtonRectangle
+            android:id="@+id/btn_subscribe"
+            android:layout_width="fill_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/app_theme_bg"
+            android:text="{subscription-status}"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>

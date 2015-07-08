@@ -1,27 +1,32 @@
 package com.receiptofi.checkout.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.NavUtils;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.braintreepayments.api.dropin.BraintreePaymentActivity;
+import com.gc.materialdesign.views.ButtonRectangle;
+import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.johnpersano.supertoasts.util.Style;
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.SubscribeConfirmationActivity;
+import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
-import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.Constants;
 
 /**
  * User: hitender
  * Date: 7/2/15 11:33 AM
  */
-public class SubscriptionUserFragment extends Fragment {
+public class SubscriptionUserFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = SubscriptionUserFragment.class.getSimpleName();
 
     private EditText firstName;
@@ -32,6 +37,10 @@ public class SubscriptionUserFragment extends Fragment {
     private TextView planName;
     private TextView planDescription;
     private TextView planPrice;
+    private ButtonRectangle btnSubscribe;
+    public PlanModel pm;
+    public String mFirstName;
+    public String mLastName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -41,17 +50,38 @@ public class SubscriptionUserFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscription_user, container, false);
+
+        //TODO(hth) this text can be change to un-subscribed too.
+        subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
+        subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+
+        LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
+        View childPlan = inflater.inflate(R.layout.subscription_plan_list_item, null);
+        subscriptionPlanLinearLayout.addView(childPlan, 1);
+
+        pm = getActivity().getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
+        planName = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_name);
+        planName.setText(pm.getName());
+
+        planDescription = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_description);
+        planDescription.setText(pm.getDescription());
+
+        planPrice = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_price);
+        planPrice.setText("$" + String.valueOf(pm.getPrice()));
+
         firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
         lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
         postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
 
         if (TokenWrapper.getTokenModel() != null) {
             if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
-                firstName.setText(TokenWrapper.getTokenModel().getFirstName());
+                mFirstName = TokenWrapper.getTokenModel().getFirstName();
+                firstName.setText(mFirstName);
             }
 
             if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getLastName())) {
-                lastName.setText(TokenWrapper.getTokenModel().getLastName());
+                mLastName = TokenWrapper.getTokenModel().getLastName();
+                lastName.setText(mLastName);
             }
 
             if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getPostalCode())) {
@@ -59,24 +89,58 @@ public class SubscriptionUserFragment extends Fragment {
             }
         }
 
-        subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
-        subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+        View childSubmission = inflater.inflate(R.layout.subscription_submission, null);
+        subscriptionPlanLinearLayout.addView(childSubmission);
 
-        LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
-        View child = inflater.inflate(R.layout.subscription_plan_list_item, null);
-        subscriptionPlanLinearLayout.addView(child);
-
-        planName = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_name);
-        planName.setText("hello");
-
-        planDescription = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_description);
-        planDescription.setText("Description");
-
-        planPrice = (TextView) child.findViewById(R.id.subscription_plan_list_item_plan_price);
-        planPrice.setText("$10");
+        btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
+        if(pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+            btnSubscribe.setText("UNSUBSCRIBE");
+        } else {
+            btnSubscribe.setText("SUBSCRIBE");
+        }
+        btnSubscribe.setOnClickListener(this);
 
         /** Must call below method to make the fragment menu works. */
         setHasOptionsMenu(true);
         return rootView;
+    }
+
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.btn_subscribe) {
+            //TODO(hth) add un subscribe option
+            if (TokenWrapper.getTokenModel() != null) {
+                if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken())) {
+                    Intent intent = new Intent(getActivity(), BraintreePaymentActivity.class);
+                    intent.putExtra(BraintreePaymentActivity.EXTRA_CLIENT_TOKEN, TokenWrapper.getTokenModel().getToken());
+                    startActivityForResult(intent, 100);
+                }
+            } else {
+                SuperToast.create(getActivity(), "No any valid token!", SuperToast.Duration.LONG,
+                        Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN)).show();
+            }
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(TAG, "onActivityResult, requestCode:" + requestCode + ". resultCode is:" + resultCode);
+        if (requestCode == 100) {
+            if (resultCode == BraintreePaymentActivity.RESULT_OK) {
+                String paymentMethodNonce = data.getStringExtra(BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE);
+                Intent intent = new Intent(getActivity(), SubscribeConfirmationActivity.class);
+                intent.putExtra(BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE, paymentMethodNonce);
+                if (null != pm) {
+                    intent.putExtra(Constants.INTENT_EXTRA_PLAN_MODEL, pm);
+                }
+
+                if (!mFirstName.isEmpty() && !mLastName.isEmpty()) {
+                    intent.putExtra(Constants.INTENT_EXTRA_FIRST_NAME, mFirstName);
+                    intent.putExtra(Constants.INTENT_EXTRA_LAST_NAME, mLastName);
+                }
+                getActivity().startActivityForResult(intent, 200);
+                getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+            }
+        }
     }
 }

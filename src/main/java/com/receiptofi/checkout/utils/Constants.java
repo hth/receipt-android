@@ -24,6 +24,9 @@ public class Constants {
 
     public static final String INTENT_EXTRA_FILTER_TYPE = "filter_type";
     public static final String INTENT_EXTRA_BIZ_NAME = "biz_name";
+    public static final String INTENT_EXTRA_PLAN_MODEL = "plan_model";
+    public static final String INTENT_EXTRA_FIRST_NAME = "firstname";
+    public static final String INTENT_EXTRA_LAST_NAME = "lastname";
 
 
     public static final DateFormat ISO_DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);

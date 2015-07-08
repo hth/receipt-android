@@ -1,5 +1,7 @@
 package com.receiptofi.checkout.model.wrapper;
 
+import android.util.Log;
+
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.Ordering;
@@ -16,6 +18,8 @@ import java.util.concurrent.TimeUnit;
  * Date: 7/5/15 9:50 AM
  */
 public class PlanWrapper {
+    private static final String TAG = PlanWrapper.class.getSimpleName();
+
     private static final int SIZE_1 = 1;
     private static final int planCacheMinutes = 30;
     public static final String PLANS = "PLANS";
@@ -48,5 +52,18 @@ public class PlanWrapper {
     public static void setPlanCache(List<PlanModel> planModels) {
         Assert.assertNotNull("Plan Model list should not be null", planModels);
         planCache.put(PLANS, byPriceOrdering.sortedCopy(planModels));
+    }
+
+    public static int findPosition(String id) {
+        Log.d(TAG, "Finding position in plan list for planId=" + id);
+        List<PlanModel> planModels = planCache.getIfPresent(PLANS);
+        int position = -1;
+        for (PlanModel planModel : planModels) {
+            position ++;
+            if (planModel.getId().equals(id)) {
+                break;
+            }
+        }
+        return position;
     }
 }
