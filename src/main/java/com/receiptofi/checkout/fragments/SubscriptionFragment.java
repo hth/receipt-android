@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +28,7 @@ import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 
 import org.joda.time.DateTime;
@@ -60,6 +62,12 @@ public class SubscriptionFragment extends Fragment {
                 case TOKEN_SUCCESS:
                     Log.d(TAG, "Token received=" + what);
                     stopProgressToken();
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showData();
+                        }
+                    });
                     break;
                 case TOKEN_FAILURE:
                     Log.d(TAG, "Token received=" + what);
@@ -97,7 +105,7 @@ public class SubscriptionFragment extends Fragment {
             SubscriptionService.getPlans(getActivity());
             startProgressToken("Fetching available plans.");
 
-        } else if(yes) {
+        } else if (yes) {
             Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
             SubscriptionService.getToken(getActivity());
             startProgressToken("Refreshing plans.");
@@ -128,6 +136,14 @@ public class SubscriptionFragment extends Fragment {
 
     private void showData() {
         if (!PlanWrapper.getPlanModels().isEmpty()) {
+            if (null != TokenWrapper.getTokenModel() && !TextUtils.isEmpty(TokenWrapper.getTokenModel().getPlanId())) {
+                int position = PlanWrapper.findPosition(TokenWrapper.getTokenModel().getPlanId());
+                if (AppUtils.isPositive(position)) {
+                    //TODO(hth) set pre-selection of the list if user is already enrolled in a plan
+                    plans.setSelection(position + 1);
+                    plans.getChildAt(position + 1).requestFocus();
+                }
+            }
             ((PlanListAdapter) plans.getAdapter()).notifyDataSetChanged();
         }
     }
