@@ -50,16 +50,19 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscription_user, container, false);
+        pm = getActivity().getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
 
-        //TODO(hth) this text can be change to un-subscribed too.
         subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
-        subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+        if(pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+            subscriptionTitle.setText(getResources().getString(R.string.subscription_status_unSubscribe));
+        } else {
+            subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+        }
 
         LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
         View childPlan = inflater.inflate(R.layout.subscription_plan_list_item, null);
         subscriptionPlanLinearLayout.addView(childPlan, 1);
 
-        pm = getActivity().getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
         planName = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_name);
         planName.setText(pm.getName());
 
@@ -94,7 +97,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
 
         btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
         if(pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
-            btnSubscribe.setText("UNSUBSCRIBE");
+            btnSubscribe.setText("UN-SUBSCRIBE");
         } else {
             btnSubscribe.setText("SUBSCRIBE");
         }
