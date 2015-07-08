@@ -105,9 +105,9 @@ public class ExternalCallWithOkHttp {
                     int statusCode = response.code();
                     String body = response.body().string();
                     if (body.isEmpty()) {
-                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=EMPTY");
+                        Log.i(TAG, "post, statusCode=" + statusCode + ", response body=EMPTY");
                     } else {
-                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
+                        Log.i(TAG, "post, statusCode=" + statusCode + ", response body=" + body);
                     }
                     updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (ConnectException e) {
