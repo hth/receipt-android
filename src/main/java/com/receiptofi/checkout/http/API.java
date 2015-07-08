@@ -41,6 +41,8 @@ public class API {
     // Braintree Payment
     public static final String TOKEN_API = "/api/token.json";
     public static final String PLANS_API = "/api/plans.json";
+    public static final String PAYMENT_API = "/api/payment.json";
+    public static final String CANCEL_SUBSCRIPTION_API = "/api/cancelSubscription.json";
 
     public static class key {
         // Header

@@ -23,6 +23,7 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.model.PlanModel;
@@ -121,7 +122,11 @@ public class SubscriptionFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
                 planModel = PlanWrapper.getPlanModels().get(position);
-                onPlanSelection(planModel);
+                if (null != TokenWrapper.getTokenModel()) {
+                    onPlanSelection(planModel);
+                } else {
+                    ((MainMaterialDrawerActivity)getActivity()).showErrorMsg("Wait a moment, token is ready");
+                }
             }
         });
 
