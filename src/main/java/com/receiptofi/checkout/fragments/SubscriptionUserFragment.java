@@ -93,8 +93,11 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         subscriptionPlanLinearLayout.addView(childSubmission);
 
         btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
-        //TODO(hth) can be un-subscribe too
-        btnSubscribe.setText("SUBSCRIBE");
+        if(pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+            btnSubscribe.setText("UNSUBSCRIBE");
+        } else {
+            btnSubscribe.setText("SUBSCRIBE");
+        }
         btnSubscribe.setOnClickListener(this);
 
         /** Must call below method to make the fragment menu works. */
@@ -105,6 +108,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_subscribe) {
+            //TODO(hth) add un subscribe option
             if (TokenWrapper.getTokenModel() != null) {
                 if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken())) {
                     Intent intent = new Intent(getActivity(), BraintreePaymentActivity.class);
