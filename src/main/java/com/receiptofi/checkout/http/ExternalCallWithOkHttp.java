@@ -100,7 +100,7 @@ public class ExternalCallWithOkHttp {
                                 .build();
                     }
 
-                    Log.i(TAG, "post=" + request.httpUrl());
+                    Log.d(TAG, "post=" + request.httpUrl());
                     Response response = new OkHttpClient().newCall(request).execute();
                     int statusCode = response.code();
                     String body = response.body().string();
@@ -202,6 +202,7 @@ public class ExternalCallWithOkHttp {
                                 .build();
                     }
 
+                    Log.d(TAG, "get=" + request.httpUrl());
                     Response response = new OkHttpClient().newCall(request).execute();
                     int statusCode = response.code();
                     String body = response.body().string();
@@ -271,6 +272,7 @@ public class ExternalCallWithOkHttp {
                             .addHeader(API.key.XR_MAIL, UserUtils.getEmail())
                             .build();
 
+                    Log.d(TAG, "uploadImage=" + request.httpUrl());
                     Response response = new OkHttpClient().newCall(request).execute();
                     handler.onSuccess(imageModel, response.body().string());
                 } catch (UnknownHostException e) {
