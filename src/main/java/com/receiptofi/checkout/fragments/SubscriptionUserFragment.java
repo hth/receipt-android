@@ -53,7 +53,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         pm = getActivity().getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
 
         subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
-        if(pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+        if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
             subscriptionTitle.setText(getResources().getString(R.string.subscription_status_unSubscribe));
         } else {
             subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
@@ -76,7 +76,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
         postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
 
-        if (TokenWrapper.getTokenModel() != null) {
+        if (null != TokenWrapper.getTokenModel() && TokenWrapper.getTokenModel().isHasCustomerInfo()) {
             if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
                 mFirstName = TokenWrapper.getTokenModel().getFirstName();
                 firstName.setText(mFirstName);
@@ -96,7 +96,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         subscriptionPlanLinearLayout.addView(childSubmission);
 
         btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
-        if(pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+        if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
             btnSubscribe.setText("UN-SUBSCRIBE");
         } else {
             btnSubscribe.setText("SUBSCRIBE");
