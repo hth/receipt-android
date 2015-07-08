@@ -38,9 +38,9 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     private TextView planDescription;
     private TextView planPrice;
     private ButtonRectangle btnSubscribe;
-    public PlanModel pm;
-    public String mFirstName;
-    public String mLastName;
+    private PlanModel pm;
+    private String mFirstName;
+    private String mLastName;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
