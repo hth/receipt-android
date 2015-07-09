@@ -134,7 +134,7 @@ public class SubscriptionService {
         ExternalCallWithOkHttp.doPost(context, jsonObject, API.PAYMENT_API, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
             @Override
             public void onSuccess(Headers headers, String body) {
-                JsonParseUtils.parseToken(body);
+                JsonParseUtils.parseTransaction(body);
                 Activity currentActivity = ((ReceiptofiApplication)context.getApplicationContext()).getCurrentActivity();
                 Message message = new Message();
                 message.obj = "";

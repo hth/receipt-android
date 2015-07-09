@@ -7,13 +7,13 @@ import com.receiptofi.checkout.model.TransactionDetail;
  * Date: 7/9/15 1:50 AM
  */
 public class TransactionWrapper {
-    private TransactionDetail transactionDetail;
+    private static TransactionDetail transactionDetail;
 
-    public TransactionWrapper(TransactionDetail transactionDetail) {
-        this.transactionDetail = transactionDetail;
+    public static void setTransactionDetail(TransactionDetail transactionDetail) {
+        TransactionWrapper.transactionDetail = transactionDetail;
     }
 
-    public TransactionDetail getTransactionDetail() {
+    public static TransactionDetail getTransactionDetail() {
         return transactionDetail;
     }
 }
