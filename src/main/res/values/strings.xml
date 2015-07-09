@@ -79,6 +79,9 @@
     <!--Billing fragment-->
     <string name="billing_plan">Plan Subscribed</string>
     <string name="billing_history">Billing History</string>
+    <string name="subscription_title">Select Plan</string>
+    <string name="purchase_title">Purchase</string>
+    <string name="purchase_confirmation_title">Confirmation</string>
 
     <!--Preference String-->
     <string name="key_pref_sync">pref_sync</string>
