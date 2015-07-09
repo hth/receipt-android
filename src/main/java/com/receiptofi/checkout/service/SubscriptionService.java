@@ -12,6 +12,7 @@ import android.util.Log;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
+import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.SubscriptionFragment;
 import com.receiptofi.checkout.http.API;
@@ -43,7 +44,7 @@ public class SubscriptionService {
     /**
      * Get all plans.
      *
-     * @param context
+     * @param context - Call in Activity's context
      */
     public static void getToken(final Context context) {
         Log.d(TAG, "Fetching token");
@@ -85,7 +86,7 @@ public class SubscriptionService {
     /**
      * Get all plans.
      *
-     * @param context
+     * @param context - Call in Activity's context
      */
     public static void getPlans(final Context context) {
         ExternalCallWithOkHttp.doGet(context, API.PLANS_API, new ResponseHandler() {
@@ -125,7 +126,7 @@ public class SubscriptionService {
 
     /**
      * Do the payment.
-     * @param context
+     * @param context - Call in activity's context.
      */
     public static void doPayment(final Context context, final JSONObject jsonObject) {
         Log.d(TAG, "Do Payment " + jsonObject.toString());
@@ -134,30 +135,32 @@ public class SubscriptionService {
             @Override
             public void onSuccess(Headers headers, String body) {
                 JsonParseUtils.parseToken(body);
-//                Message message = new Message();
-//                message.obj = "";
-//                message.what = SubscriptionFragment.TOKEN_SUCCESS;
-//                ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
+                Activity currentActivity = ((ReceiptofiApplication)context.getApplicationContext()).getCurrentActivity();
+                Message message = new Message();
+                message.obj = "";
+                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_SUCCESS;
+                ((MainMaterialDrawerActivity)currentActivity).homeFragment.updateHandler.dispatchMessage(message);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
-//                Message message = new Message();
-//                message.obj = "";
-//                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
-//                context.getApplicationContext().homeFragment.updateHandler.dispatchMessage(message);
-
+                Activity currentActivity = ((ReceiptofiApplication)context.getApplicationContext()).getCurrentActivity();
+                Message message = new Message();
+                message.obj = "";
+                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
+                ((MainMaterialDrawerActivity)currentActivity).homeFragment.updateHandler.dispatchMessage(message);
                 showMessage(JsonParseUtils.parseError(error), (Activity) context);
             }
 
             @Override
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
-//                Message message = new Message();
-//                message.obj = "";
-//                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
-//                ((MainMaterialDrawerActivity) context).homeFragment.updateHandler.dispatchMessage(message);
+                Activity currentActivity = ((ReceiptofiApplication)context.getApplicationContext()).getCurrentActivity();
+                Message message = new Message();
+                message.obj = "";
+                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
+                ((MainMaterialDrawerActivity)currentActivity).homeFragment.updateHandler.dispatchMessage(message);
                 showMessage(e.getMessage(), (Activity) context);
             }
         });
@@ -166,8 +169,8 @@ public class SubscriptionService {
     /**
      * Show Toast message.
      *
-     * @param message
-     * @param context
+     * @param message - Toast message
+     * @param context - Show up activity's context
      */
     private static void showMessage(final String message, final Activity context) {
         Assert.assertNotNull("Context should not be null", context);

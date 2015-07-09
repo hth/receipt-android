@@ -1,5 +1,6 @@
 package com.receiptofi.checkout;
 
+import android.app.Activity;
 import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
@@ -20,6 +21,14 @@ public class ReceiptofiApplication extends Application {
 
     public static DatabaseHandler RDH;
     private static boolean homeActivityVisible;
+
+    private Activity mCurrentActivity = null;
+    public Activity getCurrentActivity(){
+        return mCurrentActivity;
+    }
+    public void setCurrentActivity(Activity mCurrentActivity){
+        this.mCurrentActivity = mCurrentActivity;
+    }
 
     public static boolean isHomeActivityVisible() {
         return homeActivityVisible;

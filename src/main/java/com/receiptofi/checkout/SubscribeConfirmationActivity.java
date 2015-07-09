@@ -100,7 +100,6 @@ public class SubscribeConfirmationActivity extends Activity {
     }
 
     public void postNonceToServer(String nonce) {
-        Log.d(TAG, "kevin in postNonceToServer, the nonce is: " + nonce);
         JSONObject postData = new JSONObject();
         try {
             postData.put(ConstantsJson.PLAN_ID, pm.getId());
