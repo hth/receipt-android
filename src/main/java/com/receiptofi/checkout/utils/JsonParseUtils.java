@@ -394,33 +394,37 @@ public class JsonParseUtils {
     public static void parseTransaction(String jsonResponse) {
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            if (jsonObject.has("PAY")) {
-                TransactionWrapper.setTransactionDetail(
-                        new TransactionDetailPaymentModel(
-                                TransactionDetail.TYPE.valueOf(jsonObject.getString("type")),
-                                jsonObject.getBoolean("success"),
-                                jsonObject.getString("status"),
-                                jsonObject.getString("firstName"),
-                                jsonObject.getString("lastName"),
-                                jsonObject.getString("postalCode"),
-                                jsonObject.getString("accountPlanId"),
-                                jsonObject.getString("transactionId"),
-                                jsonObject.getString("message")));
-            } else if (jsonObject.has("SUB")) {
-                TransactionWrapper.setTransactionDetail(
-                        new TransactionDetailSubscriptionModel(
-                                TransactionDetail.TYPE.valueOf(jsonObject.getString("type")),
-                                jsonObject.getBoolean("success"),
-                                jsonObject.getString("status"),
-                                jsonObject.getString("planId"),
-                                jsonObject.getString("firstName"),
-                                jsonObject.getString("lastName"),
-                                jsonObject.getString("postalCode"),
-                                jsonObject.getString("accountPlanId"),
-                                jsonObject.getString("subscriptionId"),
-                                jsonObject.getString("message")));
-            } else {
-                throw new RuntimeException("Undefined Transaction Type");
+            switch (TransactionDetail.TYPE.valueOf(jsonObject.getString("type"))) {
+                case PAY:
+                    TransactionWrapper.setTransactionDetail(
+                            new TransactionDetailPaymentModel(
+                                    TransactionDetail.TYPE.PAY,
+                                    jsonObject.getBoolean("success"),
+                                    jsonObject.getString("status"),
+                                    jsonObject.getString("firstName"),
+                                    jsonObject.getString("lastName"),
+                                    jsonObject.getString("postalCode"),
+                                    jsonObject.getString("accountPlanId"),
+                                    jsonObject.getString("transactionId"),
+                                    jsonObject.getString("message")));
+                    break;
+                case SUB:
+                    TransactionWrapper.setTransactionDetail(
+                            new TransactionDetailSubscriptionModel(
+                                    TransactionDetail.TYPE.SUB,
+                                    jsonObject.getBoolean("success"),
+                                    jsonObject.getString("status"),
+                                    jsonObject.getString("planId"),
+                                    jsonObject.getString("firstName"),
+                                    jsonObject.getString("lastName"),
+                                    jsonObject.getString("postalCode"),
+                                    jsonObject.getString("accountPlanId"),
+                                    jsonObject.getString("subscriptionId"),
+                                    jsonObject.getString("message")));
+                    break;
+                default:
+                    Log.e(TAG, "Undefined Transaction Type=" + jsonObject.getString("type"));
+                    throw new RuntimeException("Undefined Transaction Type");
             }
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
