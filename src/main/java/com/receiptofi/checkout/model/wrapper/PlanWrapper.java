@@ -21,7 +21,7 @@ public class PlanWrapper {
     private static final String TAG = PlanWrapper.class.getSimpleName();
 
     private static final int SIZE_1 = 1;
-    private static final int planCacheMinutes = 3;
+    private static final int planCacheMinutes = 30;
     public static final String PLANS = "PLANS";
 
     private static Cache<String, List<PlanModel>> planCache = CacheBuilder.newBuilder()

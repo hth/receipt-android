@@ -197,6 +197,8 @@ public class SubscriptionFragment extends Fragment {
                 if (null != pm) {
                     if (null != TokenWrapper.getTokenModel() && !TextUtils.isEmpty(TokenWrapper.getTokenModel().getPlanId())) {
                         if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+                            //TODO(hth)(kevin) why is this log printed 6 times when plan table is refreshed
+                            Log.d(TAG, "pm.getId()=" + pm.getId() + ", TokenWrapper.getTokenModel().getPlanId()=" + TokenWrapper.getTokenModel().getPlanId());
                             convertView.setBackgroundColor(Color.LTGRAY);
                         }
                     }
