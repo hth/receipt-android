@@ -51,57 +51,60 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_subscription_user, container, false);
         pm = getActivity().getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
+        if (null != pm) {
+            subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
+            if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+                subscriptionTitle.setText(getResources().getString(R.string.subscription_status_unSubscribe));
+            } else {
+                subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+            }
 
-        subscriptionTitle = (TextView) rootView.findViewById(R.id.subscription_title_id);
-        if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
-            subscriptionTitle.setText(getResources().getString(R.string.subscription_status_unSubscribe));
+            LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
+            View childPlan = inflater.inflate(R.layout.subscription_plan_list_item, null);
+            subscriptionPlanLinearLayout.addView(childPlan, 1);
+
+            planName = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_name);
+            planName.setText(pm.getName());
+
+            planDescription = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_description);
+            planDescription.setText(pm.getDescription());
+
+            planPrice = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_price);
+            planPrice.setText("$" + String.valueOf(pm.getPrice()));
+
+            firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
+            lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
+            postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
+
+            if (null != TokenWrapper.getTokenModel() && TokenWrapper.getTokenModel().isHasCustomerInfo()) {
+                if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
+                    mFirstName = TokenWrapper.getTokenModel().getFirstName();
+                    firstName.setText(mFirstName);
+                }
+
+                if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getLastName())) {
+                    mLastName = TokenWrapper.getTokenModel().getLastName();
+                    lastName.setText(mLastName);
+                }
+
+                if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getPostalCode())) {
+                    postalCode.setText(TokenWrapper.getTokenModel().getPostalCode());
+                }
+            }
+
+            View childSubmission = inflater.inflate(R.layout.subscription_submission, null);
+            subscriptionPlanLinearLayout.addView(childSubmission);
+
+            btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
+            if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
+                btnSubscribe.setText("UN-SUBSCRIBE");
+            } else {
+                btnSubscribe.setText("SUBSCRIBE");
+            }
+            btnSubscribe.setOnClickListener(this);
         } else {
-            subscriptionTitle.setText(getResources().getString(R.string.subscription_status_subscribe));
+            Log.e(TAG, "PM is null");
         }
-
-        LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
-        View childPlan = inflater.inflate(R.layout.subscription_plan_list_item, null);
-        subscriptionPlanLinearLayout.addView(childPlan, 1);
-
-        planName = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_name);
-        planName.setText(pm.getName());
-
-        planDescription = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_description);
-        planDescription.setText(pm.getDescription());
-
-        planPrice = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_price);
-        planPrice.setText("$" + String.valueOf(pm.getPrice()));
-
-        firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
-        lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
-        postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
-
-        if (null != TokenWrapper.getTokenModel() && TokenWrapper.getTokenModel().isHasCustomerInfo()) {
-            if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
-                mFirstName = TokenWrapper.getTokenModel().getFirstName();
-                firstName.setText(mFirstName);
-            }
-
-            if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getLastName())) {
-                mLastName = TokenWrapper.getTokenModel().getLastName();
-                lastName.setText(mLastName);
-            }
-
-            if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getPostalCode())) {
-                postalCode.setText(TokenWrapper.getTokenModel().getPostalCode());
-            }
-        }
-
-        View childSubmission = inflater.inflate(R.layout.subscription_submission, null);
-        subscriptionPlanLinearLayout.addView(childSubmission);
-
-        btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
-        if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
-            btnSubscribe.setText("UN-SUBSCRIBE");
-        } else {
-            btnSubscribe.setText("SUBSCRIBE");
-        }
-        btnSubscribe.setOnClickListener(this);
 
         /** Must call below method to make the fragment menu works. */
         setHasOptionsMenu(true);
@@ -140,6 +143,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                 if (!mFirstName.isEmpty() && !mLastName.isEmpty()) {
                     intent.putExtra(Constants.INTENT_EXTRA_FIRST_NAME, mFirstName);
                     intent.putExtra(Constants.INTENT_EXTRA_LAST_NAME, mLastName);
+                    intent.putExtra(Constants.INTENT_EXTRA_POSTAL_CODE, postalCode.getText());
                 }
                 getActivity().startActivityForResult(intent, 200);
                 getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);

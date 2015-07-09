@@ -1,11 +1,16 @@
 package com.receiptofi.checkout;
 
-import android.app.ActionBar;
+import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Rect;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -52,17 +57,15 @@ import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionLis
 public class MainMaterialDrawerActivity extends MaterialNavigationDrawer implements HomeFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
     private static final String TAG = MainMaterialDrawerActivity.class.getSimpleName();
 
-    private Menu optionMenu;
     private SearchView searchView;
-    private ActionBar ab;
     public HomeFragment homeFragment;
     public NotificationFragment notificationFragment;
     public ExpenseTagFragment expenseTagFragment;
     public BillingFragment billingFragment;
     public SubscriptionFragment subscriptionFragment;
     public SettingFragment settingFragment;
-    private Context context;
     private SuperActivityToast uploadImageToast;
+    protected ReceiptofiApplication myApp;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
@@ -71,7 +74,8 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public void init(Bundle savedInstanceState) {
 
         ReceiptofiApplication.homeActivityResumed();
-        context = getApplicationContext();
+        myApp = (ReceiptofiApplication)getApplicationContext();
+
         AppUtils.setHomePageContext(this);
 
         homeFragment = HomeFragment.newInstance("", "");
@@ -84,18 +88,20 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         ProfileModel profileModel = ProfileUtils.getProfile();
         String name = profileModel != null ? profileModel.getName() : "";
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
-        int backgroundImage = profileModel != null ? profileModel.getProfileBackgroundImage() : R.drawable.bamboo;
-        /**
-         * Check if the app already has a backgroundImage.
-         */
-        backgroundImage = BitmapFactory.decodeResource(getResources(), backgroundImage) != null ? backgroundImage : R.drawable.bamboo;
-        MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, backgroundImage);
+
+        // You can change the color to any one you like, or set the last parameter of MateralAccount as NUll, then use default color.
+        ColorDrawable drawable = new ColorDrawable(Color.WHITE);
+
+        MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, drawableToBitmap(drawable));
+
+        setUsernameTextColor(Color.BLACK);
+        setUserEmailTextColor(Color.BLACK);
 
         this.addAccount(account);
         this.addSection(
                 newSection(
                         "Home",
-                        new IconDrawable(context, Iconify.IconValue.fa_home)
+                        new IconDrawable(myApp, Iconify.IconValue.fa_home)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         homeFragment));
@@ -103,7 +109,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Notification",
-                        new IconDrawable(context, Iconify.IconValue.fa_bell_o)
+                        new IconDrawable(myApp, Iconify.IconValue.fa_bell_o)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         notificationFragment));
@@ -111,7 +117,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Tag Expenses",
-                        new IconDrawable(context, Iconify.IconValue.fa_tags)
+                        new IconDrawable(myApp, Iconify.IconValue.fa_tags)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         expenseTagFragment));
@@ -119,7 +125,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Billing History",
-                        new IconDrawable(context, Iconify.IconValue.fa_history)
+                        new IconDrawable(myApp, Iconify.IconValue.fa_history)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         billingFragment));
@@ -127,7 +133,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Subscription",
-                        new IconDrawable(context, Iconify.IconValue.fa_hand_o_up)
+                        new IconDrawable(myApp, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         subscriptionFragment));
@@ -135,7 +141,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Log Out",
-                        new IconDrawable(context, Iconify.IconValue.fa_sign_out)
+                        new IconDrawable(myApp, Iconify.IconValue.fa_sign_out)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         new MaterialSectionListener() {
@@ -149,7 +155,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addBottomSection(
                 newSection(
                         "Settings",
-                        new IconDrawable(context, Iconify.IconValue.fa_cogs)
+                        new IconDrawable(myApp, Iconify.IconValue.fa_cogs)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         settingFragment));
@@ -164,6 +170,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     @Override
     protected void onResume() {
         super.onResume();
+        myApp.setCurrentActivity(this);
         Log.d(TAG, "executing onResume");
         if (searchView != null) {
             searchView.setQuery("", false);
@@ -173,8 +180,15 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     }
 
     @Override
+    protected void onPause() {
+        clearReferences();
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
+        clearReferences();
         Log.d(TAG, "executing onDestroy");
         ReceiptofiApplication.homeActivityPaused();
         AppUtils.setHomePageContext(null);
@@ -191,8 +205,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_material_drawer_activity, menu);
-
-        optionMenu = menu;
 
         // Associate searchable configuration with the SearchView
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -269,7 +281,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     /**
      * Below three functions are the XML linear layout onclick handler.
      *
-     * @param view
+     * @param view - Button from XML function.
      */
     public void takePhoto(View view) {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -296,7 +308,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         return subscriptionFragment;
     }
 
-    private void showErrorMsg(String msg) {
+    public void showErrorMsg(String msg) {
         SuperActivityToast superActivityToast = new SuperActivityToast(MainMaterialDrawerActivity.this);
         superActivityToast.setText(msg);
         superActivityToast.setDuration(SuperToast.Duration.SHORT);
@@ -318,6 +330,34 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         if (null != uploadImageToast && uploadImageToast.isShowing()) {
             uploadImageToast.dismiss();
         }
+    }
+
+    private void clearReferences(){
+        Activity currActivity = myApp.getCurrentActivity();
+        if (currActivity != null && currActivity.equals(this))
+            myApp.setCurrentActivity(null);
+    }
+
+    public static Bitmap drawableToBitmap (Drawable drawable) {
+        Bitmap bitmap = null;
+
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            if(bitmapDrawable.getBitmap() != null) {
+                return bitmapDrawable.getBitmap();
+            }
+        }
+
+        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+            bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
+        } else {
+            bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
+        }
+
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+        return bitmap;
     }
 
 }

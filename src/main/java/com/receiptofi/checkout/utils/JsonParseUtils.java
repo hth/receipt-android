@@ -13,10 +13,14 @@ import com.receiptofi.checkout.model.ProfileModel;
 import com.receiptofi.checkout.model.ReceiptItemModel;
 import com.receiptofi.checkout.model.ReceiptModel;
 import com.receiptofi.checkout.model.TokenModel;
+import com.receiptofi.checkout.model.TransactionDetail;
+import com.receiptofi.checkout.model.TransactionDetailPaymentModel;
+import com.receiptofi.checkout.model.TransactionDetailSubscriptionModel;
 import com.receiptofi.checkout.model.UnprocessedDocumentModel;
 import com.receiptofi.checkout.model.wrapper.DataWrapper;
 import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
+import com.receiptofi.checkout.model.wrapper.TransactionWrapper;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -382,6 +386,46 @@ public class JsonParseUtils {
                             jsonObject.getString("lastName"),
                             jsonObject.getString("postalCode"),
                             jsonObject.getString("planId")));
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
+        }
+    }
+
+    public static void parseTransaction(String jsonResponse) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            switch (TransactionDetail.TYPE.valueOf(jsonObject.getString("type"))) {
+                case PAY:
+                    TransactionWrapper.setTransactionDetail(
+                            new TransactionDetailPaymentModel(
+                                    TransactionDetail.TYPE.PAY,
+                                    jsonObject.getBoolean("success"),
+                                    jsonObject.getString("status"),
+                                    jsonObject.getString("firstName"),
+                                    jsonObject.getString("lastName"),
+                                    jsonObject.getString("postalCode"),
+                                    jsonObject.getString("accountPlanId"),
+                                    jsonObject.getString("transactionId"),
+                                    jsonObject.getString("message")));
+                    break;
+                case SUB:
+                    TransactionWrapper.setTransactionDetail(
+                            new TransactionDetailSubscriptionModel(
+                                    TransactionDetail.TYPE.SUB,
+                                    jsonObject.getBoolean("success"),
+                                    jsonObject.getString("status"),
+                                    jsonObject.getString("planId"),
+                                    jsonObject.getString("firstName"),
+                                    jsonObject.getString("lastName"),
+                                    jsonObject.getString("postalCode"),
+                                    jsonObject.getString("accountPlanId"),
+                                    jsonObject.getString("subscriptionId"),
+                                    jsonObject.getString("message")));
+                    break;
+                default:
+                    Log.e(TAG, "Undefined Transaction Type=" + jsonObject.getString("type"));
+                    throw new RuntimeException("Undefined Transaction Type");
+            }
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }

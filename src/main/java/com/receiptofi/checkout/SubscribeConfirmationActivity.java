@@ -20,13 +20,23 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
+import com.receiptofi.checkout.service.SubscriptionService;
 import com.receiptofi.checkout.utils.Constants;
+import com.receiptofi.checkout.utils.ConstantsJson;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class SubscribeConfirmationActivity extends Activity {
 
     public TextView tvMessage;
     private static final String TAG = SubscribeConfirmationActivity.class.getSimpleName();
+    private PlanModel pm;
+    String firstName;
+    String lastName;
+    String postalCode;
+    private String nonce;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +54,12 @@ public class SubscribeConfirmationActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvMessage = (TextView) findViewById(R.id.tv_message);
-        PlanModel pm = getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
-        String firstName = getIntent().getStringExtra(Constants.INTENT_EXTRA_FIRST_NAME);
-        String lastName = getIntent().getStringExtra(Constants.INTENT_EXTRA_LAST_NAME);
+        pm = getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
+        firstName = getIntent().getStringExtra(Constants.INTENT_EXTRA_FIRST_NAME);
+        lastName = getIntent().getStringExtra(Constants.INTENT_EXTRA_LAST_NAME);
+        postalCode = getIntent().getStringExtra(Constants.INTENT_EXTRA_POSTAL_CODE);
+        nonce  = getIntent().getStringExtra(BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE);
+
         String message = "";
         if (pm != null && !firstName.isEmpty() && !lastName.isEmpty()) {
             message = firstName + " " + lastName + " your card has been successfully charged for " + pm.getPrice() + " and you are enrolled for " + pm.getDescription() + ". Your last transactions and subscription has been cancelled. First of every month your card would be charged for " + pm.getBillingPlan() + ".";
@@ -81,17 +94,27 @@ public class SubscribeConfirmationActivity extends Activity {
     }
 
     public void onOkPressed(View button) {
-        onBraintreeSubmit();
+        if (!TextUtils.isEmpty(nonce)) {
+            postNonceToServer(nonce);
+        }
     }
-
-    public void onBraintreeSubmit() {
-
-
-    }
-
 
     public void postNonceToServer(String nonce) {
-        Log.d(TAG, "kevin in postNonceToServer, the nonce is: " + nonce);
+        JSONObject postData = new JSONObject();
+        try {
+            postData.put(ConstantsJson.PLAN_ID, pm.getId());
+            postData.put(ConstantsJson.FIRST_NAME, firstName);
+            postData.put(ConstantsJson.LAST_NAME, lastName);
+            postData.put(ConstantsJson.POSTAL, postalCode);
+            postData.put(ConstantsJson.COMPANY, "Some Company");
+            postData.put(ConstantsJson.PAYMENT_NONCE, nonce);
+            SubscriptionService.doPayment(this, postData);
+            Intent intent = new Intent(this, MainMaterialDrawerActivity.class);
+            startActivity(intent);
+            this.overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+        }  catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 }
