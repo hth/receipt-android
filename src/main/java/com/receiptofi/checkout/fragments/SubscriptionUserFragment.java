@@ -2,10 +2,8 @@ package com.receiptofi.checkout.fragments;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,12 +17,10 @@ import android.widget.TextView;
 import com.braintreepayments.api.Braintree;
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.views.ProgressBarCircularIndeterminate;
 import com.gc.materialdesign.widgets.Dialog;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
-import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscribeConfirmationActivity;
 import com.receiptofi.checkout.model.PlanModel;
@@ -55,10 +51,10 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     private ButtonRectangle btnSubscribe;
     private SuperActivityToast progressToast;
     private PlanModel pm;
-    private String mFirstName;
-    private String mLastName;
-    private String mPostcode;
-    private Braintree mBraintree;
+    private String firstName;
+    private String lastName;
+    private String postalCode;
+    private Braintree braintree;
     private Boolean braintreeReady = false;
 
     public static final int SUBSCRIPTION_PAYMENT_SUCCESS = 0X2571;
@@ -77,17 +73,17 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                         intent.putExtra(Constants.INTENT_EXTRA_PLAN_MODEL, pm);
                     }
 
-                    if (!mFirstName.isEmpty() && !mLastName.isEmpty()) {
-                        intent.putExtra(Constants.INTENT_EXTRA_FIRST_NAME, mFirstName);
-                        intent.putExtra(Constants.INTENT_EXTRA_LAST_NAME, mLastName);
-                        intent.putExtra(Constants.INTENT_EXTRA_POSTAL_CODE, mPostcode);
+                    if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                        intent.putExtra(Constants.INTENT_EXTRA_FIRST_NAME, firstName);
+                        intent.putExtra(Constants.INTENT_EXTRA_LAST_NAME, lastName);
+                        intent.putExtra(Constants.INTENT_EXTRA_POSTAL_CODE, postalCode);
                     }
                     getActivity().startActivityForResult(intent, 200);
                     getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
                     break;
                 case SUBSCRIPTION_PAYMENT_FAILED:
                     Log.d(TAG, "payment failed");
-                    Dialog dialog = new Dialog(getActivity(), "Payment Failed",  "Sorry your payment is failed!");
+                    Dialog dialog = new Dialog(getActivity(), "Payment Failed", "Sorry your payment is failed!");
                     dialog.show();
                     break;
                 default:
@@ -134,17 +130,17 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
 
             if (null != TokenWrapper.getTokenModel() && TokenWrapper.getTokenModel().isHasCustomerInfo()) {
                 if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
-                    mFirstName = TokenWrapper.getTokenModel().getFirstName();
-                    etFirstName.setText(mFirstName);
+                    firstName = TokenWrapper.getTokenModel().getFirstName();
+                    etFirstName.setText(firstName);
                 }
 
                 if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getLastName())) {
-                    mLastName = TokenWrapper.getTokenModel().getLastName();
-                    etLastName.setText(mLastName);
+                    lastName = TokenWrapper.getTokenModel().getLastName();
+                    etLastName.setText(lastName);
                 }
 
                 if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getPostalCode())) {
-                    mPostcode = TokenWrapper.getTokenModel().getPostalCode();
+                    postalCode = TokenWrapper.getTokenModel().getPostalCode();
                     etPostalCode.setText(TokenWrapper.getTokenModel().getPostalCode());
                 }
             }
@@ -165,9 +161,9 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
 
         if (TokenWrapper.getTokenModel() != null) {
             if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken())) {
-                mBraintree = Braintree.restoreSavedInstanceState(getActivity(), savedInstanceState);
-                if (mBraintree != null) {
-                    // mBraintree is ready to use
+                braintree = Braintree.restoreSavedInstanceState(getActivity(), savedInstanceState);
+                if (braintree != null) {
+                    // braintree is ready to use
                     braintreeReady = true;
                 } else {
                     Braintree.setup(getActivity(), TokenWrapper.getTokenModel().getToken(), new Braintree.BraintreeSetupFinishedListener() {
@@ -175,7 +171,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                         public void onBraintreeSetupFinished(boolean setupSuccessful, Braintree braintree, String errorMessage, Exception exception) {
                             if (setupSuccessful) {
                                 // braintree is now setup and available for use
-                                mBraintree = braintree;
+                                SubscriptionUserFragment.this.braintree = braintree;
                                 braintreeReady = true;
                             } else {
                                 // Braintree could not be initialized, check errors and try again
@@ -196,17 +192,17 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        if (mBraintree != null) {
-            mBraintree.onSaveInstanceState(outState);
+        if (braintree != null) {
+            braintree.onSaveInstanceState(outState);
         }
     }
 
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_subscribe) {
-            mFirstName = etFirstName.getText().toString();
-            mLastName = etLastName.getText().toString();
-            mPostcode = etPostalCode.getText().toString();
+            firstName = etFirstName.getText().toString();
+            lastName = etLastName.getText().toString();
+            postalCode = etPostalCode.getText().toString();
             //TODO(hth) add un subscribe option
             if (validateFieldsString()) {
                 if (TokenWrapper.getTokenModel() != null) {
@@ -247,14 +243,14 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         JSONObject postData = new JSONObject();
         try {
             postData.put(ConstantsJson.PLAN_ID, pm.getId());
-            postData.put(ConstantsJson.FIRST_NAME, mFirstName);
-            postData.put(ConstantsJson.LAST_NAME, mLastName);
-            postData.put(ConstantsJson.POSTAL, mPostcode);
+            postData.put(ConstantsJson.FIRST_NAME, firstName);
+            postData.put(ConstantsJson.LAST_NAME, lastName);
+            postData.put(ConstantsJson.POSTAL, postalCode);
             postData.put(ConstantsJson.COMPANY, "Some Company");
             postData.put(ConstantsJson.PAYMENT_NONCE, nonce);
             SubscriptionService.doPayment(getActivity(), postData);
             this.startProgressToken("Payment is ongoing");
-        }  catch (JSONException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
@@ -280,9 +276,9 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     }
 
     private boolean validateFieldsString() {
-        if (TextUtils.isEmpty(mFirstName)||TextUtils.isEmpty(mLastName)||TextUtils.isEmpty(mPostcode)) {
+        if (TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(postalCode)) {
             return false;
-        } else if (!Validation.isAlphaNumeric(mFirstName) || !Validation.isAlphaNumeric(mLastName)){
+        } else if (!Validation.isAlphaNumeric(firstName) || !Validation.isAlphaNumeric(lastName)) {
             return false;
         } else {
             return true;
