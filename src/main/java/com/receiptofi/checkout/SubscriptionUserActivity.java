@@ -21,6 +21,8 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
@@ -35,7 +37,7 @@ public class SubscriptionUserActivity extends Activity {
 
     private static final String TAG = SubscriptionUserActivity.class.getSimpleName();
     private SearchView searchView;
-    private SubscriptionUserFragment subscriptionUserFragment;
+    public SubscriptionUserFragment subscriptionUserFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,6 +75,7 @@ public class SubscriptionUserActivity extends Activity {
             // Add the fragment to the 'fragment_container' FrameLayout
             getFragmentManager().beginTransaction().add(R.id.fragment_container, subscriptionUserFragment).commit();
         }
+        setTitle(getResources().getString(R.string.purchase_title));
     }
 
     @Override
@@ -140,4 +143,5 @@ public class SubscriptionUserActivity extends Activity {
 
         return super.onOptionsItemSelected(item);
     }
+
 }

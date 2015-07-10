@@ -13,8 +13,10 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.ReceiptofiApplication;
+import com.receiptofi.checkout.SubscriptionUserActivity;
 import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.SubscriptionFragment;
+import com.receiptofi.checkout.fragments.SubscriptionUserFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -135,32 +137,29 @@ public class SubscriptionService {
             @Override
             public void onSuccess(Headers headers, String body) {
                 JsonParseUtils.parseTransaction(body);
-                Activity currentActivity = ((ReceiptofiApplication)context.getApplicationContext()).getCurrentActivity();
                 Message message = new Message();
                 message.obj = "";
-                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_SUCCESS;
-                ((MainMaterialDrawerActivity)currentActivity).homeFragment.updateHandler.dispatchMessage(message);
+                message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_SUCCESS;
+                ((SubscriptionUserActivity)context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
-                Activity currentActivity = ((ReceiptofiApplication)context.getApplicationContext()).getCurrentActivity();
                 Message message = new Message();
                 message.obj = "";
-                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
-                ((MainMaterialDrawerActivity)currentActivity).homeFragment.updateHandler.dispatchMessage(message);
+                message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_FAILED;
+                ((SubscriptionUserActivity)context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
                 showMessage(JsonParseUtils.parseError(error), (Activity) context);
             }
 
             @Override
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
-                Activity currentActivity = ((ReceiptofiApplication)context.getApplicationContext()).getCurrentActivity();
                 Message message = new Message();
                 message.obj = "";
-                message.what = HomeFragment.SUBSCRIPTION_PAYMENT_FAILED;
-                ((MainMaterialDrawerActivity)currentActivity).homeFragment.updateHandler.dispatchMessage(message);
+                message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_FAILED;
+                ((SubscriptionUserActivity)context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
                 showMessage(e.getMessage(), (Activity) context);
             }
         });

@@ -9,4 +9,12 @@ public class Validation {
     public static final int NAME_MIN_LENGTH = 2;
     public static final int EMAIL_MIN_LENGTH = 5;
     public static final int PASSWORD_MIN_LENGTH = 6;
+
+    public static boolean isAlphaNumeric(String s){
+        String pattern= "^[a-zA-Z0-9]*$";
+        if(s.matches(pattern)){
+            return true;
+        }
+        return false;
+    }
 }

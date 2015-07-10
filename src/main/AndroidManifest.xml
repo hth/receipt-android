@@ -30,8 +30,6 @@
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
 
-        <!-- Required to use Drop-In -->
-        <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity" />
         <activity
             android:name=".LaunchActivity"
             android:windowSoftInputMode="stateAlwaysHidden" >
@@ -119,6 +117,9 @@
             android:name=".SubscribeConfirmationActivity"
             android:label="@string/title_activity_subscribe_confirmation">
         </activity>
+        <!-- Required to use Drop-In -->
+        <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity"
+            android:parentActivityName=".SubscriptionUserActivity" />
     </application>
 
 </manifest>
