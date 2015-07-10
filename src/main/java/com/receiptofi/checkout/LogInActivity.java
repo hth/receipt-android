@@ -34,7 +34,8 @@ import java.util.Set;
 
 
 /**
- * Created by PT on 12/7/14.
+ * User: PT
+ * Date: 12/7/14 10:23 AM
  */
 public class LogInActivity extends ParentActivity implements View.OnClickListener {
 

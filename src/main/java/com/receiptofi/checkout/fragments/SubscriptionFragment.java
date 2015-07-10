@@ -97,6 +97,7 @@ public class SubscriptionFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate");
         boolean yes = fetchToken();
 
         //TODO(hth) may be remove token cache and instead fetch every time user comes to this screen
@@ -115,6 +116,7 @@ public class SubscriptionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        Log.d(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_subscription, container, false);
         plans = (ListView) rootView.findViewById(R.id.plans);
         plans.setAdapter(new PlanListAdapter(getActivity()));
