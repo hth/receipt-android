@@ -8,7 +8,6 @@ import android.preference.EditTextPreference;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.widget.EditText;
 
 import com.joanzapata.android.iconify.IconDrawable;
@@ -25,15 +24,16 @@ public class LoginIdPreference extends EditTextPreference {
 
     public LoginIdPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        icon = new IconDrawable(getContext(), Iconify.IconValue.fa_user)
-                .colorRes(R.color.light_blue_500)
+        icon = new IconDrawable(getContext(), Iconify.IconValue.fa_envelope)
+                .colorRes(R.color.app_theme_bg)
                 .actionBarSize();
     }
 
     @Override
-    protected void onPrepareDialogBuilder (AlertDialog.Builder builder) {
+    protected void onPrepareDialogBuilder(AlertDialog.Builder builder) {
         builder.setIcon(icon);
     }
+
     @Override
     protected void showDialog(Bundle state) {
         super.showDialog(state);
