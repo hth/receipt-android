@@ -5,37 +5,27 @@ import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.braintreepayments.api.dropin.BraintreePaymentActivity;
-import com.github.johnpersano.supertoasts.SuperActivityToast;
-import com.github.johnpersano.supertoasts.SuperToast;
-import com.github.johnpersano.supertoasts.util.Style;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.model.PlanModel;
-import com.receiptofi.checkout.model.wrapper.TokenWrapper;
-import com.receiptofi.checkout.service.SubscriptionService;
+import com.receiptofi.checkout.model.TransactionDetail;
 import com.receiptofi.checkout.utils.Constants;
-import com.receiptofi.checkout.utils.ConstantsJson;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
 
 public class SubscribeConfirmationActivity extends Activity {
+    private static final String TAG = SubscribeConfirmationActivity.class.getSimpleName();
 
     public TextView tvMessage;
-    private static final String TAG = SubscribeConfirmationActivity.class.getSimpleName();
+    private String type;
     private PlanModel pm;
-    String firstName;
-    String lastName;
-    String postalCode;
+    private String firstName;
+    private String lastName;
+    private String postalCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +43,25 @@ public class SubscribeConfirmationActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvMessage = (TextView) findViewById(R.id.tv_message);
+
+        type = getIntent().getStringExtra(Constants.INTENT_EXTRA_TRANSACTION_TYPE);
         pm = getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
         firstName = getIntent().getStringExtra(Constants.INTENT_EXTRA_FIRST_NAME);
         lastName = getIntent().getStringExtra(Constants.INTENT_EXTRA_LAST_NAME);
         postalCode = getIntent().getStringExtra(Constants.INTENT_EXTRA_POSTAL_CODE);
 
         String message = "";
-        if (pm != null && !firstName.isEmpty() && !lastName.isEmpty()) {
-            message = firstName + " " + lastName + " your card has been successfully charged for " + pm.getPrice() + " and you are enrolled for " + pm.getDescription() + ". Your last transactions and subscription has been cancelled. First of every month your card would be charged for " + pm.getBillingPlan() + ".";
+        if (!TextUtils.isEmpty(type) && pm != null && !firstName.isEmpty() && !lastName.isEmpty()) {
+            switch(TransactionDetail.TYPE.valueOf(type)) {
+                case PAY:
+                    message = firstName + " " + lastName + ", your card has been successfully charged for " + pm.getPrice() + " and you are enrolled for " + pm.getDescription() + ". Your last transactions and subscription has been cancelled. First of every month your card would be charged for " + pm.getBillingPlan() + ".";
+                    break;
+                case SUB:
+                    message = firstName + " " + lastName + ", you have successfully unsubscribed from " + pm.getBillingPlan() + ".";
+                    break;
+                default:
+            }
+
         }
         tvMessage.setText(message);
         setTitle(getResources().getString(R.string.purchase_confirmation_title));
