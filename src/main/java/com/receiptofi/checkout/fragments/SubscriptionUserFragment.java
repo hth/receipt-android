@@ -246,7 +246,6 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             postData.put(ConstantsJson.FIRST_NAME, firstName);
             postData.put(ConstantsJson.LAST_NAME, lastName);
             postData.put(ConstantsJson.POSTAL, postalCode);
-            postData.put(ConstantsJson.COMPANY, "Some Company");
             postData.put(ConstantsJson.PAYMENT_NONCE, nonce);
             SubscriptionService.doPayment(getActivity(), postData);
             this.startProgressToken("Payment is ongoing");
@@ -276,13 +275,8 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     }
 
     private boolean validateFieldsString() {
-        if (TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(postalCode)) {
-            return false;
-        } else if (!Validation.isAlphaNumeric(firstName) || !Validation.isAlphaNumeric(lastName)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(postalCode))
+                && !(!Validation.isAlphaNumeric(firstName) || !Validation.isAlphaNumeric(lastName));
     }
 
 }
