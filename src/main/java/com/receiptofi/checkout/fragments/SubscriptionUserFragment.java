@@ -24,6 +24,7 @@ import com.github.johnpersano.supertoasts.util.Style;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscribeConfirmationActivity;
 import com.receiptofi.checkout.model.PlanModel;
+import com.receiptofi.checkout.model.TransactionDetail;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
 import com.receiptofi.checkout.utils.Constants;
@@ -59,16 +60,19 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
 
     public static final int SUBSCRIPTION_PAYMENT_SUCCESS = 0X2571;
     public static final int SUBSCRIPTION_PAYMENT_FAILED = 0X2572;
+    public static final int SUBSCRIPTION_CANCELLED_SUCCESS = 0X2573;
+    public static final int SUBSCRIPTION_CANCELLED_FAILED = 0X2574;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
             stopProgressToken();
-            final int what = msg.what;
-            switch (what) {
+            Intent intent;
+            switch (msg.what) {
                 case SUBSCRIPTION_PAYMENT_SUCCESS:
-                    Log.d(TAG, "payment successs");
-                    Intent intent = new Intent(getActivity(), SubscribeConfirmationActivity.class);
+                    Log.d(TAG, "payment success");
+                    intent = new Intent(getActivity(), SubscribeConfirmationActivity.class);
+                    intent.putExtra(Constants.INTENT_EXTRA_TRANSACTION_TYPE, TransactionDetail.TYPE.PAY.name());
                     if (null != pm) {
                         intent.putExtra(Constants.INTENT_EXTRA_PLAN_MODEL, pm);
                     }
@@ -86,8 +90,27 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                     Dialog dialog = new Dialog(getActivity(), "Payment Failed", "Sorry your payment is failed!");
                     dialog.show();
                     break;
+                case SUBSCRIPTION_CANCELLED_FAILED:
+                    Log.d(TAG, "subscription cancellation failed");
+                    break;
+                case SUBSCRIPTION_CANCELLED_SUCCESS:
+                    Log.d(TAG, "subscription cancellation success");
+                    intent = new Intent(getActivity(), SubscribeConfirmationActivity.class);
+                    intent.putExtra(Constants.INTENT_EXTRA_TRANSACTION_TYPE, TransactionDetail.TYPE.SUB.name());
+                    if (null != pm) {
+                        intent.putExtra(Constants.INTENT_EXTRA_PLAN_MODEL, pm);
+                    }
+
+                    if (!firstName.isEmpty() && !lastName.isEmpty()) {
+                        intent.putExtra(Constants.INTENT_EXTRA_FIRST_NAME, firstName);
+                        intent.putExtra(Constants.INTENT_EXTRA_LAST_NAME, lastName);
+                        intent.putExtra(Constants.INTENT_EXTRA_POSTAL_CODE, postalCode);
+                    }
+                    getActivity().startActivityForResult(intent, 200);
+                    getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
+                    break;
                 default:
-                    Log.e(TAG, "Update handler not defined for: " + what);
+                    Log.e(TAG, "Update handler not defined for: " + msg.what);
             }
             return true;
         }
@@ -200,30 +223,42 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_subscribe) {
-            firstName = etFirstName.getText().toString();
-            lastName = etLastName.getText().toString();
-            postalCode = etPostalCode.getText().toString();
-            //TODO(hth) add un subscribe option
-            if (validateFieldsString()) {
-                if (TokenWrapper.getTokenModel() != null) {
-                    if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken()) && braintreeReady) {
-                        Intent intent = new Intent(getActivity(), BraintreePaymentActivity.class);
-                        intent.putExtra(BraintreePaymentActivity.EXTRA_CLIENT_TOKEN, TokenWrapper.getTokenModel().getToken());
-                        startActivityForResult(intent, 100);
+            if (btnSubscribe.getText().equals("SUBSCRIBE")) {
+                firstName = etFirstName.getText().toString();
+                lastName = etLastName.getText().toString();
+                postalCode = etPostalCode.getText().toString();
+
+                if (validateFieldsString()) {
+                    if (TokenWrapper.getTokenModel() != null) {
+                        if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken()) && braintreeReady) {
+                            Intent intent = new Intent(getActivity(), BraintreePaymentActivity.class);
+                            intent.putExtra(BraintreePaymentActivity.EXTRA_CLIENT_TOKEN, TokenWrapper.getTokenModel().getToken());
+                            startActivityForResult(intent, 100);
+                        }
+                    } else {
+                        String message;
+                        if (braintreeReady) {
+                            message = "Payment Service is ready.";
+                        } else {
+                            message = "Payment Service is not ready.";
+                        }
+                        SuperToast.create(
+                                getActivity(),
+                                "Could not initialize app with data from server. " + message,
+                                SuperToast.Duration.LONG,
+                                Style.getStyle(Style.RED, SuperToast.Animations.FLYIN)
+                        ).show();
                     }
                 } else {
-                    String message;
-                    if (braintreeReady) {
-                        message = "Payment Service is ready!";
-                    } else {
-                        message = "Payment Service is not ready!";
-                    }
-                    SuperToast.create(getActivity(), "No any valid token! " + message, SuperToast.Duration.LONG,
-                            Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN)).show();
+                    SuperToast.create(
+                            getActivity(),
+                            "Invalid First Name, Last Name and Zip Code!",
+                            SuperToast.Duration.LONG,
+                            Style.getStyle(Style.RED, SuperToast.Animations.FLYIN)
+                    ).show();
                 }
             } else {
-                SuperToast.create(getActivity(), "Need Valid First Name, Last Name and post code!", SuperToast.Duration.LONG,
-                        Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN)).show();
+                SubscriptionService.cancelSubscription(getActivity());
             }
         }
     }

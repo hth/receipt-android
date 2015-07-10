@@ -8,7 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 /**
- * Created by PT on 3/28/15.
+ * User: PT
+ * Date: 3/28/15 4:05 AM
  */
 public class Constants {
 
@@ -28,6 +29,7 @@ public class Constants {
     public static final String INTENT_EXTRA_FIRST_NAME = "firstname";
     public static final String INTENT_EXTRA_LAST_NAME = "lastname";
     public static final String INTENT_EXTRA_POSTAL_CODE = "postalcode";
+    public static final String INTENT_EXTRA_TRANSACTION_TYPE = "type";
 
 
     public static final DateFormat ISO_DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);

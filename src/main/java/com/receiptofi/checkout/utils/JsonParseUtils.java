@@ -378,14 +378,25 @@ public class JsonParseUtils {
     public static void parseToken(String jsonResponse) {
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            TokenWrapper.setTokenModel(
-                    new TokenModel(
-                            jsonObject.getString("token"),
-                            jsonObject.getBoolean("hasCustomerInfo"),
-                            jsonObject.getString("firstName"),
-                            jsonObject.getString("lastName"),
-                            jsonObject.getString("postalCode"),
-                            jsonObject.getString("planId")));
+            if(jsonObject.getBoolean("hasCustomerInfo")) {
+                TokenWrapper.setTokenModel(
+                        new TokenModel(
+                                jsonObject.getString("token"),
+                                jsonObject.getBoolean("hasCustomerInfo"),
+                                jsonObject.getString("firstName"),
+                                jsonObject.getString("lastName"),
+                                jsonObject.getString("postalCode"),
+                                jsonObject.getString("planId")));
+            } else {
+                TokenWrapper.setTokenModel(
+                        new TokenModel(
+                                jsonObject.getString("token"),
+                                jsonObject.getBoolean("hasCustomerInfo"),
+                                null,
+                                null,
+                                null,
+                                null));
+            }
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }

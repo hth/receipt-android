@@ -12,21 +12,15 @@ import android.util.Log;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
-import com.receiptofi.checkout.ReceiptofiApplication;
 import com.receiptofi.checkout.SubscriptionUserActivity;
-import com.receiptofi.checkout.fragments.HomeFragment;
 import com.receiptofi.checkout.fragments.SubscriptionFragment;
 import com.receiptofi.checkout.fragments.SubscriptionUserFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.model.TokenModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.model.types.IncludeDevice;
-import com.receiptofi.checkout.model.wrapper.TokenWrapper;
-import com.receiptofi.checkout.utils.ConstantsJson;
 import com.receiptofi.checkout.utils.JsonParseUtils;
-import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
@@ -128,6 +122,7 @@ public class SubscriptionService {
 
     /**
      * Do the payment.
+     *
      * @param context - Call in activity's context.
      */
     public static void doPayment(final Context context, final JSONObject jsonObject) {
@@ -140,7 +135,7 @@ public class SubscriptionService {
                 Message message = new Message();
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_SUCCESS;
-                ((SubscriptionUserActivity)context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+                ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
             }
 
             @Override
@@ -149,7 +144,7 @@ public class SubscriptionService {
                 Message message = new Message();
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_FAILED;
-                ((SubscriptionUserActivity)context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+                ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
                 showMessage(JsonParseUtils.parseError(error), (Activity) context);
             }
 
@@ -159,7 +154,47 @@ public class SubscriptionService {
                 Message message = new Message();
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_FAILED;
-                ((SubscriptionUserActivity)context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+                ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+                showMessage(e.getMessage(), (Activity) context);
+            }
+        });
+    }
+
+    /**
+     * Do the payment.
+     *
+     * @param context - Call in activity's context.
+     */
+    public static void cancelSubscription(final Context context) {
+        Log.d(TAG, "Cancel subscription");
+
+        ExternalCallWithOkHttp.doPost(context, API.CANCEL_SUBSCRIPTION_API, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
+            @Override
+            public void onSuccess(Headers headers, String body) {
+                JsonParseUtils.parseTransaction(body);
+                Message message = new Message();
+                message.obj = "";
+                message.what = SubscriptionUserFragment.SUBSCRIPTION_CANCELLED_SUCCESS;
+                ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+                Log.e(TAG, "error=" + error);
+                Message message = new Message();
+                message.obj = "";
+                message.what = SubscriptionUserFragment.SUBSCRIPTION_CANCELLED_FAILED;
+                ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+                showMessage(JsonParseUtils.parseError(error), (Activity) context);
+            }
+
+            @Override
+            public void onException(Exception e) {
+                Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                Message message = new Message();
+                message.obj = "";
+                message.what = SubscriptionUserFragment.SUBSCRIPTION_CANCELLED_FAILED;
+                ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
                 showMessage(e.getMessage(), (Activity) context);
             }
         });
