@@ -6,6 +6,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -20,6 +21,8 @@ import android.widget.EditText;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
@@ -51,6 +54,7 @@ public class ExpenseTagDialog extends DialogFragment {
     private DialogMode dialogMode = null;
     private ExpenseTagModel tagModel;
     private EditText label;
+    private Drawable tagIcon;
 
     /**
      * Create a new instance of EditTagDialog, providing "id" of
@@ -77,6 +81,10 @@ public class ExpenseTagDialog extends DialogFragment {
             dialogMode = DialogMode.MODE_UPDATE;
             this.tagId = selectedTagId;
         }
+
+        tagIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_tag)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize();
     }
 
     @NonNull
@@ -96,6 +104,8 @@ public class ExpenseTagDialog extends DialogFragment {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
+        ((IconDrawable) tagIcon).color(Color.parseColor(tagModel.getColor()));
+        builder.setIcon(tagIcon);
         builder.setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel),
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
