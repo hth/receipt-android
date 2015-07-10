@@ -17,4 +17,12 @@ public class Validation {
         }
         return false;
     }
+
+    public static boolean isNumeric(String s){
+        String pattern= "^[0-9]*$";
+        if(s.matches(pattern)){
+            return true;
+        }
+        return false;
+    }
 }

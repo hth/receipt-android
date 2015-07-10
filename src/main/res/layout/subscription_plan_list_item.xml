@@ -13,7 +13,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toLeftOf="@+id/subscription_plan_list_item_plan_price"
+        android:layout_alignParentLeft="true">
 
         <TextView
             android:id="@+id/subscription_plan_list_item_plan_name"
@@ -21,7 +23,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:height="35dp"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            android:text = "Monthly 10"/>
 
         <TextView
             android:id="@+id/subscription_plan_list_item_plan_description"
@@ -31,7 +34,8 @@
             android:height="35dp"
             android:lines="2"
             android:paddingLeft="10dp"
-            android:paddingRight="20dp"/>
+            android:paddingRight="20dp"
+            android:text = "Process 120 receipts annually. Get two months discount."/>
 
     </LinearLayout>
 
@@ -51,8 +55,8 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_toLeftOf="@id/subscription_plan_list_item_next_arrow"
-        android:layout_toRightOf="@id/rd_list_item_left"
         android:gravity="right"
-        android:paddingRight="10dp"/>
+        android:paddingRight="10dp"
+        android:text = "$20"/>
 
 </RelativeLayout>

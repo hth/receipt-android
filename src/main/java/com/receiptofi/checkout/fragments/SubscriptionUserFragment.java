@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -168,6 +170,27 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                 }
             }
 
+            final TextWatcher textWatcher = new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                }
+
+                @Override
+                public void onTextChanged(CharSequence charSequence, int i, int i2, int i3) {
+
+                }
+
+                @Override
+                public void afterTextChanged(Editable editable) {
+                    btnSubscribe.setEnabled(validateFieldsString());
+                }
+            };
+
+            etFirstName.addTextChangedListener(textWatcher);
+            etLastName.addTextChangedListener(textWatcher);
+            etPostalCode.addTextChangedListener(textWatcher);
+
             View childSubmission = inflater.inflate(R.layout.subscription_submission, null);
             subscriptionPlanLinearLayout.addView(childSubmission);
 
@@ -224,10 +247,6 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.btn_subscribe) {
             if (btnSubscribe.getText().equals("SUBSCRIBE")) {
-                firstName = etFirstName.getText().toString();
-                lastName = etLastName.getText().toString();
-                postalCode = etPostalCode.getText().toString();
-
                 if (validateFieldsString()) {
                     if (TokenWrapper.getTokenModel() != null) {
                         if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken()) && braintreeReady) {
@@ -269,6 +288,8 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         if (requestCode == 100) {
             if (resultCode == BraintreePaymentActivity.RESULT_OK) {
                 String paymentMethodNonce = data.getStringExtra(BraintreePaymentActivity.EXTRA_PAYMENT_METHOD_NONCE);
+                // We should disable the button before do a background payment in case duplicate payment.
+                btnSubscribe.setEnabled(false);
                 postNonceToServer(paymentMethodNonce);
             }
         }
@@ -310,8 +331,11 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     }
 
     private boolean validateFieldsString() {
+        firstName = etFirstName.getText().toString();
+        lastName = etLastName.getText().toString();
+        postalCode = etPostalCode.getText().toString();
         return !(TextUtils.isEmpty(firstName) || TextUtils.isEmpty(lastName) || TextUtils.isEmpty(postalCode))
-                && !(!Validation.isAlphaNumeric(firstName) || !Validation.isAlphaNumeric(lastName));
+                && !(!Validation.isAlphaNumeric(firstName) || !Validation.isAlphaNumeric(lastName)) || !Validation.isNumeric(postalCode);
     }
 
 }

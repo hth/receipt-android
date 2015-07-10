@@ -77,6 +77,20 @@ public class PlanModel implements Parcelable {
     }
 
     @Override
+    public String toString() {
+        return "PlanModel{" +
+                "id='" + id + '\'' +
+                ", price=" + price +
+                ", billingFrequency='" + billingFrequency + '\'' +
+                ", description='" + description + '\'' +
+                ", billingDayOfMonth='" + billingDayOfMonth + '\'' +
+                ", name='" + name + '\'' +
+                ", paymentGateway='" + paymentGateway + '\'' +
+                ", billingPlan='" + billingPlan + '\'' +
+                '}';
+    }
+
+    @Override
     public int describeContents() {
         return 0;
     }
