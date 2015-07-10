@@ -100,11 +100,15 @@ public class ExpenseTagDialog extends DialogFragment {
             tagModel = ExpenseTagUtils.getExpenseTagModels().get(tagId);
             label.setText(tagModel.getName());
             colorPicker.setColor(Color.parseColor(tagModel.getColor()));
+            ((IconDrawable) tagIcon).color(Color.parseColor(tagModel.getColor()));
         }
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
-        ((IconDrawable) tagIcon).color(Color.parseColor(tagModel.getColor()));
+        if (DialogMode.MODE_UPDATE == dialogMode) {
+            builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
+        } else {
+            builder.setTitle(getString(R.string.expense_tag_dialog_add_text));
+        }
         builder.setIcon(tagIcon);
         builder.setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel),
                 new DialogInterface.OnClickListener() {
@@ -223,7 +227,7 @@ public class ExpenseTagDialog extends DialogFragment {
     public void onStart() {
         super.onStart();
 
-        Log.d("!!!!!!!!!!       ", "onStart");
+        Log.d(TAG, "onStart Opened Expense Tag dialog");
         final Button positiveButton = ((AlertDialog) getDialog()).getButton(AlertDialog.BUTTON_POSITIVE);
         if (DialogMode.MODE_CREATE == dialogMode) {
             positiveButton.setEnabled(false);

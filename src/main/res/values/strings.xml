@@ -74,7 +74,7 @@
     <string name="expense_tag_dialog_button_update">Update</string>
     <string name="expense_tag_dialog_button_add">Add</string>
     <string name="expense_tag_dialog_edit_label">Edit Expense Tag label or color</string>
-    <string name="expense_tag_dialog_add_text">Add new tag</string>
+    <string name="expense_tag_dialog_add_text">Add Expense Tag</string>
 
     <!--Billing fragment-->
     <string name="billing_plan">Plan Subscribed</string>
