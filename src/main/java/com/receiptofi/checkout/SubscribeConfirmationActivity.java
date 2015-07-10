@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.gc.materialdesign.views.ButtonRectangle;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.model.PlanModel;
@@ -21,6 +22,7 @@ public class SubscribeConfirmationActivity extends Activity {
     private static final String TAG = SubscribeConfirmationActivity.class.getSimpleName();
 
     public TextView tvMessage;
+    public ButtonRectangle btnSubscribe;
     private String type;
     private PlanModel pm;
     private String firstName;
@@ -42,7 +44,9 @@ public class SubscribeConfirmationActivity extends Activity {
         }
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
-        tvMessage = (TextView) findViewById(R.id.tv_message);
+        tvMessage = (TextView) findViewById(R.id.tv_subscription_confirmation_message);
+        btnSubscribe = (ButtonRectangle) findViewById(R.id.br_subscription_confirmation);
+        btnSubscribe.setRippleSpeed(Constants.RIPPLE_SPEED_EFFECT);
 
         type = getIntent().getStringExtra(Constants.INTENT_EXTRA_TRANSACTION_TYPE);
         pm = getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);

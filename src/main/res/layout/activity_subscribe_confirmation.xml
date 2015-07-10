@@ -9,7 +9,7 @@
                 tools:context="com.receiptofi.checkout.SubscribeConfirmationActivity">
 
     <TextView
-        android:id="@+id/tv_message"
+        android:id="@+id/tv_subscription_confirmation_message"
         style="@style/exp_list_child_text_left_primary_style"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -18,9 +18,10 @@
         android:text="@string/hello_world"/>
 
     <com.gc.materialdesign.views.ButtonRectangle
+        android:id="@+id/br_subscription_confirmation"
         android:layout_width="fill_parent"
         android:layout_height="60dp"
-        android:layout_below="@+id/tv_message"
+        android:layout_below="@+id/tv_subscription_confirmation_message"
         android:layout_marginTop="30dp"
         android:background="@color/app_theme_bg"
         android:onClick="onOkPressed"

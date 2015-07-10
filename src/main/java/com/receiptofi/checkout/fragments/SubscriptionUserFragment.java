@@ -195,6 +195,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             subscriptionPlanLinearLayout.addView(childSubmission);
 
             btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
+            btnSubscribe.setRippleSpeed(Constants.RIPPLE_SPEED_EFFECT);
             if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
                 btnSubscribe.setText("UN-SUBSCRIBE");
             } else {
@@ -271,7 +272,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                 } else {
                     SuperToast.create(
                             getActivity(),
-                            "Invalid First Name, Last Name and Zip Code!",
+                            "Invalid First Name, Last Name or Zip Code.",
                             SuperToast.Duration.LONG,
                             Style.getStyle(Style.RED, SuperToast.Animations.FLYIN)
                     ).show();
@@ -306,9 +307,8 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             SubscriptionService.doPayment(getActivity(), postData);
             this.startProgressToken("Payment is ongoing");
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
-
     }
 
     private void startProgressToken(String message) {

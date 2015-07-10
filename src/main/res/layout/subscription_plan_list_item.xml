@@ -57,6 +57,6 @@
         android:layout_toLeftOf="@id/subscription_plan_list_item_next_arrow"
         android:gravity="right"
         android:paddingRight="10dp"
-        android:text = "$20"/>
+        android:text = "000"/>
 
 </RelativeLayout>

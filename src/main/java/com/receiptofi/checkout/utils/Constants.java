@@ -16,6 +16,9 @@ public class Constants {
     public static final boolean SET_RECEIPT_REMINDER = false;
     public static final int DEFAULT_REMINDER_TIME = 15;
 
+    /** Higher value mean faster is the effect. */
+    public static final float RIPPLE_SPEED_EFFECT = 80.0F;
+
     public static final long EXPANSE_TAG_UPDATE_DELAY = 6000;
 
     public final static String ARG_INDEX = "index";
