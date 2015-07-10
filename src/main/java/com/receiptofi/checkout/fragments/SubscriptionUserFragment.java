@@ -32,6 +32,7 @@ import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.ConstantsJson;
+import com.receiptofi.checkout.utils.Validation;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -43,9 +44,9 @@ import org.json.JSONObject;
 public class SubscriptionUserFragment extends Fragment implements View.OnClickListener {
     private static final String TAG = SubscriptionUserFragment.class.getSimpleName();
 
-    private EditText firstName;
-    private EditText lastName;
-    private EditText postalCode;
+    private EditText etFirstName;
+    private EditText etLastName;
+    private EditText etPostalCode;
 
     private TextView subscriptionTitle;
     private TextView planName;
@@ -127,25 +128,24 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             planPrice = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_price);
             planPrice.setText("$" + String.valueOf(pm.getPrice()));
 
-            firstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
-            lastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
-            postalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
+            etFirstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);
+            etLastName = (EditText) rootView.findViewById(R.id.subscription_user_last_name);
+            etPostalCode = (EditText) rootView.findViewById(R.id.subscription_user_postal_code);
 
             if (null != TokenWrapper.getTokenModel() && TokenWrapper.getTokenModel().isHasCustomerInfo()) {
                 if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getFirstName())) {
                     mFirstName = TokenWrapper.getTokenModel().getFirstName();
-                    Log.d(TAG, "first Name is: " + mFirstName);
-                    firstName.setText(mFirstName);
+                    etFirstName.setText(mFirstName);
                 }
 
                 if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getLastName())) {
                     mLastName = TokenWrapper.getTokenModel().getLastName();
-                    lastName.setText(mLastName);
+                    etLastName.setText(mLastName);
                 }
 
                 if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getPostalCode())) {
                     mPostcode = TokenWrapper.getTokenModel().getPostalCode();
-                    postalCode.setText(TokenWrapper.getTokenModel().getPostalCode());
+                    etPostalCode.setText(TokenWrapper.getTokenModel().getPostalCode());
                 }
             }
 
@@ -204,21 +204,29 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View view) {
         if (view.getId() == R.id.btn_subscribe) {
+            mFirstName = etFirstName.getText().toString();
+            mLastName = etLastName.getText().toString();
+            mPostcode = etPostalCode.getText().toString();
             //TODO(hth) add un subscribe option
-            if (TokenWrapper.getTokenModel() != null) {
-                if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken()) && braintreeReady) {
-                    Intent intent = new Intent(getActivity(), BraintreePaymentActivity.class);
-                    intent.putExtra(BraintreePaymentActivity.EXTRA_CLIENT_TOKEN, TokenWrapper.getTokenModel().getToken());
-                    startActivityForResult(intent, 100);
+            if (validateFieldsString()) {
+                if (TokenWrapper.getTokenModel() != null) {
+                    if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken()) && braintreeReady) {
+                        Intent intent = new Intent(getActivity(), BraintreePaymentActivity.class);
+                        intent.putExtra(BraintreePaymentActivity.EXTRA_CLIENT_TOKEN, TokenWrapper.getTokenModel().getToken());
+                        startActivityForResult(intent, 100);
+                    }
+                } else {
+                    String message;
+                    if (braintreeReady) {
+                        message = "Payment Service is ready!";
+                    } else {
+                        message = "Payment Service is not ready!";
+                    }
+                    SuperToast.create(getActivity(), "No any valid token! " + message, SuperToast.Duration.LONG,
+                            Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN)).show();
                 }
             } else {
-                String message;
-                if (braintreeReady) {
-                    message = "Payment Service is ready!";
-                } else {
-                    message = "Payment Service is not ready!";
-                }
-                SuperToast.create(getActivity(), "No any valid token! " + message, SuperToast.Duration.LONG,
+                SuperToast.create(getActivity(), "Need Valid First Name, Last Name and post code!", SuperToast.Duration.LONG,
                         Style.getStyle(Style.GREEN, SuperToast.Animations.FLYIN)).show();
             }
         }
@@ -239,9 +247,9 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
         JSONObject postData = new JSONObject();
         try {
             postData.put(ConstantsJson.PLAN_ID, pm.getId());
-            postData.put(ConstantsJson.FIRST_NAME, firstName);
-            postData.put(ConstantsJson.LAST_NAME, lastName);
-            postData.put(ConstantsJson.POSTAL, postalCode);
+            postData.put(ConstantsJson.FIRST_NAME, mFirstName);
+            postData.put(ConstantsJson.LAST_NAME, mLastName);
+            postData.put(ConstantsJson.POSTAL, mPostcode);
             postData.put(ConstantsJson.COMPANY, "Some Company");
             postData.put(ConstantsJson.PAYMENT_NONCE, nonce);
             SubscriptionService.doPayment(getActivity(), postData);
@@ -268,6 +276,16 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                     progressToast.dismiss();
                 }
             });
+        }
+    }
+
+    private boolean validateFieldsString() {
+        if (TextUtils.isEmpty(mFirstName)||TextUtils.isEmpty(mLastName)||TextUtils.isEmpty(mPostcode)) {
+            return false;
+        } else if (!Validation.isAlphaNumeric(mFirstName) || !Validation.isAlphaNumeric(mLastName)){
+            return false;
+        } else {
+            return true;
         }
     }
 

@@ -182,7 +182,8 @@ public class ReceiptDetailImageFragment extends Fragment {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
-            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+            // Currently no interaction between fragments, so no need throw this exception.
+//            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
