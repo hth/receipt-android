@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.ReceiptListActivity;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 import com.receiptofi.checkout.utils.OnSwipeTouchListener;
@@ -179,11 +180,13 @@ public class ReceiptDetailImageFragment extends Fragment {
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+            if (!(activity instanceof ReceiptListActivity)) {
+                mListener = (OnFragmentInteractionListener) activity;
+            }
         } catch (ClassCastException e) {
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
-            // Currently no interaction between fragments, so no need throw this exception.
-//            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+            /** Currently no interaction between fragments, so no need throw this exception. */
+            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
