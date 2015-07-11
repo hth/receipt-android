@@ -230,9 +230,9 @@ public class ExternalCallWithOkHttp {
         } else {
             if (!bodyContainsError(body)) {
                 if (body.isEmpty()) {
-                    Log.i(TAG, "get, statusCode=" + statusCode + ", body=EMPTY onSuccess");
+                    Log.d(TAG, response.request().method() + " statusCode=" + statusCode + ", body=EMPTY onSuccess");
                 } else {
-                    Log.i(TAG, "get, statusCode=" + statusCode + ", body=" + body + " onSuccess");
+                    Log.d(TAG, response.request().method() + " statusCode=" + statusCode + ", body=" + body + " onSuccess");
                 }
                 responseHandler.onSuccess(response.headers(), body);
             } else {
