@@ -1,6 +1,5 @@
 package com.receiptofi.checkout.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
@@ -23,8 +22,6 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
-import com.receiptofi.checkout.service.DeviceService;
-import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -46,6 +43,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private SuperActivityToast progressToast;
     private static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
     private static final int PASSWORD_UPDATE_SUCCESS = 0x2567;
+    private static final int CHECK_UPDATE_SUCCESS = 0x2568;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -60,6 +58,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 case PASSWORD_UPDATE_SUCCESS:
                     stopProgressToken();
                     showToast("Password updated successfully.", SuperToast.Duration.SHORT);
+                    break;
+                case CHECK_UPDATE_SUCCESS:
+                    //TODO(hth) implement this later
+                    Log.d(TAG, "Update checked successfully");
+                    stopProgressToken();
                     break;
                 default:
                     Log.e(TAG, "Update handler not defined for: " + what);
@@ -96,7 +99,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         usernamePref.setSummary(username);
 
         // Handle update and about preferences
-        Preference perUpdate = (Preference) findPreference("preference_update");
+        Preference perUpdate = findPreference("preference_update");
         perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
@@ -106,7 +109,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         .setMessage("Update the last version. xxx")
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
-                                // do nothing
+                                /** do nothing. */
                             }
                         })
                         .setPositiveButton("Update", new DialogInterface.OnClickListener() {
@@ -119,7 +122,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             }
         });
 
-        Preference perAbout = (Preference) findPreference("preference_about");
+        Preference perAbout = findPreference("preference_about");
         perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
@@ -142,8 +145,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     public void onStart() {
         super.onStart();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        // Setup the background color
+
+        /** Setup the background color. */
         View v = getView();
+        Assert.assertNotNull("View is null", v);
         v.setBackgroundColor(Color.WHITE);
     }
 
