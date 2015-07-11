@@ -1,37 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="Setting">
+        android:title="Preferences">
         <SwitchPreference
             android:id="@+id/pref_wifi_sync"
             android:key="@string/key_pref_sync"
-            android:title="@string/pref_sync"
+            android:summaryOff="@string/pref_sync_off"
             android:summaryOn="@string/pref_sync_on"
-            android:summaryOff="@string/pref_sync_off"/>
+            android:title="@string/pref_sync"/>
         <SwitchPreference
             android:id="@+id/pref_wifi_notification"
             android:key="@string/key_pref_notification"
-            android:title="@string/pref_notification"
+            android:summaryOff="@string/pref_notification_off"
             android:summaryOn="@string/pref_notification_on"
-            android:summaryOff="@string/pref_notification_off"/>
+            android:title="@string/pref_notification"/>
 
     </PreferenceCategory>
     <PreferenceCategory
         android:title="User Account">
         <com.receiptofi.checkout.views.LoginIdPreference
             android:id="@+id/pref_user_id"
+            android:inputType="textEmailAddress"
             android:key="@string/key_pref_login_id"
-            android:title="@string/pref_login_id"
-            android:inputType="textEmailAddress"/>
+            android:title="@string/pref_login_id"/>
 
         <com.receiptofi.checkout.views.PasswordPreference
             android:id="@+id/pref_password"
-            android:key="@string/key_pref_password"
-            android:title="@string/pref_password"
-            android:summary="@string/pref_password_text"
             android:inputType="textPassword"
+            android:key="@string/key_pref_password"
             android:password="true"
+            android:summary="@string/pref_password_text"
+            android:title="@string/pref_password"
             />
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="Data Refresh Reset">
+        <Preference
+            android:title="Force refresh data"
+            android:summary="Refresh data from server.">
+        </Preference>
+        <Preference
+            android:title="Remove all data"
+            android:summary="Delete everything including user login information. Forces user to login again.">
+        </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Others">
