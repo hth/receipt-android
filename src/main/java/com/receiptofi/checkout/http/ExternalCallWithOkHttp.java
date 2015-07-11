@@ -206,11 +206,6 @@ public class ExternalCallWithOkHttp {
                     Response response = new OkHttpClient().newCall(request).execute();
                     int statusCode = response.code();
                     String body = response.body().string();
-                    if (body.isEmpty()) {
-                        Log.i(TAG, "get, statusCode=" + statusCode + ", body=EMPTY");
-                    } else {
-                        Log.i(TAG, "get, statusCode=" + statusCode + ", body=" + body);
-                    }
                     updateResponseHandler(statusCode, response, body, responseHandler);
                 } catch (ConnectException e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
@@ -234,7 +229,11 @@ public class ExternalCallWithOkHttp {
             responseHandler.onError(statusCode, null);
         } else {
             if (!bodyContainsError(body)) {
-                Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onSuccess");
+                if (body.isEmpty()) {
+                    Log.i(TAG, "get, statusCode=" + statusCode + ", body=EMPTY onSuccess");
+                } else {
+                    Log.i(TAG, "get, statusCode=" + statusCode + ", body=" + body + " onSuccess");
+                }
                 responseHandler.onSuccess(response.headers(), body);
             } else {
                 Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onError");
