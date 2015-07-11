@@ -49,6 +49,7 @@ public class SubscriptionFragment extends Fragment {
     private ListView plans;
     private PlanModel planModel;
     private SuperActivityToast progressToast;
+    private PlanListAdapter planAdapter;
 
     public static final int TOKEN_SUCCESS = 0x2880;
     public static final int TOKEN_FAILURE = 0x2882;
@@ -63,12 +64,6 @@ public class SubscriptionFragment extends Fragment {
                 case TOKEN_SUCCESS:
                     Log.d(TAG, "Token received=" + what);
                     stopProgressToken();
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showData();
-                        }
-                    });
                     break;
                 case TOKEN_FAILURE:
                     Log.d(TAG, "Token received=" + what);
@@ -76,12 +71,7 @@ public class SubscriptionFragment extends Fragment {
                     break;
                 case PLAN_FETCH_SUCCESS:
                     Log.d(TAG, "Plans fetched=" + what);
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showData();
-                        }
-                    });
+                    showData();
                     break;
                 case PLAN_FETCH_FAILURE:
                     Log.d(TAG, "Plans fetched=" + what);
@@ -119,7 +109,8 @@ public class SubscriptionFragment extends Fragment {
         Log.d(TAG, "onCreateView");
         View rootView = inflater.inflate(R.layout.fragment_subscription, container, false);
         plans = (ListView) rootView.findViewById(R.id.plans);
-        plans.setAdapter(new PlanListAdapter(getActivity()));
+        planAdapter = new PlanListAdapter(getActivity());
+        plans.setAdapter(planAdapter);
         plans.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -143,7 +134,13 @@ public class SubscriptionFragment extends Fragment {
 
     private void showData() {
         if (!PlanWrapper.getPlanModels().isEmpty()) {
-            ((PlanListAdapter) plans.getAdapter()).notifyDataSetChanged();
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    planAdapter.notifyDataSetChanged();
+                }
+            });
+
         }
     }
 

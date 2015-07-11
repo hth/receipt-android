@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/rd_item_selector"
                 android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
