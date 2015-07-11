@@ -1,11 +1,15 @@
 package com.receiptofi.checkout.fragments;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -19,6 +23,8 @@ import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -88,6 +94,48 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
         usernamePref.setSummary(username);
+
+        // Handle update and about preferences
+        Preference perUpdate = (Preference) findPreference("preference_update");
+        perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                //open browser or intent here
+                Log.d(TAG, "update is pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Update")
+                        .setMessage("Update the last version. xxx")
+                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Trigger update process");
+                            }
+                        })
+                        .show();
+                return true;
+            }
+        });
+
+        Preference perAbout = (Preference) findPreference("preference_about");
+        perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                //open browser or intent here
+                Log.d(TAG, "about is pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("About")
+                        .setMessage("Receipt is an very good app for you.")
+                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Yes pressed by about");
+                            }
+                        })
+                        .show();
+                return true;
+            }
+        });
     }
 
     @Override

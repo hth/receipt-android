@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:choiceMode="singleChoice"
         android:paddingLeft="0dp"
-        android:paddingRight="0dp"/>
+        android:paddingRight="0dp"
+        android:listSelector="@drawable/list_selector_app_theme"/>
 
 </LinearLayout>

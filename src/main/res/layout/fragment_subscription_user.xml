@@ -52,7 +52,9 @@
                 android:background="@null"
                 android:hint="@string/subscription_user_firstName"
                 android:inputType="text|textAutoComplete"
-                android:maxLength="@integer/name_max_length" />
+                android:maxLength="@integer/name_max_length"
+                android:imeOptions="flagNoExtractUi"
+                />
         </LinearLayout>
 
         <LinearLayout
@@ -75,7 +77,8 @@
                 android:background="@null"
                 android:hint="@string/subscription_user_lastName"
                 android:inputType="text|textAutoComplete"
-                android:maxLength="@integer/name_max_length" />
+                android:maxLength="@integer/name_max_length"
+                android:imeOptions="flagNoExtractUi"/>
         </LinearLayout>
 
         <LinearLayout
@@ -98,7 +101,8 @@
                 android:background="@null"
                 android:hint="@string/subscription_user_postal"
                 android:inputType="number"
-                android:maxLength="@integer/postal_code_max_length" />
+                android:maxLength="@integer/postal_code_max_length"
+                android:imeOptions="flagNoExtractUi"/>
         </LinearLayout>
 
         <!--<TextView-->
