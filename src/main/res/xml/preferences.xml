@@ -36,10 +36,12 @@
     <PreferenceCategory
         android:title="Others">
         <Preference
-            android:title="Check Update">
+            android:title="Check Update"
+            android:key= "preference_update">
         </Preference>
         <Preference
-            android:title="About">
+            android:title="About"
+            android:key= "preference_about">
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

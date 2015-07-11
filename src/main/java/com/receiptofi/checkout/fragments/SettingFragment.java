@@ -1,11 +1,14 @@
 package com.receiptofi.checkout.fragments;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
@@ -40,6 +43,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private SuperActivityToast progressToast;
     private static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
     private static final int PASSWORD_UPDATE_SUCCESS = 0x2567;
+    private static final int CHECK_UPDATE_SUCCESS = 0x2568;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -54,6 +58,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 case PASSWORD_UPDATE_SUCCESS:
                     stopProgressToken();
                     showToast("Password updated successfully.", SuperToast.Duration.SHORT);
+                    break;
+                case CHECK_UPDATE_SUCCESS:
+                    //TODO(hth) implement this later
+                    Log.d(TAG, "Update checked successfully");
+                    stopProgressToken();
                     break;
                 default:
                     Log.e(TAG, "Update handler not defined for: " + what);
@@ -88,14 +97,58 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
         usernamePref.setSummary(username);
+
+        // Handle update and about preferences
+        Preference perUpdate = findPreference("preference_update");
+        perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                //open browser or intent here
+                Log.d(TAG, "update is pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Update")
+                        .setMessage("Update the last version. xxx")
+                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                /** do nothing. */
+                            }
+                        })
+                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Trigger update process");
+                            }
+                        })
+                        .show();
+                return true;
+            }
+        });
+
+        Preference perAbout = findPreference("preference_about");
+        perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                //open browser or intent here
+                Log.d(TAG, "about is pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("About")
+                        .setMessage("Receipt is an very good app for you.")
+                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Yes pressed by about");
+                            }
+                        })
+                        .show();
+                return true;
+            }
+        });
     }
 
     @Override
     public void onStart() {
         super.onStart();
         getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
-        // Setup the background color
+
+        /** Setup the background color. */
         View v = getView();
+        Assert.assertNotNull("View is null", v);
         v.setBackgroundColor(Color.WHITE);
     }
 
