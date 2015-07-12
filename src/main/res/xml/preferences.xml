@@ -34,14 +34,14 @@
             />
     </PreferenceCategory>
     <PreferenceCategory
-        android:title="Data Refresh Reset">
+        android:title="Data Sync Reset">
         <Preference
-            android:title="Force refresh data"
-            android:summary="Refresh data from server.">
+            android:title="Force Sync data"
+            android:summary="Syncs data to latest available update.">
         </Preference>
         <Preference
-            android:title="Remove all data"
-            android:summary="Delete everything including user login information. Forces user to login again.">
+            android:title="Delete data"
+            android:summary="Deletes everything including user login information. This action will force user to logout of the app.">
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory

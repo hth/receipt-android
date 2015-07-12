@@ -352,7 +352,7 @@ public class JsonParseUtils {
             for (int i = 0; i < jsonArray.length(); i++) {
                 planModels.add(parsePlanModel(jsonArray.getJSONObject(i)));
             }
-            PlanWrapper.setPlanCache(planModels);
+            PlanWrapper.setPlanModels(planModels);
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
@@ -378,7 +378,7 @@ public class JsonParseUtils {
     public static void parseToken(String jsonResponse) {
         try {
             JSONObject jsonObject = new JSONObject(jsonResponse);
-            if(jsonObject.getBoolean("hasCustomerInfo")) {
+            if (jsonObject.getBoolean("hasCustomerInfo")) {
                 TokenWrapper.setTokenModel(
                         new TokenModel(
                                 jsonObject.getString("token"),

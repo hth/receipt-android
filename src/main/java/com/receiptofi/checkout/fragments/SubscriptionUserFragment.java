@@ -183,7 +183,13 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
 
                 @Override
                 public void afterTextChanged(Editable editable) {
-                    btnSubscribe.setEnabled(validateFieldsString());
+                    if (validateFieldsString()) {
+                        btnSubscribe.setBackgroundColor(getResources().getColor(R.color.app_theme_bg));
+                        btnSubscribe.setTextColor(getResources().getColor(R.color.white));
+                    } else {
+                        btnSubscribe.setBackgroundColor(getResources().getColor(R.color.white));
+                        btnSubscribe.setTextColor(getResources().getColor(R.color.app_theme_txt_color));
+                    }
                 }
             };
 
@@ -200,6 +206,11 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                 btnSubscribe.setText("UN-SUBSCRIBE");
             } else {
                 btnSubscribe.setText("SUBSCRIBE");
+            }
+
+            if (!validateFieldsString()) {
+                btnSubscribe.setBackgroundColor(getResources().getColor(R.color.white));
+                btnSubscribe.setTextColor(getResources().getColor(R.color.app_theme_txt_color));
             }
             btnSubscribe.setOnClickListener(this);
         } else {

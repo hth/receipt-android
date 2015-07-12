@@ -102,14 +102,7 @@ public class ExternalCallWithOkHttp {
 
                     Log.d(TAG, "post=" + request.httpUrl());
                     Response response = new OkHttpClient().newCall(request).execute();
-                    int statusCode = response.code();
-                    String body = response.body().string();
-                    if (body.isEmpty()) {
-                        Log.i(TAG, "post, statusCode=" + statusCode + ", response body=EMPTY");
-                    } else {
-                        Log.i(TAG, "post, statusCode=" + statusCode + ", response body=" + body);
-                    }
-                    updateResponseHandler(statusCode, response, body, responseHandler);
+                    updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(new RuntimeException(context.getString(R.string.connect_to_server_failure)));
@@ -143,15 +136,7 @@ public class ExternalCallWithOkHttp {
 
                     Log.i(TAG, "post=" + request.httpUrl() + ", login params=*****");
                     Response response = new OkHttpClient().newCall(request).execute();
-
-                    int statusCode = response.code();
-                    String body = response.body().string();
-                    if (body.isEmpty()) {
-                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=EMPTY");
-                    } else {
-                        Log.i(TAG, "post, statusCode=" + statusCode + ", body=" + body);
-                    }
-                    updateResponseHandler(statusCode, response, body, responseHandler);
+                    updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(new RuntimeException(context.getString(R.string.connect_to_server_failure)));
@@ -204,14 +189,7 @@ public class ExternalCallWithOkHttp {
 
                     Log.d(TAG, "get=" + request.httpUrl());
                     Response response = new OkHttpClient().newCall(request).execute();
-                    int statusCode = response.code();
-                    String body = response.body().string();
-                    if (body.isEmpty()) {
-                        Log.i(TAG, "get, statusCode=" + statusCode + ", body=EMPTY");
-                    } else {
-                        Log.i(TAG, "get, statusCode=" + statusCode + ", body=" + body);
-                    }
-                    updateResponseHandler(statusCode, response, body, responseHandler);
+                    updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(new RuntimeException(context.getString(R.string.connect_to_server_failure)));
@@ -230,14 +208,18 @@ public class ExternalCallWithOkHttp {
             ResponseHandler responseHandler
     ) {
         if (statusCode != 200) {
-            Log.i(TAG, "statusCode=" + statusCode + " onError");
+            Log.i(TAG, response.request().method() + " statusCode=" + statusCode + " onError");
             responseHandler.onError(statusCode, null);
         } else {
             if (!bodyContainsError(body)) {
-                Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onSuccess");
+                if (body.isEmpty()) {
+                    Log.d(TAG, response.request().method() + " statusCode=" + statusCode + ", body=EMPTY onSuccess");
+                } else {
+                    Log.d(TAG, response.request().method() + " statusCode=" + statusCode + ", body=" + body + " onSuccess");
+                }
                 responseHandler.onSuccess(response.headers(), body);
             } else {
-                Log.i(TAG, "statusCode=" + statusCode + ", body=" + body + " onError");
+                Log.i(TAG, response.request().method() + " statusCode=" + statusCode + ", body=" + body + " onError");
                 responseHandler.onError(statusCode, body);
             }
         }
