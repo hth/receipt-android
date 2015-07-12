@@ -32,9 +32,6 @@ import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
 import com.receiptofi.checkout.utils.Constants;
 
-import org.joda.time.DateTime;
-import org.joda.time.Seconds;
-
 import java.util.List;
 
 /**
@@ -43,8 +40,6 @@ import java.util.List;
  */
 public class SubscriptionFragment extends Fragment {
     private static final String TAG = SubscriptionFragment.class.getSimpleName();
-
-    private static final int CACHE_TOKEN_SECONDS = 59;
 
     private ListView plans;
     private PlanModel planModel;
@@ -63,6 +58,7 @@ public class SubscriptionFragment extends Fragment {
             switch (what) {
                 case TOKEN_SUCCESS:
                     Log.d(TAG, "Token received=" + what);
+                    showData();
                     stopProgressToken();
                     break;
                 case TOKEN_FAILURE:
@@ -88,16 +84,17 @@ public class SubscriptionFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Log.d(TAG, "onCreate");
-        boolean yes = fetchToken();
+        populateData();
+    }
 
-        //TODO(hth) may be remove token cache and instead fetch every time user comes to this screen
-        if (yes && PlanWrapper.getPlanModels().isEmpty()) {
+    private void populateData() {
+        if (PlanWrapper.refresh()) {
             Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
             SubscriptionService.getToken(getActivity());
             SubscriptionService.getPlans(getActivity());
             startProgressToken("Fetching available plans.");
 
-        } else if (yes) {
+        } else {
             Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
             SubscriptionService.getToken(getActivity());
             startProgressToken("Refreshing plans.");
@@ -118,18 +115,13 @@ public class SubscriptionFragment extends Fragment {
                 if (null != TokenWrapper.getTokenModel()) {
                     onPlanSelection(planModel);
                 } else {
-                    ((MainMaterialDrawerActivity)getActivity()).showErrorMsg("Wait a moment, token is not ready");
+                    ((MainMaterialDrawerActivity) getActivity()).showErrorMsg("Wait a moment, token is not ready");
                 }
             }
         });
 
         new PlanTask().execute();
         return rootView;
-    }
-
-    private boolean fetchToken() {
-        return null == TokenWrapper.getLastUpdated() ||
-                Seconds.secondsBetween(TokenWrapper.getLastUpdated(), DateTime.now()).getSeconds() > CACHE_TOKEN_SECONDS;
     }
 
     private void showData() {
@@ -140,7 +132,6 @@ public class SubscriptionFragment extends Fragment {
                     planAdapter.notifyDataSetChanged();
                 }
             });
-
         }
     }
 
@@ -196,11 +187,14 @@ public class SubscriptionFragment extends Fragment {
                 if (null != pm) {
                     if (null != TokenWrapper.getTokenModel() && !TextUtils.isEmpty(TokenWrapper.getTokenModel().getPlanId())) {
                         if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
-                            //TODO(hth)(kevin) why is this log printed 6 times when plan table is refreshed
-                            Log.d(TAG, "pm.getId()=" + pm.getId() + ", TokenWrapper.getTokenModel().getPlanId()=" + TokenWrapper.getTokenModel().getPlanId());
-                            convertView.setBackgroundColor(Color.LTGRAY);
+                            ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+                            if (viewHolder != null && viewHolder.id != null && viewHolder.id.equals(TokenWrapper.getTokenModel().getPlanId())) {
+                                Log.d(TAG, "pm.getId()=" + pm.getId() + ", TokenWrapper.getTokenModel().getPlanId()=" + TokenWrapper.getTokenModel().getPlanId());
+                                convertView.setBackgroundColor(Color.LTGRAY);
+                            }
                         }
                     }
+                    holder.id = pm.getId();
                     holder.planName.setText(pm.getName());
                     holder.planDescription.setText(pm.getDescription());
                     holder.planPrice.setText("$" + String.valueOf(pm.getPrice()));
@@ -213,6 +207,7 @@ public class SubscriptionFragment extends Fragment {
         }
 
         private class ViewHolder {
+            String id;
             TextView planName;
             TextView planDescription;
             TextView planPrice;
