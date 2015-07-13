@@ -175,7 +175,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             }
         });
 
-        Preference dataForceUpdate = findPreference("data_force_update");
+        Preference dataForceUpdate = findPreference(getString(R.string.key_pref_data_sync_id));
         dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
@@ -183,8 +183,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             public boolean onPreferenceClick(Preference preference) {
                 Log.d(TAG, "Force sync data pressed");
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Force Sync Data")
-                        .setMessage("Sync data to latest available update")
+                        .setTitle(R.string.pref_data_sync_title)
+                        .setMessage(R.string.pref_data_sync_message)
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 /** do nothing. */
@@ -204,7 +204,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             }
         });
 
-        Preference dataDelete = findPreference("data_delete");
+        Preference dataDelete = findPreference(getString(R.string.key_pref_data_delete_id));
         dataDelete.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
                 .colorRes(R.color.red)
                 .actionBarSize());
@@ -212,8 +212,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             public boolean onPreferenceClick(Preference preference) {
                 Log.d(TAG, "Delete data pressed");
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Delete Local Data")
-                        .setMessage("Deletes everything including user login information. This action will force you to logout of the app.")
+                        .setTitle(R.string.pref_data_delete_title)
+                        .setMessage(R.string.pref_data_delete_message)
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 /** do nothing. */

@@ -101,6 +101,16 @@
     <string name="pref_password">Password</string>
     <string name="pref_password_text">********</string>
 
+    <string name="key_pref_data_sync_id">pref_data_sync</string>
+    <string name="pref_data_sync_title">Force Sync Data</string>
+    <string name="pref_data_sync_summary">Syncs data to latest available update.</string>
+    <string name="pref_data_sync_message">Sync data to latest available update.</string>
+
+    <string name="key_pref_data_delete_id">pref_data_delete</string>
+    <string name="pref_data_delete_title">Delete Local Data</string>
+    <string name="pref_data_delete_summary">Delete local app data. This action will force you to logout of the app.</string>
+    <string name="pref_data_delete_message">Deletes everything including user login information. This action will force you to logout of the app.</string>
+
     <!-- Receipt list String-->
     <string name="receipt_list_header_month" formatted="false">%s (%d)</string>
     <string name="receipt_list_header_amount" formatted="false">$%.2f</string>
