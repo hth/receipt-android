@@ -87,6 +87,12 @@ public class SubscriptionFragment extends Fragment {
         populateData();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        stopToast();
+    }
+
     private void populateData() {
         if (PlanWrapper.refresh()) {
             Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
