@@ -125,7 +125,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         dataSyncReset();
 
         // Handle update and about preferences
-        Preference perUpdate = findPreference("preference_update");
+        Preference perUpdate = findPreference(getString(R.string.key_pref_update_id));
         perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
@@ -134,8 +134,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 //open browser or intent here
                 Log.d(TAG, "update is pressed");
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Update")
-                        .setMessage("Update the last version. xxx")
+                        .setTitle(R.string.pref_update_title)
+                        .setMessage(R.string.pref_update_message)
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 /** do nothing. */
@@ -154,7 +154,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             }
         });
 
-        Preference perAbout = findPreference("preference_about");
+        Preference perAbout = findPreference(getString(R.string.key_pref_about_id));
         perAbout.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
@@ -163,8 +163,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 //open browser or intent here
                 Log.d(TAG, "about is pressed");
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("About")
-                        .setMessage("Receipt is an very good app for you.")
+                        .setTitle(R.string.pref_about_title)
+                        .setMessage(R.string.pref_about_message)
                         .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d(TAG, "Yes pressed by about");
@@ -195,7 +195,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                                 /** do nothing. */
                             }
                         })
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d(TAG, "Confirmed force sync");
                                 DeviceService.getAll(getActivity());
@@ -224,7 +224,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                                 /** do nothing. */
                             }
                         })
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                        .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
                                 Log.d(TAG, "Confirmed force sync");
                                 DeviceService.getAll(getActivity());
