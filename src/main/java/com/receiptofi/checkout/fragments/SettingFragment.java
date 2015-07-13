@@ -17,15 +17,19 @@ import android.view.View;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
+import com.receiptofi.checkout.views.PasswordPreference;
 import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
@@ -96,10 +100,21 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         // login id
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
+        usernamePref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_envelope)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
         usernamePref.setSummary(username);
+
+        PasswordPreference passwordPreference = (PasswordPreference) findPreference(getString(R.string.key_pref_password));
+        passwordPreference.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_lock)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
 
         // Handle update and about preferences
         Preference perUpdate = findPreference("preference_update");
+        perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
         perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
@@ -117,12 +132,18 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                                 Log.d(TAG, "Trigger update process");
                             }
                         })
+                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                                .colorRes(R.color.app_theme_bg)
+                                .actionBarSize())
                         .show();
                 return true;
             }
         });
 
         Preference perAbout = findPreference("preference_about");
+        perAbout.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
         perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
@@ -135,6 +156,67 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                                 Log.d(TAG, "Yes pressed by about");
                             }
                         })
+                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                                .colorRes(R.color.app_theme_bg)
+                                .actionBarSize())
+                        .show();
+                return true;
+            }
+        });
+
+        Preference dataForceUpdate = findPreference("data_force_update");
+        dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+        dataForceUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Log.d(TAG, "Force sync data pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Force Sync Data")
+                        .setMessage("Sync data to latest available update")
+                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                /** do nothing. */
+                            }
+                        })
+                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Confirmed force sync");
+                                DeviceService.getAll(getActivity());
+                            }
+                        })
+                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+                                .colorRes(R.color.app_theme_bg)
+                                .actionBarSize())
+                        .show();
+                return true;
+            }
+        });
+
+        Preference dataDelete = findPreference("data_delete");
+        dataDelete.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                .colorRes(R.color.red)
+                .actionBarSize());
+        dataDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Log.d(TAG, "Delete data pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Delete Data")
+                        .setMessage("Deletes everything including user login information. This action will force you to logout of the app.")
+                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                /** do nothing. */
+                            }
+                        })
+                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Confirmed force sync");
+                                DeviceService.getAll(getActivity());
+                            }
+                        })
+                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                                .colorRes(R.color.red)
+                                .actionBarSize())
                         .show();
                 return true;
             }

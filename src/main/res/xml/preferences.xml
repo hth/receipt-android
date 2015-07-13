@@ -36,12 +36,14 @@
     <PreferenceCategory
         android:title="Data Sync Reset">
         <Preference
-            android:title="Force Sync data"
-            android:summary="Syncs data to latest available update.">
+            android:title="Force Sync Data"
+            android:summary="Syncs data to latest available update."
+            android:key= "data_force_update">
         </Preference>
         <Preference
-            android:title="Delete data"
-            android:summary="Deletes everything including user login information. This action will force user to logout of the app.">
+            android:title="Delete Data"
+            android:summary="Deletes everything. This action will force you to logout of the app."
+            android:key= "data_delete">
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory
