@@ -122,6 +122,64 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .actionBarSize());
 
         /** Handle Data Sync and Reset. */
+        dataSyncReset();
+
+        // Handle update and about preferences
+        Preference perUpdate = findPreference("preference_update");
+        perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+        perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                //open browser or intent here
+                Log.d(TAG, "update is pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("Update")
+                        .setMessage("Update the last version. xxx")
+                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                /** do nothing. */
+                            }
+                        })
+                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Trigger update process");
+                            }
+                        })
+                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                                .colorRes(R.color.app_theme_bg)
+                                .actionBarSize())
+                        .show();
+                return true;
+            }
+        });
+
+        Preference perAbout = findPreference("preference_about");
+        perAbout.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+        perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                //open browser or intent here
+                Log.d(TAG, "about is pressed");
+                new AlertDialog.Builder(getActivity())
+                        .setTitle("About")
+                        .setMessage("Receipt is an very good app for you.")
+                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                Log.d(TAG, "Yes pressed by about");
+                            }
+                        })
+                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                                .colorRes(R.color.app_theme_bg)
+                                .actionBarSize())
+                        .show();
+                return true;
+            }
+        });
+    }
+
+    private void dataSyncReset() {
         Preference dataForceUpdate = findPreference(getString(R.string.key_pref_data_sync_id));
         dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
                 .colorRes(R.color.app_theme_bg)
@@ -174,60 +232,6 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         })
                         .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
                                 .colorRes(R.color.red)
-                                .actionBarSize())
-                        .show();
-                return true;
-            }
-        });
-
-        // Handle update and about preferences
-        Preference perUpdate = findPreference("preference_update");
-        perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
-                .colorRes(R.color.app_theme_bg)
-                .actionBarSize());
-        perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                //open browser or intent here
-                Log.d(TAG, "update is pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Update")
-                        .setMessage("Update the last version. xxx")
-                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                /** do nothing. */
-                            }
-                        })
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Trigger update process");
-                            }
-                        })
-                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
-                                .colorRes(R.color.app_theme_bg)
-                                .actionBarSize())
-                        .show();
-                return true;
-            }
-        });
-
-        Preference perAbout = findPreference("preference_about");
-        perAbout.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
-                .colorRes(R.color.app_theme_bg)
-                .actionBarSize());
-        perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                //open browser or intent here
-                Log.d(TAG, "about is pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("About")
-                        .setMessage("Receipt is an very good app for you.")
-                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Yes pressed by about");
-                            }
-                        })
-                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
-                                .colorRes(R.color.app_theme_bg)
                                 .actionBarSize())
                         .show();
                 return true;
