@@ -98,17 +98,19 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private void updatePrefs() {
+        /** Wi-Fi. */
         SwitchPreference wifiPref = (SwitchPreference) findPreference(getString(R.string.key_pref_sync));
         wifiPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_wifi)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
+        /** Notification. */
         SwitchPreference notificationPref = (SwitchPreference) findPreference(getString(R.string.key_pref_notification));
         notificationPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_bell)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
-        // login id
+        /** Login Id. */
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
         usernamePref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_envelope)
@@ -116,15 +118,20 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .actionBarSize());
         usernamePref.setSummary(username);
 
+        /** Password. */
         PasswordPreference passwordPreference = (PasswordPreference) findPreference(getString(R.string.key_pref_password));
         passwordPreference.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_lock)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
         /** Handle Data Sync and Reset. */
-        dataSyncReset();
+        loadDataSyncReset();
 
         // Handle update and about preferences
+        loadOther();
+    }
+
+    private void loadOther() {
         Preference perUpdate = findPreference(getString(R.string.key_pref_update_id));
         perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
                 .colorRes(R.color.app_theme_bg)
@@ -179,7 +186,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         });
     }
 
-    private void dataSyncReset() {
+    private void loadDataSyncReset() {
         Preference dataForceUpdate = findPreference(getString(R.string.key_pref_data_sync_id));
         dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
                 .colorRes(R.color.app_theme_bg)
