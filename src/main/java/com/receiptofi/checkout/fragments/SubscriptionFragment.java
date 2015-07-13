@@ -240,6 +240,7 @@ public class SubscriptionFragment extends Fragment {
         progressToast.setText(message);
         progressToast.setIndeterminate(true);
         progressToast.setProgressIndeterminate(true);
+        progressToast.setDuration(30);
         progressToast.show();
     }
 
