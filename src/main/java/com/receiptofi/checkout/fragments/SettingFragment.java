@@ -11,6 +11,7 @@ import android.os.Message;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -97,6 +98,16 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private void updatePrefs() {
+        SwitchPreference wifiPref = (SwitchPreference) findPreference(getString(R.string.key_pref_sync));
+        wifiPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_wifi)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+
+        SwitchPreference notificationPref = (SwitchPreference) findPreference(getString(R.string.key_pref_notification));
+        notificationPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_bell)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+
         // login id
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
@@ -201,7 +212,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             public boolean onPreferenceClick(Preference preference) {
                 Log.d(TAG, "Delete data pressed");
                 new AlertDialog.Builder(getActivity())
-                        .setTitle("Delete Data")
+                        .setTitle("Delete Local Data")
                         .setMessage("Deletes everything including user login information. This action will force you to logout of the app.")
                         .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {

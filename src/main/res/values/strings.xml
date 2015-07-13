@@ -85,9 +85,14 @@
 
     <!--Preference String-->
     <string name="key_pref_sync">pref_sync</string>
-    <string name="pref_sync">Wi-Fi sync</string>
-    <string name="pref_sync_on">Images syncs over Wi-Fi only</string>
-    <string name="pref_sync_off">Images syncs over Wi-Fi/mobile-data</string>
+    <string name="pref_sync">Wi-Fi Sync</string>
+    <string name="pref_sync_on">Images syncs over Wi-Fi only.</string>
+    <string name="pref_sync_off">Images syncs over Wi-Fi / Data.</string>
+
+    <string name="key_pref_notification">pref_notification</string>
+    <string name="pref_notification">Show Notification</string>
+    <string name="pref_notification_on">App will post on notification bar.</string>
+    <string name="pref_notification_off">App won\'t post on notification bar.</string>
 
     <string name="key_pref_login_id">pref_login_id</string>
     <string name="pref_login_id">Login Id</string>
@@ -95,11 +100,6 @@
     <string name="key_pref_password">pref_password</string>
     <string name="pref_password">Password</string>
     <string name="pref_password_text">********</string>
-
-    <string name="key_pref_notification">pref_notification</string>
-    <string name="pref_notification">Show Notification</string>
-    <string name="pref_notification_on">App will post on notification bar</string>
-    <string name="pref_notification_off">App won\'t post on notification bar</string>
 
     <!-- Receipt list String-->
     <string name="receipt_list_header_month" formatted="false">%s (%d)</string>

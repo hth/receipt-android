@@ -41,8 +41,8 @@
             android:key= "data_force_update">
         </Preference>
         <Preference
-            android:title="Delete Data"
-            android:summary="Deletes everything. This action will force you to logout of the app."
+            android:title="Delete Local Data"
+            android:summary="Delete local app data. This action will force you to logout of the app."
             android:key= "data_delete">
         </Preference>
     </PreferenceCategory>
