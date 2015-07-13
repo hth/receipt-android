@@ -59,11 +59,11 @@ public class SubscriptionFragment extends Fragment {
                 case TOKEN_SUCCESS:
                     Log.d(TAG, "Token received=" + what);
                     showData();
-                    stopProgressToken();
+                    stopToast();
                     break;
                 case TOKEN_FAILURE:
                     Log.d(TAG, "Token received=" + what);
-                    stopProgressToken();
+                    stopToast();
                     break;
                 case PLAN_FETCH_SUCCESS:
                     Log.d(TAG, "Plans fetched=" + what);
@@ -71,7 +71,7 @@ public class SubscriptionFragment extends Fragment {
                     break;
                 case PLAN_FETCH_FAILURE:
                     Log.d(TAG, "Plans fetched=" + what);
-                    stopProgressToken();
+                    stopToast();
                     break;
                 default:
                     Log.e(TAG, "Update handler not defined for: " + what);
@@ -92,12 +92,12 @@ public class SubscriptionFragment extends Fragment {
             Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
             SubscriptionService.getToken(getActivity());
             SubscriptionService.getPlans(getActivity());
-            startProgressToken("Fetching available plans.");
+            showToast("Fetching available plans.");
 
         } else {
             Log.d(TAG, "Cache containing Plans is empty and token is stale, fetching fresh");
             SubscriptionService.getToken(getActivity());
-            startProgressToken("Refreshing plans.");
+            showToast("Refreshing plans.");
         }
     }
 
@@ -229,22 +229,23 @@ public class SubscriptionFragment extends Fragment {
     }
 
     private void onPlanSelection(PlanModel planModel) {
+        /** Stop toast message anyways, since user has moved past the list. */
+        stopToast();
         Intent intent = new Intent(getActivity(), SubscriptionUserActivity.class);
         intent.putExtra(Constants.INTENT_EXTRA_PLAN_MODEL, planModel);
         startActivity(intent);
         getActivity().overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
     }
 
-    private void startProgressToken(String message) {
+    private void showToast(String message) {
         progressToast = new SuperActivityToast(getActivity(), SuperToast.Type.PROGRESS);
         progressToast.setText(message);
         progressToast.setIndeterminate(true);
         progressToast.setProgressIndeterminate(true);
-        progressToast.setDuration(30);
         progressToast.show();
     }
 
-    public void stopProgressToken() {
+    public void stopToast() {
         if (null != progressToast && progressToast.isShowing()) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
