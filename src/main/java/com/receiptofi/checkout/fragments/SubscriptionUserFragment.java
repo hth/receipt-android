@@ -27,6 +27,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.SubscribeConfirmationActivity;
 import com.receiptofi.checkout.model.PlanModel;
 import com.receiptofi.checkout.model.TransactionDetail;
+import com.receiptofi.checkout.model.wrapper.PlanWrapper;
 import com.receiptofi.checkout.model.wrapper.TokenWrapper;
 import com.receiptofi.checkout.service.SubscriptionService;
 import com.receiptofi.checkout.utils.Constants;
@@ -259,7 +260,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     public void onClick(View view) {
         if (view.getId() == R.id.btn_subscribe) {
             if (btnSubscribe.getText().equals("SUBSCRIBE")) {
-                if (validateFieldsString()) {
+                if (validateFieldsString() && !PlanWrapper.refresh()) {
                     if (TokenWrapper.getTokenModel() != null) {
                         if (!TextUtils.isEmpty(TokenWrapper.getTokenModel().getToken()) && braintreeReady) {
                             Intent intent = new Intent(getActivity(), BraintreePaymentActivity.class);
@@ -273,20 +274,13 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                         } else {
                             message = "Payment Service is not ready.";
                         }
-                        SuperToast.create(
-                                getActivity(),
-                                "Could not initialize app with data from server. " + message,
-                                SuperToast.Duration.LONG,
-                                Style.getStyle(Style.RED, SuperToast.Animations.FLYIN)
-                        ).show();
+                        Log.d(TAG, "Could not initialize Payment SDK with token from server. " + message);
+                        showToast("Something went wrong. Please refresh state by going to Home.");
                     }
+                } else if(PlanWrapper.refresh()) {
+                    showToast("Plans were fetched more than " + PlanWrapper.CACHE_PLAN_HOURS + "hrs ago. Please refresh by going to Home.");
                 } else {
-                    SuperToast.create(
-                            getActivity(),
-                            "Invalid First Name, Last Name or Zip Code.",
-                            SuperToast.Duration.LONG,
-                            Style.getStyle(Style.RED, SuperToast.Animations.FLYIN)
-                    ).show();
+                    showToast("Invalid First Name, Last Name or Zip Code.");
                 }
             } else {
                 SubscriptionService.cancelSubscription(getActivity());
@@ -349,4 +343,12 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                 && !(!Validation.isAlphaNumeric(firstName) || !Validation.isAlphaNumeric(lastName)) || !Validation.isNumeric(postalCode);
     }
 
+    private void showToast(String message) {
+        SuperToast.create(
+                getActivity(),
+                message,
+                SuperToast.Duration.LONG,
+                Style.getStyle(Style.RED, SuperToast.Animations.FLYIN)
+        ).show();
+    }
 }
