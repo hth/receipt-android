@@ -55,7 +55,7 @@ public class SubscribeConfirmationActivity extends Activity {
         postalCode = getIntent().getStringExtra(Constants.INTENT_EXTRA_POSTAL_CODE);
 
         String message = "";
-        if (!TextUtils.isEmpty(type) && pm != null && !firstName.isEmpty() && !lastName.isEmpty()) {
+        if (!TextUtils.isEmpty(type) && pm != null && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
             switch(TransactionDetail.TYPE.valueOf(type)) {
                 case PAY:
                     message = firstName + " " + lastName + ", your card has been successfully charged for " + pm.getPrice() + " and you are enrolled for " + pm.getDescription() + ". Your last transactions and subscription has been cancelled. First of every month your card would be charged for " + pm.getBillingPlan() + ".";

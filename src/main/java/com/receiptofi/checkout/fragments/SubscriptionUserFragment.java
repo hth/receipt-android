@@ -283,7 +283,11 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                     showToast("Invalid First Name, Last Name or Zip Code.");
                 }
             } else {
-                SubscriptionService.cancelSubscription(getActivity());
+                if (validateFieldsString()) {
+                    SubscriptionService.cancelSubscription(getActivity());
+                } else {
+                    showToast("Invalid First Name, Last Name or Zip Code.");
+                }
             }
         }
     }
