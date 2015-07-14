@@ -4,6 +4,8 @@ import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -55,6 +57,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private static final int PASSWORD_UPDATE_SUCCESS = 0x2567;
     private static final int CHECK_UPDATE_SUCCESS = 0x2568;
     private ContextThemeWrapper ctw;
+    private PackageInfo pInfo;
+    private String version = "";
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -86,6 +90,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ctw = new ContextThemeWrapper(getActivity(), R.style.alert_dialog);
+        try {
+            version = getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName;
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Failed to get app version, reason=" + e.getLocalizedMessage(), e);
+        }
 
         // set fields before inflating view from xml
         initializePref();
@@ -215,6 +224,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
+        perUpdate.setSummary(getString(R.string.pref_update_summary, version));
         perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
@@ -243,9 +253,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private AlertDialog updateAlertDialog() {
+
         return new AlertDialog.Builder(ctw)
                 .setTitle(R.string.pref_update_title)
-                .setMessage(R.string.pref_update_message)
+                .setMessage(getString(R.string.pref_update_message))
                 .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         /** do nothing. */
