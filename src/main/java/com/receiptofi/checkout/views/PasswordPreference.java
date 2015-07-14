@@ -68,5 +68,6 @@ public class PasswordPreference extends EditTextPreference {
 
         TextView textView = (TextView) dialog.findViewById(android.R.id.message);
         textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+        textView.setText(getContext().getString(R.string.pref_password_message, Validation.PASSWORD_MIN_LENGTH));
     }
 }

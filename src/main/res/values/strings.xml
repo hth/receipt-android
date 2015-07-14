@@ -103,7 +103,7 @@
     <string name="pref_password_title">Password</string>
     <string name="pref_password_change_title">Change Password</string>
     <string name="pref_password_text">********</string>
-    <string name="pref_password_message">To change your password, please enter a new password below.</string>
+    <string name="pref_password_message">To change your password, please enter a new password below. Minimum length of %s characters.</string>
 
     <string name="key_pref_data_sync_id">pref_data_sync</string>
     <string name="pref_data_sync_title">Sync Data</string>
@@ -173,11 +173,11 @@
     <string name="notify_empty_detail">Choose month to view receipts</string>
 
     <!--Error String-->
-    <string name="err_str_enter_name">Please enter name</string>
-    <string name="err_str_enter_email">Please enter email</string>
-    <string name="err_str_enter_password">Please enter password</string>
-    <string name="err_str_enter_valid_email">Please enter valid email</string>
-    <string name="err_str_enter_valid_password">Password must contain at least 6 letters</string>
+    <string name="err_str_enter_name">Please enter name.</string>
+    <string name="err_str_enter_email">Please enter email.</string>
+    <string name="err_str_enter_password">Please enter password.</string>
+    <string name="err_str_enter_valid_email">Please enter valid email.</string>
+    <string name="err_str_enter_valid_password">Password must contain at least %s characters.</string>
     <string name="err_str_bundle_null">Bundle is null</string>
 
     <string-array name="age_range">

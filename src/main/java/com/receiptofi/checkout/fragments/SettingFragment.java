@@ -32,6 +32,7 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
 import com.receiptofi.checkout.views.PasswordPreference;
@@ -364,7 +365,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private void updatePassword(String data) {
         Log.d(TAG, "executing updatePassword");
         if (TextUtils.isEmpty(data)) {
-            showToast(getString(R.string.err_str_enter_valid_password), SuperToast.Duration.SHORT);
+            showToast(getString(R.string.err_str_enter_valid_password, Validation.PASSWORD_MIN_LENGTH), SuperToast.Duration.SHORT);
         } else {
             JSONObject postData = new JSONObject();
 
