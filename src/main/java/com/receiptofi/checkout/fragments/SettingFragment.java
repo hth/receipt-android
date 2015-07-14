@@ -1,9 +1,11 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,7 +16,9 @@ import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -49,6 +53,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
     private static final int PASSWORD_UPDATE_SUCCESS = 0x2567;
     private static final int CHECK_UPDATE_SUCCESS = 0x2568;
+    private ContextThemeWrapper ctw;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -79,6 +84,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ctw = new ContextThemeWrapper(getActivity(), R.style.alert_dialog);
 
         // set fields before inflating view from xml
         initializePref();
@@ -131,6 +137,78 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         loadOther();
     }
 
+    private void loadDataSyncReset() {
+        Preference dataForceUpdate = findPreference(getString(R.string.key_pref_data_sync_id));
+        dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+        dataForceUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Log.d(TAG, "Force sync data pressed");
+                AlertDialog alertDialog = dataSyncAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                return true;
+            }
+        });
+
+        Preference dataDelete = findPreference(getString(R.string.key_pref_data_delete_id));
+        dataDelete.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                .colorRes(R.color.red)
+                .actionBarSize());
+        dataDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Log.d(TAG, "Delete data pressed");
+                AlertDialog alertDialog = dataDeleteAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                return true;
+            }
+        });
+    }
+
+    private AlertDialog dataSyncAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_data_sync_title)
+                .setMessage(R.string.pref_data_sync_message)
+                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        /** do nothing. */
+                    }
+                })
+                .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Confirmed force sync");
+                        DeviceService.getAll(getActivity());
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+                        .colorRes(R.color.app_theme_bg)
+                        .actionBarSize())
+                .show();
+    }
+
+    private AlertDialog dataDeleteAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_data_delete_title)
+                .setMessage(R.string.pref_data_delete_message)
+                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        /** do nothing. */
+                    }
+                })
+                .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Confirmed force sync");
+                        DeviceService.getAll(getActivity());
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                        .colorRes(R.color.red)
+                        .actionBarSize())
+                .show();
+    }
+
     private void loadOther() {
         Preference perUpdate = findPreference(getString(R.string.key_pref_update_id));
         perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
@@ -140,23 +218,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
                 Log.d(TAG, "update is pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.pref_update_title)
-                        .setMessage(R.string.pref_update_message)
-                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                /** do nothing. */
-                            }
-                        })
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Trigger update process");
-                            }
-                        })
-                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
-                                .colorRes(R.color.app_theme_bg)
-                                .actionBarSize())
-                        .show();
+                AlertDialog alertDialog = updateAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 return true;
             }
         });
@@ -169,81 +233,47 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
                 Log.d(TAG, "about is pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.pref_about_title)
-                        .setMessage(R.string.pref_about_message)
-                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Yes pressed by about");
-                            }
-                        })
-                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
-                                .colorRes(R.color.app_theme_bg)
-                                .actionBarSize())
-                        .show();
+                AlertDialog alertDialog = aboutAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 return true;
             }
         });
     }
 
-    private void loadDataSyncReset() {
-        Preference dataForceUpdate = findPreference(getString(R.string.key_pref_data_sync_id));
-        dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
-                .colorRes(R.color.app_theme_bg)
-                .actionBarSize());
-        dataForceUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                Log.d(TAG, "Force sync data pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.pref_data_sync_title)
-                        .setMessage(R.string.pref_data_sync_message)
-                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                /** do nothing. */
-                            }
-                        })
-                        .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Confirmed force sync");
-                                DeviceService.getAll(getActivity());
-                            }
-                        })
-                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
-                                .colorRes(R.color.app_theme_bg)
-                                .actionBarSize())
-                        .show();
-                return true;
-            }
-        });
+    private AlertDialog updateAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_update_title)
+                .setMessage(R.string.pref_update_message)
+                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        /** do nothing. */
+                    }
+                })
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Trigger update process");
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                        .colorRes(R.color.app_theme_bg)
+                        .actionBarSize())
+                .show();
+    }
 
-        Preference dataDelete = findPreference(getString(R.string.key_pref_data_delete_id));
-        dataDelete.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
-                .colorRes(R.color.red)
-                .actionBarSize());
-        dataDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                Log.d(TAG, "Delete data pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(R.string.pref_data_delete_title)
-                        .setMessage(R.string.pref_data_delete_message)
-                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                /** do nothing. */
-                            }
-                        })
-                        .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Confirmed force sync");
-                                DeviceService.getAll(getActivity());
-                            }
-                        })
-                        .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
-                                .colorRes(R.color.red)
-                                .actionBarSize())
-                        .show();
-                return true;
-            }
-        });
+    private AlertDialog aboutAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_about_title)
+                .setMessage(R.string.pref_about_message)
+                .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Yes pressed by about");
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                        .colorRes(R.color.app_theme_bg)
+                        .actionBarSize())
+                .show();
     }
 
     @Override
