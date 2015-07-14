@@ -1,11 +1,12 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.AlertDialog;
-import android.app.DialogFragment;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -14,7 +15,10 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.View;
@@ -28,8 +32,10 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.model.ApkVersionModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
@@ -55,6 +61,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private static final int PASSWORD_UPDATE_SUCCESS = 0x2567;
     private static final int CHECK_UPDATE_SUCCESS = 0x2568;
     private ContextThemeWrapper ctw;
+    private ApkVersionModel currentVersion;
+    private ApkVersionModel latestVersion;
+    private String packageName = "";
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -71,7 +80,6 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     showToast("Password updated successfully.", SuperToast.Duration.SHORT);
                     break;
                 case CHECK_UPDATE_SUCCESS:
-                    //TODO(hth) implement this later
                     Log.d(TAG, "Update checked successfully");
                     stopProgressToken();
                     break;
@@ -86,6 +94,15 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ctw = new ContextThemeWrapper(getActivity(), R.style.alert_dialog);
+        try {
+            packageName = getActivity().getPackageName();
+            currentVersion = AppUtils.parseVersion(getActivity().getPackageManager().getPackageInfo(packageName, 0).versionName);
+
+            /** Ignores first time, since the request is made when user lands on this screen. */
+            latestVersion = AppUtils.parseVersion(KeyValueUtils.getValue(KeyValueUtils.KEYS.LATEST_APK));
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e(TAG, "Failed to get app version, reason=" + e.getLocalizedMessage(), e);
+        }
 
         // set fields before inflating view from xml
         initializePref();
@@ -93,6 +110,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         addPreferencesFromResource(R.xml.preferences);
         // set fields in the view
         updatePrefs();
+
+        checkForLatestApk();
     }
 
     private void initializePref() {
@@ -215,16 +234,23 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
-        perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-            public boolean onPreferenceClick(Preference preference) {
-                //open browser or intent here
-                Log.d(TAG, "update is pressed");
-                AlertDialog alertDialog = updateAlertDialog();
-                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
-                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
-                return true;
-            }
-        });
+        perUpdate.setTitle(getString(R.string.pref_update_title, currentVersion.version()));
+        if (AppUtils.isLatest(currentVersion, latestVersion)) {
+            Spannable wordToSpan = new SpannableString(getString(R.string.pref_update_summary, latestVersion.version()));
+            wordToSpan.setSpan(new ForegroundColorSpan(R.color.father_bg), wordToSpan.length() - latestVersion.version().length(), wordToSpan.length(), 0);
+            perUpdate.setSummary(wordToSpan);
+            perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                public boolean onPreferenceClick(Preference preference) {
+                    Log.d(TAG, "update is pressed");
+                    AlertDialog alertDialog = updateAlertDialog(latestVersion);
+                    TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                    textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                    return true;
+                }
+            });
+        } else {
+            perUpdate.setSummary("");
+        }
 
         Preference perAbout = findPreference(getString(R.string.key_pref_about_id));
         perAbout.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
@@ -242,10 +268,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         });
     }
 
-    private AlertDialog updateAlertDialog() {
+    private AlertDialog updateAlertDialog(final ApkVersionModel latestVersion) {
         return new AlertDialog.Builder(ctw)
-                .setTitle(R.string.pref_update_title)
-                .setMessage(R.string.pref_update_message)
+                .setTitle(getString(R.string.pref_update_dialog_title, latestVersion.version()))
+                .setMessage(getString(R.string.pref_update_message))
                 .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         /** do nothing. */
@@ -254,6 +280,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "Trigger update process");
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("market://details?id=" + packageName));
+                        startActivity(goToMarket);
                     }
                 })
                 .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
@@ -345,7 +373,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 
                 @Override
                 public void onError(int statusCode, String error) {
-                    Log.d(TAG, "executing updateLoginId: onError: " + error);
+                    Log.e(TAG, "executing updateLoginId: onError: " + error);
                     resetLoginId();
                     stopProgressToken();
                     showToast(JsonParseUtils.parseError(error), SuperToast.Duration.EXTRA_LONG);
@@ -353,7 +381,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 
                 @Override
                 public void onException(Exception exception) {
-                    Log.d(TAG, "executing updateLoginId: onException: " + exception.getMessage());
+                    Log.e(TAG, "executing updateLoginId: onException: " + exception.getMessage());
                     resetLoginId();
                     stopProgressToken();
                     showToast(exception.getMessage(), SuperToast.Duration.SHORT);
@@ -388,19 +416,41 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 
                 @Override
                 public void onError(int statusCode, String error) {
-                    Log.d(TAG, "executing updatePassword: onError: " + error);
+                    Log.e(TAG, "executing updatePassword: onError: " + error);
                     stopProgressToken();
                     showToast(JsonParseUtils.parseError(error), SuperToast.Duration.EXTRA_LONG);
                 }
 
                 @Override
                 public void onException(Exception exception) {
-                    Log.d(TAG, "executing updatePassword: onException: " + exception.getMessage());
+                    Log.e(TAG, "executing updatePassword: onException: " + exception.getMessage());
                     stopProgressToken();
                     showToast(exception.getMessage(), SuperToast.Duration.SHORT);
                 }
             });
         }
+    }
+
+    private void checkForLatestApk() {
+        ExternalCallWithOkHttp.doGet(getActivity(), API.LATEST_APK_API, new ResponseHandler() {
+
+            @Override
+            public void onSuccess(Headers headers, String body) {
+                Log.d(TAG, "executing updatePassword: onSuccess");
+                KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LATEST_APK, JsonParseUtils.parseLatestAPK(body));
+                updateHandler.sendEmptyMessage(CHECK_UPDATE_SUCCESS);
+            }
+
+            @Override
+            public void onError(int statusCode, String error) {
+                Log.e(TAG, "executing updatePassword: onError: " + error);
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                Log.e(TAG, "executing updatePassword: onException: " + exception.getMessage());
+            }
+        });
     }
 
     private void resetLoginId() {

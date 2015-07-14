@@ -10,6 +10,8 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 
+import com.receiptofi.checkout.model.ApkVersionModel;
+
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
@@ -142,5 +144,34 @@ public class AppUtils {
 
     public static String getDateTime(DateTime date) {
         return date.withZone(DateTimeZone.getDefault()).toString();
+    }
+
+    public static ApkVersionModel parseVersion(String version) {
+        if (null == version || !version.contains(".")) {
+            return null;
+        }
+
+        String[] split = version.split("\\.");
+        ApkVersionModel apkVersionModel = null;
+        if (split.length == 4) {
+            apkVersionModel = new ApkVersionModel(Integer.valueOf(split[0]), Integer.valueOf(split[1]), Integer.valueOf(split[2]), Integer.valueOf(split[3]));
+        } else if (split.length == 3) {
+            apkVersionModel = new ApkVersionModel(Integer.valueOf(split[0]), Integer.valueOf(split[1]), Integer.valueOf(split[2]));
+        }
+        return apkVersionModel;
+    }
+
+    /**
+     * Compares is the existing version is less than the newer version number received from server.
+     *
+     * @param older
+     * @param newer
+     * @return
+     */
+    public static boolean isLatest(ApkVersionModel older, ApkVersionModel newer) {
+        return newer != null &&
+                (newer.getMajor() > older.getMajor() ||
+                        newer.getMinor() > older.getMinor() ||
+                        newer.getPatch() > older.getPatch());
     }
 }

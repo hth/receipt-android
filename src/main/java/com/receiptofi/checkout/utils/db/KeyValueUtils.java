@@ -103,6 +103,7 @@ public class KeyValueUtils {
         public static final String XR_DID = API.key.XR_DID;
         public static final String LAST_FETCHED = "LAST_FETCHED";
         public static final String GET_ALL_COMPLETE = "GET_ALL_COMPLETE";
+        public static final String LATEST_APK = "LATEST_APK";
         //TODO(hht) Should we manage interval time for app from server
 
         private KEYS() {
