@@ -441,4 +441,16 @@ public class JsonParseUtils {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }
     }
+
+    public static String parseLatestAPK(String jsonResponse) {
+        try {
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            if (jsonObject.has("apk")) {
+                return jsonObject.getString("apk");
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
+        }
+        return "";
+    }
 }

@@ -68,6 +68,7 @@ public class DBUtils {
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LAST_FETCHED, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.GET_ALL_COMPLETE, Boolean.toString(false));
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LATEST_APK, "");
     }
 
     /**

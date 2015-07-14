@@ -44,6 +44,9 @@ public class API {
     public static final String PAYMENT_API = "/api/payment.json";
     public static final String CANCEL_SUBSCRIPTION_API = "/api/cancelSubscription.json";
 
+    // Latest APK
+    public static final String LATEST_APK_API = "/api/latestAPK.json";
+
     public static class key {
         // Header
         public static final String XR_MAIL = "X-R-MAIL";
