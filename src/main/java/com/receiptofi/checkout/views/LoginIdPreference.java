@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
@@ -37,7 +38,9 @@ public class LoginIdPreference extends EditTextPreference {
     @Override
     protected void showDialog(Bundle state) {
         super.showDialog(state);
+
         final AlertDialog dialog = (AlertDialog) getDialog();
+        dialog.setTitle(R.string.pref_login_change_title);
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
         final TextWatcher textWatcher = new TextWatcher() {
             @Override
@@ -59,5 +62,9 @@ public class LoginIdPreference extends EditTextPreference {
         text.setText("");
         text.setHint(R.string.hint_email);
         text.addTextChangedListener(textWatcher);
+        text.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+
+        TextView textView = (TextView) dialog.findViewById(android.R.id.message);
+        textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
     }
 }

@@ -1,9 +1,11 @@
 package com.receiptofi.checkout.fragments;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -11,21 +13,29 @@ import android.os.Message;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
+import android.preference.SwitchPreference;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.ContextThemeWrapper;
 import android.view.View;
+import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
+import com.receiptofi.checkout.utils.Validation;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
+import com.receiptofi.checkout.views.PasswordPreference;
 import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
@@ -44,6 +54,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private static final int LOGIN_ID_UPDATE_SUCCESS = 0x2565;
     private static final int PASSWORD_UPDATE_SUCCESS = 0x2567;
     private static final int CHECK_UPDATE_SUCCESS = 0x2568;
+    private ContextThemeWrapper ctw;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -74,6 +85,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ctw = new ContextThemeWrapper(getActivity(), R.style.alert_dialog);
 
         // set fields before inflating view from xml
         initializePref();
@@ -93,52 +105,176 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private void updatePrefs() {
-        // login id
+        /** Wi-Fi. */
+        SwitchPreference wifiPref = (SwitchPreference) findPreference(getString(R.string.key_pref_sync));
+        wifiPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_wifi)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+
+        /** Notification. */
+        SwitchPreference notificationPref = (SwitchPreference) findPreference(getString(R.string.key_pref_notification));
+        notificationPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_bell)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+
+        /** Login Id. */
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
+        usernamePref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_envelope)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
         usernamePref.setSummary(username);
 
+        /** Password. */
+        PasswordPreference passwordPreference = (PasswordPreference) findPreference(getString(R.string.key_pref_password));
+        passwordPreference.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_lock)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+
+        /** Handle Data Sync and Reset. */
+        loadDataSyncReset();
+
         // Handle update and about preferences
-        Preference perUpdate = findPreference("preference_update");
+        loadOther();
+    }
+
+    private void loadDataSyncReset() {
+        Preference dataForceUpdate = findPreference(getString(R.string.key_pref_data_sync_id));
+        dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
+        dataForceUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Log.d(TAG, "Force sync data pressed");
+                AlertDialog alertDialog = dataSyncAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                return true;
+            }
+        });
+
+        Preference dataDelete = findPreference(getString(R.string.key_pref_data_delete_id));
+        dataDelete.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                .colorRes(R.color.red)
+                .actionBarSize());
+        dataDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+            public boolean onPreferenceClick(Preference preference) {
+                Log.d(TAG, "Delete data pressed");
+                AlertDialog alertDialog = dataDeleteAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                return true;
+            }
+        });
+    }
+
+    private AlertDialog dataSyncAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_data_sync_title)
+                .setMessage(R.string.pref_data_sync_message)
+                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        /** do nothing. */
+                    }
+                })
+                .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Confirmed force sync");
+                        DeviceService.getAll(getActivity());
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+                        .colorRes(R.color.app_theme_bg)
+                        .actionBarSize())
+                .show();
+    }
+
+    private AlertDialog dataDeleteAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_data_delete_title)
+                .setMessage(R.string.pref_data_delete_message)
+                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        /** do nothing. */
+                    }
+                })
+                .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Confirmed force sync");
+                        DeviceService.getAll(getActivity());
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                        .colorRes(R.color.red)
+                        .actionBarSize())
+                .show();
+    }
+
+    private void loadOther() {
+        Preference perUpdate = findPreference(getString(R.string.key_pref_update_id));
+        perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
         perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
                 Log.d(TAG, "update is pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("Update")
-                        .setMessage("Update the last version. xxx")
-                        .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                /** do nothing. */
-                            }
-                        })
-                        .setPositiveButton("Update", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Trigger update process");
-                            }
-                        })
-                        .show();
+                AlertDialog alertDialog = updateAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 return true;
             }
         });
 
-        Preference perAbout = findPreference("preference_about");
+        Preference perAbout = findPreference(getString(R.string.key_pref_about_id));
+        perAbout.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                .colorRes(R.color.app_theme_bg)
+                .actionBarSize());
         perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
                 Log.d(TAG, "about is pressed");
-                new AlertDialog.Builder(getActivity())
-                        .setTitle("About")
-                        .setMessage("Receipt is an very good app for you.")
-                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                Log.d(TAG, "Yes pressed by about");
-                            }
-                        })
-                        .show();
+                AlertDialog alertDialog = aboutAlertDialog();
+                TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
+                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 return true;
             }
         });
+    }
+
+    private AlertDialog updateAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_update_title)
+                .setMessage(R.string.pref_update_message)
+                .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        /** do nothing. */
+                    }
+                })
+                .setPositiveButton("Update", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Trigger update process");
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                        .colorRes(R.color.app_theme_bg)
+                        .actionBarSize())
+                .show();
+    }
+
+    private AlertDialog aboutAlertDialog() {
+        return new AlertDialog.Builder(ctw)
+                .setTitle(R.string.pref_about_title)
+                .setMessage(R.string.pref_about_message)
+                .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Log.d(TAG, "Yes pressed by about");
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                        .colorRes(R.color.app_theme_bg)
+                        .actionBarSize())
+                .show();
     }
 
     @Override
@@ -229,7 +365,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private void updatePassword(String data) {
         Log.d(TAG, "executing updatePassword");
         if (TextUtils.isEmpty(data)) {
-            showToast(getString(R.string.err_str_enter_valid_password), SuperToast.Duration.SHORT);
+            showToast(getString(R.string.err_str_enter_valid_password, Validation.PASSWORD_MIN_LENGTH), SuperToast.Duration.SHORT);
         } else {
             JSONObject postData = new JSONObject();
 
@@ -247,7 +383,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                     Map<String, String> headerData = ExternalCallWithOkHttp.parseHeader(headers, keys);
                     saveAuthKey(headerData);
-                    updateHandler.sendEmptyMessage(LOGIN_ID_UPDATE_SUCCESS);
+                    updateHandler.sendEmptyMessage(PASSWORD_UPDATE_SUCCESS);
                 }
 
                 @Override
@@ -271,7 +407,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         SharedPreferences.Editor editor = pref.edit();
         // us old email
-        editor.putString(getString(R.string.pref_login_id), UserUtils.getEmail());
+        editor.putString(getString(R.string.pref_login_title), UserUtils.getEmail());
         editor.apply();
     }
 

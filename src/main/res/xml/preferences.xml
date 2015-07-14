@@ -22,7 +22,8 @@
             android:id="@+id/pref_user_id"
             android:inputType="textEmailAddress"
             android:key="@string/key_pref_login_id"
-            android:title="@string/pref_login_id"/>
+            android:dialogMessage="@string/pref_login_message"
+            android:title="@string/pref_login_title"/>
 
         <com.receiptofi.checkout.views.PasswordPreference
             android:id="@+id/pref_password"
@@ -30,29 +31,34 @@
             android:key="@string/key_pref_password"
             android:password="true"
             android:summary="@string/pref_password_text"
-            android:title="@string/pref_password"
+            android:title="@string/pref_password_title"
+            android:dialogMessage="@string/pref_password_message"
             />
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Data Sync Reset">
         <Preference
-            android:title="Force Sync data"
-            android:summary="Syncs data to latest available update.">
+            android:key= "@string/key_pref_data_sync_id"
+            android:title="@string/pref_data_sync_title"
+            android:summary="@string/pref_data_sync_summary">
         </Preference>
         <Preference
-            android:title="Delete data"
-            android:summary="Deletes everything including user login information. This action will force user to logout of the app.">
+            android:key= "@string/key_pref_data_delete_id"
+            android:title="@string/pref_data_delete_title"
+            android:summary="@string/pref_data_delete_summary">
         </Preference>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="Others">
         <Preference
-            android:title="Check Update"
-            android:key= "preference_update">
+            android:key= "@string/key_pref_update_id"
+            android:title="@string/pref_update_title"
+            android:summary="@string/pref_update_summary">
         </Preference>
         <Preference
-            android:title="About"
-            android:key= "preference_about">
+            android:key= "@string/key_pref_about_id"
+            android:title="@string/pref_about_title"
+            android:summary="@string/pref_about_summary">
         </Preference>
     </PreferenceCategory>
 </PreferenceScreen>

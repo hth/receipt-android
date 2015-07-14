@@ -65,7 +65,7 @@
     <string name="preferences">Preferences</string>
     <string name="billing">Billing</string>
 
-    <!--Pref fragment-->
+    <!--Expense Tag-->
     <string name="expense_tag_info">Select any tag to modify</string>
     <string name="expense_tag_dialog_delete_label">Delete Expense Tag</string>
     <string name="expense_tag_dialog_text">Confirm delete tag \"%s\".\n\nDeleting the tag will delete all references from within receipts.</string>
@@ -85,21 +85,45 @@
 
     <!--Preference String-->
     <string name="key_pref_sync">pref_sync</string>
-    <string name="pref_sync">Wi-Fi sync</string>
-    <string name="pref_sync_on">Images syncs over Wi-Fi only</string>
-    <string name="pref_sync_off">Images syncs over Wi-Fi/mobile-data</string>
-
-    <string name="key_pref_login_id">pref_login_id</string>
-    <string name="pref_login_id">Login Id</string>
-
-    <string name="key_pref_password">pref_password</string>
-    <string name="pref_password">Password</string>
-    <string name="pref_password_text">********</string>
+    <string name="pref_sync">Wi-Fi Sync</string>
+    <string name="pref_sync_on">Images syncs over Wi-Fi only.</string>
+    <string name="pref_sync_off">Images syncs over Wi-Fi / Data.</string>
 
     <string name="key_pref_notification">pref_notification</string>
     <string name="pref_notification">Show Notification</string>
-    <string name="pref_notification_on">App will post on notification bar</string>
-    <string name="pref_notification_off">App won\'t post on notification bar</string>
+    <string name="pref_notification_on">App will post on notification bar.</string>
+    <string name="pref_notification_off">App won\'t post on notification bar.</string>
+
+    <string name="key_pref_login_id">pref_login_id</string>
+    <string name="pref_login_title">Login Id</string>
+    <string name="pref_login_change_title">Change Login Id</string>
+    <string name="pref_login_message">To change your login, please enter your preferred valid email address below.</string>
+
+    <string name="key_pref_password">pref_password</string>
+    <string name="pref_password_title">Password</string>
+    <string name="pref_password_change_title">Change Password</string>
+    <string name="pref_password_text">********</string>
+    <string name="pref_password_message">To change your password, please enter a new password below. Minimum length of %s characters.</string>
+
+    <string name="key_pref_data_sync_id">pref_data_sync</string>
+    <string name="pref_data_sync_title">Sync Data</string>
+    <string name="pref_data_sync_summary"/>
+    <string name="pref_data_sync_message">Sync data to latest available update.</string>
+
+    <string name="key_pref_data_delete_id">pref_data_delete</string>
+    <string name="pref_data_delete_title">Delete App Data</string>
+    <string name="pref_data_delete_summary"/>
+    <string name="pref_data_delete_message">Deletes all data within app, including user login information. This action will force you to logout from the app.</string>
+
+    <string name="key_pref_update_id">pref_update</string>
+    <string name="pref_update_title">Check Latest Version</string>
+    <string name="pref_update_summary"/>
+    <string name="pref_update_message">Update the last version. xxx</string>
+
+    <string name="key_pref_about_id">pref_about</string>
+    <string name="pref_about_title">About</string>
+    <string name="pref_about_summary"/>
+    <string name="pref_about_message">Receipt is an very good app for you.</string>
 
     <!-- Receipt list String-->
     <string name="receipt_list_header_month" formatted="false">%s (%d)</string>
@@ -149,11 +173,11 @@
     <string name="notify_empty_detail">Choose month to view receipts</string>
 
     <!--Error String-->
-    <string name="err_str_enter_name">Please enter name</string>
-    <string name="err_str_enter_email">Please enter email</string>
-    <string name="err_str_enter_password">Please enter password</string>
-    <string name="err_str_enter_valid_email">Please enter valid email</string>
-    <string name="err_str_enter_valid_password">Password must contain at least 6 letters</string>
+    <string name="err_str_enter_name">Please enter name.</string>
+    <string name="err_str_enter_email">Please enter email.</string>
+    <string name="err_str_enter_password">Please enter password.</string>
+    <string name="err_str_enter_valid_email">Please enter valid email.</string>
+    <string name="err_str_enter_valid_password">Password must contain at least %s characters.</string>
     <string name="err_str_bundle_null">Bundle is null</string>
 
     <string-array name="age_range">
@@ -189,6 +213,12 @@
     <!-- Load image -->
     <string name="receipt_image_failed_to_load">Failed to load image.</string>
     <string name="receipt_image_not_available">No Receipt Image.</string>
+
+    <!-- Common button action -->
+    <string name="dialog_button_cancel">Cancel</string>
+    <string name="dialog_button_ok">OK</string>
+    <string name="dialog_button_delete">Delete</string>
+    <string name="dialog_button_update">Update</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

@@ -20,7 +20,8 @@ import com.receiptofi.checkout.model.BillingHistoryModel;
 import com.receiptofi.checkout.utils.db.BillingAccountUtils;
 
 /**
- * Created by PT on 4/9/15.
+ * User: PT
+ * Date: 4/9/15 7:30 PM
  */
 public class BillingFragment extends Fragment {
     private static final String TAG = BillingFragment.class.getSimpleName();

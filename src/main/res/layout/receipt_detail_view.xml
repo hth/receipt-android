@@ -99,7 +99,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/header"
-                    android:listSelector="@drawable/list_selector_app_theme"></ListView>
+                    android:listSelector="@drawable/list_selector_app_theme"/>
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
