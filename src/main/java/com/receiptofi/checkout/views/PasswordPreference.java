@@ -40,6 +40,7 @@ public class PasswordPreference extends EditTextPreference {
         super.showDialog(state);
 
         final AlertDialog dialog = (AlertDialog) getDialog();
+        dialog.setTitle(R.string.pref_password_change_title);
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
         final TextWatcher textWatcher = new TextWatcher() {

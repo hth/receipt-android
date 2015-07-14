@@ -382,7 +382,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                     Map<String, String> headerData = ExternalCallWithOkHttp.parseHeader(headers, keys);
                     saveAuthKey(headerData);
-                    updateHandler.sendEmptyMessage(LOGIN_ID_UPDATE_SUCCESS);
+                    updateHandler.sendEmptyMessage(PASSWORD_UPDATE_SUCCESS);
                 }
 
                 @Override
@@ -406,7 +406,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext());
         SharedPreferences.Editor editor = pref.edit();
         // us old email
-        editor.putString(getString(R.string.pref_login_id), UserUtils.getEmail());
+        editor.putString(getString(R.string.pref_login_title), UserUtils.getEmail());
         editor.apply();
     }
 

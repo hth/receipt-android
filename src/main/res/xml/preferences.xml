@@ -23,7 +23,7 @@
             android:inputType="textEmailAddress"
             android:key="@string/key_pref_login_id"
             android:dialogMessage="@string/pref_login_message"
-            android:title="@string/pref_login_id"/>
+            android:title="@string/pref_login_title"/>
 
         <com.receiptofi.checkout.views.PasswordPreference
             android:id="@+id/pref_password"
@@ -31,7 +31,7 @@
             android:key="@string/key_pref_password"
             android:password="true"
             android:summary="@string/pref_password_text"
-            android:title="@string/pref_password"
+            android:title="@string/pref_password_title"
             android:dialogMessage="@string/pref_password_message"
             />
     </PreferenceCategory>

@@ -95,16 +95,18 @@
     <string name="pref_notification_off">App won\'t post on notification bar.</string>
 
     <string name="key_pref_login_id">pref_login_id</string>
-    <string name="pref_login_id">Change Login Id</string>
+    <string name="pref_login_title">Login Id</string>
+    <string name="pref_login_change_title">Change Login Id</string>
     <string name="pref_login_message">To change your login, please enter your preferred valid email address below.</string>
 
     <string name="key_pref_password">pref_password</string>
-    <string name="pref_password">Change Password</string>
+    <string name="pref_password_title">Password</string>
+    <string name="pref_password_change_title">Change Password</string>
     <string name="pref_password_text">********</string>
     <string name="pref_password_message">To change your password, please enter a new password below.</string>
 
     <string name="key_pref_data_sync_id">pref_data_sync</string>
-    <string name="pref_data_sync_title">Force Sync Data</string>
+    <string name="pref_data_sync_title">Sync Data</string>
     <string name="pref_data_sync_summary"/>
     <string name="pref_data_sync_message">Sync data to latest available update.</string>
 

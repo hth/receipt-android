@@ -38,7 +38,9 @@ public class LoginIdPreference extends EditTextPreference {
     @Override
     protected void showDialog(Bundle state) {
         super.showDialog(state);
+
         final AlertDialog dialog = (AlertDialog) getDialog();
+        dialog.setTitle(R.string.pref_login_change_title);
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
         final TextWatcher textWatcher = new TextWatcher() {
             @Override
