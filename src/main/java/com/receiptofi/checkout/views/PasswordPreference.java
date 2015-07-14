@@ -6,6 +6,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.View;
@@ -60,7 +61,7 @@ public class PasswordPreference extends EditTextPreference {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                if (editable.toString().length() <= 0) {
+                if (TextUtils.isEmpty(editable.toString())) {
                     text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark));
                 }
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(editable.length() >= Validation.PASSWORD_MIN_LENGTH);
