@@ -8,6 +8,7 @@ import android.preference.EditTextPreference;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,8 +42,11 @@ public class PasswordPreference extends EditTextPreference {
 
         final AlertDialog dialog = (AlertDialog) getDialog();
         dialog.setTitle(R.string.pref_password_change_title);
+        View title = dialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
+        ((TextView) title).setTextAppearance(getContext(), R.style.alert_dialog);
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
+        final EditText text = (EditText) dialog.findViewById(android.R.id.edit);
         final TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -56,11 +60,12 @@ public class PasswordPreference extends EditTextPreference {
 
             @Override
             public void afterTextChanged(Editable editable) {
+                if (editable.toString().length() <= 0) {
+                    text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark));
+                }
                 dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(editable.length() >= Validation.PASSWORD_MIN_LENGTH);
             }
         };
-
-        EditText text = (EditText) dialog.findViewById(android.R.id.edit);
         text.setText("");
         text.setHint(R.string.hint_password);
         text.addTextChangedListener(textWatcher);
