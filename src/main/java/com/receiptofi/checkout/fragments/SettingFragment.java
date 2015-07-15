@@ -63,7 +63,6 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private ContextThemeWrapper ctw;
     private ApkVersionModel currentVersion;
     private ApkVersionModel latestVersion;
-    private String packageName = "";
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -95,8 +94,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         super.onCreate(savedInstanceState);
         ctw = new ContextThemeWrapper(getActivity(), R.style.alert_dialog);
         try {
-            packageName = getActivity().getPackageName();
-            currentVersion = AppUtils.parseVersion(getActivity().getPackageManager().getPackageInfo(packageName, 0).versionName);
+            currentVersion = AppUtils.parseVersion(getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
 
             /** Ignores first time, since the request is made when user lands on this screen. */
             latestVersion = AppUtils.parseVersion(KeyValueUtils.getValue(KeyValueUtils.KEYS.LATEST_APK));
@@ -280,7 +278,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "Trigger update process");
-                        Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("market://details?id=" + packageName));
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("market://details?id=" + getActivity().getPackageName()));
                         startActivity(goToMarket);
                     }
                 })
