@@ -28,6 +28,7 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.checkout.LaunchActivity;
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
@@ -39,6 +40,7 @@ import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
+import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.views.LoginIdPreference;
 import com.receiptofi.checkout.views.PasswordPreference;
@@ -63,7 +65,6 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private ContextThemeWrapper ctw;
     private ApkVersionModel currentVersion;
     private ApkVersionModel latestVersion;
-    private String packageName = "";
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -95,8 +96,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         super.onCreate(savedInstanceState);
         ctw = new ContextThemeWrapper(getActivity(), R.style.alert_dialog);
         try {
-            packageName = getActivity().getPackageName();
-            currentVersion = AppUtils.parseVersion(getActivity().getPackageManager().getPackageInfo(packageName, 0).versionName);
+            currentVersion = AppUtils.parseVersion(getActivity().getPackageManager().getPackageInfo(getActivity().getPackageName(), 0).versionName);
 
             /** Ignores first time, since the request is made when user lands on this screen. */
             latestVersion = AppUtils.parseVersion(KeyValueUtils.getValue(KeyValueUtils.KEYS.LATEST_APK));
@@ -199,6 +199,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "Confirmed force sync");
+                        showToast("Started syncing data.", SuperToast.Duration.EXTRA_LONG);
+                        //TODO Delete all data
                         DeviceService.getAll(getActivity());
                     }
                 })
@@ -219,8 +221,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 })
                 .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        Log.d(TAG, "Confirmed force sync");
-                        DeviceService.getAll(getActivity());
+                        Log.d(TAG, "Confirm delete data");
+                        showToast("Started deleting data.", SuperToast.Duration.EXTRA_LONG);
+                        DBUtils.dbReInitialize();
+                        startActivity(new Intent(getActivity(), LaunchActivity.class));
                     }
                 })
                 .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
@@ -280,7 +284,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .setPositiveButton("Update", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "Trigger update process");
-                        Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("market://details?id=" + packageName));
+                        Intent goToMarket = new Intent(Intent.ACTION_VIEW).setData(Uri.parse("market://details?id=" + getActivity().getPackageName()));
                         startActivity(goToMarket);
                     }
                 })
