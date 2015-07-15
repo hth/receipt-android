@@ -47,8 +47,10 @@
     <!--Password recovery page-->
     <string name="password_recovery">SEND RECOVERY EMAIL</string>
     <string name="password_recovery_failed"> request failed, try again later.</string>
-    <string name="password_recovery_message">An email has been sent to above email-address with
-        instructions to reset password</string>
+    <string name="password_recovery_message">
+        An email has been sent to above email-address with
+        instructions to reset password
+    </string>
 
     <!--Home page-->
     <string name="take_photo">TAKE PHOTO</string>
