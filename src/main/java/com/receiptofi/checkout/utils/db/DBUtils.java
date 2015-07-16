@@ -21,6 +21,8 @@ public class DBUtils {
      */
     public static void dbReInitialize() {
         dbReInitializeNonKeyValues();
+        dbReInitializeKeyValues();
+
         initializeDefaults();
         initializeAuthDefaults();
     }
@@ -31,7 +33,6 @@ public class DBUtils {
         /** Delete all tables. */
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Profile.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Receipt.TABLE_NAME);
-        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.KeyValue.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ImageIndex.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.UploadQueue.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.MonthlyReport.TABLE_NAME);
@@ -45,7 +46,6 @@ public class DBUtils {
         CreateTable.createTableProfile(RDH.getDb());
         CreateTable.createTableReceipts(RDH.getDb());
         CreateTable.createTableImageIndex(RDH.getDb());
-        CreateTable.createTableKeyValue(RDH.getDb());
         CreateTable.createTableUploadQueue(RDH.getDb());
         CreateTable.createTableMonthlyReport(RDH.getDb());
         CreateTable.createTableItem(RDH.getDb());
@@ -55,6 +55,16 @@ public class DBUtils {
         CreateTable.createTableBillingHistory(RDH.getDb());
     }
 
+    private  static void dbReInitializeKeyValues() {
+        Log.d(TAG, "Initialize table " + DatabaseTable.KeyValue.TABLE_NAME);
+
+        /** Delete table. */
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.KeyValue.TABLE_NAME);
+
+        /** Create table. */
+        CreateTable.createTableKeyValue(RDH.getDb());
+    }
+
     /**
      * Invoked in three different scenarios.
      * Once called during onCreate() when app is installed
@@ -62,7 +72,7 @@ public class DBUtils {
      * And when new user logs in.
      */
     public static void initializeDefaults() {
-        Log.d(TAG, "Initialize defaults");
+        Log.d(TAG, "Initialize key value defaults");
 
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
@@ -73,7 +83,7 @@ public class DBUtils {
     }
 
     private static void initializeAuthDefaults() {
-        Log.d(TAG, "Initialize defaults");
+        Log.d(TAG, "Initialize key value auth defaults");
 
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_MAIL, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_AUTH, "");
