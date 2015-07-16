@@ -20,6 +20,12 @@ public class DBUtils {
      * Delete all tables and re-create all tables with default settings.
      */
     public static void dbReInitialize() {
+        dbReInitializeNonKeyValues();
+        initializeDefaults();
+        initializeAuthDefaults();
+    }
+
+    public static void dbReInitializeNonKeyValues() {
         Log.d(TAG, "Initialize database");
 
         /** Delete all tables. */
@@ -47,8 +53,6 @@ public class DBUtils {
         CreateTable.createTableNotification(RDH.getDb());
         CreateTable.createTableBillingAccount(RDH.getDb());
         CreateTable.createTableBillingHistory(RDH.getDb());
-
-        initializeDefaults();
     }
 
     /**
@@ -60,15 +64,20 @@ public class DBUtils {
     public static void initializeDefaults() {
         Log.d(TAG, "Initialize defaults");
 
-        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_MAIL, "");
-        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_AUTH, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LAST_FETCHED, "");
-        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, "");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.GET_ALL_COMPLETE, Boolean.toString(false));
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LATEST_APK, "");
+    }
+
+    private static void initializeAuthDefaults() {
+        Log.d(TAG, "Initialize defaults");
+
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_MAIL, "");
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_AUTH, "");
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, "");
     }
 
     /**
