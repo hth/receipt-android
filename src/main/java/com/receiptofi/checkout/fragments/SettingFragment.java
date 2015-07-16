@@ -200,7 +200,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "Confirmed force sync");
                         showToast("Started syncing data.", SuperToast.Duration.EXTRA_LONG);
-                        //TODO Delete all data
+                        DBUtils.dbReInitializeNonKeyValues();
+                        DBUtils.initializeDefaults();
                         DeviceService.getAll(getActivity());
                     }
                 })
