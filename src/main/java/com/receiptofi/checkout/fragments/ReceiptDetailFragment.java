@@ -302,7 +302,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 return;
             }
 
-            ReceiptModel rdModel;
+            final ReceiptModel rdModel;
             if (!isFilterList) {
                 rdModel = ReceiptListFragment.children.get(index).get(position);
             } else {
@@ -311,13 +311,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             }
 
             // Biz address
-            final String bizName = rdModel.getBizName();
-            rdBizName.setText(bizName);
-
-            // Address and phone block
-            final String address = rdModel.getAddress();
-
-            StringTokenizer tokenizer = new StringTokenizer(address, ",");
+            rdBizName.setText(rdModel.getBizName());
+            StringTokenizer tokenizer = new StringTokenizer(rdModel.getAddress(), ",");
             if (tokenizer.countTokens() <= 4) {
                 rdBizAddLine1.setText((tokenizer.nextToken()).trim());
                 String addressLine2 = "";
@@ -342,11 +337,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             rdBizAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
-                    String uriBegin = "geo:" + address;
-                    String query = address + "(" + bizName + ")";
-                    String encodedQuery = Uri.encode(query);
-                    String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
+                    String geoQuery = "geo:" + rdModel.getLat() + "," + rdModel.getLng();
+                    String uriString = geoQuery + "?q=" + Uri.encode(rdModel.getAddress()) + "(" + rdModel.getBizName() + ")" + "&z=16";
                     Uri uri = Uri.parse(uriString);
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(mapIntent);
