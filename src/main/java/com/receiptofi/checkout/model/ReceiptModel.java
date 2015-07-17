@@ -57,6 +57,8 @@ public class ReceiptModel {
     public void setLat(String lat) {
         if (!TextUtils.isEmpty(lat) && !lat.equalsIgnoreCase(NULL)) {
             this.lat = lat;
+        } else {
+            this.lat = "0";
         }
     }
 
@@ -67,6 +69,8 @@ public class ReceiptModel {
     public void setLng(String lng) {
         if (!TextUtils.isEmpty(lng) && !lng.equalsIgnoreCase(NULL)) {
             this.lng = lng;
+        } else {
+            this.lng = "0";
         }
     }
 
