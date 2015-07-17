@@ -302,17 +302,17 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 return;
             }
 
-            final ReceiptModel rdModel;
+            final ReceiptModel receiptModel;
             if (!isFilterList) {
-                rdModel = ReceiptListFragment.children.get(index).get(position);
+                receiptModel = ReceiptListFragment.children.get(index).get(position);
             } else {
                 // Coming from FilterListActivity: we show and activate drawer view
-                rdModel = FilterListFragment.children.get(index).get(position);
+                receiptModel = FilterListFragment.children.get(index).get(position);
             }
 
             // Biz address
-            rdBizName.setText(rdModel.getBizName());
-            StringTokenizer tokenizer = new StringTokenizer(rdModel.getAddress(), ",");
+            rdBizName.setText(receiptModel.getBizName());
+            StringTokenizer tokenizer = new StringTokenizer(receiptModel.getAddress(), ",");
             if (tokenizer.countTokens() <= 4) {
                 rdBizAddLine1.setText((tokenizer.nextToken()).trim());
                 String addressLine2 = "";
@@ -337,8 +337,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             rdBizAddress.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    String geoQuery = "geo:" + rdModel.getLat() + "," + rdModel.getLng();
-                    String uriString = geoQuery + "?q=" + Uri.encode(rdModel.getAddress()) + "(" + rdModel.getBizName() + ")" + "&z=16";
+                    String geoQuery = "geo:" + receiptModel.getLat() + "," + receiptModel.getLng();
+                    String uriString = geoQuery + "?q=" + Uri.encode(receiptModel.getAddress()) + "(" + receiptModel.getBizName() + ")" + "&z=16";
                     Uri uri = Uri.parse(uriString);
                     Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
                     startActivity(mapIntent);
@@ -346,7 +346,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             });
 
             //Phone action
-            final String phoneNumber = rdModel.getPhone().trim();
+            final String phoneNumber = receiptModel.getPhone().trim();
             rdBizPhone.setText(phoneNumber);
             if (!AppUtils.isTablet(getActivity())) {
                 rdBizPhone.setOnClickListener(new View.OnClickListener() {
@@ -360,21 +360,21 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             }
 
             // Date block
-            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(rdModel.getReceiptDate()));
+            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptModel.getReceiptDate()));
             rdDate.setText(formattedDate);
 
 
             //Receipt item list Block
             // Add tax footer
-            taxDscpView.setText(Double.toString(rdModel.getPtax()));
-            taxAmountView.setText(Double.toString(rdModel.getTax()));
+            taxDscpView.setText(Double.toString(receiptModel.getPtax()));
+            taxAmountView.setText(Double.toString(receiptModel.getTax()));
 
             // Add total footer
-            totalAmountView.setText(Double.toString(rdModel.getTotal()));
+            totalAmountView.setText(Double.toString(receiptModel.getTotal()));
 
             // Set Adaptor on items list
-            rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));
-            itemList = rdModel.getReceiptItems();
+            rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), receiptModel.getReceiptItems()));
+            itemList = receiptModel.getReceiptItems();
             if (Constants.SET_RECEIPT_REMINDER) {
                 rdItemsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -413,15 +413,15 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
             // Set Tag Color
             /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
-            if (!TextUtils.isEmpty(rdModel.getExpenseTagId()) && null != rdModel.getExpenseTagModel()) {
-                String colorCode = rdModel.getExpenseTagModel().getColor();
+            if (!TextUtils.isEmpty(receiptModel.getExpenseTagId()) && null != receiptModel.getExpenseTagModel()) {
+                String colorCode = receiptModel.getExpenseTagModel().getColor();
                 tagIcon.setTextColor(Color.parseColor(colorCode));
                 tagIcon.setVisibility(View.VISIBLE);
             } else {
                 tagIcon.setVisibility(View.INVISIBLE);
             }
 
-            blobIds = rdModel.getBlobIds();
+            blobIds = receiptModel.getBlobIds();
 
         } catch (ParseException e) {
             Log.d(TAG, "ParseException=" + e.getLocalizedMessage(), e);
