@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -148,7 +149,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(blobIds)) {
                     String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobIds;
-                    if (getActivity() instanceof  ReceiptListActivity) {
+                    if (getActivity() instanceof ReceiptListActivity) {
                         ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
                     } else if (getActivity() instanceof FilterListActivity) {
                         ((FilterListActivity) getActivity()).showReceiptDetailImageFragment(url);
@@ -333,17 +334,10 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 rdBizAddLine3.setText(addressLine3.trim());
                 rdBizAddLine3.setVisibility(View.VISIBLE);
             }
-            // Address action
-            rdBizAddress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    String geoQuery = "geo:" + receiptModel.getLat() + "," + receiptModel.getLng();
-                    String uriString = geoQuery + "?q=" + Uri.encode(receiptModel.getAddress()) + "(" + receiptModel.getBizName() + ")" + "&z=16";
-                    Uri uri = Uri.parse(uriString);
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(mapIntent);
-                }
-            });
+
+            if (isAppInstalled("com.google.android.apps.maps")) {
+                addAddressListener(receiptModel);
+            }
 
             //Phone action
             final String phoneNumber = receiptModel.getPhone().trim();
@@ -428,6 +422,29 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         } catch (Exception e) {
             Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
+    }
+
+    /**
+     * Add listener to address.
+     *
+     * @param receiptModel
+     */
+    private void addAddressListener(final ReceiptModel receiptModel) {
+        rdBizAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uriString = new StringBuilder()
+                        .append("geo:").append(receiptModel.getLat()).append(",").append(receiptModel.getLng())
+                        .append("?q=").append(Uri.encode(receiptModel.getAddress()))
+                        .append("(").append(receiptModel.getBizName()).append(")")
+                        .append("&z=16").toString();
+                Uri uri = Uri.parse(uriString);
+
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+                mapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                startActivity(mapIntent);
+            }
+        });
     }
 
     @Override
@@ -526,5 +543,17 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         }
         Log.d(TAG, "found calendars " + calendarMap.toString());
         return calendarMap;
+    }
+
+    private boolean isAppInstalled(String uri) {
+        PackageManager pm = getActivity().getPackageManager();
+        boolean app_installed;
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+            app_installed = true;
+        } catch (PackageManager.NameNotFoundException e) {
+            app_installed = false;
+        }
+        return app_installed;
     }
 }
