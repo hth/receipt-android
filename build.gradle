@@ -34,6 +34,7 @@ repositories {
     maven { url "http://repo.spring.io/libs-milestone" }
     maven { url "http://repo1.maven.org/maven2/" }
     maven { url "https://jitpack.io" }
+    maven { url 'http://dl.bintray.com/amulyakhare/maven' }
 }
 
 dependencies {
@@ -54,6 +55,10 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     /** Icons. */
     compile 'com.joanzapata.android:android-iconify:1.0.9'
+    /** Text Drawable. */
+    compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
+    /** Word Utils */
+    compile 'org.apache.commons:commons-lang3:3.4'
 
     compile 'com.squareup.okhttp:okhttp:2.4.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
