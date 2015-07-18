@@ -113,7 +113,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
 
             // Add new View.
             view = new View(this);
-            view.setBackgroundResource(R.drawable.point_background);
+            view.setBackground(getDrawable(R.drawable.point_background));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(5, 5);
             lp.leftMargin = 10;
             view.setLayoutParams(lp);
