@@ -90,7 +90,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
 
         // You can change the color to any one you like, or set the last parameter of MateralAccount as NUll, then use default color.
-        ColorDrawable drawable = new ColorDrawable(Color.WHITE);
+        ColorDrawable drawable = new ColorDrawable(R.color.green);
 
         MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, drawableToBitmap(drawable));
 
@@ -339,7 +339,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     }
 
     public static Bitmap drawableToBitmap (Drawable drawable) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
 
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
