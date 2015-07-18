@@ -5,10 +5,8 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -74,7 +72,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public void init(Bundle savedInstanceState) {
 
         ReceiptofiApplication.homeActivityResumed();
-        myApp = (ReceiptofiApplication)getApplicationContext();
+        myApp = (ReceiptofiApplication) getApplicationContext();
 
         AppUtils.setHomePageContext(this);
 
@@ -89,7 +87,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         String name = profileModel != null ? profileModel.getName() : "";
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
 
-        // You can change the color to any one you like, or set the last parameter of MateralAccount as NUll, then use default color.
+        // You can change the color to any one you like, or set the last parameter of MaterialAccount as NUll, then use default color.
         ColorDrawable drawable = new ColorDrawable(R.color.green);
 
         MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, drawableToBitmap(drawable));
@@ -332,23 +330,23 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         }
     }
 
-    private void clearReferences(){
+    private void clearReferences() {
         Activity currActivity = myApp.getCurrentActivity();
         if (currActivity != null && currActivity.equals(this))
             myApp.setCurrentActivity(null);
     }
 
-    public static Bitmap drawableToBitmap (Drawable drawable) {
+    public static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap;
 
         if (drawable instanceof BitmapDrawable) {
             BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-            if(bitmapDrawable.getBitmap() != null) {
+            if (bitmapDrawable.getBitmap() != null) {
                 return bitmapDrawable.getBitmap();
             }
         }
 
-        if(drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
+        if (drawable.getIntrinsicWidth() <= 0 || drawable.getIntrinsicHeight() <= 0) {
             bitmap = Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888); // Single color bitmap will be created of 1x1 pixel
         } else {
             bitmap = Bitmap.createBitmap(drawable.getIntrinsicWidth(), drawable.getIntrinsicHeight(), Bitmap.Config.ARGB_8888);
@@ -359,5 +357,4 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         drawable.draw(canvas);
         return bitmap;
     }
-
 }
