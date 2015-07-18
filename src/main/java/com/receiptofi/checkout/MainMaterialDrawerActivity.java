@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -14,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.InputType;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +25,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.ImageView;
 import android.widget.SearchView;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
@@ -40,6 +43,8 @@ import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
 import com.receiptofi.checkout.utils.db.ProfileUtils;
+
+import org.apache.commons.lang3.text.WordUtils;
 
 import java.io.File;
 
@@ -87,13 +92,35 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         String name = profileModel != null ? profileModel.getName() : "";
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
 
-        // You can change the color to any one you like, or set the last parameter of MaterialAccount as NUll, then use default color.
-        ColorDrawable drawable = new ColorDrawable(R.color.green);
+        MaterialAccount account;
+        if (TextUtils.isEmpty(name)) {
+            account = new MaterialAccount(
+                    this.getResources(),
+                    name,
+                    mail,
+                    R.drawable.ic_profile,
+                    drawableToBitmap(new ColorDrawable(R.color.green)));
+        } else {
+            TextDrawable textDrawable = TextDrawable.builder()
+                    .beginConfig()
+                    .textColor(Color.BLACK)
+                    .useFont(Typeface.DEFAULT)
+                    .fontSize(30) /* size in px */
+                    .bold()
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRound(WordUtils.initials(name), Color.WHITE);
 
-        MaterialAccount account = new MaterialAccount(this.getResources(), name, mail, R.drawable.ic_profile, drawableToBitmap(drawable));
+            account = new MaterialAccount(
+                    this.getResources(),
+                    name,
+                    mail,
+                    drawableToText(textDrawable),
+                    drawableToBitmap(new ColorDrawable(R.color.green)));
+        }
 
-        setUsernameTextColor(Color.BLACK);
-        setUserEmailTextColor(Color.BLACK);
+        setUsernameTextColor(Color.WHITE);
+        setUserEmailTextColor(Color.WHITE);
 
         this.addAccount(account);
         this.addSection(
@@ -336,7 +363,14 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
             myApp.setCurrentActivity(null);
     }
 
-    public static Bitmap drawableToBitmap(Drawable drawable) {
+    /**
+     * Change the color to any one you like, or set the last parameter of MaterialAccount as NUll,
+     * then use default color.
+     *
+     * @param drawable
+     * @return
+     */
+    private static Bitmap drawableToBitmap(Drawable drawable) {
         Bitmap bitmap;
 
         if (drawable instanceof BitmapDrawable) {
@@ -355,6 +389,26 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         Canvas canvas = new Canvas(bitmap);
         drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
         drawable.draw(canvas);
+        return bitmap;
+    }
+
+    /**
+     * Set the profile image with initials.
+     *
+     * @param drawable
+     * @return
+     */
+    private Bitmap drawableToText(TextDrawable drawable) {
+        int width = drawable.getIntrinsicWidth();
+        width = width > 0 ? width : 96;
+        int height = drawable.getIntrinsicHeight();
+        height = height > 0 ? height : 96;
+
+        Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
+        Canvas canvas = new Canvas(bitmap);
+        drawable.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+        drawable.draw(canvas);
+
         return bitmap;
     }
 }
