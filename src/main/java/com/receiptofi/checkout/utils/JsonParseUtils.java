@@ -174,7 +174,7 @@ public class JsonParseUtils {
             return new ReceiptItemModel(
                     item.getString("id"),
                     item.getString("name"),
-                    item.getString("price"),
+                    item.getDouble("price"),
                     item.getString("quant"),
                     item.getString("receiptId"),
                     item.getString("seq"),

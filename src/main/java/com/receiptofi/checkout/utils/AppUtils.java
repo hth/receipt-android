@@ -16,6 +16,8 @@ import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 
 import java.io.File;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 
 public class AppUtils {
 
@@ -27,6 +29,7 @@ public class AppUtils {
     private static File image;
     private static File receiptofiImgDir;
     private static Context homePageContext;
+    private static DecimalFormat formatter;
 
     private AppUtils() {
     }
@@ -173,5 +176,16 @@ public class AppUtils {
                 (newer.getMajor() > older.getMajor() ||
                         newer.getMinor() > older.getMinor() ||
                         newer.getPatch() > older.getPatch());
+    }
+
+    //TODO add support formatting price based on receipt location
+    public static DecimalFormat currencyFormatter() {
+        if (formatter == null) {
+            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance();
+            String symbol = formatter.getCurrency().getSymbol();
+            formatter.setNegativePrefix("-" + symbol); // or "-"+symbol if that's what you need
+            formatter.setNegativeSuffix("");
+        }
+        return formatter;
     }
 }
