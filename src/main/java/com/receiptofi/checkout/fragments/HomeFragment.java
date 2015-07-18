@@ -245,7 +245,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         unprocessedValue = KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT);
         setUnprocessedCount();
         try {
-            String[] monthDay = DF_YYYY_MM.format(new Date()).split(" ");
+            String[] monthDay = DF_YYYY_MM.format(new Date()).split(Pattern.quote(" "));
             currentMonthExpValue = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
             setMonthlyExpense();
         } catch (Exception e) {

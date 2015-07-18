@@ -20,6 +20,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import static com.receiptofi.checkout.ReceiptofiApplication.RDH;
 
@@ -241,7 +242,7 @@ public class ReceiptUtils {
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    String[] yearMonthSplit = yearMonth.split("-");
+                    String[] yearMonthSplit = yearMonth.split(Pattern.quote("-"));
                     ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
                             yearMonthSplit[1],
                             yearMonthSplit[0],
