@@ -56,7 +56,7 @@
     <string name="take_photo">TAKE PHOTO</string>
     <string name="view_receipt">VIEW RECEIPT</string>
     <string name="choose_photo">CHOOSE PHOTO</string>
-    <string name="monthly_amount" formatted="false">%s     $%s</string>
+    <string name="monthly_amount" formatted="false">%s&#160;&#160;&#160;%s&#160;&#160;&#160;</string>
     <string name="processing_info" formatted="false">Receipts in-process %s</string>
 
     <!--Chart-->
