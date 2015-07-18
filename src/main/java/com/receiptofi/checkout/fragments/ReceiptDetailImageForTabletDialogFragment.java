@@ -44,7 +44,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    SuperActivityToast superActivityProgressToast;
+    private SuperActivityToast progressToast;
     private static boolean inShowingProgress = false;
 
     /**
@@ -125,14 +125,14 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
                 public void onSuccess() {
                     Log.d(TAG, "on success");
                     mReceiptImage.setVisibility(View.VISIBLE);
-                    superActivityProgressToast.dismiss();
+                    progressToast.dismiss();
                     inShowingProgress = false;
                 }
 
                 @Override
                 public void onError() {
                     Log.d(TAG, "on error");
-                    superActivityProgressToast.dismiss();
+                    progressToast.dismiss();
                     inShowingProgress = false;
                 }
             });
@@ -173,8 +173,8 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     @Override
     public void onDismiss(DialogInterface dialog) {
         super.onDismiss(dialog);
-        if (superActivityProgressToast != null && superActivityProgressToast.isShowing()) {
-            superActivityProgressToast.dismiss();
+        if (progressToast != null && progressToast.isShowing()) {
+            progressToast.dismiss();
             inShowingProgress = true;
         }
     }
@@ -194,10 +194,10 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
     }
 
     private void showProgressDialog() {
-        superActivityProgressToast = new SuperActivityToast(getActivity(), SuperToast.Type.PROGRESS);
-        superActivityProgressToast.setText("Downloading Image");
-        superActivityProgressToast.setIndeterminate(true);
-        superActivityProgressToast.setProgressIndeterminate(true);
-        superActivityProgressToast.show();
+        progressToast = new SuperActivityToast(getActivity(), SuperToast.Type.PROGRESS);
+        progressToast.setText("Downloading Image");
+        progressToast.setIndeterminate(true);
+        progressToast.setProgressIndeterminate(true);
+        progressToast.show();
     }
 }
