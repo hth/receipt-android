@@ -545,14 +545,22 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         return calendarMap;
     }
 
+    /**
+     * Checks if google map is installed.
+     *
+     * @param uri
+     * @return
+     */
     private boolean isAppInstalled(String uri) {
         PackageManager pm = getActivity().getPackageManager();
-        boolean app_installed;
-        try {
-            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
-            app_installed = true;
-        } catch (PackageManager.NameNotFoundException e) {
-            app_installed = false;
+        boolean app_installed = false;
+        if (!TextUtils.isEmpty(uri)) {
+            try {
+                pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+                app_installed = true;
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, "Google map not installed reason=" + e.getLocalizedMessage());
+            }
         }
         return app_installed;
     }
