@@ -35,7 +35,7 @@ public class ChartService {
         }
 
         PieDataSet pieDataSet = new PieDataSet(yVals1, "Exp/Business");
-        pieDataSet.setSliceSpace(3f);
+        pieDataSet.setSliceSpace(1f);
         setColors(pieDataSet);
 
         return new PieData(xVals, pieDataSet);

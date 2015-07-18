@@ -11,7 +11,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -48,6 +52,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.regex.Pattern;
 
 import in.srain.cube.views.ptr.PtrFrameLayout;
 import in.srain.cube.views.ptr.PtrHandler;
@@ -99,6 +104,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private boolean expByBizAnimate = false;
     private View view;
     protected PtrFrameLayout mPtrFrameLayout;
+    private int PADDING_SPACE = 3;
 
     private OnFragmentInteractionListener mListener;
 
@@ -245,11 +251,11 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         unprocessedValue = KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT);
         setUnprocessedCount();
         try {
-            String[] monthDay = DF_YYYY_MM.format(new Date()).split(" ");
+            String[] monthDay = DF_YYYY_MM.format(new Date()).split(Pattern.quote(" "));
             currentMonthExpValue = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
             setMonthlyExpense();
         } catch (Exception e) {
-            Log.e(TAG, "Exception" + e.getMessage(), e);
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
         updateChartData();
         Log.d(TAG, "Done onCreate!!");
@@ -263,8 +269,8 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 
@@ -411,8 +417,14 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private void setMonthlyExpense() {
         Log.d(TAG, "executing setMonthlyExpense");
         Activity activity = getActivity();
-        if (activity != null) {
-            currentMonthExp.setText(getString(R.string.monthly_amount, DF_MMM.format(new Date()), currentMonthExpValue));
+        if (null != activity) {
+            String amount = AppUtils.currencyFormatter().format(Double.valueOf(currentMonthExpValue));
+            String month = DF_MMM.format(new Date());
+
+            Spannable wordToSpan = new SpannableString(getString(R.string.monthly_amount, month, amount));
+            wordToSpan.setSpan(new ForegroundColorSpan(R.color.green), wordToSpan.length() - month.length() - PADDING_SPACE, wordToSpan.length(), 0);
+            wordToSpan.setSpan(new RelativeSizeSpan(1.22f), wordToSpan.length() - month.length() - PADDING_SPACE, wordToSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            currentMonthExp.setText(wordToSpan);
         } else {
             Log.d(TAG, "setMonthlyExpense the response of getActivity() is null.");
         }
