@@ -133,9 +133,9 @@
     </string>
 
     <string name="key_pref_update_id">pref_update</string>
-    <string name="pref_update_title">Build Version: %s</string>
+    <string name="pref_update_title">Version: %s</string>
     <string name="pref_update_dialog_title">Upgrade To Version %s</string>
-    <string name="pref_update_summary">Latest Version: %s</string>
+    <string name="pref_update_summary">Newer Version Available: %s</string>
     <string name="pref_update_message">
         Google play has latest available version.
         Would you prefer to go download from there?
@@ -151,10 +151,10 @@
 
     <!-- Receipt list String-->
     <string name="receipt_list_header_month" formatted="false">%s (%d)</string>
-    <string name="receipt_list_header_amount" formatted="false">$%.2f</string>
-    <string name="receipt_list_child_amount" formatted="false">$%.2f</string>
-    <string name="rd_item_quantity" formatted="false">%.2f @ $%.2f each</string>
-    <string name="rd_item_price" formatted="false">$%.2f</string>
+    <string name="receipt_list_header_amount" formatted="false">%s</string>
+    <string name="receipt_list_child_amount" formatted="false">%s</string>
+    <string name="rd_item_quantity" formatted="false">%.2f @ %s each</string>
+    <string name="rd_item_price" formatted="false">%s</string>
     <string name="rd_item_header_title">Item</string>
     <string name="rd_item_header_amount">Price</string>
     <string name="rd_item_header_tax_title">Tax</string>

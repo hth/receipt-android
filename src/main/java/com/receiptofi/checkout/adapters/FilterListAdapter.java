@@ -13,6 +13,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.fragments.FilterListFragment;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 
 import java.text.DateFormat;
@@ -92,7 +93,7 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
-            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
+            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, AppUtils.currencyFormatter().format(receiptData.getTotal())));
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {
@@ -127,7 +128,7 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
                 holder.amount.setVisibility(View.GONE);
             } else {
                 holder.amount.setVisibility(View.VISIBLE);
-                holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
+                holder.amount.setText(context.getString(R.string.receipt_list_header_amount, AppUtils.currencyFormatter().format(headerData.getTotal())));
             }
 
             /** Set the group 0 to be always expanded. */

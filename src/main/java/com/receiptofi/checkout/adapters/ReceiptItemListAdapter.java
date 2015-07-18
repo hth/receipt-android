@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.model.ReceiptItemModel;
+import com.receiptofi.checkout.utils.AppUtils;
 
 import java.util.List;
 
@@ -70,11 +71,17 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
             ReceiptItemModel itemModel = getItem(position);
             holder.title.setText(itemModel.getName());
             if (Double.parseDouble(itemModel.getQuantity()) > 1) {
-                holder.quantity.setText(context.getString(R.string.rd_item_quantity, Double.parseDouble(itemModel.getQuantity()), Double.parseDouble(itemModel.getPrice())));
-                holder.price.setText(context.getString(R.string.rd_item_price, (Double.parseDouble(itemModel.getPrice()) * Double.parseDouble(itemModel.getQuantity()))));
+                holder.quantity.setText(context.getString(
+                        R.string.rd_item_quantity,
+                        Double.parseDouble(itemModel.getQuantity()),
+                        AppUtils.currencyFormatter().format(itemModel.getPrice())));
+
+                holder.price.setText(context.getString(
+                        R.string.rd_item_price,
+                        AppUtils.currencyFormatter().format((itemModel.getPrice() * Double.parseDouble(itemModel.getQuantity())))));
             } else {
                 holder.quantity.setVisibility(View.GONE);
-                holder.price.setText(context.getString(R.string.rd_item_price, Double.parseDouble(itemModel.getPrice())));
+                holder.price.setText(context.getString(R.string.rd_item_price, AppUtils.currencyFormatter().format(itemModel.getPrice())));
             }
 
 

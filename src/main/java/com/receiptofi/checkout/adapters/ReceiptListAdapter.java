@@ -14,6 +14,7 @@ import com.receiptofi.checkout.R;
 import com.receiptofi.checkout.fragments.ReceiptListFragment;
 import com.receiptofi.checkout.model.ReceiptGroupHeader;
 import com.receiptofi.checkout.model.ReceiptModel;
+import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants;
 
 import java.text.DateFormat;
@@ -99,7 +100,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
-            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, receiptData.getTotal()));
+            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, AppUtils.currencyFormatter().format(receiptData.getTotal())));
             /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
             if (!TextUtils.isEmpty(receiptData.getExpenseTagId()) && null != receiptData.getExpenseTagModel()) {
                 String colorCode = receiptData.getExpenseTagModel().getColor();
@@ -138,7 +139,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             ReceiptGroupHeader headerData = (ReceiptGroupHeader) getGroup(groupPosition);
             String formattedMonth = outputDF.format(inputDF.parse(headerData.getMonth() + " " + headerData.getYear()));
             holder.month.setText(context.getString(R.string.receipt_list_header_month, formattedMonth, headerData.getCount()));
-            holder.amount.setText(context.getString(R.string.receipt_list_header_amount, headerData.getTotal()));
+            holder.amount.setText(context.getString(R.string.receipt_list_header_amount, AppUtils.currencyFormatter().format(headerData.getTotal())));
             return convertView;
 
         } catch (ParseException e) {

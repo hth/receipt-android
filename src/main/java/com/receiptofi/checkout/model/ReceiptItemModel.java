@@ -7,14 +7,14 @@ public class ReceiptItemModel {
 
     private String id;
     private String name;
-    private String price;
+    private Double price;
     private String quantity;
     private String receiptId;
     private String sequence;
     private String tax;
     private String expenseTagId;
 
-    public ReceiptItemModel(String id, String name, String price, String quantity, String receiptId, String sequence, String tax, String expenseTagId) {
+    public ReceiptItemModel(String id, String name, Double price, String quantity, String receiptId, String sequence, String tax, String expenseTagId) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -33,7 +33,7 @@ public class ReceiptItemModel {
         return name;
     }
 
-    public String getPrice() {
+    public Double getPrice() {
         return price;
     }
 

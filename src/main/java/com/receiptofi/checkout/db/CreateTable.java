@@ -93,7 +93,7 @@ public class CreateTable {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Item.TABLE_NAME + "("
                 + DatabaseTable.Item.ID + " TEXT ,"
                 + DatabaseTable.Item.NAME + " TEXT ,"
-                + DatabaseTable.Item.PRICE + " TEXT ,"
+                + DatabaseTable.Item.PRICE + " DOUBLE ,"
                 + DatabaseTable.Item.QUANTITY + " TEXT ,"
                 + DatabaseTable.Item.RECEIPTID + " TEXT ,"
                 + DatabaseTable.Item.SEQUENCE + " TEXT ,"

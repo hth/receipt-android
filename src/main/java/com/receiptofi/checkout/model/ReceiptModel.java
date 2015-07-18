@@ -1,5 +1,7 @@
 package com.receiptofi.checkout.model;
 
+import android.text.TextUtils;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -8,6 +10,8 @@ public class ReceiptModel {
 
     private String bizName;
     private String address;
+    private String lat;
+    private String lng;
     private String phone;
     private String receiptDate;
     private String expenseReport;
@@ -43,6 +47,30 @@ public class ReceiptModel {
     public void setAddress(String address) {
         if (null != address && !address.equalsIgnoreCase(NULL)) {
             this.address = address;
+        }
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        if (!TextUtils.isEmpty(lat) && !lat.equalsIgnoreCase(NULL)) {
+            this.lat = lat;
+        } else {
+            this.lat = "0";
+        }
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        if (!TextUtils.isEmpty(lng) && !lng.equalsIgnoreCase(NULL)) {
+            this.lng = lng;
+        } else {
+            this.lng = "0";
         }
     }
 

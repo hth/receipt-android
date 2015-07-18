@@ -8,6 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -148,7 +149,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(blobIds)) {
                     String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobIds;
-                    if (getActivity() instanceof  ReceiptListActivity) {
+                    if (getActivity() instanceof ReceiptListActivity) {
                         ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
                     } else if (getActivity() instanceof FilterListActivity) {
                         ((FilterListActivity) getActivity()).showReceiptDetailImageFragment(url);
@@ -302,22 +303,17 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 return;
             }
 
-            ReceiptModel rdModel;
+            final ReceiptModel receiptModel;
             if (!isFilterList) {
-                rdModel = ReceiptListFragment.children.get(index).get(position);
+                receiptModel = ReceiptListFragment.children.get(index).get(position);
             } else {
                 // Coming from FilterListActivity: we show and activate drawer view
-                rdModel = FilterListFragment.children.get(index).get(position);
+                receiptModel = FilterListFragment.children.get(index).get(position);
             }
 
             // Biz address
-            final String bizName = rdModel.getBizName();
-            rdBizName.setText(bizName);
-
-            // Address and phone block
-            final String address = rdModel.getAddress();
-
-            StringTokenizer tokenizer = new StringTokenizer(address, ",");
+            rdBizName.setText(receiptModel.getBizName());
+            StringTokenizer tokenizer = new StringTokenizer(receiptModel.getAddress(), ",");
             if (tokenizer.countTokens() <= 4) {
                 rdBizAddLine1.setText((tokenizer.nextToken()).trim());
                 String addressLine2 = "";
@@ -338,23 +334,13 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 rdBizAddLine3.setText(addressLine3.trim());
                 rdBizAddLine3.setVisibility(View.VISIBLE);
             }
-            // Address action
-            rdBizAddress.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    String uriBegin = "geo:" + address;
-                    String query = address + "(" + bizName + ")";
-                    String encodedQuery = Uri.encode(query);
-                    String uriString = uriBegin + "?q=" + encodedQuery + "&z=16";
-                    Uri uri = Uri.parse(uriString);
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
-                    startActivity(mapIntent);
-                }
-            });
+            if (isAppInstalled("com.google.android.apps.maps")) {
+                addAddressListener(receiptModel);
+            }
 
             //Phone action
-            final String phoneNumber = rdModel.getPhone().trim();
+            final String phoneNumber = receiptModel.getPhone().trim();
             rdBizPhone.setText(phoneNumber);
             if (!AppUtils.isTablet(getActivity())) {
                 rdBizPhone.setOnClickListener(new View.OnClickListener() {
@@ -368,21 +354,21 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             }
 
             // Date block
-            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(rdModel.getReceiptDate()));
+            String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptModel.getReceiptDate()));
             rdDate.setText(formattedDate);
 
 
             //Receipt item list Block
             // Add tax footer
-            taxDscpView.setText(Double.toString(rdModel.getPtax()));
-            taxAmountView.setText(Double.toString(rdModel.getTax()));
+            taxDscpView.setText(Double.toString(receiptModel.getPtax()));
+            taxAmountView.setText(Double.toString(receiptModel.getTax()));
 
             // Add total footer
-            totalAmountView.setText(Double.toString(rdModel.getTotal()));
+            totalAmountView.setText(AppUtils.currencyFormatter().format(receiptModel.getTotal()));
 
             // Set Adaptor on items list
-            rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), rdModel.getReceiptItems()));
-            itemList = rdModel.getReceiptItems();
+            rdItemsList.setAdapter(new ReceiptItemListAdapter(getActivity(), receiptModel.getReceiptItems()));
+            itemList = receiptModel.getReceiptItems();
             if (Constants.SET_RECEIPT_REMINDER) {
                 rdItemsList.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                     @Override
@@ -421,21 +407,44 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
             // Set Tag Color
             /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
-            if (!TextUtils.isEmpty(rdModel.getExpenseTagId()) && null != rdModel.getExpenseTagModel()) {
-                String colorCode = rdModel.getExpenseTagModel().getColor();
+            if (!TextUtils.isEmpty(receiptModel.getExpenseTagId()) && null != receiptModel.getExpenseTagModel()) {
+                String colorCode = receiptModel.getExpenseTagModel().getColor();
                 tagIcon.setTextColor(Color.parseColor(colorCode));
                 tagIcon.setVisibility(View.VISIBLE);
             } else {
                 tagIcon.setVisibility(View.INVISIBLE);
             }
 
-            blobIds = rdModel.getBlobIds();
+            blobIds = receiptModel.getBlobIds();
 
         } catch (ParseException e) {
             Log.d(TAG, "ParseException=" + e.getLocalizedMessage(), e);
         } catch (Exception e) {
             Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
+    }
+
+    /**
+     * Add listener to address.
+     *
+     * @param receiptModel
+     */
+    private void addAddressListener(final ReceiptModel receiptModel) {
+        rdBizAddress.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String uriString = new StringBuilder()
+                        .append("geo:").append(receiptModel.getLat()).append(",").append(receiptModel.getLng())
+                        .append("?q=").append(Uri.encode(receiptModel.getAddress()))
+                        .append("(").append(receiptModel.getBizName()).append(")")
+                        .append("&z=16").toString();
+                Uri uri = Uri.parse(uriString);
+
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+                mapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+                startActivity(mapIntent);
+            }
+        });
     }
 
     @Override
@@ -534,5 +543,25 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         }
         Log.d(TAG, "found calendars " + calendarMap.toString());
         return calendarMap;
+    }
+
+    /**
+     * Checks if google map is installed.
+     *
+     * @param uri
+     * @return
+     */
+    private boolean isAppInstalled(String uri) {
+        PackageManager pm = getActivity().getPackageManager();
+        boolean app_installed = false;
+        if (!TextUtils.isEmpty(uri)) {
+            try {
+                pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+                app_installed = true;
+            } catch (PackageManager.NameNotFoundException e) {
+                Log.e(TAG, "Google map not installed reason=" + e.getLocalizedMessage());
+            }
+        }
+        return app_installed;
     }
 }

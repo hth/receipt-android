@@ -165,7 +165,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         dataForceUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Log.d(TAG, "Force sync data pressed");
-                AlertDialog alertDialog = dataSyncAlertDialog();
+                AlertDialog alertDialog = dataSync();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 return true;
@@ -179,7 +179,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         dataDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             public boolean onPreferenceClick(Preference preference) {
                 Log.d(TAG, "Delete data pressed");
-                AlertDialog alertDialog = dataDeleteAlertDialog();
+                AlertDialog alertDialog = dataDelete();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 return true;
@@ -187,7 +187,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         });
     }
 
-    private AlertDialog dataSyncAlertDialog() {
+    private AlertDialog dataSync() {
         return new AlertDialog.Builder(ctw)
                 .setTitle(R.string.pref_data_sync_title)
                 .setMessage(R.string.pref_data_sync_message)
@@ -199,10 +199,15 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "Confirmed force sync");
-                        showToast("Started syncing data.", SuperToast.Duration.EXTRA_LONG);
-                        DBUtils.dbReInitializeNonKeyValues();
-                        DBUtils.initializeDefaults();
-                        DeviceService.getAll(getActivity());
+
+                        if (AppUtils.isNetworkConnectedOrConnecting(getActivity())) {
+                            showToast("Started syncing data.", SuperToast.Duration.EXTRA_LONG);
+                            DBUtils.dbReInitializeNonKeyValues();
+                            DBUtils.initializeDefaults();
+                            DeviceService.getAll(getActivity());
+                        } else {
+                            showToast("No network available. Please try again when network is available.", SuperToast.Duration.EXTRA_LONG);
+                        }
                     }
                 })
                 .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
@@ -211,7 +216,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .show();
     }
 
-    private AlertDialog dataDeleteAlertDialog() {
+    private AlertDialog dataDelete() {
         return new AlertDialog.Builder(ctw)
                 .setTitle(R.string.pref_data_delete_title)
                 .setMessage(R.string.pref_data_delete_message)
@@ -247,7 +252,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     Log.d(TAG, "update is pressed");
-                    AlertDialog alertDialog = updateAlertDialog(latestVersion);
+                    AlertDialog alertDialog = update(latestVersion);
                     TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                     textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                     return true;
@@ -265,7 +270,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             public boolean onPreferenceClick(Preference preference) {
                 //open browser or intent here
                 Log.d(TAG, "about is pressed");
-                AlertDialog alertDialog = aboutAlertDialog();
+                AlertDialog alertDialog = about();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                 textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 return true;
@@ -273,7 +278,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         });
     }
 
-    private AlertDialog updateAlertDialog(final ApkVersionModel latestVersion) {
+    private AlertDialog update(final ApkVersionModel latestVersion) {
         return new AlertDialog.Builder(ctw)
                 .setTitle(getString(R.string.pref_update_dialog_title, latestVersion.version()))
                 .setMessage(getString(R.string.pref_update_message))
@@ -295,7 +300,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .show();
     }
 
-    private AlertDialog aboutAlertDialog() {
+    private AlertDialog about() {
         return new AlertDialog.Builder(ctw)
                 .setTitle(R.string.pref_about_title)
                 .setMessage(R.string.pref_about_message)
