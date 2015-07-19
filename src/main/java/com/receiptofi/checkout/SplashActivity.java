@@ -3,6 +3,7 @@ package com.receiptofi.checkout;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
@@ -113,7 +114,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
 
             // Add new View.
             view = new View(this);
-            view.setBackground(getDrawable(R.drawable.point_background));
+            view.setBackground(ContextCompat.getDrawable(this, R.drawable.point_background));
             LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(5, 5);
             lp.leftMargin = 10;
             view.setLayoutParams(lp);

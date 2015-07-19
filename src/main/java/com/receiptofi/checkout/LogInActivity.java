@@ -22,6 +22,7 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
 import com.squareup.okhttp.FormEncodingBuilder;
@@ -125,7 +126,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
          * Because the loader will be destoried during Orientation changing.
          * And a new Window link exception will throw up.
          */
-        if (super.inLoadingUserLogin) {
+        if (inLoadingUserLogin) {
             if (super.loader == null) {
                 showLoader(this.getResources().getString(R.string.login_auth_msg));
             } else {
@@ -270,7 +271,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Executing authenticateLogIn: onError: " + error);
                 hideLoader();
-                showErrorMsg(error, Toast.LENGTH_LONG);
+                if (TextUtils.isEmpty(error)) {
+                    showErrorMsg("Failed Login..make red", Toast.LENGTH_LONG);
+                } else {
+                    showErrorMsg(JsonParseUtils.parseError(error), Toast.LENGTH_LONG);
+                }
             }
 
             @Override
