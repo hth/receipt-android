@@ -233,7 +233,7 @@
     <!-- Subscription user hint -->
     <string name="subscription_user_firstName">First Name</string>
     <string name="subscription_user_lastName">Last Name</string>
-    <string name="subscription_user_postal">Zip Code</string>
+    <string name="subscription_user_postal">Zip</string>
     <string name="subscription_status_subscribe">Subscribing to plan</string>
     <string name="subscription_status_unSubscribe">Unsubscribe from plan</string>
 

@@ -280,13 +280,13 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                 } else if(PlanWrapper.refresh()) {
                     showToast("Plans were fetched more than " + PlanWrapper.CACHE_PLAN_HOURS + "hrs ago. Please refresh by going to Home.");
                 } else {
-                    showToast("Invalid First Name, Last Name or Zip Code.");
+                    showToast("Invalid First Name, Last Name or Zip.");
                 }
             } else {
                 if (validateFieldsString()) {
                     SubscriptionService.cancelSubscription(getActivity());
                 } else {
-                    showToast("Invalid First Name, Last Name or Zip Code.");
+                    showToast("Invalid First Name, Last Name or Zip.");
                 }
             }
         }
