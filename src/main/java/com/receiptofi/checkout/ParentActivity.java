@@ -2,11 +2,9 @@ package com.receiptofi.checkout;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -62,8 +60,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
     private boolean mIntentInProgress;
-    protected ProgressDialog loader;
-    protected static Boolean inLoadingUserLogin = false;
+    protected SuperActivityToast loader;
+    protected static Boolean loginToastRunning = false;
 
     private static Session openActiveSession(Activity activity, boolean allowLoginUI, List permissions, Session.StatusCallback callback) {
         Log.d(TAG, "Parent executing openActiveSession");
@@ -182,21 +180,25 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         });
     }
 
-    public void showLoader(String msg) {
-        loader = new ProgressDialog(this);
-        loader.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loader.setCancelable(false);
+    public void showLoader(String message) {
+        loader = new SuperActivityToast(this, SuperToast.Type.PROGRESS);
+        loader.setText(message);
         loader.setIndeterminate(true);
-        loader.setMessage(msg);
+        loader.setProgressIndeterminate(true);
         loader.show();
-        inLoadingUserLogin = true;
+        loginToastRunning = true;
     }
 
     public void hideLoader() {
-        if (loader != null) {
-            loader.dismiss();
-            inLoadingUserLogin = false;
+        if (null != loader && loader.isShowing()) {
+            final SuperActivityToast superActivityToast = loader;
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    superActivityToast.dismiss();
+                }
+            });
+            loginToastRunning = false;
         }
         loader = null;
     }
@@ -315,6 +317,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
             @Override
             public void run() {
+                loginToastRunning = false;
                 Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);

@@ -126,7 +126,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
          * Because the loader will be destoried during Orientation changing.
          * And a new Window link exception will throw up.
          */
-        if (inLoadingUserLogin) {
+        if (loginToastRunning) {
             if (super.loader == null) {
                 showLoader(this.getResources().getString(R.string.login_auth_msg));
             } else {
