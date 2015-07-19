@@ -57,20 +57,20 @@ public class SubscriptionFragment extends Fragment {
             final int what = msg.what;
             switch (what) {
                 case TOKEN_SUCCESS:
-                    Log.d(TAG, "Token received=" + what);
+                    Log.d(TAG, "Token success received=" + what);
                     showData();
                     stopToast();
                     break;
                 case TOKEN_FAILURE:
-                    Log.d(TAG, "Token received=" + what);
+                    Log.d(TAG, "Token failure received=" + what);
                     stopToast();
                     break;
                 case PLAN_FETCH_SUCCESS:
-                    Log.d(TAG, "Plans fetched=" + what);
+                    Log.d(TAG, "Plans success fetched=" + what);
                     showData();
                     break;
                 case PLAN_FETCH_FAILURE:
-                    Log.d(TAG, "Plans fetched=" + what);
+                    Log.d(TAG, "Plans failure fetched=" + what);
                     stopToast();
                     break;
                 default:
@@ -244,6 +244,9 @@ public class SubscriptionFragment extends Fragment {
     }
 
     private void showToast(String message) {
+        /** Required when user is coming from Refresh home page to subscription fragment. */
+        SuperActivityToast.cancelAllSuperActivityToasts();
+
         progressToast = new SuperActivityToast(getActivity(), SuperToast.Type.PROGRESS);
         progressToast.setText(message);
         progressToast.setIndeterminate(true);
