@@ -25,6 +25,7 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.checkout.MainMaterialDrawerActivity;
 import com.receiptofi.checkout.R;
+import com.receiptofi.checkout.fragments.ExpenseTagFragment;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -33,6 +34,7 @@ import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
 import com.receiptofi.checkout.utils.Constants.DialogMode;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
 import com.squareup.okhttp.Headers;
@@ -166,7 +168,7 @@ public class ExpenseTagDialog extends DialogFragment {
                 public void onError(int statusCode, String error) {
                     Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
                     if (null != AppUtils.getHomePageContext()) {
-                        showMessage(error, (Activity) AppUtils.getHomePageContext());
+                        ExpenseTagFragment.showMessage(JsonParseUtils.parseError(error), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
                     }
                 }
 
@@ -174,7 +176,7 @@ public class ExpenseTagDialog extends DialogFragment {
                 public void onException(Exception exception) {
                     Log.d(TAG, "executing ADD_EXPENSE_TAG: onException: " + exception.getMessage());
                     if (null != AppUtils.getHomePageContext()) {
-                        showMessage(exception.getMessage(), (Activity) AppUtils.getHomePageContext());
+                        ExpenseTagFragment.showMessage(exception.getMessage(), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
                     }
                 }
             });
@@ -207,13 +209,13 @@ public class ExpenseTagDialog extends DialogFragment {
                     @Override
                     public void onError(int statusCode, String error) {
                         Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
-                        showMessage(error, (Activity) AppUtils.getHomePageContext());
+                        ExpenseTagFragment.showMessage(JsonParseUtils.parseError(error), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
                     }
 
                     @Override
                     public void onException(Exception exception) {
                         Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onException: " + exception.getMessage());
-                        showMessage(exception.getMessage(), (Activity) AppUtils.getHomePageContext());
+                        ExpenseTagFragment.showMessage(exception.getMessage(), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
                     }
                 });
 
@@ -258,31 +260,5 @@ public class ExpenseTagDialog extends DialogFragment {
         if (activity.expenseTagFragment != null) {
             (activity.expenseTagFragment).onDismiss(dialog);
         }
-    }
-
-    /**
-     * Show Toast message.
-     *
-     * @param message
-     * @param context
-     */
-    private static void showMessage(final String message, final Activity context) {
-        Assert.assertNotNull("Context should not be null", context);
-        if (TextUtils.isEmpty(message)) {
-            return;
-        }
-        /** getMainLooper() function of Looper class, which will provide you the Looper against the Main UI thread. */
-        new Handler(Looper.getMainLooper()).post(new Runnable() {
-            @Override
-            public void run() {
-                SuperActivityToast superActivityToast = new SuperActivityToast(context);
-                superActivityToast.setText(message);
-                superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                superActivityToast.setBackground(SuperToast.Background.BLUE);
-                superActivityToast.setTextColor(Color.WHITE);
-                superActivityToast.setTouchToDismiss(true);
-                superActivityToast.show();
-            }
-        });
     }
 }

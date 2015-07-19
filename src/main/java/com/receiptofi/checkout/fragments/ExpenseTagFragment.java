@@ -40,6 +40,7 @@ import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
 import com.receiptofi.checkout.utils.AppUtils;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.dialog.ExpenseTagDialog;
 import com.squareup.okhttp.Headers;
@@ -313,7 +314,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                                     public void onError(int statusCode, String error) {
                                         Log.d(TAG, "onError=" + error);
                                         if (null != getActivity()) {
-                                            showMessage(error, getActivity());
+                                            showMessage(JsonParseUtils.parseError(error), SuperToast.Background.RED, getActivity());
                                         }
                                     }
 
@@ -321,7 +322,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                                     public void onException(Exception e) {
                                         Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
                                         if (null != getActivity()) {
-                                            showMessage(e.getMessage(), (Activity) AppUtils.getHomePageContext());
+                                            showMessage(e.getMessage(), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
                                         }
                                     }
                                 });
@@ -361,7 +362,11 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
      * @param message
      * @param context
      */
-    private static void showMessage(final String message, final Activity context) {
+    public static void showMessage(final String message, final Activity context) {
+        showMessage(message, SuperToast.Background.BLUE, context);
+    }
+
+    public static void showMessage(final String message, final int backgroundColor, final Activity context) {
         Assert.assertNotNull("Context should not be null", context);
         if (TextUtils.isEmpty(message)) {
             return;
@@ -373,7 +378,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 SuperActivityToast superActivityToast = new SuperActivityToast(context);
                 superActivityToast.setText(message);
                 superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setBackground(backgroundColor);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();

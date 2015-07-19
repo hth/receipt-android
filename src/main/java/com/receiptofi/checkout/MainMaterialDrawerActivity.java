@@ -345,7 +345,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
     private void startProgressToken() {
         uploadImageToast = new SuperActivityToast(this, SuperToast.Type.PROGRESS);
-        uploadImageToast.setText("Image Uploading");
+        uploadImageToast.setText("Image Uploading.");
         uploadImageToast.setIndeterminate(true);
         uploadImageToast.setProgressIndeterminate(true);
         uploadImageToast.show();
