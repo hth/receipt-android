@@ -95,7 +95,7 @@ public class DeviceService {
 
                 /** Update DB if successful in getting all the data and update the DB. */
                 KeyValueUtils.updateInsert(KeyValueUtils.KEYS.GET_ALL_COMPLETE, Boolean.toString(true));
-                showMessage("Synced all data.", (Activity) AppUtils.getHomePageContext());
+                showMessage("Synced all data.", (Activity) context);
             }
 
             @Override
