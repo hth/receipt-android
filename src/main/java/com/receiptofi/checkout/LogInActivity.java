@@ -11,6 +11,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
@@ -104,8 +105,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         googleLogin.setOnClickListener(this);
 
         if (!"debug".equals(BuildConfig.BUILD_TYPE)) {
-            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.left_right_test_button);
-            linearLayout.setVisibility(View.GONE);
+            Button left_bt = (Button) findViewById(R.id.hidden_left_Button);
+            left_bt.setVisibility(View.INVISIBLE);
+
+            Button right_bt = (Button) findViewById(R.id.hidden_right_Button);
+            right_bt.setVisibility(View.INVISIBLE);
         }
     }
 
