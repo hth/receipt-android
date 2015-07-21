@@ -69,6 +69,7 @@ dependencies {
     compile 'com.google.android.gms:play-services:7.5.0'
     compile 'com.facebook.android:facebook-android-sdk:3.23.1'
     compile 'com.google.guava:guava:18.0'
+    compile 'com.jayway.android.robotium:robotium-solo:5.4.1'
     androidTestCompile 'junit:junit:4.10'
     androidTestCompile 'org.mockito:mockito-core:1.9.5'
 }
@@ -232,6 +233,7 @@ android {
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLocal
             buildConfigField STRING, "AWSS3", debugEndpointAwsS3
             buildConfigField STRING, "AWSS3_BUCKET", debugBucket
+            resValue "string", "FACEBOOK_APP_ID", facebookAppIdLocal
         }
 
         staging {
@@ -264,6 +266,7 @@ android {
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdStaging
             buildConfigField STRING, "AWSS3", debugEndpointAwsS3
             buildConfigField STRING, "AWSS3_BUCKET", debugBucket
+            resValue "string", "FACEBOOK_APP_ID", facebookAppIdStaging
         }
 
         release {
@@ -296,6 +299,7 @@ android {
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdLive
             buildConfigField STRING, "AWSS3", releaseEndpointAwsS3
             buildConfigField STRING, "AWSS3_BUCKET", releaseBucket
+            resValue "string", "FACEBOOK_APP_ID", facebookAppIdLive
         }
     }
 
@@ -349,6 +353,12 @@ android {
         warning 'ResourceAsColor'
         // Set the severity of the given issues to ignore (same as disabling the check)
         ignore 'TypographyQuotes'
+    }
+
+    sourceSets {
+        androidTest {
+            java.srcDirs = ['androidTest/java']
+        }
     }
 }
 

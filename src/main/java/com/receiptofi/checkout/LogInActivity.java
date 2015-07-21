@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -103,6 +102,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
+
+        if (!"debug".equals(BuildConfig.BUILD_TYPE)) {
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.left_right_test_button);
+            linearLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -163,7 +167,8 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         Log.d(TAG, "inside leftButtonClick");
         isLeftButtonClicked = true;
         if (isRightButtonClicked) {
-            setFieldsToR();
+            email.setText("li@receiptofi.com");
+            password.setText("Chongzhi");
         }
     }
 
@@ -171,20 +176,9 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         Log.d(TAG, "inside rightButtonClick");
         isRightButtonClicked = true;
         if (isLeftButtonClicked) {
-            setFieldsToS();
+            email.setText("blank@r.com");
+            password.setText("testtest");
         }
-    }
-
-    // TODO: DELETE ME
-    private void setFieldsToS() {
-        email.setText("blank@r.com");
-        password.setText("testtest");
-    }
-
-    // TODO: DELETE ME
-    private void setFieldsToR() {
-        email.setText("li@receiptofi.com");
-        password.setText("Chongzhi");
     }
 
     private boolean areFieldsSet() {
@@ -272,9 +266,9 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 Log.d(TAG, "Executing authenticateLogIn: onError: " + error);
                 hideLoader();
                 if (TextUtils.isEmpty(error)) {
-                    showErrorMsg("Failed Login..make red", Toast.LENGTH_LONG);
+                    showErrorMsg("Login failed.", SuperToast.Duration.LONG);
                 } else {
-                    showErrorMsg(JsonParseUtils.parseError(error), Toast.LENGTH_LONG);
+                    showErrorMsg(JsonParseUtils.parseError(error), SuperToast.Duration.LONG);
                 }
             }
 
@@ -282,7 +276,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             public void onException(Exception exception) {
                 Log.d(TAG, "Executing authenticateLogIn: onException: " + exception.getMessage());
                 hideLoader();
-                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
+                showErrorMsg(exception.getMessage(), SuperToast.Duration.LONG);
             }
         });
     }
