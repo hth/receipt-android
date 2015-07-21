@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
@@ -173,6 +174,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
+            //TODO(hth) fix this with super toast
             Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
@@ -192,6 +194,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         Log.d(TAG, "executing authenticateSignUp");
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
+        //TODO(hth) fix this with super toast
         if (data == null) {
             errors.append(this.getResources().getString(R.string.err_str_bundle_null));
             Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
@@ -208,7 +211,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             postData.put(API.key.SIGNUP_PASSWORD, data.getString(API.key.SIGNUP_PASSWORD));
             postData.put(API.key.SIGNUP_AGE, data.getString(API.key.SIGNUP_AGE));
         } catch (JSONException e) {
-            Log.d(TAG, "Exception while adding postdata: " + e.getMessage());
+            Log.e(TAG, "Exception while adding postdata: " + e.getMessage(), e);
         }
 
         ExternalCallWithOkHttp.doPost(SignUpActivity.this, postData, API.SIGNUP_API, IncludeAuthentication.NO, new ResponseHandler() {
@@ -227,14 +230,14 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "executing authenticateSignUp: onError: " + error);
                 hideLoader();
-                showErrorMsg(JsonParseUtils.parseError(error), Toast.LENGTH_LONG);
+                showErrorMsg(JsonParseUtils.parseError(error), SuperToast.Duration.LONG);
             }
 
             @Override
             public void onException(Exception exception) {
                 Log.d(TAG, "executing authenticateSignUp: onException: " + exception.getMessage());
                 hideLoader();
-                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
+                showErrorMsg(exception.getMessage(), SuperToast.Duration.LONG);
             }
         });
     }

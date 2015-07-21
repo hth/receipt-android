@@ -159,7 +159,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
      * @param msg
      */
     public void showErrorMsg(final String msg) {
-        showErrorMsg(msg, Toast.LENGTH_SHORT);
+        showErrorMsg(msg, SuperToast.Duration.SHORT);
     }
 
     public void showErrorMsg(final String msg, final int length) {
@@ -172,7 +172,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 SuperActivityToast superActivityToast = new SuperActivityToast(ParentActivity.this);
                 superActivityToast.setText(msg);
                 superActivityToast.setDuration(length);
-                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setBackground(SuperToast.Background.RED);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();
@@ -230,18 +230,17 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             }
 
             @Override
-            public void onException(Exception exception) {
-                Log.d(TAG, "Parent executing authenticateSocialAccount: onException: " + exception.getMessage());
-                hideLoader();
-                showErrorMsg(exception.getMessage(), Toast.LENGTH_LONG);
-            }
-
-            @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onError: " + error);
                 hideLoader();
-                String errorMsg = ResponseParser.getSocialAuthError(error);
-                (ParentActivity.this).showErrorMsg(errorMsg);
+                showErrorMsg(ResponseParser.getSocialAuthError(error), SuperToast.Duration.LONG);
+            }
+
+            @Override
+            public void onException(Exception exception) {
+                Log.d(TAG, "Parent executing authenticateSocialAccount: onException: " + exception.getMessage());
+                hideLoader();
+                showErrorMsg(exception.getMessage(), SuperToast.Duration.LONG);
             }
         });
     }
