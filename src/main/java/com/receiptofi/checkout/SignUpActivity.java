@@ -95,7 +95,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
                 if (position == 0) {
-                    ageRange = null;
+                    ageRange = "";
                     Log.d(TAG, "Selected range is: " + ageRange);
                     return;
                 }
