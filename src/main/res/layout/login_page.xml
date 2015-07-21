@@ -99,7 +99,7 @@
                 android:layout_height="@dimen/activity_horizontal_margin"
                 android:layout_gravity="start|left"
                 android:onClick="leftButtonClick"
-                android:background="@color/amber_100"/>
+                android:background="@color/red_900"/>
 
             <View
                 android:layout_width="wrap_content"
@@ -113,7 +113,7 @@
                 android:layout_height="@dimen/activity_horizontal_margin"
                 android:layout_gravity="end|right"
                 android:onClick="rightButtonClick"
-                android:background="@color/amber_100"/>
+                android:background="@color/red_900"/>
 
         </LinearLayout>
 
