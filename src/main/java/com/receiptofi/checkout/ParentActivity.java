@@ -479,7 +479,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 //String scopes = "oauth2:server:client_id:<SERVER-CLIENT-ID>:api_scope:<SCOPE1> <SCOPE2>";
 
                 token = GoogleAuthUtil.getToken(
-                        ParentActivity.this,                                              // Context context
+                        ParentActivity.this,                               // Context context
                         Plus.AccountApi.getAccountName(mGoogleApiClient),  // String accountName
                         scopes,                                            // String scope
                         appActivities                                      // Bundle bundle
