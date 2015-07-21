@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
@@ -103,6 +102,11 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
+
+        if (!"debug".equals(BuildConfig.BUILD_TYPE)) {
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.left_right_test_button);
+            linearLayout.setVisibility(View.GONE);
+        }
     }
 
     @Override
@@ -163,7 +167,8 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         Log.d(TAG, "inside leftButtonClick");
         isLeftButtonClicked = true;
         if (isRightButtonClicked) {
-            setFieldsToR();
+            email.setText("li@receiptofi.com");
+            password.setText("Chongzhi");
         }
     }
 
@@ -171,20 +176,9 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         Log.d(TAG, "inside rightButtonClick");
         isRightButtonClicked = true;
         if (isLeftButtonClicked) {
-            setFieldsToS();
+            email.setText("blank@r.com");
+            password.setText("testtest");
         }
-    }
-
-    // TODO: DELETE ME
-    private void setFieldsToS() {
-        email.setText("blank@r.com");
-        password.setText("testtest");
-    }
-
-    // TODO: DELETE ME
-    private void setFieldsToR() {
-        email.setText("li@receiptofi.com");
-        password.setText("Chongzhi");
     }
 
     private boolean areFieldsSet() {
