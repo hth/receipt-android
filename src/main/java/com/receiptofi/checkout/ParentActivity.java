@@ -412,8 +412,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         Log.d(TAG, "executing onConnectionFailed");
         Log.d(TAG, "Google Sign in: onConnectionFailed: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         if (!result.hasResolution()) {
-            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this,
-                    0).show();
+            GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, 0).show();
             return;
         }
 
