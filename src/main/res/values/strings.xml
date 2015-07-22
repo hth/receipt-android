@@ -112,6 +112,10 @@
         To change your login, please enter your
         preferred valid email address below.
     </string>
+    <string name="pref_login_social_message">
+        Cannot change login id for your account.
+        As you signed up using social login from Facebook or Google+.
+    </string>
 
     <string name="key_pref_password">pref_password</string>
     <string name="pref_password_title">Password</string>
@@ -120,6 +124,10 @@
     <string name="pref_password_message">
         To change your password, please enter a new
         password below. Minimum length of %s characters.
+    </string>
+    <string name="pref_password_social_message">
+        Cannot change password for your account.
+        As you signed up using social login from Facebook or Google+.
     </string>
 
     <string name="key_pref_data_sync_id">pref_data_sync</string>

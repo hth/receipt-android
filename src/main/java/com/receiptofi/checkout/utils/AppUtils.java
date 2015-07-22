@@ -11,6 +11,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 
 import com.receiptofi.checkout.model.ApkVersionModel;
+import com.receiptofi.checkout.utils.db.KeyValueUtils;
 
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
@@ -187,5 +188,9 @@ public class AppUtils {
             formatter.setNegativeSuffix("");
         }
         return formatter;
+    }
+
+    public static boolean isSocialAccount() {
+        return Boolean.valueOf(KeyValueUtils.getValue(KeyValueUtils.KEYS.SOCIAL_LOGIN));
     }
 }
