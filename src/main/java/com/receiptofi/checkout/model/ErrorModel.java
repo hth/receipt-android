@@ -8,33 +8,24 @@ import com.receiptofi.checkout.model.types.MobileSystemErrorCodeEnum;
  */
 public class ErrorModel {
     private String reason;
-    private MobileSystemErrorCodeEnum systemErrorCode;
-    private String systemError;
+    private int systemErrorCode;
+    private MobileSystemErrorCodeEnum errorCode;
 
-    public ErrorModel(String reason, String systemErrorCode, String systemError) {
+    public ErrorModel(String reason, int systemErrorCode, String systemError) {
         this.reason = reason;
-        this.systemErrorCode = MobileSystemErrorCodeEnum.valueOf(systemErrorCode);
-        this.systemError = systemError;
+        this.systemErrorCode = systemErrorCode;
+        this.errorCode = MobileSystemErrorCodeEnum.valueOf(systemError);
     }
 
     public String getReason() {
         return reason;
     }
 
-    public MobileSystemErrorCodeEnum getSystemErrorCode() {
+    public int getSystemErrorCode() {
         return systemErrorCode;
     }
 
-    public String getSystemError() {
-        return systemError;
-    }
-
-    @Override
-    public String toString() {
-        return "ErrorModel{" +
-                "reason='" + reason + '\'' +
-                ", systemErrorCode=" + systemErrorCode +
-                ", systemError='" + systemError + '\'' +
-                '}';
+    public MobileSystemErrorCodeEnum getErrorCode() {
+        return errorCode;
     }
 }

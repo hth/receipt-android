@@ -206,7 +206,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     }
 
     private void onPasswordRecoveryError(ErrorModel errorModel) {
-        if (errorModel.getSystemErrorCode() == MobileSystemErrorCodeEnum.USER_SOCIAL) {
+        if (errorModel.getSystemErrorCode() != 0 && errorModel.getErrorCode() == MobileSystemErrorCodeEnum.USER_SOCIAL) {
             showToast(
                     getResources().getString(R.string.password_recovery_social_failed),
                     SuperToast.Duration.EXTRA_LONG,
