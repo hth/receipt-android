@@ -74,7 +74,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
             @Override
             public void afterTextChanged(Editable editable) {
-
                 logIn.setEnabled(areFieldsSet());
             }
         };
@@ -235,7 +234,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
         if (data == null) {
-            errors.append(this.getResources().getString(R.string.err_str_bundle_null));
+            errors.append(getResources().getString(R.string.err_str_bundle_null));
             SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
             superActivityToast.setText(errors);
             superActivityToast.setDuration(SuperToast.Duration.SHORT);

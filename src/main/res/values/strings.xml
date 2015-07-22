@@ -46,10 +46,13 @@
 
     <!--Password recovery page-->
     <string name="password_recovery">SEND RECOVERY EMAIL</string>
-    <string name="password_recovery_failed"> request failed, try again later.</string>
+    <string name="password_recovery_social_failed">
+        Could not send password recovery email.
+        As you have signed up using Facebook or Google+.
+    </string>
     <string name="password_recovery_message">
-        An email has been sent to above email-address with
-        instructions to reset password
+        An email has been sent to above email address with
+        instructions on resetting your password.
     </string>
 
     <!--Home page-->
@@ -214,6 +217,7 @@
     <string name="err_str_enter_valid_email">Please enter valid email.</string>
     <string name="err_str_enter_valid_password">Password must contain at least %s characters.</string>
     <string name="err_str_bundle_null">Bundle is null</string>
+    <string name="err_str_email_empty">Are you sure you provided email address?</string>
 
     <string-array name="age_range">
         <item>Select</item>

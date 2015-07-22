@@ -196,7 +196,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
         //TODO(hth) fix this with super toast
         if (data == null) {
-            errors.append(this.getResources().getString(R.string.err_str_bundle_null));
+            errors.append(getResources().getString(R.string.err_str_bundle_null));
             Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
             toast.setGravity(Gravity.TOP, 0, 20);
             toast.show();
