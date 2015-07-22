@@ -226,6 +226,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
+                KeyValueUtils.updateInsert(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(true));
             }
 
             @Override
