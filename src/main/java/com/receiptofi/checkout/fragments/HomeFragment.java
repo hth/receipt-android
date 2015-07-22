@@ -111,8 +111,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message msg) {
-            final int what = msg.what;
-            switch (what) {
+            switch (msg.what) {
                 case IMAGE_UPLOAD_SUCCESS:
                     unprocessedValue = Integer.toString(msg.arg1);
                     setUnprocessedCount();
@@ -158,7 +157,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     }
                     break;
                 default:
-                    Log.e(TAG, "Update handler not defined for: " + what);
+                    Log.e(TAG, "Update handler not defined for: " + msg.what);
             }
             return true;
         }
