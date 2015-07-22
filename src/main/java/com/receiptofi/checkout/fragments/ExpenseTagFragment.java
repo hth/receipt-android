@@ -314,7 +314,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                                     public void onError(int statusCode, String error) {
                                         Log.d(TAG, "onError=" + error);
                                         if (null != getActivity()) {
-                                            showMessage(JsonParseUtils.parseError(error), SuperToast.Background.RED, getActivity());
+                                            showMessage(JsonParseUtils.parseForErrorReason(error), SuperToast.Background.RED, getActivity());
                                         }
                                     }
 

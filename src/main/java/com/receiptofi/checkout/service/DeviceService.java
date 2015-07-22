@@ -67,7 +67,7 @@ public class DeviceService {
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
                 }
             }
 
@@ -102,7 +102,7 @@ public class DeviceService {
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
                 }
             }
 
@@ -140,7 +140,7 @@ public class DeviceService {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
                 }
             }
 

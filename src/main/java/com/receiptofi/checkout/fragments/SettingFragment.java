@@ -386,7 +386,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     Log.e(TAG, "executing updateLoginId: onError: " + error);
                     resetLoginId();
                     stopProgressToken();
-                    showToast(JsonParseUtils.parseError(error), SuperToast.Duration.EXTRA_LONG);
+                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.EXTRA_LONG);
                 }
 
                 @Override
@@ -428,7 +428,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 public void onError(int statusCode, String error) {
                     Log.e(TAG, "executing updatePassword: onError: " + error);
                     stopProgressToken();
-                    showToast(JsonParseUtils.parseError(error), SuperToast.Duration.EXTRA_LONG);
+                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.EXTRA_LONG);
                 }
 
                 @Override

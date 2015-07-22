@@ -233,7 +233,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onError: " + error);
                 hideLoader();
-                showErrorMsg(JsonParseUtils.parseError(error), SuperToast.Duration.LONG);
+                showErrorMsg(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG);
             }
 
             @Override

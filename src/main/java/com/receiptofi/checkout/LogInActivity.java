@@ -272,7 +272,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 if (TextUtils.isEmpty(error)) {
                     showErrorMsg("Login failed.", SuperToast.Duration.LONG);
                 } else {
-                    showErrorMsg(JsonParseUtils.parseError(error), SuperToast.Duration.LONG);
+                    showErrorMsg(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG);
                 }
             }
 

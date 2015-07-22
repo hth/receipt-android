@@ -63,7 +63,7 @@ public class SubscriptionService {
                 message.what = SubscriptionFragment.TOKEN_FAILURE;
                 ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
 
-                showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
             }
 
             @Override
@@ -104,7 +104,7 @@ public class SubscriptionService {
                 message.what = SubscriptionFragment.PLAN_FETCH_FAILURE;
                 ((MainMaterialDrawerActivity) context).getSubscriptionFragment().updateHandler.dispatchMessage(message);
 
-                showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
             }
 
             @Override
@@ -145,7 +145,7 @@ public class SubscriptionService {
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_FAILED;
                 ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
-                showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
             }
 
             @Override
@@ -185,7 +185,7 @@ public class SubscriptionService {
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_CANCELLED_FAILED;
                 ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
-                showMessage(JsonParseUtils.parseError(error), (Activity) context);
+                showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
             }
 
             @Override

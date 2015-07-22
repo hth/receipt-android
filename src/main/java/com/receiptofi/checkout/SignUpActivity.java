@@ -230,7 +230,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "executing authenticateSignUp: onError: " + error);
                 hideLoader();
-                showErrorMsg(JsonParseUtils.parseError(error), SuperToast.Duration.LONG);
+                showErrorMsg(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG);
             }
 
             @Override

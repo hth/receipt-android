@@ -300,7 +300,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
                                 @Override
                                 public void onError(int statusCode, String error) {
                                     Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
-                                    ToastBox.makeText(FilterListActivity.this, JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
+                                    ToastBox.makeText(FilterListActivity.this, JsonParseUtils.parseForErrorReason(error), Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override

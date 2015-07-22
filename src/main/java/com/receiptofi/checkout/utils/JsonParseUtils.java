@@ -335,7 +335,7 @@ public class JsonParseUtils {
         return dataWrapper;
     }
 
-    public static String parseError(String jsonResponse) {
+    public static String parseForErrorReason(String jsonResponse) {
         if (TextUtils.isEmpty(jsonResponse)) {
             return null;
         }
