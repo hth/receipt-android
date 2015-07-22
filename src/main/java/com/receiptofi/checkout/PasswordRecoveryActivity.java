@@ -106,11 +106,12 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         /** Getting email and trim. */
         String emailStr = email.getText().toString().trim();
 
+        /** Validation. */
         if (TextUtils.isEmpty(emailStr)) {
-            addErrorMsg(this.getResources().getString(R.string.err_str_email_empty));
+            addErrorMsg(getResources().getString(R.string.err_str_email_empty));
         } else {
             if (!UserUtils.isValidEmail(emailStr)) {
-                addErrorMsg(this.getResources().getString(R.string.err_str_enter_valid_email));
+                addErrorMsg(getResources().getString(R.string.err_str_enter_valid_email));
             }
         }
 
@@ -125,7 +126,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
     private void sendRecoveryEmail(String email) {
         Log.d(TAG, "recovery email invoked");
-        showLoader(this.getResources().getString(R.string.password_recovery_msg));
+        showLoader(getResources().getString(R.string.password_recovery_msg));
 
         JSONObject postData = new JSONObject();
         try {
@@ -245,6 +246,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         superToast.setDuration(length);
         superToast.setBackground(color);
         superToast.setTextColor(Color.WHITE);
+        superToast.setAnimations(SuperToast.Animations.FLYIN);
         superToast.setGravity(Gravity.TOP, 0, 20);
         superToast.show();
     }

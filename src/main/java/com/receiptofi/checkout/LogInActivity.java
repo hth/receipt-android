@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -191,35 +194,29 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     }
 
     private void login() {
-        // Hide soft keyboard
+        /** Hide soft keyboard. */
         InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
-        // getting username and password
-        emailStr = email.getText().toString();
+        /** Getting email and password and trim email. */
+        emailStr = email.getText().toString().trim();
         passwordStr = password.getText().toString();
 
+        /** Validation. */
         if (TextUtils.isEmpty(emailStr)) {
-            errors.append(this.getResources().getString(R.string.err_str_enter_email));
+            addErrorMsg(getResources().getString(R.string.err_str_enter_email));
         } else {
             if (!UserUtils.isValidEmail(emailStr)) {
-                addErrorMsg(this.getResources().getString(R.string.err_str_enter_valid_email));
+                addErrorMsg(getResources().getString(R.string.err_str_enter_valid_email));
             }
         }
         if (TextUtils.isEmpty(passwordStr)) {
-            addErrorMsg(this.getResources().getString(R.string.err_str_enter_password));
+            addErrorMsg(getResources().getString(R.string.err_str_enter_password));
         }
-        // error string is for keeping the error that needs to be shown to the
-        // user.
-        if (errors.length() > 0) {
-            SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
-            superActivityToast.setText(errors);
-            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-            superActivityToast.setBackground(SuperToast.Background.BLUE);
-            superActivityToast.setTextColor(Color.WHITE);
-            superActivityToast.setTouchToDismiss(true);
-            superActivityToast.show();
 
+        /** Error string is for keeping the error that needs to be shown to the user. */
+        if (errors.length() > 0) {
+            showToast(errors.toString(), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
             errors.delete(0, errors.length());
         } else {
             Bundle bundle = new Bundle();
@@ -231,7 +228,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
 
     private void authenticateLogIn(Bundle data) {
         Log.d(TAG, "Authenticating");
-        showLoader(this.getResources().getString(R.string.login_auth_msg));
+        showLoader(getResources().getString(R.string.login_auth_msg));
 
         RequestBody formBody = new FormEncodingBuilder()
                 .add(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL))
@@ -245,8 +242,8 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 Log.d(TAG, "Executing authenticateLogIn: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
-                hideLoader();
                 afterSuccessfulLogin();
+                hideLoader();
                 finish();
             }
 
@@ -255,9 +252,9 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 Log.d(TAG, "Executing authenticateLogIn: onError: " + error);
                 hideLoader();
                 if (TextUtils.isEmpty(error)) {
-                    showErrorMsg("Login failed.", SuperToast.Duration.LONG);
+                    showToast("Login failed. Either user does not exists or invalid password.", SuperToast.Duration.LONG, SuperToast.Background.RED);
                 } else {
-                    showErrorMsg(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG);
+                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG, SuperToast.Background.RED);
                 }
             }
 
@@ -265,7 +262,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             public void onException(Exception exception) {
                 Log.d(TAG, "Executing authenticateLogIn: onException: " + exception.getMessage());
                 hideLoader();
-                showErrorMsg(exception.getMessage(), SuperToast.Duration.LONG);
+                showToast(exception.getMessage(), SuperToast.Duration.LONG, SuperToast.Background.RED);
             }
         });
     }
@@ -276,5 +273,25 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         } else {
             errors.append("\n").append("\n").append(msg);
         }
+    }
+
+    private void showToast(final String msg, final int length, final int color) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                SuperToast superToast = new SuperToast(LogInActivity.this);
+                superToast.setText(msg);
+                superToast.setDuration(length);
+                superToast.setBackground(color);
+                superToast.setTextColor(Color.WHITE);
+                superToast.setAnimations(SuperToast.Animations.FLYIN);
+                superToast.setGravity(Gravity.TOP, 0, 20);
+                superToast.show();
+            }
+        });
     }
 }

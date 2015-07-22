@@ -8,8 +8,10 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.Gravity;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -55,7 +57,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     private static List<Activity> backStack;
     protected boolean isFbLoginClicked = false;
     protected boolean isGPlusLoginClicked = false;
-    protected Handler uiThread = new Handler();
     private GoogleApiClient mGoogleApiClient;
     private ConnectionResult mConnectionResult;
     private boolean mIntentInProgress;
@@ -152,33 +153,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         }
     }
 
-    /**
-     * Toast and loader for login status.
-     *
-     * @param msg
-     */
-    public void showErrorMsg(final String msg) {
-        showErrorMsg(msg, SuperToast.Duration.SHORT);
-    }
-
-    public void showErrorMsg(final String msg, final int length) {
-        if (TextUtils.isEmpty(msg)) {
-            return;
-        }
-        uiThread.post(new Runnable() {
-            @Override
-            public void run() {
-                SuperActivityToast superActivityToast = new SuperActivityToast(ParentActivity.this);
-                superActivityToast.setText(msg);
-                superActivityToast.setDuration(length);
-                superActivityToast.setBackground(SuperToast.Background.RED);
-                superActivityToast.setTextColor(Color.WHITE);
-                superActivityToast.setTouchToDismiss(true);
-                superActivityToast.show();
-            }
-        });
-    }
-
     public void showLoader(String message) {
         loader = new SuperActivityToast(this, SuperToast.Type.PROGRESS);
         loader.setText(message);
@@ -233,14 +207,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onError: " + error);
                 hideLoader();
-                showErrorMsg(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG);
+                showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.EXTRA_LONG, SuperToast.Background.RED);
             }
 
             @Override
             public void onException(Exception exception) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onException: " + exception.getMessage());
                 hideLoader();
-                showErrorMsg(exception.getMessage(), SuperToast.Duration.LONG);
+                showToast(exception.getMessage(), SuperToast.Duration.LONG, SuperToast.Background.RED);
             }
         });
     }
@@ -293,7 +267,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 }
             }
         } else {
-            showErrorMsg("Login Failed.");
+            showToast("Login Failed.", SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
         }
     }
 
@@ -312,8 +286,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
     private void launchHomeScreen() {
         Log.d(TAG, "Parent executing launchHomeScreen");
-        uiThread.post(new Runnable() {
-
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 loginToastRunning = false;
@@ -328,8 +301,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
     private void launchSplashScreen() {
         Log.d(TAG, "Parent executing launchHomeScreen");
-        uiThread.post(new Runnable() {
-
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
                 Intent i = new Intent(ParentActivity.this, SplashActivity.class);
@@ -440,7 +412,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         Log.d(TAG, "executing onConnected");
         Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         isGPlusLoginClicked = false;
-        showErrorMsg("User is connected!");
+        showToast("User is connected to Google+.", SuperToast.Duration.VERY_SHORT, SuperToast.Background.BLUE);
 
         // Get user's information
         getUserInformation();
@@ -529,5 +501,25 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 Log.i("TOKEN IS  NULL", "TOKEN IS  NULL MAKING QUERY");
             }
         }
+    }
+
+    private void showToast(final String msg, final int length, final int color) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                SuperToast superToast = new SuperToast(ParentActivity.this);
+                superToast.setText(msg);
+                superToast.setDuration(length);
+                superToast.setBackground(color);
+                superToast.setTextColor(Color.WHITE);
+                superToast.setAnimations(SuperToast.Animations.FLYIN);
+                superToast.setGravity(Gravity.TOP, 0, 20);
+                superToast.show();
+            }
+        });
     }
 }

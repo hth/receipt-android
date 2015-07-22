@@ -3,6 +3,8 @@ package com.receiptofi.checkout;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -150,30 +152,31 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     }
 
     private void signUp() {
-        // Hide soft keyboard
+        /** Hide soft keyboard. */
         InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
-        // getting username and password
+        /** Getting email and password and trim email. */
         nameStr = name.getText().toString();
-        emailStr = email.getText().toString();
+        emailStr = email.getText().toString().trim();
         passwordStr = password.getText().toString();
 
+        /** Validation. */
         if (TextUtils.isEmpty(nameStr)) {
-            addErrorMsg(this.getResources().getString(R.string.err_str_enter_name));
+            addErrorMsg(getResources().getString(R.string.err_str_enter_name));
         }
         if (TextUtils.isEmpty(emailStr)) {
-            errors.append(this.getResources().getString(R.string.err_str_enter_email));
+            addErrorMsg(getResources().getString(R.string.err_str_enter_email));
         } else {
             if (!UserUtils.isValidEmail(emailStr)) {
-                addErrorMsg(this.getResources().getString(R.string.err_str_enter_valid_email));
+                addErrorMsg(getResources().getString(R.string.err_str_enter_valid_email));
             }
         }
         if (TextUtils.isEmpty(passwordStr)) {
-            addErrorMsg(this.getResources().getString(R.string.err_str_enter_password));
+            addErrorMsg(getResources().getString(R.string.err_str_enter_password));
         }
-        // error string is for keeping the error that needs to be shown to the
-        // user.
+
+        /** Error string is for keeping the error that needs to be shown to the user. */
         if (errors.length() > 0) {
             showToast(errors.toString(), SuperToast.Duration.EXTRA_LONG, SuperToast.Background.RED);
             errors.delete(0, errors.length());
@@ -190,7 +193,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
     private void authenticateSignUp(Bundle data) {
         Log.d(TAG, "executing authenticateSignUp");
-        showLoader(this.getResources().getString(R.string.login_auth_msg));
+        showLoader(getResources().getString(R.string.sign_up_msg));
 
         JSONObject postData = new JSONObject();
 
@@ -210,8 +213,8 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
                 Log.d(TAG, "executing authenticateSignUp: onSuccess");
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
-                hideLoader();
                 afterSuccessfulLogin();
+                hideLoader();
                 finish();
             }
 
@@ -219,14 +222,14 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "executing authenticateSignUp: onError: " + error);
                 hideLoader();
-                showErrorMsg(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG);
+                showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG, SuperToast.Background.RED);
             }
 
             @Override
             public void onException(Exception exception) {
                 Log.d(TAG, "executing authenticateSignUp: onException: " + exception.getMessage());
                 hideLoader();
-                showErrorMsg(exception.getMessage(), SuperToast.Duration.LONG);
+                showToast(exception.getMessage(), SuperToast.Duration.LONG, SuperToast.Background.RED);
             }
         });
     }
@@ -239,13 +242,23 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         }
     }
 
-    private void showToast(String msg, int length, int color) {
-        SuperToast superToast = new SuperToast(SignUpActivity.this);
-        superToast.setText(msg);
-        superToast.setDuration(length);
-        superToast.setBackground(color);
-        superToast.setTextColor(Color.WHITE);
-        superToast.setGravity(Gravity.TOP, 0, 20);
-        superToast.show();
+    private void showToast(final String msg, final int length, final int color) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                SuperToast superToast = new SuperToast(SignUpActivity.this);
+                superToast.setText(msg);
+                superToast.setDuration(length);
+                superToast.setBackground(color);
+                superToast.setTextColor(Color.WHITE);
+                superToast.setAnimations(SuperToast.Animations.FLYIN);
+                superToast.setGravity(Gravity.TOP, 0, 20);
+                superToast.show();
+            }
+        });
     }
 }

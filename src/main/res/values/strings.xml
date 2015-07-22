@@ -235,6 +235,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login_auth_msg">Logging in …</string>
+    <string name="sign_up_msg">Signing up …</string>
     <string name="password_recovery_msg">Recovering password …</string>
     <string name="title_activity_main_page">MainMaterialDrawerActivity</string>
 
