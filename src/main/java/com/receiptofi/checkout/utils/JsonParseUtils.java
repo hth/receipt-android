@@ -360,7 +360,7 @@ public class JsonParseUtils {
             JSONObject jsonObject = new JSONObject(jsonResponse);
             JSONObject errorJson = jsonObject.getJSONObject("error");
             String errorReason = errorJson.has("reason") ? errorJson.getString("reason") : "";
-            int errorCode = errorJson.has("systemErrorCode") ? errorJson.getInt("systemErrorCode") : 0;
+            String errorCode = errorJson.has("systemErrorCode") ? errorJson.getString("systemErrorCode") : "";
             String error = errorJson.has("systemError") ? errorJson.getString("systemError") : "";
 
             Log.d(TAG, "errorReason: " + errorReason);

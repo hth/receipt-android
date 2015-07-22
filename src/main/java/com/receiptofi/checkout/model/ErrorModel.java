@@ -1,17 +1,19 @@
 package com.receiptofi.checkout.model;
 
+import com.receiptofi.checkout.model.types.MobileSystemErrorCodeEnum;
+
 /**
  * User: hitender
  * Date: 7/21/15 10:19 PM
  */
 public class ErrorModel {
     private String reason;
-    private int systemErrorCode;
+    private MobileSystemErrorCodeEnum systemErrorCode;
     private String systemError;
 
-    public ErrorModel(String reason, int systemErrorCode, String systemError) {
+    public ErrorModel(String reason, String systemErrorCode, String systemError) {
         this.reason = reason;
-        this.systemErrorCode = systemErrorCode;
+        this.systemErrorCode = MobileSystemErrorCodeEnum.valueOf(systemErrorCode);
         this.systemError = systemError;
     }
 
@@ -19,7 +21,7 @@ public class ErrorModel {
         return reason;
     }
 
-    public int getSystemErrorCode() {
+    public MobileSystemErrorCodeEnum getSystemErrorCode() {
         return systemErrorCode;
     }
 

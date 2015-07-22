@@ -23,6 +23,7 @@ import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
 import com.receiptofi.checkout.model.ErrorModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.model.types.MobileSystemErrorCodeEnum;
 import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
@@ -205,7 +206,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     }
 
     private void onPasswordRecoveryError(ErrorModel errorModel) {
-        if (errorModel.getSystemErrorCode() == 416) {
+        if (errorModel.getSystemErrorCode() == MobileSystemErrorCodeEnum.USER_SOCIAL) {
             showToast(
                     getResources().getString(R.string.password_recovery_social_failed),
                     SuperToast.Duration.EXTRA_LONG,
