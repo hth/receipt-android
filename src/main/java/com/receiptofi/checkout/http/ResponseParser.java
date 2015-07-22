@@ -28,17 +28,6 @@ public class ResponseParser {
         }
     }
 
-    public static String getSocialAuthError(String response) {
-        try {
-            JSONObject loginResponseJson = new JSONObject(response);
-            JSONObject error = loginResponseJson.getJSONObject("error");
-            return error.getString("reason");
-        } catch (JSONException e) {
-            Log.d(TAG, "reason=" + e.getMessage(), e);
-            return null;
-        }
-    }
-
     public synchronized static Bundle getImageUploadResponse(String response) {
         Bundle bundle = new Bundle();
         try {

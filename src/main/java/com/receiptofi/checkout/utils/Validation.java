@@ -1,7 +1,8 @@
 package com.receiptofi.checkout.utils;
 
 /**
- * Created by PT on 12/12/14.
+ * User: PT
+ * Date: 12/12/14 6:40 PM
  */
 public class Validation {
 
