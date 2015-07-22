@@ -211,10 +211,10 @@
     <string name="notify_empty_detail">Choose month to view receipts</string>
 
     <!--Error String-->
-    <string name="err_str_enter_name">Please enter name.</string>
-    <string name="err_str_enter_email">Please enter email.</string>
-    <string name="err_str_enter_password">Please enter password.</string>
-    <string name="err_str_enter_valid_email">Please enter valid email.</string>
+    <string name="err_str_enter_name">Please enter a name.</string>
+    <string name="err_str_enter_email">Please enter an email.</string>
+    <string name="err_str_enter_password">Please enter a password.</string>
+    <string name="err_str_enter_valid_email">Please enter a valid email.</string>
     <string name="err_str_enter_valid_password">Password must contain at least %s characters.</string>
     <string name="err_str_bundle_null">Bundle is null</string>
     <string name="err_str_email_empty">Are you sure you provided email address?</string>
