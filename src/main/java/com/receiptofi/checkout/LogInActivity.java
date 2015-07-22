@@ -233,20 +233,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         Log.d(TAG, "Authenticating");
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
-        if (data == null) {
-            errors.append(getResources().getString(R.string.err_str_bundle_null));
-            SuperActivityToast superActivityToast = new SuperActivityToast(LogInActivity.this);
-            superActivityToast.setText(errors);
-            superActivityToast.setDuration(SuperToast.Duration.SHORT);
-            superActivityToast.setBackground(SuperToast.Background.BLUE);
-            superActivityToast.setTextColor(Color.WHITE);
-            superActivityToast.setTouchToDismiss(true);
-            superActivityToast.show();
-
-            errors.delete(0, errors.length());
-            return;
-        }
-
         RequestBody formBody = new FormEncodingBuilder()
                 .add(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL))
                 .add(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD))

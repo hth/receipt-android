@@ -216,7 +216,6 @@
     <string name="err_str_enter_password">Please enter a password.</string>
     <string name="err_str_enter_valid_email">Please enter a valid email.</string>
     <string name="err_str_enter_valid_password">Password must contain at least %s characters.</string>
-    <string name="err_str_bundle_null">Bundle is null</string>
     <string name="err_str_email_empty">Are you sure you provided email address?</string>
 
     <string-array name="age_range">

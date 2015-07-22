@@ -1,6 +1,7 @@
 package com.receiptofi.checkout;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -174,10 +175,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         // error string is for keeping the error that needs to be shown to the
         // user.
         if (errors.length() > 0) {
-            //TODO(hth) fix this with super toast
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
+            showToast(errors.toString(), SuperToast.Duration.EXTRA_LONG, SuperToast.Background.RED);
             errors.delete(0, errors.length());
         } else {
             Bundle bundle = new Bundle();
@@ -194,15 +192,6 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         Log.d(TAG, "executing authenticateSignUp");
         showLoader(this.getResources().getString(R.string.login_auth_msg));
 
-        //TODO(hth) fix this with super toast
-        if (data == null) {
-            errors.append(getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
-            errors.delete(0, errors.length());
-            return;
-        }
         JSONObject postData = new JSONObject();
 
         try {
@@ -248,5 +237,15 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         } else {
             errors.append("\n").append("\n").append(msg);
         }
+    }
+
+    private void showToast(String msg, int length, int color) {
+        SuperToast superToast = new SuperToast(SignUpActivity.this);
+        superToast.setText(msg);
+        superToast.setDuration(length);
+        superToast.setBackground(color);
+        superToast.setTextColor(Color.WHITE);
+        superToast.setGravity(Gravity.TOP, 0, 20);
+        superToast.show();
     }
 }

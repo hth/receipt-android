@@ -119,20 +119,13 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             showToast(errors.toString(), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
             errors.delete(0, errors.length());
         } else {
-            sendRecoveryInfo(emailStr);
+            sendRecoveryEmail(emailStr);
         }
     }
 
-    private void sendRecoveryInfo(String email) {
+    private void sendRecoveryEmail(String email) {
         Log.d(TAG, "recovery email invoked");
         showLoader(this.getResources().getString(R.string.password_recovery_msg));
-
-        if (TextUtils.isEmpty(email)) {
-            errors.append(this.getResources().getString(R.string.err_str_email_empty));
-            showToast(errors.toString(), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
-            errors.delete(0, errors.length());
-            return;
-        }
 
         JSONObject postData = new JSONObject();
         try {
@@ -145,7 +138,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
             @Override
             public void onSuccess(Headers headers, String body) {
-                Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
+                Log.d(TAG, "executing sendRecoveryEmail: onSuccess");
                 Message msg = new Message();
                 msg.what = PASSWORD_RECOVERY_SUCCESS;
                 msg.obj = getResources().getText(R.string.password_recovery_message);
@@ -154,7 +147,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing sendRecoveryInfo: onError: " + error);
+                Log.d(TAG, "executing sendRecoveryEmail: onError: " + error);
                 Message msg = new Message();
                 msg.what = PASSWORD_RECOVERY_ERROR;
                 msg.obj = JsonParseUtils.parseError(error);
@@ -163,7 +156,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
             @Override
             public void onException(Exception exception) {
-                Log.e(TAG, "executing sendRecoveryInfo: onException: " + exception.getMessage(), exception);
+                Log.e(TAG, "executing sendRecoveryEmail: onException: " + exception.getMessage(), exception);
                 Message msg = new Message();
                 msg.what = PASSWORD_RECOVERY_EXCEPTION;
                 msg.obj = exception.getLocalizedMessage();
@@ -252,7 +245,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         superToast.setDuration(length);
         superToast.setBackground(color);
         superToast.setTextColor(Color.WHITE);
-        superToast.setGravity(Gravity.CENTER, 0, 20);
+        superToast.setGravity(Gravity.TOP, 0, 20);
         superToast.show();
     }
 }
