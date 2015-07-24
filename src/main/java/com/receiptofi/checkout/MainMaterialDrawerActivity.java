@@ -13,6 +13,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -72,6 +74,25 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
+
+    public static final int UPDATE_USER_INFO = 0x1061;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case UPDATE_USER_INFO:
+                    ProfileModel profileModel = (ProfileModel) msg.obj;
+                    setUserEmail(profileModel.getMail());
+                    setUsername(profileModel.getName());
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     @Override
     public void init(Bundle savedInstanceState) {

@@ -251,7 +251,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
         if (UserUtils.isValidAppUser()) {
             launchHomeScreen();
             finish();
-            // TODO make this call later
             String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
             if (TextUtils.isEmpty(did)) {
                 DeviceService.registerDevice(this);
