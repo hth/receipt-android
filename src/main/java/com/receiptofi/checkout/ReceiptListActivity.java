@@ -237,7 +237,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                                 @Override
                                 public void onError(int statusCode, String error) {
                                     Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
-                                    ToastBox.makeText(ReceiptListActivity.this, JsonParseUtils.parseError(error), Toast.LENGTH_SHORT).show();
+                                    ToastBox.makeText(ReceiptListActivity.this, JsonParseUtils.parseForErrorReason(error), Toast.LENGTH_SHORT).show();
                                 }
 
                                 @Override

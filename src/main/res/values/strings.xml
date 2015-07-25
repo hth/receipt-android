@@ -112,6 +112,10 @@
         To change your login, please enter your
         preferred valid email address below.
     </string>
+    <string name="pref_login_social_message">
+        Cannot change login id for your account.
+        As you signed up using social login from Facebook or Google+.
+    </string>
 
     <string name="key_pref_password">pref_password</string>
     <string name="pref_password_title">Password</string>
@@ -120,6 +124,10 @@
     <string name="pref_password_message">
         To change your password, please enter a new
         password below. Minimum length of %s characters.
+    </string>
+    <string name="pref_password_social_message">
+        Cannot change password for your account.
+        As you signed up using social login from Facebook or Google+.
     </string>
 
     <string name="key_pref_data_sync_id">pref_data_sync</string>
@@ -224,6 +232,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login_auth_msg">Logging in …</string>
+    <string name="password_recovery_msg">Recovering password …</string>
     <string name="title_activity_main_page">MainMaterialDrawerActivity</string>
 
     <!-- Used by fragment_expense_tag_style_listview.xml -->

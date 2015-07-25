@@ -8,8 +8,6 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -19,7 +17,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
@@ -38,8 +35,6 @@ import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.db.ExpenseTagUtils;
 import com.receiptofi.checkout.views.ColorPickerView;
 import com.squareup.okhttp.Headers;
-
-import junit.framework.Assert;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -168,7 +163,7 @@ public class ExpenseTagDialog extends DialogFragment {
                 public void onError(int statusCode, String error) {
                     Log.d(TAG, "executing ADD_EXPENSE_TAG: onError: " + error);
                     if (null != AppUtils.getHomePageContext()) {
-                        ExpenseTagFragment.showMessage(JsonParseUtils.parseError(error), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
+                        ExpenseTagFragment.showMessage(JsonParseUtils.parseForErrorReason(error), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
                     }
                 }
 
@@ -209,7 +204,7 @@ public class ExpenseTagDialog extends DialogFragment {
                     @Override
                     public void onError(int statusCode, String error) {
                         Log.d(TAG, "executing UPDATE_EXPENSE_TAG: onError: " + error);
-                        ExpenseTagFragment.showMessage(JsonParseUtils.parseError(error), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
+                        ExpenseTagFragment.showMessage(JsonParseUtils.parseForErrorReason(error), SuperToast.Background.RED, (Activity) AppUtils.getHomePageContext());
                     }
 
                     @Override

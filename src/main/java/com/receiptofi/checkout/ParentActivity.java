@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.facebook.Session;
 import com.facebook.SessionState;
@@ -29,9 +28,9 @@ import com.google.android.gms.plus.Plus;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
-import com.receiptofi.checkout.http.ResponseParser;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
 import com.receiptofi.checkout.service.DeviceService;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.db.DBUtils;
 import com.receiptofi.checkout.utils.db.KeyValueUtils;
@@ -227,13 +226,14 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 hideLoader();
                 afterSuccessfulLogin();
+                KeyValueUtils.updateInsert(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(true));
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Parent executing authenticateSocialAccount: onError: " + error);
                 hideLoader();
-                showErrorMsg(ResponseParser.getSocialAuthError(error), SuperToast.Duration.LONG);
+                showErrorMsg(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG);
             }
 
             @Override
@@ -480,7 +480,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                         ParentActivity.this,                               // Context context
                         Plus.AccountApi.getAccountName(mGoogleApiClient),  // String accountName
                         scopes,                                            // String scope
-                        appActivities                                      // Bundle bundle
+                        appActivities                                      // Bundle appActivities
                 );
                 Log.d(TAG, "token is: " + token);
             } catch (IOException transientEx) {

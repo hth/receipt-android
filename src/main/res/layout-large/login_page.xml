@@ -104,6 +104,7 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"/>
 
             <LinearLayout
+                android:id="@+id/left_right_test_button"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/activity_vertical_margin_wide"
                 android:orientation="horizontal">
