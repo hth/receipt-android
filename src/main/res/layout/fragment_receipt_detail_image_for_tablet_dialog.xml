@@ -3,13 +3,13 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              android:background="@color/tv_black"
-             tools:context="com.receiptofi.checkout.fragments.ReceiptDetailImageForTabletDialogFragment">
+             tools:context="com.receiptofi.receipts.fragments.ReceiptDetailImageForTabletDialogFragment">
 
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent">
 
-        <com.receiptofi.checkout.views.TouchImageView
+        <com.receiptofi.receipts.views.TouchImageView
             android:id="@+id/receiptImage"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

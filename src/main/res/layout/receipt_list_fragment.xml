@@ -3,7 +3,7 @@
               android:layout_height="match_parent"
               android:orientation="vertical">
 
-    <com.receiptofi.checkout.views.PinnedHeaderExpandableListView
+    <com.receiptofi.receipts.views.PinnedHeaderExpandableListView
         android:id="@+id/exp_list_view"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

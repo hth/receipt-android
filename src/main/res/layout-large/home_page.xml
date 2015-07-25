@@ -196,7 +196,7 @@
                 android:layout_height="400dp"
                 android:layout_below="@+id/current_amount"/>
 
-            <com.receiptofi.checkout.views.FlowLayout
+            <com.receiptofi.receipts.views.FlowLayout
                 android:id="@+id/legend_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.receiptofi.checkout.fragments.HomeFragment">
+    tools:context="com.receiptofi.receipts.fragments.HomeFragment">
 
     <in.srain.cube.views.ptr.PtrFrameLayout xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
         android:id="@+id/material_style_ptr_frame"
@@ -213,7 +213,7 @@
                         android:layout_height="400dp"
                         android:layout_below="@+id/current_amount" />
 
-                    <com.receiptofi.checkout.views.FlowLayout
+                    <com.receiptofi.receipts.views.FlowLayout
                         android:id="@+id/legend_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
