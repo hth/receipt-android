@@ -13,7 +13,7 @@ Consent Icon 120x120px
 https://play.google.com/apps/publish/
 
 - 512px - Phone
-- 1028px - 7 inch
+- 1280px - 7 inch
 - 3840px - 10 inch and Tv
 
 ### App release Alpha Group
