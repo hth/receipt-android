@@ -456,5 +456,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
             setUsername(profileModel.getName());
             setUserEmail(profileModel.getMail());
         }
+        /** Works without this line but just to be safe. */
+        notifyAccountDataChanged();
     }
 }
