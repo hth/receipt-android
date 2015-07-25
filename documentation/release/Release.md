@@ -10,12 +10,13 @@ Consent Icon 120x120px
 
 ### Play Store to release app
 
-https://play.google.com/apps/publish/
+When [Publishing] (https://play.google.com/apps/publish/) have images of size
 
 - 512px - Phone
 - 1280px - 7 inch
 - 3840px - 10 inch and Tv
 
-### App release Alpha Group
+### App alpha - release Google Group
 
-https://groups.google.com/forum/#!managemembers/receiptofi-alpha-testers/members/active
+Add users to the [group] (https://groups.google.com/forum/#!managemembers/receiptofi-alpha-testers/members/active)
+for alpha release testing. Mostly should contain dev tester.
