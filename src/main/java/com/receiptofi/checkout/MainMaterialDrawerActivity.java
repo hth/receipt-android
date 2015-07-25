@@ -13,6 +13,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.provider.MediaStore;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -68,16 +70,35 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     public SubscriptionFragment subscriptionFragment;
     public SettingFragment settingFragment;
     private SuperActivityToast uploadImageToast;
-    protected ReceiptofiApplication myApp;
+    private ReceiptofiApplication receiptofiApplication;
+    private MaterialAccount account;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
+
+    public static final int UPDATE_USER_INFO = 0x1061;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case UPDATE_USER_INFO:
+                    ProfileModel profileModel = (ProfileModel) msg.obj;
+                    refreshAccount(profileModel);
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     @Override
     public void init(Bundle savedInstanceState) {
 
         ReceiptofiApplication.homeActivityResumed();
-        myApp = (ReceiptofiApplication) getApplicationContext();
+        receiptofiApplication = (ReceiptofiApplication) getApplicationContext();
 
         AppUtils.setHomePageContext(this);
 
@@ -92,7 +113,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         String name = profileModel != null ? profileModel.getName() : "";
         String mail = profileModel != null ? profileModel.getMail() : UserUtils.getEmail();
 
-        MaterialAccount account;
         if (TextUtils.isEmpty(name)) {
             account = new MaterialAccount(
                     this.getResources(),
@@ -126,7 +146,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Home",
-                        new IconDrawable(myApp, Iconify.IconValue.fa_home)
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_home)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         homeFragment));
@@ -134,7 +154,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Notification",
-                        new IconDrawable(myApp, Iconify.IconValue.fa_bell_o)
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_bell_o)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         notificationFragment));
@@ -142,7 +162,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Tag Expenses",
-                        new IconDrawable(myApp, Iconify.IconValue.fa_tags)
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_tags)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         expenseTagFragment));
@@ -150,7 +170,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Billing History",
-                        new IconDrawable(myApp, Iconify.IconValue.fa_history)
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_history)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         billingFragment));
@@ -158,7 +178,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Subscription",
-                        new IconDrawable(myApp, Iconify.IconValue.fa_hand_o_up)
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         subscriptionFragment));
@@ -166,7 +186,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Log Out",
-                        new IconDrawable(myApp, Iconify.IconValue.fa_sign_out)
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_sign_out)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         new MaterialSectionListener() {
@@ -180,7 +200,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addBottomSection(
                 newSection(
                         "Settings",
-                        new IconDrawable(myApp, Iconify.IconValue.fa_cogs)
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_cogs)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         settingFragment));
@@ -195,7 +215,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     @Override
     protected void onResume() {
         super.onResume();
-        myApp.setCurrentActivity(this);
+        receiptofiApplication.setCurrentActivity(this);
         Log.d(TAG, "executing onResume");
         if (searchView != null) {
             searchView.setQuery("", false);
@@ -358,9 +378,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     }
 
     private void clearReferences() {
-        Activity currActivity = myApp.getCurrentActivity();
+        Activity currActivity = receiptofiApplication.getCurrentActivity();
         if (currActivity != null && currActivity.equals(this))
-            myApp.setCurrentActivity(null);
+            receiptofiApplication.setCurrentActivity(null);
     }
 
     /**
@@ -410,5 +430,31 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         drawable.draw(canvas);
 
         return bitmap;
+    }
+
+    /**
+     * Refreshes account profile on main menu.
+     *
+     * @param profileModel
+     */
+    private void refreshAccount(ProfileModel profileModel) {
+        if (null != account) {
+            TextDrawable textDrawable = TextDrawable.builder()
+                    .beginConfig()
+                    .textColor(Color.BLACK)
+                    .useFont(Typeface.DEFAULT)
+                    .fontSize(30) /* size in px */
+                    .bold()
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRound(WordUtils.initials(profileModel.getName()), Color.WHITE);
+
+            account.setPhoto(drawableToText(textDrawable));
+            account.setTitle(profileModel.getName());
+            setUserEmail(profileModel.getMail());
+        } else {
+            setUsername(profileModel.getName());
+            setUserEmail(profileModel.getMail());
+        }
     }
 }

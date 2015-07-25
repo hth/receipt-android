@@ -158,14 +158,25 @@ public class DeviceService {
     public static void onSuccess(Headers headers, String body) {
         MainMaterialDrawerActivity mainMaterialDrawer = (MainMaterialDrawerActivity) AppUtils.getHomePageContext();
         Boolean refreshView = false;
-        // If HomePageContext has been cleared, then we should discard the http response.
-        if (AppUtils.getHomePageContext() == null) {
-            return;
+
+        /** We need the context to be not null to update data. */
+        if (null == mainMaterialDrawer) {
+            while (null == AppUtils.getHomePageContext()) {
+                //TODO(hth) remove this while loop :( This is done because context is not initialized.
+                Log.d(TAG, "Waiting on MainMaterialDrawerActivity context initialization.");
+            }
+
+            Log.d(TAG, "Context not null during refresh data");
+            mainMaterialDrawer = (MainMaterialDrawerActivity) AppUtils.getHomePageContext();
         }
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
 
         if (null != dataWrapper.getProfileModel()) {
             ProfileUtils.insert(dataWrapper.getProfileModel());
+            Message message = new Message();
+            message.obj = dataWrapper.getProfileModel();
+            message.what = MainMaterialDrawerActivity.UPDATE_USER_INFO;
+            mainMaterialDrawer.updateHandler.sendMessage(message);
         }
 
         ReceiptUtils.insert(dataWrapper.getReceiptModels());

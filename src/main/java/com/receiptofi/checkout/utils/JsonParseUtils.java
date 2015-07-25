@@ -6,6 +6,7 @@ import android.util.Log;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.model.BillingAccountModel;
 import com.receiptofi.checkout.model.BillingHistoryModel;
+import com.receiptofi.checkout.model.ErrorModel;
 import com.receiptofi.checkout.model.ExpenseTagModel;
 import com.receiptofi.checkout.model.NotificationModel;
 import com.receiptofi.checkout.model.PlanModel;
@@ -345,6 +346,25 @@ public class JsonParseUtils {
             String errorReason = errorJson.getString("reason");
             Log.d(TAG, "errorReason: " + errorReason);
             return errorReason;
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
+        }
+        return null;
+    }
+
+    public static ErrorModel parseError(String jsonResponse) {
+        if (TextUtils.isEmpty(jsonResponse)) {
+            return null;
+        }
+        try {
+            JSONObject jsonObject = new JSONObject(jsonResponse);
+            JSONObject errorJson = jsonObject.getJSONObject("error");
+            String errorReason = errorJson.has("reason") ? errorJson.getString("reason") : "";
+            int errorCode = errorJson.has("systemErrorCode") ? errorJson.getInt("systemErrorCode") : 0;
+            String error = errorJson.has("systemError") ? errorJson.getString("systemError") : "";
+
+            Log.d(TAG, "errorReason: " + errorReason);
+            return new ErrorModel(errorReason, errorCode, error);
         } catch (JSONException e) {
             Log.e(TAG, "Fail parsing jsonResponse=" + jsonResponse + " reason=" + e.getLocalizedMessage(), e);
         }

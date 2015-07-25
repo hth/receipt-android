@@ -1,9 +1,8 @@
 package com.receiptofi.checkout;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,15 +15,18 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperActivityToast;
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.checkout.http.API;
 import com.receiptofi.checkout.http.ExternalCallWithOkHttp;
 import com.receiptofi.checkout.http.ResponseHandler;
+import com.receiptofi.checkout.model.ErrorModel;
 import com.receiptofi.checkout.model.types.IncludeAuthentication;
+import com.receiptofi.checkout.model.types.MobileSystemErrorCodeEnum;
+import com.receiptofi.checkout.utils.JsonParseUtils;
 import com.receiptofi.checkout.utils.UserUtils;
 import com.receiptofi.checkout.utils.Validation;
-import com.receiptofi.checkout.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
@@ -37,13 +39,14 @@ import org.json.JSONObject;
  */
 public class PasswordRecoveryActivity extends Activity implements View.OnClickListener {
 
-    protected static final int PASSWORD_RECOVERY_SUCCESS = 0x2565;
-    protected static final int PASSWORD_RECOVERY_FAILURE = 0x2566;
+    protected static final int PASSWORD_RECOVERY_SUCCESS = 0x2965;
+    protected static final int PASSWORD_RECOVERY_ERROR = 0x2966;
+    protected static final int PASSWORD_RECOVERY_EXCEPTION = 0x2967;
     private static final String TAG = PasswordRecoveryActivity.class.getSimpleName();
     private StringBuilder errors = new StringBuilder();
     private EditText email;
 
-    private ProgressDialog loader;
+    private SuperActivityToast loader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +56,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         final TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
         passwordRecovery.setOnClickListener(this);
 
+        email = (EditText) findViewById(R.id.email);
         final TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i2, int i3) {
@@ -67,12 +71,15 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             @Override
             public void afterTextChanged(Editable editable) {
                 passwordRecovery.setEnabled(editable.length() >= Validation.EMAIL_MIN_LENGTH);
+
+                TextView recoveryStatus = (TextView) findViewById(R.id.password_recovery_info);
+                if (!TextUtils.isEmpty(recoveryStatus.getText())) {
+                    recoveryStatus.setText("");
+                    recoveryStatus.setVisibility(View.INVISIBLE);
+                }
             }
         };
-
-        email = (EditText) findViewById(R.id.email);
         email.addTextChangedListener(textWatcher);
-
     }
 
     @Override
@@ -81,8 +88,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         switch (view.getId()) {
             case R.id.password_recovery_button:
                 Log.d(TAG, "password_recovery_button clicked");
-                email.setEnabled(false);
-                final TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
+                TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
                 passwordRecovery.setEnabled(false);
                 recoverPassword();
                 break;
@@ -93,50 +99,38 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     }
 
     private void recoverPassword() {
-        // Hide soft keyboard
+        /** Hide soft keyboard. */
         InputMethodManager inputManager = (InputMethodManager) this.getSystemService(Context.INPUT_METHOD_SERVICE);
         inputManager.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0);
 
-        // getting username and password
-        String emailStr = email.getText().toString();
+        /** Getting email and trim. */
+        String emailStr = email.getText().toString().trim();
 
+        /** Validation. */
         if (TextUtils.isEmpty(emailStr)) {
-            errors.append(this.getResources().getString(R.string.err_str_enter_email));
+            addErrorMsg(getResources().getString(R.string.err_str_email_empty));
         } else {
             if (!UserUtils.isValidEmail(emailStr)) {
-                addErrorMsg(this.getResources().getString(R.string.err_str_enter_valid_email));
+                addErrorMsg(getResources().getString(R.string.err_str_enter_valid_email));
             }
         }
-        // error string is for keeping the error that needs to be shown to the
-        // user.
+
+        /** Error string is for keeping the error that needs to be shown to the user. */
         if (errors.length() > 0) {
-            //TODO(hth) change toast
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
+            showToast(errors.toString(), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
             errors.delete(0, errors.length());
         } else {
-            sendRecoveryInfo(emailStr);
+            sendRecoveryEmail(emailStr);
         }
     }
 
-    private void sendRecoveryInfo(String email) {
-        Log.d(TAG, "executing authenticateSignUp");
-        showLoader(this.getResources().getString(R.string.login_auth_msg));
-
-        if (TextUtils.isEmpty(email)) {
-            //TODO(hth) change toast
-            errors.append(this.getResources().getString(R.string.err_str_bundle_null));
-            Toast toast = ToastBox.makeText(this, errors, Toast.LENGTH_SHORT);
-            toast.setGravity(Gravity.TOP, 0, 20);
-            toast.show();
-            errors.delete(0, errors.length());
-            return;
-        }
+    private void sendRecoveryEmail(String email) {
+        Log.d(TAG, "recovery email invoked");
+        showLoader(getResources().getString(R.string.password_recovery_msg));
 
         JSONObject postData = new JSONObject();
         try {
-            postData.put(API.key.PASSWORD_RECOVERY_EMAIL, email);
+            postData.put(API.key.PASSWORD_RECOVERY_EMAIL, email.trim());
         } catch (JSONException e) {
             Log.e(TAG, "Exception while adding postdata: " + e.getMessage(), e);
         }
@@ -145,22 +139,29 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
             @Override
             public void onSuccess(Headers headers, String body) {
-                Log.d(TAG, "executing sendRecoveryInfo: onSuccess");
-                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                Log.d(TAG, "executing sendRecoveryEmail: onSuccess");
+                Message msg = new Message();
+                msg.what = PASSWORD_RECOVERY_SUCCESS;
+                msg.obj = getResources().getText(R.string.password_recovery_message);
+                updateHandler.sendMessage(msg);
             }
 
             @Override
             public void onError(int statusCode, String error) {
-                Log.d(TAG, "executing sendRecoveryInfo: onError: " + error);
-                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_SUCCESS);
+                Log.d(TAG, "executing sendRecoveryEmail: onError: " + error);
+                Message msg = new Message();
+                msg.what = PASSWORD_RECOVERY_ERROR;
+                msg.obj = JsonParseUtils.parseError(error);
+                updateHandler.sendMessage(msg);
             }
 
             @Override
             public void onException(Exception exception) {
-                Log.d(TAG, "executing sendRecoveryInfo: onException: " + exception.getMessage());
-                updateHandler.sendEmptyMessage(PASSWORD_RECOVERY_FAILURE);
-                //TODO(hth) change toast
-                ToastBox.makeText(PasswordRecoveryActivity.this, exception.getMessage(), Toast.LENGTH_SHORT);
+                Log.e(TAG, "executing sendRecoveryEmail: onException: " + exception.getMessage(), exception);
+                Message msg = new Message();
+                msg.what = PASSWORD_RECOVERY_EXCEPTION;
+                msg.obj = exception.getLocalizedMessage();
+                updateHandler.sendMessage(msg);
             }
         });
     }
@@ -174,12 +175,10 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     }
 
     public void showLoader(String msg) {
-        loader = new ProgressDialog(this);
-        loader.getWindow().setBackgroundDrawable(new ColorDrawable(0));
-        loader.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        loader.setCancelable(false);
+        loader = new SuperActivityToast(this, SuperToast.Type.PROGRESS);
+        loader.setText(msg);
         loader.setIndeterminate(true);
-        loader.setMessage(msg);
+        loader.setProgressIndeterminate(true);
         loader.show();
     }
 
@@ -190,17 +189,33 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         loader = null;
     }
 
-    private void passwordChanged(boolean success) {
+    private void passwordChanged(String message) {
         hideLoader();
         TextView recoveryStatus = (TextView) findViewById(R.id.password_recovery_info);
-        if (success) {
-            recoveryStatus.setText(PasswordRecoveryActivity.this.getText(R.string.password_recovery_message));
-        } else {
-            recoveryStatus.setText(PasswordRecoveryActivity.this.getText(R.string.password_recovery_failed));
-            final TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
-            passwordRecovery.setEnabled(true);
-        }
+        recoveryStatus.setText(message);
         recoveryStatus.setVisibility(View.VISIBLE);
+
+        TextView recoveryButton = (TextView) findViewById(R.id.password_recovery_button);
+        recoveryButton.setEnabled(false);
+    }
+
+    private void onPasswordRecoveryError(ErrorModel errorModel) {
+        if (errorModel.getSystemErrorCode() != 0 && errorModel.getErrorCode() == MobileSystemErrorCodeEnum.USER_SOCIAL) {
+            showToast(
+                    getResources().getString(R.string.password_recovery_social_failed),
+                    SuperToast.Duration.EXTRA_LONG,
+                    SuperToast.Background.RED);
+        } else {
+            showToast(
+                    errorModel.getReason(),
+                    SuperToast.Duration.EXTRA_LONG,
+                    SuperToast.Background.RED);
+        }
+
+        if (!TextUtils.isEmpty(email.getText())) {
+            TextView recoveryButton = (TextView) findViewById(R.id.password_recovery_button);
+            recoveryButton.setEnabled(true);
+        }
     }
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
@@ -208,15 +223,31 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         public boolean handleMessage(Message msg) {
             switch (msg.what) {
                 case PASSWORD_RECOVERY_SUCCESS:
-                    passwordChanged(true);
+                    passwordChanged((String) msg.obj);
                     break;
-                case PASSWORD_RECOVERY_FAILURE:
-                    passwordChanged(false);
+                case PASSWORD_RECOVERY_ERROR:
+                    onPasswordRecoveryError((ErrorModel) msg.obj);
+                    break;
+                case PASSWORD_RECOVERY_EXCEPTION:
+                    showToast((String) msg.obj, SuperToast.Duration.EXTRA_LONG, SuperToast.Background.RED);
                     break;
                 default:
-                    Log.e(TAG, "Update handler not defined for: " + msg);
+                    Log.e(TAG, "Update handler not defined for: " + msg.what);
             }
             return true;
         }
     });
+
+    private void showToast(String msg, int length, int color) {
+        hideLoader();
+
+        SuperToast superToast = new SuperToast(PasswordRecoveryActivity.this);
+        superToast.setText(msg);
+        superToast.setDuration(length);
+        superToast.setBackground(color);
+        superToast.setTextColor(Color.WHITE);
+        superToast.setAnimations(SuperToast.Animations.FLYIN);
+        superToast.setGravity(Gravity.TOP, 0, 20);
+        superToast.show();
+    }
 }

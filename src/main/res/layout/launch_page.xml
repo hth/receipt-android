@@ -41,7 +41,7 @@
                 android:layout_marginLeft="@dimen/image_info_margin_side"
                 android:layout_marginRight="@dimen/image_info_margin_side"
                 android:contentDescription="@string/app_info_cnt_dscp"
-                android:src="@drawable/app_logo"/>
+                android:src="@drawable/receipt_logo"/>
 
             <TextView
                 android:id="@+id/logo_view_text"

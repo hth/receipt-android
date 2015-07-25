@@ -46,10 +46,13 @@
 
     <!--Password recovery page-->
     <string name="password_recovery">SEND RECOVERY EMAIL</string>
-    <string name="password_recovery_failed"> request failed, try again later.</string>
+    <string name="password_recovery_social_failed">
+        Could not send password recovery email.
+        As you have signed up using Facebook or Google+.
+    </string>
     <string name="password_recovery_message">
-        An email has been sent to above email-address with
-        instructions to reset password
+        An email has been sent to above email address with
+        instructions on resetting your password.
     </string>
 
     <!--Home page-->
@@ -208,12 +211,12 @@
     <string name="notify_empty_detail">Choose month to view receipts</string>
 
     <!--Error String-->
-    <string name="err_str_enter_name">Please enter name.</string>
-    <string name="err_str_enter_email">Please enter email.</string>
-    <string name="err_str_enter_password">Please enter password.</string>
-    <string name="err_str_enter_valid_email">Please enter valid email.</string>
+    <string name="err_str_enter_name">Please enter a name.</string>
+    <string name="err_str_enter_email">Please enter an email.</string>
+    <string name="err_str_enter_password">Please enter a password.</string>
+    <string name="err_str_enter_valid_email">Please enter a valid email.</string>
     <string name="err_str_enter_valid_password">Password must contain at least %s characters.</string>
-    <string name="err_str_bundle_null">Bundle is null</string>
+    <string name="err_str_email_empty">Are you sure you provided email address?</string>
 
     <string-array name="age_range">
         <item>Select</item>
@@ -232,6 +235,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="login_auth_msg">Logging in …</string>
+    <string name="sign_up_msg">Signing up …</string>
     <string name="password_recovery_msg">Recovering password …</string>
     <string name="title_activity_main_page">MainMaterialDrawerActivity</string>
 

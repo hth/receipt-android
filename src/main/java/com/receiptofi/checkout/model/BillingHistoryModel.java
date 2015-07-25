@@ -3,7 +3,6 @@ package com.receiptofi.checkout.model;
 import android.util.Log;
 
 import com.receiptofi.checkout.model.types.BilledStatus;
-import com.receiptofi.checkout.model.types.BillingPlan;
 import com.receiptofi.checkout.utils.Constants;
 
 import org.joda.time.DateTime;
@@ -69,7 +68,7 @@ public class BillingHistoryModel {
     }
 
     public String displayBillingType() {
-        return (BillingPlan.valueOf(accountBillingType)).getDescription();
+        return accountBillingType;
     }
 
     public String displayBilledInfo() {

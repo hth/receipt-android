@@ -120,7 +120,7 @@ public class BillingFragment extends Fragment {
                 if (getItem(position).displayBilledInfo().equalsIgnoreCase("Payment Due")) {
                     holder.billingDate.setTextColor(Color.RED);
                 } else {
-                    holder.billingDate.setTextColor(R.color.gray_dark);
+                    holder.billingDate.setTextColor(getResources().getColor(R.color.gray_dark));
                 }
                 return convertView;
             } catch (Exception e) {
