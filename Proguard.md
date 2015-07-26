@@ -24,7 +24,7 @@ Use [apktool] (https://code.google.com/p/android-apktool/) to unpack apk file
     adb shell pm install -r "/data/local/tmp/com.receiptofi.checkout"
 
 
-### Signing APK
+### Signing APK (Do not use this, instead use ApkSigning.md)
 
     keytool -genkey -v -keystore checkout-staging.keystore -alias staging.checkout -keyalg RSA -keysize 2048 -validity 90
 
