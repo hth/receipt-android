@@ -24,6 +24,11 @@
     Is CN=Receiptofi Inc, OU=Receiptofi Inc, O=Receiptofi Inc, L=Sunnyvale, ST=CA, C=US correct?
       [no]:  yes
 
-For SHA1
+### For SHA1
 
      keytool -list -v -keystore receipts-release.keystore
+
+### For Facebook Key Hash
+
+     keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
+     keytool -exportcert -alias receipts.release -keystore receipts-release.keystore | openssl sha1 -binary | openssl base64
