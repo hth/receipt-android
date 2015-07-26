@@ -1,6 +1,6 @@
 def Properties props = new Properties()
 if (env == 'release') {
-    def propFile = new File(checkoutFileLocation + releaseProperties)
+    def propFile = new File(signingFileLocation + releaseProperties)
 
     if (propFile.canRead()) {
         props.load(new FileInputStream(propFile))
@@ -24,7 +24,7 @@ if (env == 'release') {
         android.buildTypes.release.signingConfig = null
     }
 } else if (env == 'staging') {
-    def propFile = new File(checkoutFileLocation + stagingProperties)
+    def propFile = new File(signingFileLocation + stagingProperties)
 
     if (propFile.canRead()) {
         props.load(new FileInputStream(propFile))
