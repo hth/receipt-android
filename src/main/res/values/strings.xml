@@ -4,8 +4,7 @@
     <string name="app_name">Receipts</string>
     <string name="no_network_available">Network connection unavailable,&#160;\n
         please connect Wi-Fi/Data plan.</string>
-    <string name="connect_to_server_failure">The server you are trying to connect is down.&#160;\n
-        We apologize and are working on fixing the issue.</string>
+    <string name="connect_to_server_failure">The server you are trying to connect is down. We apologize and are working on fixing the issue.</string>
     <string name="post_get_general_error">Could not complete action successfully.</string>
     <string name="post_image_upload_error">Image upload failed.</string>
     <string name="get_image_download_error">Failed to download image.</string>
@@ -98,6 +97,7 @@
     <string name="purchase_confirmation_title">Confirmation</string>
 
     <!--Preference String-->
+    <string name="key_pref_preferences_id">key_pref_preferences_id</string>
     <string name="key_pref_sync">pref_sync</string>
     <string name="pref_sync">Wi-Fi Sync</string>
     <string name="pref_sync_on">Images syncs over Wi-Fi only.</string>

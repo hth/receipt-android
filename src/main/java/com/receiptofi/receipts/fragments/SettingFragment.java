@@ -12,6 +12,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.preference.Preference;
+import android.preference.PreferenceCategory;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 import android.preference.SwitchPreference;
@@ -28,6 +29,7 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
+import com.receiptofi.receipts.BuildConfig;
 import com.receiptofi.receipts.LaunchActivity;
 import com.receiptofi.receipts.R;
 import com.receiptofi.receipts.http.API;
@@ -136,6 +138,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
+        if ("debug".equals(BuildConfig.BUILD_TYPE)) {
+            PreferenceCategory mCategory = (PreferenceCategory) findPreference(getString(R.string.key_pref_preferences_id));
+            mCategory.removePreference(notificationPref);
+        }
         /** Login Id. */
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
