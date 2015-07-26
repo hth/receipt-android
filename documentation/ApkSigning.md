@@ -1,6 +1,6 @@
 ### Steps to sign APK
 
-    keytool -genkey -v -keystore checkout-staging.keystore -alias staging.checkout -keyalg RSA -keysize 2048 -validity 8500
+    keytool -genkey -v -keystore receipts-release.keystore -alias receipts.release -keyalg RSA -keysize 2048 -validity 8500
 
 - Add Key store password
 - And add another password
@@ -23,3 +23,7 @@
       [Unknown]:  US
     Is CN=Receiptofi Inc, OU=Receiptofi Inc, O=Receiptofi Inc, L=Sunnyvale, ST=CA, C=US correct?
       [no]:  yes
+
+For SHA1
+
+     keytool -list -v -keystore receipts-release.keystore

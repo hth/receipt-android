@@ -1,6 +1,6 @@
-package com.receiptofi.checkout.test;
+package com.receiptofi.receipts.test;
 
-import com.receiptofi.checkout.LaunchActivity;
+import com.receiptofi.receipts.LaunchActivity;
 import com.robotium.solo.*;
 import android.test.ActivityInstrumentationTestCase2;
 
@@ -26,33 +26,33 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
   
 	public void testRun() {
         //Wait for activity: 'com.receiptofi.checkout.LaunchActivity'
-		solo.waitForActivity(com.receiptofi.checkout.LaunchActivity.class, 2000);
+		solo.waitForActivity(com.receiptofi.receipts.LaunchActivity.class, 2000);
         //Sleep for 3381 milliseconds
 		solo.sleep(3381);
         //Click on LOG IN
-		solo.clickOnView(solo.getView(com.receiptofi.checkout.R.id.sign_in_button));
+		solo.clickOnView(solo.getView(com.receiptofi.receipts.R.id.sign_in_button));
         //Wait for activity: 'com.receiptofi.checkout.LogInActivity'
-		assertTrue("com.receiptofi.checkout.LogInActivity is not found!", solo.waitForActivity(com.receiptofi.checkout.LogInActivity.class));
+		assertTrue("com.receiptofi.checkout.LogInActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.LogInActivity.class));
         //Sleep for 12945 milliseconds
 		solo.sleep(12945);
         //Enter the text: 'li@receiptofi.com'
-		solo.clearEditText((android.widget.EditText) solo.getView(com.receiptofi.checkout.R.id.email));
-		solo.enterText((android.widget.EditText) solo.getView(com.receiptofi.checkout.R.id.email), "li@receiptofi.com");
+		solo.clearEditText((android.widget.EditText) solo.getView(com.receiptofi.receipts.R.id.email));
+		solo.enterText((android.widget.EditText) solo.getView(com.receiptofi.receipts.R.id.email), "li@receiptofi.com");
         //Sleep for 518 milliseconds
 		solo.sleep(518);
         //Click on Empty Text View
-		solo.clickOnView(solo.getView(com.receiptofi.checkout.R.id.password));
+		solo.clickOnView(solo.getView(com.receiptofi.receipts.R.id.password));
         //Sleep for 5762 milliseconds
 		solo.sleep(5762);
         //Enter the text: 'Chongzhi'
-		solo.clearEditText((android.widget.EditText) solo.getView(com.receiptofi.checkout.R.id.password));
-		solo.enterText((android.widget.EditText) solo.getView(com.receiptofi.checkout.R.id.password), "Chongzhi");
+		solo.clearEditText((android.widget.EditText) solo.getView(com.receiptofi.receipts.R.id.password));
+		solo.enterText((android.widget.EditText) solo.getView(com.receiptofi.receipts.R.id.password), "Chongzhi");
         //Sleep for 769 milliseconds
 		solo.sleep(769);
         //Click on LOG IN
-		solo.clickOnView(solo.getView(com.receiptofi.checkout.R.id.login_button));
+		solo.clickOnView(solo.getView(com.receiptofi.receipts.R.id.login_button));
         //Wait for activity: 'com.receiptofi.checkout.MainMaterialDrawerActivity'
-		assertTrue("com.receiptofi.checkout.MainMaterialDrawerActivity is not found!", solo.waitForActivity(com.receiptofi.checkout.MainMaterialDrawerActivity.class));
+		assertTrue("com.receiptofi.checkout.MainMaterialDrawerActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.MainMaterialDrawerActivity.class));
         //Sleep for 10611 milliseconds
 		solo.sleep(10611);
         //Click on ImageView
@@ -62,7 +62,7 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
         //Click on Monthly 10 Process 10 receipts every month $0.02
 		solo.clickInList(1, 0);
         //Wait for activity: 'com.receiptofi.checkout.SubscriptionUserActivity'
-		assertTrue("com.receiptofi.checkout.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.checkout.SubscriptionUserActivity.class));
+		assertTrue("com.receiptofi.checkout.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.SubscriptionUserActivity.class));
         //Sleep for 2198 milliseconds
 		solo.sleep(2198);
         //Click on HomeView Purchase
@@ -72,7 +72,7 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
         //Click on Monthly 30 Process 30 receipts every month $0.04
 		solo.clickInList(2, 0);
         //Wait for activity: 'com.receiptofi.checkout.SubscriptionUserActivity'
-		assertTrue("com.receiptofi.checkout.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.checkout.SubscriptionUserActivity.class));
+		assertTrue("com.receiptofi.checkout.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.SubscriptionUserActivity.class));
         //Wait for activity: 'com.braintreepayments.api.dropin.BraintreePaymentActivity'
 		assertTrue("com.braintreepayments.api.dropin.BraintreePaymentActivity is not found!", solo.waitForActivity(com.braintreepayments.api.dropin.BraintreePaymentActivity.class));
         //Sleep for 4935 milliseconds
@@ -119,6 +119,6 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
         //Click on OK
 		solo.clickOnView(solo.getView(android.R.id.button1));
         //Wait for activity: 'com.receiptofi.checkout.LaunchActivity'
-		assertTrue("com.receiptofi.checkout.LaunchActivity is not found!", solo.waitForActivity(com.receiptofi.checkout.LaunchActivity.class));
+		assertTrue("com.receiptofi.checkout.LaunchActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.LaunchActivity.class));
 	}
 }
