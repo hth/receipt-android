@@ -17,7 +17,7 @@
     <string name="image_exists_in_queue">This image already exists in upload queue.</string>
 
     <!--Label-->
-    <string name="label_app_name">Checkout</string>
+    <string name="label_app_name">Receipts</string>
     <string name="label_sign_up">Sign Up</string>
     <string name="label_log_in">Log In</string>
     <string name="label_password_recovery">Password Recovery</string>
@@ -29,7 +29,7 @@
     <string name="sign_up">SIGN UP</string>
     <string name="log_in">LOG IN</string>
 
-    <string name="app_info_cnt_dscp">Where do you park your receipt at checkout</string>
+    <string name="app_info_cnt_dscp">Park your receipts here</string>
     <string name="facebook_login_cnt_dscp">Login using your Facebook account</string>
     <string name="google_login_cnt_dscp">Login using your Google account</string>
 
@@ -42,7 +42,7 @@
     <!--Sign up page-->
     <string name="hint_name">John Doe</string>
     <string name="age">Age</string>
-    <string name="signup_term">Tapping \"Sign Up\" confirms that you agree to the Checkout Terms of use.</string>
+    <string name="signup_term">Tapping \"Sign Up\" confirms that you agree to the Receipts Terms of use.</string>
 
     <!--Password recovery page-->
     <string name="password_recovery">SEND RECOVERY EMAIL</string>
@@ -156,10 +156,10 @@
     </string>
 
     <string name="key_pref_about_id">pref_about</string>
-    <string name="pref_about_title">About Checkout</string>
+    <string name="pref_about_title">About Receipts</string>
     <string name="pref_about_summary"/>
     <string name="pref_about_message">
-        Checkout is built on the idea that receipt can be more intuitive, efficient, and useful. Easy
+        Receipts is built on the idea that receipt can be more intuitive, efficient, and useful. Easy
         to tag, expense, track purchases geographically in a fun way by digitizing your receipts.
     </string>
 
@@ -196,7 +196,7 @@
     <string name="reminder_cancel">Cancel</string>
     <string name="reminder_set">Set</string>
     <string name="event_title">Your reminder for </string>
-    <string name="event_organizer">Checkout app - manage your receipt</string>
+    <string name="event_organizer">Receipts app - manage your receipt</string>
     <string name="event_description_1">You bought \"</string>
     <string name="event_description_2">\" from </string>
     <string name="event_description_3"> on </string>

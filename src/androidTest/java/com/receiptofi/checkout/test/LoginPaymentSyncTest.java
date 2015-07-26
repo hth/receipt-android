@@ -25,14 +25,14 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
   	}
   
 	public void testRun() {
-        //Wait for activity: 'com.receiptofi.checkout.LaunchActivity'
+        //Wait for activity: 'com.receiptofi.receipts.LaunchActivity'
 		solo.waitForActivity(com.receiptofi.receipts.LaunchActivity.class, 2000);
         //Sleep for 3381 milliseconds
 		solo.sleep(3381);
         //Click on LOG IN
 		solo.clickOnView(solo.getView(com.receiptofi.receipts.R.id.sign_in_button));
-        //Wait for activity: 'com.receiptofi.checkout.LogInActivity'
-		assertTrue("com.receiptofi.checkout.LogInActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.LogInActivity.class));
+        //Wait for activity: 'com.receiptofi.receipts.LogInActivity'
+		assertTrue("com.receiptofi.receipts.LogInActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.LogInActivity.class));
         //Sleep for 12945 milliseconds
 		solo.sleep(12945);
         //Enter the text: 'li@receiptofi.com'
@@ -51,8 +51,8 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
 		solo.sleep(769);
         //Click on LOG IN
 		solo.clickOnView(solo.getView(com.receiptofi.receipts.R.id.login_button));
-        //Wait for activity: 'com.receiptofi.checkout.MainMaterialDrawerActivity'
-		assertTrue("com.receiptofi.checkout.MainMaterialDrawerActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.MainMaterialDrawerActivity.class));
+        //Wait for activity: 'com.receiptofi.receipts.MainMaterialDrawerActivity'
+		assertTrue("com.receiptofi.receipts.MainMaterialDrawerActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.MainMaterialDrawerActivity.class));
         //Sleep for 10611 milliseconds
 		solo.sleep(10611);
         //Click on ImageView
@@ -61,8 +61,8 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
 		solo.sleep(6888);
         //Click on Monthly 10 Process 10 receipts every month $0.02
 		solo.clickInList(1, 0);
-        //Wait for activity: 'com.receiptofi.checkout.SubscriptionUserActivity'
-		assertTrue("com.receiptofi.checkout.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.SubscriptionUserActivity.class));
+        //Wait for activity: 'com.receiptofi.receipts.SubscriptionUserActivity'
+		assertTrue("com.receiptofi.receipts.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.SubscriptionUserActivity.class));
         //Sleep for 2198 milliseconds
 		solo.sleep(2198);
         //Click on HomeView Purchase
@@ -71,8 +71,8 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
 		solo.sleep(1579);
         //Click on Monthly 30 Process 30 receipts every month $0.04
 		solo.clickInList(2, 0);
-        //Wait for activity: 'com.receiptofi.checkout.SubscriptionUserActivity'
-		assertTrue("com.receiptofi.checkout.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.SubscriptionUserActivity.class));
+        //Wait for activity: 'com.receiptofi.receipts.SubscriptionUserActivity'
+		assertTrue("com.receiptofi.receipts.SubscriptionUserActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.SubscriptionUserActivity.class));
         //Wait for activity: 'com.braintreepayments.api.dropin.BraintreePaymentActivity'
 		assertTrue("com.braintreepayments.api.dropin.BraintreePaymentActivity is not found!", solo.waitForActivity(com.braintreepayments.api.dropin.BraintreePaymentActivity.class));
         //Sleep for 4935 milliseconds
@@ -101,11 +101,11 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
 		solo.clickOnView(solo.getView(android.R.id.button1));
         //Sleep for 11903 milliseconds
 		solo.sleep(11903);
-        //Scroll to LinearLayout About Checkout  LinearLayout
+        //Scroll to LinearLayout About receipts  LinearLayout
 		android.widget.ListView listView0 = (android.widget.ListView) solo.getView(android.widget.ListView.class, 0);
 		solo.scrollListToLine(listView0, 2);
-        //Click on LinearLayout About Checkout  LinearLayout
-		solo.clickOnText(java.util.regex.Pattern.quote("About Checkout"));
+        //Click on LinearLayout About receipts  LinearLayout
+		solo.clickOnText(java.util.regex.Pattern.quote("About receipts"));
         //Sleep for 1137 milliseconds
 		solo.sleep(1137);
         //Click on Got it
@@ -118,7 +118,7 @@ public class LoginPaymentSyncTest extends ActivityInstrumentationTestCase2<Launc
 		solo.sleep(1180);
         //Click on OK
 		solo.clickOnView(solo.getView(android.R.id.button1));
-        //Wait for activity: 'com.receiptofi.checkout.LaunchActivity'
-		assertTrue("com.receiptofi.checkout.LaunchActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.LaunchActivity.class));
+        //Wait for activity: 'com.receiptofi.receipts.LaunchActivity'
+		assertTrue("com.receiptofi.receipts.LaunchActivity is not found!", solo.waitForActivity(com.receiptofi.receipts.LaunchActivity.class));
 	}
 }

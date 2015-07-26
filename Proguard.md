@@ -5,23 +5,23 @@
 
 - Rename apk file to zip
 - Then unzip this file
-- Use [dex2jar] (https://code.google.com/p/dex2jar/) to convert classes.dex to checkout.jar
+- Use [dex2jar] (https://code.google.com/p/dex2jar/) to convert classes.dex to receipts.jar
 
 
-    ./d2j-dex2jar.sh ~/path/of/classes.dex -o ~/path/destination/checkout.jar
+    ./d2j-dex2jar.sh ~/path/of/classes.dex -o ~/path/destination/receipts.jar
 
-- Open checkout.jar with [JD-GUI] (http://jd.benow.ca/)
+- Open receipts.jar with [JD-GUI] (http://jd.benow.ca/)
 
 ### Unzip apk
 
 Use [apktool] (https://code.google.com/p/android-apktool/) to unpack apk file
 
-    apktool d checkout-debug.apk
+    apktool d receipts-debug.apk
 
 ### Copy and Install proguard apk to device
 
-    adb push -p checkout-debug.apk /data/local/tmp/com.receiptofi.checkout &&
-    adb shell pm install -r "/data/local/tmp/com.receiptofi.checkout"
+    adb push -p receipts-debug.apk /data/local/tmp/com.receiptofi.receipts &&
+    adb shell pm install -r "/data/local/tmp/com.receiptofi.receipts"
 
 
 ### Signing APK (Do not use this, instead use ApkSigning.md)
