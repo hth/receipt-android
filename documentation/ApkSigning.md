@@ -24,6 +24,13 @@
     Is CN=Receiptofi Inc, OU=Receiptofi Inc, O=Receiptofi Inc, L=Sunnyvale, ST=CA, C=US correct?
       [no]:  yes
 
+### For Debug signing
+
+[Debug] (https://developers.google.com/+/mobile/android/getting-started)
+
+      keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore -list -v
+      Enter keystore password: Type "android" if using debug.keystore
+
 ### For SHA1
 
      keytool -list -v -keystore receipts-release.keystore
