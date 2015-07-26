@@ -82,7 +82,7 @@ idea {
 }
 
 android {
-    archivesBaseName = "checkout";
+    archivesBaseName = "receipts";
 
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -137,7 +137,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.receiptofi.checkout"
+        applicationId "com.receiptofi.receipts"
         minSdkVersion 16
         targetSdkVersion 22
         testHandleProfiling true
@@ -154,7 +154,7 @@ android {
         }
 
         ext.versionName = manifestVersionName()
-        println "Building Receiptofi Checkout for " +
+        println "Building Receiptofi Receipts for " +
                 "environment: $env " +
                 "app-version: $versionName " +
                 "apkName ends with : $apkName"
@@ -193,7 +193,7 @@ android {
         staging
         release
     }
-    apply from: 'checkout-additional-files/signing.gradle'
+    apply from: 'receipt-android-app-signing-files/signing.gradle'
 
     buildTypes {
         def BOOLEAN = "boolean"
