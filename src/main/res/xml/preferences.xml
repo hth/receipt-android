@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
-        android:title="Preferences">
+        android:title="Preferences"
+        android:key="@string/key_pref_preferences_id">
         <SwitchPreference
             android:id="@+id/pref_wifi_sync"
             android:key="@string/key_pref_sync"
