@@ -120,6 +120,14 @@
         <!-- Required to use Drop-In -->
         <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity"
             android:parentActivityName="com.receiptofi.receipts.SubscriptionUserActivity" />
+
+        <!-- For Crash Dialog -->
+        <activity android:name="org.acra.CrashReportDialog"
+                  android:theme="@style/Theme.Dialog"
+                  android:process=":error_report"
+                  android:launchMode="singleInstance"
+                  android:excludeFromRecents="true"
+                  android:finishOnTaskLaunch="true" />
     </application>
 
 </manifest>
