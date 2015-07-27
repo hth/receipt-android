@@ -10,16 +10,21 @@ import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receipts.http.API;
 import com.receiptofi.receipts.http.ExternalCallWithOkHttp;
 import com.receiptofi.receipts.http.ResponseHandler;
@@ -46,8 +51,11 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
     private StringBuilder errors = new StringBuilder();
     private EditText name;
+    private ImageView nameImage;
     private EditText email;
+    private ImageView emailImage;
     private EditText password;
+    private ImageView passwordImage;
     private Spinner ageSpinner;
 
     private String nameStr;
@@ -82,11 +90,26 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
             }
         };
 
+        nameImage = (ImageView) findViewById(R.id.name_image);
+        nameImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_user)
+                .colorRes(R.color.white)
+                .actionBarSize());
+
         name = (EditText) findViewById(R.id.name);
         name.addTextChangedListener(textWatcher);
 
+        emailImage = (ImageView) findViewById(R.id.email_image);
+        emailImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_envelope)
+                .colorRes(R.color.white)
+                .actionBarSize());
+
         email = (EditText) findViewById(R.id.email);
         email.addTextChangedListener(textWatcher);
+
+        passwordImage = (ImageView) findViewById(R.id.password_image);
+        passwordImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_lock)
+                .colorRes(R.color.white)
+                .actionBarSize());
 
         password = (EditText) findViewById(R.id.password);
         password.addTextChangedListener(textWatcher);

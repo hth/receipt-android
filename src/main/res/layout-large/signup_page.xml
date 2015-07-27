@@ -40,6 +40,7 @@
                 android:addStatesFromChildren="true">
 
                 <ImageView
+                    android:id="@+id/name_image"
                     android:layout_width="@dimen/login_page_icon_width_height"
                     android:layout_height="@dimen/login_page_icon_width_height"
                     android:src="@drawable/ic_fullname"/>
@@ -67,6 +68,7 @@
                 android:addStatesFromChildren="true">
 
                 <ImageView
+                    android:id="@+id/email_image"
                     android:layout_width="@dimen/login_page_icon_width_height"
                     android:layout_height="@dimen/login_page_icon_width_height"
                     android:src="@drawable/ic_email"/>
@@ -94,6 +96,7 @@
                 android:addStatesFromChildren="true">
 
                 <ImageView
+                    android:id="@+id/password_image"
                     android:layout_width="@dimen/login_page_icon_width_height"
                     android:layout_height="@dimen/login_page_icon_width_height"
                     android:src="@drawable/ic_pswd"/>
@@ -115,7 +118,7 @@
                 android:background="@drawable/linearlayout_withborder_for_spinner"
                 android:orientation="horizontal"
                 android:padding="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="5dp">
 
                 <TextView
                     android:id="@+id/age"
@@ -123,7 +126,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="@string/age"
-                    android:textAppearance="?android:attr/textAppearanceMedium"/>
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textStyle="bold"/>
 
                 <Spinner
                     android:id="@+id/age_spinner"

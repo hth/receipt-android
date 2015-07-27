@@ -23,6 +23,7 @@
             android:addStatesFromChildren="true">
 
             <ImageView
+                android:id="@+id/name_image"
                 android:layout_width="@dimen/login_page_icon_width_height"
                 android:layout_height="@dimen/login_page_icon_width_height"
                 android:src="@drawable/ic_fullname"/>
@@ -50,6 +51,7 @@
             android:addStatesFromChildren="true">
 
             <ImageView
+                android:id="@+id/email_image"
                 android:layout_width="@dimen/login_page_icon_width_height"
                 android:layout_height="@dimen/login_page_icon_width_height"
                 android:src="@drawable/ic_email"/>
@@ -77,6 +79,7 @@
             android:addStatesFromChildren="true">
 
             <ImageView
+                android:id="@+id/password_image"
                 android:layout_width="@dimen/login_page_icon_width_height"
                 android:layout_height="@dimen/login_page_icon_width_height"
                 android:src="@drawable/ic_pswd"/>
@@ -100,7 +103,6 @@
             android:orientation="horizontal"
             android:padding="@dimen/activity_horizontal_margin"
             android:addStatesFromChildren="true">
-
 
             <TextView
                 android:id="@+id/age"
