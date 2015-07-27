@@ -76,6 +76,7 @@ public class ReceiptofiApplication extends Application {
         ImageUpload.initializeQueue();
         AppUtils.setHomePageContext(null);
         AppUtils.createImageDir();
-    }
 
+        throw new RuntimeException("Failed");
+    }
 }
