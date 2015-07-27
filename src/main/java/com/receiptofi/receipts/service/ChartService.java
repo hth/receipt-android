@@ -4,6 +4,7 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.PercentFormatter;
 import com.receiptofi.receipts.model.ChartModel;
 import com.receiptofi.receipts.model.ReceiptModel;
 import com.receiptofi.receipts.utils.db.ReceiptUtils;
@@ -34,7 +35,8 @@ public class ChartService {
             i++;
         }
 
-        PieDataSet pieDataSet = new PieDataSet(yVals1, "Exp/Business");
+        PieDataSet pieDataSet = new PieDataSet(yVals1, "Expenses By Business Name");
+        pieDataSet.setValueFormatter(new PercentFormatter());
         pieDataSet.setSliceSpace(1f);
         setColors(pieDataSet);
 
