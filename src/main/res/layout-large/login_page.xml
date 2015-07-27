@@ -40,6 +40,7 @@
                 android:addStatesFromChildren="true">
 
                 <ImageView
+                    android:id="@+id/email_image"
                     android:layout_width="@dimen/login_page_icon_width_height"
                     android:layout_height="@dimen/login_page_icon_width_height"
                     android:src="@drawable/ic_email"/>
@@ -67,6 +68,7 @@
                 android:addStatesFromChildren="true">
 
                 <ImageView
+                    android:id="@+id/password_image"
                     android:layout_width="@dimen/login_page_icon_width_height"
                     android:layout_height="@dimen/login_page_icon_width_height"
                     android:src="@drawable/ic_pswd"/>

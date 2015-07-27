@@ -14,10 +14,13 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receipts.http.API;
 import com.receiptofi.receipts.http.ExternalCallWithOkHttp;
 import com.receiptofi.receipts.http.ResponseHandler;
@@ -45,6 +48,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     private static final String TAG = PasswordRecoveryActivity.class.getSimpleName();
     private StringBuilder errors = new StringBuilder();
     private EditText email;
+    private ImageView emailImage;
 
     private SuperActivityToast loader;
 
@@ -55,6 +59,11 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
 
         final TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
         passwordRecovery.setOnClickListener(this);
+
+        emailImage = (ImageView) findViewById(R.id.email_image);
+        emailImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_envelope)
+                .colorRes(R.color.white)
+                .actionBarSize());
 
         email = (EditText) findViewById(R.id.email);
         final TextWatcher textWatcher = new TextWatcher() {
