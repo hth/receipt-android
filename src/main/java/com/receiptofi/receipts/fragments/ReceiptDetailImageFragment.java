@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.receiptofi.receipts.BuildConfig;
 import com.receiptofi.receipts.R;
 import com.receiptofi.receipts.ReceiptListActivity;
 import com.receiptofi.receipts.utils.AppUtils;
@@ -132,7 +133,7 @@ public class ReceiptDetailImageFragment extends Fragment {
             builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
-                    Log.d(TAG, "Successfully downloaded image from cloud");
+                    Log.d(TAG, "Successfully downloaded image from cloud " + mUrl);
                     mReceiptImage.setVisibility(View.VISIBLE);
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
@@ -140,7 +141,11 @@ public class ReceiptDetailImageFragment extends Fragment {
 
                 @Override
                 public void onError() {
-                    Log.e(TAG, "Error downloading image from cloud");
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG, "Error downloading image from cloud " + mUrl);
+                    } else {
+                        Log.e(TAG, "Error downloading image from cloud");
+                    }
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
                 }
