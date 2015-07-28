@@ -260,8 +260,6 @@
     <string name="dialog_button_update">Update</string>
 
     <!-- For Crash -->
-    <string name="crash_toast_text">Ooooops ! I crashed, but a report has been sent to my developer to help fix the issue !</string>
-
     <string name="crash_dialog_title">Receipts has crashed</string>
     <string name="crash_dialog_text">An unexpected error occurred forcing the
     application to stop. Please help us fix this by sending us error data,
