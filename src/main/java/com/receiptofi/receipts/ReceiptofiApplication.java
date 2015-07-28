@@ -15,7 +15,6 @@ import com.receiptofi.receipts.utils.db.MonthlyReportUtils;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
-import org.acra.ACRA;
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
 

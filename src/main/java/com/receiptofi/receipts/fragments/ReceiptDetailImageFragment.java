@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.receiptofi.receipts.BuildConfig;
 import com.receiptofi.receipts.R;
 import com.receiptofi.receipts.ReceiptListActivity;
 import com.receiptofi.receipts.utils.AppUtils;
@@ -116,8 +117,9 @@ public class ReceiptDetailImageFragment extends Fragment {
                         SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                         superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.get_image_download_error));
                         superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
-                        superActivityToast.setBackground(SuperToast.Background.BLUE);
+                        superActivityToast.setBackground(SuperToast.Background.RED);
                         superActivityToast.setTextColor(Color.WHITE);
+                        superActivityToast.setAnimations(SuperToast.Animations.FLYIN);
                         superActivityToast.setTouchToDismiss(true);
                         superActivityToast.show();
 
@@ -131,7 +133,7 @@ public class ReceiptDetailImageFragment extends Fragment {
             builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
-                    Log.d(TAG, "on success");
+                    Log.d(TAG, "Successfully downloaded image from cloud " + mUrl);
                     mReceiptImage.setVisibility(View.VISIBLE);
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
@@ -139,7 +141,11 @@ public class ReceiptDetailImageFragment extends Fragment {
 
                 @Override
                 public void onError() {
-                    Log.e(TAG, "on error");
+                    if (BuildConfig.DEBUG) {
+                        Log.d(TAG, "Error downloading image from cloud " + mUrl);
+                    } else {
+                        Log.e(TAG, "Error downloading image from cloud");
+                    }
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
                 }
