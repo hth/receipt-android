@@ -116,8 +116,9 @@ public class ReceiptDetailImageFragment extends Fragment {
                         SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                         superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.get_image_download_error));
                         superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
-                        superActivityToast.setBackground(SuperToast.Background.BLUE);
+                        superActivityToast.setBackground(SuperToast.Background.RED);
                         superActivityToast.setTextColor(Color.WHITE);
+                        superActivityToast.setAnimations(SuperToast.Animations.FLYIN);
                         superActivityToast.setTouchToDismiss(true);
                         superActivityToast.show();
 
@@ -131,7 +132,7 @@ public class ReceiptDetailImageFragment extends Fragment {
             builder.build().load(mUrl).into(mReceiptImage, new com.squareup.picasso.Callback() {
                 @Override
                 public void onSuccess() {
-                    Log.d(TAG, "on success");
+                    Log.d(TAG, "Successfully downloaded image from cloud");
                     mReceiptImage.setVisibility(View.VISIBLE);
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
@@ -139,7 +140,7 @@ public class ReceiptDetailImageFragment extends Fragment {
 
                 @Override
                 public void onError() {
-                    Log.e(TAG, "on error");
+                    Log.e(TAG, "Error downloading image from cloud");
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
                 }
