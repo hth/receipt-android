@@ -22,7 +22,8 @@
         </shape>
     </item>
 
-    <item android:shape="rectangle">
+    <item
+        android:shape="rectangle">
         <shape>
             <stroke
                 android:width="2dip"

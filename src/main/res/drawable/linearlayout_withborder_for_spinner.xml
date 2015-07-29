@@ -2,7 +2,9 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!-- Spinner normal state -->
-    <item android:state_enabled="true" android:state_window_focused="true">
+    <item
+        android:state_enabled="true"
+        android:state_window_focused="true">
         <shape>
             <stroke
                 android:width="2dip"
@@ -13,7 +15,8 @@
     </item>
 
     <!-- Spinner list view show up -->
-    <item android:shape="rectangle">
+    <item
+        android:shape="rectangle">
         <shape>
             <stroke
                 android:width="2dip"
