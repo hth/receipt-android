@@ -50,10 +50,10 @@ import java.util.Map;
 import java.util.Set;
 
 public class ParentActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
+    private static final String TAG = ParentActivity.class.getSimpleName();
 
     protected static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
     protected static final int FACEBOOK_SIGN_IN = 0x2566;
-    private static final String TAG = ParentActivity.class.getSimpleName();
     private static List<Activity> backStack;
     protected boolean isFbLoginClicked = false;
     protected boolean isGPlusLoginClicked = false;
@@ -191,7 +191,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
 
-        Log.i("ACCESS TOKEN", data.getString(API.key.ACCESS_TOKEN));
+        Log.d(TAG, "access_token=" + data.getString(API.key.ACCESS_TOKEN));
         ExternalCallWithOkHttp.doPost(ParentActivity.this, postData, API.SOCIAL_LOGIN_API, IncludeAuthentication.NO, new ResponseHandler() {
             @Override
             public void onSuccess(Headers headers, String body) {
@@ -350,7 +350,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
      * Google login.
      */
     protected void signInWithGplus() {
-        Log.d(TAG, "executing signInWithGplus");
         Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         mGoogleApiClient.connect();
         if (!mGoogleApiClient.isConnecting()) {
@@ -359,7 +358,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
     }
 
     private void resolveSignInError() {
-        Log.d(TAG, "executing resolveSignInError");
         Log.d(TAG, "Google Sign in: resolveSignInError: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
 
         if (null != mConnectionResult && mConnectionResult.hasResolution()) {
@@ -379,7 +377,6 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
     @Override
     public void onConnectionFailed(ConnectionResult result) {
-        Log.d(TAG, "executing onConnectionFailed");
         Log.d(TAG, "Google Sign in: onConnectionFailed: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         if (!result.hasResolution()) {
             GooglePlayServicesUtil.getErrorDialog(result.getErrorCode(), this, 0).show();
@@ -408,8 +405,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
 
     @Override
     public void onConnected(Bundle connectionHint) {
-        Log.d(TAG, "executing onConnected");
-        Log.d(TAG, "Google Sign in: signInWithGplus: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
+        Log.d(TAG, "Google Sign in: onConnected: mGoogleApiClient.isConnected(): " + mGoogleApiClient.isConnected());
         isGPlusLoginClicked = false;
         showToast("User is connected to Google+.", SuperToast.Duration.VERY_SHORT, SuperToast.Background.BLUE);
 
@@ -486,7 +482,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             super.onPostExecute(result);
 
             if (token != null) {
-                Log.i("TOKEN NOT NULL", "TOKEN IS NOT NULL MAKING QUERY");
+                Log.i(TAG, "Google token is null");
                 Bundle data = new Bundle();
                 data.putString(API.key.PID, API.key.PID_GOOGLE);
                 data.putString(API.key.ACCESS_TOKEN, token);
@@ -497,7 +493,7 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
                 }
                 authenticateSocialAccount(data);
             } else {
-                Log.i("TOKEN IS  NULL", "TOKEN IS  NULL MAKING QUERY");
+                Log.i(TAG, "Google token is null");
             }
         }
     }
