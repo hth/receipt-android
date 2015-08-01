@@ -14,7 +14,7 @@ Curl command options used
 
 QA Secure login for getting <code>X-R-AUTH</code> code from user's account
 
-    curl -ik -X POST -d mail=test@receiptofi.com -d password=test https://test.receiptofi.com/receipt-mobile/j_spring_security_check
+    curl -ik -X POST -d mail=test@receiptofi.com -d password=test https://test.receiptofi.com/receipt-mobile/login
 
 HTTP Response Header
 
