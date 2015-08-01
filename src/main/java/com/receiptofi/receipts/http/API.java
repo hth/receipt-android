@@ -6,7 +6,7 @@ public class API {
     }
 
     // Account api
-    public static final String LOGIN_API = "/j_spring_security_check";
+    public static final String LOGIN_API = "/login";
     public static final String SIGNUP_API = "/registration.json";
     public static final String SOCIAL_LOGIN_API = "/authenticate.json";
     public static final String PASSWORD_RECOVER_API = "/recover.json";
