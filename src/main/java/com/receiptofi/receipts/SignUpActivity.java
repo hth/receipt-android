@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.LinkMovementMethod;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -57,6 +59,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     private EditText password;
     private ImageView passwordImage;
     private Spinner ageSpinner;
+    private TextView signupTerms;
 
     private String nameStr;
     private String emailStr;
@@ -132,6 +135,11 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
             }
         });
+
+        signupTerms = (TextView) findViewById(R.id.signup_term_id);
+        String linkText = getResources().getString(R.string.signup_term);
+        signupTerms.setText(Html.fromHtml(linkText));
+        signupTerms.setMovementMethod(LinkMovementMethod.getInstance());
 
         LinearLayout facebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
         facebookLogin.setOnClickListener(this);
