@@ -31,6 +31,7 @@
         android:layout_centerVertical="true"
         android:layout_toRightOf="@id/rd_item_list_footer_tax_title"
         android:gravity="right"
+        android:text="00.00"
         android:textColor="@color/app_theme_txt_color"/>
 
 </RelativeLayout>
