@@ -1,36 +1,37 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
+                android:background="@drawable/rd_item_selector"
                 android:gravity="center_vertical"
+                android:minHeight="?android:attr/listPreferredItemHeightSmall"
                 android:orientation="vertical"
                 android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:background="@drawable/rd_item_selector">
+                android:paddingRight="@dimen/activity_horizontal_margin">
 
     <TextView
         android:id="@+id/rd_item_list_footer_tax_title"
+        style="@style/rd_list_item_tax_footer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        style="@style/rd_list_item_tax_footer_text"
         android:text="@string/rd_item_header_tax_title"/>
 
     <TextView
         android:id="@+id/rd_item_list_footer_tax_dscp"
+        style="@style/rd_list_item_text_left_secondary_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/rd_item_list_footer_tax_title"
-        style="@style/rd_list_item_text_left_secondary_style"/>
+        android:layout_below="@id/rd_item_list_footer_tax_title"/>
 
     <TextView
         android:id="@+id/rd_item_list_footer_tax_amount"
+        style="@style/rd_list_item_tax_footer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/rd_item_list_footer_tax_title"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
+        android:layout_toRightOf="@id/rd_item_list_footer_tax_title"
         android:gravity="right"
-        style="@style/rd_list_item_tax_footer_text"
+        android:text="00.00"
         android:textColor="@color/app_theme_txt_color"/>
 
 </RelativeLayout>
