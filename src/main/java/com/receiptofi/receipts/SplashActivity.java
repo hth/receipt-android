@@ -135,9 +135,9 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
 
     private String[] getImageDescription() {
         return new String[]{
-                "Instruction Page1",
-                "Instruction Page2",
-                "Instruction Page3",
+                "Visualize Expenses",
+                "View all receipts in one place",
+                "Details of your receipt",
                 "Instruction Page4",
                 "Instruction Page5"
         };
