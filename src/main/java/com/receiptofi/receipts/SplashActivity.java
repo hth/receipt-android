@@ -128,18 +128,16 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
                 R.drawable.splash,
                 R.drawable.splash2,
                 R.drawable.splash3,
-                R.drawable.splash,
-                R.drawable.splash2
+                R.drawable.splash_blank
         };
     }
 
     private String[] getImageDescription() {
         return new String[]{
-                "Instruction Page1",
-                "Instruction Page2",
-                "Instruction Page3",
-                "Instruction Page4",
-                "Instruction Page5"
+                "Visualize Expenses",
+                "View all receipts in one place",
+                "Details of your receipt",
+                ""
         };
     }
 
