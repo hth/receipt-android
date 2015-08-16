@@ -128,8 +128,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
                 R.drawable.splash,
                 R.drawable.splash2,
                 R.drawable.splash3,
-                R.drawable.splash,
-                R.drawable.splash2
+                R.drawable.splash_blank
         };
     }
 
@@ -138,8 +137,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
                 "Visualize Expenses",
                 "View all receipts in one place",
                 "Details of your receipt",
-                "Instruction Page4",
-                "Instruction Page5"
+                ""
         };
     }
 
