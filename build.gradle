@@ -84,7 +84,7 @@ idea {
 }
 
 android {
-    archivesBaseName = "receipts";
+    archivesBaseName = "receiptApp";
 
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
@@ -152,7 +152,7 @@ android {
         buildConfigField "String", "BUILD", "\"$buildNumber\""
 
         if (env == 'debug' || env == 'release' || env == 'staging') {
-            apkName = "$apkName-$env" + "-" + versionMajor + "." + versionMinor + "." + versionPatch + "." + versionBuild + "-" + buildNumber + "$apkFileExtension"
+            apkName = "-" + versionMajor + "." + versionMinor + "." + versionPatch + "." + versionBuild + "-" + buildNumber + ".apk"
         }
 
         ext.versionName = manifestVersionName()
