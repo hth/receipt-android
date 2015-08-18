@@ -152,7 +152,7 @@ android {
         buildConfigField "String", "BUILD", "\"$buildNumber\""
 
         if (env == 'debug' || env == 'release' || env == 'staging') {
-            apkName = "$apkName" + "-" + versionMajor + "." + versionMinor + "." + versionPatch + "." + versionBuild + "-" + buildNumber + "$apkFileExtension"
+            apkName = "$apkName-$env" + "-" + versionMajor + "." + versionMinor + "." + versionPatch + "." + versionBuild + "-" + buildNumber + "$apkFileExtension"
         }
 
         ext.versionName = manifestVersionName()
