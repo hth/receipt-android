@@ -11,7 +11,7 @@
 
         <fragment
             android:id="@+id/rlist_fragment"
-            android:name="com.receiptofi.receipts.fragments.ReceiptListFragment"
+            android:name="com.receiptofi.receiptapp.fragments.ReceiptListFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"/>
@@ -25,7 +25,7 @@
 
         <fragment
             android:id="@+id/rdetail_fragment"
-            android:name="com.receiptofi.receipts.fragments.ReceiptDetailFragment"
+            android:name="com.receiptofi.receiptapp.fragments.ReceiptDetailFragment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3"/>

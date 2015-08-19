@@ -9,7 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.receiptofi.receipts.fragments.SubscriptionUserFragment">
+    tools:context="com.receiptofi.receiptapp.fragments.SubscriptionUserFragment">
 
     <LinearLayout
         android:id="@+id/subscription_user"

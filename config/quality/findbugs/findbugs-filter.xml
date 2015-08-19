@@ -16,11 +16,11 @@
     </Match>
 
     <Match>
-        <Package name="com.receiptofi.receipts.model" />
+        <Package name="com.receiptofi.receiptapp.model" />
     </Match>
 
     <Match>
-        <Package name="com.receiptofi.receipts.fragments" />
+        <Package name="com.receiptofi.receiptapp.fragments" />
     </Match>
 
 </FindBugsFilter>
