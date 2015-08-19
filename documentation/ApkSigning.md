@@ -33,9 +33,9 @@
 
 ### For SHA1
 
-     keytool -list -v -keystore receipts-release.keystore
+     keytool -list -v -keystore receiptApp.keystore
 
 ### For Facebook Key Hash
 
      keytool -exportcert -alias androiddebugkey -keystore ~/.android/debug.keystore | openssl sha1 -binary | openssl base64
-     keytool -exportcert -alias receipts.release -keystore receipts-release.keystore | openssl sha1 -binary | openssl base64
+     keytool -exportcert -alias receiptApp.release -keystore receiptApp.keystore | openssl sha1 -binary | openssl base64
