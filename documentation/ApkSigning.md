@@ -1,6 +1,6 @@
 ### Steps to sign APK
 
-    keytool -genkey -v -keystore receipts-release.keystore -alias receipts.release -keyalg RSA -keysize 2048 -validity 8500
+    keytool -genkey -v -keystore receiptApp.keystore -alias receiptApp.release -keyalg RSA -keysize 2048 -validity 8500
 
 - Add Key store password
 - And add another password
@@ -10,9 +10,9 @@
     Enter keystore password:
     Re-enter new password:
     What is your first and last name?
-      [Unknown]:  Receiptofi Inc
+      [Unknown]:  ReceiptApp
     What is the name of your organizational unit?
-      [Unknown]:  Receiptofi Inc
+      [Unknown]:  receiptofi.com
     What is the name of your organization?
       [Unknown]:  Receiptofi Inc
     What is the name of your City or Locality?
@@ -21,7 +21,7 @@
       [Unknown]:  California
     What is the two-letter country code for this unit?
       [Unknown]:  US
-    Is CN=Receiptofi Inc, OU=Receiptofi Inc, O=Receiptofi Inc, L=Sunnyvale, ST=CA, C=US correct?
+    Is CN=ReceiptApp, OU=receiptofi.com, O=Receiptofi Inc, L=Sunnyvale, ST=California, C=US correct?
       [no]:  yes
 
 ### For Debug signing
