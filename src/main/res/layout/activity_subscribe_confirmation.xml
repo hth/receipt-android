@@ -6,7 +6,7 @@
                 android:paddingLeft="@dimen/activity_horizontal_margin"
                 android:paddingRight="@dimen/activity_horizontal_margin"
                 android:paddingTop="@dimen/activity_vertical_margin"
-                tools:context="com.receiptofi.receipts.SubscribeConfirmationActivity">
+                tools:context="com.receiptofi.receiptapp.SubscribeConfirmationActivity">
 
     <TextView
         android:id="@+id/tv_subscription_confirmation_message"

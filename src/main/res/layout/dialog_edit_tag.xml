@@ -12,7 +12,7 @@
         android:inputType="textNoSuggestions|textCapCharacters"
         android:singleLine="true"/>
 
-    <com.receiptofi.receipts.views.ColorPickerView
+    <com.receiptofi.receiptapp.views.ColorPickerView
         android:id="@+id/edit_tag_colorPicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

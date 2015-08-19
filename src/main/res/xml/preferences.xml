@@ -19,7 +19,7 @@
     </PreferenceCategory>
     <PreferenceCategory
         android:title="User Account">
-        <com.receiptofi.receipts.views.LoginIdPreference
+        <com.receiptofi.receiptapp.views.LoginIdPreference
             android:id="@+id/pref_user_id"
             android:inputType="textEmailAddress"
             android:key="@string/key_pref_login_id"
@@ -27,7 +27,7 @@
             android:textColorHint="@color/gray_dark"
             android:title="@string/pref_login_title"/>
 
-        <com.receiptofi.receipts.views.PasswordPreference
+        <com.receiptofi.receiptapp.views.PasswordPreference
             android:id="@+id/pref_password"
             android:inputType="textPassword"
             android:key="@string/key_pref_password"
