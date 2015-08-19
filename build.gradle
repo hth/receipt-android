@@ -288,7 +288,7 @@ android {
             proguardFile 'receiptofi-release-proguard.config'
             proguardFile getDefaultProguardFile('proguard-android.txt')
 
-            signingConfig signingConfigs.release
+            signingConfig signingConfigs.staging
 
             buildConfigField BOOLEAN, LOG_HTTP_REQUESTS, FALSE
             buildConfigField BOOLEAN, REPORT_CRASHES, TRUE
