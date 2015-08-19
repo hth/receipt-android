@@ -1,6 +1,6 @@
 def Properties props = new Properties()
 if (env == 'release') {
-    def propFile = new File(signingFileLocation + releaseProperties)
+    def propFile = new File(signingFileLocation + receiptAppProperties)
 
     if (propFile.canRead()) {
         props.load(new FileInputStream(propFile))
@@ -16,15 +16,15 @@ if (env == 'release') {
             android.signingConfigs.release.keyAlias = props['KEY_ALIAS']
             android.signingConfigs.release.keyPassword = props['KEY_PASSWORD']
         } else {
-            println 'release.signing.properties found but some entries are missing'
+            println 'signing.properties found but some entries are missing'
             android.buildTypes.release.signingConfig = null
         }
     } else {
-        println 'release.signing.properties not found'
+        println 'signing.properties not found'
         android.buildTypes.release.signingConfig = null
     }
 } else if (env == 'staging') {
-    def propFile = new File(signingFileLocation + stagingProperties)
+    def propFile = new File(signingFileLocation + receiptAppProperties)
 
     if (propFile.canRead()) {
         props.load(new FileInputStream(propFile))
@@ -41,11 +41,11 @@ if (env == 'release') {
             android.signingConfigs.staging.keyAlias = props['KEY_ALIAS']
             android.signingConfigs.staging.keyPassword = props['KEY_PASSWORD']
         } else {
-            println 'staging.signing.properties found but some entries are missing'
+            println 'signing.properties found but some entries are missing'
             android.buildTypes.staging.signingConfig = null
         }
     } else {
-        println 'staging.signing.properties not found'
+        println 'signing.properties not found'
         android.buildTypes.staging.signingConfig = null
     }
 } else if (env == 'debug') {
