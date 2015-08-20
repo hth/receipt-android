@@ -406,14 +406,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             mCurrentPosition = position;
 
             // Set Tag Color
-            /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
-            if (!TextUtils.isEmpty(receiptModel.getExpenseTagId()) && null != receiptModel.getExpenseTagModel()) {
-                String colorCode = receiptModel.getExpenseTagModel().getColor();
-                tagIcon.setTextColor(Color.parseColor(colorCode));
-                tagIcon.setVisibility(View.VISIBLE);
-            } else {
-                tagIcon.setVisibility(View.INVISIBLE);
-            }
+            setTagColor(receiptModel);
 
             blobIds = receiptModel.getBlobIds();
 
@@ -421,6 +414,17 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             Log.d(TAG, "ParseException=" + e.getLocalizedMessage(), e);
         } catch (Exception e) {
             Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
+        }
+    }
+
+    private void setTagColor(ReceiptModel receiptModel) {
+        /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
+        if (!TextUtils.isEmpty(receiptModel.getExpenseTagId()) && null != receiptModel.getExpenseTagModel()) {
+            String colorCode = receiptModel.getExpenseTagModel().getColor();
+            tagIcon.setTextColor(Color.parseColor(colorCode));
+            tagIcon.setVisibility(View.VISIBLE);
+        } else {
+            tagIcon.setVisibility(View.INVISIBLE);
         }
     }
 
