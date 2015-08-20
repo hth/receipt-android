@@ -266,8 +266,8 @@ android {
             buildConfigField STRING, "PROVIDER_AUTHORITY", stagingProviderAuthority
             buildConfigField STRING, "RECEIPTOFI_MOBILE", stagingEndpoint
             buildConfigField STRING, "GOOGLE_CLIENT_ID", googleClientIdStaging
-            buildConfigField STRING, "AWSS3", debugEndpointAwsS3
-            buildConfigField STRING, "AWSS3_BUCKET", debugBucket
+            buildConfigField STRING, "AWSS3", stagingEndpointAwsS3
+            buildConfigField STRING, "AWSS3_BUCKET", stagingBucket
             resValue "string", "FACEBOOK_APP_ID", facebookAppIdStaging
         }
 
