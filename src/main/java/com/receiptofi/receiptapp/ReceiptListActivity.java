@@ -205,7 +205,7 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             public void onDrawerClosed(View drawerView) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                if (groupIndex > 0 && childIndex > 0) {
+                if (groupIndex >= 0 && childIndex >= 0) {
                     ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
 
                     // Assign values only if fields have been changed
@@ -231,6 +231,9 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                             ExternalCallWithOkHttp.doPost(ReceiptListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
                                 @Override
                                 public void onSuccess(Headers headers, String body) {
+                                    Log.d(TAG, "Executing onDrawerClosed: success: ");
+                                    groupIndex = -1;
+                                    childIndex = -1;
                                     DeviceService.onSuccess(headers, body);
                                 }
 
