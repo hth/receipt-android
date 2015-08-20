@@ -53,6 +53,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     private static final String TAG = ReceiptListFragment.class.getSimpleName();
 
     public static final int RECEIPT_MODEL_UPDATED = 0x2436;
+    public static final int RECEIPT_MODEL_REDRAW = 0x2437;
 
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
@@ -70,7 +71,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             final int what = msg.what;
             switch (what) {
                 case RECEIPT_MODEL_UPDATED:
-                    Log.d(TAG, "receiptGroupObserver onChanged");
+                    Log.d(TAG, "receiptGroupObserver onChanged RECEIPT_MODEL_UPDATED");
                     groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
                     children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
                     ((ReceiptListAdapter) explv.getExpandableListAdapter()).notifyDataSetChanged();
@@ -116,6 +117,11 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
                         }
                     }
                     break;
+                case RECEIPT_MODEL_REDRAW:
+                    Log.d(TAG, "receiptGroupObserver onChanged RECEIPT_MODEL_REDRAW");
+                    groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
+                    children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
+                    break;
                 default:
                     Log.e(TAG, "Update handler not defined for: " + what);
             }
@@ -149,6 +155,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     @Override
     public void onResume() {
         super.onResume();
+        updateHandler.sendEmptyMessage(RECEIPT_MODEL_REDRAW);
         receiptGroupObservable.registerObserver(receiptGroupObserver);
     }
 
