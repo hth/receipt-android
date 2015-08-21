@@ -10,10 +10,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
@@ -47,10 +51,12 @@ import com.receiptofi.receiptapp.FilterListActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptListActivity;
 import com.receiptofi.receiptapp.adapters.ReceiptItemListAdapter;
+import com.receiptofi.receiptapp.model.ReceiptDetailObservable;
 import com.receiptofi.receiptapp.model.ReceiptItemModel;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.Constants;
+import com.receiptofi.receiptapp.utils.db.ReceiptUtils;
 import com.receiptofi.receiptapp.views.ToastBox;
 
 import java.text.ParseException;
@@ -96,6 +102,61 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
     private String blobIds = "";
     private SearchView searchView;
+    private DataSetObserver observer;
+    public static ReceiptDetailObservable receiptDetailObservable = ReceiptDetailObservable.getInstance();
+    private String receiptId;
+
+    public static final int RECEIPT_DETAIL_REFRESHED = 0x4436;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case RECEIPT_DETAIL_REFRESHED:
+                    /** Update any visual changes if any. */
+                    Log.i(TAG, "Receipt refreshed.");
+                    final ReceiptModel receiptModel = ReceiptUtils.fetchReceipt(msg.obj.toString());
+                    if (receiptModel != null) {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                setTagColor(receiptModel);
+                            }
+                        });
+                    }
+                    break;
+                default:
+            }
+
+            return true;
+        }
+    });
+
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        observer = new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                Message message = new Message();
+                message.obj = receiptId;
+                message.what = RECEIPT_DETAIL_REFRESHED;
+                updateHandler.dispatchMessage(message);
+            }
+        };
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        receiptDetailObservable.registerObserver(observer);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        receiptDetailObservable.unregisterObserver(observer);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -310,6 +371,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 // Coming from FilterListActivity: we show and activate drawer view
                 receiptModel = FilterListFragment.children.get(index).get(position);
             }
+            receiptId = receiptModel.getId();
 
             // Biz address
             rdBizName.setText(receiptModel.getBizName());

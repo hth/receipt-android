@@ -206,6 +206,42 @@ public class ReceiptUtils {
     }
 
     /**
+     * Fetch receipts based on receipt id.
+     *
+     * @param id
+     * @return
+     */
+    public static ReceiptModel fetchReceipt(String id) {
+        Log.d(TAG, "Get receipts for ids");
+        ReceiptModel receiptModel = null;
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    null,
+                    DatabaseTable.Receipt.ID + "=?",
+                    new String[]{id},
+                    null,
+                    null,
+                    null
+            );
+
+            List<ReceiptModel> list = retrieveReceiptModelFromCursor(cursor);
+            if (!list.isEmpty()) {
+                receiptModel = list.get(0);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting value " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return receiptModel;
+    }
+
+    /**
      * Fetch receipts for selected business name in pie chart. This is used as filter receipts by business name
      * for selected month in pie chart.
      *

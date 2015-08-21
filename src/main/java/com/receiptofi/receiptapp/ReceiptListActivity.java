@@ -232,8 +232,9 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                                 @Override
                                 public void onSuccess(Headers headers, String body) {
                                     Log.d(TAG, "Executing onDrawerClosed: success: ");
-                                    groupIndex = -1;
-                                    childIndex = -1;
+                                    if (recheckBox.isChecked()) {
+                                        //TODO
+                                    }
                                     DeviceService.onSuccess(headers, body);
                                 }
 
