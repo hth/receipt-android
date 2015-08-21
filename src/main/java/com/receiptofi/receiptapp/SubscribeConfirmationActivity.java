@@ -16,6 +16,7 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.model.PlanModel;
 import com.receiptofi.receiptapp.model.TransactionDetail;
+import com.receiptofi.receiptapp.model.wrapper.TransactionWrapper;
 import com.receiptofi.receiptapp.utils.Constants;
 
 public class SubscribeConfirmationActivity extends Activity {
@@ -56,19 +57,23 @@ public class SubscribeConfirmationActivity extends Activity {
 
         String message = "";
         if (!TextUtils.isEmpty(type) && pm != null && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {
-            switch(TransactionDetail.TYPE.valueOf(type)) {
+            switch (TransactionDetail.TYPE.valueOf(type)) {
                 case PAY:
-                    message = firstName
-                            + " "
-                            + lastName
-                            + ", your card has been successfully charged for "
-                            + pm.getPrice()
-                            + " and you are enrolled for "
-                            + pm.getDescription()
-                            + ". Your last transactions and subscription has been cancelled. "
-                            + "First of every month your card would be charged for "
-                            + pm.getBillingPlan()
-                            + ".";
+                    if (TransactionWrapper.getTransactionDetail().isSuccess()) {
+                        message = firstName
+                                + " "
+                                + lastName
+                                + ", your card has been successfully charged for "
+                                + pm.getPrice()
+                                + " and you are enrolled for "
+                                + pm.getDescription()
+                                + ". Your last transactions and subscription has been cancelled. "
+                                + "First of every month your card would be charged for "
+                                + pm.getBillingPlan()
+                                + ".";
+                    } else {
+                        message = TransactionWrapper.getTransactionDetail().getMessage();
+                    }
                     break;
                 case SUB:
                     message = firstName
