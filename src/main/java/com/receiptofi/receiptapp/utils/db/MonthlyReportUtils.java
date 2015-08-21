@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.receiptofi.receiptapp.db.CreateTable;
 import com.receiptofi.receiptapp.db.DatabaseTable;
+import com.receiptofi.receiptapp.model.ReceiptDetailObservable;
 import com.receiptofi.receiptapp.model.ReceiptGroup;
 import com.receiptofi.receiptapp.model.ReceiptGroupHeader;
 import com.receiptofi.receiptapp.model.ReceiptGroupObservable;
@@ -150,6 +151,7 @@ public class MonthlyReportUtils {
 
             /** Update the group view here. */
             ReceiptGroupObservable.setMonthlyReceiptGroup(receiptGroup);
+            ReceiptDetailObservable.refreshReceiptModel();
         } catch (Exception e) {
             Log.e(TAG, "Error getting monthly total " + e.getLocalizedMessage(), e);
         } finally {
