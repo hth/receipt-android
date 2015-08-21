@@ -61,7 +61,7 @@ public class SubscribeConfirmationActivity extends Activity {
                     message = firstName + " " + lastName + ", your card has been successfully charged for " + pm.getPrice() + " and you are enrolled for " + pm.getDescription() + ". Your last transactions and subscription has been cancelled. First of every month your card would be charged for " + pm.getBillingPlan() + ".";
                     break;
                 case SUB:
-                    message = firstName + " " + lastName + ", you have successfully unsubscribed from " + pm.getBillingPlan() + ".";
+                    message = firstName + " " + lastName + ", you have successfully un-subscribed from " + pm.getBillingPlan() + ".";
                     break;
                 default:
             }
