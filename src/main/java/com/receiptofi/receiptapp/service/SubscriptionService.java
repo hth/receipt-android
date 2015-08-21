@@ -145,6 +145,7 @@ public class SubscriptionService {
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_FAILED;
                 ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+
                 showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
             }
 
@@ -155,6 +156,7 @@ public class SubscriptionService {
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_PAYMENT_FAILED;
                 ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+
                 showMessage(e.getMessage(), (Activity) context);
             }
         });
@@ -185,6 +187,7 @@ public class SubscriptionService {
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_CANCELLED_FAILED;
                 ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+
                 showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
             }
 
@@ -195,6 +198,7 @@ public class SubscriptionService {
                 message.obj = "";
                 message.what = SubscriptionUserFragment.SUBSCRIPTION_CANCELLED_FAILED;
                 ((SubscriptionUserActivity) context).subscriptionUserFragment.updateHandler.dispatchMessage(message);
+
                 showMessage(e.getMessage(), (Activity) context);
             }
         });
@@ -218,7 +222,7 @@ public class SubscriptionService {
                 SuperActivityToast superActivityToast = new SuperActivityToast(context);
                 superActivityToast.setText(message);
                 superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setBackground(SuperToast.Background.RED);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();
