@@ -54,6 +54,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private ImageView passwordImage;
     private String emailStr;
     private String passwordStr;
+    private TextView buildVersion;
 
     private boolean isLeftButtonClicked = false;
     private boolean isRightButtonClicked = false;
@@ -127,6 +128,14 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             Button right_bt = (Button) findViewById(R.id.hidden_right_Button);
             right_bt.setVisibility(View.INVISIBLE);
         }
+
+        if ("release".equals(BuildConfig.BUILD_TYPE)) {
+            buildVersion = (TextView) findViewById(R.id.login_build_version);
+            buildVersion.setVisibility(View.INVISIBLE);
+        } else {
+            buildVersion = (TextView) findViewById(R.id.login_build_version);
+            buildVersion.setText(BuildConfig.VERSION_NAME);
+        }
     }
 
     @Override
@@ -147,7 +156,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         super.onResume();
         /**
          * We add this process.
-         * Because the loader will be destoried during Orientation changing.
+         * Because the loader will be destroyed during Orientation changing.
          * And a new Window link exception will throw up.
          */
         if (loginToastRunning) {
