@@ -250,10 +250,15 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
-        perUpdate.setTitle(getString(R.string.pref_update_title, currentVersion.version()));
+        perUpdate.setTitle(getString(R.string.pref_update_title, BuildConfig.VERSION_NAME));
         if (AppUtils.isLatest(currentVersion, latestVersion)) {
             Spannable wordToSpan = new SpannableString(getString(R.string.pref_update_summary, latestVersion.version()));
-            wordToSpan.setSpan(new ForegroundColorSpan(R.color.father_bg), wordToSpan.length() - latestVersion.version().length(), wordToSpan.length(), 0);
+            wordToSpan.setSpan(
+                    new ForegroundColorSpan(getResources().getColor(R.color.father_bg)),
+                    wordToSpan.length() - latestVersion.version().length(),
+                    wordToSpan.length(),
+                    0);
+
             perUpdate.setSummary(wordToSpan);
             perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
