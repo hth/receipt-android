@@ -138,10 +138,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
-        if ("debug".equals(BuildConfig.BUILD_TYPE)) {
+        if (!"debug".equals(BuildConfig.BUILD_TYPE)) {
             PreferenceCategory mCategory = (PreferenceCategory) findPreference(getString(R.string.key_pref_preferences_id));
             mCategory.removePreference(notificationPref);
         }
+
         /** Login Id. */
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
