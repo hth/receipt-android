@@ -156,10 +156,10 @@
     </string>
 
     <string name="key_pref_about_id">pref_about</string>
-    <string name="pref_about_title">About Receipts</string>
+    <string name="pref_about_title">About ReceiptApp</string>
     <string name="pref_about_summary"/>
     <string name="pref_about_message">
-        Receipts is built on the idea that receipt can be more intuitive, efficient, and useful. Easy
+        ReceiptApp is built on the idea that receipt can be more intuitive, efficient, and useful. Easy
         to tag, expense, track purchases geographically in a fun way by digitizing your receipts.
     </string>
 
