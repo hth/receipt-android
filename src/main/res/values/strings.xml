@@ -228,6 +228,7 @@
         <item>40-45</item>
         <item>45-50</item>
         <item>50-55</item>
+        <!-- Checkout age_range during signup for special code -->
         <item>Above 55</item>
     </string-array>
 

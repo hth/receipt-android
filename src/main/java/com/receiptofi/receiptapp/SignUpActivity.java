@@ -126,6 +126,9 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
                 }
                 ageRange = (String) adapterView.getItemAtPosition(position);
                 Log.d(TAG, "Selected range is: " + ageRange);
+                if (ageRange.startsWith("Above")) {
+                    ageRange = ageRange.split(" ")[1];
+                }
             }
 
             @Override
