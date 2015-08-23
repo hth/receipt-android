@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -19,6 +22,7 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.adapters.ExpenseTagListAdapter;
@@ -241,13 +245,13 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                                 @Override
                                 public void onError(int statusCode, String error) {
                                     Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
-                                    ToastBox.makeText(ReceiptListActivity.this, JsonParseUtils.parseForErrorReason(error), Toast.LENGTH_SHORT).show();
+                                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
                                 }
 
                                 @Override
                                 public void onException(Exception exception) {
                                     Log.d(TAG, "Executing onDrawerClosed: onException: " + exception.getMessage());
-                                    ToastBox.makeText(ReceiptListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                    showToast(exception.getMessage(), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
                                 }
                             });
 
@@ -345,7 +349,25 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
             // Commit the transaction
             transaction.commit();
         }
-
     }
 
+    private void showToast(final String msg, final int length, final int color) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                SuperToast superToast = new SuperToast(ReceiptListActivity.this);
+                superToast.setText(msg);
+                superToast.setDuration(length);
+                superToast.setBackground(color);
+                superToast.setTextColor(Color.WHITE);
+                superToast.setAnimations(SuperToast.Animations.FLYIN);
+                superToast.setGravity(Gravity.TOP, 0, 20);
+                superToast.show();
+            }
+        });
+    }
 }

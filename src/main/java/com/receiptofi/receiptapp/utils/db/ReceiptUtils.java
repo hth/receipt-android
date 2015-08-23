@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.common.collect.Ordering;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.model.ChartModel;
@@ -28,6 +29,12 @@ public class ReceiptUtils {
 
     private static final String TAG = ReceiptUtils.class.getSimpleName();
     private static final SimpleDateFormat SDF_YM = new SimpleDateFormat("yyyy-MM-", Locale.US);
+
+    private static final Ordering<String> byYearMonthOrderingDesc = new Ordering<String>() {
+        public int compare(String left, String right) {
+            return right.compareTo(left);
+        }
+    };
 
     private ReceiptUtils() {
     }
@@ -385,11 +392,12 @@ public class ReceiptUtils {
             }
         }
 
-        for (String key : map.keySet()) {
+        List<String> sortedKeys = byYearMonthOrderingDesc.sortedCopy(map.keySet());
+        for (String key : sortedKeys) {
             receiptGroup.addReceiptGroup(map.get(key));
             ReceiptGroupHeader receiptGroupHeader = new ReceiptGroupHeader(
-                    key.split("-")[1],
-                    key.split("-")[0],
+                    key.split("\\-")[1],
+                    key.split("\\-")[0],
                     null,
                     map.get(key).size());
             receiptGroup.addReceiptGroupHeader(receiptGroupHeader);

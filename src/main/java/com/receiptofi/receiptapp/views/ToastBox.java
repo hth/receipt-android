@@ -9,7 +9,8 @@ import android.widget.Toast;
 import com.receiptofi.receiptapp.R;
 
 /**
- * Created by PT on 5/15/15.
+ * User: PT
+ * Date: 5/15/15 7:20 AM
  */
 public class ToastBox extends Toast {
 
