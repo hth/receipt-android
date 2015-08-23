@@ -9,6 +9,7 @@ import com.google.common.collect.Ordering;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.model.ChartModel;
+import com.receiptofi.receiptapp.model.FilterGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptGroup;
 import com.receiptofi.receiptapp.model.ReceiptGroupHeader;
 import com.receiptofi.receiptapp.model.ReceiptModel;
@@ -373,6 +374,7 @@ public class ReceiptUtils {
             }
         }
 
+        FilterGroupObservable.setMonthlyReceiptGroup(receiptGroup);
         return receiptGroup;
     }
 

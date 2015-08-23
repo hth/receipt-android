@@ -219,6 +219,14 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         return childIndex;
     }
 
+    public void setGroupIndex(int groupPosition) {
+        groupIndex = groupPosition;
+    }
+
+    public void setChildIndex(int childPosition) {
+        childIndex = childPosition;
+    }
+
     public boolean hideTotal() {
         return ReceiptFilter.FILTER_BY_KEYWORD == receiptFilter;
     }
@@ -274,7 +282,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                 if (groupIndex >= 0 && childIndex >= 0) {
-                    ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
+                    ReceiptModel rModel = FilterListFragment.children.get(groupIndex).get(childIndex);
 
                     // Assign values only if fields have been changed
                     boolean reCheck = recheckBox.isChecked();

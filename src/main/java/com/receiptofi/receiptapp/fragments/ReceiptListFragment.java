@@ -58,8 +58,12 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     public static List<List<ReceiptModel>> children = new LinkedList<>();
 
     public ReceiptListAdapter adapter = null;
-    private StickyLayout stickyLayout;
+
+    private PinnedHeaderExpandableListView explv;
+    private OnReceiptSelectedListener mCallback;
     private SearchView searchView;
+    public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
+    private DataSetObserver receiptGroupObserver;
 
     private DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);
     private DateFormat outputDF = new SimpleDateFormat("MMM yyyy", Locale.US);
@@ -122,11 +126,6 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             return true;
         }
     });
-
-    public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
-    private PinnedHeaderExpandableListView explv;
-    private OnReceiptSelectedListener mCallback;
-    private DataSetObserver receiptGroupObserver;
 
     public ReceiptListFragment() {
         super();
