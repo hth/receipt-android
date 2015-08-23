@@ -283,7 +283,8 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
                     outputDF.format(inputDF.parse(firstVisibleGroup.getMonth() + " " + firstVisibleGroup.getYear())),
                     firstVisibleGroup.getCount()));
 
-            header_amount.setText(getActivity().getString(R.string.receipt_list_header_amount, AppUtils.currencyFormatter().format(firstVisibleGroup.getTotal())));
+            header_amount.setText(getActivity().getString(R.string.receipt_list_header_amount,
+                    AppUtils.currencyFormatter().format(firstVisibleGroup.getTotal())));
         } catch (ParseException e) {
             Log.e(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {

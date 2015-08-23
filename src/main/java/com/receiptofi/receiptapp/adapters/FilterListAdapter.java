@@ -1,6 +1,8 @@
 package com.receiptofi.receiptapp.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +23,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
- * Created by PT on 3/28/15.
+ * User: PT
+ * Date: 3/28/15 1:21 PM
  */
 public class FilterListAdapter extends BaseExpandableListAdapter {
 
@@ -74,14 +77,20 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
     }
 
     @Override
-    public View getChildView(int groupPosition, final int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-
+    public View getChildView(
+            int groupPosition,
+            final int childPosition,
+            boolean isLastChild,
+            View convertView,
+            ViewGroup parent
+    ) {
         try {
             ChildViewHolder holder;
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.receipt_list_child, parent, false);
                 holder = new ChildViewHolder();
 
+                holder.expenseTag = convertView.findViewById(R.id.exp_list_child_tag_color);
                 holder.bizName = (TextView) convertView.findViewById(R.id.exp_list_child_buz_name);
                 holder.date = (TextView) convertView.findViewById(R.id.exp_list_child_date);
                 holder.amount = (TextView) convertView.findViewById(R.id.exp_list_child_amount);
@@ -91,17 +100,24 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             }
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
+            /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
+            if (!TextUtils.isEmpty(receiptData.getExpenseTagId()) && null != receiptData.getExpenseTagModel()) {
+                String colorCode = receiptData.getExpenseTagModel().getColor();
+                holder.expenseTag.setBackgroundColor(Color.parseColor(colorCode));
+            } else {
+                holder.expenseTag.setBackgroundColor(Color.TRANSPARENT);
+            }
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
             holder.amount.setText(context.getString(R.string.receipt_list_child_amount, AppUtils.currencyFormatter().format(receiptData.getTotal())));
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {
-            Log.d(TAG, "IndexOutOfBoundsException " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "IndexOutOfBoundsException " + e.getLocalizedMessage(), e);
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -139,9 +155,9 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
 
             return convertView;
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException reason=" + e.getLocalizedMessage(), e);
+            Log.e(TAG, "ParseException reason=" + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -157,6 +173,7 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
     }
 
     private class ChildViewHolder {
+        View expenseTag;
         TextView bizName;
         TextView date;
         TextView amount;
