@@ -118,15 +118,15 @@ android {
                     versionBuildProps['VERSION_MINOR'].toInteger() != versionMinor ||
                     versionBuildProps['VERSION_PATCH'].toInteger() != versionPatch) {
                 versionBuild = 0.toString()
-                versionBuildProps['VERSION_BUILD'] = "22"
+                versionBuildProps['VERSION_BUILD'] = versionBuild.toString()
 
                 versionBuildProps['VERSION_MAJOR'] = versionMajor.toString()
                 versionBuildProps['VERSION_MINOR'] = versionMinor.toString()
                 versionBuildProps['VERSION_PATCH'] = versionPatch.toString()
                 versionBuildProps.store(versionBuildPropsFile.newWriter(), null)
             } else {
-                versionBuild = versionBuildProps['VERSION_BUILD'].toInteger() + 1
-                versionBuildProps['VERSION_BUILD'] = "22"
+                versionBuild = 21 + 1
+                versionBuildProps['VERSION_BUILD'] = versionBuild.toString()
 
                 versionBuildProps['VERSION_MAJOR'] = versionMajor.toString()
                 versionBuildProps['VERSION_MINOR'] = versionMinor.toString()
