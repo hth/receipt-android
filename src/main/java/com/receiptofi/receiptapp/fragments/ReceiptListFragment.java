@@ -62,7 +62,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     private PinnedHeaderExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
     private SearchView searchView;
-    public static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
+    private static ReceiptGroupObservable receiptGroupObservable = ReceiptGroupObservable.getInstance();
     private DataSetObserver receiptGroupObserver;
 
     private DateFormat inputDF = new SimpleDateFormat("M yyyy", Locale.US);

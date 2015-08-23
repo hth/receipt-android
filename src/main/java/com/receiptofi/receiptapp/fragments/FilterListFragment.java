@@ -62,7 +62,7 @@ public class FilterListFragment extends Fragment {
     private ExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
     private SearchView searchView;
-    public static FilterGroupObservable receiptGroupObservable = FilterGroupObservable.getInstance();
+    private static FilterGroupObservable receiptGroupObservable = FilterGroupObservable.getInstance();
     private DataSetObserver receiptGroupObserver;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
