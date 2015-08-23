@@ -125,8 +125,8 @@ android {
                 versionBuildProps['VERSION_PATCH'] = versionPatch.toString()
                 versionBuildProps.store(versionBuildPropsFile.newWriter(), null)
             } else {
-                versionBuild = 21 + 1
-                versionBuildProps['VERSION_BUILD'] = versionBuild.toString()
+                //versionBuild = versionBuildProps['VERSION_BUILD'].toInteger() + 1
+                versionBuildProps['VERSION_BUILD'] = "22"
 
                 versionBuildProps['VERSION_MAJOR'] = versionMajor.toString()
                 versionBuildProps['VERSION_MINOR'] = versionMinor.toString()
