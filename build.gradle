@@ -117,7 +117,7 @@ android {
             if(versionBuildProps['VERSION_MAJOR'].toInteger() != versionMajor ||
                     versionBuildProps['VERSION_MINOR'].toInteger() != versionMinor ||
                     versionBuildProps['VERSION_PATCH'].toInteger() != versionPatch) {
-                versionBuild = 22
+                versionBuild = 0
                 versionBuildProps['VERSION_BUILD'] = versionBuild.toString()
 
                 versionBuildProps['VERSION_MAJOR'] = versionMajor.toString()
