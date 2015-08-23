@@ -40,6 +40,7 @@ import com.receiptofi.receiptapp.model.ReceiptGroupHeader;
 import com.receiptofi.receiptapp.model.ReceiptGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
+import com.receiptofi.receiptapp.views.PinnedHeaderExpandableListView;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -62,7 +63,7 @@ public class FilterListFragment extends Fragment {
     private ExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
     private SearchView searchView;
-    public static FilterGroupObservable receiptGroupObservable = FilterGroupObservable.getInstance();
+    private static FilterGroupObservable receiptGroupObservable = FilterGroupObservable.getInstance();
     private DataSetObserver receiptGroupObserver;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
@@ -153,7 +154,7 @@ public class FilterListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        explv = (ExpandableListView) view.findViewById(R.id.exp_list_view);
+        explv = (PinnedHeaderExpandableListView) view.findViewById(R.id.exp_list_view);
         explv.setEmptyView(view.findViewById(R.id.empty_view));
         explv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
 

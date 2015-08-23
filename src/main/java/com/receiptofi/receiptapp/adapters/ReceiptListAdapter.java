@@ -87,9 +87,9 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
                 convertView = inflater.inflate(R.layout.receipt_list_child, parent, false);
                 holder = new ChildViewHolder();
 
+                holder.expenseTag = convertView.findViewById(R.id.exp_list_child_tag_color);
                 holder.bizName = (TextView) convertView.findViewById(R.id.exp_list_child_buz_name);
                 holder.date = (TextView) convertView.findViewById(R.id.exp_list_child_date);
-                holder.expenseTag = convertView.findViewById(R.id.exp_list_child_tag_color);
                 holder.amount = (TextView) convertView.findViewById(R.id.exp_list_child_amount);
                 convertView.setTag(holder);
             } else {
@@ -98,9 +98,6 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
 
             ReceiptModel receiptData = (ReceiptModel) getChild(groupPosition, childPosition);
 
-            holder.bizName.setText(receiptData.getBizName());
-            holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
-            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, AppUtils.currencyFormatter().format(receiptData.getTotal())));
             /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
             if (!TextUtils.isEmpty(receiptData.getExpenseTagId()) && null != receiptData.getExpenseTagModel()) {
                 String colorCode = receiptData.getExpenseTagModel().getColor();
@@ -108,14 +105,17 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             } else {
                 holder.expenseTag.setBackgroundColor(Color.TRANSPARENT);
             }
+            holder.bizName.setText(receiptData.getBizName());
+            holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
+            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, AppUtils.currencyFormatter().format(receiptData.getTotal())));
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {
-            Log.d(TAG, "IndexOutOfBoundsException " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "IndexOutOfBoundsException " + e.getLocalizedMessage(), e);
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -143,9 +143,9 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
             return convertView;
 
         } catch (ParseException e) {
-            Log.d(TAG, "ParseException " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
-            Log.d(TAG, "Exception " + e.getLocalizedMessage(), e);
+            Log.e(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
         return null;
     }
@@ -161,9 +161,9 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
     }
 
     private class ChildViewHolder {
+        View expenseTag;
         TextView bizName;
         TextView date;
-        View expenseTag;
         TextView amount;
     }
 }
