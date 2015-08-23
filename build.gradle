@@ -115,11 +115,11 @@ android {
             versionBuildProps.load(new FileInputStream(versionBuildPropsFile))
 
             if(versionBuildProps['VERSION_MAJOR'].toInteger() != versionMajor ||
-                    versionBuildProps['VERSION_MINOR'].toInteger() != versionMinor ||
-                    versionBuildProps['VERSION_PATCH'].toInteger() != versionPatch) {
+                    versionBuildProps['VERSION_MINOR'].toInteger() != versionMinor) {
 
-                println "versionBuild: " + 0.toString()
-                versionBuild = 0.toString()
+                println "versionPatch: " + 0.toString() +
+                        " versionBuild: " + versionBuildProps['VERSION_BUILD']
+                versionBuild = versionBuildProps['VERSION_BUILD'].toInteger() + 1
                 versionBuildProps['VERSION_BUILD'] = versionBuild.toString()
 
                 versionBuildProps['VERSION_MAJOR'] = versionMajor.toString()
@@ -127,12 +127,15 @@ android {
                 versionBuildProps['VERSION_PATCH'] = versionPatch.toString()
                 versionBuildProps.store(versionBuildPropsFile.newWriter(), null)
             } else {
-                println "versionBuild: " + versionBuildProps['VERSION_BUILD']
+                println "versionBuild: " + versionBuildProps['VERSION_BUILD'] +
+                        " versionBuild: " + versionBuildProps['VERSION_BUILD']
                 versionBuild = versionBuildProps['VERSION_BUILD'].toInteger() + 1
                 versionBuildProps['VERSION_BUILD'] = versionBuild.toString()
 
                 versionBuildProps['VERSION_MAJOR'] = versionMajor.toString()
                 versionBuildProps['VERSION_MINOR'] = versionMinor.toString()
+
+                versionPatch = versionBuildProps['VERSION_PATCH'].toInteger() + 1
                 versionBuildProps['VERSION_PATCH'] = versionPatch.toString()
                 versionBuildProps.store(versionBuildPropsFile.newWriter(), null)
             }
