@@ -156,12 +156,13 @@ public class ReceiptDetailImageFragment extends Fragment {
                 if (!hasConnection) {
                     Log.w(TAG, "No network available.");
                     superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.no_network_available));
+                    superActivityToast.setBackground(SuperToast.Background.RED);
                 } else {
                     Log.w(TAG, "Receipt has no image.");
                     superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.image_location_is_blank));
+                    superActivityToast.setBackground(SuperToast.Background.BLUE);
                 }
                 superActivityToast.setDuration(SuperToast.Duration.EXTRA_LONG);
-                superActivityToast.setBackground(SuperToast.Background.BLUE);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();

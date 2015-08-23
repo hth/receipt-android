@@ -6,8 +6,11 @@ import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Resources;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.adapters.ExpenseTagListAdapter;
@@ -56,7 +60,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Created by PT on 3/28/15.
+ * User: PT
+ * Date: 3/28/15 7:58 AM
  */
 public class FilterListActivity extends Activity implements FilterListFragment.OnReceiptSelectedListener {
 
@@ -214,6 +219,14 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         return childIndex;
     }
 
+    public void setGroupIndex(int groupPosition) {
+        groupIndex = groupPosition;
+    }
+
+    public void setChildIndex(int childPosition) {
+        childIndex = childPosition;
+    }
+
     public boolean hideTotal() {
         return ReceiptFilter.FILTER_BY_KEYWORD == receiptFilter;
     }
@@ -228,10 +241,10 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         protected ReceiptGroup doInBackground(String... args) {
             ReceiptGroup receiptGroup = null;
             if (ReceiptFilter.FILTER_BY_BIZ_AND_MONTH.getValue().equals(args[0])) {
-                Log.d(TAG, "!!!!! search query is: " + args[1]);
+                Log.d(TAG, "Search query is: " + args[1]);
                 receiptGroup = ReceiptUtils.filterByBizByMonth(args[1], new Date());
             } else if (ReceiptFilter.FILTER_BY_KEYWORD.getValue().equals(args[0])) {
-                Log.d(TAG, "!!!!! search query is: " + args[1]);
+                Log.d(TAG, "Search query is: " + args[1]);
                 receiptGroup = ReceiptUtils.searchByKeyword(args[1]);
             }
             return receiptGroup;
@@ -268,8 +281,8 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             public void onDrawerClosed(View drawerView) {
                 InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
                 inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-                if (groupIndex > 0 && childIndex > 0) {
-                    ReceiptModel rModel = ReceiptListFragment.children.get(groupIndex).get(childIndex);
+                if (groupIndex >= 0 && childIndex >= 0) {
+                    ReceiptModel rModel = FilterListFragment.children.get(groupIndex).get(childIndex);
 
                     // Assign values only if fields have been changed
                     boolean reCheck = recheckBox.isChecked();
@@ -294,19 +307,23 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
                             ExternalCallWithOkHttp.doPost(FilterListActivity.this, postData, API.RECEIPT_ACTION, IncludeAuthentication.YES, new ResponseHandler() {
                                 @Override
                                 public void onSuccess(Headers headers, String body) {
+                                    Log.d(TAG, "Executing onDrawerClosed: success: ");
+                                    if (recheckBox.isChecked()) {
+                                        //TODO
+                                    }
                                     DeviceService.onSuccess(headers, body);
                                 }
 
                                 @Override
                                 public void onError(int statusCode, String error) {
                                     Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
-                                    ToastBox.makeText(FilterListActivity.this, JsonParseUtils.parseForErrorReason(error), Toast.LENGTH_SHORT).show();
+                                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
                                 }
 
                                 @Override
                                 public void onException(Exception exception) {
                                     Log.d(TAG, "Executing onDrawerClosed: onException: " + exception.getMessage());
-                                    ToastBox.makeText(FilterListActivity.this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                                    showToast(exception.getMessage(), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
                                 }
                             });
 
@@ -404,6 +421,25 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
             // Commit the transaction
             transaction.commit();
         }
+    }
 
+    private void showToast(final String msg, final int length, final int color) {
+        if (TextUtils.isEmpty(msg)) {
+            return;
+        }
+
+        new Handler(Looper.getMainLooper()).post(new Runnable() {
+            @Override
+            public void run() {
+                SuperToast superToast = new SuperToast(FilterListActivity.this);
+                superToast.setText(msg);
+                superToast.setDuration(length);
+                superToast.setBackground(color);
+                superToast.setTextColor(Color.WHITE);
+                superToast.setAnimations(SuperToast.Animations.FLYIN);
+                superToast.setGravity(Gravity.TOP, 0, 20);
+                superToast.show();
+            }
+        });
     }
 }

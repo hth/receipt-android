@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
+import android.database.DataSetObserver;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.NavUtils;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -28,9 +31,13 @@ import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.FilterListActivity;
 import com.receiptofi.receiptapp.R;
+import com.receiptofi.receiptapp.ReceiptListActivity;
 import com.receiptofi.receiptapp.adapters.FilterListAdapter;
+import com.receiptofi.receiptapp.adapters.ReceiptListAdapter;
+import com.receiptofi.receiptapp.model.FilterGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptGroup;
 import com.receiptofi.receiptapp.model.ReceiptGroupHeader;
+import com.receiptofi.receiptapp.model.ReceiptGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
 
@@ -44,26 +51,77 @@ import java.util.List;
 public class FilterListFragment extends Fragment {
 
     private static final String TAG = FilterListFragment.class.getSimpleName();
+
+    public static final int RECEIPT_MODEL_UPDATED = 0x2436;
+
     public static List<ReceiptGroupHeader> groups = new LinkedList<>();
     public static List<List<ReceiptModel>> children = new LinkedList<>();
+
     public static boolean hideTotal;
-    private View rootView;
+
     private ExpandableListView explv;
     private OnReceiptSelectedListener mCallback;
-    SearchView searchView;
+    private SearchView searchView;
+    public static FilterGroupObservable receiptGroupObservable = FilterGroupObservable.getInstance();
+    private DataSetObserver receiptGroupObserver;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case RECEIPT_MODEL_UPDATED:
+                    Log.d(TAG, "receiptGroupObserver onChanged RECEIPT_MODEL_UPDATED");
+                    groups = FilterGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
+                    children = FilterGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     public FilterListFragment() {
         super();
+        if (receiptGroupObservable != null) {
+            groups = FilterGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
+            children = FilterGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
+        }
     }
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        receiptGroupObserver = new DataSetObserver() {
+            @Override
+            public void onChanged() {
+                updateHandler.sendEmptyMessage(RECEIPT_MODEL_UPDATED);
+            }
+        };
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        receiptGroupObservable.registerObserver(receiptGroupObserver);
+        /** Remove selected receipt from list to avoid re-loading of the detail receipt when refresh is complete. */
+        ((FilterListActivity) getActivity()).setGroupIndex(-1);
+        ((FilterListActivity) getActivity()).setChildIndex(-1);
+
+        /** When resume, refresh anyway to update list with any changes. */
+        updateHandler.sendEmptyMessage(RECEIPT_MODEL_UPDATED);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        receiptGroupObservable.unregisterObserver(receiptGroupObserver);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         Log.d(TAG, "executing onCreateView");
-        rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.receipt_list_fragment, container, false);
         // We only add menu within Phone environment.
         if (!AppUtils.isTablet(getActivity())) {
             // Must call below method to make the fragment menu works. REALLY IMPORTANT.
