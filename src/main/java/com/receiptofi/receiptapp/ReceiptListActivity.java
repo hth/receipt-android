@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
@@ -42,7 +41,6 @@ import com.receiptofi.receiptapp.utils.Constants;
 import com.receiptofi.receiptapp.utils.ConstantsJson;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
-import com.receiptofi.receiptapp.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
@@ -245,7 +243,11 @@ public class ReceiptListActivity extends Activity implements ReceiptListFragment
                                 @Override
                                 public void onError(int statusCode, String error) {
                                     Log.d(TAG, "Executing onDrawerClosed: onError: " + error);
-                                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
+                                    if (JsonParseUtils.isJSONValid(error)) {
+                                        showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
+                                    } else {
+                                        showToast(error, SuperToast.Duration.MEDIUM, SuperToast.Background.RED);
+                                    }
                                 }
 
                                 @Override
