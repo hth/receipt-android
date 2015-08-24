@@ -22,7 +22,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.android.iconify.IconDrawable;
@@ -32,11 +31,11 @@ import com.receiptofi.receiptapp.fragments.FilterListFragment;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailFragment;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailImageForTabletDialogFragment;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailImageFragment;
-import com.receiptofi.receiptapp.fragments.ReceiptListFragment;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.http.ExternalCallWithOkHttp;
 import com.receiptofi.receiptapp.http.ResponseHandler;
 import com.receiptofi.receiptapp.model.ExpenseTagModel;
+import com.receiptofi.receiptapp.model.FilterGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptGroup;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.model.types.IncludeAuthentication;
@@ -48,7 +47,6 @@ import com.receiptofi.receiptapp.utils.ConstantsJson;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptUtils;
-import com.receiptofi.receiptapp.views.ToastBox;
 import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
@@ -312,6 +310,10 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
                                         //TODO
                                     }
                                     DeviceService.onSuccess(headers, body);
+
+                                    if (!TextUtils.isEmpty(FilterGroupObservable.getKeyWord())) {
+                                        ReceiptUtils.searchByKeyword(FilterGroupObservable.getKeyWord());
+                                    }
                                 }
 
                                 @Override

@@ -375,6 +375,7 @@ public class ReceiptUtils {
         }
 
         FilterGroupObservable.setMonthlyReceiptGroup(receiptGroup);
+        FilterGroupObservable.setKeyWord(name);
         return receiptGroup;
     }
 
