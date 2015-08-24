@@ -41,7 +41,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="@dimen/image_info_margin_side"
                 android:layout_marginRight="@dimen/image_info_margin_side"
-                android:src="@drawable/receipt_logo"
+                android:src="@drawable/receipt_app_logo"
                 android:contentDescription="@string/app_info_cnt_dscp"/>
 
             <TextView

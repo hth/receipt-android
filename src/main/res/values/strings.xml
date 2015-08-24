@@ -175,7 +175,7 @@
     <string name="rd_item_header_total_title">Total</string>
 
     <!-- Receipt action String-->
-    <string name="receipt_action_recheck_label">Data mismatch</string>
+    <string name="receipt_action_recheck_label">Data Mismatch</string>
     <string name="receipt_action_recheck">Verify receipt again</string>
     <string name="receipt_action_expense_tag_label">Expense Tag</string>
     <string name="receipt_action_note_label">Notes</string>
