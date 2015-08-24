@@ -209,7 +209,12 @@ public class ExternalCallWithOkHttp {
     ) {
         if (statusCode != 200) {
             Log.i(TAG, response.request().method() + " statusCode=" + statusCode + " onError");
-            responseHandler.onError(statusCode, null);
+            if (statusCode == 404) {
+                responseHandler.onError(statusCode, response.message() + ". Please re-sync with server.");
+            } else {
+                Log.e(TAG, "Missing JSON representation");
+                responseHandler.onError(statusCode, response.message());
+            }
         } else {
             if (!bodyContainsError(body)) {
                 if (body.isEmpty()) {
