@@ -360,7 +360,8 @@ public class ReceiptUtils {
                                 + "* "
                                 + "from " + DatabaseTable.Receipt.TABLE_NAME + " "
                                 + "where " + DatabaseTable.Receipt.ID
-                                + " IN (" + ids.substring(0, ids.length() - 1) + ")",
+                                + " IN (" + ids.substring(0, ids.length() - 1) + ")"
+                                + "ORDER BY " + DatabaseTable.Receipt.RECEIPT_DATE + " DESC",
                         null);
 
                 receiptGroup = convertToReceiptGroup(retrieveReceiptModelFromCursor(cursor));
