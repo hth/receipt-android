@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import junit.framework.Assert;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -104,6 +106,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         imageViewList = new ArrayList<>();
         int[] imageResIDs = getImageResIDs();
         imageDescriptions = getImageDescription();
+        Assert.assertTrue("Should of same size", imageResIDs.length == imageDescriptions.length);
 
         ImageView iv;
         View view;
@@ -128,6 +131,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
                 R.drawable.splash,
                 R.drawable.splash2,
                 R.drawable.splash3,
+                R.drawable.splash4,
                 R.drawable.splash_blank
         };
     }
@@ -137,6 +141,7 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
                 "Visualize Expenses",
                 "View all receipts in one place",
                 "Details of your receipt",
+                "Tag receipts with Expense Tag",
                 ""
         };
     }
