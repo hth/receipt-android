@@ -14,6 +14,7 @@ import java.util.List;
 public class FilterGroupObservable extends DataSetObservable {
     private static final String TAG = ReceiptGroupObservable.class.getSimpleName();
 
+    private static String keyWord = "";
     private static ReceiptGroup monthlyReceiptGroup;
     private static List<DataSetObserver> observerList = new ArrayList<>();
 
@@ -29,6 +30,14 @@ public class FilterGroupObservable extends DataSetObservable {
             return ReceiptGroup.getInstance();
         }
         return monthlyReceiptGroup;
+    }
+
+    public static String getKeyWord() {
+        return keyWord;
+    }
+
+    public static void setKeyWord(String keyWord) {
+        FilterGroupObservable.keyWord = keyWord;
     }
 
     public static synchronized void setMonthlyReceiptGroup(ReceiptGroup monthlyReceiptGroup) {
