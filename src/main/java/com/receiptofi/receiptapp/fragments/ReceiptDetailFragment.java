@@ -124,6 +124,15 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                                 setTagColor(receiptModel);
                             }
                         });
+                    } else {
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent i = new Intent(getActivity(), ReceiptListActivity.class);
+                                startActivity(i);
+                                getActivity().finish();
+                            }
+                        });
                     }
                     break;
                 default:
