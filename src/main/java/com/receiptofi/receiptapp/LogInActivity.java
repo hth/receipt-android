@@ -274,10 +274,10 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "Executing authenticateLogIn: onError: " + error);
                 hideLoader();
-                if (TextUtils.isEmpty(error)) {
-                    showToast("Login failed. Either user does not exists or invalid password.", SuperToast.Duration.LONG, SuperToast.Background.RED);
-                } else {
+                if (JsonParseUtils.isJSONValid(error)) {
                     showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG, SuperToast.Background.RED);
+                } else {
+                    showToast("Login failed. Either user does not exists or invalid password.", SuperToast.Duration.LONG, SuperToast.Background.RED);
                 }
             }
 
