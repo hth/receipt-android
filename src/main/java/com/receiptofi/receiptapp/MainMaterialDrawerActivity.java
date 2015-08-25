@@ -119,7 +119,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                     name,
                     mail,
                     R.drawable.ic_profile,
-                    drawableToBitmap(new ColorDrawable(getResources().getColor(R.color.green))));
+                    drawableToBitmap(new ColorDrawable(getResources().getColor(R.color.gray_darker))));
         } else {
             TextDrawable textDrawable = TextDrawable.builder()
                     .beginConfig()
@@ -136,7 +136,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                     name,
                     mail,
                     drawableToText(textDrawable),
-                    drawableToBitmap(new ColorDrawable(getResources().getColor(R.color.green))));
+                    drawableToBitmap(new ColorDrawable(getResources().getColor(R.color.gray_darker))));
         }
 
         setUsernameTextColor(Color.WHITE);
