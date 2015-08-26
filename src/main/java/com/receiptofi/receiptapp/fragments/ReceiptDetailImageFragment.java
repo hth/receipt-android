@@ -115,7 +115,7 @@ public class ReceiptDetailImageFragment extends Fragment {
                     Log.e(TAG, "Failed to download image=" + e.getLocalizedMessage(), e);
                     if (null != getActivity()) {
                         SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
-                        superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.get_image_download_error));
+                        superActivityToast.setText(getActivity().getApplicationContext().getString(R.string.get_image_download_error) + " " + mUrl);
                         superActivityToast.setDuration(SuperToast.Duration.MEDIUM);
                         superActivityToast.setBackground(SuperToast.Background.RED);
                         superActivityToast.setTextColor(Color.WHITE);
