@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.os.Message;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -49,6 +50,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     private StringBuilder errors = new StringBuilder();
     private EditText email;
     private ImageView emailImage;
+    private TextView passwordRecovery;
 
     private SuperActivityToast loader;
 
@@ -57,7 +59,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.password_recovery);
 
-        final TextView passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
+        passwordRecovery = (TextView) findViewById(R.id.password_recovery_button);
         passwordRecovery.setOnClickListener(this);
 
         emailImage = (ImageView) findViewById(R.id.email_image);
@@ -136,6 +138,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
     private void sendRecoveryEmail(String email) {
         Log.d(TAG, "recovery email invoked");
         showLoader(getResources().getString(R.string.password_recovery_msg));
+        passwordRecovery.setEnabled(false);
 
         JSONObject postData = new JSONObject();
         try {
@@ -158,6 +161,13 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             @Override
             public void onError(int statusCode, String error) {
                 Log.d(TAG, "executing sendRecoveryEmail: onError: " + error);
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        passwordRecovery.setEnabled(true);
+                    }
+                });
+
                 Message msg = new Message();
                 msg.what = PASSWORD_RECOVERY_ERROR;
                 msg.obj = JsonParseUtils.parseError(error);
@@ -167,6 +177,13 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
             @Override
             public void onException(Exception exception) {
                 Log.e(TAG, "executing sendRecoveryEmail: onException: " + exception.getMessage(), exception);
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        passwordRecovery.setEnabled(true);
+                    }
+                });
+
                 Message msg = new Message();
                 msg.what = PASSWORD_RECOVERY_EXCEPTION;
                 msg.obj = exception.getLocalizedMessage();

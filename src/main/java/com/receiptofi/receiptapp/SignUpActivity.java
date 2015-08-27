@@ -58,6 +58,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     private ImageView passwordImage;
     private Spinner ageSpinner;
     private TextView signupTerms;
+    private TextView signUp;
 
     private String nameStr;
     private String emailStr;
@@ -71,7 +72,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
-        final TextView signUp = (TextView) findViewById(R.id.sign_up_button);
+        signUp = (TextView) findViewById(R.id.sign_up_button);
         signUp.setOnClickListener(this);
 
         final TextWatcher textWatcher = new TextWatcher() {
@@ -223,6 +224,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     private void authenticateSignUp(Bundle data) {
         Log.d(TAG, "executing authenticateSignUp");
         showLoader(getResources().getString(R.string.sign_up_msg));
+        signUp.setEnabled(false);
 
         JSONObject postData = new JSONObject();
 
@@ -252,6 +254,13 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
                 Log.d(TAG, "executing authenticateSignUp: onError: " + error);
                 hideLoader();
                 showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.LONG, SuperToast.Background.RED);
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        signUp.setEnabled(true);
+                    }
+                });
             }
 
             @Override
@@ -259,6 +268,13 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
                 Log.d(TAG, "executing authenticateSignUp: onException: " + exception.getMessage());
                 hideLoader();
                 showToast(exception.getMessage(), SuperToast.Duration.LONG, SuperToast.Background.RED);
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        signUp.setEnabled(true);
+                    }
+                });
             }
         });
     }

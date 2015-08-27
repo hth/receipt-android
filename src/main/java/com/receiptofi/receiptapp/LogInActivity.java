@@ -55,6 +55,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private String emailStr;
     private String passwordStr;
     private TextView buildVersion;
+    private TextView logIn;
 
     private boolean isLeftButtonClicked = false;
     private boolean isRightButtonClicked = false;
@@ -66,7 +67,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         ScrollView scrollView = (ScrollView) findViewById(R.id.scroll_view);
         scrollView.setVerticalScrollBarEnabled(false);
 
-        final TextView logIn = (TextView) findViewById(R.id.login_button);
+        logIn = (TextView) findViewById(R.id.login_button);
         logIn.setOnClickListener(this);
 
         final TextWatcher textWatcher = new TextWatcher() {
@@ -252,6 +253,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private void authenticateLogIn(Bundle data) {
         Log.d(TAG, "Authenticating");
         showLoader(getResources().getString(R.string.login_auth_msg));
+        logIn.setEnabled(false);
 
         RequestBody formBody = new FormEncodingBuilder()
                 .add(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL))
@@ -279,6 +281,13 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 } else {
                     showToast("Login failed. Either user does not exists or invalid password.", SuperToast.Duration.LONG, SuperToast.Background.RED);
                 }
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        logIn.setEnabled(true);
+                    }
+                });
             }
 
             @Override
@@ -286,6 +295,13 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
                 Log.d(TAG, "Executing authenticateLogIn: onException: " + exception.getMessage());
                 hideLoader();
                 showToast(exception.getMessage(), SuperToast.Duration.LONG, SuperToast.Background.RED);
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        logIn.setEnabled(true);
+                    }
+                });
             }
         });
     }
