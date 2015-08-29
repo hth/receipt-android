@@ -202,7 +202,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
         // Add tax footer
         View taxFooter = View.inflate(getActivity(), R.layout.rd_item_list_footer_tax, null);
-        taxDscpView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_dscp);
         taxAmountView = (TextView) taxFooter.findViewById(R.id.rd_item_list_footer_tax_amount);
         rdItemsList.addFooterView(taxFooter);
 
@@ -431,7 +430,6 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
             //Receipt item list Block
             // Add tax footer
-            taxDscpView.setText(Double.toString(receiptModel.getPtax()));
             taxAmountView.setText(Double.toString(receiptModel.getTax()));
 
             // Add total footer
