@@ -16,22 +16,16 @@
         android:text="@string/rd_item_header_tax_title"/>
 
     <TextView
-        android:id="@+id/rd_item_list_footer_tax_dscp"
-        style="@style/rd_list_item_text_left_secondary_style"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/rd_item_list_footer_tax_title"/>
-
-    <TextView
         android:id="@+id/rd_item_list_footer_tax_amount"
         style="@style/rd_list_item_tax_footer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/rd_item_list_footer_tax_title"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@id/rd_item_list_footer_tax_title"
+        android:layout_alignTop="@+id/rd_item_list_footer_tax_title"
         android:gravity="right"
-        android:text="00.00"
+        android:text="@string/placeholder_text"
         android:textColor="@color/app_theme_txt_color"/>
 
 </RelativeLayout>
