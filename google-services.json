@@ -1,0 +1,57 @@
+{
+  "project_info": {
+    "project_id": "api-project-453221870821",
+    "project_number": "453221870821",
+    "name": "Receiptofi\u0027s ReceiptApp"
+  },
+  "client": [
+    {
+      "client_info": {
+        "client_id": "android:com.receiptofi.receiptapp",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.receiptofi.receiptapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "453221870821-3c19ldfnsmkd9afil58juplrh5snifid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.receiptofi.receiptapp",
+            "certificate_hash": "8314931406912031d400dfcc4678e286a1c1d980"
+          }
+        },
+        {
+          "client_id": "453221870821-cp7072ue7alq41lqqhb2l800t44fcbpc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.receiptofi.receiptapp",
+            "certificate_hash": "1be6ea6850b20fcbe13733368ad2c9eead008dde"
+          }
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 2,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 1
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "ARTIFACT_VERSION": "1"
+}
