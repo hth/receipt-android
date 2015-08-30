@@ -30,6 +30,8 @@ import android.widget.SearchView;
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
@@ -41,6 +43,7 @@ import com.receiptofi.receiptapp.fragments.SettingFragment;
 import com.receiptofi.receiptapp.fragments.SubscriptionFragment;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.ProfileModel;
+import com.receiptofi.receiptapp.service.gcm.RegistrationIntentService;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
@@ -61,6 +64,8 @@ import it.neokree.materialnavigationdrawer.elements.listeners.MaterialSectionLis
  */
 public class MainMaterialDrawerActivity extends MaterialNavigationDrawer implements HomeFragment.OnFragmentInteractionListener, ExpenseTagFragment.OnFragmentInteractionListener {
     private static final String TAG = MainMaterialDrawerActivity.class.getSimpleName();
+
+    private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     private SearchView searchView;
     public HomeFragment homeFragment;
@@ -210,6 +215,12 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         setBackPattern(MaterialNavigationDrawer.BACKPATTERN_BACK_TO_FIRST);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        if (checkPlayServices()) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegistrationIntentService.class);
+            startService(intent);
+        }
     }
 
     @Override
@@ -458,5 +469,24 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         }
         /** Works without this line but just to be safe. */
         notifyAccountDataChanged();
+    }
+
+    /**
+     * Check the device to make sure it has the Google Play Services APK. If
+     * it doesn't, display a dialog that allows users to download the APK from
+     * the Google Play Store or enable it in the device's system settings.
+     */
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Log.i(TAG, "This device is not supported.");
+                finish();
+            }
+            return false;
+        }
+        return true;
     }
 }
