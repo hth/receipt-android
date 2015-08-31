@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmPubSub;
@@ -94,8 +95,15 @@ public class RegistrationIntentService extends IntentService {
     // [END subscribe_topics]
 
     private String[] getTopics() {
-        return new String[]{
-                "/topics/" + KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID) + ""
-        };
+        String[] subscriptionTopic = new String[]{};
+        if (!TextUtils.isEmpty(KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID))) {
+            subscriptionTopic = new String[]{"/topics/" + KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID) + ""};
+        }
+
+        if (subscriptionTopic.length == 0) {
+            Log.d(TAG, "Subscription topic is empty");
+        }
+
+        return subscriptionTopic;
     }
 }
