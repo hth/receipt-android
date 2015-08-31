@@ -60,14 +60,14 @@ public class DeviceService {
             @Override
             public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
-                showMessage("Syncing complete with latest data.", (Activity) context);
+                showMessage("Syncing complete with latest data.", (Activity) context, SuperToast.Background.BLUE);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
+                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context, SuperToast.Background.RED);
                 }
             }
 
@@ -75,7 +75,7 @@ public class DeviceService {
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 if (null != context) {
-                    showMessage(e.getMessage(), (Activity) context);
+                    showMessage(e.getMessage(), (Activity) context, SuperToast.Background.RED);
                 }
             }
         });
@@ -95,14 +95,14 @@ public class DeviceService {
 
                 /** Update DB if successful in getting all the data and update the DB. */
                 KeyValueUtils.updateInsert(KeyValueUtils.KEYS.GET_ALL_COMPLETE, Boolean.toString(true));
-                showMessage("Synced all data.", (Activity) context);
+                showMessage("Synced all data.", (Activity) context, SuperToast.Background.BLUE);
             }
 
             @Override
             public void onError(int statusCode, String error) {
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
+                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context, SuperToast.Background.RED);
                 }
             }
 
@@ -110,7 +110,7 @@ public class DeviceService {
             public void onException(Exception e) {
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 if (null != context) {
-                    showMessage(e.getMessage(), (Activity) context);
+                    showMessage(e.getMessage(), (Activity) context, SuperToast.Background.RED);
                 }
             }
         });
@@ -140,7 +140,7 @@ public class DeviceService {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 Log.e(TAG, "error=" + error);
                 if (null != context) {
-                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context);
+                    showMessage(JsonParseUtils.parseForErrorReason(error), (Activity) context, SuperToast.Background.RED);
                 }
             }
 
@@ -149,7 +149,7 @@ public class DeviceService {
                 KeyValueUtils.deleteKey(KeyValueUtils.KEYS.XR_DID);
                 Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
                 if (null != context) {
-                    showMessage(e.getMessage(), (Activity) context);
+                    showMessage(e.getMessage(), (Activity) context, SuperToast.Background.RED);
                 }
             }
         });
@@ -232,7 +232,7 @@ public class DeviceService {
      * @param message
      * @param context
      */
-    private static void showMessage(final String message, final Activity context) {
+    private static void showMessage(final String message, final Activity context, final int backgroundColor) {
         Assert.assertNotNull("Context should not be null", context);
         if (TextUtils.isEmpty(message)) {
             return;
@@ -244,7 +244,7 @@ public class DeviceService {
                 SuperActivityToast superActivityToast = new SuperActivityToast(context);
                 superActivityToast.setText(message);
                 superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setBackground(backgroundColor);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();
