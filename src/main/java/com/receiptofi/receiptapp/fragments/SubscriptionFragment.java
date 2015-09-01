@@ -121,7 +121,7 @@ public class SubscriptionFragment extends Fragment {
                 if (null != TokenWrapper.getTokenModel()) {
                     onPlanSelection(planModel);
                 } else {
-                    ((MainMaterialDrawerActivity) getActivity()).showErrorMsg("Wait a moment, token is not ready");
+                    ((MainMaterialDrawerActivity) getActivity()).showToastMsg("Wait a moment, token is not ready", SuperToast.Background.BLUE);
                 }
             }
         });

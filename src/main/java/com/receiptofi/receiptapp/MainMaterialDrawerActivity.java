@@ -301,7 +301,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
             if (null != imageAbsolutePath) {
                 File pickerImage = new File(imageAbsolutePath);
                 if ((pickerImage.length() / 1048576) >= 10) {
-                    showErrorMsg("Image size of more than 10MB not supported.");
+                    showToastMsg("Image size of more than 10MB not supported.", SuperToast.Background.RED);
                 } else {
                     startProgressToken();
                     ImageUpload.process(this, imageAbsolutePath);
@@ -347,7 +347,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
-            showErrorMsg("We seemed to have encountered issue saving your image.");
+            showToastMsg("We seemed to have encountered issue saving your image.", SuperToast.Background.RED);
         }
     }
 
@@ -364,11 +364,11 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         return subscriptionFragment;
     }
 
-    public void showErrorMsg(String msg) {
+    public void showToastMsg(String msg, int backgroundColor) {
         SuperActivityToast superActivityToast = new SuperActivityToast(MainMaterialDrawerActivity.this);
         superActivityToast.setText(msg);
         superActivityToast.setDuration(SuperToast.Duration.SHORT);
-        superActivityToast.setBackground(SuperToast.Background.BLUE);
+        superActivityToast.setBackground(backgroundColor);
         superActivityToast.setTextColor(Color.WHITE);
         superActivityToast.setTouchToDismiss(true);
         superActivityToast.show();
