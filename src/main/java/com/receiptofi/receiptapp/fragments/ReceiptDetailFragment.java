@@ -427,10 +427,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             String formattedDate = Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptModel.getReceiptDate()));
             rdDate.setText(formattedDate);
 
-
             //Receipt item list Block
             // Add tax footer
-            taxAmountView.setText(Double.toString(receiptModel.getTax()));
+            taxAmountView.setText(AppUtils.currencyFormatter().format(receiptModel.getTax()));
 
             // Add total footer
             totalAmountView.setText(AppUtils.currencyFormatter().format(receiptModel.getTotal()));
