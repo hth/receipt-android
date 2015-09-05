@@ -20,6 +20,8 @@ import com.receiptofi.receiptapp.utils.ConstantsJson;
 import com.receiptofi.receiptapp.utils.UserUtils.UserSettings;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 
+import junit.framework.Assert;
+
 import java.util.ArrayList;
 
 public class ImageUploaderService {
@@ -36,24 +38,25 @@ public class ImageUploaderService {
     }
 
     public static void start(Context context) {
+        Assert.assertNotNull(context);
         ImageUploaderService.context = context;
         ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
+        Assert.assertNotNull(queue);
 
-        if (queue != null && !queue.isEmpty()) {
-            for (int i = 0; i < queue.size() && imageUploadThreads.size() < MAX_NUMBER_THREAD; i++) {
+        Log.i(TAG, "Queue size=" + queue.size() + " imageUploadThreads.size()=" + imageUploadThreads.size());
+        for (int i = 0; !queue.isEmpty() && i < queue.size() && imageUploadThreads.size() < MAX_NUMBER_THREAD; i++) {
 
-                ImageModel iModel = queue.get(i);
-                if (validateImageForUpload(iModel)) {
-                    isServiceStarted = true;
-                    Log.d(TAG, i + " image upload started for " + iModel.imgPath);
-                    Thread imageUploaderThread = getUploaderThread(context, iModel);
-                    imageUploadThreads.add(imageUploaderThread);
-                    allThreads.add(imageUploaderThread);
-                }
+            ImageModel iModel = queue.get(i);
+            if (validateImageForUpload(iModel)) {
+                isServiceStarted = true;
+                Log.d(TAG, i + " image upload started for " + iModel.imgPath);
+                Thread imageUploaderThread = getUploaderThread(context, iModel);
+                imageUploadThreads.add(imageUploaderThread);
+                allThreads.add(imageUploaderThread);
+            }
 
-                if (i == (queue.size() - 1)) {
-                    isServiceStarted = false;
-                }
+            if (i == (queue.size() - 1)) {
+                isServiceStarted = false;
             }
         }
     }
