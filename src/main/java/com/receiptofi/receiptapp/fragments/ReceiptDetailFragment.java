@@ -164,6 +164,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     @Override
     public void onPause() {
         super.onPause();
+        if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
+            ((ReceiptListActivity) getActivity()).closeDrawer();
+        }
         receiptDetailObservable.unregisterObserver(observer);
     }
 
