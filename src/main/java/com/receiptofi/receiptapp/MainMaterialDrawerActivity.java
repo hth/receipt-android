@@ -301,7 +301,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
             if (null != imageAbsolutePath) {
                 File pickerImage = new File(imageAbsolutePath);
                 if ((pickerImage.length() / 1048576) >= 10) {
-                    showToastMsg("Image size of more than 10MB not supported.", SuperToast.Background.RED);
+                    showToastMsg("Image size of more than 10MB not supported.",
+                            SuperToast.Background.RED,
+                            SuperToast.Duration.MEDIUM);
                 } else {
                     startProgressToken();
                     ImageUpload.process(this, imageAbsolutePath);
@@ -347,7 +349,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
-            showToastMsg("We seemed to have encountered issue saving your image.", SuperToast.Background.RED);
+            showToastMsg("We seemed to have encountered issue saving your image.",
+                    SuperToast.Background.RED,
+                    SuperToast.Duration.MEDIUM);
         }
     }
 
@@ -364,10 +368,10 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         return subscriptionFragment;
     }
 
-    public void showToastMsg(String msg, int backgroundColor) {
+    public void showToastMsg(String msg, int backgroundColor, int duration) {
         SuperActivityToast superActivityToast = new SuperActivityToast(MainMaterialDrawerActivity.this);
         superActivityToast.setText(msg);
-        superActivityToast.setDuration(SuperToast.Duration.SHORT);
+        superActivityToast.setDuration(duration);
         superActivityToast.setBackground(backgroundColor);
         superActivityToast.setTextColor(Color.WHITE);
         superActivityToast.setTouchToDismiss(true);
@@ -480,7 +484,10 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
         if (resultCode != ConnectionResult.SUCCESS) {
             if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                //GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
+                showToastMsg("Certain feature would not be available due to missing Google Play Service.",
+                        SuperToast.Background.RED,
+                        SuperToast.Duration.EXTRA_LONG);
             } else {
                 Log.i(TAG, "This device is not supported.");
                 finish();
