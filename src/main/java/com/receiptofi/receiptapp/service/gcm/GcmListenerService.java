@@ -12,6 +12,8 @@ import android.util.Log;
 
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
+import com.receiptofi.receiptapp.service.DeviceService;
+import com.receiptofi.receiptapp.utils.AppUtils;
 
 /**
  * User: hitender
@@ -36,6 +38,9 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
 
         if (from.startsWith("/topics/")) {
             // message received from some topic.
+            if (AppUtils.getHomePageContext() != null) {
+                DeviceService.getUpdates(AppUtils.getHomePageContext());
+            }
         } else {
             // normal downstream message.
         }
@@ -71,7 +76,7 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
                 intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 .setSmallIcon(R.drawable.receipt_logo)
                 .setContentTitle("ReceiptApp")
