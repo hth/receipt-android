@@ -383,30 +383,36 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
             // Biz address
             rdBizName.setText(receiptModel.getBizName());
-            StringTokenizer tokenizer = new StringTokenizer(receiptModel.getAddress(), ",");
-            if (tokenizer.countTokens() <= 4) {
-                rdBizAddLine1.setText((tokenizer.nextToken()).trim());
-                String addressLine2 = "";
-                while (tokenizer.hasMoreTokens()) {
-                    addressLine2 = addressLine2 + tokenizer.nextToken() + ",";
+            if (!TextUtils.isEmpty(receiptModel.getAddress())) {
+                StringTokenizer tokenizer = new StringTokenizer(receiptModel.getAddress(), ",");
+                if (tokenizer.countTokens() <= 4) {
+                    rdBizAddLine1.setText((tokenizer.nextToken()).trim());
+                    String addressLine2 = "";
+                    while (tokenizer.hasMoreTokens()) {
+                        addressLine2 = addressLine2 + tokenizer.nextToken() + ",";
+                    }
+                    addressLine2 = addressLine2.replaceAll(",$", "");
+                    rdBizAddLine2.setText(addressLine2.trim());
+                    rdBizAddLine3.setVisibility(View.GONE);
+                } else {
+                    rdBizAddLine1.setText((tokenizer.nextToken()).trim());
+                    rdBizAddLine2.setText((tokenizer.nextToken()).trim());
+                    String addressLine3 = "";
+                    while (tokenizer.hasMoreTokens()) {
+                        addressLine3 = addressLine3 + tokenizer.nextToken() + ",";
+                    }
+                    addressLine3 = addressLine3.replaceAll(",$", "");
+                    rdBizAddLine3.setText(addressLine3.trim());
+                    rdBizAddLine3.setVisibility(View.VISIBLE);
                 }
-                addressLine2 = addressLine2.replaceAll(",$", "");
-                rdBizAddLine2.setText(addressLine2.trim());
-                rdBizAddLine3.setVisibility(View.GONE);
-            } else {
-                rdBizAddLine1.setText((tokenizer.nextToken()).trim());
-                rdBizAddLine2.setText((tokenizer.nextToken()).trim());
-                String addressLine3 = "";
-                while (tokenizer.hasMoreTokens()) {
-                    addressLine3 = addressLine3 + tokenizer.nextToken() + ",";
-                }
-                addressLine3 = addressLine3.replaceAll(",$", "");
-                rdBizAddLine3.setText(addressLine3.trim());
-                rdBizAddLine3.setVisibility(View.VISIBLE);
-            }
 
-            if (isAppInstalled("com.google.android.apps.maps")) {
-                addAddressListener(receiptModel);
+                if (isAppInstalled("com.google.android.apps.maps")) {
+                    addAddressListener(receiptModel);
+                }
+            } else {
+                rdBizAddLine1.setText("");
+                rdBizAddLine2.setText("");
+                rdBizAddLine3.setText("");
             }
 
             //Phone action
