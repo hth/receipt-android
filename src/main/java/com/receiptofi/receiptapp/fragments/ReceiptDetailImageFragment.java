@@ -144,7 +144,7 @@ public class ReceiptDetailImageFragment extends Fragment {
                     if (BuildConfig.DEBUG) {
                         Log.d(TAG, "Error downloading image from cloud " + mUrl);
                     } else {
-                        Log.e(TAG, "Error downloading image from cloud " + mUrl);
+                        Log.e(TAG, "Error downloading image from cloud");
                     }
                     superActivityProgressToast.dismiss();
                     inShowingProgress = false;
