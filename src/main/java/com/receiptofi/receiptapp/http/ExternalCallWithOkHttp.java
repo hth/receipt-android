@@ -84,6 +84,10 @@ public class ExternalCallWithOkHttp {
                     if (includeDevice == IncludeDevice.YES) {
                         headers.put(API.key.XR_DID, UserUtils.getDeviceId());
                     }
+                    if (includeDevice == IncludeDevice.TYPE) {
+                        headers.put(API.key.XR_DID, UserUtils.getDeviceId());
+                        headers.put(API.key.XR_DT, "A");
+                    }
 
                     Request request;
                     if (!TextUtils.isEmpty(api)) {
@@ -172,6 +176,10 @@ public class ExternalCallWithOkHttp {
                     headers.put(API.key.XR_MAIL, UserUtils.getEmail());
                     if (includeDevice == IncludeDevice.YES) {
                         headers.put(API.key.XR_DID, UserUtils.getDeviceId());
+                    }
+                    if (includeDevice == IncludeDevice.TYPE) {
+                        headers.put(API.key.XR_DID, UserUtils.getDeviceId());
+                        headers.put(API.key.XR_DT, "A");
                     }
 
                     Request request;

@@ -56,7 +56,7 @@ public class DeviceService {
      */
     public static void getUpdates(final Context context) {
         Log.d(TAG, "get new update for device");
-        ExternalCallWithOkHttp.doGet(context, IncludeDevice.YES, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
+        ExternalCallWithOkHttp.doGet(context, IncludeDevice.TYPE, API.NEW_UPDATE_FOR_DEVICE, new ResponseHandler() {
             @Override
             public void onSuccess(Headers headers, String body) {
                 DeviceService.onSuccess(headers, body);
@@ -124,7 +124,7 @@ public class DeviceService {
         Log.d(TAG, "register device");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
 
-        ExternalCallWithOkHttp.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.YES, new ResponseHandler() {
+        ExternalCallWithOkHttp.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.TYPE, new ResponseHandler() {
 
             @Override
             public void onSuccess(Headers headers, String body) {
