@@ -14,10 +14,10 @@ public class API {
     // Launch HomeActivity api
     // On successful login check if XR-mail is same and DID exist skip device registration
     // otherwise register device and call ALL_FROM_BEGINNING
-    public static final String REGISTER_DEVICE = "/api/v1/register.json";
+    public static final String REGISTER_DEVICE = "/api/register.json";
     public static final String ALL_FROM_BEGINNING = "/api/all.json";
     // if re-login call NEW_UPDATE_FOR_DEVICE
-    public static final String NEW_UPDATE_FOR_DEVICE = "/api/v1/update.json";
+    public static final String NEW_UPDATE_FOR_DEVICE = "/api/update.json";
 
 
     // Settings api - Profile
