@@ -2,7 +2,14 @@
 
 As soon as user logs in for the first time and when APP has noticed there is no Device ID registered/saved internally, APP should make a call to register the device
 
-API call <code>POST</code> path <code>curl -ik -X POST -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" -H "X-R-DID: Unique-Device-Id" https://receiptofi.com:9443/receipt-mobile/api/register.json</code>
+API call <code>POST</code> path
+
+	curl -ik -X POST
+    -H "X-R-MAIL: test@receiptofi.com"
+    -H "X-R-AUTH: %242a%"
+    -H "X-R-DID: Unique-Device-Id"
+    -H "X-R-DT: I or A"
+    https://receiptofi.com:9443/receipt-mobile/api/register.json
 
 ***Success***
 
