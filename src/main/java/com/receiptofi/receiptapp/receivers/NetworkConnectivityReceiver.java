@@ -37,8 +37,12 @@ public class NetworkConnectivityReceiver extends BroadcastReceiver {
                 Log.d(TAG, "Starting image upload for count=" + queue.size());
                 ImageUploaderService.start(context);
             } else {
-                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext())
-                        .homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                MainMaterialDrawerActivity mainMaterialDrawerActivity = (MainMaterialDrawerActivity) AppUtils.getHomePageContext();
+                if (null != mainMaterialDrawerActivity) {
+                    mainMaterialDrawerActivity.homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+                } else {
+                    Log.e(TAG, "MainMaterialDrawerActivity is null. Cannot send message.");
+                }
             }
         }
     }
