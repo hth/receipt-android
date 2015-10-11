@@ -421,7 +421,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             String month = DF_MMM.format(new Date());
 
             Spannable wordToSpan = new SpannableString(getString(R.string.monthly_amount, month, amount));
-            wordToSpan.setSpan(new ForegroundColorSpan(R.color.green), wordToSpan.length() - month.length() - PADDING_SPACE, wordToSpan.length(), 0);
+            wordToSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.father_bg)), wordToSpan.length() - month.length() - PADDING_SPACE, wordToSpan.length(), 0);
             wordToSpan.setSpan(new RelativeSizeSpan(1.22f), wordToSpan.length() - month.length() - PADDING_SPACE, wordToSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
             currentMonthExp.setText(wordToSpan);
         } else {
