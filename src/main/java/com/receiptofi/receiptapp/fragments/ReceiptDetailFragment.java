@@ -164,10 +164,19 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     @Override
     public void onPause() {
         super.onPause();
-        if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
-            ((ReceiptListActivity) getActivity()).closeDrawer();
+        if (getActivity() instanceof ReceiptListActivity) {
+            if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
+                ((ReceiptListActivity) getActivity()).closeDrawer();
+            }
+            receiptDetailObservable.unregisterObserver(observer);
+        } else if(getActivity() instanceof FilterListActivity) {
+            if (((FilterListActivity) getActivity()).isDrawerOpened()) {
+                ((FilterListActivity) getActivity()).closeDrawer();
+            }
+            receiptDetailObservable.unregisterObserver(observer);
+        } else {
+            Log.w(TAG, "Not an instanceof ReceiptListActivity or FilterListActivity");
         }
-        receiptDetailObservable.unregisterObserver(observer);
     }
 
     @Override
