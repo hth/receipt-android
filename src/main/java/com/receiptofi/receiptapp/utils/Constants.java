@@ -37,7 +37,7 @@ public class Constants {
 
     public static final DateFormat ISO_DF = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.US);
     public static final DateTimeFormatter ISO_J_DF = ISODateTimeFormat.dateTime();
-    public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy HH:mm a", Locale.US);
+    public static final DateFormat MMM_DD_DF = new SimpleDateFormat("MMM dd',' yyyy hh:mm a", Locale.US);
 
     public enum ReceiptFilter {
         FILTER_BY_BIZ_AND_MONTH("filter_by_biz_and_month"),
