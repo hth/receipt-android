@@ -9,7 +9,6 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.appsflyer.AppsFlyerLib;
 import com.receiptofi.receiptapp.utils.UserUtils;
 
 /**
@@ -29,10 +28,6 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        AppsFlyerLib.setAppsFlyerKey(BuildConfig.AppsFlyer_Dev_Key);
-        AppsFlyerLib.sendTracking(getApplicationContext());
-
         if (UserUtils.isValidAppUser()) {
             startActivity(new Intent(this, MainMaterialDrawerActivity.class));
             finish();
