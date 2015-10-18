@@ -1,14 +1,14 @@
 #### All available data
 
 API will get **all** data for registered account. This API is mostly used when device has not been registered or when
- new user logs in. 
+ new user logs in.
 
 <code>GET</code> API call <code>/receipt-mobile/api/all.json</code>
 
-    curl -ik -X GET 
-    -H "X-R-MAIL: test@receiptofi.com" 
-    -H "X-R-AUTH: %242a%2415%24e2" 
-    -H "X-R-DID: 12345" 
+    curl -ik -X GET
+    -H "X-R-MAIL: test@receiptofi.com"
+    -H "X-R-AUTH: %242a%2415%24e2"
+    -H "X-R-DID: 12345"
     https://test.receiptofi.com/receipt-mobile/api/all.json
 
 All different kind of data available in this API
@@ -19,7 +19,9 @@ All different kind of data available in this API
     PROFILE
     RECEIPTS
     UNPROCESSED COUNT
-    
+    FRIENDS
+    PENDING & AWAITING FRIENDS
+
 JSON HTTP Response
 
     HTTP/1.1 200 OK
@@ -166,13 +168,33 @@ JSON Response data
       ],
       "unprocessedDocuments": {
         "unprocessedCount": 1
-      }
+      },
+      "awaitingFriends": [],
+      "friends": [
+        {
+          "in": "BB",
+          "na": "BR BR",
+          "rid": "10000000002"
+        }
+      ],
+      "pendingFriends": [
+        {
+          "a": true,
+          "au": "xtk3d0qwjrpkt7ag2f2175xmx414aoty",
+          "c": 1445075325745,
+          "em": "jkl@r.com",
+          "id": "5622197dad116ed79ee94985",
+          "in": "vb",
+          "na": "vbxcvbcv bxcvbc",
+          "pr": ""
+        }
+      ]
     }
-    
-### Field References    
-    
+
+### Field References
+
 Expense Tag field reference
-    
+
     @JsonProperty ("id")
     private String id;
 
@@ -181,9 +203,9 @@ Expense Tag field reference
 
     @JsonProperty ("color")
     private String color;
-    
+
 Items field reference
-    
+
     @JsonProperty ("id")
     private String id;
 
@@ -207,9 +229,9 @@ Items field reference
 
     @JsonProperty ("expenseTagId")
     private String expenseTagId;
-    
+
 Notification field names
-    
+
     @JsonProperty ("id")
     private String id;
 
@@ -233,9 +255,9 @@ Notification field names
 
     @JsonProperty ("u")
     private String updated;
-    
+
 Receipt field name
-        
+
     @JsonProperty ("id")
     private String id;
 
@@ -273,4 +295,42 @@ Receipt field name
     private String billedStatus = BilledStatusEnum.NB.getName();
 
     @JsonProperty ("expenseTagId")
-    private String expenseTagId;        
+    private String expenseTagId;
+
+Friends
+
+    @JsonProperty ("rid")
+    private String rid;
+
+    @JsonProperty ("in")
+    private String initials;
+
+    @JsonProperty ("na")
+    private String name;
+
+Awaiting and Pending Friends
+
+    @JsonProperty ("id")
+    private String id;
+
+    @JsonProperty ("au")
+    private String authKey;
+
+    @JsonProperty ("c")
+    private Date created;
+
+    @JsonProperty ("in")
+    private String initials;
+
+    @JsonProperty ("na")
+    private String name;
+
+    @JsonProperty ("em")
+    private String email;
+
+    @JsonProperty ("pr")
+    private String provider = "";      // FACEBOOK or GOOGLE
+
+    @JsonProperty ("a")
+    private boolean active;
+
