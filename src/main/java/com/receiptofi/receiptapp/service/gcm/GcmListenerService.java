@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
@@ -32,6 +33,12 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
+        PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+        PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
+                PowerManager.PARTIAL_WAKE_LOCK,
+                "MyWakelockTag");
+        wakeLock.acquire();
+
         String message = data.getString("message");
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Message: " + message);
@@ -59,6 +66,8 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
          */
         sendNotification(message);
         // [END_EXCLUDE]
+
+        wakeLock.release();
     }
     // [END receive_message]
 
