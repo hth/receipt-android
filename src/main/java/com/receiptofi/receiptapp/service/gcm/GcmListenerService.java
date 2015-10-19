@@ -36,7 +36,7 @@ public class GcmListenerService extends com.google.android.gms.gcm.GcmListenerSe
         PowerManager powerManager = (PowerManager) getSystemService(POWER_SERVICE);
         PowerManager.WakeLock wakeLock = powerManager.newWakeLock(
                 PowerManager.PARTIAL_WAKE_LOCK,
-                "MyWakelockTag");
+                "ReceiptAppWakeLockTag");
         wakeLock.acquire();
 
         String message = data.getString("message");
