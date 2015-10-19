@@ -76,11 +76,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 case LOGIN_ID_UPDATE_SUCCESS:
                     updatePrefs();
                     stopProgressToken();
-                    showToast("Login Id updated successfully.", SuperToast.Duration.SHORT);
+                    showToast("Login Id updated successfully.", SuperToast.Duration.SHORT, SuperToast.Background.BLUE);
                     break;
                 case PASSWORD_UPDATE_SUCCESS:
                     stopProgressToken();
-                    showToast("Password updated successfully.", SuperToast.Duration.SHORT);
+                    showToast("Password updated successfully.", SuperToast.Duration.SHORT, SuperToast.Background.BLUE);
                     break;
                 case CHECK_UPDATE_SUCCESS:
                     Log.d(TAG, "Update checked successfully");
@@ -208,12 +208,12 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         Log.d(TAG, "Confirmed force sync");
 
                         if (AppUtils.isNetworkConnectedOrConnecting(getActivity())) {
-                            showToast("Started syncing data.", SuperToast.Duration.EXTRA_LONG);
+                            showToast("Started syncing data.", SuperToast.Duration.EXTRA_LONG, SuperToast.Background.BLUE);
                             DBUtils.dbReInitializeNonKeyValues();
                             DBUtils.initializeDefaults();
                             DeviceService.getAll(getActivity());
                         } else {
-                            showToast("No network available. Please try again when network is available.", SuperToast.Duration.EXTRA_LONG);
+                            showToast("No network available. Please try again when network is available.", SuperToast.Duration.EXTRA_LONG, SuperToast.Background.RED);
                         }
                     }
                 })
@@ -235,7 +235,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .setPositiveButton(getString(R.string.dialog_button_ok), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         Log.d(TAG, "Confirm delete data");
-                        showToast("Started deleting data.", SuperToast.Duration.EXTRA_LONG);
+                        showToast("Started deleting data.", SuperToast.Duration.EXTRA_LONG, SuperToast.Background.BLUE);
                         DBUtils.dbReInitialize();
                         startActivity(new Intent(getActivity(), LaunchActivity.class));
                     }
@@ -371,7 +371,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private void updateLoginId(String data) {
         Log.d(TAG, "executing updateLoginId");
         if (!UserUtils.isValidEmail(data)) {
-            showToast(getString(R.string.err_str_enter_valid_email), SuperToast.Duration.SHORT);
+            showToast(getString(R.string.err_str_enter_valid_email), SuperToast.Duration.SHORT, SuperToast.Background.RED);
             resetLoginId();
         } else {
             JSONObject postData = new JSONObject();
@@ -398,7 +398,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     Log.e(TAG, "executing updateLoginId: onError: " + error);
                     resetLoginId();
                     stopProgressToken();
-                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.EXTRA_LONG);
+                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.EXTRA_LONG, SuperToast.Background.RED);
                 }
 
                 @Override
@@ -406,7 +406,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     Log.e(TAG, "executing updateLoginId: onException: " + exception.getMessage());
                     resetLoginId();
                     stopProgressToken();
-                    showToast(exception.getMessage(), SuperToast.Duration.SHORT);
+                    showToast(exception.getMessage(), SuperToast.Duration.SHORT, SuperToast.Background.RED);
                 }
             });
         }
@@ -415,7 +415,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private void updatePassword(String data) {
         Log.d(TAG, "executing updatePassword");
         if (TextUtils.isEmpty(data)) {
-            showToast(getString(R.string.err_str_enter_valid_password, Validation.PASSWORD_MIN_LENGTH), SuperToast.Duration.SHORT);
+            showToast(getString(R.string.err_str_enter_valid_password, Validation.PASSWORD_MIN_LENGTH), SuperToast.Duration.SHORT, SuperToast.Background.RED);
         } else {
             JSONObject postData = new JSONObject();
 
@@ -440,14 +440,14 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 public void onError(int statusCode, String error) {
                     Log.e(TAG, "executing updatePassword: onError: " + error);
                     stopProgressToken();
-                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.EXTRA_LONG);
+                    showToast(JsonParseUtils.parseForErrorReason(error), SuperToast.Duration.EXTRA_LONG, SuperToast.Background.RED);
                 }
 
                 @Override
                 public void onException(Exception exception) {
                     Log.e(TAG, "executing updatePassword: onException: " + exception.getMessage());
                     stopProgressToken();
-                    showToast(exception.getMessage(), SuperToast.Duration.SHORT);
+                    showToast(exception.getMessage(), SuperToast.Duration.SHORT, SuperToast.Background.RED);
                 }
             });
         }
@@ -492,7 +492,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         }
     }
 
-    public void showToast(final String message, final int duration) {
+    public void showToast(final String message, final int duration, final int backgroundColor) {
         Assert.assertNotNull("Context should not be null", getActivity());
         if (TextUtils.isEmpty(message)) {
             return;
@@ -504,7 +504,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                 superActivityToast.setText(message);
                 superActivityToast.setDuration(duration);
-                superActivityToast.setBackground(SuperToast.Background.BLUE);
+                superActivityToast.setBackground(backgroundColor);
                 superActivityToast.setTextColor(Color.WHITE);
                 superActivityToast.setTouchToDismiss(true);
                 superActivityToast.show();
