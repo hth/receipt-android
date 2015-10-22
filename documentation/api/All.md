@@ -1,14 +1,14 @@
 #### All available data
 
 API will get **all** data for registered account. This API is mostly used when device has not been registered or when
- new user logs in.
+ new user logs in. 
 
 <code>GET</code> API call <code>/receipt-mobile/api/all.json</code>
 
-    curl -ik -X GET
-    -H "X-R-MAIL: test@receiptofi.com"
-    -H "X-R-AUTH: %242a%2415%24e2"
-    -H "X-R-DID: 12345"
+    curl -ik -X GET 
+    -H "X-R-MAIL: test@receiptofi.com" 
+    -H "X-R-AUTH: %242a%2415%24e2" 
+    -H "X-R-DID: 12345" 
     https://test.receiptofi.com/receipt-mobile/api/all.json
 
 All different kind of data available in this API
@@ -21,7 +21,7 @@ All different kind of data available in this API
     UNPROCESSED COUNT
     FRIENDS
     PENDING & AWAITING FRIENDS
-
+    
 JSON HTTP Response
 
     HTTP/1.1 200 OK
@@ -190,11 +190,11 @@ JSON Response data
         }
       ]
     }
-
-### Field References
-
+    
+### Field References    
+    
 Expense Tag field reference
-
+    
     @JsonProperty ("id")
     private String id;
 
@@ -203,9 +203,9 @@ Expense Tag field reference
 
     @JsonProperty ("color")
     private String color;
-
+    
 Items field reference
-
+    
     @JsonProperty ("id")
     private String id;
 
@@ -229,9 +229,9 @@ Items field reference
 
     @JsonProperty ("expenseTagId")
     private String expenseTagId;
-
+    
 Notification field names
-
+    
     @JsonProperty ("id")
     private String id;
 
@@ -255,9 +255,9 @@ Notification field names
 
     @JsonProperty ("u")
     private String updated;
-
+    
 Receipt field name
-
+        
     @JsonProperty ("id")
     private String id;
 
@@ -295,20 +295,20 @@ Receipt field name
     private String billedStatus = BilledStatusEnum.NB.getName();
 
     @JsonProperty ("expenseTagId")
-    private String expenseTagId;
-
+    private String expenseTagId;    
+        
 Friends
 
     @JsonProperty ("rid")
     private String rid;
-
-    @JsonProperty ("in")
+    
+    @JsonProperty ("initials")
     private String initials;
-
-    @JsonProperty ("na")
+    
+    @JsonProperty ("name")
     private String name;
 
-Awaiting and Pending Friends
+Awaiting and Pending Friends 
 
     @JsonProperty ("id")
     private String id;
@@ -319,10 +319,10 @@ Awaiting and Pending Friends
     @JsonProperty ("c")
     private Date created;
 
-    @JsonProperty ("in")
+    @JsonProperty ("initials")
     private String initials;
 
-    @JsonProperty ("na")
+    @JsonProperty ("name")
     private String name;
 
     @JsonProperty ("em")
@@ -333,4 +333,5 @@ Awaiting and Pending Friends
 
     @JsonProperty ("a")
     private boolean active;
-
+        
+        
