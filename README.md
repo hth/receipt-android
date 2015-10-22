@@ -30,4 +30,5 @@ Table of content
 18. [Expense Tag actions](documentation/api/ExpenseTag.md)
 19. [Billing] (documentation/api/Billing.md)
 20. [Payment] (documentation/api/Payment.md)
-21. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used
+21. [Friends] (documentation/api/Friends.md)
+22. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used	
