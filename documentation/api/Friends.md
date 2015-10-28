@@ -14,7 +14,7 @@ Friends and Awaiting or Pending Friends (same data response)  would look as belo
       ],      
       "pendingFriends": [
         {
-          "a": true,
+          "pa": true,
           "au": "xtk3d0qwjrpkt7ag2f2175xmx414aoty",
           "c": 1445075325745,
           "em": "jkl@r.com",
@@ -117,7 +117,7 @@ API call <code>/receipt-mobile/api/invite.json</code>
               "notifications": [],
               "pendingFriends": [
                 {
-                  "a": false,
+                  "pa": false,
                   "au": "124i8nnfm11wa4cemo4nvjvz53m3z18m",
                   "c": 1445501020201,
                   "em": "z@r.com",
@@ -127,7 +127,7 @@ API call <code>/receipt-mobile/api/invite.json</code>
                   "pr": ""
                 },
                 {
-                  "a": false,
+                  "pa": false,
                   "au": "3v10d1tdd81max3xrsboz2iympykt1fu",
                   "c": 1445629856296,
                   "em": "m@r.com",
@@ -248,7 +248,7 @@ API call <code>/receipt-mobile/api/friend.json</code>
             {
               "awaitingFriends": [
                 {
-                  "a": true,
+                  "pa": true,
                   "au": "cu8bi5s38mmrh2cg9pp21dm54ir78but",
                   "c": 1445637977654,
                   "em": "d@r.com",
@@ -271,7 +271,7 @@ API call <code>/receipt-mobile/api/friend.json</code>
               "notifications": [],
               "pendingFriends": [
                 {
-                  "a": false,
+                  "pa": false,
                   "au": "124i8nnfm11wa4cemo4nvjvz53m3z18m",
                   "c": 1445501020201,
                   "em": "z@r.com",
