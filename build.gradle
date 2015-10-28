@@ -7,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:1.3.0'
+        classpath 'com.android.tools.build:gradle:1.3.1'
         classpath 'com.google.gms:google-services:1.3.0-beta1'
     }
 }
@@ -49,7 +49,7 @@ dependencies {
     /** Android library for material design. */
     compile 'com.github.navasmdc:MaterialDesign:1.3'
     /** Pull refresh. */
-    compile 'in.srain.cube:ultra-ptr:1.0.10'
+    compile 'in.srain.cube:ultra-ptr:1.0.11'
     /** Material Navigation Drawer */
     compile 'it.neokree:MaterialNavigationDrawer:1.3.3'
     /** Super toast */
@@ -66,7 +66,7 @@ dependencies {
     compile 'com.squareup.okhttp:okhttp:2.5.0'
     compile 'com.github.PhilJay:MPAndroidChart:v2.1.0'
     compile 'com.github.machinarius:preferencefragment:0.1.1'
-    compile 'net.danlew:android.joda:2.7.2'
+    compile 'net.danlew:android.joda:2.9.0'
     compile 'org.ocpsoft.prettytime:prettytime:4.0.0.Final'
     compile 'com.braintreepayments.api:braintree:1.6.5'
     compile 'com.google.android.gms:play-services:7.5.0'
@@ -89,8 +89,8 @@ idea {
 android {
     archivesBaseName = "receiptApp";
 
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.1"
 
     def versionPropsFile = file('version.properties')
     def versionMajor = 0;
@@ -150,7 +150,7 @@ android {
     defaultConfig {
         applicationId "com.receiptofi.receiptapp"
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 23
         testHandleProfiling true
         testFunctionalTest true
         versionCode versionBuild
@@ -374,7 +374,7 @@ android {
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.4'
+    gradleVersion = '2.3'
 }
 
 defaultTasks 'clean', 'assembleDebug'
