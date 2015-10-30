@@ -36,6 +36,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             this.db = db;
             Log.d(TAG, "creating all tables");
             CreateTable.createTableReceipts(db);
+            CreateTable.createTableReceiptSplit(db);
             CreateTable.createTableImageIndex(db);
             CreateTable.createTableUploadQueue(db);
             CreateTable.createTableKeyValue(db);

@@ -42,8 +42,23 @@ public class CreateTable {
                 + DatabaseTable.Receipt.TOTAL + " DOUBLE , "
                 + DatabaseTable.Receipt.BILL_STATUS + " TEXT, "
                 + DatabaseTable.Receipt.EXPENSE_TAG_ID + " TEXT, "
+                + DatabaseTable.Receipt.REFER_RECEIPT_ID + " TEXT, "
+                + DatabaseTable.Receipt.SPLIT_COUNT + " INT, "
+                + DatabaseTable.Receipt.SPLIT_TOTAL + " DOUBLE, "
+                + DatabaseTable.Receipt.SPLIT_TAX + " DOUBLE, "
                 + DatabaseTable.Receipt.ACTIVE + " INT, "
                 + DatabaseTable.Receipt.DELETED + " INT " +
+
+                ");");
+    }
+
+    public static void createTableReceiptSplit(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableReceiptSplit");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ReceiptSplit.TABLE_NAME + "("
+                + DatabaseTable.ReceiptSplit.ID + " TEXT ,"
+                + DatabaseTable.ReceiptSplit.RID + " TEXT ,"
+                + DatabaseTable.ReceiptSplit.NAME + " TEXT ,"
+                + DatabaseTable.ReceiptSplit.NAME_INITIALS + " TEXT " +
 
                 ");");
     }

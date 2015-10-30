@@ -30,6 +30,7 @@ import com.receiptofi.receiptapp.utils.db.MonthlyReportUtils;
 import com.receiptofi.receiptapp.utils.db.NotificationUtils;
 import com.receiptofi.receiptapp.utils.db.ProfileUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptItemUtils;
+import com.receiptofi.receiptapp.utils.db.ReceiptSplitUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptUtils;
 import com.squareup.okhttp.Headers;
 
@@ -218,6 +219,10 @@ public class DeviceService {
             }
 
             refreshView = true;
+        }
+
+        if (!dataWrapper.getReceiptSplitModels().isEmpty()) {
+            ReceiptSplitUtils.insert(dataWrapper.getReceiptSplitModels());
         }
 
         if (refreshView) {

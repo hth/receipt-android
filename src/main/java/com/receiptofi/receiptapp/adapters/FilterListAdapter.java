@@ -18,6 +18,8 @@ import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.Constants;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -109,7 +111,10 @@ public class FilterListAdapter extends BaseExpandableListAdapter {
             }
             holder.bizName.setText(receiptData.getBizName());
             holder.date.setText(Constants.MMM_DD_DF.format(Constants.ISO_DF.parse(receiptData.getReceiptDate())));
-            holder.amount.setText(context.getString(R.string.receipt_list_child_amount, AppUtils.currencyFormatter().format(receiptData.getTotal())));
+            holder.amount.setText(
+                    context.getString(
+                            R.string.receipt_list_child_amount,
+                            AppUtils.currencyFormatter().format(receiptData.getSplitTotal())));
 
             return convertView;
         } catch (IndexOutOfBoundsException e) {

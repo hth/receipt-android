@@ -3,6 +3,7 @@ package com.receiptofi.receiptapp.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.BillingAccountModel;
 import com.receiptofi.receiptapp.model.BillingHistoryModel;
@@ -13,6 +14,7 @@ import com.receiptofi.receiptapp.model.PlanModel;
 import com.receiptofi.receiptapp.model.ProfileModel;
 import com.receiptofi.receiptapp.model.ReceiptItemModel;
 import com.receiptofi.receiptapp.model.ReceiptModel;
+import com.receiptofi.receiptapp.model.ReceiptSplitModel;
 import com.receiptofi.receiptapp.model.TokenModel;
 import com.receiptofi.receiptapp.model.TransactionDetail;
 import com.receiptofi.receiptapp.model.TransactionDetailPaymentModel;
@@ -141,6 +143,10 @@ public class JsonParseUtils {
         receiptModel.setRid(receipt.getString("rid"));
         receiptModel.setTotal(receipt.getDouble("total"));
         receiptModel.setExpenseTagId(receipt.getString("expenseTagId"));
+        receiptModel.setReferReceiptId(receipt.getString("referReceiptId"));
+        receiptModel.setSplitCount(receipt.getInt("splitCount"));
+        receiptModel.setSplitTotal(receipt.getDouble("splitTotal"));
+        receiptModel.setSplitTax(receipt.getDouble("splitTax"));
         receiptModel.setBillStatus(receipt.getString("bs"));
         receiptModel.setActive(receipt.getBoolean("a"));
         receiptModel.setDeleted(receipt.getBoolean("d"));
@@ -186,6 +192,38 @@ public class JsonParseUtils {
             Log.e(TAG, "Fail parsing receiptItem response=" + item, e);
             return null;
         }
+    }
+
+    public static List<ReceiptSplitModel> parseReceiptSplits(JSONArray jsonArray) {
+        List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                String receiptId = jsonObject.getString("receiptId");
+                receiptSplitModels.addAll(parseReceiptSplit(receiptId, jsonObject.getJSONArray("splits")));
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing ReceiptSplit array reason=" + e.getLocalizedMessage(), e);
+        }
+        return receiptSplitModels;
+    }
+
+    public static List<ReceiptSplitModel> parseReceiptSplit(String receiptId, JSONArray jsonArray) {
+        List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
+        try {
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+                receiptSplitModels.add(
+                        new ReceiptSplitModel(
+                                receiptId,
+                                jsonObject.getString(DatabaseTable.ReceiptSplit.RID),
+                                jsonObject.getString(DatabaseTable.ReceiptSplit.NAME_INITIALS),
+                                jsonObject.getString(DatabaseTable.ReceiptSplit.NAME)));
+            }
+        } catch (JSONException e) {
+            Log.e(TAG, "Fail parsing Split receiptId=" + receiptId + " reason=" + e.getLocalizedMessage(), e);
+        }
+        return receiptSplitModels;
     }
 
     public static List<ExpenseTagModel> parseExpenses(JSONArray jsonArray) {
@@ -304,6 +342,11 @@ public class JsonParseUtils {
             List<ReceiptItemModel> receiptItemModels = parseItems(jsonObject.getJSONArray(ConstantsJson.ITEMS));
             if (!receiptItemModels.isEmpty()) {
                 dataWrapper.setReceiptItemModels(receiptItemModels);
+            }
+
+            List<ReceiptSplitModel> receiptSplitModels = parseReceiptSplits(jsonObject.getJSONArray(ConstantsJson.SPLITS));
+            if (!receiptSplitModels.isEmpty()) {
+                dataWrapper.setReceiptSplitModels(receiptSplitModels);
             }
 
             List<ReceiptModel> receiptModels = parseReceipts(jsonObject.getJSONArray(ConstantsJson.RECEIPTS));
