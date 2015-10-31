@@ -76,7 +76,7 @@ public class DBUtils {
     public static void initializeDefaults() {
         Log.d(TAG, "Initialize key value defaults");
 
-        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(true));
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(false));
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT, "0");
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.SOCIAL_LOGIN, Boolean.toString(false));
         KeyValueUtils.updateInsert(KeyValueUtils.KEYS.LAST_FETCHED, "");
