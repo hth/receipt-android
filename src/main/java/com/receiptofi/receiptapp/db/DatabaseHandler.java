@@ -64,13 +64,14 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(TAG, "DatabaseHandler onUpgrade");
-        for (int i = 0; i < PATCHES.length; i++) {
-            PATCHES[i].apply(db);
-        }
+        Log.i(TAG, "DatabaseHandler onUpgrade");
+//        for (int i = 0; i < PATCHES.length; i++) {
+//            PATCHES[i].apply(db);
+//        }
 
         DBUtils.dbReInitializeNonKeyValues();
         DBUtils.initializeDefaults();
+        Log.i(TAG, "DatabaseHandler onUpgrade getAll");
         DeviceService.getAll(context);
     }
 
