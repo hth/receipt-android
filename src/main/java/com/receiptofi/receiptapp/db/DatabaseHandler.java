@@ -5,6 +5,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TAG = DatabaseHandler.class.getSimpleName();
@@ -60,8 +62,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.d(TAG, "DatabaseHandler onUpgrade");
-        for (int i = 0; i < PATCHES.length; i++) {
-            PATCHES[i].apply(db);
+        for (Patch patch : PATCHES) {
+            patch.apply(db);
         }
     }
 
@@ -121,6 +123,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.DELETED +
                                     " FROM " + DatabaseTable.Receipt.TABLE_NAME + "_old;");
                     db.execSQL("DROP TABLE " + DatabaseTable.Receipt.TABLE_NAME + "_old;");
+
+                    KeyValueUtils.updateInsert(KeyValueUtils.KEYS.WIFI_SYNC, Boolean.toString(false));
                 }
             }
     };
