@@ -25,7 +25,7 @@ public class DataWrapper {
     private UnprocessedDocumentModel unprocessedDocumentModel;
     private List<NotificationModel> notificationModels = new ArrayList<>();
     private BillingAccountModel billingAccountModel;
-    List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
+    private List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
 
     public ProfileModel getProfileModel() {
         return profileModel;
