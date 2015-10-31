@@ -5,9 +5,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
-import com.receiptofi.receiptapp.service.DeviceService;
-import com.receiptofi.receiptapp.utils.db.DBUtils;
-
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TAG = DatabaseHandler.class.getSimpleName();
@@ -15,11 +12,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DB_VERSION = 2;
     private static DatabaseHandler dbInstance;
     private SQLiteDatabase db = null;
-    private Context context;
 
     private DatabaseHandler(Context context) {
         super(context, DatabaseTable.DB_NAME, null, DB_VERSION);
-        this.context = context;
     }
 
     public static DatabaseHandler getsInstance(Context context) {
@@ -64,15 +59,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.i(TAG, "DatabaseHandler onUpgrade");
-//        for (int i = 0; i < PATCHES.length; i++) {
-//            PATCHES[i].apply(db);
-//        }
-
-        DBUtils.dbReInitializeNonKeyValues();
-        DBUtils.initializeDefaults();
-        Log.i(TAG, "DatabaseHandler onUpgrade getAll");
-        DeviceService.getAll(context);
+        Log.d(TAG, "DatabaseHandler onUpgrade");
+        for (int i = 0; i < PATCHES.length; i++) {
+            PATCHES[i].apply(db);
+        }
     }
 
     private static final Patch[] PATCHES = new Patch[]{
@@ -104,6 +94,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.TOTAL + ", " +
                                     DatabaseTable.Receipt.BILL_STATUS + ", " +
                                     DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
+                                    DatabaseTable.Receipt.SPLIT_COUNT + ", " +
+                                    DatabaseTable.Receipt.SPLIT_TOTAL + ", " +
+                                    DatabaseTable.Receipt.SPLIT_TAX + ", " +
                                     DatabaseTable.Receipt.ACTIVE + ", " +
                                     DatabaseTable.Receipt.DELETED +
                                     ") SELECT " +
@@ -121,6 +114,9 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.TOTAL + ", " +
                                     DatabaseTable.Receipt.BILL_STATUS + ", " +
                                     DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
+                                    1 + ", " +
+                                    DatabaseTable.Receipt.TOTAL + ", " +
+                                    DatabaseTable.Receipt.TAX + ", " +
                                     DatabaseTable.Receipt.ACTIVE + ", " +
                                     DatabaseTable.Receipt.DELETED +
                                     " FROM " + DatabaseTable.Receipt.TABLE_NAME + "_old;");
