@@ -32,10 +32,25 @@ public class DatabaseTable {
         public static final String TOTAL = "total";
         public static final String BILL_STATUS = "bs";
         public static final String EXPENSE_TAG_ID = "expenseTagId";
+        public static final String REFER_RECEIPT_ID = "referReceiptId";
+        public static final String SPLIT_COUNT = "splitCount";
+        public static final String SPLIT_TOTAL = "splitTotal";
+        public static final String SPLIT_TAX = "splitTax";
         public static final String ACTIVE = "active";
         public static final String DELETED = "deleted";
 
         private Receipt() {
+        }
+    }
+
+    public static class ReceiptSplit {
+        public static final String TABLE_NAME = "RECEIPT_SPLIT";
+        public static final String ID = "id";
+        public static final String RID = "rid";
+        public static final String NAME = "name";
+        public static final String NAME_INITIALS = "initials";
+
+        private ReceiptSplit() {
         }
     }
 

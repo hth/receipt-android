@@ -14,6 +14,8 @@ import com.receiptofi.receiptapp.model.ReceiptGroup;
 import com.receiptofi.receiptapp.model.ReceiptGroupHeader;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -49,7 +51,14 @@ public class ReceiptUtils {
         for (ReceiptModel receipt : receipts) {
             if (receipt.isDeleted() || !receipt.isActive()) {
                 if (delete(receipt.getId())) {
-                    ReceiptItemUtils.delete(receipt.getId());
+                    if (StringUtils.isBlank(receipt.getReferReceiptId())) {
+                        ReceiptItemUtils.delete(receipt.getId());
+                    } else {
+                        /** Because ITEMs of shared receipts has reference to original receipt id. */
+                        ReceiptItemUtils.delete(receipt.getReferReceiptId());
+                    }
+
+                    ReceiptSplitUtils.delete(receipt.getId());
                     Log.d(TAG, "Deleted receipt=" + receipt.getId());
                 }
             } else {
@@ -87,6 +96,10 @@ public class ReceiptUtils {
         values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
         values.put(DatabaseTable.Receipt.BILL_STATUS, receipt.getBillStatus());
         values.put(DatabaseTable.Receipt.EXPENSE_TAG_ID, receipt.getExpenseTagId());
+        values.put(DatabaseTable.Receipt.REFER_RECEIPT_ID, receipt.getReferReceiptId());
+        values.put(DatabaseTable.Receipt.SPLIT_COUNT, receipt.getSplitCount());
+        values.put(DatabaseTable.Receipt.SPLIT_TOTAL, receipt.getSplitTotal());
+        values.put(DatabaseTable.Receipt.SPLIT_TAX, receipt.getSplitTax());
         values.put(DatabaseTable.Receipt.ACTIVE, receipt.isActive());
         values.put(DatabaseTable.Receipt.DELETED, receipt.isDeleted());
 
@@ -278,7 +291,7 @@ public class ReceiptUtils {
 
             cursor = RDH.getReadableDatabase().rawQuery(
                     "select "
-                            + "total(total) total "
+                            + "total(" + DatabaseTable.Receipt.SPLIT_TOTAL + ") " + DatabaseTable.Receipt.SPLIT_TOTAL + " "
                             + "from " + DatabaseTable.Receipt.TABLE_NAME + " "
                             + "where " + DatabaseTable.Receipt.BIZ_NAME + " = " + escapedBizName + " "
                             + "and " + DatabaseTable.Receipt.RECEIPT_DATE + " LIKE '" + SDF_YM.format(monthYear) + "%'",
@@ -313,6 +326,7 @@ public class ReceiptUtils {
      * @return
      */
     public static ReceiptGroup searchByKeyword(String name) {
+        Log.d(TAG, "Search for " + name);
         ReceiptGroup receiptGroup = ReceiptGroup.getInstance();
         Cursor cursor = null;
         try {
@@ -360,6 +374,8 @@ public class ReceiptUtils {
                                 + "* "
                                 + "from " + DatabaseTable.Receipt.TABLE_NAME + " "
                                 + "where " + DatabaseTable.Receipt.ID
+                                + " IN (" + ids.substring(0, ids.length() - 1) + ")"
+                                + " OR " + DatabaseTable.Receipt.REFER_RECEIPT_ID
                                 + " IN (" + ids.substring(0, ids.length() - 1) + ")"
                                 + "ORDER BY " + DatabaseTable.Receipt.RECEIPT_DATE + " DESC",
                         null);
@@ -430,14 +446,22 @@ public class ReceiptUtils {
                 receiptModel.setTotal(cursor.getDouble(11));
                 receiptModel.setBillStatus(cursor.getString(12));
                 receiptModel.setExpenseTagId(cursor.getString(13));
-                receiptModel.setActive(cursor.getInt(14) == 1);
-                receiptModel.setDeleted(cursor.getInt(15) == 1);
+                receiptModel.setReferReceiptId(cursor.getString(14));
+                receiptModel.setSplitCount(cursor.getInt(15));
+                receiptModel.setSplitTotal(cursor.getDouble(16));
+                receiptModel.setSplitTax(cursor.getDouble(17));
+                receiptModel.setActive(cursor.getInt(18) == 1);
+                receiptModel.setDeleted(cursor.getInt(19) == 1);
 
                 if (!TextUtils.isEmpty(receiptModel.getExpenseTagId())) {
                     receiptModel.setExpenseTagModel(ExpenseTagUtils.getExpenseTagModels().get(receiptModel.getExpenseTagId()));
                 }
 
-                receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getId()));
+                if (StringUtils.isBlank(receiptModel.getReferReceiptId())) {
+                    receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getId()));
+                } else {
+                    receiptModel.setReceiptItems(ReceiptItemUtils.getItems(receiptModel.getReferReceiptId()));
+                }
                 list.add(receiptModel);
             }
         }

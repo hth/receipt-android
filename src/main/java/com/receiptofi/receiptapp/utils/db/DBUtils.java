@@ -33,6 +33,7 @@ public class DBUtils {
         /** Delete all tables. */
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Profile.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Receipt.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ReceiptSplit.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ImageIndex.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.UploadQueue.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.MonthlyReport.TABLE_NAME);
@@ -45,6 +46,7 @@ public class DBUtils {
         /** Create tables. */
         CreateTable.createTableProfile(RDH.getDb());
         CreateTable.createTableReceipts(RDH.getDb());
+        CreateTable.createTableReceiptSplit(RDH.getDb());
         CreateTable.createTableImageIndex(RDH.getDb());
         CreateTable.createTableUploadQueue(RDH.getDb());
         CreateTable.createTableMonthlyReport(RDH.getDb());

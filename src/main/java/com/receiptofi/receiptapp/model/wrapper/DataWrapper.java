@@ -6,6 +6,7 @@ import com.receiptofi.receiptapp.model.NotificationModel;
 import com.receiptofi.receiptapp.model.ProfileModel;
 import com.receiptofi.receiptapp.model.ReceiptItemModel;
 import com.receiptofi.receiptapp.model.ReceiptModel;
+import com.receiptofi.receiptapp.model.ReceiptSplitModel;
 import com.receiptofi.receiptapp.model.UnprocessedDocumentModel;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class DataWrapper {
     private UnprocessedDocumentModel unprocessedDocumentModel;
     private List<NotificationModel> notificationModels = new ArrayList<>();
     private BillingAccountModel billingAccountModel;
+    private List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
 
     public ProfileModel getProfileModel() {
         return profileModel;
@@ -79,5 +81,13 @@ public class DataWrapper {
 
     public void setBillingAccountModel(BillingAccountModel billingAccountModel) {
         this.billingAccountModel = billingAccountModel;
+    }
+
+    public List<ReceiptSplitModel> getReceiptSplitModels() {
+        return receiptSplitModels;
+    }
+
+    public void setReceiptSplitModels(List<ReceiptSplitModel> receiptSplitModels) {
+        this.receiptSplitModels = receiptSplitModels;
     }
 }

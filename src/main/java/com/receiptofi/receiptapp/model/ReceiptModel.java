@@ -2,6 +2,9 @@ package com.receiptofi.receiptapp.model;
 
 import android.text.TextUtils;
 
+import com.receiptofi.receiptapp.db.DatabaseTable;
+
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +28,11 @@ public class ReceiptModel {
     private List<ReceiptItemModel> receiptItems = new LinkedList<>();
     private String billStatus;
     private String expenseTagId;
+    private String referReceiptId;
+    private int splitCount;
+    private double splitTotal;
+    private double splitTax;
+    private List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
     private boolean active;
     private boolean deleted;
 
@@ -188,6 +196,48 @@ public class ReceiptModel {
         this.expenseTagId = expenseTagId;
     }
 
+    public String getReferReceiptId() {
+        return referReceiptId;
+    }
+
+    public void setReferReceiptId(String referReceiptId) {
+        if (null != referReceiptId && !referReceiptId.equalsIgnoreCase(NULL)) {
+            this.referReceiptId = referReceiptId;
+        }
+    }
+
+    public int getSplitCount() {
+        return splitCount;
+    }
+
+    public void setSplitCount(int splitCount) {
+        this.splitCount = splitCount;
+    }
+
+    public double getSplitTotal() {
+        return splitTotal;
+    }
+
+    public void setSplitTotal(double splitTotal) {
+        this.splitTotal = splitTotal;
+    }
+
+    public double getSplitTax() {
+        return splitTax;
+    }
+
+    public void setSplitTax(double splitTax) {
+        this.splitTax = splitTax;
+    }
+
+    public List<ReceiptSplitModel> getReceiptSplitModels() {
+        return receiptSplitModels;
+    }
+
+    public void setReceiptSplitModels(List<ReceiptSplitModel> receiptSplitModels) {
+        this.receiptSplitModels = receiptSplitModels;
+    }
+
     public String getBillStatus() {
         return billStatus;
     }
@@ -222,5 +272,14 @@ public class ReceiptModel {
 
     public void setExpenseTagModel(ExpenseTagModel expenseTagModel) {
         this.expenseTagModel = expenseTagModel;
+    }
+
+    @Override
+    public String toString() {
+        return "ReceiptModel{" +
+                "bizName='" + bizName + '\'' +
+                ", splitTotal=" + splitTotal +
+                ", rid='" + rid + '\'' +
+                '}';
     }
 }

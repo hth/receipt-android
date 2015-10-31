@@ -42,7 +42,7 @@ public class MonthlyReportUtils {
                     "select " +
                             "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 6, 2) mon," +
                             "SUBSTR(" + DatabaseTable.Receipt.RECEIPT_DATE + ", 1, 4) yr, " +
-                            "total(total) total, " +
+                            "total(" + DatabaseTable.Receipt.SPLIT_TOTAL + ") " + DatabaseTable.Receipt.SPLIT_TOTAL + ", " +
                             "count(*) count " +
                             "from " + DatabaseTable.Receipt.TABLE_NAME + " group by mon, yr", null);
 

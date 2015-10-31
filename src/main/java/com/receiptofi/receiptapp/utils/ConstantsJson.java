@@ -10,6 +10,7 @@ public class ConstantsJson {
     /** JSON representation from Server. */
     public static final String PROFILE = "profile";
     public static final String ITEMS = "items";
+    public static final String SPLITS = "receiptSplits";
     public static final String RECEIPTS = "receipts";
     public static final String EXPENSE_TAGS = "expenseTags";
     public static final String UNPROCESSED_DOCUMENTS = "unprocessedDocuments";
