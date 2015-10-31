@@ -8,7 +8,6 @@ import android.util.Log;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
 import com.receiptofi.receiptapp.db.DatabaseHandler;
 import com.receiptofi.receiptapp.utils.AppUtils;
-import com.receiptofi.receiptapp.utils.CurrencyUtil;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.db.DBUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
@@ -18,9 +17,6 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
-
-import java.util.Currency;
-import java.util.Locale;
 
 @ReportsCrashes(
         mode = ReportingInteractionMode.DIALOG,
@@ -34,7 +30,6 @@ import java.util.Locale;
 public class ReceiptofiApplication extends Application {
 
     private static final String TAG = ReceiptofiApplication.class.getSimpleName();
-    public static String CURRENCY_SYMBOL = null;
 
     public static DatabaseHandler RDH;
     private static boolean homeActivityVisible;
@@ -79,9 +74,5 @@ public class ReceiptofiApplication extends Application {
         ImageUpload.initializeQueue();
         AppUtils.setHomePageContext(null);
         AppUtils.createImageDir();
-
-        Currency currency = Currency.getInstance(Locale.getDefault());
-        CURRENCY_SYMBOL = CurrencyUtil.CurrencyMap.get(currency.getCurrencyCode());
-        Log.d(TAG, "Currency symbol set: " + CURRENCY_SYMBOL);
     }
 }
