@@ -5,6 +5,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.receiptofi.receiptapp.service.DeviceService;
+import com.receiptofi.receiptapp.utils.db.DBUtils;
+
 public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TAG = DatabaseHandler.class.getSimpleName();
@@ -12,9 +15,11 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final int DB_VERSION = 2;
     private static DatabaseHandler dbInstance;
     private SQLiteDatabase db = null;
+    private Context context;
 
     private DatabaseHandler(Context context) {
         super(context, DatabaseTable.DB_NAME, null, DB_VERSION);
+        this.context = context;
     }
 
     public static DatabaseHandler getsInstance(Context context) {
@@ -63,6 +68,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         for (int i = 0; i < PATCHES.length; i++) {
             PATCHES[i].apply(db);
         }
+
+        DBUtils.dbReInitializeNonKeyValues();
+        DBUtils.initializeDefaults();
+        DeviceService.getAll(context);
     }
 
     private static final Patch[] PATCHES = new Patch[]{
