@@ -123,7 +123,10 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.DELETED +
                                     " FROM " + DatabaseTable.Receipt.TABLE_NAME + "_old;");
                     db.execSQL("DROP TABLE " + DatabaseTable.Receipt.TABLE_NAME + "_old;");
-                    db.execSQL("UPDATE " + DatabaseTable.KeyValue.TABLE_NAME + " SET " + KeyValueUtils.KEYS.WIFI_SYNC + " = '" + Boolean.toString(false) + "';");
+                                        
+                    db.execSQL("UPDATE " + DatabaseTable.KeyValue.TABLE_NAME + " SET " +
+                            DatabaseTable.KeyValue.VALUE + " = '" + Boolean.toString(false) + "' " +
+                            "WHERE " + DatabaseTable.KeyValue.KEY + " = '" + KeyValueUtils.KEYS.WIFI_SYNC + "';");
                 }
             }
     };
