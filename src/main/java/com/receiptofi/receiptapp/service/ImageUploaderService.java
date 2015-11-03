@@ -30,7 +30,7 @@ public class ImageUploaderService {
     private static ArrayList<Thread> allThreads = new ArrayList<>();
     private static ArrayList<Thread> imageUploadThreads = new ArrayList<>();
     private static boolean isServiceStarted = false;
-    private static int MAX_NUMBER_THREAD = 5;
+    private static int MAX_NUMBER_THREAD = 1;
     private static int MAX_RETRY_UPLOAD = 25;
     private static Context context;
 
