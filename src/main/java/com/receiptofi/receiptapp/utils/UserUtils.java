@@ -13,7 +13,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
 public class UserUtils {
-
     private static final String TAG = UserUtils.class.getSimpleName();
 
     public static boolean isValidEmail(String email) {
@@ -61,18 +60,11 @@ public class UserUtils {
     }
 
     public static boolean userExist(String email) {
-        if (TextUtils.isEmpty(email)) {
-            return false;
-        }
-        return email.equalsIgnoreCase(getEmail());
+        return !TextUtils.isEmpty(email) && email.equalsIgnoreCase(getEmail());
     }
 
     public static boolean isValidAppUser() {
-        if (TextUtils.isEmpty(UserUtils.getEmail()) || TextUtils.isEmpty(UserUtils.getAuth())) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(TextUtils.isEmpty(UserUtils.getEmail()) || TextUtils.isEmpty(UserUtils.getAuth()));
     }
 
     public static class UserSettings {
