@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/app_light_bg"
-    android:fillViewport="true"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.receiptofi.receiptapp.fragments.SubscriptionUserFragment">
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/app_light_bg"
+            android:fillViewport="true"
+            android:paddingBottom="@dimen/activity_vertical_margin"
+            android:paddingLeft="@dimen/activity_horizontal_margin"
+            android:paddingRight="@dimen/activity_horizontal_margin"
+            android:paddingTop="@dimen/activity_vertical_margin"
+            tools:context="com.receiptofi.receiptapp.fragments.SubscriptionUserFragment">
 
     <LinearLayout
         android:id="@+id/subscription_user"
@@ -30,7 +30,7 @@
 
         <Space
             android:layout_width="1dp"
-            android:layout_height="20dp" />
+            android:layout_height="20dp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -106,22 +106,22 @@
         </LinearLayout>
 
         <!--<TextView-->
-            <!--android:id="@+id/subscription_plan_list_item_plan_name"-->
-            <!--style="@style/rd_list_item_text_left_primary_style"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_gravity="center_horizontal"-->
-            <!--android:height="35dp"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:text = "Monthly 50"/>-->
+        <!--android:id="@+id/subscription_plan_list_item_plan_name"-->
+        <!--style="@style/rd_list_item_text_left_primary_style"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:height="35dp"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:text = "Monthly 50"/>-->
 
         <!--<TextView-->
-            <!--android:id="@+id/subscription_plan_list_item_plan_description"-->
-            <!--style="@style/rd_list_item_text_left_secondary_style"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:height="35dp"-->
-            <!--android:paddingLeft="10dp"-->
-            <!--android:text = "Monthly 10"/>-->
+        <!--android:id="@+id/subscription_plan_list_item_plan_description"-->
+        <!--style="@style/rd_list_item_text_left_secondary_style"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:height="35dp"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:text = "Monthly 10"/>-->
     </LinearLayout>
 </ScrollView>

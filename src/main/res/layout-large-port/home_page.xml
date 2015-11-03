@@ -8,8 +8,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="wrap_content">
+
         <RelativeLayout
             android:id="@+id/action_layout"
             android:layout_width="match_parent"
@@ -17,7 +17,6 @@
             android:layout_alignParentTop="true"
             android:orientation="vertical"
             android:padding="@dimen/activity_horizontal_margin">
-
 
             <LinearLayout
                 android:id="@+id/camera_action_layout"
@@ -175,7 +174,6 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:textColor="@drawable/action_button_text_color"
             android:textStyle="bold"/>
-
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pie_chart"
