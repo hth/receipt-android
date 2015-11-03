@@ -28,7 +28,6 @@ import org.acra.annotation.ReportsCrashes;
         resDialogOkToast = R.string.crash_dialog_ok_toast // optional. displays a Toast message when the user accepts to send a report.
 )
 public class ReceiptofiApplication extends Application {
-
     private static final String TAG = ReceiptofiApplication.class.getSimpleName();
 
     public static DatabaseHandler RDH;

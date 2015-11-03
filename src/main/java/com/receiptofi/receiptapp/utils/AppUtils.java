@@ -19,6 +19,7 @@ import org.joda.time.DateTimeZone;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.Locale;
 
 public class AppUtils {
 
@@ -182,7 +183,7 @@ public class AppUtils {
     //TODO add support formatting price based on receipt location
     public static DecimalFormat currencyFormatter() {
         if (formatter == null) {
-            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance();
+            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.getDefault());
             String symbol = formatter.getCurrency().getSymbol();
             formatter.setNegativePrefix("-" + symbol); // or "-"+symbol if that's what you need
             formatter.setNegativeSuffix("");
