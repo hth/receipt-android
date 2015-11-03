@@ -1,9 +1,9 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    tools:context="com.receiptofi.receiptapp.fragments.NotificationFragment">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white"
+             tools:context="com.receiptofi.receiptapp.fragments.NotificationFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -14,7 +14,7 @@
             android:id="@+id/notification_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:listSelector="@drawable/list_selector_app_theme" />
+            android:listSelector="@drawable/list_selector_app_theme"/>
 
         <TextView
             android:id="@+id/empty_view"
@@ -24,6 +24,6 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="@string/notify_empty_notification_list"
-            android:visibility="invisible" />
+            android:visibility="invisible"/>
     </LinearLayout>
 </FrameLayout>
