@@ -119,7 +119,7 @@ public class ImageUploaderService {
             public void onError(ImageModel iModel, String Error) {
                 iModel.updateStatus(false);
                 updateProcessStatus(iModel);
-                Log.d("Image upload failed  ", iModel.imgPath);
+                Log.e("Image upload failed ", iModel.imgPath);
 
                 Message msg = new Message();
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
@@ -136,33 +136,31 @@ public class ImageUploaderService {
     }
 
     public static boolean isServiceConnected() {
-        if (isServiceStarted) {
-            return true;
-        } else {
-            return false;
-        }
+        return isServiceStarted;
     }
 
     private synchronized static void updateProcessStatus(ImageModel model) {
-        ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
-        if (model.imgStatus != null && model.imgStatus.equalsIgnoreCase(ImageModel.STATUS.PROCESSED)) {
-            queue.remove(model);
-        }
-        imageUploadThreads.remove(model.uploaderThread);
-        model.uploaderThread = null;
-        Log.d(TAG, "Queuing done and now in updateProcessStatus");
-        model.LOCK = false;
-        for (Thread thread : allThreads) {
-            if (!thread.isAlive()) {
-                Log.w(TAG, "Thread  Died " + thread.getName());
+        try {
+            ArrayList<ImageModel> queue = ImageUpload.getImageQueue();
+            if (model.imgStatus != null && model.imgStatus.equalsIgnoreCase(ImageModel.STATUS.PROCESSED)) {
+                queue.remove(model);
             }
-        }
-        if (UserSettings.isStartImageUploadProcess(context)) {
-            start(context);
-        } else {
-            ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
-
+            imageUploadThreads.remove(model.uploaderThread);
+            model.uploaderThread = null;
+            Log.d(TAG, "Queuing done and now in updateProcessStatus");
+            model.LOCK = false;
+            for (Thread thread : allThreads) {
+                if (!thread.isAlive()) {
+                    Log.w(TAG, "Thread  Died " + thread.getName());
+                }
+            }
+            if (UserSettings.isStartImageUploadProcess(context)) {
+                start(context);
+            } else {
+                ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "UploadProcessStatus failed" + e.getLocalizedMessage(), e);
         }
     }
-
 }
