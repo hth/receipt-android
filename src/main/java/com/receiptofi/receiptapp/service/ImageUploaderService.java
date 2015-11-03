@@ -136,11 +136,7 @@ public class ImageUploaderService {
     }
 
     public static boolean isServiceConnected() {
-        if (isServiceStarted) {
-            return true;
-        } else {
-            return false;
-        }
+        return isServiceStarted;
     }
 
     private synchronized static void updateProcessStatus(ImageModel model) {
@@ -161,7 +157,6 @@ public class ImageUploaderService {
             start(context);
         } else {
             ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendEmptyMessage(HomeFragment.IMAGE_ADDED_TO_QUEUED);
-
         }
     }
 
