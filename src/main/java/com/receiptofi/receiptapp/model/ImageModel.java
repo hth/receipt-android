@@ -77,8 +77,8 @@ public class ImageModel {
                         true,
                         DOCUMENT_UPLOAD_FAILED_NOTIFICATION_TYPE,
                         "",
-                        DateTime.now().minusMonths(2).toString(),
-                        DateTime.now().minusMonths(2).toString(),
+                        DateTime.now().toString(),
+                        DateTime.now().toString(),
                         true);
                 NotificationUtils.insert(notificationModel);
             }
