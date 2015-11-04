@@ -48,7 +48,10 @@ public class ImageModel {
         values.put(DatabaseTable.UploadQueue.IMAGE_PATH, imgPath);
         values.put(DatabaseTable.UploadQueue.STATUS, STATUS.UNPROCESSED);
 
-        responseCode = ReceiptofiApplication.RDH.getWritableDatabase().insertOrThrow(DatabaseTable.UploadQueue.TABLE_NAME, null, values);
+        responseCode = ReceiptofiApplication.RDH.getWritableDatabase().insertOrThrow(
+                DatabaseTable.UploadQueue.TABLE_NAME,
+                null,
+                values);
 
         if (responseCode != -1) {
             return true;
