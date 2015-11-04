@@ -32,7 +32,7 @@ public class ImageUploaderService {
     private static boolean isServiceStarted = false;
     /** Changed number of thread to 1 because of multiple upload for same file. */
     private static final int MAX_NUMBER_THREAD = 1;
-    private static final int MAX_RETRY_UPLOAD = 25;
+    public static final int MAX_RETRY_UPLOAD = 10;
     private static Context context;
 
     private ImageUploaderService() {
@@ -63,13 +63,10 @@ public class ImageUploaderService {
     }
 
     private static boolean validateImageForUpload(ImageModel iModel) {
-        if (iModel.imgPath != null
+        return iModel.imgPath != null
                 && (iModel.imgStatus == null || iModel.imgStatus.equalsIgnoreCase(ImageModel.STATUS.UNPROCESSED))
-                && !iModel.LOCK && iModel.noOfTimesTried <= MAX_RETRY_UPLOAD && iModel.noOfTimesTried > 0) {
-            return true;
-        } else {
-            return false;
-        }
+                && !iModel.LOCK && iModel.noOfTimesTried <= MAX_RETRY_UPLOAD
+                && iModel.noOfTimesTried > 0;
     }
 
     private static Thread getUploaderThread(Context context, ImageModel iModel) {

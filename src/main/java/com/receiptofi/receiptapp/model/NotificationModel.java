@@ -14,7 +14,16 @@ public class NotificationModel {
     private String updated;
     private boolean active;
 
-    public NotificationModel(String id, String message, boolean visible, String notificationType, String referenceId, String created, String updated, boolean active) {
+    public NotificationModel(
+            String id,
+            String message,
+            boolean visible,
+            String notificationType,
+            String referenceId,
+            String created,
+            String updated,
+            boolean active
+    ) {
         this.id = id;
         this.message = message;
         this.visible = visible;

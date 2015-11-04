@@ -3,16 +3,24 @@ package com.receiptofi.receiptapp.model;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteConstraintException;
+import android.support.annotation.NonNull;
+import android.util.Log;
 
+import com.google.common.base.Objects;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
+import com.receiptofi.receiptapp.service.ImageUploaderService;
 
 import java.util.ArrayList;
 
 public class ImageModel {
+    private static final String TAG = ImageModel.class.getSimpleName();
 
     public String blobId;
+
+    @NonNull
     public String imgPath;
+
     public String imgDate;
     public String imgStatus;
     public boolean LOCK = false;
@@ -41,7 +49,7 @@ public class ImageModel {
     }
 
     public boolean addToQueue() throws SQLiteConstraintException {
-        long responseCode = -1;
+        long responseCode;
 
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.UploadQueue.IMAGE_DATE, imgDate);
@@ -53,15 +61,10 @@ public class ImageModel {
                 null,
                 values);
 
-        if (responseCode != -1) {
-            return true;
-        } else {
-            return false;
-        }
-
+        return responseCode != -1;
     }
 
-    public void deleteFromQueue() {
+    private void deleteFromDatabaseQueue() {
         ReceiptofiApplication.RDH.getWritableDatabase().delete(DatabaseTable.UploadQueue.TABLE_NAME, DatabaseTable.UploadQueue.IMAGE_PATH + "=?", new String[]{imgPath});
     }
 
@@ -98,8 +101,18 @@ public class ImageModel {
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(DatabaseTable.ImageIndex.TABLE_NAME, null, imageIndexValue);
 
-        if (isProcessed) {
-            deleteFromQueue();
+        if (isProcessed || noOfTimesTried > ImageUploaderService.MAX_RETRY_UPLOAD) {
+            if (noOfTimesTried > ImageUploaderService.MAX_RETRY_UPLOAD) {
+                Log.d(TAG, "Failed to upload image after " + ImageUploaderService.MAX_RETRY_UPLOAD + " tries. Deleting from queue.");
+            }
+
+            deleteFromDatabaseQueue();
+
+            ImageModel model = new ImageModel();
+            model.imgPath = imgPath;
+            getAllUnprocessedImages().remove(model);
+
+            Log.i(TAG, "Removed image from queue");
         }
 
         return true;
@@ -108,5 +121,18 @@ public class ImageModel {
     public static final class STATUS {
         public static final String PROCESSED = "P";
         public static final String UNPROCESSED = "U";
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ImageModel that = (ImageModel) o;
+        return Objects.equal(imgPath, that.imgPath);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(imgPath);
     }
 }
