@@ -115,13 +115,13 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                 case IMAGE_UPLOAD_SUCCESS:
                     unprocessedValue = Integer.toString(msg.arg1);
                     setUnprocessedCount();
-                    showMessage((String) msg.obj);
+                    showMessage((String) msg.obj, SuperToast.Background.BLUE);
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
                     break;
                 case IMAGE_UPLOAD_FAILURE:
-                    showMessage((String) msg.obj);
+                    showMessage((String) msg.obj, SuperToast.Background.RED);
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
@@ -130,13 +130,13 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
-                    showMessage((String) msg.obj);
+                    showMessage((String) msg.obj, SuperToast.Background.BLUE);
                     break;
                 case IMAGE_ALREADY_QUEUED:
                     if (getActivity() instanceof MainMaterialDrawerActivity) {
                         ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
                     }
-                    showMessage((String) msg.obj);
+                    showMessage((String) msg.obj, SuperToast.Background.GRAY);
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
                     unprocessedValue = (String) msg.obj;
@@ -459,7 +459,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
             startActivityForResult(takePictureIntent, RESULT_IMAGE_CAPTURE);
         } else {
-            showMessage("We seemed to have encountered issue saving your image.");
+            showMessage("We seemed to have encountered issue saving Receipt image.", SuperToast.Background.RED);
         }
     }
 
@@ -473,7 +473,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         startActivity(new Intent(getActivity(), ReceiptListActivity.class));
     }
 
-    private void showMessage(final String message) {
+    private void showMessage(final String message, final int backgroundColor) {
         if (TextUtils.isEmpty(message)) {
             return;
         }
@@ -485,7 +485,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
                     SuperActivityToast superActivityToast = new SuperActivityToast(getActivity());
                     superActivityToast.setText(message);
                     superActivityToast.setDuration(SuperToast.Duration.SHORT);
-                    superActivityToast.setBackground(SuperToast.Background.BLUE);
+                    superActivityToast.setBackground(backgroundColor);
                     superActivityToast.setTextColor(Color.WHITE);
                     superActivityToast.setTouchToDismiss(true);
                     superActivityToast.show();
