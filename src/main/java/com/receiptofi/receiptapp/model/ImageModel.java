@@ -1,17 +1,19 @@
 package com.receiptofi.receiptapp.model;
 
 import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteConstraintException;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.common.base.Objects;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
+import com.receiptofi.receiptapp.adapters.ImageUpload;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.service.ImageUploaderService;
+import com.receiptofi.receiptapp.utils.AppUtils;
+import com.receiptofi.receiptapp.utils.db.ImageUtils;
+import com.receiptofi.receiptapp.utils.db.NotificationUtils;
 
-import java.util.ArrayList;
+import org.joda.time.DateTime;
 
 public class ImageModel {
     private static final String TAG = ImageModel.class.getSimpleName();
@@ -28,45 +30,7 @@ public class ImageModel {
     public int noOfTimesTried = 1;
     public Thread uploaderThread;
 
-    public static ArrayList<ImageModel> getAllUnprocessedImages() {
-        ArrayList<ImageModel> models = new ArrayList<>();
-        Cursor c = ReceiptofiApplication.RDH.getReadableDatabase().query
-                (DatabaseTable.UploadQueue.TABLE_NAME,
-                        new String[]{DatabaseTable.UploadQueue.IMAGE_PATH},
-                        null,
-                        null,
-                        null,
-                        null,
-                        null
-                );
-        if (c != null && c.getCount() > 0) {
-            c.moveToFirst();
-            ImageModel model = new ImageModel();
-            model.imgPath = c.getString(0);
-            models.add(model);
-        }
-        return models;
-    }
-
-    public boolean addToQueue() throws SQLiteConstraintException {
-        long responseCode;
-
-        ContentValues values = new ContentValues();
-        values.put(DatabaseTable.UploadQueue.IMAGE_DATE, imgDate);
-        values.put(DatabaseTable.UploadQueue.IMAGE_PATH, imgPath);
-        values.put(DatabaseTable.UploadQueue.STATUS, STATUS.UNPROCESSED);
-
-        responseCode = ReceiptofiApplication.RDH.getWritableDatabase().insertOrThrow(
-                DatabaseTable.UploadQueue.TABLE_NAME,
-                null,
-                values);
-
-        return responseCode != -1;
-    }
-
-    private void deleteFromDatabaseQueue() {
-        ReceiptofiApplication.RDH.getWritableDatabase().delete(DatabaseTable.UploadQueue.TABLE_NAME, DatabaseTable.UploadQueue.IMAGE_PATH + "=?", new String[]{imgPath});
-    }
+    public static final String DOCUMENT_UPLOAD_FAILED_NOTIFICATION_TYPE = "DOCUMENT_UPLOAD_FAILED";
 
     public synchronized boolean updateStatus(boolean isProcessed) {
         if (isProcessed) {
@@ -103,16 +67,31 @@ public class ImageModel {
 
         if (isProcessed || noOfTimesTried > ImageUploaderService.MAX_RETRY_UPLOAD) {
             if (noOfTimesTried > ImageUploaderService.MAX_RETRY_UPLOAD) {
-                Log.d(TAG, "Failed to upload image after " + ImageUploaderService.MAX_RETRY_UPLOAD + " tries. Deleting from queue.");
+                Log.i(TAG, "Failed to upload image after " + ImageUploaderService.MAX_RETRY_UPLOAD + " tries. Deleting from queue.");
+
+                NotificationModel notificationModel = new NotificationModel(
+                        imgPath,
+                        "Receipt '" + AppUtils.getFileName(imgPath) + "' reached maximum number of upload tries. " +
+                                "Removed receipt from queue. " +
+                                "Please re-try uploading receipt.",
+                        true,
+                        DOCUMENT_UPLOAD_FAILED_NOTIFICATION_TYPE,
+                        "",
+                        DateTime.now().minusMonths(2).toString(),
+                        DateTime.now().minusMonths(2).toString(),
+                        true);
+                NotificationUtils.insert(notificationModel);
             }
 
-            deleteFromDatabaseQueue();
+            ImageUtils.deleteFromDatabaseQueue(imgPath);
 
-            ImageModel model = new ImageModel();
-            model.imgPath = imgPath;
-            getAllUnprocessedImages().remove(model);
+            ImageModel imageModel = new ImageModel();
+            imageModel.imgPath = imgPath;
+            ImageUpload.imageQueue.remove(imageModel);
+            Log.i(TAG, "Removed image from db queue and imageQueue");
 
-            Log.i(TAG, "Removed image from queue");
+            /** Delete old notifications is any. */
+            NotificationUtils.deleteOldNotificationForUploadFailed();
         }
 
         return true;

@@ -6,6 +6,7 @@ import android.util.Log;
 
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
+import com.receiptofi.receiptapp.model.ImageModel;
 import com.receiptofi.receiptapp.model.NotificationModel;
 
 import java.util.LinkedList;
@@ -43,11 +44,23 @@ public class NotificationUtils {
     }
 
     /**
+     * Delete month old notification.
+     */
+    public static void deleteOldNotificationForUploadFailed() {
+        RDH.getReadableDatabase().execSQL(
+                "delete "
+                        + "from " + DatabaseTable.Notification.TABLE_NAME + " "
+                        + "where " + DatabaseTable.Notification.CREATED + " < "
+                        + "datetime('now', 'localtime', 'start of month','+1 month','-1 day') "
+                        + "and " + DatabaseTable.Notification.NOTIFICATION_TYPE + " = '" + ImageModel.DOCUMENT_UPLOAD_FAILED_NOTIFICATION_TYPE + "'");
+    }
+
+    /**
      * Insert item in table.
      *
      * @param notification
      */
-    private static void insert(NotificationModel notification) {
+    public static void insert(NotificationModel notification) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.Notification.ID, notification.getId());
         values.put(DatabaseTable.Notification.MESSAGE, notification.getMessage());

@@ -84,6 +84,13 @@ public class AppUtils {
         }
     }
 
+    public static String getFileName(String file) {
+        if (file.contains(".")) {
+            return file.substring(file.lastIndexOf("/") + 1);
+        }
+        return "";
+    }
+
     public static Context getHomePageContext() {
         return homePageContext;
     }

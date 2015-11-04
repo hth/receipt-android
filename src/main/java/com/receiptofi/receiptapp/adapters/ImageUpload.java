@@ -12,11 +12,11 @@ import com.receiptofi.receiptapp.fragments.HomeFragment;
 import com.receiptofi.receiptapp.model.ImageModel;
 import com.receiptofi.receiptapp.service.ImageUploaderService;
 import com.receiptofi.receiptapp.utils.UserUtils.UserSettings;
+import com.receiptofi.receiptapp.utils.db.ImageUtils;
 
 import java.util.ArrayList;
 
 public class ImageUpload {
-
     public static ArrayList<ImageModel> imageQueue = null;
 
     private ImageUpload() {
@@ -27,7 +27,7 @@ public class ImageUpload {
             imageQueue = new ArrayList<>();
         }
         imageQueue.clear();
-        imageQueue.addAll(ImageModel.getAllUnprocessedImages());
+        imageQueue.addAll(ImageUtils.getAllUnprocessedImages());
     }
 
     public static ArrayList<ImageModel> getImageQueue() {
@@ -41,7 +41,7 @@ public class ImageUpload {
         model.imgStatus = ImageModel.STATUS.UNPROCESSED;
 
         try {
-            isAddedToDB = model.addToQueue();
+            isAddedToDB = ImageUtils.addToQueue(model.imgDate, model.imgPath);
             imageQueue.add(model);
 
             if (!ImageUploaderService.isServiceConnected()
