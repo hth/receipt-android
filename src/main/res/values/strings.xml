@@ -41,7 +41,7 @@
     <!--Sign up page-->
     <string name="hint_name">First and Last name</string>
     <string name="age">Age</string>
-    <string name="signup_term">Tapping \"Sign Up\" confirms that you agree to the Receipts &lt;a href=\'https://receiptofi.com/TermsOfUse\'&gt;Terms of use.&lt;/a&gt;</string>
+    <string name="signup_term">Tapping \"Sign Up\" confirms that you agree to the Receiptofi &lt;a href=\'https://receiptofi.com/TermsOfUse\'&gt;Terms of use.&lt;/a&gt;</string>
 
     <!--Password recovery page-->
     <string name="password_recovery">SEND RECOVERY EMAIL</string>
