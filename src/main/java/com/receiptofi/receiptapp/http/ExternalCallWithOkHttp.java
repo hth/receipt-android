@@ -27,6 +27,7 @@ import java.net.UnknownHostException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  * User: hitender
@@ -105,7 +106,7 @@ public class ExternalCallWithOkHttp {
                     }
 
                     Log.d(TAG, "post=" + request.httpUrl());
-                    Response response = new OkHttpClient().newCall(request).execute();
+                    Response response = okHttpClient().newCall(request).execute();
                     updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
@@ -139,7 +140,7 @@ public class ExternalCallWithOkHttp {
                             .build();
 
                     Log.i(TAG, "post=" + request.httpUrl() + ", login params=*****");
-                    Response response = new OkHttpClient().newCall(request).execute();
+                    Response response = okHttpClient().newCall(request).execute();
                     updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
@@ -196,7 +197,7 @@ public class ExternalCallWithOkHttp {
                     }
 
                     Log.d(TAG, "get=" + request.httpUrl());
-                    Response response = new OkHttpClient().newCall(request).execute();
+                    Response response = okHttpClient().newCall(request).execute();
                     updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
                     Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
@@ -268,7 +269,7 @@ public class ExternalCallWithOkHttp {
                             .build();
 
                     Log.d(TAG, "uploadImage=" + request.httpUrl());
-                    Response response = new OkHttpClient().newCall(request).execute();
+                    Response response = okHttpClient().newCall(request).execute();
                     handler.onSuccess(imageModel, response.body().string());
                 } catch (UnknownHostException e) {
                     Log.e(TAG, "failed connection reason=" + e.getLocalizedMessage(), e);
@@ -316,5 +317,11 @@ public class ExternalCallWithOkHttp {
         }
         Log.d(TAG, "Couldn't parse header");
         return null;
+    }
+
+    private static OkHttpClient okHttpClient() {
+        OkHttpClient httpClient = new OkHttpClient();
+        httpClient.setReadTimeout(3, TimeUnit.MINUTES);
+        return httpClient;
     }
 }
