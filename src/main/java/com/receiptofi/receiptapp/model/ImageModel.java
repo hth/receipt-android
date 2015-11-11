@@ -89,9 +89,6 @@ public class ImageModel {
             imageModel.imgPath = imgPath;
             ImageUpload.imageQueue.remove(imageModel);
             Log.i(TAG, "Removed image from db queue and imageQueue");
-
-            /** Delete old notifications is any. */
-            NotificationUtils.deleteOldNotificationForUploadFailed();
         }
 
         return true;
