@@ -191,6 +191,8 @@ public class DeviceService {
             }
         }
 
+        /** Delete old notifications is any. */
+        NotificationUtils.deleteOldNotificationForUploadFailed();
         NotificationUtils.insert(dataWrapper.getNotificationModels());
         if (null != dataWrapper.getBillingAccountModel()) {
             BillingAccountUtils.insertOrReplace(dataWrapper.getBillingAccountModel());

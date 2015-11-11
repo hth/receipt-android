@@ -51,7 +51,7 @@ public class NotificationUtils {
                 "delete "
                         + "from " + DatabaseTable.Notification.TABLE_NAME + " "
                         + "where " + DatabaseTable.Notification.CREATED + " < "
-                        + "datetime('now', 'localtime', 'start of month','+1 month','-1 day') "
+                        + "datetime('now', 'localtime', 'start of month','+2 month','-15 day') "
                         + "and " + DatabaseTable.Notification.NOTIFICATION_TYPE + " = '" + ImageModel.DOCUMENT_UPLOAD_FAILED_NOTIFICATION_TYPE + "'");
     }
 
