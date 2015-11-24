@@ -152,7 +152,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 message.what = RECEIPT_DETAIL_REFRESHED;
                 updateHandler.dispatchMessage(message);
             }
-        };
+        };a
     }
 
     @Override
