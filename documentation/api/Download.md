@@ -1,13 +1,13 @@
 ### Download document
 
-API call <code>GET</code> path <code>/receipt-mobile/api/image/53e95c153004693f770e656a.json</code>    
-Replace <code>blobId</code> with <code>53e95c153004693f770e656a</code>
+URL pattern to download file -> AwsS3 + bucket + blobId
 
-    curl -i -X GET -H "X-R-MAIL: test@receiptofi.com" -H "X-R-AUTH: %242a%" http://localhost:9090/receipt-mobile/api/image/53e95c.json
+Download file location for test and debug
 
-HTTP Header response
+    debugEndpointAwsS3="https://s3-us-west-2.amazonaws.com/chk.test/"
+    debugBucket="chk.test/"
     
-    HTTP/1.1 200 OK
-    Content-Type: image/jpeg
-    Transfer-Encoding: chunked
-    Date: Tue, 19 Aug 2014 06:22:11 GMT
+Download file location for Live Server    
+
+    releaseEndpointAwsS3 = "https://s3-us-west-2.amazonaws.com/chk.live/"
+    releaseBucket="chk.live/"
