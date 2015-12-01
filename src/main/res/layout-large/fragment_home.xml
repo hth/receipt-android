@@ -171,7 +171,7 @@
                                     android:layout_marginStart="50dp"
                                     android:layout_marginTop="5dp"
                                     android:text="@string/processing_info"
-                                    android:textColor="@color/common_signin_btn_dark_text_disabled"/>
+                                    android:textColor="@color/receipt_in_process"/>
                             </LinearLayout>
 
                         </LinearLayout>
