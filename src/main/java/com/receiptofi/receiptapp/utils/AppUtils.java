@@ -190,7 +190,7 @@ public class AppUtils {
     //TODO add support formatting price based on receipt location
     public static DecimalFormat currencyFormatter() {
         if (formatter == null) {
-            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(Locale.getDefault());
+            formatter = (DecimalFormat) NumberFormat.getCurrencyInstance(getHomePageContext().getResources().getConfiguration().locale);
             String symbol = formatter.getCurrency().getSymbol();
             formatter.setNegativePrefix("-" + symbol); // or "-"+symbol if that's what you need
             formatter.setNegativeSuffix("");
