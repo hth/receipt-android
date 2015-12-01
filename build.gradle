@@ -90,7 +90,7 @@ android {
     archivesBaseName = "receiptApp";
 
     compileSdkVersion 23
-    buildToolsVersion "23.0.1"
+    buildToolsVersion "23.0.2"
 
     def versionPropsFile = file('version.properties')
     def versionMajor = 0;
@@ -147,10 +147,15 @@ android {
         }
     }
 
+    dexOptions {
+        javaMaxHeapSize "2g"
+    }
+
     defaultConfig {
         applicationId "com.receiptofi.receiptapp"
         minSdkVersion 16
         targetSdkVersion 23
+        multiDexEnabled true
         testHandleProfiling true
         testFunctionalTest true
         versionCode versionBuild
