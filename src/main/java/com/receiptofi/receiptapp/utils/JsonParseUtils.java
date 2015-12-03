@@ -154,16 +154,6 @@ public class JsonParseUtils {
         return receiptModel;
     }
 
-    public static List<ReceiptItemModel> parseItems(String jsonResponse) {
-        List<ReceiptItemModel> receiptItemModels = new ArrayList<>();
-        try {
-            receiptItemModels = parseItems(new JSONArray(jsonResponse));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return receiptItemModels;
-    }
-
     public static List<ReceiptItemModel> parseItems(JSONArray jsonArray) {
         List<ReceiptItemModel> receiptItemModels = new ArrayList<>();
         try {
@@ -171,7 +161,7 @@ public class JsonParseUtils {
                 receiptItemModels.add(parseItem(jsonArray.getJSONObject(i)));
             }
         } catch (JSONException e) {
-            e.printStackTrace();
+            Log.e(TAG, "Fail parsing Items reason=" + e.getLocalizedMessage(), e);
         }
         return receiptItemModels;
     }
@@ -344,14 +334,15 @@ public class JsonParseUtils {
                 dataWrapper.setReceiptItemModels(receiptItemModels);
             }
 
-            List<ReceiptSplitModel> receiptSplitModels = parseReceiptSplits(jsonObject.getJSONArray(ConstantsJson.SPLITS));
-            if (!receiptSplitModels.isEmpty()) {
-                dataWrapper.setReceiptSplitModels(receiptSplitModels);
-            }
-
             List<ReceiptModel> receiptModels = parseReceipts(jsonObject.getJSONArray(ConstantsJson.RECEIPTS));
             if (!receiptModels.isEmpty()) {
                 dataWrapper.setReceiptModels(receiptModels);
+            }
+
+            /** Shows split with friends. */
+            List<ReceiptSplitModel> receiptSplitModels = parseReceiptSplits(jsonObject.getJSONArray(ConstantsJson.SPLITS));
+            if (!receiptSplitModels.isEmpty()) {
+                dataWrapper.setReceiptSplitModels(receiptSplitModels);
             }
 
             List<ExpenseTagModel> expenseTagModels = parseExpenses(jsonObject.getJSONArray(ConstantsJson.EXPENSE_TAGS));
