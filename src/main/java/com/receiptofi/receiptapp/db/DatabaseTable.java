@@ -108,6 +108,23 @@ public class DatabaseTable {
         }
     }
 
+    public static class ItemReceipt {
+        public static final String TABLE_NAME = "ITEM_RECEIPT";
+        public static final String RECEIPT_ID = "receiptId";
+        public static final String BIZ_NAME = "bizName";
+        public static final String LAT = "lat";
+        public static final String LNG = "lng";
+        public static final String RECEIPT_DATE = "receiptDate";
+        public static final String EXPENSE_TAG_ID = "expenseTagId";
+        public static final String ITEM_ID = "itemId";
+        public static final String NAME = "name";
+        public static final String PRICE = "price";
+        public static final String QUANTITY = "quantity";
+        public static final String TAX = "tax";
+        public static final String ACTIVE = "active";
+        public static final String DELETED = "deleted";
+    }
+
     public static class ExpenseTag {
         public static final String TABLE_NAME = "EXPENSE_TAG";
         public static final String ID = "id";

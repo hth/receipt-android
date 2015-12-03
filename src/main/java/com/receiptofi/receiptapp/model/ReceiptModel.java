@@ -2,8 +2,6 @@ package com.receiptofi.receiptapp.model;
 
 import android.text.TextUtils;
 
-import com.receiptofi.receiptapp.db.DatabaseTable;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

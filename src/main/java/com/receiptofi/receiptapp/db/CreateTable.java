@@ -168,4 +168,24 @@ public class CreateTable {
                 ");");
         Log.d(TAG, "Finished executing createTableBillingHistory");
     }
+
+    public static void createTableItemReceipt(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableItemReceipt");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ItemReceipt.TABLE_NAME + "("
+                + DatabaseTable.ItemReceipt.RECEIPT_ID + " TEXT ,"
+                + DatabaseTable.ItemReceipt.BIZ_NAME + " TEXT ,"
+                + DatabaseTable.ItemReceipt.LAT + " TEXT ,"
+                + DatabaseTable.ItemReceipt.LNG + " TEXT ,"
+                + DatabaseTable.ItemReceipt.RECEIPT_DATE + " TEXT ,"
+                + DatabaseTable.ItemReceipt.EXPENSE_TAG_ID + " TEXT ,"
+                + DatabaseTable.ItemReceipt.ITEM_ID + " TEXT ,"
+                + DatabaseTable.ItemReceipt.NAME + " TEXT ,"
+                + DatabaseTable.ItemReceipt.PRICE + " DOUBLE ,"
+                + DatabaseTable.ItemReceipt.QUANTITY + " TEXT ,"
+                + DatabaseTable.ItemReceipt.TAX + " DOUBLE ,"
+                + DatabaseTable.Receipt.ACTIVE + " INT, "
+                + DatabaseTable.Receipt.DELETED + " INT " +
+
+                ");");
+    }
 }
