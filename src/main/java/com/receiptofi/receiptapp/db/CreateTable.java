@@ -31,6 +31,10 @@ public class CreateTable {
                 + DatabaseTable.Receipt.BIZ_NAME + " TEXT ,"
                 + DatabaseTable.Receipt.BIZ_STORE_ADDRESS + " TEXT ,"
                 + DatabaseTable.Receipt.BIZ_STORE_PHONE + " TEXT ,"
+                + DatabaseTable.Receipt.LAT + " DOUBLE ,"
+                + DatabaseTable.Receipt.LNG + " DOUBLE ,"
+                + DatabaseTable.Receipt.TYPE + " TEXT ,"
+                + DatabaseTable.Receipt.RATING + " DOUBLE ,"
                 + DatabaseTable.Receipt.RECEIPT_DATE + " TEXT ,"
                 + DatabaseTable.Receipt.EXPENSE_REPORT + " TEXT ,"
                 + DatabaseTable.Receipt.BLOB_IDS + " TEXT ,"
@@ -138,9 +142,9 @@ public class CreateTable {
                 + DatabaseTable.Notification.MESSAGE + " TEXT ,"
                 + DatabaseTable.Notification.VISIBLE + " BOOLEAN ,"
                 + DatabaseTable.Notification.NOTIFICATION_TYPE + " TEXT ,"
-                + DatabaseTable.Notification.REFERENCE_ID + " TEXT, "
-                + DatabaseTable.Notification.CREATED + " TEXT, "
-                + DatabaseTable.Notification.UPDATED + " TEXT, "
+                + DatabaseTable.Notification.REFERENCE_ID + " TEXT ,"
+                + DatabaseTable.Notification.CREATED + " TEXT ,"
+                + DatabaseTable.Notification.UPDATED + " TEXT ,"
                 + DatabaseTable.Notification.ACTIVE + " BOOLEAN " +
 
                 ");");
@@ -174,8 +178,8 @@ public class CreateTable {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ItemReceipt.TABLE_NAME + "("
                 + DatabaseTable.ItemReceipt.RECEIPT_ID + " TEXT ,"
                 + DatabaseTable.ItemReceipt.BIZ_NAME + " TEXT ,"
-                + DatabaseTable.ItemReceipt.LAT + " TEXT ,"
-                + DatabaseTable.ItemReceipt.LNG + " TEXT ,"
+                + DatabaseTable.ItemReceipt.LAT + " DOUBLE ,"
+                + DatabaseTable.ItemReceipt.LNG + " DOUBLE ,"
                 + DatabaseTable.ItemReceipt.RECEIPT_DATE + " TEXT ,"
                 + DatabaseTable.ItemReceipt.EXPENSE_TAG_ID + " TEXT ,"
                 + DatabaseTable.ItemReceipt.ITEM_ID + " TEXT ,"
@@ -183,7 +187,7 @@ public class CreateTable {
                 + DatabaseTable.ItemReceipt.PRICE + " DOUBLE ,"
                 + DatabaseTable.ItemReceipt.QUANTITY + " TEXT ,"
                 + DatabaseTable.ItemReceipt.TAX + " DOUBLE ,"
-                + DatabaseTable.Receipt.ACTIVE + " INT, "
+                + DatabaseTable.Receipt.ACTIVE + " INT ,"
                 + DatabaseTable.Receipt.DELETED + " INT " +
 
                 ");");

@@ -124,10 +124,16 @@ public class JsonParseUtils {
         receiptModel.setBizName(receipt.getJSONObject("bizName").getString("name"));
         receiptModel.setAddress(receipt.getJSONObject("bizStore").getString("address"));
         if (receipt.getJSONObject("bizStore").has("lat")) {
-            receiptModel.setLat(receipt.getJSONObject("bizStore").getString("lat"));
+            receiptModel.setLat(receipt.getJSONObject("bizStore").getDouble("lat"));
         }
         if (receipt.getJSONObject("bizStore").has("lng")) {
-            receiptModel.setLng(receipt.getJSONObject("bizStore").getString("lng"));
+            receiptModel.setLng(receipt.getJSONObject("bizStore").getDouble("lng"));
+        }
+        if (receipt.getJSONObject("bizStore").has("type")) {
+            receiptModel.setType(receipt.getJSONObject("bizStore").getString("type"));
+        }
+        if (receipt.getJSONObject("bizStore").has("rating")) {
+            receiptModel.setRating(receipt.getJSONObject("bizStore").getDouble("rating"));
         }
         receiptModel.setPhone(receipt.getJSONObject("bizStore").getString("phone"));
         receiptModel.setReceiptDate(receipt.getString("receiptDate"));

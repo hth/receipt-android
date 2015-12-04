@@ -8,8 +8,8 @@ public class ItemReceiptModel {
 
     private String receiptId;
     private String bizName;
-    private String lat;
-    private String lng;
+    private Double lat;
+    private Double lng;
     private String receiptDate;
     private String expenseTagId;
     private boolean active;
@@ -46,11 +46,11 @@ public class ItemReceiptModel {
         return bizName;
     }
 
-    public String getLat() {
+    public Double getLat() {
         return lat;
     }
 
-    public String getLng() {
+    public Double getLng() {
         return lng;
     }
 

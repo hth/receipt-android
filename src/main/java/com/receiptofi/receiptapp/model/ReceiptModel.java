@@ -1,7 +1,5 @@
 package com.receiptofi.receiptapp.model;
 
-import android.text.TextUtils;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -11,9 +9,11 @@ public class ReceiptModel {
 
     private String bizName;
     private String address;
-    private String lat;
-    private String lng;
     private String phone;
+    private Double lat;
+    private Double lng;
+    private String type;
+    private Double rating;
     private String receiptDate;
     private String expenseReport;
     private String blobIds;
@@ -56,30 +56,6 @@ public class ReceiptModel {
         }
     }
 
-    public String getLat() {
-        return lat;
-    }
-
-    public void setLat(String lat) {
-        if (!TextUtils.isEmpty(lat) && !lat.equalsIgnoreCase(NULL)) {
-            this.lat = lat;
-        } else {
-            this.lat = "0";
-        }
-    }
-
-    public String getLng() {
-        return lng;
-    }
-
-    public void setLng(String lng) {
-        if (!TextUtils.isEmpty(lng) && !lng.equalsIgnoreCase(NULL)) {
-            this.lng = lng;
-        } else {
-            this.lng = "0";
-        }
-    }
-
     public String getPhone() {
         return phone;
     }
@@ -88,6 +64,38 @@ public class ReceiptModel {
         if (null != phone && !phone.equalsIgnoreCase(NULL)) {
             this.phone = phone;
         }
+    }
+
+    public Double getLat() {
+        return lat;
+    }
+
+    public void setLat(Double lat) {
+        this.lat = lat;
+    }
+
+    public Double getLng() {
+        return lng;
+    }
+
+    public void setLng(Double lng) {
+        this.lng = lng;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public Double getRating() {
+        return rating;
+    }
+
+    public void setRating(Double rating) {
+        this.rating = rating;
     }
 
     public String getReceiptDate() {

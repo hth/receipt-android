@@ -21,6 +21,10 @@ public class DatabaseTable {
         public static final String BIZ_NAME = "bizName";
         public static final String BIZ_STORE_ADDRESS = "address";
         public static final String BIZ_STORE_PHONE = "phone";
+        public static final String LAT = "lat";
+        public static final String LNG = "lng";
+        public static final String TYPE = "type";
+        public static final String RATING = "rating";
         public static final String RECEIPT_DATE = "receiptDate";
         public static final String EXPENSE_REPORT = "expenseReport";
         public static final String BLOB_IDS = "blobIds";

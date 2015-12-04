@@ -128,6 +128,72 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                             DatabaseTable.KeyValue.VALUE + " = '" + Boolean.toString(false) + "' " +
                             "WHERE " + DatabaseTable.KeyValue.KEY + " = '" + KeyValueUtils.KEYS.WIFI_SYNC + "';");
                 }
+            },
+            new Patch(2, 3, "1.1.3") {
+                public void apply(SQLiteDatabase db) {
+                    db.execSQL(
+                            "ALTER TABLE " +
+                                    DatabaseTable.Receipt.TABLE_NAME +
+                                    " RENAME TO " +
+                                    DatabaseTable.Receipt.TABLE_NAME + "_old;");
+
+                    CreateTable.createTableReceipts(db);
+                    db.execSQL(
+                            "INSERT INTO " + DatabaseTable.Receipt.TABLE_NAME +
+                                    "(" +
+                                    DatabaseTable.Receipt.BIZ_NAME + ", " +
+                                    DatabaseTable.Receipt.BIZ_STORE_ADDRESS + ", " +
+                                    DatabaseTable.Receipt.BIZ_STORE_PHONE + ", " +
+                                    DatabaseTable.Receipt.LAT + ", " +
+                                    DatabaseTable.Receipt.LNG + ", " +
+                                    DatabaseTable.Receipt.TYPE + ", " +
+                                    DatabaseTable.Receipt.RATING + ", " +
+                                    DatabaseTable.Receipt.RECEIPT_DATE + ", " +
+                                    DatabaseTable.Receipt.EXPENSE_REPORT + ", " +
+                                    DatabaseTable.Receipt.BLOB_IDS + ", " +
+                                    DatabaseTable.Receipt.ID + ", " +
+                                    DatabaseTable.Receipt.NOTES + ", " +
+                                    DatabaseTable.Receipt.PTAX + ", " +
+                                    DatabaseTable.Receipt.RID + ", " +
+                                    DatabaseTable.Receipt.TAX + ", " +
+                                    DatabaseTable.Receipt.TOTAL + ", " +
+                                    DatabaseTable.Receipt.BILL_STATUS + ", " +
+                                    DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
+                                    DatabaseTable.Receipt.REFER_RECEIPT_ID + ", " +
+                                    DatabaseTable.Receipt.SPLIT_COUNT + ", " +
+                                    DatabaseTable.Receipt.SPLIT_TOTAL + ", " +
+                                    DatabaseTable.Receipt.SPLIT_TAX + ", " +
+                                    DatabaseTable.Receipt.ACTIVE + ", " +
+                                    DatabaseTable.Receipt.DELETED +
+                                    ") SELECT " +
+                                    DatabaseTable.Receipt.BIZ_NAME + ", " +
+                                    DatabaseTable.Receipt.BIZ_STORE_ADDRESS + ", " +
+                                    DatabaseTable.Receipt.BIZ_STORE_PHONE + ", " +
+                                    0 + ", " +
+                                    0 + ", " +
+                                    "" + ", " +
+                                    0 + ", " +
+                                    DatabaseTable.Receipt.RECEIPT_DATE + ", " +
+                                    DatabaseTable.Receipt.EXPENSE_REPORT + ", " +
+                                    DatabaseTable.Receipt.BLOB_IDS + ", " +
+                                    DatabaseTable.Receipt.ID + ", " +
+                                    DatabaseTable.Receipt.NOTES + ", " +
+                                    DatabaseTable.Receipt.PTAX + ", " +
+                                    DatabaseTable.Receipt.RID + ", " +
+                                    DatabaseTable.Receipt.TAX + ", " +
+                                    DatabaseTable.Receipt.TOTAL + ", " +
+                                    DatabaseTable.Receipt.BILL_STATUS + ", " +
+                                    DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
+                                    DatabaseTable.Receipt.REFER_RECEIPT_ID + ", " +
+                                    DatabaseTable.Receipt.SPLIT_COUNT + ", " +
+                                    DatabaseTable.Receipt.SPLIT_TOTAL + ", " +
+                                    DatabaseTable.Receipt.TOTAL + ", " +
+                                    DatabaseTable.Receipt.TAX + ", " +
+                                    DatabaseTable.Receipt.ACTIVE + ", " +
+                                    DatabaseTable.Receipt.DELETED +
+                                    " FROM " + DatabaseTable.Receipt.TABLE_NAME + "_old;");
+                    db.execSQL("DROP TABLE " + DatabaseTable.Receipt.TABLE_NAME + "_old;");
+                }
             }
     };
 }
