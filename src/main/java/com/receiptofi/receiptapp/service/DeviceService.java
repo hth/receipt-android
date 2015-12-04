@@ -25,6 +25,7 @@ import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.db.BillingAccountUtils;
 import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
+import com.receiptofi.receiptapp.utils.db.ItemReceiptUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 import com.receiptofi.receiptapp.utils.db.MonthlyReportUtils;
 import com.receiptofi.receiptapp.utils.db.NotificationUtils;
@@ -182,6 +183,7 @@ public class DeviceService {
 
         ReceiptUtils.insert(dataWrapper.getReceiptModels());
         ReceiptItemUtils.insert(dataWrapper.getReceiptItemModels());
+        ItemReceiptUtils.insert(dataWrapper.getItemReceiptModels());
 
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {

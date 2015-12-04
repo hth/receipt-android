@@ -2,6 +2,7 @@ package com.receiptofi.receiptapp.model.wrapper;
 
 import com.receiptofi.receiptapp.model.BillingAccountModel;
 import com.receiptofi.receiptapp.model.ExpenseTagModel;
+import com.receiptofi.receiptapp.model.ItemReceiptModel;
 import com.receiptofi.receiptapp.model.NotificationModel;
 import com.receiptofi.receiptapp.model.ProfileModel;
 import com.receiptofi.receiptapp.model.ReceiptItemModel;
@@ -21,6 +22,7 @@ public class DataWrapper {
     private ProfileModel profileModel;
     private List<ReceiptItemModel> receiptItemModels = new ArrayList<>();
     private List<ReceiptModel> receiptModels = new ArrayList<>();
+    private List<ItemReceiptModel> itemReceiptModels = new ArrayList<>();
     private List<ExpenseTagModel> expenseTagModels = new ArrayList<>();
     private UnprocessedDocumentModel unprocessedDocumentModel;
     private List<NotificationModel> notificationModels = new ArrayList<>();
@@ -49,6 +51,14 @@ public class DataWrapper {
 
     public void setReceiptModels(List<ReceiptModel> receiptModels) {
         this.receiptModels = receiptModels;
+    }
+
+    public List<ItemReceiptModel> getItemReceiptModels() {
+        return itemReceiptModels;
+    }
+
+    public void setItemReceiptModels(List<ItemReceiptModel> itemReceiptModels) {
+        this.itemReceiptModels = itemReceiptModels;
     }
 
     public List<ExpenseTagModel> getExpenseTagModels() {

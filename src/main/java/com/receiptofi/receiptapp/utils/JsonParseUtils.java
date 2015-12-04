@@ -3,12 +3,15 @@ package com.receiptofi.receiptapp.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.google.common.base.Predicate;
+import com.google.common.collect.Iterables;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.BillingAccountModel;
 import com.receiptofi.receiptapp.model.BillingHistoryModel;
 import com.receiptofi.receiptapp.model.ErrorModel;
 import com.receiptofi.receiptapp.model.ExpenseTagModel;
+import com.receiptofi.receiptapp.model.ItemReceiptModel;
 import com.receiptofi.receiptapp.model.NotificationModel;
 import com.receiptofi.receiptapp.model.PlanModel;
 import com.receiptofi.receiptapp.model.ProfileModel;
@@ -31,8 +34,11 @@ import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * User: hitender
@@ -118,10 +124,16 @@ public class JsonParseUtils {
         receiptModel.setBizName(receipt.getJSONObject("bizName").getString("name"));
         receiptModel.setAddress(receipt.getJSONObject("bizStore").getString("address"));
         if (receipt.getJSONObject("bizStore").has("lat")) {
-            receiptModel.setLat(receipt.getJSONObject("bizStore").getString("lat"));
+            receiptModel.setLat(receipt.getJSONObject("bizStore").getDouble("lat"));
         }
         if (receipt.getJSONObject("bizStore").has("lng")) {
-            receiptModel.setLng(receipt.getJSONObject("bizStore").getString("lng"));
+            receiptModel.setLng(receipt.getJSONObject("bizStore").getDouble("lng"));
+        }
+        if (receipt.getJSONObject("bizStore").has("type")) {
+            receiptModel.setType(receipt.getJSONObject("bizStore").getString("type"));
+        }
+        if (receipt.getJSONObject("bizStore").has("rating")) {
+            receiptModel.setRating(receipt.getJSONObject("bizStore").getDouble("rating"));
         }
         receiptModel.setPhone(receipt.getJSONObject("bizStore").getString("phone"));
         receiptModel.setReceiptDate(receipt.getString("receiptDate"));
@@ -339,6 +351,8 @@ public class JsonParseUtils {
                 dataWrapper.setReceiptModels(receiptModels);
             }
 
+            dataWrapper.setItemReceiptModels(populateItemReceipts(receiptModels, receiptItemModels));
+
             /** Shows split with friends. */
             List<ReceiptSplitModel> receiptSplitModels = parseReceiptSplits(jsonObject.getJSONArray(ConstantsJson.SPLITS));
             if (!receiptSplitModels.isEmpty()) {
@@ -525,5 +539,21 @@ public class JsonParseUtils {
             }
         }
         return true;
+    }
+
+    public static List<ItemReceiptModel> populateItemReceipts(List<ReceiptModel> receiptModels, List<ReceiptItemModel> receiptItemModels) {
+        Map<String, ReceiptModel> receiptModelMap = new HashMap<>();
+        for (ReceiptModel receiptModel : receiptModels) {
+            receiptModelMap.put(receiptModel.getId(), receiptModel);
+        }
+
+        List<ItemReceiptModel> itemReceiptModels = new ArrayList<>();
+        for (ReceiptItemModel receiptItemModel : receiptItemModels) {
+            ReceiptModel receiptModel = receiptModelMap.get(receiptItemModel.getReceiptId());
+            ItemReceiptModel itemReceiptModel = new ItemReceiptModel(receiptModel, receiptItemModel);
+            itemReceiptModels.add(itemReceiptModel);
+        }
+
+        return itemReceiptModels;
     }
 }

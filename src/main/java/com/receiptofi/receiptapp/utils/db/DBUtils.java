@@ -42,6 +42,7 @@ public class DBUtils {
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.Notification.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.BillingAccount.TABLE_NAME);
         RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.BillingHistory.TABLE_NAME);
+        RDH.getWritableDatabase().execSQL("Drop table if exists " + DatabaseTable.ItemReceipt.TABLE_NAME);
 
         /** Create tables. */
         CreateTable.createTableProfile(RDH.getDb());
@@ -55,6 +56,7 @@ public class DBUtils {
         CreateTable.createTableNotification(RDH.getDb());
         CreateTable.createTableBillingAccount(RDH.getDb());
         CreateTable.createTableBillingHistory(RDH.getDb());
+        CreateTable.createTableItemReceipt(RDH.getDb());
     }
 
     private  static void dbReInitializeKeyValues() {
