@@ -1,10 +1,14 @@
 package com.receiptofi.receiptapp.model;
 
+import android.util.Log;
+
 /**
+ * De-Normalized view of Item and Receipt table for computing shopping list.
  * User: hitender
  * Date: 12/2/15 5:16 PM
  */
 public class ItemReceiptModel {
+    private static final String TAG = ItemReceiptModel.class.getSimpleName();
 
     private String receiptId;
     private String bizName;
@@ -22,20 +26,26 @@ public class ItemReceiptModel {
     private String tax;
 
     public ItemReceiptModel(ReceiptModel receipt, ReceiptItemModel item) {
-        this.receiptId = receipt.getId();
-        this.bizName = receipt.getBizName();
-        this.lat = receipt.getLat();
-        this.lng = receipt.getLng();
-        this.receiptDate = receipt.getReceiptDate();
-        this.expenseTagId = receipt.getExpenseTagId();
-        this.active = receipt.isActive();
-        this.deleted = receipt.isDeleted();
+        try {
+            Log.i(TAG, receipt.toString());
+            this.receiptId = receipt.getId();
+            this.bizName = receipt.getBizName();
+            this.lat = receipt.getLat();
+            this.lng = receipt.getLng();
+            this.receiptDate = receipt.getReceiptDate();
+            this.expenseTagId = receipt.getExpenseTagId();
+            this.active = receipt.isActive();
+            this.deleted = receipt.isDeleted();
 
-        this.itemId = item.getId();
-        this.name = item.getName();
-        this.price = item.getPrice();
-        this.quantity = item.getQuantity();
-        this.tax = item.getTax();
+            this.itemId = item.getId();
+            this.name = item.getName();
+            this.price = item.getPrice();
+            this.quantity = item.getQuantity();
+            this.tax = item.getTax();
+        } catch (NullPointerException npe) {
+            //TODO make sure to consider split receipt here.
+            npe.getStackTrace();
+        }
     }
 
     public String getReceiptId() {
