@@ -1,9 +1,14 @@
 package com.receiptofi.receiptapp.fragments;
 
+import android.app.AlertDialog;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +20,8 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.joanzapata.android.iconify.IconDrawable;
+import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.R;
 
 import java.text.DateFormat;
@@ -111,9 +118,17 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
     }
 
     private void setupView() {
-        mLatitudeTextView.setText(String.format("%s: %f", mLatitudeLabel, mCurrentLocation.getLatitude()));
-        mLongitudeTextView.setText(String.format("%s: %f", mLongitudeLabel, mCurrentLocation.getLongitude()));
-        mLastUpdateTimeTextView.setText(String.format("%s: %s", mLastUpdateTimeLabel, mLastUpdateTime));
+        LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
+        if (!enabled) {
+            alertInactiveGps();
+        } else if (null == mCurrentLocation) {
+
+        } else {
+            mLatitudeTextView.setText(String.format("%s: %f", mLatitudeLabel, mCurrentLocation.getLatitude()));
+            mLongitudeTextView.setText(String.format("%s: %f", mLongitudeLabel, mCurrentLocation.getLongitude()));
+            mLastUpdateTimeTextView.setText(String.format("%s: %s", mLastUpdateTimeLabel, mLastUpdateTime));
+        }
     }
 
     /**
@@ -306,5 +321,26 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
         savedInstanceState.putParcelable(LOCATION_KEY, mCurrentLocation);
         savedInstanceState.putString(LAST_UPDATED_TIME_STRING_KEY, mLastUpdateTime);
         super.onSaveInstanceState(savedInstanceState);
+    }
+
+    private AlertDialog alertInactiveGps() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        return builder
+                .setTitle(getString(R.string.enable_gps_title))
+                .setMessage(getString(R.string.enable_gps_message))
+                .setNegativeButton(getString(R.string.no_button), new DialogInterface.OnClickListener() {
+                    public void onClick(final DialogInterface dialog, @SuppressWarnings("unused") final int which) {
+                        dialog.cancel();
+                    }
+                })
+                .setPositiveButton(getString(R.string.yes_button), new DialogInterface.OnClickListener() {
+                    public void onClick(@SuppressWarnings("unused") final DialogInterface dialog, @SuppressWarnings("unused") final int which) {
+                        startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
+                    }
+                })
+                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_map_marker)
+                        .colorRes(R.color.app_theme_bg)
+                        .actionBarSize())
+                .show();
     }
 }

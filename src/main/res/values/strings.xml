@@ -232,6 +232,12 @@
         <item>Above 55</item>
     </string-array>
 
+    <!-- GPS Message -->
+    <string name="enable_gps_title">GPS</string>
+    <string name="enable_gps_message">Your GPS seems to be disabled, do you want to enable it?</string>
+    <string name="no_button">No</string>
+    <string name="yes_button">Yes</string>
+
     <!--//////////////////////-->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
