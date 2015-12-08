@@ -255,7 +255,6 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
     @Override
     public void onStop() {
         mGoogleApiClient.disconnect();
-
         super.onStop();
     }
 
@@ -301,10 +300,6 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
         setupView();
-//        Toast.makeText(
-//                this,
-//                getResources().getString(R.string.location_updated_message),
-//                Toast.LENGTH_SHORT).show();
     }
 
     @Override

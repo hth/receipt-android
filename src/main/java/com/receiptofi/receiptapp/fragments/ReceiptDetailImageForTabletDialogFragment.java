@@ -161,6 +161,7 @@ public class ReceiptDetailImageForTabletDialogFragment extends DialogFragment {
         try {
             mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
     }
 
