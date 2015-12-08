@@ -6,7 +6,10 @@ import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.model.ItemReceiptModel;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import static com.receiptofi.receiptapp.ReceiptofiApplication.RDH;
 
@@ -21,13 +24,22 @@ public class ItemReceiptUtils {
     }
 
     public static void insert(List<ItemReceiptModel> itemReceiptModels) {
+        Set<String> insertBizNames = new HashSet<>();
+        Set<String> deleteBizNames = new HashSet<>();
+
         for (ItemReceiptModel itemReceiptModel : itemReceiptModels) {
-            if (itemReceiptModel.isActive()) {
+            /** Only add items that were bought and not returned. */
+            if (itemReceiptModel.isActive() && itemReceiptModel.getPrice() >= 0.0) {
                 insert(itemReceiptModel);
+                insertBizNames.add(itemReceiptModel.getBizName());
             } else {
                 delete(itemReceiptModel.getReceiptId());
+                deleteBizNames.add(itemReceiptModel.getBizName());
             }
         }
+
+        ShoppingItemUtils.delete(deleteBizNames);
+        ShoppingItemUtils.insert(insertBizNames);
     }
 
     protected static void delete(String receiptId) {

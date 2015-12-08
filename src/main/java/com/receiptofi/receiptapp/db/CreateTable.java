@@ -187,8 +187,20 @@ public class CreateTable {
                 + DatabaseTable.ItemReceipt.PRICE + " DOUBLE ,"
                 + DatabaseTable.ItemReceipt.QUANTITY + " TEXT ,"
                 + DatabaseTable.ItemReceipt.TAX + " DOUBLE ,"
-                + DatabaseTable.Receipt.ACTIVE + " INT ,"
-                + DatabaseTable.Receipt.DELETED + " INT " +
+                + DatabaseTable.ItemReceipt.ACTIVE + " INT ,"
+                + DatabaseTable.ItemReceipt.DELETED + " INT " +
+
+                ");");
+    }
+
+    public static void createTableShoppingItem(SQLiteDatabase db) {
+        Log.d(TAG, "executing createTableShoppingItem");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ShoppingItem.TABLE_NAME + "("
+                + DatabaseTable.ShoppingItem.NAME + " TEXT ,"
+                + DatabaseTable.ShoppingItem.CUSTOM_NAME + " TEXT ,"
+                + DatabaseTable.ShoppingItem.BIZ_NAME + " TEXT ,"
+                + DatabaseTable.ShoppingItem.COUNT + " INT ,"
+                + DatabaseTable.ShoppingItem.SMOOTH_COUNT + " DOUBLE " +
 
                 ");");
     }

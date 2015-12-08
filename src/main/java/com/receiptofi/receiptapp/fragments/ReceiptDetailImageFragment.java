@@ -2,6 +2,7 @@ package com.receiptofi.receiptapp.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -184,16 +185,16 @@ public class ReceiptDetailImageFragment extends Fragment {
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
         try {
-            if (!(activity instanceof ReceiptListActivity)) {
-                mListener = (OnFragmentInteractionListener) activity;
+            if (!(context instanceof ReceiptListActivity)) {
+                mListener = (OnFragmentInteractionListener) context;
             }
         } catch (ClassCastException e) {
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             /** Currently no interaction between fragments, so no need throw this exception. */
-            throw new ClassCastException(activity.toString() + " must implement OnFragmentInteractionListener");
+            throw new ClassCastException(context.toString() + " must implement OnFragmentInteractionListener");
         }
     }
 

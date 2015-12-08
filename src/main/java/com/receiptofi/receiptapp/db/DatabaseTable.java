@@ -129,6 +129,15 @@ public class DatabaseTable {
         public static final String DELETED = "deleted";
     }
 
+    public static class ShoppingItem {
+        public static final String TABLE_NAME = "SHOPPING_ITEM";
+        public static final String NAME = "name";
+        public static final String CUSTOM_NAME = "customName";
+        public static final String BIZ_NAME = "bizName";
+        public static final String COUNT = "count";
+        public static final String SMOOTH_COUNT = "smoothCount";
+    }
+
     public static class ExpenseTag {
         public static final String TABLE_NAME = "EXPENSE_TAG";
         public static final String ID = "id";

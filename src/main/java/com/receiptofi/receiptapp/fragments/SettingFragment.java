@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -174,7 +175,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 Log.d(TAG, "Force sync data pressed");
                 AlertDialog alertDialog = dataSync();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
-                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                if (Build.VERSION.SDK_INT < 23) {
+                    textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                } else {
+                    textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+                }
                 return true;
             }
         });
@@ -188,7 +193,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 Log.d(TAG, "Delete data pressed");
                 AlertDialog alertDialog = dataDelete();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
-                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                if (Build.VERSION.SDK_INT < 23) {
+                    textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                } else {
+                    textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+                }
                 return true;
             }
         });
@@ -266,7 +275,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     Log.d(TAG, "update is pressed");
                     AlertDialog alertDialog = update(latestVersion);
                     TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
-                    textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                    if (Build.VERSION.SDK_INT < 23) {
+                        textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                    } else {
+                        textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+                    }
                     return true;
                 }
             });
@@ -284,7 +297,11 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 Log.d(TAG, "about is pressed");
                 AlertDialog alertDialog = about();
                 TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
-                textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                if (Build.VERSION.SDK_INT < 23) {
+                    textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                } else {
+                    textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+                }
                 return true;
             }
         });

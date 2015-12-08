@@ -86,7 +86,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
                         Log.d(TAG, "groupPosition at start is: " + groupPosition + " childPosition at start is: " + childPosition);
                         if (groups.size() > groupPosition) {
                             if (children.get(groupPosition).size() > childPosition) {
-                                // In this case there is current group has a child at same postion
+                                // In this case there is current group has a child at same position
                                 Log.d(TAG, "Keeping group and child position as it is");
                                 Log.d(TAG, "groupPosition line 58 is: " + groupPosition + " childPosition is: " + childPosition);
                                 ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
@@ -253,16 +253,16 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
+    public void onAttach(Context context) {
+        super.onAttach(context);
 
         // This makes sure that the container activity has implemented
         // the callback interface. If not, it throws an exception.
         try {
-            mCallback = (OnReceiptSelectedListener) activity;
+            mCallback = (OnReceiptSelectedListener) context;
         } catch (ClassCastException e) {
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
-            throw new ClassCastException(activity.toString() + " must implement OnReceiptSelectedListener");
+            throw new ClassCastException(context.toString() + " must implement OnReceiptSelectedListener");
         }
     }
 
