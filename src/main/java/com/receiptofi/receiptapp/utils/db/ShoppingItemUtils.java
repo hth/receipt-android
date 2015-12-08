@@ -10,6 +10,7 @@ import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
 import com.receiptofi.receiptapp.model.helper.BusinessFrequency;
 import com.receiptofi.receiptapp.model.helper.Coordinates;
+import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
 import com.receiptofi.receiptapp.utils.Constants;
 
 import org.joda.time.DateTime;
@@ -97,14 +98,14 @@ public class ShoppingItemUtils {
     }
 
 
-    private static List<String> getBusinessName() {
-        List<String> values = new ArrayList<>();
+    public static List<ShoppingPlace> getBusinessName() {
+        List<ShoppingPlace> values = new ArrayList<>();
         Cursor cursor = null;
         try {
             cursor = RDH.getReadableDatabase().query(
                     true,
-                    DatabaseTable.ItemReceipt.TABLE_NAME,
-                    new String[]{DatabaseTable.ItemReceipt.BIZ_NAME},
+                    DatabaseTable.ShoppingItem.TABLE_NAME,
+                    new String[]{DatabaseTable.ShoppingItem.BIZ_NAME},
                     null,
                     null,
                     null,
@@ -114,7 +115,7 @@ public class ShoppingItemUtils {
 
             if (cursor != null && cursor.getCount() > 0) {
                 while (cursor.moveToNext()) {
-                    values.add(cursor.getString(0));
+                    values.add(new ShoppingPlace(cursor.getString(0)));
                 }
             }
         } catch (Exception e) {

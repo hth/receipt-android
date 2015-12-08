@@ -1,20 +1,30 @@
 package com.receiptofi.receiptapp.fragments;
 
 import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
+import com.baoyz.swipemenulistview.SwipeMenu;
+import com.baoyz.swipemenulistview.SwipeMenuCreator;
+import com.baoyz.swipemenulistview.SwipeMenuItem;
+import com.baoyz.swipemenulistview.SwipeMenuListView;
+import com.gc.materialdesign.views.ButtonFloat;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
@@ -23,9 +33,18 @@ import com.google.android.gms.location.LocationServices;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.R;
+import com.receiptofi.receiptapp.adapters.ShoppingPlaceAdapter;
+import com.receiptofi.receiptapp.http.types.ExpenseTagSwipe;
+import com.receiptofi.receiptapp.model.ShoppingItemModel;
+import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
+import com.receiptofi.receiptapp.utils.db.ShoppingItemUtils;
+import com.receiptofi.receiptapp.views.dialog.ExpenseTagDialog;
+
+import junit.framework.Assert;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.List;
 
 import static android.content.DialogInterface.OnDismissListener;
 import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -35,8 +54,8 @@ import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFail
  * User: hitender
  * Date: 12/7/15 4:11 AM
  */
-public class ShoppingListNewFragment extends Fragment implements OnDismissListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
-    private static final String TAG = ShoppingListNewFragment.class.getSimpleName();
+public class ShoppingPlaceFragment extends Fragment implements OnDismissListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
+    private static final String TAG = ShoppingPlaceFragment.class.getSimpleName();
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -74,16 +93,14 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
     protected final static String LAST_UPDATED_TIME_STRING_KEY = "last-updated-time-string-key";
 
     private View view;
+    private ButtonFloat fbAddTag;
+    private SwipeMenuListView mListView;
+    private ShoppingPlaceAdapter mAdapter;
+    private List<ShoppingItemModel> tagModelList;
 
-    //UIWidget
-    protected TextView mLastUpdateTimeTextView;
-    protected TextView mLatitudeTextView;
-    protected TextView mLongitudeTextView;
-
-    // Labels.
-    protected String mLatitudeLabel;
-    protected String mLongitudeLabel;
-    protected String mLastUpdateTimeLabel;
+    private Drawable edit;
+    private Drawable delete;
+    private Drawable alert;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,25 +116,120 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        List<ShoppingPlace> shoppingPlaces = ShoppingItemUtils.getBusinessName();
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_shopping_list, container, false);
+        if (shoppingPlaces.isEmpty()) {
+            view = inflater.inflate(R.layout.fragment_shopping_places_empty, container, false);
+        } else {
+            view = inflater.inflate(R.layout.fragment_shopping_places, container, false);
+            setupView(shoppingPlaces);
+        }
 
-        mLatitudeTextView = (TextView) view.findViewById(R.id.latitude_text);
-        mLongitudeTextView = (TextView) view.findViewById(R.id.longitude_text);
-        mLastUpdateTimeTextView = (TextView) view.findViewById(R.id.last_update_time_text);
-
-        // Set labels.
-        mLatitudeLabel = "Latitude";
-        mLongitudeLabel = "Longitude";
-        mLastUpdateTimeLabel = "Time of Update";
-
-        mLastUpdateTime = "";
-
-        //setupView();
         return view;
     }
 
-    private void setupView() {
+    private void setupView(List<ShoppingPlace> shoppingPlaces) {
+        fbAddTag = (ButtonFloat) view.findViewById(R.id.buttonFloat);
+        fbAddTag.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                if (prev != null) {
+                    ft.remove(prev);
+                }
+                ft.addToBackStack(null);
+
+                // Create and show the dialog.
+                DialogFragment editTagDialog = ExpenseTagDialog.newInstance(null);
+                editTagDialog.show(ft, "dialog");
+            }
+        });
+
+        if (!shoppingPlaces.isEmpty()) {
+            mListView = (SwipeMenuListView) view.findViewById(R.id.listView);
+            mAdapter = new ShoppingPlaceAdapter(getActivity(), shoppingPlaces);
+            mListView.setAdapter(mAdapter);
+        }
+
+        edit = new IconDrawable(getActivity(), Iconify.IconValue.fa_pencil_square_o)
+                .colorRes(R.color.white)
+                .sizePx(64);
+
+        delete = new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                .colorRes(R.color.white)
+                .sizePx(64);
+
+        alert = new IconDrawable(getActivity(), Iconify.IconValue.fa_exclamation_triangle)
+                .colorRes(R.color.red)
+                .actionBarSize();
+
+        // step 1. create a MenuCreator
+        SwipeMenuCreator creator = new SwipeMenuCreator() {
+
+            @Override
+            public void create(SwipeMenu menu) {
+                // create "open" item
+                SwipeMenuItem openItem = new SwipeMenuItem(getActivity());
+                // set item background
+                openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
+                // set item width
+                openItem.setWidth(dp2px(90));
+                // set a icon
+                openItem.setIcon(edit);
+                // add to menu
+                menu.addMenuItem(openItem);
+                // create "delete" item
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
+                // set item background
+                deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
+                // set item width
+                deleteItem.setWidth(dp2px(90));
+                // set a icon
+                deleteItem.setIcon(delete);
+                // add to menu
+                menu.addMenuItem(deleteItem);
+            }
+        };
+        // set creator
+        mListView.setMenuCreator(creator);
+        // step 2. listener item click event
+        mListView.setOnMenuItemClickListener(new SwipeMenuListView.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(final int position, SwipeMenu menu, int index) {
+                ExpenseTagSwipe expenseTagSwipe = ExpenseTagSwipe.findSwipeTypeByCode(index);
+                Assert.assertNotNull(expenseTagSwipe);
+                Log.d(TAG, "Selected swipe action is: " + expenseTagSwipe.name());
+
+                final ShoppingItemModel tagModel = tagModelList.get(position);
+                Log.d(TAG, "Selected tag name is: " + tagModel.getName());
+                switch (expenseTagSwipe) {
+                    case EDIT:
+                        FragmentTransaction ft = getFragmentManager().beginTransaction();
+                        Fragment prev = getFragmentManager().findFragmentByTag("dialog");
+                        if (prev != null) {
+                            ft.remove(prev);
+                        }
+                        ft.addToBackStack(null);
+
+                        /** Create and show the dialog.*/
+                        DialogFragment editTagDialog = ExpenseTagDialog.newInstance(tagModel.getName());
+                        editTagDialog.show(ft, "dialog");
+
+                        break;
+                    case DELETE:
+                        deleteExpenseTag(tagModel);
+                        break;
+                    default:
+                        Log.e(TAG, "Reached unsupported condition, expense tag swipe index=" + index);
+                        throw new RuntimeException("Reached unreachable condition");
+                }
+                return false;
+            }
+        });
+    }
+
+    private void updateGeoCoordinates() {
         LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!enabled) {
@@ -125,9 +237,10 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
         } else if (null == mCurrentLocation) {
 
         } else {
-            mLatitudeTextView.setText(String.format("%s: %f", mLatitudeLabel, mCurrentLocation.getLatitude()));
-            mLongitudeTextView.setText(String.format("%s: %f", mLongitudeLabel, mCurrentLocation.getLongitude()));
-            mLastUpdateTimeTextView.setText(String.format("%s: %s", mLastUpdateTimeLabel, mLastUpdateTime));
+            //Update co-ordinates
+            mCurrentLocation.getLatitude();
+            mCurrentLocation.getLongitude();
+            //mLastUpdateTime;
         }
     }
 
@@ -151,7 +264,7 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
             if (savedInstanceState.keySet().contains(LAST_UPDATED_TIME_STRING_KEY)) {
                 mLastUpdateTime = savedInstanceState.getString(LAST_UPDATED_TIME_STRING_KEY);
             }
-            setupView();
+            updateGeoCoordinates();
         }
     }
 
@@ -275,7 +388,7 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
         if (mCurrentLocation == null) {
             mCurrentLocation = LocationServices.FusedLocationApi.getLastLocation(mGoogleApiClient);
             mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-            setupView();
+            updateGeoCoordinates();
         }
 
         // If the user presses the Start Updates button before GoogleApiClient connects, we set
@@ -299,7 +412,7 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
     public void onLocationChanged(Location location) {
         mCurrentLocation = location;
         mLastUpdateTime = DateFormat.getTimeInstance().format(new Date());
-        setupView();
+        updateGeoCoordinates();
     }
 
     @Override
@@ -337,5 +450,13 @@ public class ShoppingListNewFragment extends Fragment implements OnDismissListen
                         .colorRes(R.color.app_theme_bg)
                         .actionBarSize())
                 .show();
+    }
+
+    private void deleteExpenseTag(final ShoppingItemModel tagModel) {
+
+    }
+
+    private int dp2px(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
     }
 }
