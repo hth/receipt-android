@@ -40,6 +40,7 @@ import com.receiptofi.receiptapp.fragments.ExpenseTagFragment;
 import com.receiptofi.receiptapp.fragments.HomeFragment;
 import com.receiptofi.receiptapp.fragments.NotificationFragment;
 import com.receiptofi.receiptapp.fragments.SettingFragment;
+import com.receiptofi.receiptapp.fragments.ShoppingPlaceFragment;
 import com.receiptofi.receiptapp.fragments.SubscriptionFragment;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.ProfileModel;
@@ -77,6 +78,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
     private SuperActivityToast uploadImageToast;
     private ReceiptofiApplication receiptofiApplication;
     private MaterialAccount account;
+    public ShoppingPlaceFragment shoppingListFragment;
 
     private static final int RESULT_IMAGE_GALLERY = 0x4c5;
     private static final int RESULT_IMAGE_CAPTURE = 0x4c6;
@@ -113,6 +115,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         billingFragment = new BillingFragment();
         subscriptionFragment = new SubscriptionFragment();
         settingFragment = new SettingFragment();
+        shoppingListFragment = new ShoppingPlaceFragment();
 
         ProfileModel profileModel = ProfileUtils.getProfile();
         String name = profileModel != null ? profileModel.getName() : "";
@@ -155,6 +158,14 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         homeFragment));
+
+        this.addSection(
+                newSection(
+                        "Shopping List",
+                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_shopping_cart)
+                                .colorRes(R.color.white)
+                                .actionBarSize(),
+                        shoppingListFragment));
 
         this.addSection(
                 newSection(

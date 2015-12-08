@@ -238,6 +238,9 @@
     <string name="no_button">No</string>
     <string name="yes_button">Yes</string>
 
+    <!-- Business Name and List -->
+    <string name="empty_shopping_places">Not enough data to show shopping list. Please upload receipts.</string>
+
     <!--//////////////////////-->
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
