@@ -1,6 +1,5 @@
 package com.receiptofi.receiptapp.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.SearchManager;
 import android.content.Context;
@@ -36,7 +35,6 @@ import com.receiptofi.receiptapp.model.ReceiptGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.views.PinnedHeaderExpandableListView;
-import com.receiptofi.receiptapp.views.StickyLayout;
 
 import java.text.DateFormat;
 import java.text.ParseException;
