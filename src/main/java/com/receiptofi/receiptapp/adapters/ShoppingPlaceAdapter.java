@@ -4,11 +4,9 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.receiptofi.receiptapp.R;
-import com.receiptofi.receiptapp.model.ShoppingItemModel;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
 
 import java.util.List;
@@ -18,9 +16,6 @@ import java.util.List;
  * Date: 12/8/15 5:07 AM
  */
 public class ShoppingPlaceAdapter extends BaseAdapter {
-    /**
-     * New implementation for list style ExpenseTag
-     */
     private List<ShoppingPlace> shoppingPlaces;
     private Context context;
 
@@ -51,24 +46,30 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (null == view) {
-            view = View.inflate(context, R.layout.fragment_shopping_places_style_list, null);
+            view = View.inflate(context, R.layout.shopping_place_list, null);
             new ViewHolder(view);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        ShoppingPlace tagModel = (ShoppingPlace) getItem(i);
-        holder.tagName.setText(tagModel.getBizName());
-        holder.tagName.setTextColor(context.getResources().getColor(R.color.tv_black));
-        holder.tagColor.setBackgroundColor(context.getResources().getColor(R.color.tv_black));
+        ShoppingPlace shoppingPlace = (ShoppingPlace) getItem(i);
+        holder.bizName.setText(shoppingPlace.getBizName());
+
+        if (shoppingPlace.getLastShopped().isEmpty()) {
+            holder.lastShopped.setText("");
+        } else {
+            holder.lastShopped.setText(
+                    context.getResources().getString(R.string.shopped,
+                            NotificationAdapter.prettyTime.format(shoppingPlace.getLastShopped().get(0))));
+        }
         return view;
     }
 
     class ViewHolder {
-        ImageView tagColor;
-        TextView tagName;
+        TextView bizName;
+        TextView lastShopped;
 
         public ViewHolder(View view) {
-            tagColor = (ImageView) view.findViewById(R.id.tag_color);
-            tagName = (TextView) view.findViewById(R.id.tag_name);
+            bizName = (TextView) view.findViewById(R.id.biz_name);
+            lastShopped = (TextView) view.findViewById(R.id.last_shopped);
             view.setTag(this);
         }
     }

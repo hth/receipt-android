@@ -9,7 +9,7 @@ import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
 import com.receiptofi.receiptapp.model.helper.BusinessFrequency;
-import com.receiptofi.receiptapp.model.helper.Coordinates;
+import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
 import com.receiptofi.receiptapp.utils.Constants;
 
@@ -160,8 +160,8 @@ public class ShoppingItemUtils {
                     BusinessFrequency businessFrequency = new BusinessFrequency(bizName);
                     while (cursor.moveToNext()) {
                         values.add(DateTime.parse(cursor.getString(0), Constants.ISO_J_DF));
-                        Coordinates coordinates = new Coordinates(cursor.getDouble(1), cursor.getDouble(2));
-                        businessFrequency.addCoordinates(coordinates);
+                        Coordinate coordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2));
+                        businessFrequency.addCoordinates(coordinate);
                     }
 
                     int visitFrequency = 0;

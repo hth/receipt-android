@@ -7,8 +7,8 @@
                 xmlns:materialdesign="http://schemas.android.com/apk/res-auto">
 
     <TextView
-        android:id="@+id/tv_title"
-        android:text="@string/tag_modify_note"
+        android:id="@+id/shopping_place_message"
+        android:text="@string/shopping_place_ignore"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -23,7 +23,7 @@
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/tv_title"
+        android:layout_below="@id/shopping_place_message"
         />
 
     <com.gc.materialdesign.views.ButtonFloat

@@ -237,6 +237,8 @@
     <string name="enable_gps_message">Your GPS seems to be disabled, do you want to enable it?</string>
     <string name="no_button">No</string>
     <string name="yes_button">Yes</string>
+    <string name="shopping_place_ignore">Swipe from right side to ignore business from shopping.</string>
+    <string name="shopped">Shopped %s</string>
 
     <!-- Business Name and List -->
     <string name="empty_shopping_places">Not enough data to show shopping list. Please upload receipts.</string>
