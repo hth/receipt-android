@@ -29,7 +29,7 @@ public class BusinessFrequency {
     private int frequency;
 
     private List<DateTime> visits = new ArrayList<>();
-    private Set<Coordinates> coordinates = new HashSet<>();
+    private Set<Coordinate> coordinates = new HashSet<>();
 
     public BusinessFrequency(String bizName) {
         this.bizName = bizName;
@@ -71,11 +71,11 @@ public class BusinessFrequency {
         return visits.size();
     }
 
-    public Set<Coordinates> getCoordinates() {
+    public Set<Coordinate> getCoordinates() {
         return coordinates;
     }
 
-    public void addCoordinates(Coordinates coordinate) {
+    public void addCoordinates(Coordinate coordinate) {
         this.coordinates.add(coordinate);
     }
 

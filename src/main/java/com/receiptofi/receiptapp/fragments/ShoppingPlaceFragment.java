@@ -30,13 +30,18 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.common.collect.Ordering;
 import com.joanzapata.android.iconify.IconDrawable;
 import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.adapters.ShoppingPlaceAdapter;
 import com.receiptofi.receiptapp.http.types.ExpenseTagSwipe;
+import com.receiptofi.receiptapp.model.ExpenseTagModel;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
+import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
+import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
+import com.receiptofi.receiptapp.utils.db.ItemReceiptUtils;
 import com.receiptofi.receiptapp.utils.db.ShoppingItemUtils;
 import com.receiptofi.receiptapp.views.dialog.ExpenseTagDialog;
 
@@ -44,7 +49,9 @@ import junit.framework.Assert;
 
 import java.text.DateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import static android.content.DialogInterface.OnDismissListener;
 import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
@@ -102,6 +109,14 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
     private Drawable delete;
     private Drawable alert;
 
+    private List<ShoppingPlace> shoppingPlaces;
+
+    private static Ordering<ShoppingPlace> SORT_BY_CLOSET_DISTANCE = new Ordering<ShoppingPlace>() {
+        public int compare(ShoppingPlace right, ShoppingPlace left) {
+            return Double.compare(right.getDistance().get(0), left.getDistance().get(0));
+        }
+    };
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,11 +131,12 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        List<ShoppingPlace> shoppingPlaces = ShoppingItemUtils.getBusinessName();
+        shoppingPlaces = ShoppingItemUtils.getBusinessName();
         // Inflate the layout for this fragment
         if (shoppingPlaces.isEmpty()) {
             view = inflater.inflate(R.layout.fragment_shopping_places_empty, container, false);
         } else {
+            shoppingPlaces = ItemReceiptUtils.populateShoppingPlaces(shoppingPlaces);
             view = inflater.inflate(R.layout.fragment_shopping_places, container, false);
             setupView(shoppingPlaces);
         }
@@ -238,9 +254,16 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
 
         } else {
             //Update co-ordinates
-            mCurrentLocation.getLatitude();
-            mCurrentLocation.getLongitude();
+            double lat = mCurrentLocation.getLatitude();
+            double lng = mCurrentLocation.getLongitude();
             //mLastUpdateTime;
+            Coordinate coordinate = new Coordinate(lat, lng);
+            for (ShoppingPlace shoppingPlace : shoppingPlaces) {
+                shoppingPlace.computeDistanceFromLocation(coordinate);
+            }
+
+            shoppingPlaces = SORT_BY_CLOSET_DISTANCE.sortedCopy(shoppingPlaces);
+            notifyList();
         }
     }
 
@@ -452,8 +475,15 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
                 .show();
     }
 
-    private void deleteExpenseTag(final ShoppingItemModel tagModel) {
+    private void deleteExpenseTag(final ShoppingItemModel shoppingItemModel) {
 
+    }
+
+    private void notifyList() {
+        if (mAdapter != null) {
+            mAdapter.updateList(shoppingPlaces);
+            mAdapter.notifyDataSetChanged();
+        }
     }
 
     private int dp2px(int dp) {

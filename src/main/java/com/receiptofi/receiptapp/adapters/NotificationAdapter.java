@@ -18,7 +18,8 @@ import org.ocpsoft.prettytime.PrettyTime;
 import java.util.List;
 
 /**
- * Created by PT on 4/5/15.
+ * User: PT
+ * Date: 4/5/15 4:16 AM
  */
 public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
 
@@ -26,7 +27,7 @@ public class NotificationAdapter extends ArrayAdapter<NotificationModel> {
     private final LayoutInflater inflater;
     private Context context;
     private List<NotificationModel> notificationList;
-    private static final PrettyTime prettyTime = new PrettyTime();
+    protected static final PrettyTime prettyTime = new PrettyTime();
 
     public NotificationAdapter(Context context, List<NotificationModel> notificationList) {
         super(context, R.layout.rd_item_list, notificationList);

@@ -7,21 +7,23 @@
                 android:padding="8dp">
 
     <TextView
-        android:id="@+id/notification_text"
-        style="@style/text_notification"
+        android:id="@+id/biz_name"
+        style="@style/text_shopping_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/shoppingPlaceTextMarginTop"
+        android:layout_marginBottom="@dimen/shoppingPlaceTextMarginBottom"
         android:paddingLeft="@dimen/tv_horizontal_margin"
         android:text="@string/hello_world"/>
 
     <TextView
-        android:id="@+id/notification_time"
+        android:id="@+id/last_shopped"
         style="@style/date_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/notification_text"
+        android:layout_below="@id/biz_name"
         android:paddingLeft="@dimen/tv_horizontal_margin"
         android:text="@string/hello_world"/>
 

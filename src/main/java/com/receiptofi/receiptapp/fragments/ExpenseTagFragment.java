@@ -347,7 +347,6 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
         if (mAdapter != null) {
             mAdapter.updateList(tagModelList);
             mAdapter.notifyDataSetChanged();
-            mAdapter.notifyDataSetChanged();
         }
     }
 
