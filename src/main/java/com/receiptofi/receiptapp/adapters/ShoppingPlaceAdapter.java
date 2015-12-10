@@ -19,6 +19,7 @@ import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
 import com.receiptofi.receiptapp.model.types.DistanceUnit;
+import com.receiptofi.receiptapp.utils.AppUtils;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
     private Context context;
 
     private Drawable locationDraw;
+    private Drawable locationOffDraw;
     private Drawable shoppingBasketDraw;
     private boolean mapInstalled;
 
@@ -41,6 +43,10 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
 
         locationDraw = new IconDrawable(context, Iconify.IconValue.fa_map_marker)
                 .colorRes(R.color.red)
+                .actionBarSize();
+
+        locationOffDraw = new IconDrawable(context, Iconify.IconValue.fa_map_marker)
+                .colorRes(R.color.gray_light)
                 .actionBarSize();
 
         shoppingBasketDraw = new IconDrawable(context, Iconify.IconValue.fa_shopping_cart)
@@ -78,7 +84,10 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
         ShoppingPlace shoppingPlace = (ShoppingPlace) getItem(i);
         holder.bizName.setText(shoppingPlace.getBizName());
-        holder.lastPurchase.setText(context.getResources().getString(R.string.last_purchase, 20.00));
+        holder.lastPurchase.setText(
+                context.getResources().getString(
+                        R.string.last_purchase,
+                        AppUtils.currencyFormatter().format(shoppingPlace.getMostRecentPurchase())));
 
         if (shoppingPlace.getLastShopped().isEmpty()) {
             holder.lastShopped.setText("");
@@ -91,12 +100,13 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         }
 
         if (!shoppingPlace.getDistance().isEmpty()) {
+            holder.gpsImage.setImageDrawable(locationDraw);
             holder.bizDistance.setText(
                     context.getResources().getString(R.string.biz_distance,
                             shoppingPlace.getDistance().get(0), DistanceUnit.M.getName()));
-            holder.gpsImage.setImageDrawable(locationDraw);
         } else {
-            holder.bizDistance.setText("");
+            holder.gpsImage.setImageDrawable(locationOffDraw);
+            holder.bizDistance.setText(context.getResources().getString(R.string.biz_distance_empty, "-------", DistanceUnit.M.getName()));
         }
 
         if (mapInstalled) {

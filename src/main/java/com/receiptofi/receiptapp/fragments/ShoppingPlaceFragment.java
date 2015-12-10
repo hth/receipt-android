@@ -260,7 +260,7 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
         } else {
             //Update co-ordinates
             for (ShoppingPlace shoppingPlace : shoppingPlaces) {
-                shoppingPlace.computeDistanceFromLocation(mCurrentLocation.getLatitude(),  mCurrentLocation.getLongitude());
+                shoppingPlace.computeDistanceFromLocation(mCurrentLocation.getLatitude(), mCurrentLocation.getLongitude());
             }
 
             shoppingPlaces = SORT_BY_CLOSET_DISTANCE.sortedCopy(shoppingPlaces);

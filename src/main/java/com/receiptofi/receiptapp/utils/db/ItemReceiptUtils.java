@@ -112,13 +112,18 @@ public class ItemReceiptUtils {
                         DatabaseTable.ItemReceipt.RECEIPT_DATE + " DESC",
                         null);
 
+                String mostRecentReceiptDate = null;
                 if (cursor != null && cursor.getCount() > 0) {
                     while (cursor.moveToNext()) {
+                        if (mostRecentReceiptDate == null) {
+                            mostRecentReceiptDate = cursor.getString(0);
+                        }
                         shoppingPlace.addLastShopped(AppUtils.getDateTime(cursor.getString(0)).toDate());
                         Coordinate coordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2), cursor.getString(3));
                         shoppingPlace.addCoordinates(coordinate);
                     }
 
+                    shoppingPlace.setMostRecentPurchase(ReceiptUtils.findSplitTotal(shoppingPlace.getBizName(), mostRecentReceiptDate));
                     shoppingPlaceList.add(shoppingPlace);
                 }
             } catch (Exception e) {

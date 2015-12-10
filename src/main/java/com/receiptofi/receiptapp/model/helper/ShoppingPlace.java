@@ -19,6 +19,7 @@ public class ShoppingPlace {
     private List<Date> lastShopped = new LinkedList<>();
     private Set<Coordinate> coordinates = new HashSet<>();
     private List<Double> distance = new LinkedList<>();
+    private Double mostRecentPurchase = 0.0;
 
     private static Ordering<Double> SORT_BY_DISTANCE = new Ordering<Double>() {
         public int compare(Double right, Double left) {
@@ -60,5 +61,13 @@ public class ShoppingPlace {
         }
 
         distance = SORT_BY_DISTANCE.reverse().sortedCopy(distance);
+    }
+
+    public Double getMostRecentPurchase() {
+        return mostRecentPurchase;
+    }
+
+    public void setMostRecentPurchase(Double mostRecentPurchase) {
+        this.mostRecentPurchase = mostRecentPurchase;
     }
 }
