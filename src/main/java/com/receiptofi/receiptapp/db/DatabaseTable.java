@@ -116,6 +116,7 @@ public class DatabaseTable {
         public static final String TABLE_NAME = "ITEM_RECEIPT";
         public static final String RECEIPT_ID = "receiptId";
         public static final String BIZ_NAME = "bizName";
+        public static final String BIZ_STORE_ADDRESS = "address";
         public static final String LAT = "lat";
         public static final String LNG = "lng";
         public static final String RECEIPT_DATE = "receiptDate";

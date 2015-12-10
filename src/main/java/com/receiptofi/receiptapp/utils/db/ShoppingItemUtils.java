@@ -147,7 +147,8 @@ public class ShoppingItemUtils {
                         new String[]{
                                 DatabaseTable.ItemReceipt.RECEIPT_DATE,
                                 DatabaseTable.ItemReceipt.LAT,
-                                DatabaseTable.ItemReceipt.LNG
+                                DatabaseTable.ItemReceipt.LNG,
+                                DatabaseTable.ItemReceipt.BIZ_STORE_ADDRESS
                         },
                         DatabaseTable.ItemReceipt.BIZ_NAME + " = ?",
                         new String[]{bizName},
@@ -160,7 +161,7 @@ public class ShoppingItemUtils {
                     BusinessFrequency businessFrequency = new BusinessFrequency(bizName);
                     while (cursor.moveToNext()) {
                         values.add(DateTime.parse(cursor.getString(0), Constants.ISO_J_DF));
-                        Coordinate coordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2));
+                        Coordinate coordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2), cursor.getString(3));
                         businessFrequency.addCoordinates(coordinate);
                     }
 

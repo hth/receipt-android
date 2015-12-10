@@ -239,6 +239,8 @@
     <string name="yes_button">Yes</string>
     <string name="shopping_place_ignore">Swipe from right side to ignore business from shopping.</string>
     <string name="shopped">Shopped %s</string>
+    <string name="biz_distance" formatted="false">%.2f %s</string>
+    <string name="last_purchase" formatted="false">Last purchase of %.2f</string>
 
     <!-- Business Name and List -->
     <string name="empty_shopping_places">Not enough data to show shopping list. Please upload receipts.</string>

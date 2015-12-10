@@ -123,6 +123,14 @@
         <item name="android:paddingBottom">@dimen/notification_list_vertical_padding</item>
     </style>
 
+    <style name="biz_miles" parent="@android:style/TextAppearance.Small">
+        <!--  <item name="android:textColor">@color/app_theme_txt_color</item> -->
+        <item name="android:textColor">@color/tv_black_second</item>
+        <item name="android:paddingTop">@dimen/notification_list_vertical_padding</item>
+        <item name="android:paddingBottom">@dimen/notification_list_vertical_padding</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="billing_fragment_style" parent="@android:style/TextAppearance.Large">
         <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/black</item>

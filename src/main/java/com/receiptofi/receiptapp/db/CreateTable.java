@@ -178,6 +178,7 @@ public class CreateTable {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ItemReceipt.TABLE_NAME + "("
                 + DatabaseTable.ItemReceipt.RECEIPT_ID + " TEXT ,"
                 + DatabaseTable.ItemReceipt.BIZ_NAME + " TEXT ,"
+                + DatabaseTable.ItemReceipt.BIZ_STORE_ADDRESS + " TEXT ,"
                 + DatabaseTable.ItemReceipt.LAT + " DOUBLE ,"
                 + DatabaseTable.ItemReceipt.LNG + " DOUBLE ,"
                 + DatabaseTable.ItemReceipt.RECEIPT_DATE + " TEXT ,"
