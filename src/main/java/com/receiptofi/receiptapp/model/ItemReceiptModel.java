@@ -12,6 +12,7 @@ public class ItemReceiptModel {
 
     private String receiptId;
     private String bizName;
+    private String address;
     private Double lat;
     private Double lng;
     private String receiptDate;
@@ -30,6 +31,7 @@ public class ItemReceiptModel {
             Log.i(TAG, receipt.toString());
             this.receiptId = receipt.getId();
             this.bizName = receipt.getBizName();
+            this.address = receipt.getAddress();
             this.lat = receipt.getLat();
             this.lng = receipt.getLng();
             this.receiptDate = receipt.getReceiptDate();
@@ -54,6 +56,10 @@ public class ItemReceiptModel {
 
     public String getBizName() {
         return bizName;
+    }
+
+    public String getAddress() {
+        return address;
     }
 
     public Double getLat() {

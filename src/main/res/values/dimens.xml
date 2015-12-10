@@ -51,7 +51,8 @@
     <dimen name="icontextviewsize">28sp</dimen>
     <dimen name="linearlayout_padding">5dp</dimen>
     <dimen name="shoppingPlaceTextMarginTop">2dp</dimen>
-    <dimen name="shoppingPlaceTextMarginBottom">28dp</dimen>
+    <dimen name="shoppingPlaceTextMarginBottom">6dp</dimen>
+    <dimen name="shoppingBasketPaddingBottom">14dp</dimen>
 
     <!--   For TextView in fragment  -->
     <dimen name="tv_horizontal_margin">16dp</dimen>

@@ -71,6 +71,7 @@ public class ItemReceiptUtils {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.ItemReceipt.RECEIPT_ID, itemReceiptModel.getReceiptId());
         values.put(DatabaseTable.ItemReceipt.BIZ_NAME, itemReceiptModel.getBizName());
+        values.put(DatabaseTable.ItemReceipt.BIZ_STORE_ADDRESS, itemReceiptModel.getAddress());
         values.put(DatabaseTable.ItemReceipt.LAT, itemReceiptModel.getLat());
         values.put(DatabaseTable.ItemReceipt.LNG, itemReceiptModel.getLng());
         values.put(DatabaseTable.ItemReceipt.RECEIPT_DATE, itemReceiptModel.getReceiptDate());
@@ -101,7 +102,8 @@ public class ItemReceiptUtils {
                         new String[]{
                                 DatabaseTable.ItemReceipt.RECEIPT_DATE,
                                 DatabaseTable.ItemReceipt.LAT,
-                                DatabaseTable.ItemReceipt.LNG
+                                DatabaseTable.ItemReceipt.LNG,
+                                DatabaseTable.ItemReceipt.BIZ_STORE_ADDRESS
                         },
                         DatabaseTable.ItemReceipt.BIZ_NAME + " = ?",
                         new String[]{shoppingPlace.getBizName()},
@@ -113,7 +115,7 @@ public class ItemReceiptUtils {
                 if (cursor != null && cursor.getCount() > 0) {
                     while (cursor.moveToNext()) {
                         shoppingPlace.addLastShopped(AppUtils.getDateTime(cursor.getString(0)).toDate());
-                        Coordinate coordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2));
+                        Coordinate coordinate = new Coordinate(cursor.getDouble(1), cursor.getDouble(2), cursor.getString(3));
                         shoppingPlace.addCoordinates(coordinate);
                     }
 

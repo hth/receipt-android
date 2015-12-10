@@ -11,20 +11,69 @@
         style="@style/text_shopping_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/shoppingPlaceTextMarginTop"
         android:layout_marginBottom="@dimen/shoppingPlaceTextMarginBottom"
+        android:layout_marginTop="@dimen/shoppingPlaceTextMarginTop"
         android:paddingLeft="@dimen/tv_horizontal_margin"
-        android:text="@string/hello_world"/>
+        android:text="@string/placeholder_text"/>
+
+    <TextView
+        android:id="@+id/last_purchase"
+        style="@style/date_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/biz_name"
+        android:paddingLeft="@dimen/tv_horizontal_margin"
+        android:text="@string/placeholder_text"/>
 
     <TextView
         android:id="@+id/last_shopped"
         style="@style/date_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/biz_name"
+        android:layout_below="@id/last_purchase"
         android:paddingLeft="@dimen/tv_horizontal_margin"
-        android:text="@string/hello_world"/>
+        android:text="@string/placeholder_text"
+        />
+
+    <ImageView
+        android:id="@+id/shopping_basket"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/last_shopped"
+        android:layout_alignEnd="@+id/biz_distance_in_units"
+        android:layout_alignRight="@+id/biz_distance_in_units"
+        android:layout_alignTop="@+id/biz_name"
+        android:layout_toEndOf="@+id/gps_image"
+        android:layout_toRightOf="@+id/gps_image"
+        android:clickable="true"
+        android:paddingBottom="@dimen/shoppingBasketPaddingBottom"
+        />
+
+    <ImageView
+        android:id="@+id/gps_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/biz_distance_in_units"
+        android:layout_alignTop="@+id/biz_distance_in_units"
+        android:layout_toLeftOf="@+id/biz_distance_in_units"
+        android:clickable="true"
+        />
+
+    <TextView
+        android:id="@+id/biz_distance_in_units"
+        style="@style/biz_miles"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/last_shopped"
+        android:clickable="true"
+        android:paddingRight="@dimen/tv_horizontal_margin"
+        android:text="@string/placeholder_text"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        />
 
 </RelativeLayout>

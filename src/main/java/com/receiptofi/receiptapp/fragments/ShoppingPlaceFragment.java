@@ -1,5 +1,6 @@
 package com.receiptofi.receiptapp.fragments;
 
+import android.Manifest;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -7,13 +8,16 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
@@ -36,11 +40,10 @@ import com.joanzapata.android.iconify.Iconify;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.adapters.ShoppingPlaceAdapter;
 import com.receiptofi.receiptapp.http.types.ExpenseTagSwipe;
-import com.receiptofi.receiptapp.model.ExpenseTagModel;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
 import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
-import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
+import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.db.ItemReceiptUtils;
 import com.receiptofi.receiptapp.utils.db.ShoppingItemUtils;
 import com.receiptofi.receiptapp.views.dialog.ExpenseTagDialog;
@@ -48,12 +51,12 @@ import com.receiptofi.receiptapp.views.dialog.ExpenseTagDialog;
 import junit.framework.Assert;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static android.content.DialogInterface.OnDismissListener;
+import static android.support.v4.content.PermissionChecker.checkSelfPermission;
 import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 
@@ -63,6 +66,8 @@ import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFail
  */
 public class ShoppingPlaceFragment extends Fragment implements OnDismissListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
     private static final String TAG = ShoppingPlaceFragment.class.getSimpleName();
+
+    private final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
 
     /**
      * The desired interval for location updates. Inexact. Updates may be more or less frequent.
@@ -254,12 +259,8 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
 
         } else {
             //Update co-ordinates
-            double lat = mCurrentLocation.getLatitude();
-            double lng = mCurrentLocation.getLongitude();
-            //mLastUpdateTime;
-            Coordinate coordinate = new Coordinate(lat, lng);
             for (ShoppingPlace shoppingPlace : shoppingPlaces) {
-                shoppingPlace.computeDistanceFromLocation(coordinate);
+                shoppingPlace.computeDistanceFromLocation(mCurrentLocation.getLatitude(),  mCurrentLocation.getLongitude());
             }
 
             shoppingPlaces = SORT_BY_CLOSET_DISTANCE.sortedCopy(shoppingPlaces);
@@ -453,6 +454,72 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
         savedInstanceState.putString(LAST_UPDATED_TIME_STRING_KEY, mLastUpdateTime);
         super.onSaveInstanceState(savedInstanceState);
     }
+//TODO for API 23
+//    private void checkPermission() {
+//        if (checkAccessLocation(Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+//                checkAccessLocation(Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+//
+//            List<String> permissionsNeeded = new ArrayList<>();
+//            final List<String> permissionsList = new ArrayList<>();
+//
+//            if (!addPermission(permissionsList, Manifest.permission.ACCESS_FINE_LOCATION))
+//                permissionsNeeded.add("GPS");
+//            if (!addPermission(permissionsList, Manifest.permission.ACCESS_COARSE_LOCATION))
+//                permissionsNeeded.add("Read Contacts");
+//
+//            if (permissionsList.size() > 0) {
+//                if (permissionsNeeded.size() > 0) {
+//                    // Need Rationale
+//                    String message = "You need to grant access to " + permissionsNeeded.get(0);
+//                    for (int i = 1; i < permissionsNeeded.size(); i++) {
+//                        message = message + ", " + permissionsNeeded.get(i);
+//                    }
+//
+//                    showMessageOKCancel(message,
+//                            new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                                        requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+//                                    }
+//                                }
+//                            });
+//                    return;
+//                }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    requestPermissions(permissionsList.toArray(new String[permissionsList.size()]), REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+//                }
+//                return;
+//            }
+//        }
+//    }
+//
+//    private int checkAccessLocation(String accessFineLocation) {
+//        return ActivityCompat.checkSelfPermission(AppUtils.getHomePageContext(), accessFineLocation);
+//    }
+//
+//    private boolean addPermission(List<String> permissionsList, String permission) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            if (checkSelfPermission(getContext(), permission) != PackageManager.PERMISSION_GRANTED) {
+//                permissionsList.add(permission);
+//                // Check for Rationale Option
+//                if (!shouldShowRequestPermissionRationale(permission))
+//                    return false;
+//            }
+//        }
+//        return true;
+//    }
+//
+//    private void showMessageOKCancel(String message, DialogInterface.OnClickListener okListener) {
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            new AlertDialog.Builder(getContext())
+//                    .setMessage(message)
+//                    .setPositiveButton("OK", okListener)
+//                    .setNegativeButton("Cancel", null)
+//                    .create()
+//                    .show();
+//        }
+//    }
 
     private AlertDialog alertInactiveGps() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
