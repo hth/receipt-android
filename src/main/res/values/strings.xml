@@ -240,6 +240,7 @@
     <string name="shopping_place_ignore">Swipe from right side to ignore business from shopping.</string>
     <string name="shopped">Shopped %s</string>
     <string name="biz_distance" formatted="false">%.2f %s</string>
+    <string name="biz_distance_empty" formatted="false">%s %s</string>
     <string name="last_purchase" formatted="false">Last purchase of %.2f</string>
 
     <!-- Business Name and List -->

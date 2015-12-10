@@ -32,6 +32,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
     private Context context;
 
     private Drawable locationDraw;
+    private Drawable locationOffDraw;
     private Drawable shoppingBasketDraw;
     private boolean mapInstalled;
 
@@ -41,6 +42,10 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
 
         locationDraw = new IconDrawable(context, Iconify.IconValue.fa_map_marker)
                 .colorRes(R.color.red)
+                .actionBarSize();
+
+        locationOffDraw = new IconDrawable(context, Iconify.IconValue.fa_map_marker)
+                .colorRes(R.color.gray_light)
                 .actionBarSize();
 
         shoppingBasketDraw = new IconDrawable(context, Iconify.IconValue.fa_shopping_cart)
@@ -91,12 +96,13 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         }
 
         if (!shoppingPlace.getDistance().isEmpty()) {
+            holder.gpsImage.setImageDrawable(locationDraw);
             holder.bizDistance.setText(
                     context.getResources().getString(R.string.biz_distance,
                             shoppingPlace.getDistance().get(0), DistanceUnit.M.getName()));
-            holder.gpsImage.setImageDrawable(locationDraw);
         } else {
-            holder.bizDistance.setText("");
+            holder.gpsImage.setImageDrawable(locationOffDraw);
+            holder.bizDistance.setText(context.getResources().getString(R.string.biz_distance_empty, "---", DistanceUnit.M.getName()));
         }
 
         if (mapInstalled) {
