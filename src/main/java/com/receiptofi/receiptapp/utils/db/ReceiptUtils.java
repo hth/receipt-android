@@ -189,6 +189,38 @@ public class ReceiptUtils {
         return list;
     }
 
+    public static Double findSplitTotal(String bizName, String receiptDate) {
+        Log.d(TAG, "Fetching receipt for bizName=" + bizName + " receiptDate=" + receiptDate);
+
+        Double splitTotal = 0.0;
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    DatabaseTable.Receipt.TABLE_NAME,
+                    new String[]{DatabaseTable.Receipt.SPLIT_TOTAL},
+                    DatabaseTable.Receipt.BIZ_NAME + "=? and " + DatabaseTable.Receipt.RECEIPT_DATE + "=?",
+                    new String[]{bizName, receiptDate},
+                    null,
+                    null,
+                    DatabaseTable.Receipt.RECEIPT_DATE + " DESC"
+            );
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    splitTotal = cursor.getDouble(0);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting receipts " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return splitTotal;
+    }
+
     /**
      * Fetch receipts based on receipt ids.
      *

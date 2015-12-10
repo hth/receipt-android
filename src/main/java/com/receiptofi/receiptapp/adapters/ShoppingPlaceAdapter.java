@@ -19,6 +19,7 @@ import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
 import com.receiptofi.receiptapp.model.types.DistanceUnit;
+import com.receiptofi.receiptapp.utils.AppUtils;
 
 import java.util.List;
 
@@ -83,7 +84,10 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
         ShoppingPlace shoppingPlace = (ShoppingPlace) getItem(i);
         holder.bizName.setText(shoppingPlace.getBizName());
-        holder.lastPurchase.setText(context.getResources().getString(R.string.last_purchase, 20.00));
+        holder.lastPurchase.setText(
+                context.getResources().getString(
+                        R.string.last_purchase,
+                        AppUtils.currencyFormatter().format(shoppingPlace.getMostRecentPurchase())));
 
         if (shoppingPlace.getLastShopped().isEmpty()) {
             holder.lastShopped.setText("");
@@ -102,7 +106,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
                             shoppingPlace.getDistance().get(0), DistanceUnit.M.getName()));
         } else {
             holder.gpsImage.setImageDrawable(locationOffDraw);
-            holder.bizDistance.setText(context.getResources().getString(R.string.biz_distance_empty, "---", DistanceUnit.M.getName()));
+            holder.bizDistance.setText(context.getResources().getString(R.string.biz_distance_empty, "-------", DistanceUnit.M.getName()));
         }
 
         if (mapInstalled) {
