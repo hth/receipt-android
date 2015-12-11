@@ -125,11 +125,9 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         if (!shoppingPlace.getCoordinates().isEmpty()) {
             final Coordinate coordinate = shoppingPlace.getCoordinates().iterator().next();
 
-            String uriString = new StringBuilder()
-                    .append("geo:").append(coordinate.getLat()).append(",").append(coordinate.getLng())
-                    .append("?q=").append(Uri.encode(coordinate.getAddress()))
-                    .append("(").append(Uri.encode(shoppingPlace.getBizName())).append(")")
-                    .append("&z=16").toString();
+            String uriString = "geo:" + coordinate.getLat() + "," + coordinate.getLng() +
+                    "?q=" + Uri.encode(coordinate.getAddress()) +
+                    "(" + Uri.encode(shoppingPlace.getBizName()) + ")" + "&z=16";
             final Uri uri = Uri.parse(uriString);
 
             holder.bizDistance.setOnClickListener(new View.OnClickListener() {
