@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -369,21 +370,21 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     }
 
     public void openDrawer() {
-        drawerLayout.openDrawer(Gravity.END);
+        drawerLayout.openDrawer(GravityCompat.END);
     }
 
     public void closeDrawer() {
         if (drawerLayout != null) {
-            if (drawerLayout.isDrawerOpen(Gravity.END)) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
-                drawerLayout.closeDrawer(Gravity.END);
+                drawerLayout.closeDrawer(GravityCompat.END);
             }
         }
     }
 
     public boolean isDrawerOpened() {
         if (drawerLayout != null) {
-            return drawerLayout.isDrawerOpen(Gravity.END);
+            return drawerLayout.isDrawerOpen(GravityCompat.END);
         }
         return false;
     }
