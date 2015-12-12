@@ -1,7 +1,6 @@
 package com.receiptofi.receiptapp.model.helper;
 
 import com.google.common.collect.Ordering;
-import com.receiptofi.receiptapp.model.types.DistanceUnit;
 
 import java.util.Date;
 import java.util.HashSet;
