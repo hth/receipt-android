@@ -73,6 +73,22 @@
                 android:value=".MainMaterialDrawerActivity" />
         </activity>
         <activity
+            android:name=".ShoppingPlaceActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".MainMaterialDrawerActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMaterialDrawerActivity" />
+        </activity>
+        <activity
+            android:name=".ShoppingListActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:parentActivityName=".MainMaterialDrawerActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".ShoppingPlaceActivity" />
+        </activity>
+        <activity
             android:name=".FilterListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
