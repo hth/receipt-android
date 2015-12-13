@@ -25,8 +25,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ExpenseTagListAdapter;
 import com.receiptofi.receiptapp.fragments.FilterListFragment;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailFragment;
@@ -90,7 +91,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
             ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_chevron_left)
+            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
                     .colorRes(R.color.white)
                     .actionBarSize());
         }

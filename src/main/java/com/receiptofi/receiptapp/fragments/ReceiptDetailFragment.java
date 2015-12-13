@@ -33,8 +33,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.DatePicker;
-import android.widget.IconButton;
-import android.widget.IconTextView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -44,8 +42,10 @@ import android.widget.Toast;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+import com.joanzapata.iconify.widget.IconButton;
+import com.joanzapata.iconify.widget.IconTextView;
 import com.receiptofi.receiptapp.BuildConfig;
 import com.receiptofi.receiptapp.FilterListActivity;
 import com.receiptofi.receiptapp.R;
@@ -169,7 +169,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 ((ReceiptListActivity) getActivity()).closeDrawer();
             }
             receiptDetailObservable.unregisterObserver(observer);
-        } else if(getActivity() instanceof FilterListActivity) {
+        } else if (getActivity() instanceof FilterListActivity) {
             if (((FilterListActivity) getActivity()).isDrawerOpened()) {
                 ((FilterListActivity) getActivity()).closeDrawer();
             }
@@ -203,7 +203,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdBizPhone = (TextView) receiptDetailView.findViewById(R.id.rd_biz_phone);
 
         // Replace the phone textview left drawable icon with fa-phone.
-        Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_phone_square)
+        Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_phone_square)
                 .colorRes(R.color.app_theme_bg)
                 .sizeDp(18);
         rdBizPhone.setCompoundDrawables(rdBizPhoneIcon, null, null, null);
@@ -279,7 +279,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
 
         inflater.inflate(R.menu.menu_main_detail_receipt, menu);
         MenuItem receiptAction = menu.findItem(R.id.menu_receipt_actions)
-                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_tasks)
+                .setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_tasks)
                         .colorRes(R.color.white)
                         .actionBarSize());
 
@@ -291,7 +291,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         /**
          * Replace the default menu search image.
          */
-        Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
+        Drawable mDraw = new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
                 .colorRes(R.color.white)
                 .actionBarSize();
         int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);

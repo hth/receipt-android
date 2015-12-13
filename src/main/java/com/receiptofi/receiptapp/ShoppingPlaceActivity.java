@@ -28,8 +28,9 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.common.collect.Ordering;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ShoppingPlaceAdapter;
 import com.receiptofi.receiptapp.http.types.ExpenseTagSwipe;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
@@ -134,15 +135,15 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
             mListView.setAdapter(mAdapter);
         }
 
-        edit = new IconDrawable(this, Iconify.IconValue.fa_pencil_square_o)
+        edit = new IconDrawable(this, FontAwesomeIcons.fa_pencil_square_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        delete = new IconDrawable(this, Iconify.IconValue.fa_trash_o)
+        delete = new IconDrawable(this, FontAwesomeIcons.fa_trash_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        alert = new IconDrawable(this, Iconify.IconValue.fa_exclamation_triangle)
+        alert = new IconDrawable(this, FontAwesomeIcons.fa_exclamation_triangle)
                 .colorRes(R.color.red)
                 .actionBarSize();
 
@@ -497,7 +498,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
-                .setIcon(new IconDrawable(this, Iconify.IconValue.fa_map_marker)
+                .setIcon(new IconDrawable(this, FontAwesomeIcons.fa_map_marker)
                         .colorRes(R.color.app_theme_bg)
                         .actionBarSize())
                 .show();

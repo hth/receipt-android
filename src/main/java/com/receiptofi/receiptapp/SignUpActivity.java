@@ -23,8 +23,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.http.ExternalCallWithOkHttp;
 import com.receiptofi.receiptapp.http.ResponseHandler;
@@ -93,7 +94,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         };
 
         nameImage = (ImageView) findViewById(R.id.name_image);
-        nameImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_user)
+        nameImage.setImageDrawable(new IconDrawable(getApplicationContext(), FontAwesomeIcons.fa_user)
                 .colorRes(R.color.white)
                 .actionBarSize());
 
@@ -101,7 +102,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         name.addTextChangedListener(textWatcher);
 
         emailImage = (ImageView) findViewById(R.id.email_image);
-        emailImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_envelope)
+        emailImage.setImageDrawable(new IconDrawable(getApplicationContext(), FontAwesomeIcons.fa_envelope)
                 .colorRes(R.color.white)
                 .actionBarSize());
 
@@ -109,7 +110,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
         email.addTextChangedListener(textWatcher);
 
         passwordImage = (ImageView) findViewById(R.id.password_image);
-        passwordImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_lock)
+        passwordImage.setImageDrawable(new IconDrawable(getApplicationContext(), FontAwesomeIcons.fa_lock)
                 .colorRes(R.color.white)
                 .actionBarSize());
 

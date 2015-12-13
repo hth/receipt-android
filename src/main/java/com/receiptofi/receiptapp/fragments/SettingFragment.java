@@ -28,8 +28,8 @@ import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.BuildConfig;
 import com.receiptofi.receiptapp.LaunchActivity;
 import com.receiptofi.receiptapp.R;
@@ -129,13 +129,13 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private void updatePrefs() {
         /** Wi-Fi. */
         SwitchPreference wifiPref = (SwitchPreference) findPreference(getString(R.string.key_pref_sync));
-        wifiPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_wifi)
+        wifiPref.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_wifi)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
         /** Notification. */
         SwitchPreference notificationPref = (SwitchPreference) findPreference(getString(R.string.key_pref_notification));
-        notificationPref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_bell)
+        notificationPref.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_bell)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
@@ -147,14 +147,14 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         /** Login Id. */
         String username = UserUtils.getEmail();
         LoginIdPreference usernamePref = (LoginIdPreference) findPreference(getString(R.string.key_pref_login_id));
-        usernamePref.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_envelope)
+        usernamePref.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_envelope)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
         usernamePref.setSummary(username);
 
         /** Password. */
         PasswordPreference passwordPreference = (PasswordPreference) findPreference(getString(R.string.key_pref_password));
-        passwordPreference.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_lock)
+        passwordPreference.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_lock)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
 
@@ -167,7 +167,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 
     private void loadDataSyncReset() {
         Preference dataForceUpdate = findPreference(getString(R.string.key_pref_data_sync_id));
-        dataForceUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+        dataForceUpdate.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_refresh)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
         dataForceUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -185,7 +185,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         });
 
         Preference dataDelete = findPreference(getString(R.string.key_pref_data_delete_id));
-        dataDelete.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+        dataDelete.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_trash_o)
                 .colorRes(R.color.red)
                 .actionBarSize());
         dataDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -226,7 +226,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         }
                     }
                 })
-                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_refresh)
+                .setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_refresh)
                         .colorRes(R.color.app_theme_bg)
                         .actionBarSize())
                 .show();
@@ -249,7 +249,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         startActivity(new Intent(getActivity(), LaunchActivity.class));
                     }
                 })
-                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+                .setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_trash_o)
                         .colorRes(R.color.red)
                         .actionBarSize())
                 .show();
@@ -257,7 +257,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
 
     private void loadOther() {
         Preference perUpdate = findPreference(getString(R.string.key_pref_update_id));
-        perUpdate.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+        perUpdate.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_exchange)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
         perUpdate.setTitle(getString(R.string.pref_update_title, BuildConfig.VERSION_NAME));
@@ -288,7 +288,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         }
 
         Preference perAbout = findPreference(getString(R.string.key_pref_about_id));
-        perAbout.setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+        perAbout.setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_info_circle)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize());
         perAbout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -323,7 +323,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         startActivity(goToMarket);
                     }
                 })
-                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_exchange)
+                .setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_exchange)
                         .colorRes(R.color.app_theme_bg)
                         .actionBarSize())
                 .show();
@@ -338,7 +338,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         Log.d(TAG, "Yes pressed by about");
                     }
                 })
-                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_info_circle)
+                .setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_info_circle)
                         .colorRes(R.color.app_theme_bg)
                         .actionBarSize())
                 .show();

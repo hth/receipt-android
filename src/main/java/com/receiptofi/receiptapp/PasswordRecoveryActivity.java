@@ -20,8 +20,9 @@ import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.http.ExternalCallWithOkHttp;
 import com.receiptofi.receiptapp.http.ResponseHandler;
@@ -63,7 +64,7 @@ public class PasswordRecoveryActivity extends Activity implements View.OnClickLi
         passwordRecovery.setOnClickListener(this);
 
         emailImage = (ImageView) findViewById(R.id.email_image);
-        emailImage.setImageDrawable(new IconDrawable(getApplicationContext(), Iconify.IconValue.fa_envelope)
+        emailImage.setImageDrawable(new IconDrawable(getApplicationContext(), FontAwesomeIcons.fa_envelope)
                 .colorRes(R.color.white)
                 .actionBarSize());
 

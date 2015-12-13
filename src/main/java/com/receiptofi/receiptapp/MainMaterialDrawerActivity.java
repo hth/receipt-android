@@ -32,8 +32,9 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
 import com.receiptofi.receiptapp.fragments.BillingFragment;
 import com.receiptofi.receiptapp.fragments.ExpenseTagFragment;
@@ -153,7 +154,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Home",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_home)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_home)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         homeFragment));
@@ -161,7 +162,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Shopping List",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_shopping_cart)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_shopping_cart)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         new Intent(this, ShoppingPlaceActivity.class)));
@@ -169,7 +170,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Notification",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_bell_o)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_bell_o)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         notificationFragment));
@@ -177,7 +178,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Tag Expenses",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_tags)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_tags)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         expenseTagFragment));
@@ -185,7 +186,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Billing History",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_history)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_history)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         billingFragment));
@@ -193,7 +194,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Subscription",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_hand_o_up)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_hand_o_up)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         subscriptionFragment));
@@ -201,7 +202,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addSection(
                 newSection(
                         "Log Out",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_sign_out)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_sign_out)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         new MaterialSectionListener() {
@@ -215,7 +216,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         this.addBottomSection(
                 newSection(
                         "Settings",
-                        new IconDrawable(receiptofiApplication, Iconify.IconValue.fa_cogs)
+                        new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_cogs)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
                         settingFragment));
@@ -280,7 +281,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
         /**
          * Replace the default menu search image.
          */
-        Drawable mDraw = new IconDrawable(this, Iconify.IconValue.fa_search)
+        Drawable mDraw = new IconDrawable(this, FontAwesomeIcons.fa_search)
                 .colorRes(R.color.white)
                 .actionBarSize();
         int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);

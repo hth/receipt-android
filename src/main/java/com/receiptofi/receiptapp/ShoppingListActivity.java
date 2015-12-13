@@ -10,17 +10,15 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gc.materialdesign.views.ButtonFloat;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ShoppingListAdapter;
 import com.receiptofi.receiptapp.http.types.ExpenseTagSwipe;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
@@ -89,15 +87,15 @@ public class ShoppingListActivity extends Activity {
             mListView.setAdapter(mAdapter);
         }
 
-        edit = new IconDrawable(this, Iconify.IconValue.fa_pencil_square_o)
+        edit = new IconDrawable(this, FontAwesomeIcons.fa_pencil_square_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        delete = new IconDrawable(this, Iconify.IconValue.fa_trash_o)
+        delete = new IconDrawable(this, FontAwesomeIcons.fa_trash_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        alert = new IconDrawable(this, Iconify.IconValue.fa_exclamation_triangle)
+        alert = new IconDrawable(this, FontAwesomeIcons.fa_exclamation_triangle)
                 .colorRes(R.color.red)
                 .actionBarSize();
 

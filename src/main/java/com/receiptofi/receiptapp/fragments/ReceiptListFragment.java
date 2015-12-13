@@ -25,8 +25,8 @@ import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptListActivity;
 import com.receiptofi.receiptapp.adapters.ReceiptListAdapter;
@@ -183,7 +183,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             /**
              * Replace the default menu search image.
              */
-            Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
+            Drawable mDraw = new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
                     .colorRes(R.color.white)
                     .actionBarSize();
             int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
@@ -292,7 +292,9 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
 
     // The container Activity must implement this interface so the frag can deliver messages
     public interface OnReceiptSelectedListener {
-        /** Called by HeadlinesFragment when a list item is selected. */
+        /**
+         * Called by HeadlinesFragment when a list item is selected.
+         */
         void onReceiptSelected(int index, int position);
     }
 

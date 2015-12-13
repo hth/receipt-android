@@ -13,8 +13,9 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.Validation;
@@ -29,7 +30,7 @@ public class PasswordPreference extends EditTextPreference {
 
     public PasswordPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        icon = new IconDrawable(getContext(), Iconify.IconValue.fa_lock)
+        icon = new IconDrawable(getContext(), FontAwesomeIcons.fa_lock)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize();
 

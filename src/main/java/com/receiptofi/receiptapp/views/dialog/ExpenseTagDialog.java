@@ -18,8 +18,9 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.fragments.ExpenseTagFragment;
@@ -79,7 +80,7 @@ public class ExpenseTagDialog extends DialogFragment {
             this.tagId = selectedTagId;
         }
 
-        tagIcon = new IconDrawable(getActivity(), Iconify.IconValue.fa_tag)
+        tagIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_tag)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize();
     }

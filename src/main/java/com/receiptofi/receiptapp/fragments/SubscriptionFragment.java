@@ -21,8 +21,9 @@ import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.SubscriptionUserActivity;
@@ -179,7 +180,7 @@ public class SubscriptionFragment extends Fragment {
                 if (convertView == null) {
                     convertView = inflater.inflate(R.layout.subscription_plan_list_item, parent, false);
                     ImageView nextAction = (ImageView) convertView.findViewById(R.id.subscription_plan_list_item_next_arrow);
-                    nextAction.setImageDrawable(new IconDrawable(getActivity(), Iconify.IconValue.fa_chevron_right)
+                    nextAction.setImageDrawable(new IconDrawable(getActivity(), FontAwesomeIcons.fa_chevron_right)
                             .colorRes(R.color.app_theme_bg)
                             .sizePx(44));
 

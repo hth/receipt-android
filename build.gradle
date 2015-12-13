@@ -57,7 +57,7 @@ dependencies {
     /** Image download. */
     compile 'com.squareup.picasso:picasso:2.5.2'
     /** Icons. */
-    compile 'com.joanzapata.android:android-iconify:1.0.11'
+    compile 'com.joanzapata.iconify:android-iconify-fontawesome:2.1.1'
     /** Text Drawable. */
     compile 'com.amulyakhare:com.amulyakhare.textdrawable:1.0.1'
     /** Word Utils */

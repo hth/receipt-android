@@ -8,8 +8,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 
 import java.util.ArrayList;
@@ -43,22 +44,22 @@ public class MenuListAdapter extends BaseAdapter {
     }
 
     private void setupData() {
-        icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_home)
+        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_home)
                 .colorRes(R.color.white)
                 .actionBarSize());
-        icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_bell_o)
+        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_bell_o)
                 .colorRes(R.color.white)
                 .actionBarSize());
-        icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_tags)
+        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_tags)
                 .colorRes(R.color.white)
                 .actionBarSize());
-        icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_shopping_cart)
+        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_shopping_cart)
                 .colorRes(R.color.white)
                 .actionBarSize());
-        icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_money)
+        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_money)
                 .colorRes(R.color.white)
                 .actionBarSize());
-        icons_array.add(new IconDrawable(activity, Iconify.IconValue.fa_cogs)
+        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_cogs)
                 .colorRes(R.color.white)
                 .actionBarSize());
     }

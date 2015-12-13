@@ -13,8 +13,9 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ShoppingListActivity;
 import com.receiptofi.receiptapp.ShoppingPlaceActivity;
@@ -43,15 +44,15 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         this.shoppingPlaces = shoppingPlaces;
         this.activity = activity;
 
-        locationDraw = new IconDrawable(activity, Iconify.IconValue.fa_map_marker)
+        locationDraw = new IconDrawable(activity, FontAwesomeIcons.fa_map_marker)
                 .colorRes(R.color.red)
                 .actionBarSize();
 
-        locationOffDraw = new IconDrawable(activity, Iconify.IconValue.fa_map_marker)
+        locationOffDraw = new IconDrawable(activity, FontAwesomeIcons.fa_map_marker)
                 .colorRes(R.color.gray_light)
                 .actionBarSize();
 
-        shoppingBasketDraw = new IconDrawable(activity, Iconify.IconValue.fa_shopping_cart)
+        shoppingBasketDraw = new IconDrawable(activity, FontAwesomeIcons.fa_shopping_cart)
                 .colorRes(R.color.father_bg)
                 .actionBarSize();
 

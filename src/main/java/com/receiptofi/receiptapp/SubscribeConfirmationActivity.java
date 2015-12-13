@@ -12,8 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gc.materialdesign.views.ButtonRectangle;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.model.PlanModel;
 import com.receiptofi.receiptapp.model.TransactionDetail;
 import com.receiptofi.receiptapp.model.wrapper.TransactionWrapper;
@@ -39,7 +40,7 @@ public class SubscribeConfirmationActivity extends Activity {
         int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
             ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_chevron_left)
+            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
                     .colorRes(R.color.white)
                     .actionBarSize());
         }
