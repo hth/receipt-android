@@ -34,8 +34,8 @@ import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.Highlight;
 import com.receiptofi.receiptapp.FilterListActivity;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
@@ -385,7 +385,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     private void addLegend() {
         Legend legend = mChart.getLegend();
         int[] colorCodes = legend.getColors();
-        String[] labelArr = legend.getLegendLabels();
+        String[] labelArr = legend.getLabels();
         legend.setEnabled(false);
 
         FlowLayout ll = (FlowLayout) view.findViewById(R.id.legend_layout);
