@@ -28,8 +28,9 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.gc.materialdesign.views.ButtonFloat;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.adapters.ExpenseTagAdapter;
 import com.receiptofi.receiptapp.http.API;
@@ -206,15 +207,15 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
         mAdapter = new ExpenseTagAdapter(getActivity(), tagModelList);
         mListView.setAdapter(mAdapter);
 
-        edit = new IconDrawable(getActivity(), Iconify.IconValue.fa_pencil_square_o)
+        edit = new IconDrawable(getActivity(), FontAwesomeIcons.fa_pencil_square_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        delete = new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+        delete = new IconDrawable(getActivity(), FontAwesomeIcons.fa_trash_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        alert = new IconDrawable(getActivity(), Iconify.IconValue.fa_exclamation_triangle)
+        alert = new IconDrawable(getActivity(), FontAwesomeIcons.fa_exclamation_triangle)
                 .colorRes(R.color.red)
                 .actionBarSize();
 

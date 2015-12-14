@@ -11,6 +11,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.text.TextUtils;
 import android.util.Log;
@@ -24,8 +25,9 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ExpenseTagListAdapter;
 import com.receiptofi.receiptapp.fragments.FilterListFragment;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailFragment;
@@ -89,7 +91,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
             ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_chevron_left)
+            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
                     .colorRes(R.color.white)
                     .actionBarSize());
         }
@@ -369,21 +371,21 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
     }
 
     public void openDrawer() {
-        drawerLayout.openDrawer(Gravity.END);
+        drawerLayout.openDrawer(GravityCompat.END);
     }
 
     public void closeDrawer() {
         if (drawerLayout != null) {
-            if (drawerLayout.isDrawerOpen(Gravity.END)) {
+            if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                 drawerLayout = (DrawerLayout) findViewById(R.id.receipt_drawer_layout);
-                drawerLayout.closeDrawer(Gravity.END);
+                drawerLayout.closeDrawer(GravityCompat.END);
             }
         }
     }
 
     public boolean isDrawerOpened() {
         if (drawerLayout != null) {
-            return drawerLayout.isDrawerOpen(Gravity.END);
+            return drawerLayout.isDrawerOpen(GravityCompat.END);
         }
         return false;
     }

@@ -16,8 +16,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.fragments.SubscriptionUserFragment;
 
 /**
@@ -39,7 +40,7 @@ public class SubscriptionUserActivity extends Activity {
         int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
             ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, Iconify.IconValue.fa_chevron_left)
+            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
                     .colorRes(R.color.white)
                     .actionBarSize());
         }
@@ -86,7 +87,7 @@ public class SubscriptionUserActivity extends Activity {
         /**
          * Replace the default menu search image.
          */
-        Drawable mDraw = new IconDrawable(this, Iconify.IconValue.fa_search)
+        Drawable mDraw = new IconDrawable(this, FontAwesomeIcons.fa_search)
                 .colorRes(R.color.white)
                 .actionBarSize();
         int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);

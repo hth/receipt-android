@@ -1,6 +1,6 @@
-package com.receiptofi.receiptapp.fragments;
+package com.receiptofi.receiptapp;
 
-import android.Manifest;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
@@ -8,42 +8,33 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.location.Location;
 import android.location.LocationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.util.Log;
 import android.util.TypedValue;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.gc.materialdesign.views.ButtonFloat;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.common.collect.Ordering;
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
-import com.receiptofi.receiptapp.R;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ShoppingPlaceAdapter;
 import com.receiptofi.receiptapp.http.types.ExpenseTagSwipe;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
-import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
-import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.db.ItemReceiptUtils;
 import com.receiptofi.receiptapp.utils.db.ShoppingItemUtils;
 import com.receiptofi.receiptapp.views.dialog.ExpenseTagDialog;
@@ -51,21 +42,16 @@ import com.receiptofi.receiptapp.views.dialog.ExpenseTagDialog;
 import junit.framework.Assert;
 
 import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static android.content.DialogInterface.OnDismissListener;
-import static android.support.v4.content.PermissionChecker.checkSelfPermission;
-import static com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
-import static com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
-
 /**
  * User: hitender
- * Date: 12/7/15 4:11 AM
+ * Date: 12/11/15 9:03 PM
  */
-public class ShoppingPlaceFragment extends Fragment implements OnDismissListener, ConnectionCallbacks, OnConnectionFailedListener, LocationListener {
-    private static final String TAG = ShoppingPlaceFragment.class.getSimpleName();
+public class ShoppingPlaceActivity extends Activity implements DialogInterface.OnDismissListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+
+    private static final String TAG = ShoppingPlaceActivity.class.getSimpleName();
 
     private final int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
 
@@ -104,8 +90,6 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
     protected final static String LOCATION_KEY = "location-key";
     protected final static String LAST_UPDATED_TIME_STRING_KEY = "last-updated-time-string-key";
 
-    private View view;
-    private ButtonFloat fbAddTag;
     private SwipeMenuListView mListView;
     private ShoppingPlaceAdapter mAdapter;
     private List<ShoppingItemModel> tagModelList;
@@ -132,56 +116,34 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
         // Kick off the process of building a GoogleApiClient and requesting the LocationServices
         // API.
         buildGoogleApiClient();
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         shoppingPlaces = ShoppingItemUtils.getBusinessName();
         // Inflate the layout for this fragment
         if (shoppingPlaces.isEmpty()) {
-            view = inflater.inflate(R.layout.fragment_shopping_places_empty, container, false);
+            setContentView(R.layout.fragment_shopping_places_empty);
         } else {
             shoppingPlaces = ItemReceiptUtils.populateShoppingPlaces(shoppingPlaces);
-            view = inflater.inflate(R.layout.fragment_shopping_places, container, false);
+            setContentView(R.layout.fragment_shopping_places);
             setupView(shoppingPlaces);
         }
-
-        return view;
     }
 
     private void setupView(List<ShoppingPlace> shoppingPlaces) {
-        fbAddTag = (ButtonFloat) view.findViewById(R.id.buttonFloat);
-        fbAddTag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FragmentTransaction ft = getFragmentManager().beginTransaction();
-                Fragment prev = getFragmentManager().findFragmentByTag("dialog");
-                if (prev != null) {
-                    ft.remove(prev);
-                }
-                ft.addToBackStack(null);
-
-                // Create and show the dialog.
-                DialogFragment editTagDialog = ExpenseTagDialog.newInstance(null);
-                editTagDialog.show(ft, "dialog");
-            }
-        });
-
         if (!shoppingPlaces.isEmpty()) {
-            mListView = (SwipeMenuListView) view.findViewById(R.id.listView);
-            mAdapter = new ShoppingPlaceAdapter(getActivity(), shoppingPlaces);
+            mListView = (SwipeMenuListView) findViewById(R.id.listView);
+            mAdapter = new ShoppingPlaceAdapter(shoppingPlaces, this);
             mListView.setAdapter(mAdapter);
         }
 
-        edit = new IconDrawable(getActivity(), Iconify.IconValue.fa_pencil_square_o)
+        edit = new IconDrawable(this, FontAwesomeIcons.fa_pencil_square_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        delete = new IconDrawable(getActivity(), Iconify.IconValue.fa_trash_o)
+        delete = new IconDrawable(this, FontAwesomeIcons.fa_trash_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        alert = new IconDrawable(getActivity(), Iconify.IconValue.fa_exclamation_triangle)
+        alert = new IconDrawable(this, FontAwesomeIcons.fa_exclamation_triangle)
                 .colorRes(R.color.red)
                 .actionBarSize();
 
@@ -191,7 +153,7 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
             @Override
             public void create(SwipeMenu menu) {
                 // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(getActivity());
+                SwipeMenuItem openItem = new SwipeMenuItem(ShoppingPlaceActivity.this);
                 // set item background
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 // set item width
@@ -201,7 +163,7 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
                 // add to menu
                 menu.addMenuItem(openItem);
                 // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
+                SwipeMenuItem deleteItem = new SwipeMenuItem(ShoppingPlaceActivity.this);
                 // set item background
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
                 // set item width
@@ -251,7 +213,7 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
     }
 
     private void updateGeoCoordinates() {
-        LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!enabled) {
             alertInactiveGps();
@@ -298,7 +260,7 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
      */
     protected synchronized void buildGoogleApiClient() {
         Log.i(TAG, "Building GoogleApiClient");
-        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
+        mGoogleApiClient = new GoogleApiClient.Builder(this)
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -522,7 +484,7 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
 //    }
 
     private AlertDialog alertInactiveGps() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
         return builder
                 .setTitle(getString(R.string.enable_gps_title))
                 .setMessage(getString(R.string.enable_gps_message))
@@ -536,7 +498,7 @@ public class ShoppingPlaceFragment extends Fragment implements OnDismissListener
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
-                .setIcon(new IconDrawable(getActivity(), Iconify.IconValue.fa_map_marker)
+                .setIcon(new IconDrawable(this, FontAwesomeIcons.fa_map_marker)
                         .colorRes(R.color.app_theme_bg)
                         .actionBarSize())
                 .show();

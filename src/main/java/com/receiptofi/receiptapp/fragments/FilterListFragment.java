@@ -27,8 +27,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.FilterListActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptListActivity;
@@ -210,7 +211,7 @@ public class FilterListFragment extends Fragment {
         /**
          * Replace the default menu search image.
          */
-        Drawable mDraw = new IconDrawable(getActivity(), Iconify.IconValue.fa_search)
+        Drawable mDraw = new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
                 .colorRes(R.color.white)
                 .actionBarSize();
         int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);

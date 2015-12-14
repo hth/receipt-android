@@ -3,6 +3,7 @@ package com.receiptofi.receiptapp.views;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.text.Editable;
@@ -13,8 +14,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
@@ -29,7 +30,7 @@ public class LoginIdPreference extends EditTextPreference {
 
     public LoginIdPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
-        icon = new IconDrawable(getContext(), Iconify.IconValue.fa_envelope)
+        icon = new IconDrawable(getContext(), FontAwesomeIcons.fa_envelope)
                 .colorRes(R.color.app_theme_bg)
                 .actionBarSize();
 
@@ -48,7 +49,15 @@ public class LoginIdPreference extends EditTextPreference {
         final AlertDialog dialog = (AlertDialog) getDialog();
         dialog.setTitle(R.string.pref_login_change_title);
         View title = dialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
-        ((TextView) title).setTextAppearance(getContext(), R.style.alert_dialog);
+        if (Build.VERSION.SDK_INT < 23) {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.black));
+            ((TextView) title).setTextAppearance(getContext(), R.style.alert_dialog);
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.gray));
+        } else {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.black, null));
+            ((TextView) title).setTextAppearance(R.style.alert_dialog);
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.gray, null));
+        }
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
         if (!isSocialAccount) {
@@ -67,26 +76,51 @@ public class LoginIdPreference extends EditTextPreference {
                 @Override
                 public void afterTextChanged(Editable editable) {
                     if (TextUtils.isEmpty(editable.toString())) {
-                        text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark));
+                        if (Build.VERSION.SDK_INT < 23) {
+                            text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark));
+                        } else {
+                            text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark, null));
+                        }
                     }
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(UserUtils.isValidEmail(editable.toString()));
+
+                    if (UserUtils.isValidEmail(editable.toString())) {
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        if (Build.VERSION.SDK_INT < 23) {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.black));
+                        } else {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.black, null));
+                        }
+                    }
                 }
             };
             text.setText("");
             text.setHint(R.string.hint_email);
             text.addTextChangedListener(textWatcher);
-            text.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            if (Build.VERSION.SDK_INT < 23) {
+                text.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            } else {
+                text.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+            }
 
             TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-            textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            if (Build.VERSION.SDK_INT < 23) {
+                textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            } else {
+                textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+            }
         } else {
             final EditText text = (EditText) dialog.findViewById(android.R.id.edit);
             text.setVisibility(View.INVISIBLE);
 
             TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-            textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            if (Build.VERSION.SDK_INT < 23) {
+                textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+                textView.setTextColor(getContext().getResources().getColor(R.color.red));
+            } else {
+                textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+                textView.setTextColor(getContext().getResources().getColor(R.color.red, null));
+            }
             textView.setText(getContext().getString(R.string.pref_login_social_message));
-            textView.setTextColor(getContext().getResources().getColor(R.color.red));
         }
     }
 }

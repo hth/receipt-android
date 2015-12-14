@@ -5,6 +5,8 @@ import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
 import com.receiptofi.receiptapp.db.DatabaseHandler;
 import com.receiptofi.receiptapp.utils.AppUtils;
@@ -61,6 +63,8 @@ public class ReceiptofiApplication extends Application {
         Log.d(TAG, "ReceiptofiApplication onCreate");
 
         JodaTimeAndroid.init(this);
+        Iconify.with(new FontAwesomeModule());
+
         RDH = DatabaseHandler.getsInstance(this);
         if (KeyValueUtils.doesTableExists() &&
                 TextUtils.isEmpty(UserUtils.getAuth()) &&

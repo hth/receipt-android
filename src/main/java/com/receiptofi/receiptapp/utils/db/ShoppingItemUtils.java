@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.receiptofi.receiptapp.ReceiptofiApplication.RDH;
+import static com.receiptofi.receiptapp.db.DatabaseTable.*;
 
 /**
  * User: hitender
@@ -74,14 +75,14 @@ public class ShoppingItemUtils {
      */
     private static void insert(ShoppingItemModel shoppingItemModel) {
         ContentValues values = new ContentValues();
-        values.put(DatabaseTable.ShoppingItem.NAME, shoppingItemModel.getName());
-        values.put(DatabaseTable.ShoppingItem.CUSTOM_NAME, shoppingItemModel.getCustomName());
-        values.put(DatabaseTable.ShoppingItem.BIZ_NAME, shoppingItemModel.getBizName());
-        values.put(DatabaseTable.ShoppingItem.COUNT, shoppingItemModel.getCount());
-        values.put(DatabaseTable.ShoppingItem.SMOOTH_COUNT, shoppingItemModel.getSmoothCount());
+        values.put(ShoppingItem.NAME, shoppingItemModel.getName());
+        values.put(ShoppingItem.CUSTOM_NAME, shoppingItemModel.getCustomName());
+        values.put(ShoppingItem.BIZ_NAME, shoppingItemModel.getBizName());
+        values.put(ShoppingItem.COUNT, shoppingItemModel.getCount());
+        values.put(ShoppingItem.SMOOTH_COUNT, shoppingItemModel.getSmoothCount());
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
-                DatabaseTable.ShoppingItem.TABLE_NAME,
+                ShoppingItem.TABLE_NAME,
                 null,
                 values
         );
@@ -90,8 +91,8 @@ public class ShoppingItemUtils {
     protected static void delete(Set<String> bizNames) {
         for (String bizName : bizNames) {
             RDH.getWritableDatabase().delete(
-                    DatabaseTable.ShoppingItem.TABLE_NAME,
-                    DatabaseTable.ShoppingItem.BIZ_NAME + " = '" + bizName + "'",
+                    ShoppingItem.TABLE_NAME,
+                    ShoppingItem.BIZ_NAME + " = '" + bizName + "'",
                     null
             );
         }
@@ -104,8 +105,8 @@ public class ShoppingItemUtils {
         try {
             cursor = RDH.getReadableDatabase().query(
                     true,
-                    DatabaseTable.ShoppingItem.TABLE_NAME,
-                    new String[]{DatabaseTable.ShoppingItem.BIZ_NAME},
+                    ShoppingItem.TABLE_NAME,
+                    new String[]{ShoppingItem.BIZ_NAME},
                     null,
                     null,
                     null,
@@ -143,18 +144,18 @@ public class ShoppingItemUtils {
                 List<DateTime> values = new ArrayList<>();
                 cursor = RDH.getReadableDatabase().query(
                         true,
-                        DatabaseTable.ItemReceipt.TABLE_NAME,
+                        ItemReceipt.TABLE_NAME,
                         new String[]{
-                                DatabaseTable.ItemReceipt.RECEIPT_DATE,
-                                DatabaseTable.ItemReceipt.LAT,
-                                DatabaseTable.ItemReceipt.LNG,
-                                DatabaseTable.ItemReceipt.BIZ_STORE_ADDRESS
+                                ItemReceipt.RECEIPT_DATE,
+                                ItemReceipt.LAT,
+                                ItemReceipt.LNG,
+                                ItemReceipt.BIZ_STORE_ADDRESS
                         },
-                        DatabaseTable.ItemReceipt.BIZ_NAME + " = ?",
+                        ItemReceipt.BIZ_NAME + " = ?",
                         new String[]{bizName},
                         null,
                         null,
-                        DatabaseTable.ItemReceipt.RECEIPT_DATE + " DESC",
+                        ItemReceipt.RECEIPT_DATE + " DESC",
                         null);
 
                 if (cursor != null && cursor.getCount() > 0) {
@@ -202,13 +203,13 @@ public class ShoppingItemUtils {
         for (String bizName : businessFrequencyMap.keySet()) {
             try {
                 cursor = RDH.getReadableDatabase().query(
-                        DatabaseTable.ItemReceipt.TABLE_NAME,
-                        new String[]{DatabaseTable.ItemReceipt.NAME, "count()"},
-                        DatabaseTable.ItemReceipt.BIZ_NAME + " = ?",
+                        ItemReceipt.TABLE_NAME,
+                        new String[]{ItemReceipt.NAME, "count()"},
+                        ItemReceipt.BIZ_NAME + " = ?",
                         new String[]{bizName},
-                        DatabaseTable.ItemReceipt.NAME,
+                        ItemReceipt.NAME,
                         null,
-                        DatabaseTable.ItemReceipt.RECEIPT_DATE + " DESC",
+                        ItemReceipt.RECEIPT_DATE + " DESC",
                         null);
 
                 if (cursor != null && cursor.getCount() > 0) {
@@ -236,5 +237,43 @@ public class ShoppingItemUtils {
         }
 
         return businessItemFrequency;
+    }
+
+    public static List<ShoppingItemModel> getShoppingItems(String bizName) {
+        List<ShoppingItemModel> shoppingItemModels = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    ShoppingItem.TABLE_NAME,
+                    null,
+                    ShoppingItem.BIZ_NAME + " = ?",
+                    new String[]{bizName},
+                    null,
+                    null,
+                    ShoppingItem.SMOOTH_COUNT + " DESC, " +
+                            ShoppingItem.CUSTOM_NAME + " ASC, " +
+                            ShoppingItem.NAME + " ASC",
+                    null);
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ShoppingItemModel shoppingItemModel = new ShoppingItemModel(
+                            cursor.getString(0),
+                            cursor.getString(2),
+                            cursor.getInt(3),
+                            cursor.getDouble(4)
+                    );
+                    shoppingItemModel.setCustomName(cursor.getString(1));
+                    shoppingItemModels.add(shoppingItemModel);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting value " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+        return shoppingItemModels;
     }
 }

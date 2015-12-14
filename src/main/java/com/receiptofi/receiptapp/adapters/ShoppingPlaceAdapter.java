@@ -1,10 +1,10 @@
 package com.receiptofi.receiptapp.adapters;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -13,9 +13,12 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.joanzapata.android.iconify.IconDrawable;
-import com.joanzapata.android.iconify.Iconify;
+import com.joanzapata.iconify.IconDrawable;
+import com.joanzapata.iconify.Iconify;
+import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
+import com.receiptofi.receiptapp.ShoppingListActivity;
+import com.receiptofi.receiptapp.ShoppingPlaceActivity;
 import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
 import com.receiptofi.receiptapp.model.types.DistanceUnit;
@@ -30,26 +33,26 @@ import java.util.List;
 public class ShoppingPlaceAdapter extends BaseAdapter {
     private static final String TAG = ShoppingPlaceAdapter.class.getSimpleName();
     private List<ShoppingPlace> shoppingPlaces;
-    private Context context;
+    private ShoppingPlaceActivity activity;
 
     private Drawable locationDraw;
     private Drawable locationOffDraw;
     private Drawable shoppingBasketDraw;
     private boolean mapInstalled;
 
-    public ShoppingPlaceAdapter(Context context, List<ShoppingPlace> shoppingPlaces) {
-        this.context = context;
+    public ShoppingPlaceAdapter(List<ShoppingPlace> shoppingPlaces, ShoppingPlaceActivity activity) {
         this.shoppingPlaces = shoppingPlaces;
+        this.activity = activity;
 
-        locationDraw = new IconDrawable(context, Iconify.IconValue.fa_map_marker)
+        locationDraw = new IconDrawable(activity, FontAwesomeIcons.fa_map_marker)
                 .colorRes(R.color.red)
                 .actionBarSize();
 
-        locationOffDraw = new IconDrawable(context, Iconify.IconValue.fa_map_marker)
+        locationOffDraw = new IconDrawable(activity, FontAwesomeIcons.fa_map_marker)
                 .colorRes(R.color.gray_light)
                 .actionBarSize();
 
-        shoppingBasketDraw = new IconDrawable(context, Iconify.IconValue.fa_shopping_cart)
+        shoppingBasketDraw = new IconDrawable(activity, FontAwesomeIcons.fa_shopping_basket)
                 .colorRes(R.color.father_bg)
                 .actionBarSize();
 
@@ -78,14 +81,14 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         if (null == view) {
-            view = View.inflate(context, R.layout.shopping_place_list, null);
+            view = View.inflate(activity, R.layout.fragment_shopping_places_list, null);
             new ViewHolder(view);
         }
         ViewHolder holder = (ViewHolder) view.getTag();
-        ShoppingPlace shoppingPlace = (ShoppingPlace) getItem(i);
+        final ShoppingPlace shoppingPlace = (ShoppingPlace) getItem(i);
         holder.bizName.setText(shoppingPlace.getBizName());
         holder.lastPurchase.setText(
-                context.getResources().getString(
+                activity.getResources().getString(
                         R.string.last_purchase,
                         AppUtils.currencyFormatter().format(shoppingPlace.getMostRecentPurchase())));
 
@@ -93,20 +96,31 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
             holder.lastShopped.setText("");
         } else {
             holder.lastShopped.setText(
-                    context.getResources().getString(R.string.shopped,
+                    activity.getResources().getString(R.string.shopped,
                             NotificationAdapter.prettyTime.format(shoppingPlace.getLastShopped().get(0))));
 
             holder.shoppingBasketImage.setImageDrawable(shoppingBasketDraw);
+            holder.shoppingBasketImage.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Bundle sendBundle = new Bundle();
+                    sendBundle.putString(ShoppingListActivity.BUNDLE_KEY_BIZ_NAME, shoppingPlace.getBizName());
+
+                    Intent intent = new Intent(activity, ShoppingListActivity.class);
+                    intent.putExtras(sendBundle);
+                    activity.startActivity(intent);
+                }
+            });
         }
 
         if (!shoppingPlace.getDistance().isEmpty()) {
             holder.gpsImage.setImageDrawable(locationDraw);
             holder.bizDistance.setText(
-                    context.getResources().getString(R.string.biz_distance,
+                    activity.getResources().getString(R.string.biz_distance,
                             shoppingPlace.getDistance().get(0), DistanceUnit.M.getName()));
         } else {
             holder.gpsImage.setImageDrawable(locationOffDraw);
-            holder.bizDistance.setText(context.getResources().getString(R.string.biz_distance_empty, "-------", DistanceUnit.M.getName()));
+            holder.bizDistance.setText(activity.getResources().getString(R.string.biz_distance_empty, "-------", DistanceUnit.M.getName()));
         }
 
         if (mapInstalled) {
@@ -125,28 +139,24 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         if (!shoppingPlace.getCoordinates().isEmpty()) {
             final Coordinate coordinate = shoppingPlace.getCoordinates().iterator().next();
 
-            String uriString = new StringBuilder()
-                    .append("geo:").append(coordinate.getLat()).append(",").append(coordinate.getLng())
-                    .append("?q=").append(Uri.encode(coordinate.getAddress()))
-                    .append("(").append(Uri.encode(shoppingPlace.getBizName())).append(")")
-                    .append("&z=16").toString();
+            String uriString = "geo:" + coordinate.getLat() + "," + coordinate.getLng() +
+                    "?q=" + Uri.encode(coordinate.getAddress()) +
+                    "(" + Uri.encode(shoppingPlace.getBizName()) + ")" + "&z=16";
             final Uri uri = Uri.parse(uriString);
+
+            final Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
+            mapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
 
             holder.bizDistance.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
-                    mapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-                    context.startActivity(mapIntent);
+                    activity.startActivity(mapIntent);
                 }
             });
-
             holder.gpsImage.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, uri);
-                    mapIntent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
-                    context.startActivity(mapIntent);
+                    activity.startActivity(mapIntent);
                 }
             });
         }
@@ -178,7 +188,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
      * @return
      */
     private boolean isAppInstalled(String uri) {
-        PackageManager pm = context.getPackageManager();
+        PackageManager pm = activity.getPackageManager();
         boolean app_installed = false;
         if (!TextUtils.isEmpty(uri)) {
             try {
