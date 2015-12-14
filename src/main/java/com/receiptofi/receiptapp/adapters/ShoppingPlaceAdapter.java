@@ -52,7 +52,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
                 .colorRes(R.color.gray_light)
                 .actionBarSize();
 
-        shoppingBasketDraw = new IconDrawable(activity, FontAwesomeIcons.fa_shopping_cart)
+        shoppingBasketDraw = new IconDrawable(activity, FontAwesomeIcons.fa_shopping_basket)
                 .colorRes(R.color.father_bg)
                 .actionBarSize();
 

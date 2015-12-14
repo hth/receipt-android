@@ -53,7 +53,7 @@ public class MenuListAdapter extends BaseAdapter {
         icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_tags)
                 .colorRes(R.color.white)
                 .actionBarSize());
-        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_shopping_cart)
+        icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_shopping_basket)
                 .colorRes(R.color.white)
                 .actionBarSize());
         icons_array.add(new IconDrawable(activity, FontAwesomeIcons.fa_money)

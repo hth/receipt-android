@@ -179,6 +179,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 } else {
                     textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+
+                    View title = alertDialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
+                    ((TextView) title).setTextAppearance(R.style.alert_dialog);
                 }
                 return true;
             }
@@ -197,6 +200,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 } else {
                     textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+
+                    View title = alertDialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
+                    ((TextView) title).setTextAppearance(R.style.alert_dialog);
                 }
                 return true;
             }
@@ -204,7 +210,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private AlertDialog dataSync() {
-        return new AlertDialog.Builder(ctw)
+        return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.pref_data_sync_title)
                 .setMessage(R.string.pref_data_sync_message)
                 .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
@@ -233,7 +239,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private AlertDialog dataDelete() {
-        return new AlertDialog.Builder(ctw)
+        return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.pref_data_delete_title)
                 .setMessage(R.string.pref_data_delete_message)
                 .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
@@ -279,6 +285,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                         textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                     } else {
                         textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+
+                        View title = alertDialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
+                        ((TextView) title).setTextAppearance(R.style.alert_dialog);
                     }
                     return true;
                 }
@@ -301,6 +310,9 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
                 } else {
                     textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+
+                    View title = alertDialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
+                    ((TextView) title).setTextAppearance(R.style.alert_dialog);
                 }
                 return true;
             }
@@ -308,7 +320,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private AlertDialog update(final ApkVersionModel latestVersion) {
-        return new AlertDialog.Builder(ctw)
+        return new AlertDialog.Builder(getActivity())
                 .setTitle(getString(R.string.pref_update_dialog_title, latestVersion.version()))
                 .setMessage(getString(R.string.pref_update_message))
                 .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
@@ -330,7 +342,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     }
 
     private AlertDialog about() {
-        return new AlertDialog.Builder(ctw)
+        return new AlertDialog.Builder(getActivity())
                 .setTitle(R.string.pref_about_title)
                 .setMessage(R.string.pref_about_message)
                 .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
