@@ -285,7 +285,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         if (AppUtils.isLatest(currentVersion, latestVersion)) {
             Spannable wordToSpan = new SpannableString(getString(R.string.pref_update_summary, latestVersion.version()));
             wordToSpan.setSpan(
-                    new ForegroundColorSpan(getResources().getColor(R.color.father_bg)),
+                    new ForegroundColorSpan(
+                            Build.VERSION.SDK_INT < 23 ?
+                                    getResources().getColor(R.color.father_bg) :
+                                    getResources().getColor(R.color.father_bg, null)),
                     wordToSpan.length() - latestVersion.version().length(),
                     wordToSpan.length(),
                     0);

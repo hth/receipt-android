@@ -19,7 +19,6 @@ import org.joda.time.DateTimeZone;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Locale;
 
 public class AppUtils {
 
@@ -181,10 +180,19 @@ public class AppUtils {
      * @return
      */
     public static boolean isLatest(ApkVersionModel older, ApkVersionModel newer) {
-        return newer != null &&
-                newer.getMajor() > older.getMajor() &&
-                newer.getMinor() > older.getMinor() &&
-                newer.getPatch() > older.getPatch();
+        if (newer != null) {
+            if (newer.getMajor() > older.getMajor()) {
+                return true;
+            }
+            if (newer.getMinor() > older.getMinor()) {
+                return true;
+            }
+            if (newer.getPatch() > older.getPatch()) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     //TODO add support formatting price based on receipt location
