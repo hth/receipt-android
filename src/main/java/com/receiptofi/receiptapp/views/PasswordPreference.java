@@ -3,6 +3,7 @@ package com.receiptofi.receiptapp.views;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.text.Editable;
@@ -49,7 +50,11 @@ public class PasswordPreference extends EditTextPreference {
         final AlertDialog dialog = (AlertDialog) getDialog();
         dialog.setTitle(R.string.pref_password_change_title);
         View title = dialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
-        ((TextView) title).setTextAppearance(getContext(), R.style.alert_dialog);
+        if (Build.VERSION.SDK_INT < 23) {
+            ((TextView) title).setTextAppearance(getContext(), R.style.alert_dialog);
+        } else {
+            ((TextView) title).setTextAppearance(R.style.alert_dialog);
+        }
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
         if (!isSocialAccount) {
@@ -68,7 +73,12 @@ public class PasswordPreference extends EditTextPreference {
                 @Override
                 public void afterTextChanged(Editable editable) {
                     if (TextUtils.isEmpty(editable.toString())) {
-                        text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark));
+                        if (Build.VERSION.SDK_INT < 23) {
+                            text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark));
+                        } else {
+                            text.setHintTextColor(getContext().getResources().getColor(R.color.gray_dark, null));
+                        }
+
                     }
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(editable.length() >= Validation.PASSWORD_MIN_LENGTH);
                 }
@@ -76,17 +86,29 @@ public class PasswordPreference extends EditTextPreference {
             text.setText("");
             text.setHint(R.string.hint_password);
             text.addTextChangedListener(textWatcher);
-            text.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            if (Build.VERSION.SDK_INT < 23) {
+                text.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            } else {
+                text.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+            }
 
             TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-            textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            if (Build.VERSION.SDK_INT < 23) {
+                textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            } else {
+                textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+            }
             textView.setText(getContext().getString(R.string.pref_password_message, Validation.PASSWORD_MIN_LENGTH));
         } else {
             final EditText text = (EditText) dialog.findViewById(android.R.id.edit);
             text.setVisibility(View.INVISIBLE);
 
             TextView textView = (TextView) dialog.findViewById(android.R.id.message);
-            textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            if (Build.VERSION.SDK_INT < 23) {
+                textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
+            } else  {
+                textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+            }
             textView.setText(getContext().getString(R.string.pref_password_social_message));
             textView.setTextColor(getContext().getResources().getColor(R.color.red));
         }
