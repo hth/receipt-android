@@ -298,8 +298,12 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                     TextView textView = (TextView) alertDialog.findViewById(android.R.id.message);
                     if (Build.VERSION.SDK_INT < 23) {
                         textView.setTextAppearance(getActivity(), R.style.alert_dialog_text_appearance_medium);
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getResources().getColor(R.color.black));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.black));
                     } else {
                         textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
+                        alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.black, null));
+                        alertDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.black, null));
 
                         View title = alertDialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
                         ((TextView) title).setTextAppearance(R.style.alert_dialog);
