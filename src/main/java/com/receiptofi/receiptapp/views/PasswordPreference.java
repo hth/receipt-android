@@ -15,7 +15,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.utils.AppUtils;
@@ -51,9 +50,13 @@ public class PasswordPreference extends EditTextPreference {
         dialog.setTitle(R.string.pref_password_change_title);
         View title = dialog.findViewById(getContext().getResources().getIdentifier("alertTitle", "id", "android"));
         if (Build.VERSION.SDK_INT < 23) {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.black));
             ((TextView) title).setTextAppearance(getContext(), R.style.alert_dialog);
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.gray));
         } else {
+            dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(getContext().getResources().getColor(R.color.black, null));
             ((TextView) title).setTextAppearance(R.style.alert_dialog);
+            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.gray, null));
         }
         dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
 
@@ -80,7 +83,15 @@ public class PasswordPreference extends EditTextPreference {
                         }
 
                     }
-                    dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(editable.length() >= Validation.PASSWORD_MIN_LENGTH);
+
+                    if (editable.length() >= Validation.PASSWORD_MIN_LENGTH) {
+                        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+                        if (Build.VERSION.SDK_INT < 23) {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.black));
+                        } else {
+                            dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(getContext().getResources().getColor(R.color.black, null));
+                        }
+                    }
                 }
             };
             text.setText("");
@@ -105,12 +116,13 @@ public class PasswordPreference extends EditTextPreference {
 
             TextView textView = (TextView) dialog.findViewById(android.R.id.message);
             if (Build.VERSION.SDK_INT < 23) {
+                textView.setTextColor(getContext().getResources().getColor(R.color.red));
                 textView.setTextAppearance(getContext(), R.style.alert_dialog_text_appearance_medium);
-            } else  {
+            } else {
+                textView.setTextColor(getContext().getResources().getColor(R.color.red, null));
                 textView.setTextAppearance(R.style.alert_dialog_text_appearance_medium);
             }
             textView.setText(getContext().getString(R.string.pref_password_social_message));
-            textView.setTextColor(getContext().getResources().getColor(R.color.red));
         }
     }
 }
