@@ -180,19 +180,20 @@ public class AppUtils {
      * @return
      */
     public static boolean isLatest(ApkVersionModel older, ApkVersionModel newer) {
+        boolean updateAvailable = false;
         if (newer != null) {
             if (newer.getMajor() > older.getMajor()) {
-                return false;
+                updateAvailable = true;
             }
             if (newer.getMinor() > older.getMinor()) {
-                return false;
+                updateAvailable = true;
             }
             if (newer.getPatch() > older.getPatch()) {
-                return false;
+                updateAvailable = true;
             }
         }
 
-        return true;
+        return updateAvailable;
     }
 
     //TODO add support formatting price based on receipt location
