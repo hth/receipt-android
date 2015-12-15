@@ -283,15 +283,19 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
                 .actionBarSize());
         perUpdate.setTitle(getString(R.string.pref_update_title, BuildConfig.VERSION_NAME));
         if (AppUtils.isLatest(currentVersion, latestVersion)) {
+            int color;
+            if (Build.VERSION.SDK_INT < 23) {
+                color = getResources().getColor(R.color.father_bg);
+            } else {
+                color = getResources().getColor(R.color.father_bg, null);
+            }
+
             Spannable wordToSpan = new SpannableString(getString(R.string.pref_update_summary, latestVersion.version()));
             wordToSpan.setSpan(
-                    new ForegroundColorSpan(
-                            Build.VERSION.SDK_INT < 23 ?
-                                    getResources().getColor(R.color.father_bg) :
-                                    getResources().getColor(R.color.father_bg, null)),
-                    wordToSpan.length() - latestVersion.version().length(),
-                    wordToSpan.length(),
-                    0);
+                    new ForegroundColorSpan(color),
+                            wordToSpan.length() - latestVersion.version().length(),
+                            wordToSpan.length(),
+                            0);
 
             perUpdate.setSummary(wordToSpan);
             perUpdate.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
