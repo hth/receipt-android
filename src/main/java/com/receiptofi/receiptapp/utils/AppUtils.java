@@ -185,10 +185,10 @@ public class AppUtils {
             if (newer.getMajor() > older.getMajor()) {
                 updateAvailable = true;
             }
-            if (newer.getMinor() > older.getMinor()) {
+            if (newer.getMajor() >= older.getMajor() && newer.getMinor() > older.getMinor()) {
                 updateAvailable = true;
             }
-            if (newer.getPatch() > older.getPatch()) {
+            if (newer.getMajor() >= older.getMajor() && newer.getMinor() >= older.getMinor() && newer.getPatch() > older.getPatch()) {
                 updateAvailable = true;
             }
         }
