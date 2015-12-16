@@ -17,14 +17,43 @@ public class ItemReceiptModel {
     private Double lng;
     private String receiptDate;
     private String expenseTagId;
-    private boolean active;
-    private boolean deleted;
 
     private String itemId;
     private String name;
     private Double price;
     private String quantity;
     private String tax;
+
+    private boolean active;
+    private boolean deleted;
+
+    public ItemReceiptModel(
+        String receiptId,
+        String bizName,
+        String address,
+        Double lat,
+        Double lng,
+        String receiptDate,
+        String expenseTagId,
+        String itemId,
+        String name,
+        Double price,
+        String quantity,
+        String tax
+    ) {
+        this.receiptId = receiptId;
+        this.bizName = bizName;
+        this.address = address;
+        this.lat = lat;
+        this.lng = lng;
+        this.receiptDate = receiptDate;
+        this.expenseTagId = expenseTagId;
+        this.itemId = itemId;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.tax = tax;
+    }
 
     public ItemReceiptModel(ReceiptModel receipt, ReceiptItemModel item) {
         try {
@@ -78,14 +107,6 @@ public class ItemReceiptModel {
         return expenseTagId;
     }
 
-    public boolean isActive() {
-        return active;
-    }
-
-    public boolean isDeleted() {
-        return deleted;
-    }
-
     public String getItemId() {
         return itemId;
     }
@@ -104,5 +125,13 @@ public class ItemReceiptModel {
 
     public String getTax() {
         return tax;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
     }
 }
