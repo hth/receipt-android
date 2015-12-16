@@ -1,17 +1,41 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:minHeight="?android:attr/listPreferredItemHeight"
+                android:orientation="vertical"
+                android:padding="8dp">
 
     <TextView
-        android:id="@+id/tag_name"
+        android:id="@+id/item_name"
+        style="@style/text_shopping_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="@dimen/tagTextMargin"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="@dimen/tagTextMargin"
-        android:text="@string/hello_world"
-        android:textColor="@android:color/black"
-        android:textSize="18sp"/>
-</LinearLayout>
+        android:layout_marginBottom="@dimen/shoppingPlaceTextMarginBottom"
+        android:layout_marginTop="@dimen/shoppingPlaceTextMarginTop"
+        android:paddingLeft="@dimen/tv_horizontal_margin"
+        android:text="@string/placeholder_text"/>
+
+    <TextView
+        android:id="@+id/last_transaction_amount"
+        style="@style/date_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@id/item_name"
+        android:paddingLeft="@dimen/tv_horizontal_margin"
+        android:text="@string/placeholder_text"/>
+
+    <TextView
+        android:id="@+id/last_shopped"
+        style="@style/date_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/last_transaction_amount"
+        android:paddingLeft="@dimen/tv_horizontal_margin"
+        android:text="@string/placeholder_text"
+        />
+
+</RelativeLayout>

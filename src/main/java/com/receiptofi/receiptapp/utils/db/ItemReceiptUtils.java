@@ -136,4 +136,50 @@ public class ItemReceiptUtils {
         }
         return SORT_BY_DATE.reverse().sortedCopy(shoppingPlaceList);
     }
+
+    public static List<ItemReceiptModel> latestItemReceiptModel(String bizName, String itemName) {
+        List<ItemReceiptModel> itemReceiptModels = new ArrayList<>();
+        Cursor cursor = null;
+        try {
+            cursor = RDH.getReadableDatabase().query(
+                    true,
+                    DatabaseTable.ItemReceipt.TABLE_NAME,
+                    null,
+                    DatabaseTable.ItemReceipt.BIZ_NAME + " = ? and " + DatabaseTable.ItemReceipt.NAME + " = ?",
+                    new String[]{bizName, itemName},
+                    null,
+                    null,
+                    DatabaseTable.ItemReceipt.RECEIPT_DATE + " DESC",
+                    null);
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while(cursor.moveToNext()) {
+                    ItemReceiptModel itemReceiptModel = new ItemReceiptModel(
+                            cursor.getString(0),
+                            cursor.getString(1),
+                            cursor.getString(2),
+                            cursor.getDouble(3),
+                            cursor.getDouble(4),
+                            cursor.getString(5),
+                            cursor.getString(6),
+                            cursor.getString(7),
+                            cursor.getString(8),
+                            cursor.getDouble(9),
+                            cursor.getString(10),
+                            cursor.getString(11)
+                    );
+
+                    itemReceiptModels.add(itemReceiptModel);
+                }
+            }
+        } catch (Exception e) {
+            Log.e(TAG, "Error getting value " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+
+        return itemReceiptModels;
+    }
 }

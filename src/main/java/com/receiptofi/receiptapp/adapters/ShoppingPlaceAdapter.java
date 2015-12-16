@@ -14,7 +14,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ShoppingListActivity;
@@ -87,7 +86,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) view.getTag();
         final ShoppingPlace shoppingPlace = (ShoppingPlace) getItem(i);
         holder.bizName.setText(shoppingPlace.getBizName());
-        holder.lastPurchase.setText(
+        holder.lastTransactionAmount.setText(
                 activity.getResources().getString(
                         R.string.last_purchase,
                         AppUtils.currencyFormatter().format(shoppingPlace.getMostRecentPurchase())));
@@ -164,7 +163,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
 
     class ViewHolder {
         TextView bizName;
-        TextView lastPurchase;
+        TextView lastTransactionAmount;
         TextView lastShopped;
         TextView bizDistance;
         ImageView gpsImage;
@@ -172,7 +171,7 @@ public class ShoppingPlaceAdapter extends BaseAdapter {
 
         public ViewHolder(View view) {
             bizName = (TextView) view.findViewById(R.id.biz_name);
-            lastPurchase = (TextView) view.findViewById(R.id.last_purchase);
+            lastTransactionAmount = (TextView) view.findViewById(R.id.last_transaction_amount);
             lastShopped = (TextView) view.findViewById(R.id.last_shopped);
             bizDistance = (TextView) view.findViewById(R.id.biz_distance_in_units);
             gpsImage = (ImageView) view.findViewById(R.id.gps_image);

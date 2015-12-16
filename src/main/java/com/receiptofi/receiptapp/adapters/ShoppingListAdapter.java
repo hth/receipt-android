@@ -9,7 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import com.receiptofi.receiptapp.R;
+import com.receiptofi.receiptapp.model.ItemReceiptModel;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
+import com.receiptofi.receiptapp.utils.AppUtils;
+import com.receiptofi.receiptapp.utils.Constants;
+import com.receiptofi.receiptapp.utils.db.ItemReceiptUtils;
 
 import java.util.List;
 
@@ -59,14 +63,31 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                 convertView = inflater.inflate(R.layout.fragment_shopping_list_item, parent, false);
 
                 holder = new ViewHolder();
-                holder.title = (TextView) convertView.findViewById(R.id.tag_name);
+                holder.itemName = (TextView) convertView.findViewById(R.id.item_name);
+                holder.lastTransactionAmount = (TextView) convertView.findViewById(R.id.last_transaction_amount);
+                holder.lastShopped = (TextView) convertView.findViewById(R.id.last_shopped);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
             ShoppingItemModel itemModel = getItem(position);
-            holder.title.setText(itemModel.getName());
+            holder.itemName.setText(itemModel.getName());
+            List<ItemReceiptModel> itemReceiptModels = ItemReceiptUtils.latestItemReceiptModel(itemModel.getBizName(), itemModel.getName());
+            if (!itemReceiptModels.isEmpty()) {
+                ItemReceiptModel itemReceiptModel = itemReceiptModels.get(0);
+                holder.lastTransactionAmount.setText(
+                        context.getResources().getString(
+                                R.string.last_purchase,
+                                AppUtils.currencyFormatter().format(itemReceiptModel.getPrice())));
+
+                holder.lastShopped.setText(
+                        context.getResources().getString(
+                                R.string.item_shopped_times,
+                                NotificationAdapter.prettyTime.format(Constants.ISO_DF.parse(itemReceiptModel.getReceiptDate())),
+                                itemReceiptModels.size(),
+                                itemReceiptModels.size() > 1 ? "s" : ""));
+            }
             return convertView;
         } catch (Exception e) {
             Log.d(TAG, "reason=" + e.getLocalizedMessage(), e);
@@ -75,6 +96,8 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
     }
 
     private class ViewHolder {
-        TextView title;
+        TextView itemName;
+        TextView lastTransactionAmount;
+        TextView lastShopped;
     }
 }

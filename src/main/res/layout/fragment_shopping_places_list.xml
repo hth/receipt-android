@@ -17,7 +17,7 @@
         android:text="@string/placeholder_text"/>
 
     <TextView
-        android:id="@+id/last_purchase"
+        android:id="@+id/last_transaction_amount"
         style="@style/date_notification"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@id/last_purchase"
+        android:layout_below="@id/last_transaction_amount"
         android:paddingLeft="@dimen/tv_horizontal_margin"
         android:text="@string/placeholder_text"
         />
