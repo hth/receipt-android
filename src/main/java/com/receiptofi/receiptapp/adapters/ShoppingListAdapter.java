@@ -78,7 +78,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                 ItemReceiptModel itemReceiptModel = itemReceiptModels.get(0);
                 holder.lastTransactionAmount.setText(
                         context.getResources().getString(
-                                R.string.last_purchase,
+                                R.string.item_purchase,
                                 AppUtils.currencyFormatter().format(itemReceiptModel.getPrice())));
 
                 holder.lastShopped.setText(
