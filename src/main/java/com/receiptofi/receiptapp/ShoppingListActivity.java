@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -85,6 +86,8 @@ public class ShoppingListActivity extends Activity {
             mListView = (SwipeMenuListView) findViewById(R.id.listView);
             mAdapter = new ShoppingListAdapter(this, shoppingItemModels);
             mListView.setAdapter(mAdapter);
+            TextView textView = (TextView) findViewById(R.id.shopping_place);
+            textView.setText(shoppingItemModels.get(0).getBizName());
         }
 
         edit = new IconDrawable(this, FontAwesomeIcons.fa_pencil_square_o)
