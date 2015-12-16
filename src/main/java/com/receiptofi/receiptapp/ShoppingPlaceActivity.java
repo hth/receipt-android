@@ -8,6 +8,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.util.TypedValue;
+import android.widget.ImageView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
@@ -116,6 +118,15 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
         // Kick off the process of building a GoogleApiClient and requesting the LocationServices
         // API.
         buildGoogleApiClient();
+
+        /** Setup back up button with its own icon. */
+        int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+        if (upId > 0) {
+            ImageView up = (ImageView) findViewById(upId);
+            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
+                    .colorRes(R.color.white)
+                    .actionBarSize());
+        }
 
         shoppingPlaces = ShoppingItemUtils.getBusinessName();
         // Inflate the layout for this fragment

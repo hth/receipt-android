@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -11,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -54,6 +56,16 @@ public class ShoppingListActivity extends Activity {
 
         // Inflate the layout for this fragment
         setContentView(R.layout.fragment_shopping_list);
+
+        /** Setup back up button with its own icon. */
+        int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+        if (upId > 0) {
+            ImageView up = (ImageView) findViewById(upId);
+            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
+                    .colorRes(R.color.white)
+                    .actionBarSize());
+        }
+
         setupView();
     }
 
@@ -86,6 +98,7 @@ public class ShoppingListActivity extends Activity {
             mListView = (SwipeMenuListView) findViewById(R.id.listView);
             mAdapter = new ShoppingListAdapter(this, shoppingItemModels);
             mListView.setAdapter(mAdapter);
+
             TextView textView = (TextView) findViewById(R.id.shopping_place);
             textView.setText(shoppingItemModels.get(0).getBizName());
         }
