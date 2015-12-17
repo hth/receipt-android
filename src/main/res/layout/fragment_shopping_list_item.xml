@@ -6,18 +6,29 @@
                 android:orientation="vertical"
                 android:padding="8dp">
 
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/checkBox"
+        android:checked="false"
+        android:layout_alignTop="@+id/shopping_list_item_name"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignBottom="@+id/shopping_list_item_name"/>
+
     <TextView
-        android:id="@+id/item_name"
+        android:id="@+id/shopping_list_item_name"
         style="@style/text_shopping_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/shoppingPlaceTextMarginBottom"
-        android:layout_marginTop="@dimen/shoppingPlaceTextMarginTop"
         android:paddingLeft="@dimen/tv_horizontal_margin"
-        android:text="@string/placeholder_text"/>
+        android:text="@string/placeholder_text"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/checkBox"
+        android:layout_toEndOf="@+id/checkBox"/>
 
     <TextView
-        android:id="@+id/last_transaction_amount"
+        android:id="@+id/shopping_list_price"
         style="@style/text_shopping_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -25,8 +36,19 @@
         android:text="@string/placeholder_text"
         android:layout_marginRight="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_alignTop="@+id/item_name"
+        android:layout_alignTop="@+id/shopping_list_item_name"
+        android:layout_alignBottom="@+id/shopping_list_item_name"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"/>
+
+    <TextView
+        android:id="@+id/shopping_list_quantity"
+        style="@style/date_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/tv_horizontal_margin"
+        android:text="@string/placeholder_text"
+        android:layout_below="@+id/shopping_list_item_name"
+        android:layout_alignLeft="@+id/shopping_list_item_name"/>
 
 </RelativeLayout>
