@@ -6,6 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.receiptofi.receiptapp.R;
@@ -57,6 +59,8 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         try {
+            final ShoppingItemModel itemModel = getItem(position);
+
             ViewHolder holder;
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.fragment_shopping_list_item, parent, false);
@@ -65,12 +69,22 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                 holder.itemName = (TextView) convertView.findViewById(R.id.shopping_list_item_name);
                 holder.price = (TextView) convertView.findViewById(R.id.shopping_list_price);
                 holder.quantity = (TextView) convertView.findViewById(R.id.shopping_list_quantity);
+                holder.checkbox = (CheckBox) convertView.findViewById(R.id.shopping_list_checkBox);
+                holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                    public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        if (isChecked) {
+                            itemModel.checked();
+                        } else {
+                            itemModel.unChecked();
+                        }
+                    }
+                });
+
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
 
-            ShoppingItemModel itemModel = getItem(position);
             holder.itemName.setText(itemModel.getName());
             List<ItemReceiptModel> itemReceiptModels = ItemReceiptUtils.latestItemReceiptModel(itemModel.getBizName(), itemModel.getName());
             if (!itemReceiptModels.isEmpty()) {
@@ -105,5 +119,6 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
         TextView itemName;
         TextView price;
         TextView quantity;
+        CheckBox checkbox;
     }
 }
