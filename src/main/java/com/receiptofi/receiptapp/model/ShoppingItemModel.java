@@ -11,6 +11,7 @@ public class ShoppingItemModel {
     private String customName;
     private String bizName;
     private int count;
+    private boolean checked;
 
     /**
      * count times multiplier.
@@ -46,6 +47,18 @@ public class ShoppingItemModel {
 
     public double getSmoothCount() {
         return smoothCount;
+    }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void checked() {
+        this.checked = true;
+    }
+
+    public void unChecked() {
+        this.checked = false;
     }
 
     @Override
