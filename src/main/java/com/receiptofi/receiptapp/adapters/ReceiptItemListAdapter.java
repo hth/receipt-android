@@ -70,7 +70,8 @@ public class ReceiptItemListAdapter extends ArrayAdapter<ReceiptItemModel> {
 
             ReceiptItemModel itemModel = getItem(position);
             holder.title.setText(itemModel.getName());
-            if (Double.parseDouble(itemModel.getQuantity()) > 1) {
+
+            if (Double.parseDouble(itemModel.getQuantity()) != 1) {
                 holder.quantity.setText(context.getString(
                         R.string.rd_item_quantity,
                         Double.parseDouble(itemModel.getQuantity()),
