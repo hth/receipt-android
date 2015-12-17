@@ -76,17 +76,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
             List<ItemReceiptModel> itemReceiptModels = ItemReceiptUtils.latestItemReceiptModel(itemModel.getBizName(), itemModel.getName());
             if (!itemReceiptModels.isEmpty()) {
                 ItemReceiptModel itemReceiptModel = itemReceiptModels.get(0);
-                holder.lastTransactionAmount.setText(
-                        context.getResources().getString(
-                                R.string.item_purchase,
-                                AppUtils.currencyFormatter().format(itemReceiptModel.getPrice())));
-
-                holder.lastShopped.setText(
-                        context.getResources().getString(
-                                R.string.item_shopped_times,
-                                NotificationAdapter.prettyTime.format(Constants.ISO_DF.parse(itemReceiptModel.getReceiptDate())),
-                                itemReceiptModels.size(),
-                                itemReceiptModels.size() > 1 ? "s" : ""));
+                holder.lastTransactionAmount.setText(AppUtils.currencyFormatter().format(itemReceiptModel.getPrice()));
             }
             return convertView;
         } catch (Exception e) {
