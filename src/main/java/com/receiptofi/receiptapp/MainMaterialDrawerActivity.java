@@ -161,7 +161,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         this.addSection(
                 newSection(
-                        "Shopping List",
+                        "Shopping Places",
                         new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_shopping_cart)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
