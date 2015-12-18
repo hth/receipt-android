@@ -28,23 +28,27 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
 
     private final LayoutInflater inflater;
     private Context context;
-    private List<ShoppingItemModel> rdItems;
+    private List<ShoppingItemModel> shoppingItemModels;
 
-    public ShoppingListAdapter(Context context, List<ShoppingItemModel> items) {
-        super(context, R.layout.fragment_shopping_list_item, items);
+    public ShoppingListAdapter(Context context, List<ShoppingItemModel> shoppingItemModels) {
+        super(context, R.layout.fragment_shopping_list_item, shoppingItemModels);
         this.context = context;
-        this.rdItems = items;
+        this.shoppingItemModels = shoppingItemModels;
         inflater = LayoutInflater.from(context);
+    }
+
+    public void updateList(List<ShoppingItemModel> shoppingItemModels) {
+        this.shoppingItemModels = shoppingItemModels;
     }
 
     @Override
     public int getCount() {
-        return rdItems.size();
+        return shoppingItemModels.size();
     }
 
     @Override
     public ShoppingItemModel getItem(int position) {
-        return rdItems.get(position);
+        return shoppingItemModels.get(position);
     }
 
     @Override
@@ -73,20 +77,21 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                 holder.checkbox = (CheckBox) convertView.findViewById(R.id.shopping_list_checkBox);
                 holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        int elementPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
+                        // Here we get the position that we have set for the checkbox using setTag.
+                        int elementPosition = (Integer) buttonView.getTag();
 
-                        Log.d(TAG, rdItems.get(elementPosition).getName());
+                        Log.d(TAG, shoppingItemModels.get(elementPosition).getName());
                         if (isChecked) {
-                            rdItems.get(elementPosition).checked();
-                            Log.d(TAG, rdItems.get(elementPosition).getName() + " Checked");
+                            shoppingItemModels.get(elementPosition).checked();
+                            Log.d(TAG, shoppingItemModels.get(elementPosition).getName() + " Checked");
                             holder.price.setTextColor(context.getResources().getColor(R.color.tv_black_second));
                             holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
                             holder.itemName.setTextColor(context.getResources().getColor(R.color.tv_black_second));
                             holder.itemName.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                         } else {
-                            rdItems.get(elementPosition).unChecked();
-                            Log.d(TAG, rdItems.get(elementPosition).getName() + " Un-Checked");
+                            shoppingItemModels.get(elementPosition).unChecked();
+                            Log.d(TAG, shoppingItemModels.get(elementPosition).getName() + " Un-Checked");
                             holder.price.setTextColor(context.getResources().getColor(R.color.black));
                             holder.price.setPaintFlags(holder.price.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
@@ -102,7 +107,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
             }
 
             holder.checkbox.setTag(position); // This line is important.
-            holder.checkbox.setChecked(rdItems.get(position).isChecked());
+            holder.checkbox.setChecked(shoppingItemModels.get(position).isChecked());
             holder.itemName.setText(itemModel.getName());
             List<ItemReceiptModel> itemReceiptModels = ItemReceiptUtils.latestItemReceiptModel(itemModel.getBizName(), itemModel.getName());
             if (!itemReceiptModels.isEmpty()) {
