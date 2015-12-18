@@ -17,7 +17,7 @@
         />
 
     <com.baoyz.swipemenulistview.SwipeMenuListView
-        android:id="@+id/listView"
+        android:id="@+id/shopping_list_listView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/shopping_place"
