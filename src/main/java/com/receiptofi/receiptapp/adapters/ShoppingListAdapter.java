@@ -60,7 +60,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         try {
-            final ShoppingItemModel itemModel = getItem(position);
+            ShoppingItemModel itemModel = getItem(position);
 
             final ViewHolder holder;
             if (convertView == null) {
@@ -73,24 +73,25 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                 holder.checkbox = (CheckBox) convertView.findViewById(R.id.shopping_list_checkBox);
                 holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                        Log.i(TAG, itemModel.getName());
+                        int elementPosition = (Integer) buttonView.getTag();  // Here we get the position that we have set for the checkbox using setTag.
+
+                        Log.d(TAG, rdItems.get(elementPosition).getName());
                         if (isChecked) {
-                            Log.i(TAG, itemModel.getName() + " Checked");
-                            itemModel.checked();
-                            holder.price.setTextColor(context.getResources().getColor(R.color.gray_light));
+                            rdItems.get(elementPosition).checked();
+                            Log.d(TAG, rdItems.get(elementPosition).getName() + " Checked");
+                            holder.price.setTextColor(context.getResources().getColor(R.color.tv_black_second));
                             holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-                            holder.itemName.setTextColor(context.getResources().getColor(R.color.gray_light));
+                            holder.itemName.setTextColor(context.getResources().getColor(R.color.tv_black_second));
                             holder.itemName.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
                         } else {
-                            Log.i(TAG, itemModel.getName() + "Un-Checked");
-                            itemModel.unChecked();
+                            rdItems.get(elementPosition).unChecked();
+                            Log.d(TAG, rdItems.get(elementPosition).getName() + " Un-Checked");
                             holder.price.setTextColor(context.getResources().getColor(R.color.black));
                             holder.price.setPaintFlags(holder.price.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
                             holder.itemName.setTextColor(context.getResources().getColor(R.color.black));
-                            holder.itemName.setPaintFlags(holder.price.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                            holder.itemName.setPaintFlags(holder.price.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                         }
                     }
                 });
@@ -100,6 +101,8 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                 holder = (ViewHolder) convertView.getTag();
             }
 
+            holder.checkbox.setTag(position); // This line is important.
+            holder.checkbox.setChecked(rdItems.get(position).isChecked());
             holder.itemName.setText(itemModel.getName());
             List<ItemReceiptModel> itemReceiptModels = ItemReceiptUtils.latestItemReceiptModel(itemModel.getBizName(), itemModel.getName());
             if (!itemReceiptModels.isEmpty()) {
