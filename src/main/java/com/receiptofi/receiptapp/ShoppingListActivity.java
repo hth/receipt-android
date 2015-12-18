@@ -119,7 +119,7 @@ public class ShoppingListActivity extends Activity {
 
     private void setupView(List<ShoppingItemModel> shoppingItemModels) {
         if (!shoppingItemModels.isEmpty()) {
-            mListView = (SwipeMenuListView) findViewById(R.id.listView);
+            mListView = (SwipeMenuListView) findViewById(R.id.shopping_list_listView);
             mAdapter = new ShoppingListAdapter(this, shoppingItemModels);
             mListView.setAdapter(mAdapter);
             addAnimation();

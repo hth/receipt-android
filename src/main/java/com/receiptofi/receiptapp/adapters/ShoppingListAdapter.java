@@ -1,6 +1,7 @@
 package com.receiptofi.receiptapp.adapters;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -57,11 +58,11 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         try {
             final ShoppingItemModel itemModel = getItem(position);
 
-            ViewHolder holder;
+            final ViewHolder holder;
             if (convertView == null) {
                 convertView = inflater.inflate(R.layout.fragment_shopping_list_item, parent, false);
 
@@ -72,10 +73,24 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                 holder.checkbox = (CheckBox) convertView.findViewById(R.id.shopping_list_checkBox);
                 holder.checkbox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                        Log.i(TAG, itemModel.getName());
                         if (isChecked) {
+                            Log.i(TAG, itemModel.getName() + " Checked");
                             itemModel.checked();
+                            holder.price.setTextColor(context.getResources().getColor(R.color.gray_light));
+                            holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
+                            holder.itemName.setTextColor(context.getResources().getColor(R.color.gray_light));
+                            holder.itemName.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+
                         } else {
+                            Log.i(TAG, itemModel.getName() + "Un-Checked");
                             itemModel.unChecked();
+                            holder.price.setTextColor(context.getResources().getColor(R.color.black));
+                            holder.price.setPaintFlags(holder.price.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
+
+                            holder.itemName.setTextColor(context.getResources().getColor(R.color.black));
+                            holder.itemName.setPaintFlags(holder.price.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
                         }
                     }
                 });
