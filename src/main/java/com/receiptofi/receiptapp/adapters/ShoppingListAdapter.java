@@ -77,12 +77,11 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                         if (isChecked) {
                             Log.i(TAG, itemModel.getName() + " Checked");
                             itemModel.checked();
-                            holder.price.setTextColor(context.getResources().getColor(R.color.gray_light));
+                            holder.price.setTextColor(context.getResources().getColor(R.color.tv_black_second));
                             holder.price.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-                            holder.itemName.setTextColor(context.getResources().getColor(R.color.gray_light));
+                            holder.itemName.setTextColor(context.getResources().getColor(R.color.tv_black_second));
                             holder.itemName.setPaintFlags(holder.price.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
                         } else {
                             Log.i(TAG, itemModel.getName() + "Un-Checked");
                             itemModel.unChecked();
@@ -90,7 +89,7 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                             holder.price.setPaintFlags(holder.price.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
 
                             holder.itemName.setTextColor(context.getResources().getColor(R.color.black));
-                            holder.itemName.setPaintFlags(holder.price.getPaintFlags() & (~ Paint.STRIKE_THRU_TEXT_FLAG));
+                            holder.itemName.setPaintFlags(holder.price.getPaintFlags() & (~Paint.STRIKE_THRU_TEXT_FLAG));
                         }
                     }
                 });
