@@ -1,9 +1,9 @@
-### Overview
+### Overview 
 
    [https://developers.braintreepayments.com/android+java/start/overview] (https://developers.braintreepayments.com/android+java/start/overview)
 
-### Mobile APP reference
-
+### Mobile APP reference 
+    
    [https://developers.braintreepayments.com/android+java/start/hello-client] (https://developers.braintreepayments.com/android+java/start/hello-client)
    
 ### Sample Credit Card
@@ -14,21 +14,21 @@ Link below would get you different credit card samples (Visa, MasterCard)
    
     Postal Code - 60645 or any five digit
     CVV - 100 or any three digit
-    Expiration - 06/16 or any date in future (3 or less years from now)   
-
+    Expiration - 06/16 or any date in future (3 or less years from now)
+    
 ### Client Token
 
-Get client token from server to initializing Braintree Payment SDK.
+Get client token from server to initializing Braintree Payment SDK. 
 
 API call `POST`. API call `/receipt-mobile/api/token.json`
-
+    
     curl -X "POST" "http://localhost:9090/receipt-mobile/api/token.json"
-    	-H "X-R-AUTH: $2a$15$e2kRPwg04Ld6W9u4WWwvTuYZdbUhf5PSz8BLtQCRzDRwP5x0wvlBm"
-    	-H "X-R-DID: 12347"
+    	-H "X-R-AUTH: $2a$15$e2kRPwg04Ld6W9u4WWwvTuYZdbUhf5PSz8BLtQCRzDRwP5x0wvlBm" 
+    	-H "X-R-DID: 12347" 
     	-H "X-R-MAIL: test@receiptofi.com"
-
-Response
-
+    	
+Response 
+    	
 ##### When user details does not exists. First time.
     
     {
@@ -50,19 +50,19 @@ Response
       "postalCode": "84236",
       "token": "eyJ2ZXJzaW9uIjoyLCJhdXRob3JpemF0aW9uRmluZ2VycHJpbnQiOiIy"
     }
-
+    	
 ### Plans
-
-Gets all available plans.
+    
+Gets all available plans. 
 
 API call `GET`. API call `/receipt-mobile/api/plans.json`
-
+         	
     curl -X "GET" "http://localhost:9090/receipt-mobile/api/plans.json"
-    	-H "X-R-AUTH: $2a$15$e2k"
+    	-H "X-R-AUTH: $2a$15$e2k" 
     	-H "X-R-MAIL: test@receiptofi.com"
-
+    	
 Response
-
+    	
     [
       {
         "accountBillingType": "M10",
@@ -84,10 +84,10 @@ Response
         "paymentGateway": "BT",
         "price": 4.00
       }
-    ]
-
+    ]    	
+    	
 ### Payments
-
+    	
 Submit payment
 
 API call `POST`. API call `/receipt-mobile/api/payment.json`
@@ -103,16 +103,16 @@ API call `POST`. API call `/receipt-mobile/api/payment.json`
     	"postal":"60622",
     	"company":"Some Company",
     	"payment-method-nonce":"payment-method-nonce"
-    	}"	
-
+    	}"
+    	
 Response
-
+    	
     {
       "success": true,
       "planId" : "M10",
       "transactionId" : "jhgsdf"
     }
-
+         	
 ### Cancel Subscription
     	
 API call `POST`. API call `/receipt-mobile/api/cancelSubscription.json`
@@ -130,4 +130,4 @@ Response
       "transactionId" : "jhgsdf"
     }        	
 
-### More API to come
+### More API to come    	

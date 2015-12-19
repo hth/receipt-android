@@ -188,7 +188,31 @@ JSON Response data
           "na": "vbxcvbcv bxcvbc",
           "pr": ""
         }
-      ]
+      ],
+      "owes": [
+        {
+          "fid": "10000000005",
+          "name": "He Man",
+          "splitTotal": 40.61
+        },
+        {
+          "fid": "10000000004",
+          "name": "Big Man",
+          "splitTotal": 197.58000000000004
+        },
+        {
+          "fid": "10000000002",
+          "name": "AA AA",
+          "splitTotal": 139.99
+        }
+      ],
+      "owesOther": [
+        {
+          "name": "Big Man",
+          "rid": "10000000004",
+          "splitTotal": 149.56
+        }
+      ],
     }
     
 ### Field References    
@@ -333,5 +357,23 @@ Awaiting and Pending Friends
 
     @JsonProperty ("a")
     private boolean active;
+    
+Owe and Owe Others
+    
+    /** When object used for OwesOther then RID is not null and FID is null. */
+    @Null
+    @JsonProperty ("rid")
+    private String receiptUserId;
+
+    /** When object used for OweMe then RID is not and FID is not null. */
+    @Null
+    @JsonProperty ("fid")
+    private String friendUserId;
+
+    @JsonProperty ("splitTotal")
+    private Double splitTotal;
+
+    @JsonProperty ("name")
+    private String name;
         
         
