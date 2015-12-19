@@ -2,12 +2,12 @@
 
 API below will get all the updates available. Currently it just gets "Receipt" updates, but in future it will get "Profile", "Mileage", "Uploaded Document" updates. When device is not registred, this API will register the device too. It would be better not to use this API for registering the device.
 
-API call <code>GET</code> path
+API call <code>GET</code> path 
 
-    curl -ik -X GET
-    -H "X-R-MAIL: test@receiptofi.com"
-    -H "X-R-AUTH: %242a%"
-    -H "X-R-DID: Unique-Device-Id"
+    curl -ik -X GET 
+    -H "X-R-MAIL: test@receiptofi.com" 
+    -H "X-R-AUTH: %242a%" 
+    -H "X-R-DID: Unique-Device-Id" 
     -H "X-R-DT: I or A"
     https://receiptofi.com:9443/receipt-mobile/api/update.json
 

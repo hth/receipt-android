@@ -12,7 +12,6 @@ API call `POST`. API call `/receipt-mobile/api/split.json`
 And send jsonBody
 
     requestBodyJson 
-        - fidRemove (comma separated fid [Friend Rid])
         - fidAdd    (comma separated fid [Friend Rid])
         - receiptId
         
