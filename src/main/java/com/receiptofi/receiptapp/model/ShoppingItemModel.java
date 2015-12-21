@@ -18,11 +18,12 @@ public class ShoppingItemModel {
      */
     private double smoothCount;
 
-    public ShoppingItemModel(String name, String bizName, int count, double multiplier) {
+    public ShoppingItemModel(String name, String bizName, int count, double multiplier, boolean checked) {
         this.name = name;
         this.bizName = bizName;
         this.count = count;
         this.smoothCount = count * multiplier;
+        this.checked = checked;
     }
 
     public String getName() {
@@ -53,11 +54,11 @@ public class ShoppingItemModel {
         return checked;
     }
 
-    public void checked() {
+    public void check() {
         this.checked = true;
     }
 
-    public void unChecked() {
+    public void unCheck() {
         this.checked = false;
     }
 
