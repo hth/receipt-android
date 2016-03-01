@@ -33,4 +33,4 @@ Table of content
 21. [Friends] (documentation/api/Friends.md)
 22. [Receipt Split] (documentation/api/ReceiptSplit.md)
 23. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used
-24. [Receipt Delete] (documenation/api/ReceiptDelete.md)
+24. [Receipt Delete] (documentation/api/ReceiptDelete.md)
