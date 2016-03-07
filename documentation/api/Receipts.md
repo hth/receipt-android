@@ -42,9 +42,12 @@ New fields
         },
         "bizStore": {
           "address": "Building, Sector 38, Noida, Uttar Pradesh 201301, India",
+          "country" = "IN",
           "lat": "28.5627755",
           "lng": "77.33619689999999",
           "phone": "01204247560"
+          "rating" = 0,
+          "type" = "[street_address]"
         },
         "bs": "P",
         "d": false,
@@ -78,9 +81,12 @@ New fields
         },
         "bizStore": {
           "address": "Costco Wholesale, 150 Lawrence Station Road, Sunnyvale, CA 94086, USA",
+          "country" = "US",
           "lat": "37.3720256",
           "lng": "-121.9946682",
           "phone": "(408) 730-1892"
+          "rating" = 0,
+          "type" = "[street_address]"
         },
         "bs": "P",
         "d": false,
