@@ -34,3 +34,4 @@ Table of content
 22. [Receipt Split] (documentation/api/ReceiptSplit.md)
 23. [How to check if user has access?](documentation/api/DoesUserHasAccess.md) -- Not being used
 24. [Receipt Delete] (documentation/api/ReceiptDelete.md)
+25. [Coupon Create/Update](documentation/api/Coupon.md)
