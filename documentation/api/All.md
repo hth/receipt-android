@@ -381,5 +381,53 @@ Owe and Owe Others
 
     @JsonProperty ("name")
     private String name;
-        
-        
+
+Coupons
+    
+    @JsonProperty ("id")
+    private String id;
+
+    @JsonProperty ("rid")
+    private String rid;
+
+    @JsonProperty ("lid")
+    private String lid;
+
+    @JsonProperty ("bn")
+    private String businessName;
+
+    @JsonProperty ("ft")
+    private String freeText;
+
+    @JsonProperty ("av")
+    private String available;
+
+    @JsonProperty ("ex")
+    private String expire;
+
+    @JsonProperty ("ct")
+    private String couponType;
+
+    @JsonProperty ("c")
+    private String created;
+
+    @JsonProperty ("u")
+    private String updated;
+
+    @JsonProperty ("rm")
+    private boolean reminder;
+
+    @JsonProperty ("ip")
+    private String imagePath;
+
+    @JsonProperty ("sh")
+    private List<String> sharedWithRids = new ArrayList<>();
+
+    @JsonProperty ("oi")
+    private String originId;
+
+    @JsonProperty ("uc")
+    private boolean usedCoupon;
+
+    @JsonProperty ("a")
+    private boolean active;
