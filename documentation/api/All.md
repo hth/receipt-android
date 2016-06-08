@@ -87,7 +87,6 @@ JSON Response data
           "id": "551ce04f0364146df5ebe506",
           "m": "E4145F2D-A494-4018-939D-CFD917037EE0.png upload successful",
           "n": true,
-          "ng" = "F",
           "nt": "DOCUMENT_UPLOADED",
           "ri": "551ce04f0364146df5ebe504",
           "u": "2015-04-01T23:23:11.523-07:00"
@@ -97,7 +96,6 @@ JSON Response data
           "id": "551cd1f5036401b6df58bcd9",
           "m": "$13.75 'Chevron' receipt processed",
           "n": true,
-          "ng" = "R",
           "nt": "RECEIPT",
           "ri": "551cd1f5036401b6df58bcd7",
           "u": "2015-04-01T22:21:57.009-07:00"
@@ -265,7 +263,7 @@ Notification field names
     private String message;
 
     @JsonProperty ("n")
-    private boolean notified = false;
+    private boolean notify;
 
     @JsonProperty ("nt")
     private String notificationType;
@@ -279,12 +277,18 @@ Notification field names
      */
     @JsonProperty ("ri")
     private String referenceId;
+    
+    @JsonProperty("mr")
+    private boolean markedRead;
 
     @JsonProperty ("c")
     private String created;
 
     @JsonProperty ("u")
     private String updated;
+    
+    @JsonProperty ("a")
+    private boolean active;
     
 Receipt field name
         
@@ -381,53 +385,5 @@ Owe and Owe Others
 
     @JsonProperty ("name")
     private String name;
-
-Coupons
-    
-    @JsonProperty ("id")
-    private String id;
-
-    @JsonProperty ("rid")
-    private String rid;
-
-    @JsonProperty ("lid")
-    private String lid;
-
-    @JsonProperty ("bn")
-    private String businessName;
-
-    @JsonProperty ("ft")
-    private String freeText;
-
-    @JsonProperty ("av")
-    private String available;
-
-    @JsonProperty ("ex")
-    private String expire;
-
-    @JsonProperty ("ct")
-    private String couponType;
-
-    @JsonProperty ("c")
-    private String created;
-
-    @JsonProperty ("u")
-    private String updated;
-
-    @JsonProperty ("rm")
-    private boolean reminder;
-
-    @JsonProperty ("ip")
-    private String imagePath;
-
-    @JsonProperty ("sh")
-    private List<String> sharedWithRids = new ArrayList<>();
-
-    @JsonProperty ("oi")
-    private String originId;
-
-    @JsonProperty ("uc")
-    private boolean usedCoupon;
-
-    @JsonProperty ("a")
-    private boolean active;
+        
+        
