@@ -263,22 +263,32 @@ Notification field names
     private String message;
 
     @JsonProperty ("n")
-    private boolean notified = false;
+    private boolean notify;
 
     @JsonProperty ("nt")
     private String notificationType;
+    
+    /** @since 1.0.3 */
+    @JsonProperty ("ng")
+    private String notificationGroup;
 
     /**
      * Could be a receipt id or Document id
      */
     @JsonProperty ("ri")
     private String referenceId;
+    
+    @JsonProperty("mr")
+    private boolean markedRead;
 
     @JsonProperty ("c")
     private String created;
 
     @JsonProperty ("u")
     private String updated;
+    
+    @JsonProperty ("a")
+    private boolean active;
     
 Receipt field name
         
