@@ -71,4 +71,47 @@ After saving the coupon on server, complete Coupon is sent back
           "u": "2016-05-10T15:12:28.028+00:00",
           "uc": false
         }
-      ],    	
+      ],   
+       	
+## Upload coupon image
+========================
+       	
+API call <code>POST</code> path <code>/receipt-mobile/api/coupon/upload.json</code> to signup.  
+Functionality and error response is similar to receipt upload - [Upload documents/files/images](documentation/api/Upload.md)  
+  	
+        curl -i  -X POST 
+        -H "X-R-MAIL: test@receiptofi.com" 
+        -H "X-R-AUTH: %242a%241" 
+        -d "{
+             "id":"562aaf881910357467563f40"
+            }"
+        -F "qqfile=@/Absolute/Location/File.jpg" 
+        /receipt-mobile/api/upload.json
+
+
+#### Response 
+    	
+After saving the coupon on server, complete Coupon is sent back    	
+    	
+    "coupons": [
+        {
+          "a": true,
+          "av": "2016-05-10T08:08:09.009+00:00",
+          "bn": "Costco",
+          "c": "2016-05-10T15:12:28.028+00:00",
+          "ct": "I",
+          "ex": "2016-06-25T10:22:00.000+00:00",
+          "ft": "20% Discount",
+          "id": "562aaf881910357467563f40",
+          "ip": "/Local/Locatiom",
+          "lid": "LOCALID",
+          "oi": "",
+          "rid": "10000000001",
+          "rm": false,
+          "sh": [
+            "10000000002"
+          ],
+          "u": "2016-05-10T15:12:28.028+00:00",
+          "uc": false
+        }
+      ],   
