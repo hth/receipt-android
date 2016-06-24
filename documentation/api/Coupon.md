@@ -81,12 +81,9 @@ Functionality and error response is similar to receipt upload - [Upload document
   	
         curl -i  -X POST 
         -H "X-R-MAIL: test@receiptofi.com" 
-        -H "X-R-AUTH: %242a%241" 
-        -d "{
-             "id":"562aaf881910357467563f40"
-            }"
+        -H "X-R-AUTH: %242a%241"
         -F "qqfile=@/Absolute/Location/File.jpg" 
-        /receipt-mobile/api/upload.json
+        /receipt-mobile/api/upload.json?id=562aaf881910357467563f40
 
 
 #### Response 
