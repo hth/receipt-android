@@ -83,7 +83,7 @@ Functionality and error response is similar to receipt upload - [Upload document
         -H "X-R-MAIL: test@receiptofi.com" 
         -H "X-R-AUTH: %242a%241"
         -F "qqfile=@/Absolute/Location/File.jpg" 
-        /receipt-mobile/api/upload.json?id=562aaf881910357467563f40
+        /receipt-mobile/api/upload/562aaf881910357467563f40.json
 
 
 #### Response 
