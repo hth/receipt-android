@@ -68,7 +68,8 @@ JSON Response data
           "quant": "4.167",
           "receiptId": "551cd1f5036401b6df58bcd7",
           "seq": "1",
-          "tax": "0.0"
+          "tax": "0.0",
+          "cs": "US"
         },
         {
           "expenseTagId": "",
@@ -78,7 +79,8 @@ JSON Response data
           "quant": "1.0",
           "receiptId": "547c1808036405eb90adac75",
           "seq": "1",
-          "tax": "0.0"
+          "tax": "0.0",
+          "cs": "US"
         }
       ],
       "notifications": [
@@ -87,6 +89,7 @@ JSON Response data
           "id": "551ce04f0364146df5ebe506",
           "m": "E4145F2D-A494-4018-939D-CFD917037EE0.png upload successful",
           "n": true,
+          "ng" = "F",
           "nt": "DOCUMENT_UPLOADED",
           "ri": "551ce04f0364146df5ebe504",
           "u": "2015-04-01T23:23:11.523-07:00"
@@ -96,6 +99,7 @@ JSON Response data
           "id": "551cd1f5036401b6df58bcd9",
           "m": "$13.75 'Chevron' receipt processed",
           "n": true,
+          "ng" = "R",
           "nt": "RECEIPT",
           "ri": "551cd1f5036401b6df58bcd7",
           "u": "2015-04-01T22:21:57.009-07:00"
@@ -106,7 +110,8 @@ JSON Response data
         "lastName": "Test",
         "mail": "test@receiptofi.com",
         "name": "Test Test",
-        "rid": "10000000004"
+        "rid": "10000000004",
+        "cs": "US"
       },
       "receipts": [
         {
@@ -135,7 +140,9 @@ JSON Response data
           "receiptDate": "2015-04-02T10:06:00.000-07:00",
           "rid": "10000000004",
           "tax": 0.0,
-          "total": 13.75
+          "total": 13.75,
+          "cs": "US",
+          "cd": "1234"          
         },
         {
           "bizName": {
@@ -163,7 +170,9 @@ JSON Response data
           "receiptDate": "2015-04-02T10:06:00.000-07:00",
           "rid": "10000000004",
           "tax": 0.0,
-          "total": 7.99
+          "total": 7.99,
+          "cs": "US",
+          "cd": "1234"
         }
       ],
       "unprocessedDocuments": {
@@ -385,5 +394,55 @@ Owe and Owe Others
 
     @JsonProperty ("name")
     private String name;
+    
+Coupons
+    
+    @JsonProperty ("id")
+    private String id;
+
+    @JsonProperty ("rid")
+    private String rid;
+
+    @JsonProperty ("lid")
+    private String lid;
+
+    @JsonProperty ("bn")
+    private String businessName;
+
+    @JsonProperty ("ft")
+    private String freeText;
+
+    @JsonProperty ("av")
+    private String available;
+
+    @JsonProperty ("ex")
+    private String expire;
+
+    @JsonProperty ("ct")
+    private String couponType;
+
+    @JsonProperty ("c")
+    private String created;
+
+    @JsonProperty ("u")
+    private String updated;
+
+    @JsonProperty ("rm")
+    private boolean reminder;
+
+    @JsonProperty ("ip")
+    private String imagePath;
+
+    @JsonProperty ("sh")
+    private List<String> sharedWithRids = new ArrayList<>();
+
+    @JsonProperty ("oi")
+    private String originId;
+
+    @JsonProperty ("uc")
+    private boolean usedCoupon;
+
+    @JsonProperty ("a")
+    private boolean active;
         
         
