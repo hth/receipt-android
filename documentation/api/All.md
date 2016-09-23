@@ -68,7 +68,8 @@ JSON Response data
           "quant": "4.167",
           "receiptId": "551cd1f5036401b6df58bcd7",
           "seq": "1",
-          "tax": "0.0"
+          "tax": "0.0",
+          "cs": "US"
         },
         {
           "expenseTagId": "",
@@ -78,7 +79,8 @@ JSON Response data
           "quant": "1.0",
           "receiptId": "547c1808036405eb90adac75",
           "seq": "1",
-          "tax": "0.0"
+          "tax": "0.0",
+          "cs": "US"
         }
       ],
       "notifications": [
@@ -108,7 +110,8 @@ JSON Response data
         "lastName": "Test",
         "mail": "test@receiptofi.com",
         "name": "Test Test",
-        "rid": "10000000004"
+        "rid": "10000000004",
+        "cs": "US"
       },
       "receipts": [
         {
@@ -137,7 +140,9 @@ JSON Response data
           "receiptDate": "2015-04-02T10:06:00.000-07:00",
           "rid": "10000000004",
           "tax": 0.0,
-          "total": 13.75
+          "total": 13.75,
+          "cs": "US",
+          "cd": "1234"          
         },
         {
           "bizName": {
@@ -165,7 +170,9 @@ JSON Response data
           "receiptDate": "2015-04-02T10:06:00.000-07:00",
           "rid": "10000000004",
           "tax": 0.0,
-          "total": 7.99
+          "total": 7.99,
+          "cs": "US",
+          "cd": "1234"
         }
       ],
       "unprocessedDocuments": {
@@ -265,7 +272,7 @@ Notification field names
     private String message;
 
     @JsonProperty ("n")
-    private boolean notified = false;
+    private boolean notify;
 
     @JsonProperty ("nt")
     private String notificationType;
@@ -279,12 +286,18 @@ Notification field names
      */
     @JsonProperty ("ri")
     private String referenceId;
+    
+    @JsonProperty("mr")
+    private boolean markedRead;
 
     @JsonProperty ("c")
     private String created;
 
     @JsonProperty ("u")
     private String updated;
+    
+    @JsonProperty ("a")
+    private boolean active;
     
 Receipt field name
         
@@ -381,7 +394,7 @@ Owe and Owe Others
 
     @JsonProperty ("name")
     private String name;
-
+    
 Coupons
     
     @JsonProperty ("id")
@@ -431,3 +444,5 @@ Coupons
 
     @JsonProperty ("a")
     private boolean active;
+        
+        

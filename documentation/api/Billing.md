@@ -43,7 +43,8 @@ Format of the data for the billing screen below
         "lastName": null,
         "mail": "li@receiptofi.com",
         "name": "Li",
-        "rid": "10000000003"
+        "rid": "10000000003",
+        "cs": "US"
       },
       "receipts": [],
       "unprocessedDocuments": {

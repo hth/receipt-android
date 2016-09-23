@@ -21,7 +21,8 @@ Field explanation
 		    "price": "9.99",
 		    "receiptId": "53e714b303646c5236d45c84",
 		    "seq": "1",
-		    "tax": "0.0"
+		    "tax": "0.0",
+		    "cs": "US"
 		  },
 		  {
 		    "quant": "1.0",
@@ -30,7 +31,8 @@ Field explanation
 		    "price": "6.59",
 		    "receiptId": "53e714b303646c5236d45c84",
 		    "seq": "2",
-		    "tax": "0.0"
+		    "tax": "0.0",
+		    "cs": "US"
 		  }
 		]
 
