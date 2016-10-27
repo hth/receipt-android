@@ -4,17 +4,21 @@ import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.ListActivity;
 import android.content.res.Resources;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationSet;
+import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
@@ -41,7 +45,7 @@ import java.util.List;
  * User: hitender
  * Date: 12/12/15 3:10 AM
  */
-public class ShoppingListActivity extends Activity {
+public class ShoppingListActivity extends ListActivity {
     private static final String TAG = ShoppingListActivity.class.getSimpleName();
     public static final String BUNDLE_KEY_BIZ_NAME = "BIZ_NAME";
 
@@ -54,6 +58,40 @@ public class ShoppingListActivity extends Activity {
     private Drawable edit;
     private Drawable delete;
     private Drawable alert;
+
+    public static final int UPDATE_SHOPPING_LIST = 0x1081;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case UPDATE_SHOPPING_LIST:
+                    final ShoppingListAdapter.MessageShopping messageShopping = (ShoppingListAdapter.MessageShopping) msg.obj;
+
+                    /** Show animation only when checked. */
+                    if (messageShopping.isChecked()) {
+                        Animation anim = AnimationUtils.loadAnimation(ShoppingListActivity.this, android.R.anim.slide_out_right);
+                        anim.setDuration(500);
+                        mListView.getChildAt(messageShopping.getPosition()).startAnimation(anim);
+
+                        // http://stackoverflow.com/questions/3928193/how-to-animate-addition-or-removal-of-android-listview-rows
+                        new Handler().postDelayed(new Runnable() {
+
+                            public void run() {
+                                mAdapter.notifyDataSetChanged();
+
+                            }
+
+                        }, anim.getDuration());
+                    }
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

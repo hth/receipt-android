@@ -44,25 +44,25 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
         this.list = shoppingItemModels;
     }
 
-    @Override
-    public int getCount() {
-        return list.size();
-    }
+//    @Override
+//    public int getCount() {
+//        return list.size();
+//    }
 
-    @Override
-    public ShoppingItemModel getItem(int position) {
-        return list.get(position);
-    }
+//    @Override
+//    public ShoppingItemModel getItem(int position) {
+//        return list.get(position);
+//    }
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return true;
-    }
+//    @Override
+//    public long getItemId(int position) {
+//        return position;
+//    }
+//
+//    @Override
+//    public boolean hasStableIds() {
+//        return true;
+//    }
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -86,14 +86,20 @@ public class ShoppingListAdapter extends ArrayAdapter<ShoppingItemModel> {
                                     list.get(position).getName(),
                                     true);
 
-                            element.check();
+                            if (updateSuccess) {
+                                Log.i(TAG, "Checked " + list.get(position).getName());
+                                element.check();
+                            }
                         } else {
                             boolean updateSuccess = ShoppingItemUtils.updateCheckCondition(
                                     list.get(position).getBizName(),
                                     list.get(position).getName(),
                                     false);
 
-                            element.unCheck();
+                            if (updateSuccess) {
+                                Log.i(TAG, "Un-Checked " + list.get(position).getName());
+                                element.unCheck();
+                            }
                         }
                         notifyDataSetChanged();
                     }
