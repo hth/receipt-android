@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.google.common.collect.Ordering;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
-import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.model.ShoppingItemModel;
 import com.receiptofi.receiptapp.model.helper.BusinessFrequency;
 import com.receiptofi.receiptapp.model.helper.Coordinate;
@@ -23,7 +22,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.receiptofi.receiptapp.ReceiptofiApplication.RDH;
-import static com.receiptofi.receiptapp.db.DatabaseTable.*;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ItemReceipt;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ShoppingItem;
 
 /**
  * User: hitender
@@ -80,6 +80,7 @@ public class ShoppingItemUtils {
         values.put(ShoppingItem.BIZ_NAME, shoppingItemModel.getBizName());
         values.put(ShoppingItem.COUNT, shoppingItemModel.getCount());
         values.put(ShoppingItem.SMOOTH_COUNT, shoppingItemModel.getSmoothCount());
+        values.put(ShoppingItem.CHECKED, 0);
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
                 ShoppingItem.TABLE_NAME,
@@ -220,7 +221,8 @@ public class ShoppingItemUtils {
                                 cursor.getString(0),
                                 businessFrequency.getBizName(),
                                 cursor.getInt(1),
-                                businessFrequency.multiplier());
+                                businessFrequency.multiplier(),
+                                false);
 
                         frequencies.add(shoppingItemModel);
                     }
@@ -250,7 +252,8 @@ public class ShoppingItemUtils {
                     new String[]{bizName},
                     null,
                     null,
-                    ShoppingItem.SMOOTH_COUNT + " DESC, " +
+                    ShoppingItem.CHECKED + " ASC, " +
+                            ShoppingItem.SMOOTH_COUNT + " DESC, " +
                             ShoppingItem.CUSTOM_NAME + " ASC, " +
                             ShoppingItem.NAME + " ASC",
                     null);
@@ -261,7 +264,8 @@ public class ShoppingItemUtils {
                             cursor.getString(0),
                             cursor.getString(2),
                             cursor.getInt(3),
-                            cursor.getDouble(4)
+                            cursor.getDouble(4),
+                            cursor.getInt(5) == 1
                     );
                     shoppingItemModel.setCustomName(cursor.getString(1));
                     shoppingItemModels.add(shoppingItemModel);
@@ -275,5 +279,17 @@ public class ShoppingItemUtils {
             }
         }
         return shoppingItemModels;
+    }
+
+    public static boolean updateCheckCondition(String bizName, String name, boolean check) {
+        ContentValues uploadValues = new ContentValues();
+        uploadValues.put(ShoppingItem.CHECKED, check);
+        int update = RDH.getWritableDatabase().update(
+                ShoppingItem.TABLE_NAME,
+                uploadValues,
+                ShoppingItem.BIZ_NAME + "=? and " + ShoppingItem.NAME + "=?",
+                new String[]{bizName, name});
+
+        return update > 0;
     }
 }

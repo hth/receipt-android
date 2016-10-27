@@ -201,7 +201,8 @@ public class CreateTable {
                 + DatabaseTable.ShoppingItem.CUSTOM_NAME + " TEXT ,"
                 + DatabaseTable.ShoppingItem.BIZ_NAME + " TEXT ,"
                 + DatabaseTable.ShoppingItem.COUNT + " INT ,"
-                + DatabaseTable.ShoppingItem.SMOOTH_COUNT + " DOUBLE " +
+                + DatabaseTable.ShoppingItem.SMOOTH_COUNT + " DOUBLE, "
+                + DatabaseTable.ShoppingItem.CHECKED + " INT " +
 
                 ");");
     }

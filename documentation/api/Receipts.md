@@ -34,90 +34,86 @@ New fields
  - Items are saved with original receipt id. If the receipt is shared, then the items with have receipt id from referReceiptId
     
 
-        [
+    [
+      {
+        "a": true,
+        "bizName": {
+          "name": "Appu Ghar Express"
+        },
+        "bizStore": {
+          "address": "Building, Sector 38, Noida, Uttar Pradesh 201301, India",
+          "country" = "IN",
+          "lat": "28.5627755",
+          "lng": "77.33619689999999",
+          "phone": "01204247560"
+          "rating" = 0,
+          "type" = "[street_address]"
+        },
+        "bs": "P",
+        "d": false,
+        "expenseReport": null,
+        "expenseTagId": "",
+        "files": [
           {
-            "a": true,
-            "bizName": {
-              "name": "Appu Ghar Express"
-            },
-            "bizStore": {
-              "address": "Building, Sector 38, Noida, Uttar Pradesh 201301, India",
-              "country" = "IN",
-              "lat": "28.5627755",
-              "lng": "77.33619689999999",
-              "phone": "01204247560"
-              "rating" = 0,
-              "type" = "[street_address]"
-            },
-            "bs": "P",
-            "d": false,
-            "expenseReport": null,
-            "expenseTagId": "",
-            "files": [
-              {
-                "blobId": "2015-10/01/560cce78f32026eb6cd2dc00.jpg",
-                "orientation": 0,
-                "sequence": 0
-              }
-            ],
-            "id": "56163e20f32026103793694d",
-            "notes": {
-              "text": null
-            },
-            "ptax": "0.0000",
-            "receiptDate": "2015-09-20T12:59:00.000+00:00",
-            "referReceiptId": "560cd915f32026eb6cd2dc1f",
-            "rid": "10000000004",
-            "splitCount": 2,
-            "splitTax": 92.63,
-            "splitTotal": 320.0,
-            "tax": 185.26,
-            "total": 640.0,
-            "cs": "US",
-            "cd": "1234"
-          },
-          {
-            "a": true,
-            "bizName": {
-              "name": "Costco"
-            },
-            "bizStore": {
-              "address": "Costco Wholesale, 150 Lawrence Station Road, Sunnyvale, CA 94086, USA",
-              "country" = "US",
-              "lat": "37.3720256",
-              "lng": "-121.9946682",
-              "phone": "(408) 730-1892",
-              "rating" = 0,
-              "type" = "[street_address]"          
-            },
-            "bs": "P",
-            "d": false,
-            "expenseReport": null,
-            "expenseTagId": "",
-            "files": [
-              {
-                "blobId": "2015-07/17/55a8a527f320262152e84dc0.png",
-                "orientation": 0,
-                "sequence": 0
-              }
-            ],
-            "id": "55a8cafef32026215232664d",
-            "notes": {
-              "text": null
-            },
-            "ptax": "0.0000",
-            "receiptDate": "2015-07-17T14:56:00.000+00:00",
-            "referReceiptId": null,
-            "rid": "10000000004",
-            "splitCount": 3,
-            "splitTax": 0.0,
-            "splitTotal": 13.98,
-            "tax": 0.0,
-            "total": 41.93,
-            "cs": "US",
-            "cd": "1234"
+            "blobId": "2015-10/01/560cce78f32026eb6cd2dc00.jpg",
+            "orientation": 0,
+            "sequence": 0
           }
-        ]
+        ],
+        "id": "56163e20f32026103793694d",
+        "notes": {
+          "text": null
+        },
+        "ptax": "0.0000",
+        "receiptDate": "2015-09-20T12:59:00.000+00:00",
+        "referReceiptId": "560cd915f32026eb6cd2dc1f",
+        "rid": "10000000004",
+        "splitCount": 2,
+        "splitTax": 92.63,
+        "splitTotal": 320.0,
+        "tax": 185.26,
+        "total": 640.0
+      },
+      {
+        "a": true,
+        "bizName": {
+          "name": "Costco"
+        },
+        "bizStore": {
+          "address": "Costco Wholesale, 150 Lawrence Station Road, Sunnyvale, CA 94086, USA",
+          "country" = "US",
+          "lat": "37.3720256",
+          "lng": "-121.9946682",
+          "phone": "(408) 730-1892"
+          "rating" = 0,
+          "type" = "[street_address]"
+        },
+        "bs": "P",
+        "d": false,
+        "expenseReport": null,
+        "expenseTagId": "",
+        "files": [
+          {
+            "blobId": "2015-07/17/55a8a527f320262152e84dc0.png",
+            "orientation": 0,
+            "sequence": 0
+          }
+        ],
+        "id": "55a8cafef32026215232664d",
+        "notes": {
+          "text": null
+        },
+        "ptax": "0.0000",
+        "receiptDate": "2015-07-17T14:56:00.000+00:00",
+        "referReceiptId": null,
+        "rid": "10000000004",
+        "splitCount": 3,
+        "splitTax": 0.0,
+        "splitTotal": 13.98,
+        "tax": 0.0,
+        "total": 41.93
+      }
+    ]
     
 HTTP Body when there is **No** data
 

@@ -137,6 +137,7 @@ public class DatabaseTable {
         public static final String BIZ_NAME = "bizName";
         public static final String COUNT = "count";
         public static final String SMOOTH_COUNT = "smoothCount";
+        public static final String CHECKED = "checked";
     }
 
     public static class ExpenseTag {

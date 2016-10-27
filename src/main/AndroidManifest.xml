@@ -74,6 +74,7 @@
         </activity>
         <activity
             android:name=".ShoppingPlaceActivity"
+            android:label="Shopping Places"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".MainMaterialDrawerActivity" >
             <meta-data
@@ -82,6 +83,7 @@
         </activity>
         <activity
             android:name=".ShoppingListActivity"
+            android:label="Shopping List"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:parentActivityName=".ShoppingPlaceActivity" >
         </activity>
