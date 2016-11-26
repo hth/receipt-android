@@ -163,6 +163,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
             return true;
         }
     });
+    private LinearLayout cameraLayout;
 
     /**
      * Use this factory method to create a new instance of
@@ -259,6 +260,9 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         }
         updateChartData();
         Log.d(TAG, "Done onCreate!!");
+        
+        
+        cameraLayout = (LinearLayout)view.findViewById(R.id.camera_action_layout);
 
         return view;
     }
@@ -278,6 +282,17 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        cameraLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                takePhoto();
+            }
+        });
     }
 
     /**
@@ -452,7 +467,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
 
     }
 
-    public void takePhoto(View view) {
+    public void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = AppUtils.createImageFile();
         // Continue only if the File was successfully created

@@ -33,7 +33,6 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
 import com.receiptofi.receiptapp.fragments.BillingFragment;
@@ -149,7 +148,9 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         setUsernameTextColor(Color.WHITE);
         setUserEmailTextColor(Color.WHITE);
-
+        /*//---- omkar
+        HomeFragment1 homeFragment1 = new HomeFragment1();
+        //*/
         this.addAccount(account);
         this.addSection(
                 newSection(

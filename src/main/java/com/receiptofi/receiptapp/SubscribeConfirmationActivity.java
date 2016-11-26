@@ -8,10 +8,11 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.gc.materialdesign.views.ButtonRectangle;
+
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
@@ -24,7 +25,7 @@ public class SubscribeConfirmationActivity extends Activity {
     private static final String TAG = SubscribeConfirmationActivity.class.getSimpleName();
 
     public TextView tvMessage;
-    public ButtonRectangle btnSubscribe;
+    public Button btnSubscribe;
     private String type;
     private PlanModel pm;
     private String firstName;
@@ -47,8 +48,8 @@ public class SubscribeConfirmationActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvMessage = (TextView) findViewById(R.id.tv_subscription_confirmation_message);
-        btnSubscribe = (ButtonRectangle) findViewById(R.id.br_subscription_confirmation);
-        btnSubscribe.setRippleSpeed(Constants.RIPPLE_SPEED_EFFECT);
+        btnSubscribe = (Button) findViewById(R.id.br_subscription_confirmation);
+       // btnSubscribe.setRippleSpeed(Constants.RIPPLE_SPEED_EFFECT);
 
         type = getIntent().getStringExtra(Constants.INTENT_EXTRA_TRANSACTION_TYPE);
         pm = getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);

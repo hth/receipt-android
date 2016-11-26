@@ -66,6 +66,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
     private String passwordStr;
     private String ageRange;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -242,7 +243,7 @@ public class SignUpActivity extends ParentActivity implements View.OnClickListen
 
             @Override
             public void onSuccess(Headers headers, String body) {
-                Log.d(TAG, "executing authenticateSignUp: onSuccess");
+                Log.d(TAG, "executing authenticateSignUp: onSuccess "+body +" Header :"+headers);
                 Set<String> keys = new HashSet<>(Arrays.asList(API.key.XR_MAIL, API.key.XR_AUTH));
                 saveAuthKey(ExternalCallWithOkHttp.parseHeader(headers, keys));
                 afterSuccessfulLogin();

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    >
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/signuptoolbar"
+        android:layout_alignParentTop="true" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+             android:textSize="26sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/receipt_logo"/>
+    </android.support.v7.widget.Toolbar>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/signuptoolbar"
+        android:layout_above="@+id/social_layout">
+<EditText
+    style="@style/edit_text_blue_border"
+    android:id="@+id/name"
+    android:hint="@string/hint_name"
+    />
+    <EditText
+        style="@style/edit_text_blue_border"
+        android:inputType="textEmailAddress"
+        android:id="@+id/email" android:hint="@string/hint_email"/>
+    <EditText
+        style="@style/edit_text_blue_border"
+        android:id="@+id/password"
+        android:inputType="textPassword"
+        android:hint="@string/hint_password" />
+    <EditText
+        style="@style/edit_text_blue_border"
+        android:id="@+id/age"
+        android:inputType="number"
+        android:hint="@string/age"
+        android:maxLength="2" />
+
+    <Button
+        android:id="@+id/sign_up_button"
+        android:text="@string/sign_up"
+        android:background="@drawable/blue_button_selector"
+        style="@style/btnstyleauthentication"
+        android:enabled="false"
+
+        />
+    <TextView
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg1"
+        android:gravity="center"
+        android:textColor="@color/app_light_blue_100"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/msg2"
+        android:gravity="center"
+        android:textColor="@color/app_light_blue_300"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="24sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/app_light_blue_100"
+        android:text="Use Social Account"
+        />
+    </LinearLayout>
+    <include
+        android:id="@+id/social_layout"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        layout="@layout/social_media_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        ></include>
+</RelativeLayout>

@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.TypedValue;
@@ -25,7 +26,6 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.gc.materialdesign.views.ButtonFloat;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.iconify.IconDrawable;
@@ -79,7 +79,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     private ExpenseTagAdapter mAdapter;
     private List<ExpenseTagModel> tagModelList;
     private static final String TAG = ExpenseTagFragment.class.getSimpleName();
-    private ButtonFloat fbAddTag;
+    private FloatingActionButton fbAddTag;
 
     private View view;
     public static final int EXPENSE_TAG_DELETED = 0x1561;
@@ -183,7 +183,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     }
 
     private void setupView() {
-        fbAddTag = (ButtonFloat) view.findViewById(R.id.buttonFloat);
+        fbAddTag = (FloatingActionButton) view.findViewById(R.id.buttonFloat);
         fbAddTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

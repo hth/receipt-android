@@ -22,9 +22,9 @@
     <string name="label_password_recovery">Password Recovery</string>
 
     <!--Launch page-->
-    <string name="login_with_facebook">Login via Facebook</string>
-    <string name="login_with_google">Login via Google+</string>
-    <string name="use_email">Or</string>
+    <string name="login_with_facebook">Login with Facebook</string>
+    <string name="login_with_google">Login with Google+</string>
+    <string name="use_email">OR</string>
     <string name="sign_up">SIGN UP</string>
     <string name="log_in">LOG IN</string>
 
@@ -36,7 +36,7 @@
     <string name="hint_email">Email</string>
     <string name="hint_password">Password</string>
     <string name="use_social"> - Or Use Social Account - </string>
-    <string name="forgot_password">Forgot Password?</string>
+    <string name="forgot_password">Forgot Your Password</string>
 
     <!--Sign up page-->
     <string name="hint_name">First and Last name</string>
@@ -44,7 +44,7 @@
     <string name="signup_term">Tapping \"Sign Up\" confirms that you agree to the Receiptofi &lt;a href=\'https://receiptofi.com/TermsOfUse\'&gt;Terms of use.&lt;/a&gt;</string>
 
     <!--Password recovery page-->
-    <string name="password_recovery">SEND RECOVERY EMAIL</string>
+    <string name="password_recovery">Send Recovery Email</string>
     <string name="password_recovery_social_failed">
         Could not send password recovery email.
         As you have signed up using Facebook or Google+.
@@ -55,7 +55,7 @@
     </string>
 
     <!--Home page-->
-    <string name="take_photo">TAKE PHOTO</string>
+    <string name="take_photo">TAKE A PHOTO</string>
     <string name="view_receipt">VIEW RECEIPTS</string>
     <string name="choose_photo">CHOOSE PHOTO</string>
     <string name="monthly_amount" formatted="false">%s&#160;&#160;&#160;%s&#160;&#160;&#160;</string>
@@ -135,12 +135,12 @@
 
     <string name="key_pref_data_sync_id">pref_data_sync</string>
     <string name="pref_data_sync_title">Sync Data</string>
-    <string name="pref_data_sync_summary"/>
+    <string name="pref_data_sync_summary" />
     <string name="pref_data_sync_message">Sync data to latest available update.</string>
 
     <string name="key_pref_data_delete_id">pref_data_delete</string>
     <string name="pref_data_delete_title">Delete App Data</string>
-    <string name="pref_data_delete_summary"/>
+    <string name="pref_data_delete_summary" />
     <string name="pref_data_delete_message">
         Deletes all data within app, including user login information.
         This action will force you to logout from the app.
@@ -157,7 +157,7 @@
 
     <string name="key_pref_about_id">pref_about</string>
     <string name="pref_about_title">About ReceiptApp</string>
-    <string name="pref_about_summary"/>
+    <string name="pref_about_summary" />
     <string name="pref_about_message">
         ReceiptApp is built on the idea that receipt can be more intuitive, efficient, and useful. Easy
         to tag, expense, track purchases geographically in a fun way by digitizing your receipts.
@@ -292,4 +292,13 @@
     <string name="title_activity_subscription_user">Subscribe</string>
     <string name="title_activity_subscribe_confirmation">SubscribeConfirmationActivity</string>
 
+    <!--- Bottom Navigation -->
+    <string name="home">Home</string>
+    <string name="receipts">Receipts</string>
+    <string name="split">Split</string>
+    <string name="shoppinglist">Shopping List</string>
+    <string name="me">Me</string>
+
+    <string name="msg1"> Tapping \'Sign Up\' confirms that you agree to</string>
+    <string name="msg2"><u>ReceiptApp Terms of Use</u></string>
 </resources>

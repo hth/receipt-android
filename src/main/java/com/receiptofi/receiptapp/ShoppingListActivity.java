@@ -1,6 +1,5 @@
 package com.receiptofi.receiptapp;
 
-import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -12,6 +11,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
@@ -28,7 +28,6 @@ import com.baoyz.swipemenulistview.SwipeMenu;
 import com.baoyz.swipemenulistview.SwipeMenuCreator;
 import com.baoyz.swipemenulistview.SwipeMenuItem;
 import com.baoyz.swipemenulistview.SwipeMenuListView;
-import com.gc.materialdesign.views.ButtonFloat;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ShoppingListAdapter;
@@ -49,7 +48,7 @@ public class ShoppingListActivity extends ListActivity {
     private static final String TAG = ShoppingListActivity.class.getSimpleName();
     public static final String BUNDLE_KEY_BIZ_NAME = "BIZ_NAME";
 
-    private ButtonFloat fbAddTag;
+    private FloatingActionButton fbAddTag;
 
     private SwipeMenuListView mListView;
     private ShoppingListAdapter mAdapter;
@@ -113,7 +112,7 @@ public class ShoppingListActivity extends ListActivity {
     }
 
     private void setupView() {
-        fbAddTag = (ButtonFloat) findViewById(R.id.buttonFloat);
+        fbAddTag = (FloatingActionButton) findViewById(R.id.buttonFloat);
         fbAddTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

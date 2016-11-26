@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
+    <android.support.v7.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:id="@+id/logintoolbar"
+        android:layout_alignParentTop="true" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textSize="26sp"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:drawableLeft="@drawable/receipt_logo"/>
+    </android.support.v7.widget.Toolbar>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="50dp"
+        android:layout_below="@id/logintoolbar"
+        >
+        <EditText
+            style="@style/edit_text_blue_border"
+              android:id="@+id/email"  android:hint="@string/hint_email"/>
+        <EditText
+            style="@style/edit_text_blue_border"
+             android:id="@+id/password"
+            android:inputType="textPassword" android:hint="@string/hint_password"/>
+        <Button
+            style="@style/btnstyleauthentication" android:id="@+id/login_button"
+            android:text="@string/log_in" android:background="@drawable/blue_button_selector"
+            android:enabled="false"
+            android:layout_marginTop="10dp"/>
+        <Button
+            style="@style/btnstyleauthentication" android:id="@+id/forgot_password_button"
+            android:text="@string/forgot_password" android:background="@color/app_light_blue_100"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="18sp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/app_light_blue_100"
+            android:text="Use Social Account"
+            />
+        <include layout="@layout/social_media_btn"/>
+    </LinearLayout>
+</RelativeLayout>

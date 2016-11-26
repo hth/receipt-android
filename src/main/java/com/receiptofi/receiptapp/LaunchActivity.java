@@ -9,7 +9,9 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.utils.UserUtils;
+import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 
 /**
  * Launch activity facilities.
@@ -28,13 +30,18 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (UserUtils.isValidAppUser()) {
-            startActivity(new Intent(this, MainMaterialDrawerActivity.class));
+        Log.d(TAG,"LaunchActivity Oncreate");
+         if (UserUtils.isValidAppUser()) {
+             // Change to Main activity activity
+           /* startActivity(new Intent(this, MainMaterialDrawerActivity.class));*/
+             startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
         Log.d(TAG, "executing onCreate");
-        setContentView(R.layout.launch_page);
-        getActionBar().hide();
+
+        setContentView(R.layout.launchpage1);
+       // setContentView(R.layout.launch_page);
+       // getActionBar().hide();
 
         //login via Facebook
         LinearLayout mFacebookLogin = (LinearLayout) findViewById(R.id.facebook_login);
@@ -49,7 +56,8 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         signUp.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LaunchActivity.this, SignUpActivity.class));
+                //Chnage omkar
+                startActivity(new Intent(LaunchActivity.this, SignUpActivity1.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
@@ -59,13 +67,13 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         signIn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(LaunchActivity.this, LogInActivity.class));
+                startActivity(new Intent(LaunchActivity.this, LogInActivity1.class));
                 overridePendingTransition(R.anim.slide_in_right, R.anim.slide_out_left);
             }
         });
 
-        ImageButton splashButton = (ImageButton) findViewById(R.id.ib_splash);
-        splashButton.setOnClickListener(this);
+        /*ImageButton splashButton = (ImageButton) findViewById(R.id.ib_splash);
+        splashButton.setOnClickListener(this);*/
     }
 
     @Override

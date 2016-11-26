@@ -24,7 +24,7 @@
         android:layout_marginTop="15dp"
         />
 
-    <com.gc.materialdesign.views.ButtonFloat
+    <android.support.design.widget.FloatingActionButton
         android:id="@+id/buttonFloat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,6 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:background="#1E88E5"
-        materialdesign:animate="true"
-        materialdesign:iconDrawable="@drawable/ic_action_new"/>
+        android:src="@drawable/ic_action_new"/>
 
 </RelativeLayout>

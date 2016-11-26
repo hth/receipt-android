@@ -12,14 +12,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.braintreepayments.api.Braintree;
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
-import com.gc.materialdesign.views.ButtonRectangle;
-import com.gc.materialdesign.widgets.Dialog;
+
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;
@@ -52,7 +52,7 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
     private TextView planName;
     private TextView planDescription;
     private TextView planPrice;
-    private ButtonRectangle btnSubscribe;
+    private Button btnSubscribe;
     private SuperActivityToast progressToast;
     private PlanModel pm;
     private String firstName;
@@ -90,8 +90,8 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
                     break;
                 case SUBSCRIPTION_PAYMENT_FAILED:
                     Log.d(TAG, "payment failed");
-                    Dialog dialog = new Dialog(getActivity(), "Payment Failed", "Sorry your payment is failed!");
-                    dialog.show();
+                    /*Dialog dialog = new Dialog(getActivity(), "Payment Failed", "Sorry your payment is failed!");
+                    dialog.show();*/
                     break;
                 case SUBSCRIPTION_CANCELLED_FAILED:
                     Log.d(TAG, "subscription cancellation failed");
@@ -201,8 +201,8 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             View childSubmission = inflater.inflate(R.layout.subscription_submission, null);
             subscriptionPlanLinearLayout.addView(childSubmission);
 
-            btnSubscribe = (ButtonRectangle) rootView.findViewById(R.id.btn_subscribe);
-            btnSubscribe.setRippleSpeed(Constants.RIPPLE_SPEED_EFFECT);
+            btnSubscribe = (Button) rootView.findViewById(R.id.btn_subscribe);
+          //  btnSubscribe.setRippleSpeed(Constants.RIPPLE_SPEED_EFFECT);
             if (pm.getId().equals(TokenWrapper.getTokenModel().getPlanId())) {
                 btnSubscribe.setText("UN-SUBSCRIBE");
             } else {

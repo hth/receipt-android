@@ -207,7 +207,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         Log.d(TAG, "inside rightButtonClick");
         isRightButtonClicked = true;
         if (isLeftButtonClicked) {
-            email.setText("blank@r.com");
+            email.setText("testme@r.com");
             password.setText("testtest");
         }
     }
