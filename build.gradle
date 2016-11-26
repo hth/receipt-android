@@ -388,4 +388,5 @@ task wrapper(type: Wrapper) {
     gradleVersion = '2.4'
 }
 
+/** Gradle default task. */
 defaultTasks 'clean', 'assembleDebug'
