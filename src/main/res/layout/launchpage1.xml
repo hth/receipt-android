@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:background="@drawable/bg">
+
+
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/receipt_app_logo"
+        android:layout_above="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/imageView" />
+
+    <TextView
+        android:text="@string/app_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+       android:layout_above="@+id/launchpage_login_bottom"
+android:layout_marginBottom="100dp"
+        android:fontFamily="sans-serif"
+        android:layout_centerHorizontal="true"
+        android:textSize="30sp"
+        android:id="@+id/textView" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:id="@+id/launchpage_login_bottom"
+        >
+
+        <include layout="@layout/social_media_btn"/>
+
+        <TextView
+            android:id="@+id/email_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/google_login"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center_horizontal"
+            android:text="@string/use_email"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="@color/app_light_blue_100"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/email_text"
+            android:layout_marginBottom="50dp"
+
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/sign_up_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/app_button_height"
+                android:layout_weight="1"
+                android:background="@drawable/blue_button_selector"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="5dp"
+                android:gravity="center"
+                android:text="@string/sign_up"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"/>
+
+
+
+            <TextView
+                android:id="@+id/sign_in_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/app_button_height"
+                android:layout_weight="1"
+                android:background="@drawable/blue_button_selector"
+                android:gravity="center"
+                android:text="@string/log_in"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="5dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@android:color/white"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

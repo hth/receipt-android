@@ -58,7 +58,6 @@ public class SplashActivity extends Activity implements ViewPager.OnPageChangeLi
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 

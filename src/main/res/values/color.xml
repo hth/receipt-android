@@ -20,7 +20,7 @@
     <color name="light_black">#33000000</color>
 
     <!--       Facebook blue      -->
-    <color name="facebook_bg">#3C5A99</color>
+    <color name="facebook_bg">#3b5998</color>
     <color name="facebook_bg_light">#526FA3</color>
 
     <!--       Gmail red      -->
@@ -35,6 +35,7 @@
     <color name="yellow">#FFFF00</color>
     <color name="blue">#0000FF</color>
     <color name="magenta">#DF01D7</color>
+    <color name="green">#00b200</color>
 
     <!--       For text view black color   -->
     <color name="tv_black">#87000000</color>
@@ -46,5 +47,14 @@
     <color name="light_blue_500">#03A9F4</color>
 
     <color name="receipt_in_process">#FFAAAAAA</color>
+
+    <!--- color for or -->
+    <color name="or">#8AA3B2</color>
+    <color name="app_blue">#3698d1</color>
+    <color name="app_black">#083548</color>
+    <color name="app_light_blue_100">#729BB0</color>
+    <color name="app_light_blue_200">#d2e5f3</color>
+    <color name="app_light_blue_300">#38a8d8</color>
+    <color name="app_red">#d1344e</color>
 
 </resources>

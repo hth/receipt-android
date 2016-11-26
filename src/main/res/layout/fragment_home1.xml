@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+
+  <!-- <in.srain.cube.views.ptr.PtrFrameLayout
+       xmlns:cube_ptr="http://schemas.android.com/apk/res-auto"
+       android:id="@+id/material_style_ptr_frame"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       cube_ptr:ptr_duration_to_close="300"
+       cube_ptr:ptr_duration_to_close_header="2000"
+       cube_ptr:ptr_keep_header_when_refresh="true"
+       cube_ptr:ptr_pull_to_fresh="false"
+       cube_ptr:ptr_ratio_of_header_height_to_refresh="1.2"
+       cube_ptr:ptr_resistance="1.7"
+       >-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/app_light_blue_200"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/detail"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/app_light_blue_100"
+                android:text="uploading image 2 of 3" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/app_light_blue_100"
+                android:text="Receipts in-process:3" />
+        </LinearLayout>
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pie_chart"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/current_amount"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:padding="@dimen/activity_horizontal_margin"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="january 2016 - 8,97 $"
+            android:textAllCaps="true"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:textColor="@color/app_black"
+            android:gravity="center" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/detail"
+        android:paddingBottom="5dp"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+       >
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" android:orientation="horizontal">
+            <TextView
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/app_black"
+                android:id="@+id/tv_you_owe"
+                android:text="You Owe"
+                android:gravity="left"
+                />
+            <TextView
+                android:id="@+id/processing_info"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:textColor="@color/green_200"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="0,00 "
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.2"
+            android:orientation="horizontal">
+            <TextView
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/app_black"
+                android:id="@+id/tv_other_owe_you"
+                android:text="Others owe you"
+                android:gravity="left"
+                />
+            <TextView
+                android:id="@+id/empty_chart"
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:textColor="@color/app_red"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="0,00 "
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:id="@+id/tv_total"
+                android:textSize="12sp"
+                android:textColor="@color/app_black"
+                android:text="Total"
+                android:gravity="left"
+                />
+            <TextView
+                android:textSize="12sp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:textColor="@color/app_blue"
+                android:text="0,00 "
+                />
+        </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="5dp"
+    android:orientation="horizontal">
+    <LinearLayout
+        android:id="@+id/ll_take_photo"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@color/app_blue"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/take_a_photo"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/take_photo"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    <!--<Button
+        android:layout_margin="10dp"
+        android:layout_width="0dp" android:layout_weight="1"
+        android:text="@string/take_photo"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/take_a_photo"
+        android:layout_height="wrap_content" android:background="@color/blue_300"
+        android:id="@+id/camera_action_layout_view" />-->
+
+<!--    <Button
+         android:layout_margin="10dp"
+        android:layout_width="0dp" android:layout_weight="1"
+         android:text="@string/choose_photo"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:textColor="@color/white"
+        android:drawableLeft="@drawable/choose_photo"
+        android:layout_height="wrap_content" android:background="@color/blue_300" />
+    -->
+    <LinearLayout
+        android:id="@+id/ll_choose_photo"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="5dp"
+        android:background="@color/app_blue"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@drawable/choose_photo"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:text="@string/choose_photo"
+            android:gravity="center"
+            />
+    </LinearLayout>
+    </LinearLayout>
+    </LinearLayout>
+<!--<android.support.design.widget.BottomNavigationView
+    android:id="@+id/bottomNavigation"
+    android:touchscreenBlocksFocus="false"
+    android:layout_width="match_parent"
+    android:layout_height="56dp"
+    android:layout_alignParentBottom="true"
+    app:menu="@menu/menu_home_bottom_navigation"
+    app:itemBackground="@color/white"
+    app:itemIconTint="@color/blue_800"
+    app:itemTextColor="@color/red"
+    />-->
+  <!-- </in.srain.cube.views.ptr.PtrFrameLayout>-->
+
+</RelativeLayout>

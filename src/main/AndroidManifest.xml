@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.receiptofi.receiptapp" >
+    package="com.receiptofi.receiptapp">
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.USE_CREDENTIALS"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.TIMEZONE_CHANGED"/>
-    <uses-permission android:name="android.permission.READ_CALENDAR"/>
-    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.TIMEZONE_CHANGED" />
+    <uses-permission android:name="android.permission.READ_CALENDAR" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 
     <uses-feature
         android:name="android.hardware.camera"
@@ -28,7 +28,7 @@
         android:icon="@drawable/receipt_app_logo"
         android:label="@string/app_name"
         android:theme="@style/CustomActionBarTheme"
-        tools:replace="android:icon,android:theme" >
+        tools:replace="android:icon,android:theme">
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/FACEBOOK_APP_ID" />
@@ -38,7 +38,7 @@
 
         <activity
             android:name=".LaunchActivity"
-            android:windowSoftInputMode="stateAlwaysHidden" >
+            android:windowSoftInputMode="stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -63,7 +63,7 @@
         <activity
             android:name=".ReceiptListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".MainMaterialDrawerActivity" >
+            android:parentActivityName=".MainMaterialDrawerActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".FilterListActivity" />
@@ -74,25 +74,24 @@
         </activity>
         <activity
             android:name=".ShoppingPlaceActivity"
-            android:label="Shopping Places"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".MainMaterialDrawerActivity" >
+            android:label="Shopping Places"
+            android:parentActivityName=".MainMaterialDrawerActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value=".MainMaterialDrawerActivity" />
         </activity>
         <activity
             android:name=".ShoppingListActivity"
-            android:label="Shopping List"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:parentActivityName=".ShoppingPlaceActivity" >
-        </activity>
+            android:label="Shopping List"
+            android:parentActivityName=".ShoppingPlaceActivity"></activity>
         <activity
             android:name=".FilterListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="singleTop"
             android:noHistory="true"
-            android:parentActivityName=".MainMaterialDrawerActivity" >
+            android:parentActivityName=".MainMaterialDrawerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
 
@@ -108,7 +107,7 @@
                 android:value=".MainMaterialDrawerActivity" />
         </activity>
 
-        <receiver android:name=".receivers.NetworkConnectivityReceiver" >
+        <receiver android:name=".receivers.NetworkConnectivityReceiver">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
@@ -121,64 +120,91 @@
             android:name=".MainMaterialDrawerActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="@string/title_activity_main_page"
-            android:theme="@style/KitkatStatusBar" >
+            android:theme="@style/KitkatStatusBar">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".FilterListActivity" />
         </activity>
         <activity
             android:name=".SubscriptionUserActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"
-            android:label="@string/title_activity_subscription_user" >
+            android:label="@string/title_activity_subscription_user"
+            android:windowSoftInputMode="stateHidden|adjustResize">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".FilterListActivity" />
         </activity>
         <activity
             android:name=".SubscribeConfirmationActivity"
-            android:label="@string/title_activity_subscribe_confirmation">
-        </activity>
+            android:label="@string/title_activity_subscribe_confirmation"></activity>
         <!-- Required to use Drop-In -->
-        <activity android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity"
+        <activity
+            android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity"
             android:parentActivityName=".SubscriptionUserActivity" />
 
         <!-- For Crash Dialog -->
-        <activity android:name="org.acra.CrashReportDialog"
-                  android:theme="@style/Theme.Dialog"
-                  android:process=":error_report"
-                  android:launchMode="singleInstance"
-                  android:excludeFromRecents="true"
-                  android:finishOnTaskLaunch="true" />
+        <activity
+            android:name="org.acra.CrashReportDialog"
+            android:excludeFromRecents="true"
+            android:finishOnTaskLaunch="true"
+            android:launchMode="singleInstance"
+            android:process=":error_report"
+            android:theme="@style/Theme.Dialog" />
 
         <!-- GCM -->
         <receiver
             android:name="com.google.android.gms.gcm.GcmReceiver"
             android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
+            android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="com.receiptofi.receiptapp" />
             </intent-filter>
         </receiver>
+
         <service
-            android:name="com.receiptofi.receiptapp.service.gcm.GcmListenerService"
-            android:exported="false" >
+            android:name=".service.gcm.GcmListenerService"
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
         <service
-            android:name="com.receiptofi.receiptapp.service.gcm.InstanceIDListenerService"
+            android:name=".service.gcm.InstanceIDListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID"/>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
             </intent-filter>
         </service>
         <service
-            android:name="com.receiptofi.receiptapp.service.gcm.RegistrationIntentService"
-            android:exported="false">
-        </service>
+            android:name=".service.gcm.RegistrationIntentService"
+            android:exported="false"></service>
         <!-- GCM Ends -->
+        <activity android:name=".HomeActivity"></activity>
+        <activity
+            android:name=".SignUpActivity1"
+            android:label="@string/label_sign_up"
+            android:windowSoftInputMode="stateAlwaysVisible" >
+            <meta-data android:value="com.receiptofi.receiptapp.LaunchActivity"
+                android:name="android.support.PARENT_ACTIVITY"
+                ></meta-data>
+        </activity>
+        <activity
+            android:name=".LogInActivity1"
+            android:label="@string/label_sign_up"
+            android:windowSoftInputMode="stateAlwaysVisible" >
+            <meta-data android:value="com.receiptofi.receiptapp.LaunchActivity"
+                android:name="android.support.PARENT_ACTIVITY"
+                ></meta-data>
+        </activity>
+        <activity
+            android:name=".PasswordRecoveryActivity1"
+            android:label="@string/label_sign_up"
+            android:windowSoftInputMode="stateAlwaysVisible" >
+            <meta-data android:value="com.receiptofi.receiptapp.LogInActivity1"
+                android:name="android.support.PARENT_ACTIVITY"
+                ></meta-data>
+        </activity>
     </application>
 
 </manifest>

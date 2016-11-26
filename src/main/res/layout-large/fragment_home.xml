@@ -49,7 +49,6 @@
                             android:layout_gravity="center_horizontal"
                             android:layout_marginBottom="5dp"
                             android:background="@drawable/action_button_bg"
-                            android:onClick="takePhoto"
                             android:orientation="horizontal"
                             android:paddingEnd="30dp"
                             android:paddingLeft="40dp"

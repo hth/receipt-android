@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
@@ -49,7 +50,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class ParentActivity extends Activity implements ConnectionCallbacks, OnConnectionFailedListener {
+public class  ParentActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     private static final String TAG = ParentActivity.class.getSimpleName();
 
     protected static final int GOOGLE_PLUS_SIGN_IN = 0x2565;
@@ -289,7 +290,8 @@ public class ParentActivity extends Activity implements ConnectionCallbacks, OnC
             @Override
             public void run() {
                 loginToastRunning = false;
-                Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);
+                /*Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);*/
+                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);
                 finish();
