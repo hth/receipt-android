@@ -46,11 +46,13 @@ Four kinds of network
 
 #### Inactive Card, Change name, Change number, Change card network
 
-To remove a card, set `a="0"` to inactive card with `"id":"abc1233980keh"`
-To update a card, 
-    set `nm="new_name"` to change card name with `"id":"abc1233980keh"`
-    set `cn="V"` to change to card network with `"id":"abc1233980keh"`
-    set `cd="8900"` to card number with `"id":"abc1233980keh"`
+- To remove a card, set `a="0"` to inactive card with `"id":"abc1233980keh"`
+- To update a card,
+        set `nm="new_name"` to change card name with `"id":"abc1233980keh"`
+        set `cn="V"` to change to card network with `"id":"abc1233980keh"`
+        set `cd="8900"` to card number with `"id":"abc1233980keh"`
+
+URL
 
     curl -X "POST" "http://localhost:9090/receipt-mobile/api/paymentCard/update.json"
          -H "X-R-AUTH: $2a$15$B/MOag/xLb/BTn9lduzCf.xvRcIjjfnFcACEi2TZpawzHCZQQju8G" 
