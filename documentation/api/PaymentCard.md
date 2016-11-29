@@ -37,6 +37,8 @@ Four kinds of network
 
 #### Add New Card
 
+When adding new card, `id` is blank or missing. Preferred to keep it blank.
+
     curl -X "POST" "http://localhost:9090/receipt-mobile/api/paymentCard/update.json"
          -H "X-R-AUTH: $2a$15$B/MOag/xLb/BTn9lduzCf.xvRcIjjfnFcACEi2TZpawzHCZQQju8G" 
          -H "Content-Type: application/json; charset=utf-8" 
@@ -52,7 +54,7 @@ Four kinds of network
         set `cn="V"` to change to card network with `"id":"abc1233980keh"`
         set `cd="8900"` to card number with `"id":"abc1233980keh"`
 
-URL
+Same URL for all activities 
 
     curl -X "POST" "http://localhost:9090/receipt-mobile/api/paymentCard/update.json"
          -H "X-R-AUTH: $2a$15$B/MOag/xLb/BTn9lduzCf.xvRcIjjfnFcACEi2TZpawzHCZQQju8G" 
