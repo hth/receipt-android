@@ -13,7 +13,6 @@
     <uses-permission android:name="android.permission.TIMEZONE_CHANGED" />
     <uses-permission android:name="android.permission.READ_CALENDAR" />
     <uses-permission android:name="android.permission.WRITE_CALENDAR" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
@@ -150,18 +149,6 @@
             android:process=":error_report"
             android:theme="@style/Theme.Dialog" />
 
-        <!-- GCM -->
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.receiptofi.receiptapp" />
-            </intent-filter>
-        </receiver>
-
         <service
             android:name=".service.gcm.GcmListenerService"
             android:exported="false">
@@ -173,7 +160,7 @@
             android:name=".service.gcm.InstanceIDListenerService"
             android:exported="false">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
         <service
