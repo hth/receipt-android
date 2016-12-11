@@ -33,7 +33,7 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         Log.d(TAG,"LaunchActivity Oncreate");
          if (UserUtils.isValidAppUser()) {
              // Change to Main activity activity
-           /* startActivity(new Intent(this, MainMaterialDrawerActivity.class));*/
+           //startActivity(new Intent(this, MainMaterialDrawerActivity.class));
              startActivity(new Intent(this, HomeActivity.class));
             finish();
         }

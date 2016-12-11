@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 
+import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
@@ -90,7 +91,7 @@ public class ImageUploaderService {
                     msg.obj = "Uploaded " + fileName + " successfully.";
                     msg.arg1 = unprocessedCount;
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
-                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
+                        ((HomeActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                     }
                 }
 
@@ -103,11 +104,11 @@ public class ImageUploaderService {
                 updateProcessStatus(iModel);
                 Log.e(TAG, "Image upload failed due to exception " + iModel.imgPath + " reason " + exception.getLocalizedMessage(), exception);
 
-                Message msg = new Message();
+  ;              Message msg = new Message();
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
                 msg.obj = exception.getLocalizedMessage();
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
+                    ((HomeActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                 }
             }
 
@@ -121,7 +122,7 @@ public class ImageUploaderService {
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
                 msg.obj = "Image upload failed. " + Error;
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
+                    ((HomeActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                 }
             }
         });

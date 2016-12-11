@@ -587,4 +587,10 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             });
         }
     }
+
+    public static SettingFragment getInstance()
+    {
+        SettingFragment  settingFragment = new SettingFragment();
+        return  settingFragment;
+    }
 }

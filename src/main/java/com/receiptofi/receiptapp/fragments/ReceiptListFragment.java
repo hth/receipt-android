@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.widget.SearchView;
 import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,11 +23,11 @@ import android.widget.AbsListView.LayoutParams;
 import android.widget.AutoCompleteTextView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
-import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
+import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptListActivity;
 import com.receiptofi.receiptapp.adapters.ReceiptListAdapter;
@@ -76,8 +77,8 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
                     groups = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptGroupHeaders();
                     children = ReceiptGroupObservable.getMonthlyReceiptGroup().getReceiptModels();
                     ((ReceiptListAdapter) explv.getExpandableListAdapter()).notifyDataSetChanged();
-                    int groupPosition = ((ReceiptListActivity) getActivity()).getGroupIndex();
-                    int childPosition = ((ReceiptListActivity) getActivity()).getChildIndex();
+                    int groupPosition = ((HomeActivity) getActivity()).getGroupIndex();
+                    int childPosition = ((HomeActivity) getActivity()).getChildIndex();
 
                     // we wouldn't want to run this, if there is nothing selected in list
                     if (groupPosition != -1 && childPosition != -1) {
@@ -148,8 +149,8 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
         super.onResume();
         receiptGroupObservable.registerObserver(receiptGroupObserver);
         /** Remove selected receipt from list to avoid re-loading of the detail receipt when refresh is complete. */
-        ((ReceiptListActivity) getActivity()).setGroupIndex(-1);
-        ((ReceiptListActivity) getActivity()).setChildIndex(-1);
+        ((HomeActivity) getActivity()).setGroupIndex(-1);
+        ((HomeActivity) getActivity()).setChildIndex(-1);
 
         /** When resume, refresh anyway to update list with any changes. */
         updateHandler.sendEmptyMessage(RECEIPT_MODEL_UPDATED);
@@ -186,15 +187,15 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             Drawable mDraw = new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
                     .colorRes(R.color.white)
                     .actionBarSize();
-            int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
+           /* int searchImgId = getResources().getIdentifier("android:id/search_button", null, null);
             ImageView v = (ImageView) searchView.findViewById(searchImgId);
-            v.setImageDrawable(mDraw);
-
+            v.setImageDrawable(mDraw);*/
+/*
             int autoCompleteTextViewID = getResources().getIdentifier("android:id/search_src_text", null, null);
             AutoCompleteTextView searchAutoCompleteTextView = (AutoCompleteTextView) searchView.findViewById(autoCompleteTextViewID);
             searchAutoCompleteTextView.setTextColor(Color.WHITE);
             searchAutoCompleteTextView.setHint("Search");
-            searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+            searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);*/
         }
         super.onCreateOptionsMenu(menu, inflater);
     }
@@ -204,11 +205,11 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_receipt_actions:
-                if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
+               /* if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
                     ((ReceiptListActivity) getActivity()).closeDrawer();
                 } else {
                     ((ReceiptListActivity) getActivity()).openDrawer();
-                }
+                }*/
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -235,7 +236,7 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
                 if (null != searchView && checkFocusRec(searchView)) {
                     searchView.clearFocus();
                 }
-                ((ReceiptListActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
+                ((HomeActivity) getActivity()).onReceiptSelected(groupPosition, childPosition);
                 return false;
             }
         });
@@ -310,5 +311,12 @@ public class ReceiptListFragment extends Fragment implements PinnedHeaderExpanda
             }
         }
         return false;
+    }
+
+
+    public static ReceiptListFragment getInstance()
+    {
+        ReceiptListFragment fragment = new ReceiptListFragment();
+        return fragment;
     }
 }
