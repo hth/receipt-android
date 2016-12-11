@@ -3,8 +3,10 @@ package com.receiptofi.receiptapp.fragments;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -12,7 +14,11 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,12 +28,32 @@ import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.github.mikephil.charting.charts.PieChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
+import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
+import com.receiptofi.receiptapp.service.ChartService;
+import com.receiptofi.receiptapp.service.DeviceService;
 import com.receiptofi.receiptapp.utils.AppUtils;
+import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
+import com.receiptofi.receiptapp.utils.db.MonthlyReportUtils;
+import com.receiptofi.receiptapp.views.FlowLayout;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+import java.util.regex.Pattern;
+
+import in.srain.cube.views.ptr.PtrFrameLayout;
+import in.srain.cube.views.ptr.PtrHandler;
 
 import static android.app.Activity.RESULT_CANCELED;
 import static android.app.Activity.RESULT_OK;
@@ -36,7 +62,7 @@ import static android.app.Activity.RESULT_OK;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class HomeFragment1 extends Fragment implements View.OnClickListener {
+public class HomeFragment1 extends Fragment implements View.OnClickListener, OnChartValueSelectedListener {
     private static  final String TAG = HomeFragment1.class.getSimpleName();
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -55,10 +81,24 @@ public class HomeFragment1 extends Fragment implements View.OnClickListener {
     public static final int UPDATE_EXP_BY_BIZ_CHART = 0x2569;
     public static final int GET_ALL_RECEIPTS = 0x2570;
     private SuperActivityToast uploadImageToast;
-
+    private String currentMonthExpValue;
     private String unprocessedValue;
+    private static final DateFormat DF_MMM = new SimpleDateFormat("MMM yyyy", Locale.US);
+    public static final DateFormat DF_YYYY_MM = new SimpleDateFormat("yyyy MM", Locale.US);
+    private boolean expByBizAnimate = false;
+
+    private TextView currentMonthExp;
     //UI variables
+
 private  LinearLayout llTakePhoto,llChoosePhoto;
+    // TODO: Rename and change types of parameters
+    private String mParam1;
+    private String mParam2;
+    protected PtrFrameLayout mPtrFrameLayout;
+    private View view;
+    private TextView unprocessedDocumentCount;
+    private PieChart mChart;
+    private PieData expByBizData;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -68,44 +108,44 @@ private  LinearLayout llTakePhoto,llChoosePhoto;
                     unprocessedValue = Integer.toString(msg.arg1);
                     setUnprocessedCount();
                     showMessage((String) msg.obj, SuperToast.Background.BLUE);
-                    if (getActivity() instanceof MainMaterialDrawerActivity) {
-                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    if (getActivity() instanceof HomeActivity) {
+                        ((HomeActivity) getActivity()).stopProgressToken();
                     }
                     break;
                 case IMAGE_UPLOAD_FAILURE:
                     showMessage((String) msg.obj, SuperToast.Background.RED);
-                    if (getActivity() instanceof MainMaterialDrawerActivity) {
-                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    if (getActivity() instanceof HomeActivity) {
+                        ((HomeActivity) getActivity()).stopProgressToken();
                     }
                     break;
                 case IMAGE_ADDED_TO_QUEUED:
-                    if (getActivity() instanceof MainMaterialDrawerActivity) {
-                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    if (getActivity() instanceof HomeActivity) {
+                        ((HomeActivity) getActivity()).stopProgressToken();
                     }
                     showMessage((String) msg.obj, SuperToast.Background.BLUE);
                     break;
                 case IMAGE_ALREADY_QUEUED:
-                    if (getActivity() instanceof MainMaterialDrawerActivity) {
-                        ((MainMaterialDrawerActivity) getActivity()).stopProgressToken();
+                    if (getActivity() instanceof HomeActivity) {
+                        ((HomeActivity) getActivity()).stopProgressToken();
                     }
                     showMessage((String) msg.obj, SuperToast.Background.GRAY);
                     break;
                 case UPDATE_UNPROCESSED_COUNT:
                     unprocessedValue = (String) msg.obj;
                     setUnprocessedCount();
-                   /* if (mPtrFrameLayout != null) {
+                    if (mPtrFrameLayout != null) {
                         mPtrFrameLayout.refreshComplete();
-                    }*/
+                    }
                     break;
                 case UPDATE_MONTHLY_EXPENSE:
-                   // currentMonthExpValue = (String) msg.obj;
-                   // setMonthlyExpense();
+                   currentMonthExpValue = (String) msg.obj;
+                    setMonthlyExpense();
                     break;
                 case UPDATE_EXP_BY_BIZ_CHART:
-                   // expByBizAnimate = true;
+                      expByBizAnimate = true;
                     // We must add below condition to avoid getActivity be null exception.
                     if (isAdded()) {
-                       //  updateChartData();
+                        updateChartData();
                     }
                     break;
                 default:
@@ -114,6 +154,8 @@ private  LinearLayout llTakePhoto,llChoosePhoto;
             return true;
         }
     });
+
+
 
     public HomeFragment1() {
         // Required empty public constructor
@@ -137,21 +179,78 @@ private  LinearLayout llTakePhoto,llChoosePhoto;
     }
 
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            mParam1 = getArguments().getString(ARG_PARAM1);
+            mParam2 = getArguments().getString(ARG_PARAM2);
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home1,container,false);
+         view = inflater.inflate(R.layout.fragment_home1,container,false);
         llTakePhoto = (LinearLayout)view.findViewById(R.id.ll_take_photo);
         llChoosePhoto = (LinearLayout)view.findViewById(R.id.ll_choose_photo);
 
+        /** Setup Material design pull to refresh. */
+        mPtrFrameLayout = (PtrFrameLayout) view.findViewById(R.id.material_style_ptr_frame);
+        mPtrFrameLayout.setLoadingMinTime(1000);
+        mPtrFrameLayout.setDurationToCloseHeader(1500);
+        // Todo : header is not added
+       // mPtrFrameLayout.setHeaderView(header);
+       // mPtrFrameLayout.addPtrUIHandler(header);
+      mPtrFrameLayout.setPtrHandler(new PtrHandler() {
+          @Override
+          public boolean checkCanDoRefresh(PtrFrameLayout frame, View content, View header) {
+              return false;
+          }
+
+          @Override
+          public void onRefreshBegin(final PtrFrameLayout frame) {
+              /** Pull down refresh gets latest updates. */
+              String getAllComplete = KeyValueUtils.getValue(KeyValueUtils.KEYS.GET_ALL_COMPLETE);
+              if (TextUtils.isEmpty(getAllComplete) || Boolean.toString(false).equals(getAllComplete)) {
+                  Log.i(TAG, "Failed previously to complete " + KeyValueUtils.KEYS.GET_ALL_COMPLETE);
+                  DeviceService.getAll(getActivity());
+              } else {
+                  DeviceService.getUpdates(getActivity());
+              }
+              long delay = (long) 10000;
+              frame.postDelayed(new Runnable() {
+                  @Override
+                  public void run() {
+                      frame.refreshComplete();
+                  }
+              }, delay);
+
+          }
+      });
+        this.instantiateViews();
+        // OnCreate we need to set values from Database and these will be updated later once
+        // update from server is received.
+        unprocessedValue = KeyValueUtils.getValue(KeyValueUtils.KEYS.UNPROCESSED_DOCUMENT);
+        setUnprocessedCount();
+        try {
+            String[] monthDay = DF_YYYY_MM.format(new Date()).split(Pattern.quote(" "));
+            currentMonthExpValue = MonthlyReportUtils.fetchMonthlyTotal(monthDay[0], monthDay[1]);
+           setMonthlyExpense();
+        } catch (Exception e) {
+            Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+        }
+        updateChartData();
 
         llTakePhoto.setOnClickListener(this);
         llChoosePhoto.setOnClickListener(this);
         return view;
     }
 
-
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
 
     @Override
     public void onClick(View v) {
@@ -216,6 +315,17 @@ private  LinearLayout llTakePhoto,llChoosePhoto;
         }
     }
 
+
+    @Override
+    public void onValueSelected(Entry e, int dataSetIndex, Highlight h) {
+
+    }
+
+    @Override
+    public void onNothingSelected() {
+
+    }
+
     public void takePhoto() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         File photoFile = AppUtils.createImageFile();
@@ -277,9 +387,109 @@ private  LinearLayout llTakePhoto,llChoosePhoto;
         Log.d(TAG, "executing setUnprocessedCount");
         Activity activity = getActivity();
         if (activity != null) {
-          //  unprocessedDocumentCount.setText(getString(R.string.processing_info, unprocessedValue));
+           unprocessedDocumentCount.setText(getString(R.string.processing_info, unprocessedValue));
         } else {
             Log.d(TAG, "setUnprocessedCount the response of getActivity() is null.");
         }
     }
+
+    private void instantiateViews() {
+        //Todo ask about current month expense , empty chart
+        unprocessedDocumentCount = (TextView) view.findViewById(R.id.processing_info);
+       currentMonthExp = (TextView) view.findViewById(R.id.current_amount);
+        mChart = (PieChart) view.findViewById(R.id.pie_chart);
+       // emptyChart = (TextView) view.findViewById(R.id.empty_chart);
+        setUpChartView();
+    }
+
+
+    private void setUpChartView() {
+        // change the color of the center-hole
+        mChart.setDrawHoleEnabled(true);
+        mChart.setHoleColorTransparent(true);
+        mChart.setHoleRadius(45f);
+
+        mChart.setDrawCenterText(true);
+        mChart.setRotationAngle(0);
+        // enable rotation of the chart by touch
+        mChart.setRotationEnabled(true);
+
+        mChart.setDescription("");
+        // display percentage values
+        mChart.setUsePercentValues(true);
+
+        // add a selection listener
+        mChart.setOnChartValueSelectedListener(this);
+
+        mChart.setCenterText(getString(R.string.chart_desc_short));
+        mChart.setCenterTextSize(14f);
+        mChart.setCenterTextColor(getResources().getColor(R.color.app_theme_txt_color));
+        mChart.setCenterTextTypeface(Typeface.DEFAULT_BOLD);
+    }
+
+
+    private void setMonthlyExpense() {
+        Log.d(TAG, "executing setMonthlyExpense");
+        Activity activity = getActivity();
+        if (null != activity) {
+            String amount = AppUtils.currencyFormatter().format(Double.valueOf(currentMonthExpValue));
+            String month = DF_MMM.format(new Date());
+            String monthlyExp = month +" "+ amount;
+           // Spannable wordToSpan = new SpannableString(getString(R.string.monthly_amount, month, amount));
+          //  wordToSpan.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.father_bg)), wordToSpan.length() - month.length() - PADDING_SPACE, wordToSpan.length(), 0);
+          //  wordToSpan.setSpan(new RelativeSizeSpan(1.22f), wordToSpan.length() - month.length() - PADDING_SPACE, wordToSpan.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+            currentMonthExp.setText(monthlyExp);
+        } else {
+            Log.d(TAG, "setMonthlyExpense the response of getActivity() is null.");
+        }
+    }
+
+    private void updateChartData() {
+        expByBizData = ChartService.getPieData();
+        if (expByBizData.getXVals().size() > 0) {
+            if (mChart.getVisibility() == View.GONE) {
+                mChart.setVisibility(View.VISIBLE);
+              //  emptyChart.setVisibility(View.GONE);
+            }
+            if (expByBizAnimate) {
+                mChart.animateXY(1500, 1500);
+                // mChart.spin(2000, 0, 360);
+                expByBizAnimate = false;
+            }
+            mChart.setData(expByBizData);
+
+            // undo all highlights
+            mChart.highlightValues(null);
+
+            mChart.invalidate();
+            addLegend();
+        } else {
+            mChart.setVisibility(View.GONE);
+           // emptyChart.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void addLegend() {
+        Legend legend = mChart.getLegend();
+        int[] colorCodes = legend.getColors();
+        String[] labelArr = legend.getLabels();
+        legend.setEnabled(false);
+
+      /*  FlowLayout ll = (FlowLayout) view.findViewById(R.id.legend_layout);
+        ll.removeAllViews();*/
+        for (int i = 0; i < colorCodes.length; i++) {
+
+            LinearLayout legendLayout = (LinearLayout) LayoutInflater.from(getActivity()).inflate(R.layout.legend_item, null);
+
+            View legendColor = legendLayout.getChildAt(0);
+            legendColor.setBackgroundColor(colorCodes[i]);
+
+            TextView legendText = (TextView) legendLayout.getChildAt(1);
+            legendText.setText(labelArr[i]);
+
+          //  ll.addView(legendLayout);
+        }
+    }
+
+
 }

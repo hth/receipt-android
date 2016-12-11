@@ -167,7 +167,11 @@
             android:name=".service.gcm.RegistrationIntentService"
             android:exported="false"></service>
         <!-- GCM Ends -->
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".HomeActivity">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".FilterListActivity" />
+        </activity>
         <activity
             android:name=".SignUpActivity1"
             android:label="@string/label_sign_up"
@@ -175,6 +179,7 @@
             <meta-data android:value="com.receiptofi.receiptapp.LaunchActivity"
                 android:name="android.support.PARENT_ACTIVITY"
                 ></meta-data>
+
         </activity>
         <activity
             android:name=".LogInActivity1"

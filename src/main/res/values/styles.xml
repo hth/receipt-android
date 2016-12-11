@@ -18,17 +18,17 @@
     </style>
 
     <style name="exp_list_child_text_left_primary_style" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">@color/app_theme_txt_color</item>
+        <item name="android:textColor">@color/app_black</item>
         <item name="android:textSize">16sp</item>
     </style>
 
     <style name="exp_list_child_text_left_secondary_style" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textColor">@color/app_light_blue_100</item>
     </style>
 
     <style name="exp_list_child_text_right_style" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">@color/app_theme_txt_color</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/app_black</item>
+        <item name="android:textSize">19sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 

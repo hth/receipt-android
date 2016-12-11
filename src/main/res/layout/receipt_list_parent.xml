@@ -1,7 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/father_bg"
+              android:background="@color/app_blue"
               android:orientation="horizontal"
               android:paddingLeft="@dimen/expandable_list_parent_padding_left"
               android:paddingRight="@dimen/expandable_list_parent_padding_right">
@@ -20,9 +20,10 @@
     <TextView
         android:id="@+id/exp_list_header_amount"
         style="@style/exp_list_parent_text_right_style"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="right|center_vertical"
+        android:layout_weight="1"
+        android:gravity="right"
         android:minHeight="?android:attr/listPreferredItemHeightSmall"
         android:minWidth="90dp"
         android:text="$00,000.00"

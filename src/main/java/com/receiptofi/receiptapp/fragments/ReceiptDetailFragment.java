@@ -277,7 +277,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
 
-        inflater.inflate(R.menu.menu_main_detail_receipt, menu);
+      /*  inflater.inflate(R.menu.menu_main_detail_receipt, menu);
         MenuItem receiptAction = menu.findItem(R.id.menu_receipt_actions)
                 .setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_tasks)
                         .colorRes(R.color.white)
@@ -288,9 +288,9 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getActivity().getComponentName()));
 
-        /**
+        *//**
          * Replace the default menu search image.
-         */
+         *//*
         Drawable mDraw = new IconDrawable(getActivity(), FontAwesomeIcons.fa_search)
                 .colorRes(R.color.white)
                 .actionBarSize();
@@ -298,10 +298,10 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         ImageView v = (ImageView) searchView.findViewById(searchImgId);
         v.setImageDrawable(mDraw);
 
-        /**
+        *//**
          * Below if is designed for FilterListActivity.
          * Because this fragment can be used by both normal ReceiptList Activity and FilterList Activity
-         */
+         *//*
         if (null != getActivity().getIntent() && !TextUtils.isEmpty(getActivity().getIntent().getStringExtra(SearchManager.QUERY))) {
             if (getActivity().getIntent().hasExtra(SearchManager.QUERY) && TextUtils.isEmpty(searchView.getQuery())) {
                 searchView.setIconified(false);
@@ -319,13 +319,13 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         searchAutoCompleteTextView.setTextColor(Color.WHITE);
         searchAutoCompleteTextView.setHint("Search");
         searchAutoCompleteTextView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        super.onCreateOptionsMenu(menu, inflater);
+      */  super.onCreateOptionsMenu(menu, inflater);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle item selection
-        switch (item.getItemId()) {
+       /* switch (item.getItemId()) {
             case R.id.menu_receipt_actions:
                 if (getActivity() instanceof ReceiptListActivity) {
                     if (((ReceiptListActivity) getActivity()).isDrawerOpened()) {
@@ -352,13 +352,14 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                 }
             default:
                 return super.onOptionsItemSelected(item);
-        }
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onPrepareOptionsMenu(Menu menu) {
         super.onPrepareOptionsMenu(menu);
-        MenuItem rightDrawer = menu.findItem(R.id.menu_receipt_actions);
+        /*MenuItem rightDrawer = menu.findItem(R.id.menu_receipt_actions);
         // We only change drawer show or not within Tablet environment.
         if (AppUtils.isTablet(getActivity())) {
             if (mCurrentPosition == -1) {
@@ -368,7 +369,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             }
         } else {
             rightDrawer.setVisible(true);
-        }
+        }*/
     }
 
     public void updateReceiptDetailView(int index, int position, boolean isFilterList) {
@@ -654,4 +655,7 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         }
         return app_installed;
     }
+
+  /*  navigate to previous fragment */
+
 }

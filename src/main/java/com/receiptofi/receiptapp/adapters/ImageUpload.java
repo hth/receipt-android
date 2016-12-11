@@ -5,10 +5,12 @@ import android.database.sqlite.SQLiteConstraintException;
 import android.os.Message;
 import android.util.Log;
 
+import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.fragments.HomeFragment;
+import com.receiptofi.receiptapp.fragments.HomeFragment1;
 import com.receiptofi.receiptapp.model.ImageModel;
 import com.receiptofi.receiptapp.service.ImageUploaderService;
 import com.receiptofi.receiptapp.utils.UserUtils.UserSettings;
@@ -51,9 +53,9 @@ public class ImageUpload {
                 ImageUploaderService.start(context);
             } else {
                 Message msg = new Message();
-                msg.what = HomeFragment.IMAGE_ADDED_TO_QUEUED;
+                msg.what = HomeFragment1.IMAGE_ADDED_TO_QUEUED;
                 msg.obj = context.getApplicationContext().getString(R.string.image_added_to_queue);
-                ((MainMaterialDrawerActivity) context).homeFragment.updateHandler.sendMessage(msg);
+                ((HomeActivity) context).homeFragment.updateHandler.sendMessage(msg);
             }
         } catch (SQLiteConstraintException e) {
             Message msg = new Message();

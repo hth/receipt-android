@@ -1,11 +1,15 @@
 package com.receiptofi.receiptapp;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -17,25 +21,40 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.receiptofi.receiptapp.fragments.HomeFragment;
 import com.receiptofi.receiptapp.fragments.HomeFragment1;
+import com.receiptofi.receiptapp.fragments.ReceiptDetailFragment;
+import com.receiptofi.receiptapp.fragments.ReceiptListFragment;
+import com.receiptofi.receiptapp.fragments.SettingFragment;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.ProfileModel;
 import com.receiptofi.receiptapp.service.gcm.RegistrationIntentService;
 import com.receiptofi.receiptapp.utils.AppUtils;
+import com.receiptofi.receiptapp.utils.Constants;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 import com.receiptofi.receiptapp.utils.db.ProfileUtils;
 
-public class HomeActivity extends AppCompatActivity implements View.OnClickListener {
+import org.apache.commons.lang3.text.WordUtils;
+
+import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
+
+public class HomeActivity extends AppCompatActivity implements View.OnClickListener, ReceiptListFragment.OnReceiptSelectedListener {
 
     private ReceiptofiApplication receiptofiApplication;
-    private HomeFragment1 homeFragment;
+    public HomeFragment1 homeFragment;
     private static final String TAG = HomeActivity.class.getSimpleName();
+    private String tagHome = "HOME";
+    private String tagReceipt = "RECEIPT";
+    private  String tagMe = "ME";
+    private String  tagSplit = "SPLIT";
+    private String tagShoppingList = "SHOPPINGLIST";
+    private String tagReceiptDetail = "RECEIPTDETAIL";
 
     //--- Bottom nav button
     public LinearLayout llbottom_nav_home,bottom_nav_receipts,bottom_nav_split,bottom_nav_shoping_list,bottom_nav_me;
@@ -43,9 +62,33 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private  Drawable drawablehomered,drawablereceiptred,drawablesplitred,drawableshoppinglistred,drawablemered,drawablehomeblue,drawablereceiptblue,drawablesplitblue,drawableshoppinglistblue,drawablemeblue;
 
     private Toolbar toolbar;
+    private MaterialAccount account;
+    public static final int UPDATE_USER_INFO = 0x1061;
+    private SuperActivityToast uploadImageToast;
+    private int groupIndex = -1;
+    private int childIndex = -1;
+
+    public final Handler updateHandler = new Handler(new Handler.Callback() {
+        @Override
+        public boolean handleMessage(Message msg) {
+            final int what = msg.what;
+            switch (what) {
+                case UPDATE_USER_INFO:
+                    ProfileModel profileModel = (ProfileModel) msg.obj;
+                   // refreshAccount(profileModel);
+                    break;
+                default:
+                    Log.e(TAG, "Update handler not defined for: " + what);
+            }
+            return true;
+        }
+    });
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        AppUtils.setHomePageContext(this);
         setContentView(R.layout.activity_home);
     }
 
@@ -54,7 +97,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         super.onStart();
         ReceiptofiApplication.homeActivityResumed();
         receiptofiApplication = (ReceiptofiApplication) getApplicationContext();
-        AppUtils.setHomePageContext(this);
 
         homeFragment = HomeFragment1.newInstance("", "");
 
@@ -76,16 +118,10 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     protected void onResume() {
         super.onResume();
+        Log.d("HomeActivity ","Home Activity OnResume");
         init();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-// Replace whatever is in the fragment_container view with this fragment,
-// and add the transaction to the back stack if needed
-        transaction.replace(R.id.fragment_container, homeFragment,"Home1");
-        transaction.addToBackStack(null);
-// Commit the transaction
-        transaction.commit();
         receiptofiApplication.setCurrentActivity(this);
-
+        replaceFragmentwithTag(homeFragment,tagHome);
     }
 
     @Override
@@ -208,9 +244,13 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         switch (id)
         {
             case R.id.btn_home:
+                HomeFragment homeFragment = new HomeFragment();
+                replaceFragmentwithTag(homeFragment,tagHome);
                 homebuttonClick();
                 break;
             case R.id.btn_me:
+                SettingFragment  settingFragment = SettingFragment.getInstance();
+                replaceFragmentwithTag(settingFragment,tagMe);
                 btn_home.setCompoundDrawablesWithIntrinsicBounds(null,drawablehomeblue,null,null);
                 btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null,drawablereceiptblue,null,null);
                 btn_split.setCompoundDrawablesWithIntrinsicBounds(null,drawablesplitblue,null,null);
@@ -225,6 +265,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 btn_me.setTextColor(HomeActivity.this.getResources().getColor(R.color.app_red));
                 break;
             case R.id.btn_receipts:
+                ReceiptListFragment fragment = ReceiptListFragment.getInstance();
+                replaceFragmentwithTag(fragment,tagReceipt);
                 btn_home.setCompoundDrawablesWithIntrinsicBounds(null,drawablehomeblue,null,null);
                 btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null,drawablereceiptred,null,null);
                 btn_split.setCompoundDrawablesWithIntrinsicBounds(null,drawablesplitblue,null,null);
@@ -287,4 +329,110 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         btn_shoppingList.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
         btn_me.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
     }
+
+    public void stopProgressToken() {
+        if (null != uploadImageToast && uploadImageToast.isShowing()) {
+            uploadImageToast.dismiss();
+        }
+    }
+
+   /* *//**
+     * Refreshes account profile on main menu.
+     *
+     * @param profileModel
+     *//*
+    private void refreshAccount(ProfileModel profileModel) {
+        if (null != account) {
+            TextDrawable textDrawable = TextDrawable.builder()
+                    .beginConfig()
+                    .textColor(Color.BLACK)
+                    .useFont(Typeface.DEFAULT)
+                    .fontSize(30) *//* size in px *//*
+                    .bold()
+                    .toUpperCase()
+                    .endConfig()
+                    .buildRound(WordUtils.initials(profileModel.getName()), Color.WHITE);
+
+            account.setPhoto(drawableToText(textDrawable));
+            account.setTitle(profileModel.getName());
+            setUserEmail(profileModel.getMail());
+        } else {
+            setUsername(profileModel.getName());
+            setUserEmail(profileModel.getMail());
+        }
+        *//** Works without this line but just to be safe. *//*
+        notifyAccountDataChanged();
+    }*/
+
+
+    private void replaceFragmentwithTag(Fragment fragment,String tag)
+    {
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+// Replace whatever is in the fragment_container view with this fragment,
+// and add the transaction to the back stack if needed
+        transaction.replace(R.id.fragment_container, fragment,tag);
+        transaction.addToBackStack(null);
+// Commit the transaction
+        transaction.commit();
+    }
+
+
+    public void onReceiptSelected(int index, int position) {
+        // The user selected the headline of an article from the HeadlinesFragment
+        Log.d(TAG, "executing onReceiptSelected: index is: " + index + " position is: " + position);
+        if (index < 0 || position < 0) {
+            return;
+        }
+
+        groupIndex = index;
+        childIndex = position;
+        // Capture the article fragment from the activity layout
+        ReceiptDetailFragment receiptDetailFragment = (ReceiptDetailFragment)
+                getFragmentManager().findFragmentById(R.id.rdetail_fragment);
+
+        if (receiptDetailFragment != null) {
+            Log.d(TAG, "detail fragment already instantiated");
+            // If article frag is available, we're in two-pane layout...
+
+            // Call a method in the ArticleFragment to update its content
+            receiptDetailFragment.updateReceiptDetailView(index, position, false);
+
+        } else {
+            Log.d(TAG, "Instantiating new detail fragment");
+            // If the frag is not available, we're in the one-pane layout and must swap frags...
+
+            // Create fragment and give it an argument for the selected article
+            ReceiptDetailFragment newFragment = new ReceiptDetailFragment();
+            Bundle args = new Bundle();
+            args.putInt(Constants.ARG_INDEX, index);
+            args.putInt(Constants.ARG_POSITION, position);
+            newFragment.setArguments(args);
+            replaceFragmentwithTag(newFragment,tagReceiptDetail);
+        }
+        if (groupIndex > -1 && childIndex > -1) {
+           // setDrawerView();
+        }
+    }
+
+    public int getGroupIndex() {
+        return groupIndex;
+    }
+
+    public int getChildIndex() {
+        return childIndex;
+    }
+
+    public void setGroupIndex(int groupPosition) {
+        groupIndex = groupPosition;
+    }
+
+    public void setChildIndex(int childPosition) {
+        childIndex = childPosition;
+    }
+
+   /* @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }*/
 }

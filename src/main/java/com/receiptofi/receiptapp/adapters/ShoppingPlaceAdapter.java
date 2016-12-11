@@ -1,5 +1,6 @@
 package com.receiptofi.receiptapp.adapters;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
@@ -32,14 +33,14 @@ import java.util.List;
 public class ShoppingPlaceAdapter extends BaseAdapter {
     private static final String TAG = ShoppingPlaceAdapter.class.getSimpleName();
     private List<ShoppingPlace> shoppingPlaces;
-    private ShoppingPlaceActivity activity;
+    private Activity activity;
 
     private Drawable locationDraw;
     private Drawable locationOffDraw;
     private Drawable shoppingBasketDraw;
     private boolean mapInstalled;
 
-    public ShoppingPlaceAdapter(List<ShoppingPlace> shoppingPlaces, ShoppingPlaceActivity activity) {
+    public ShoppingPlaceAdapter(List<ShoppingPlace> shoppingPlaces, Activity activity) {
         this.shoppingPlaces = shoppingPlaces;
         this.activity = activity;
 
