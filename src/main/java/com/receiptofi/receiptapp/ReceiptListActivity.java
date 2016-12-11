@@ -55,7 +55,7 @@ import java.util.Map;
  * User: PT
  * Date: 1/3/15 4:17 PM
  */
-public class ReceiptListActivity extends Activity implements ReceiptListFragment.OnReceiptSelectedListener {
+public class ReceiptListActivity extends HomeActivity implements ReceiptListFragment.OnReceiptSelectedListener {
 
     private static final String TAG = ReceiptListActivity.class.getSimpleName();
 

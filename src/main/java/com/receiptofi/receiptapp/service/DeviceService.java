@@ -11,10 +11,12 @@ import android.util.Log;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.fragments.ExpenseTagFragment;
 import com.receiptofi.receiptapp.fragments.HomeFragment;
+import com.receiptofi.receiptapp.fragments.HomeFragment1;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.http.ExternalCallWithOkHttp;
 import com.receiptofi.receiptapp.http.ResponseHandler;
@@ -158,7 +160,8 @@ public class DeviceService {
     }
 
     public static void onSuccess(Headers headers, String body) {
-        MainMaterialDrawerActivity mainMaterialDrawer = (MainMaterialDrawerActivity) AppUtils.getHomePageContext();
+      // MainMaterialDrawerActivity mainMaterialDrawer = (MainMaterialDrawerActivity) AppUtils.getHomePageContext();
+        HomeActivity mainMaterialDrawer = (HomeActivity)AppUtils.getHomePageContext();
         Boolean refreshView = false;
 
         /** We need the context to be not null to update data. */
@@ -169,11 +172,12 @@ public class DeviceService {
             }
 
             Log.d(TAG, "Context not null during refresh data");
-            mainMaterialDrawer = (MainMaterialDrawerActivity) AppUtils.getHomePageContext();
+            mainMaterialDrawer = (HomeActivity) AppUtils.getHomePageContext();
         }
         DataWrapper dataWrapper = JsonParseUtils.parseData(body);
 
         if (null != dataWrapper.getProfileModel()) {
+            // Profile data is inserted in DB
             ProfileUtils.insert(dataWrapper.getProfileModel());
             Message message = new Message();
             message.obj = dataWrapper.getProfileModel();
@@ -188,9 +192,10 @@ public class DeviceService {
         /** Insert or Delete Expense Tag. Note: Always return all the expense tag. */
         if (!dataWrapper.getExpenseTagModels().isEmpty()) {
             refreshView = ExpenseTagUtils.insert(dataWrapper.getExpenseTagModels());
-            if (null != mainMaterialDrawer.expenseTagFragment) {
+            // Todo Commented  Expense tag fragment
+           /* if (null != mainMaterialDrawer.expenseTagFragment) {
                 mainMaterialDrawer.expenseTagFragment.updateHandler.sendEmptyMessage(ExpenseTagFragment.EXPENSE_TAG_UPDATED);
-            }
+            }*/
         }
 
         /** Delete old notifications is any. */
@@ -206,7 +211,7 @@ public class DeviceService {
 
         Message countMessage = new Message();
         countMessage.obj = dataWrapper.getUnprocessedDocumentModel().getCount();
-        countMessage.what = HomeFragment.UPDATE_UNPROCESSED_COUNT;
+        countMessage.what = HomeFragment1.UPDATE_UNPROCESSED_COUNT;
         if (ReceiptofiApplication.isHomeActivityVisible()) {
             mainMaterialDrawer.homeFragment.updateHandler.sendMessage(countMessage);
         }

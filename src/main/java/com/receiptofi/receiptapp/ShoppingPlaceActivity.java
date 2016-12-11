@@ -16,8 +16,12 @@ import android.location.Location;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.util.TypedValue;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.baoyz.swipemenulistview.SwipeMenu;
@@ -51,7 +55,7 @@ import java.util.List;
  * User: hitender
  * Date: 12/11/15 9:03 PM
  */
-public class ShoppingPlaceActivity extends Activity implements DialogInterface.OnDismissListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
+public class ShoppingPlaceActivity extends Fragment implements DialogInterface.OnDismissListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, LocationListener {
 
     private static final String TAG = ShoppingPlaceActivity.class.getSimpleName();
 
@@ -107,6 +111,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
             return Double.compare(right.getDistance().get(0), left.getDistance().get(0));
         }
     };
+    private View view;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -120,41 +125,48 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
         buildGoogleApiClient();
 
         /** Setup back up button with its own icon. */
-        int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+       /* int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
             ImageView up = (ImageView) findViewById(upId);
             up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
                     .colorRes(R.color.white)
                     .actionBarSize());
-        }
-
+        }*/
         shoppingPlaces = ShoppingItemUtils.getBusinessName();
+
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+         super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
         if (shoppingPlaces.isEmpty()) {
-            setContentView(R.layout.fragment_shopping_places_empty);
+            view = inflater.inflate(R.layout.fragment_shopping_places_empty,container,false);
         } else {
             shoppingPlaces = ItemReceiptUtils.populateShoppingPlaces(shoppingPlaces);
-            setContentView(R.layout.fragment_shopping_places);
+            view = inflater.inflate(R.layout.fragment_shopping_places,container,false);
             setupView(shoppingPlaces);
         }
+        return view;
     }
 
     private void setupView(List<ShoppingPlace> shoppingPlaces) {
         if (!shoppingPlaces.isEmpty()) {
-            mListView = (SwipeMenuListView) findViewById(R.id.listView);
-            mAdapter = new ShoppingPlaceAdapter(shoppingPlaces, this);
+            mListView = (SwipeMenuListView) view.findViewById(R.id.listView);
+            mAdapter = new ShoppingPlaceAdapter(shoppingPlaces, getActivity());
             mListView.setAdapter(mAdapter);
         }
 
-        edit = new IconDrawable(this, FontAwesomeIcons.fa_pencil_square_o)
+        edit = new IconDrawable(getActivity(), FontAwesomeIcons.fa_pencil_square_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        delete = new IconDrawable(this, FontAwesomeIcons.fa_trash_o)
+        delete = new IconDrawable(getActivity(), FontAwesomeIcons.fa_trash_o)
                 .colorRes(R.color.white)
                 .sizePx(64);
 
-        alert = new IconDrawable(this, FontAwesomeIcons.fa_exclamation_triangle)
+        alert = new IconDrawable(getActivity(), FontAwesomeIcons.fa_exclamation_triangle)
                 .colorRes(R.color.red)
                 .actionBarSize();
 
@@ -164,7 +176,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
             @Override
             public void create(SwipeMenu menu) {
                 // create "open" item
-                SwipeMenuItem openItem = new SwipeMenuItem(ShoppingPlaceActivity.this);
+                SwipeMenuItem openItem = new SwipeMenuItem(getActivity());
                 // set item background
                 openItem.setBackground(new ColorDrawable(Color.rgb(0xC9, 0xC9, 0xCE)));
                 // set item width
@@ -174,7 +186,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
                 // add to menu
                 menu.addMenuItem(openItem);
                 // create "delete" item
-                SwipeMenuItem deleteItem = new SwipeMenuItem(ShoppingPlaceActivity.this);
+                SwipeMenuItem deleteItem = new SwipeMenuItem(getActivity());
                 // set item background
                 deleteItem.setBackground(new ColorDrawable(Color.rgb(0xF9, 0x3F, 0x25)));
                 // set item width
@@ -224,7 +236,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
     }
 
     private void updateGeoCoordinates() {
-        LocationManager service = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        LocationManager service = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         boolean enabled = service.isProviderEnabled(LocationManager.GPS_PROVIDER);
         if (!enabled) {
             alertInactiveGps();
@@ -271,7 +283,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
      */
     protected synchronized void buildGoogleApiClient() {
         Log.i(TAG, "Building GoogleApiClient");
-        mGoogleApiClient = new GoogleApiClient.Builder(this)
+        mGoogleApiClient = new GoogleApiClient.Builder(getActivity())
                 .addConnectionCallbacks(this)
                 .addOnConnectionFailedListener(this)
                 .addApi(LocationServices.API)
@@ -495,7 +507,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
 //    }
 
     private AlertDialog alertInactiveGps() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         return builder
                 .setTitle(getString(R.string.enable_gps_title))
                 .setMessage(getString(R.string.enable_gps_message))
@@ -509,7 +521,7 @@ public class ShoppingPlaceActivity extends Activity implements DialogInterface.O
                         startActivity(new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS));
                     }
                 })
-                .setIcon(new IconDrawable(this, FontAwesomeIcons.fa_map_marker)
+                .setIcon(new IconDrawable(getActivity(), FontAwesomeIcons.fa_map_marker)
                         .colorRes(R.color.app_theme_bg)
                         .actionBarSize())
                 .show();
