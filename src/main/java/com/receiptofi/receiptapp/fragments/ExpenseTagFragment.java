@@ -44,7 +44,6 @@ import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
 import com.receiptofi.receiptapp.views.dialog.ExpenseTagDialog;
-import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
 
@@ -54,6 +53,8 @@ import org.json.JSONObject;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.

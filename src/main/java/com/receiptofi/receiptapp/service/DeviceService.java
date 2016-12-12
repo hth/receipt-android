@@ -35,13 +35,14 @@ import com.receiptofi.receiptapp.utils.db.ProfileUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptItemUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptSplitUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptUtils;
-import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
 
 import java.util.Date;
 import java.util.UUID;
 import java.util.regex.Pattern;
+
+import okhttp3.Headers;
 
 /**
  * User: hitender
