@@ -1,6 +1,6 @@
 package com.receiptofi.receiptapp.http;
 
-import com.squareup.okhttp.Headers;
+import okhttp3.Headers;
 
 public interface ResponseHandler {
 

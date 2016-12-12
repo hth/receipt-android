@@ -28,7 +28,6 @@ import com.receiptofi.receiptapp.model.types.IncludeAuthentication;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.Validation;
-import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,6 +35,8 @@ import org.json.JSONObject;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import okhttp3.Headers;
 
 /**
  * Created by Omkar Gharat on 11/19/2016.

@@ -21,11 +21,12 @@ import com.receiptofi.receiptapp.http.ResponseHandler;
 import com.receiptofi.receiptapp.model.types.IncludeAuthentication;
 import com.receiptofi.receiptapp.model.types.IncludeDevice;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
-import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
 
 import org.json.JSONObject;
+
+import okhttp3.Headers;
 
 /**
  * User: hitender

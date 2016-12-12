@@ -31,13 +31,14 @@ import com.receiptofi.receiptapp.http.ResponseHandler;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.Validation;
-import com.squareup.okhttp.FormEncodingBuilder;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.RequestBody;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+
+import okhttp3.FormBody;
+import okhttp3.Headers;
+import okhttp3.RequestBody;
 
 
 /**
@@ -256,7 +257,7 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         showLoader(getResources().getString(R.string.login_auth_msg));
         logIn.setEnabled(false);
 
-        RequestBody formBody = new FormEncodingBuilder()
+        RequestBody formBody = new FormBody.Builder()
                 .add(API.key.SIGNIN_EMAIL, data.getString(API.key.SIGNIN_EMAIL))
                 .add(API.key.SIGNIN_PASSWORD, data.getString(API.key.SIGNIN_PASSWORD))
                 .build();

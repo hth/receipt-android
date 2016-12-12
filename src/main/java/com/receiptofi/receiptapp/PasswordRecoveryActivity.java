@@ -32,10 +32,11 @@ import com.receiptofi.receiptapp.model.types.MobileSystemErrorCodeEnum;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.Validation;
-import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import okhttp3.Headers;
 
 
 /**

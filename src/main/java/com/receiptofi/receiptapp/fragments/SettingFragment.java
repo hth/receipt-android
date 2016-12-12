@@ -47,7 +47,6 @@ import com.receiptofi.receiptapp.utils.db.DBUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 import com.receiptofi.receiptapp.views.LoginIdPreference;
 import com.receiptofi.receiptapp.views.PasswordPreference;
-import com.squareup.okhttp.Headers;
 
 import junit.framework.Assert;
 
@@ -58,6 +57,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import okhttp3.Headers;
 
 public class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener {
     private static final String TAG = SettingFragment.class.getSimpleName();

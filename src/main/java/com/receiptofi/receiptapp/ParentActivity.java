@@ -37,7 +37,6 @@ import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.db.DBUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
-import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -49,6 +48,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import okhttp3.Headers;
 
 public class  ParentActivity extends AppCompatActivity implements ConnectionCallbacks, OnConnectionFailedListener {
     private static final String TAG = ParentActivity.class.getSimpleName();
