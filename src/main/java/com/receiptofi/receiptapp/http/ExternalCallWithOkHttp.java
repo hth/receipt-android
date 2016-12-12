@@ -11,13 +11,6 @@ import com.receiptofi.receiptapp.model.types.IncludeAuthentication;
 import com.receiptofi.receiptapp.model.types.IncludeDevice;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
-import com.squareup.okhttp.Headers;
-import com.squareup.okhttp.MediaType;
-import com.squareup.okhttp.MultipartBuilder;
-import com.squareup.okhttp.OkHttpClient;
-import com.squareup.okhttp.Request;
-import com.squareup.okhttp.RequestBody;
-import com.squareup.okhttp.Response;
 
 import org.json.JSONObject;
 
@@ -28,6 +21,16 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.Headers;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
+import static okhttp3.OkHttpClient.*;
 
 /**
  * User: hitender
@@ -105,7 +108,7 @@ public class ExternalCallWithOkHttp {
                                 .build();
                     }
 
-                    Log.d(TAG, "post=" + request.httpUrl());
+                    Log.d(TAG, "post=" + request.url().toString());
                     Response response = okHttpClient(3).newCall(request).execute();
                     updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
@@ -139,7 +142,7 @@ public class ExternalCallWithOkHttp {
                             .post(formBody)
                             .build();
 
-                    Log.i(TAG, "post=" + request.httpUrl() + ", login params=*****");
+                    Log.i(TAG, "post=" + request.url().toString() + ", login params=*****");
                     Response response = okHttpClient(3).newCall(request).execute();
                     updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
@@ -196,7 +199,7 @@ public class ExternalCallWithOkHttp {
                                 .build();
                     }
 
-                    Log.d(TAG, "get=" + request.httpUrl());
+                    Log.d(TAG, "get=" + request.url().toString());
                     Response response = okHttpClient(5).newCall(request).execute();
                     updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
@@ -253,8 +256,8 @@ public class ExternalCallWithOkHttp {
             public void run() {
                 try {
                     File file = new File(imageModel.imgPath);
-                    RequestBody requestBody = new MultipartBuilder()
-                            .type(MultipartBuilder.FORM)
+                    RequestBody requestBody = new MultipartBody.Builder()
+                            .setType(MultipartBody.FORM)
                             .addFormDataPart(
                                     "qqfile",
                                     file.getName(),
@@ -268,7 +271,7 @@ public class ExternalCallWithOkHttp {
                             .addHeader(API.key.XR_MAIL, UserUtils.getEmail())
                             .build();
 
-                    Log.d(TAG, "uploadImage=" + request.httpUrl());
+                    Log.d(TAG, "uploadImage=" + request.url().toString());
                     Response response = okHttpClient(10).newCall(request).execute();
                     handler.onSuccess(imageModel, response.body().string());
                 } catch (UnknownHostException e) {
@@ -320,8 +323,8 @@ public class ExternalCallWithOkHttp {
     }
 
     private static OkHttpClient okHttpClient(int timeInMinutes) {
-        OkHttpClient httpClient = new OkHttpClient();
-        httpClient.setReadTimeout(timeInMinutes, TimeUnit.MINUTES);
-        return httpClient;
+        Builder builder = new Builder();
+        builder.readTimeout(timeInMinutes, TimeUnit.MINUTES);
+        return builder.build();
     }
 }

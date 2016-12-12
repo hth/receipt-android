@@ -19,7 +19,6 @@ import android.widget.EditText;
 
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
@@ -35,10 +34,11 @@ import com.receiptofi.receiptapp.utils.Constants.DialogMode;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
 import com.receiptofi.receiptapp.views.ColorPickerView;
-import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import okhttp3.Headers;
 
 /**
  * User: PT

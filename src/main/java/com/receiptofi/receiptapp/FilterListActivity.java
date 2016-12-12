@@ -49,7 +49,6 @@ import com.receiptofi.receiptapp.utils.ConstantsJson;
 import com.receiptofi.receiptapp.utils.JsonParseUtils;
 import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptUtils;
-import com.squareup.okhttp.Headers;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -58,6 +57,8 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+import okhttp3.Headers;
 
 /**
  * User: PT
