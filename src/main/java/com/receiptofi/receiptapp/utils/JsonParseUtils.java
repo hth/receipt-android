@@ -3,8 +3,6 @@ package com.receiptofi.receiptapp.utils;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.Iterables;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.BillingAccountModel;
@@ -34,7 +32,6 @@ import org.json.JSONObject;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -129,12 +126,6 @@ public class JsonParseUtils {
         if (receipt.getJSONObject("bizStore").has("lng")) {
             receiptModel.setLng(receipt.getJSONObject("bizStore").getDouble("lng"));
         }
-        if (receipt.getJSONObject("bizStore").has("type")) {
-            receiptModel.setType(receipt.getJSONObject("bizStore").getString("type"));
-        }
-        if (receipt.getJSONObject("bizStore").has("rating")) {
-            receiptModel.setRating(receipt.getJSONObject("bizStore").getDouble("rating"));
-        }
         receiptModel.setPhone(receipt.getJSONObject("bizStore").getString("phone"));
         receiptModel.setReceiptDate(receipt.getString("receiptDate"));
         receiptModel.setExpenseReport(receipt.getString("expenseReport"));
@@ -159,7 +150,8 @@ public class JsonParseUtils {
         receiptModel.setSplitCount(receipt.getInt("splitCount"));
         receiptModel.setSplitTotal(receipt.getDouble("splitTotal"));
         receiptModel.setSplitTax(receipt.getDouble("splitTax"));
-        receiptModel.setBillStatus(receipt.getString("bs"));
+        receiptModel.setCountryShortName(receipt.getString("cs"));
+        receiptModel.setPaymentCardId(receipt.getString("pc"));
         receiptModel.setActive(receipt.getBoolean("a"));
         receiptModel.setDeleted(receipt.getBoolean("d"));
 

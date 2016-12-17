@@ -87,8 +87,6 @@ public class ReceiptUtils {
         values.put(DatabaseTable.Receipt.BIZ_STORE_PHONE, receipt.getPhone());
         values.put(DatabaseTable.Receipt.LAT, receipt.getLat());
         values.put(DatabaseTable.Receipt.LNG, receipt.getLng());
-        values.put(DatabaseTable.Receipt.TYPE, receipt.getType());
-        values.put(DatabaseTable.Receipt.RATING, receipt.getRating());
         values.put(DatabaseTable.Receipt.RECEIPT_DATE, receipt.getReceiptDate());
         values.put(DatabaseTable.Receipt.EXPENSE_REPORT, receipt.getExpenseReport());
         values.put(DatabaseTable.Receipt.BLOB_IDS, receipt.getBlobIds());
@@ -98,12 +96,13 @@ public class ReceiptUtils {
         values.put(DatabaseTable.Receipt.RID, receipt.getRid());
         values.put(DatabaseTable.Receipt.TAX, receipt.getTax());
         values.put(DatabaseTable.Receipt.TOTAL, receipt.getTotal());
-        values.put(DatabaseTable.Receipt.BILL_STATUS, receipt.getBillStatus());
         values.put(DatabaseTable.Receipt.EXPENSE_TAG_ID, receipt.getExpenseTagId());
         values.put(DatabaseTable.Receipt.REFER_RECEIPT_ID, receipt.getReferReceiptId());
         values.put(DatabaseTable.Receipt.SPLIT_COUNT, receipt.getSplitCount());
         values.put(DatabaseTable.Receipt.SPLIT_TOTAL, receipt.getSplitTotal());
         values.put(DatabaseTable.Receipt.SPLIT_TAX, receipt.getSplitTax());
+        values.put(DatabaseTable.Receipt.COUNTRY_SHORT, receipt.getCountryShortName());
+        values.put(DatabaseTable.Receipt.PAYMENT_CARD_ID, receipt.getPaymentCardId());
         values.put(DatabaseTable.Receipt.ACTIVE, receipt.isActive());
         values.put(DatabaseTable.Receipt.DELETED, receipt.isDeleted());
 
@@ -473,25 +472,24 @@ public class ReceiptUtils {
                 receiptModel.setPhone(cursor.getString(2));
                 receiptModel.setLat(cursor.getDouble(3));
                 receiptModel.setLng(cursor.getDouble(4));
-                receiptModel.setType(cursor.getString(5));
-                receiptModel.setRating(cursor.getDouble(6));
-                receiptModel.setReceiptDate(cursor.getString(7));
-                receiptModel.setExpenseReport(cursor.getString(8));
-                receiptModel.setBlobIds(cursor.getString(9));
-                receiptModel.setId(cursor.getString(10));
-                receiptModel.setNotes(cursor.getString(11));
-                receiptModel.setPtax(cursor.getDouble(12));
-                receiptModel.setRid(cursor.getString(13));
-                receiptModel.setTax(cursor.getDouble(14));
-                receiptModel.setTotal(cursor.getDouble(15));
-                receiptModel.setBillStatus(cursor.getString(16));
-                receiptModel.setExpenseTagId(cursor.getString(17));
-                receiptModel.setReferReceiptId(cursor.getString(18));
-                receiptModel.setSplitCount(cursor.getInt(19));
-                receiptModel.setSplitTotal(cursor.getDouble(20));
-                receiptModel.setSplitTax(cursor.getDouble(21));
-                receiptModel.setActive(cursor.getInt(22) == 1);
-                receiptModel.setDeleted(cursor.getInt(23) == 1);
+                receiptModel.setReceiptDate(cursor.getString(5));
+                receiptModel.setExpenseReport(cursor.getString(6));
+                receiptModel.setBlobIds(cursor.getString(7));
+                receiptModel.setId(cursor.getString(8));
+                receiptModel.setNotes(cursor.getString(9));
+                receiptModel.setPtax(cursor.getDouble(10));
+                receiptModel.setRid(cursor.getString(11));
+                receiptModel.setTax(cursor.getDouble(12));
+                receiptModel.setTotal(cursor.getDouble(13));
+                receiptModel.setExpenseTagId(cursor.getString(14));
+                receiptModel.setReferReceiptId(cursor.getString(15));
+                receiptModel.setSplitCount(cursor.getInt(16));
+                receiptModel.setSplitTotal(cursor.getDouble(17));
+                receiptModel.setSplitTax(cursor.getDouble(18));
+                receiptModel.setCountryShortName(cursor.getString(19));
+                receiptModel.setPaymentCardId(cursor.getString(20));
+                receiptModel.setActive(cursor.getInt(21) == 1);
+                receiptModel.setDeleted(cursor.getInt(22) == 1);
 
                 if (!TextUtils.isEmpty(receiptModel.getExpenseTagId())) {
                     receiptModel.setExpenseTagModel(ExpenseTagUtils.getExpenseTagModels().get(receiptModel.getExpenseTagId()));
