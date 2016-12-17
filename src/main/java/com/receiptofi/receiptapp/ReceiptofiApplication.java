@@ -5,6 +5,7 @@ import android.app.Application;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
@@ -19,6 +20,8 @@ import net.danlew.android.joda.JodaTimeAndroid;
 
 import org.acra.ReportingInteractionMode;
 import org.acra.annotation.ReportsCrashes;
+
+import io.fabric.sdk.android.Fabric;
 
 @ReportsCrashes(
         mode = ReportingInteractionMode.DIALOG,
@@ -61,7 +64,7 @@ public class ReceiptofiApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Log.d(TAG, "ReceiptofiApplication onCreate");
-
+        Fabric.with(this, new Crashlytics());
         JodaTimeAndroid.init(this);
         Iconify.with(new FontAwesomeModule());
 

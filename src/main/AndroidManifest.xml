@@ -197,6 +197,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 ></meta-data>
         </activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="4cab8d76e7a11fbe785f44a564e97988ff0f5bd6"
+            />
     </application>
 
 </manifest>
