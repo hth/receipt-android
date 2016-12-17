@@ -94,7 +94,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.RID + ", " +
                                     DatabaseTable.Receipt.TAX + ", " +
                                     DatabaseTable.Receipt.TOTAL + ", " +
-                                    DatabaseTable.Receipt.BILL_STATUS + ", " +
+                                    //DatabaseTable.Receipt.BILL_STATUS + ", " +
                                     DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
                                     DatabaseTable.Receipt.SPLIT_COUNT + ", " +
                                     DatabaseTable.Receipt.SPLIT_TOTAL + ", " +
@@ -114,7 +114,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.RID + ", " +
                                     DatabaseTable.Receipt.TAX + ", " +
                                     DatabaseTable.Receipt.TOTAL + ", " +
-                                    DatabaseTable.Receipt.BILL_STATUS + ", " +
+                                    //DatabaseTable.Receipt.BILL_STATUS + ", " +
                                     DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
                                     1 + ", " +
                                     DatabaseTable.Receipt.TOTAL + ", " +
@@ -146,8 +146,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.BIZ_STORE_PHONE + ", " +
                                     DatabaseTable.Receipt.LAT + ", " +
                                     DatabaseTable.Receipt.LNG + ", " +
-                                    DatabaseTable.Receipt.TYPE + ", " +
-                                    DatabaseTable.Receipt.RATING + ", " +
                                     DatabaseTable.Receipt.RECEIPT_DATE + ", " +
                                     DatabaseTable.Receipt.EXPENSE_REPORT + ", " +
                                     DatabaseTable.Receipt.BLOB_IDS + ", " +
@@ -157,7 +155,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.RID + ", " +
                                     DatabaseTable.Receipt.TAX + ", " +
                                     DatabaseTable.Receipt.TOTAL + ", " +
-                                    DatabaseTable.Receipt.BILL_STATUS + ", " +
                                     DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
                                     DatabaseTable.Receipt.REFER_RECEIPT_ID + ", " +
                                     DatabaseTable.Receipt.SPLIT_COUNT + ", " +
@@ -182,7 +179,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                                     DatabaseTable.Receipt.RID + ", " +
                                     DatabaseTable.Receipt.TAX + ", " +
                                     DatabaseTable.Receipt.TOTAL + ", " +
-                                    DatabaseTable.Receipt.BILL_STATUS + ", " +
+                                    //DatabaseTable.Receipt.BILL_STATUS + ", " +
                                     DatabaseTable.Receipt.EXPENSE_TAG_ID + ", " +
                                     DatabaseTable.Receipt.REFER_RECEIPT_ID + ", " +
                                     DatabaseTable.Receipt.SPLIT_COUNT + ", " +
