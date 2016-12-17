@@ -33,8 +33,6 @@ public class CreateTable {
                 + DatabaseTable.Receipt.BIZ_STORE_PHONE + " TEXT ,"
                 + DatabaseTable.Receipt.LAT + " DOUBLE ,"
                 + DatabaseTable.Receipt.LNG + " DOUBLE ,"
-                + DatabaseTable.Receipt.TYPE + " TEXT ,"
-                + DatabaseTable.Receipt.RATING + " DOUBLE ,"
                 + DatabaseTable.Receipt.RECEIPT_DATE + " TEXT ,"
                 + DatabaseTable.Receipt.EXPENSE_REPORT + " TEXT ,"
                 + DatabaseTable.Receipt.BLOB_IDS + " TEXT ,"
@@ -44,12 +42,13 @@ public class CreateTable {
                 + DatabaseTable.Receipt.RID + " TEXT ,"
                 + DatabaseTable.Receipt.TAX + " DOUBLE ,"
                 + DatabaseTable.Receipt.TOTAL + " DOUBLE , "
-                + DatabaseTable.Receipt.BILL_STATUS + " TEXT, "
                 + DatabaseTable.Receipt.EXPENSE_TAG_ID + " TEXT, "
                 + DatabaseTable.Receipt.REFER_RECEIPT_ID + " TEXT, "
                 + DatabaseTable.Receipt.SPLIT_COUNT + " INT, "
                 + DatabaseTable.Receipt.SPLIT_TOTAL + " DOUBLE, "
                 + DatabaseTable.Receipt.SPLIT_TAX + " DOUBLE, "
+                + DatabaseTable.Receipt.COUNTRY_SHORT + " TEXT ,"
+                + DatabaseTable.Receipt.PAYMENT_CARD_ID + " TEXT ,"
                 + DatabaseTable.Receipt.ACTIVE + " INT, "
                 + DatabaseTable.Receipt.DELETED + " INT " +
 

@@ -12,8 +12,6 @@ public class ReceiptModel {
     private String phone;
     private Double lat;
     private Double lng;
-    private String type;
-    private Double rating;
     private String receiptDate;
     private String expenseReport;
     private String blobIds;
@@ -24,7 +22,6 @@ public class ReceiptModel {
     private String rid;
     private double total;
     private List<ReceiptItemModel> receiptItems = new LinkedList<>();
-    private String billStatus;
     private String expenseTagId;
     private String referReceiptId;
     private int splitCount;
@@ -33,6 +30,8 @@ public class ReceiptModel {
     private List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
     private boolean active;
     private boolean deleted;
+    private String countryShortName;
+    private String paymentCardId;
 
     private ExpenseTagModel expenseTagModel;
 
@@ -80,22 +79,6 @@ public class ReceiptModel {
 
     public void setLng(Double lng) {
         this.lng = lng;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Double getRating() {
-        return rating;
-    }
-
-    public void setRating(Double rating) {
-        this.rating = rating;
     }
 
     public String getReceiptDate() {
@@ -244,14 +227,6 @@ public class ReceiptModel {
         this.receiptSplitModels = receiptSplitModels;
     }
 
-    public String getBillStatus() {
-        return billStatus;
-    }
-
-    public void setBillStatus(String billStatus) {
-        this.billStatus = billStatus;
-    }
-
     public String getReceiptYearMonth() {
         return receiptDate.substring(0, 7);
     }
@@ -278,6 +253,22 @@ public class ReceiptModel {
 
     public void setExpenseTagModel(ExpenseTagModel expenseTagModel) {
         this.expenseTagModel = expenseTagModel;
+    }
+
+    public String getCountryShortName() {
+        return countryShortName;
+    }
+
+    public void setCountryShortName(String countryShortName) {
+        this.countryShortName = countryShortName;
+    }
+
+    public String getPaymentCardId() {
+        return paymentCardId;
+    }
+
+    public void setPaymentCardId(String paymentCardId) {
+        this.paymentCardId = paymentCardId;
     }
 
     @Override

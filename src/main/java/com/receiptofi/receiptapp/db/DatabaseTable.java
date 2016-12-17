@@ -23,8 +23,6 @@ public class DatabaseTable {
         public static final String BIZ_STORE_PHONE = "phone";
         public static final String LAT = "lat";
         public static final String LNG = "lng";
-        public static final String TYPE = "type";
-        public static final String RATING = "rating";
         public static final String RECEIPT_DATE = "receiptDate";
         public static final String EXPENSE_REPORT = "expenseReport";
         public static final String BLOB_IDS = "blobIds";
@@ -34,12 +32,13 @@ public class DatabaseTable {
         public static final String RID = "rid";
         public static final String TAX = "tax";
         public static final String TOTAL = "total";
-        public static final String BILL_STATUS = "bs";
         public static final String EXPENSE_TAG_ID = "expenseTagId";
         public static final String REFER_RECEIPT_ID = "referReceiptId";
         public static final String SPLIT_COUNT = "splitCount";
         public static final String SPLIT_TOTAL = "splitTotal";
         public static final String SPLIT_TAX = "splitTax";
+        public static final String COUNTRY_SHORT = "cs";
+        public static final String PAYMENT_CARD_ID = "pc";
         public static final String ACTIVE = "active";
         public static final String DELETED = "deleted";
 
