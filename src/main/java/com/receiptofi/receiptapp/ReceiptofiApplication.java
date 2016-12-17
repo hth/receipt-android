@@ -10,11 +10,13 @@ import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeModule;
 import com.receiptofi.receiptapp.adapters.ImageUpload;
 import com.receiptofi.receiptapp.db.DatabaseHandler;
+import com.receiptofi.receiptapp.model.ProfileModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.db.DBUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 import com.receiptofi.receiptapp.utils.db.MonthlyReportUtils;
+import com.receiptofi.receiptapp.utils.db.ProfileUtils;
 
 import net.danlew.android.joda.JodaTimeAndroid;
 
@@ -76,9 +78,18 @@ public class ReceiptofiApplication extends Application {
             DBUtils.initializeDefaults();
         } else {
             MonthlyReportUtils.fetchMonthly();
+            logUser();
         }
         ImageUpload.initializeQueue();
         AppUtils.setHomePageContext(null);
         AppUtils.createImageDir();
     }
+
+    private void logUser() {
+        ProfileModel profileModel = ProfileUtils.getProfile();
+        Crashlytics.setUserIdentifier(UserUtils.getDeviceId());
+        Crashlytics.setUserEmail(profileModel.getMail());
+        Crashlytics.setUserName(profileModel.getRid());
+    }
+
 }
