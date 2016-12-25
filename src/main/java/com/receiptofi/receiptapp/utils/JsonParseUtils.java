@@ -102,7 +102,7 @@ public class JsonParseUtils {
         return allReceipts;
     }
 
-    public static List<ReceiptModel> parseReceipts(JSONArray receipts) {
+    private static List<ReceiptModel> parseReceipts(JSONArray receipts) {
         List<ReceiptModel> allReceipts = new LinkedList<>();
         try {
             for (int i = 0; i < receipts.length(); ++i) {
@@ -158,7 +158,7 @@ public class JsonParseUtils {
         return receiptModel;
     }
 
-    public static List<ReceiptItemModel> parseItems(JSONArray jsonArray) {
+    private static List<ReceiptItemModel> parseItems(JSONArray jsonArray) {
         List<ReceiptItemModel> receiptItemModels = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -170,7 +170,7 @@ public class JsonParseUtils {
         return receiptItemModels;
     }
 
-    public static ReceiptItemModel parseItem(JSONObject item) {
+    private static ReceiptItemModel parseItem(JSONObject item) {
         try {
             return new ReceiptItemModel(
                     item.getString("id"),
@@ -188,7 +188,7 @@ public class JsonParseUtils {
         }
     }
 
-    public static List<ReceiptSplitModel> parseReceiptSplits(JSONArray jsonArray) {
+    private static List<ReceiptSplitModel> parseReceiptSplits(JSONArray jsonArray) {
         List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -202,7 +202,7 @@ public class JsonParseUtils {
         return receiptSplitModels;
     }
 
-    public static List<ReceiptSplitModel> parseReceiptSplit(String receiptId, JSONArray jsonArray) {
+    private static List<ReceiptSplitModel> parseReceiptSplit(String receiptId, JSONArray jsonArray) {
         List<ReceiptSplitModel> receiptSplitModels = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -220,7 +220,7 @@ public class JsonParseUtils {
         return receiptSplitModels;
     }
 
-    public static List<ExpenseTagModel> parseExpenses(JSONArray jsonArray) {
+    private static List<ExpenseTagModel> parseExpenses(JSONArray jsonArray) {
         List<ExpenseTagModel> expenseTagModels = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -232,7 +232,7 @@ public class JsonParseUtils {
         return expenseTagModels;
     }
 
-    public static ExpenseTagModel parseExpense(JSONObject jsonObject) {
+    private static ExpenseTagModel parseExpense(JSONObject jsonObject) {
         try {
             return new ExpenseTagModel(
                     jsonObject.getString("id"),
@@ -247,7 +247,7 @@ public class JsonParseUtils {
         }
     }
 
-    public static List<NotificationModel> parseNotifications(JSONArray jsonArray) {
+    private static List<NotificationModel> parseNotifications(JSONArray jsonArray) {
         List<NotificationModel> notificationModels = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -259,7 +259,7 @@ public class JsonParseUtils {
         return notificationModels;
     }
 
-    public static NotificationModel parseNotification(JSONObject jsonObject) {
+    private static NotificationModel parseNotification(JSONObject jsonObject) {
         try {
             return new NotificationModel(
                     jsonObject.getString("id"),
@@ -277,7 +277,7 @@ public class JsonParseUtils {
         }
     }
 
-    public static BillingAccountModel parseBilling(JSONObject jsonObject) {
+    private static BillingAccountModel parseBilling(JSONObject jsonObject) {
         try {
             BillingAccountModel billingAccountModel = new BillingAccountModel(jsonObject.getString("bt"));
             if (jsonObject.has("billingHistories")) {
@@ -290,7 +290,7 @@ public class JsonParseUtils {
         }
     }
 
-    public static List<BillingHistoryModel> parseBillingHistories(JSONArray jsonArray) {
+    private static List<BillingHistoryModel> parseBillingHistories(JSONArray jsonArray) {
         List<BillingHistoryModel> billingHistoryModels = new ArrayList<>();
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -305,7 +305,7 @@ public class JsonParseUtils {
         return billingHistoryModels;
     }
 
-    public static BillingHistoryModel parseBillingHistory(JSONObject jsonObject) {
+    private static BillingHistoryModel parseBillingHistory(JSONObject jsonObject) {
         try {
             return new BillingHistoryModel(
                     jsonObject.getString("id"),
@@ -534,7 +534,7 @@ public class JsonParseUtils {
         return true;
     }
 
-    public static List<ItemReceiptModel> populateItemReceipts(List<ReceiptModel> receiptModels, List<ReceiptItemModel> receiptItemModels) {
+    private static List<ItemReceiptModel> populateItemReceipts(List<ReceiptModel> receiptModels, List<ReceiptItemModel> receiptItemModels) {
         Map<String, ReceiptModel> receiptModelMap = new HashMap<>();
         for (ReceiptModel receiptModel : receiptModels) {
             receiptModelMap.put(receiptModel.getId(), receiptModel);
