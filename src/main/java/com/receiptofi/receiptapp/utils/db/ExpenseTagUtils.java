@@ -80,9 +80,9 @@ public class ExpenseTagUtils {
         }
     }
 
-    public static void updateExpenseTag(String id, String name, String color) {
+    public static void updateExpenseTag(String id, String tag, String color, String icon) {
         Log.d(TAG, "Updating expense tag before updating on server");
-        update(new ExpenseTagModel(id, name, color, false));
+        update(new ExpenseTagModel(id, tag, color, icon, false));
         populateExpenseTagModelMap();
     }
 
@@ -96,6 +96,7 @@ public class ExpenseTagUtils {
         values.put(DatabaseTable.ExpenseTag.ID, expenseTag.getId());
         values.put(DatabaseTable.ExpenseTag.TAG, expenseTag.getTag());
         values.put(DatabaseTable.ExpenseTag.COLOR, expenseTag.getColor());
+        values.put(DatabaseTable.ExpenseTag.ICON, expenseTag.getIcon());
         values.put(DatabaseTable.ExpenseTag.DELETED, expenseTag.isDeleted());
 
         ReceiptofiApplication.RDH.getWritableDatabase().insert(
@@ -148,6 +149,7 @@ public class ExpenseTagUtils {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.ExpenseTag.TAG, expenseTag.getTag());
         values.put(DatabaseTable.ExpenseTag.COLOR, expenseTag.getColor());
+        values.put(DatabaseTable.ExpenseTag.ICON, expenseTag.getIcon());
         values.put(DatabaseTable.ExpenseTag.DELETED, expenseTag.isDeleted());
         String[] whereArgs = {expenseTag.getId()};
 
@@ -180,7 +182,8 @@ public class ExpenseTagUtils {
                             cursor.getString(0),
                             cursor.getString(1),
                             cursor.getString(2),
-                            cursor.getInt(3) == 1
+                            cursor.getString(3),
+                            cursor.getInt(4) == 1
                     );
 
                     list.add(expenseTagModel);

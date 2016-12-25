@@ -238,6 +238,7 @@ public class JsonParseUtils {
                     jsonObject.getString("id"),
                     jsonObject.getString("tag"),
                     jsonObject.getString("color"),
+                    jsonObject.getString("ic"),
                     jsonObject.getBoolean("d")
             );
         } catch (JSONException e) {

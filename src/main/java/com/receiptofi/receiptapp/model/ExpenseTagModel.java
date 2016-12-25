@@ -9,12 +9,14 @@ public class ExpenseTagModel {
     private String id;
     private String tag;
     private String color;
+    private String icon;
     private boolean deleted;
 
-    public ExpenseTagModel(String id, String tag, String color, boolean deleted) {
+    public ExpenseTagModel(String id, String tag, String color, String icon, boolean deleted) {
         this.id = id;
         this.tag = tag;
         this.color = color;
+        this.icon = icon;
         this.deleted = deleted;
     }
 
@@ -30,6 +32,10 @@ public class ExpenseTagModel {
         return color;
     }
 
+    public String getIcon() {
+        return icon;
+    }
+
     public boolean isDeleted() {
         return deleted;
     }
@@ -40,6 +46,7 @@ public class ExpenseTagModel {
                 "id='" + id + '\'' +
                 ", tag='" + tag + '\'' +
                 ", color='" + color + '\'' +
+                ", icon='" + icon + '\'' +
                 ", deleted=" + deleted +
                 '}';
     }

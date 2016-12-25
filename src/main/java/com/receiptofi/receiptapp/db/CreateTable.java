@@ -128,6 +128,7 @@ public class CreateTable {
                 + DatabaseTable.ExpenseTag.ID + " TEXT ,"
                 + DatabaseTable.ExpenseTag.TAG + " TEXT ,"
                 + DatabaseTable.ExpenseTag.COLOR + " TEXT ,"
+                + DatabaseTable.ExpenseTag.ICON + " TEXT ,"
                 + DatabaseTable.ExpenseTag.DELETED + " BOOLEAN " +
 
                 ");");
