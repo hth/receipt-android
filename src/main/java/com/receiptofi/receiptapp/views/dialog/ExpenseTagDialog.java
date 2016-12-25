@@ -96,7 +96,7 @@ public class ExpenseTagDialog extends DialogFragment {
 
         if (DialogMode.MODE_UPDATE == dialogMode) {
             tagModel = ExpenseTagUtils.getExpenseTagModels().get(tagId);
-            label.setText(tagModel.getName());
+            label.setText(tagModel.getTag());
             colorPicker.setColor(Color.parseColor(tagModel.getColor()));
             ((IconDrawable) tagIcon).color(Color.parseColor(tagModel.getColor()));
         }
@@ -132,10 +132,12 @@ public class ExpenseTagDialog extends DialogFragment {
 
                         switch (dialogMode) {
                             case MODE_CREATE:
-                                createExpenseTag(tagName, tagColor, postData);
+                                //TODO remove constant and replace with icon name
+                                createExpenseTag(tagName, tagColor, "V101", postData);
                                 break;
                             case MODE_UPDATE:
-                                updateExpenseTag(tagName, tagColor, postData);
+                                //TODO remove constant and replace with icon name
+                                updateExpenseTag(tagName, tagColor, "V101", postData);
                                 break;
                             default:
                                 Log.e(TAG, "Reached unsupported condition, expense tag dialog=" + dialogMode);
@@ -149,10 +151,11 @@ public class ExpenseTagDialog extends DialogFragment {
         return builder.create();
     }
 
-    private void createExpenseTag(String tagName, String tagColor, JSONObject postData) {
+    private void createExpenseTag(String tagName, String tagColor, String tagIcon, JSONObject postData) {
         try {
             postData.put("tagName", tagName);
             postData.put("tagColor", tagColor);
+            postData.put("tagIcon", tagIcon);
 
             ExternalCallWithOkHttp.doPost(getActivity(), postData, API.ADD_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                 @Override
@@ -182,19 +185,20 @@ public class ExpenseTagDialog extends DialogFragment {
         }
     }
 
-    private void updateExpenseTag(String tagName, String tagColor, JSONObject postData) {
+    private void updateExpenseTag(String tagName, String tagColor, String tagIcon, JSONObject postData) {
         Log.d(TAG, "After dialog dismiss: " + tagColor);
-        if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
+        if (!(tagModel.getTag().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
             try {
                 postData.put("tagId", tagModel.getId());
                 postData.put("tagName", tagName);
                 postData.put("tagColor", tagColor);
+                postData.put("tagIcon", tagIcon);
 
                 /**
                  * Update DB before sending to server. being pro-active about it. Will update
                  * once again after receiving response from server.
                  */
-                ExpenseTagUtils.updateExpenseTag(tagModel.getId(), tagName, tagColor);
+                ExpenseTagUtils.updateExpenseTag(tagModel.getId(), tagName, tagColor, tagIcon);
 
                 ExternalCallWithOkHttp.doPost(getActivity(), postData, API.UPDATE_EXPENSE_TAG, IncludeAuthentication.YES, new ResponseHandler() {
                     @Override

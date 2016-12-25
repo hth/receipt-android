@@ -258,7 +258,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 Log.d(TAG, "Selected swipe action is: " + expenseTagSwipe.name());
 
                 final ExpenseTagModel tagModel = tagModelList.get(position);
-                Log.d(TAG, "Selected tag name is: " + tagModel.getName());
+                Log.d(TAG, "Selected tag name is: " + tagModel.getTag());
                 switch (expenseTagSwipe) {
                     case EDIT:
                         FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -288,7 +288,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     private void deleteExpenseTag(final ExpenseTagModel tagModel) {
         new AlertDialog.Builder(getActivity())
                 .setTitle(getString(R.string.expense_tag_dialog_delete_label))
-                .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getName()))
+                .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getTag()))
                 .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         // do nothing
@@ -297,7 +297,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
                 .setPositiveButton(getString(R.string.expense_tag_dialog_button_delete), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String tagId = tagModel.getId();
-                        String tagName = tagModel.getName();
+                        String tagName = tagModel.getTag();
 
                         if (null != tagId || null != tagName) {
                             JSONObject postData = new JSONObject();

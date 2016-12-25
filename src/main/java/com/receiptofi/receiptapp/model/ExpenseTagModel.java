@@ -7,14 +7,16 @@ package com.receiptofi.receiptapp.model;
 public class ExpenseTagModel {
 
     private String id;
-    private String name;
+    private String tag;
     private String color;
+    private String icon;
     private boolean deleted;
 
-    public ExpenseTagModel(String id, String name, String color, boolean deleted) {
+    public ExpenseTagModel(String id, String tag, String color, String icon, boolean deleted) {
         this.id = id;
-        this.name = name;
+        this.tag = tag;
         this.color = color;
+        this.icon = icon;
         this.deleted = deleted;
     }
 
@@ -22,12 +24,16 @@ public class ExpenseTagModel {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getTag() {
+        return tag;
     }
 
     public String getColor() {
         return color;
+    }
+
+    public String getIcon() {
+        return icon;
     }
 
     public boolean isDeleted() {
@@ -38,8 +44,9 @@ public class ExpenseTagModel {
     public String toString() {
         return "ExpenseTagModel{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", tag='" + tag + '\'' +
                 ", color='" + color + '\'' +
+                ", icon='" + icon + '\'' +
                 ", deleted=" + deleted +
                 '}';
     }
@@ -53,7 +60,7 @@ public class ExpenseTagModel {
 
         if (deleted != that.deleted) return false;
         if (!id.equals(that.id)) return false;
-        if (!name.equals(that.name)) return false;
+        if (!tag.equals(that.tag)) return false;
         return color.equals(that.color);
 
     }
@@ -61,7 +68,7 @@ public class ExpenseTagModel {
     @Override
     public int hashCode() {
         int result = id.hashCode();
-        result = 31 * result + name.hashCode();
+        result = 31 * result + tag.hashCode();
         result = 31 * result + color.hashCode();
         result = 31 * result + (deleted ? 1 : 0);
         return result;
