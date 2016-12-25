@@ -186,6 +186,7 @@ public class ExpenseTagUtils {
                             cursor.getInt(4) == 1
                     );
 
+                    Log.d(TAG, expenseTagModel.toString());
                     list.add(expenseTagModel);
                 }
             }
