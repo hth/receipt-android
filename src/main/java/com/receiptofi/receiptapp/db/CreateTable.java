@@ -126,7 +126,7 @@ public class CreateTable {
         Log.d(TAG, "executing createExpenseTag");
         db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ExpenseTag.TABLE_NAME + "("
                 + DatabaseTable.ExpenseTag.ID + " TEXT ,"
-                + DatabaseTable.ExpenseTag.NAME + " TEXT ,"
+                + DatabaseTable.ExpenseTag.TAG + " TEXT ,"
                 + DatabaseTable.ExpenseTag.COLOR + " TEXT ,"
                 + DatabaseTable.ExpenseTag.DELETED + " BOOLEAN " +
 

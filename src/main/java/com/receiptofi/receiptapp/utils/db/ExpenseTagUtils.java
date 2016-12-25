@@ -94,7 +94,7 @@ public class ExpenseTagUtils {
     private static void insert(ExpenseTagModel expenseTag) {
         ContentValues values = new ContentValues();
         values.put(DatabaseTable.ExpenseTag.ID, expenseTag.getId());
-        values.put(DatabaseTable.ExpenseTag.NAME, expenseTag.getName());
+        values.put(DatabaseTable.ExpenseTag.TAG, expenseTag.getTag());
         values.put(DatabaseTable.ExpenseTag.COLOR, expenseTag.getColor());
         values.put(DatabaseTable.ExpenseTag.DELETED, expenseTag.isDeleted());
 
@@ -125,7 +125,7 @@ public class ExpenseTagUtils {
                     null,
                     null,
                     null,
-                    DatabaseTable.ExpenseTag.NAME
+                    DatabaseTable.ExpenseTag.TAG
             );
 
             if (cursor != null && cursor.getCount() > 0) {
@@ -146,7 +146,7 @@ public class ExpenseTagUtils {
 
     private static void update(ExpenseTagModel expenseTag) {
         ContentValues values = new ContentValues();
-        values.put(DatabaseTable.ExpenseTag.NAME, expenseTag.getName());
+        values.put(DatabaseTable.ExpenseTag.TAG, expenseTag.getTag());
         values.put(DatabaseTable.ExpenseTag.COLOR, expenseTag.getColor());
         values.put(DatabaseTable.ExpenseTag.DELETED, expenseTag.isDeleted());
         String[] whereArgs = {expenseTag.getId()};
@@ -171,7 +171,7 @@ public class ExpenseTagUtils {
                     null,
                     null,
                     null,
-                    DatabaseTable.ExpenseTag.NAME
+                    DatabaseTable.ExpenseTag.TAG
             );
 
             if (cursor != null && cursor.getCount() > 0) {

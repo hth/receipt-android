@@ -96,7 +96,7 @@ public class ExpenseTagDialog extends DialogFragment {
 
         if (DialogMode.MODE_UPDATE == dialogMode) {
             tagModel = ExpenseTagUtils.getExpenseTagModels().get(tagId);
-            label.setText(tagModel.getName());
+            label.setText(tagModel.getTag());
             colorPicker.setColor(Color.parseColor(tagModel.getColor()));
             ((IconDrawable) tagIcon).color(Color.parseColor(tagModel.getColor()));
         }
@@ -184,7 +184,7 @@ public class ExpenseTagDialog extends DialogFragment {
 
     private void updateExpenseTag(String tagName, String tagColor, JSONObject postData) {
         Log.d(TAG, "After dialog dismiss: " + tagColor);
-        if (!(tagModel.getName().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
+        if (!(tagModel.getTag().equals(tagName)) || !(tagModel.getColor().equals(tagColor))) {
             try {
                 postData.put("tagId", tagModel.getId());
                 postData.put("tagName", tagName);
