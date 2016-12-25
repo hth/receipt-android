@@ -3,6 +3,21 @@ package com.receiptofi.receiptapp.db;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import static com.receiptofi.receiptapp.db.DatabaseTable.Profile;
+import static com.receiptofi.receiptapp.db.DatabaseTable.Receipt;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ReceiptSplit;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ImageIndex;
+import static com.receiptofi.receiptapp.db.DatabaseTable.UploadQueue;
+import static com.receiptofi.receiptapp.db.DatabaseTable.KeyValue;
+import static com.receiptofi.receiptapp.db.DatabaseTable.MonthlyReport;
+import static com.receiptofi.receiptapp.db.DatabaseTable.Item;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ExpenseTag;
+import static com.receiptofi.receiptapp.db.DatabaseTable.Notification;
+import static com.receiptofi.receiptapp.db.DatabaseTable.BillingAccount;
+import static com.receiptofi.receiptapp.db.DatabaseTable.BillingHistory;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ItemReceipt;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ShoppingItem;
+
 /**
  * User: hitender
  * Date: 1/17/15 7:57 PM
@@ -15,92 +30,92 @@ public class CreateTable {
 
     public static void createTableProfile(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableReceipts");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Profile.TABLE_NAME + "("
-                + DatabaseTable.Profile.FIRST_NAME + " TEXT ,"
-                + DatabaseTable.Profile.LAST_NAME + " TEXT ,"
-                + DatabaseTable.Profile.MAIL + " TEXT ,"
-                + DatabaseTable.Profile.NAME + " TEXT ,"
-                + DatabaseTable.Profile.RID + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Profile.TABLE_NAME + "("
+                + Profile.FIRST_NAME + " TEXT ,"
+                + Profile.LAST_NAME + " TEXT ,"
+                + Profile.MAIL + " TEXT ,"
+                + Profile.NAME + " TEXT ,"
+                + Profile.RID + " TEXT " +
 
                 ");");
     }
 
     public static void createTableReceipts(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableReceipts");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Receipt.TABLE_NAME + "("
-                + DatabaseTable.Receipt.BIZ_NAME + " TEXT ,"
-                + DatabaseTable.Receipt.BIZ_STORE_ADDRESS + " TEXT ,"
-                + DatabaseTable.Receipt.BIZ_STORE_PHONE + " TEXT ,"
-                + DatabaseTable.Receipt.LAT + " DOUBLE ,"
-                + DatabaseTable.Receipt.LNG + " DOUBLE ,"
-                + DatabaseTable.Receipt.RECEIPT_DATE + " TEXT ,"
-                + DatabaseTable.Receipt.EXPENSE_REPORT + " TEXT ,"
-                + DatabaseTable.Receipt.BLOB_IDS + " TEXT ,"
-                + DatabaseTable.Receipt.ID + " TEXT UNIQUE ,"
-                + DatabaseTable.Receipt.NOTES + " TEXT ,"
-                + DatabaseTable.Receipt.PTAX + " DOUBLE ,"
-                + DatabaseTable.Receipt.RID + " TEXT ,"
-                + DatabaseTable.Receipt.TAX + " DOUBLE ,"
-                + DatabaseTable.Receipt.TOTAL + " DOUBLE , "
-                + DatabaseTable.Receipt.EXPENSE_TAG_ID + " TEXT, "
-                + DatabaseTable.Receipt.REFER_RECEIPT_ID + " TEXT, "
-                + DatabaseTable.Receipt.SPLIT_COUNT + " INT, "
-                + DatabaseTable.Receipt.SPLIT_TOTAL + " DOUBLE, "
-                + DatabaseTable.Receipt.SPLIT_TAX + " DOUBLE, "
-                + DatabaseTable.Receipt.COUNTRY_SHORT + " TEXT ,"
-                + DatabaseTable.Receipt.PAYMENT_CARD_ID + " TEXT ,"
-                + DatabaseTable.Receipt.ACTIVE + " INT, "
-                + DatabaseTable.Receipt.DELETED + " INT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Receipt.TABLE_NAME + "("
+                + Receipt.BIZ_NAME + " TEXT ,"
+                + Receipt.BIZ_STORE_ADDRESS + " TEXT ,"
+                + Receipt.BIZ_STORE_PHONE + " TEXT ,"
+                + Receipt.LAT + " DOUBLE ,"
+                + Receipt.LNG + " DOUBLE ,"
+                + Receipt.RECEIPT_DATE + " TEXT ,"
+                + Receipt.EXPENSE_REPORT + " TEXT ,"
+                + Receipt.BLOB_IDS + " TEXT ,"
+                + Receipt.ID + " TEXT UNIQUE ,"
+                + Receipt.NOTES + " TEXT ,"
+                + Receipt.PTAX + " DOUBLE ,"
+                + Receipt.RID + " TEXT ,"
+                + Receipt.TAX + " DOUBLE ,"
+                + Receipt.TOTAL + " DOUBLE , "
+                + Receipt.EXPENSE_TAG_ID + " TEXT, "
+                + Receipt.REFER_RECEIPT_ID + " TEXT, "
+                + Receipt.SPLIT_COUNT + " INT, "
+                + Receipt.SPLIT_TOTAL + " DOUBLE, "
+                + Receipt.SPLIT_TAX + " DOUBLE, "
+                + Receipt.COUNTRY_SHORT + " TEXT ,"
+                + Receipt.PAYMENT_CARD_ID + " TEXT ,"
+                + Receipt.ACTIVE + " INT, "
+                + Receipt.DELETED + " INT " +
 
                 ");");
     }
 
     public static void createTableReceiptSplit(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableReceiptSplit");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ReceiptSplit.TABLE_NAME + "("
-                + DatabaseTable.ReceiptSplit.ID + " TEXT ,"
-                + DatabaseTable.ReceiptSplit.RID + " TEXT ,"
-                + DatabaseTable.ReceiptSplit.NAME + " TEXT ,"
-                + DatabaseTable.ReceiptSplit.NAME_INITIALS + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ReceiptSplit.TABLE_NAME + "("
+                + ReceiptSplit.ID + " TEXT ,"
+                + ReceiptSplit.RID + " TEXT ,"
+                + ReceiptSplit.NAME + " TEXT ,"
+                + ReceiptSplit.NAME_INITIALS + " TEXT " +
 
                 ");");
     }
 
     public static void createTableImageIndex(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableImageIndex");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ImageIndex.TABLE_NAME + "("
-                + DatabaseTable.ImageIndex.BLOB_ID + " TEXT ,"
-                + DatabaseTable.ImageIndex.IMAGE_PATH + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ImageIndex.TABLE_NAME + "("
+                + ImageIndex.BLOB_ID + " TEXT ,"
+                + ImageIndex.IMAGE_PATH + " TEXT " +
 
                 ");");
     }
 
     public static void createTableUploadQueue(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableUploadQueue");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.UploadQueue.TABLE_NAME + "("
-                + DatabaseTable.UploadQueue.IMAGE_DATE + " TEXT ,"
-                + DatabaseTable.UploadQueue.IMAGE_PATH + " TEXT UNIQUE ,"
-                + DatabaseTable.UploadQueue.STATUS + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + UploadQueue.TABLE_NAME + "("
+                + UploadQueue.IMAGE_DATE + " TEXT ,"
+                + UploadQueue.IMAGE_PATH + " TEXT UNIQUE ,"
+                + UploadQueue.STATUS + " TEXT " +
 
                 ");");
     }
 
     public static void createTableKeyValue(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableKeyValue");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.KeyValue.TABLE_NAME + "("
-                + DatabaseTable.KeyValue.KEY + " TEXT ,"
-                + DatabaseTable.KeyValue.VALUE + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + KeyValue.TABLE_NAME + "("
+                + KeyValue.KEY + " TEXT ,"
+                + KeyValue.VALUE + " TEXT " +
 
                 ");");
     }
 
     public static void createTableMonthlyReport(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableMonthlyReports");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.MonthlyReport.TABLE_NAME + "("
-                + DatabaseTable.MonthlyReport.MONTH + " TEXT ,"
-                + DatabaseTable.MonthlyReport.YEAR + " TEXT ,"
-                + DatabaseTable.MonthlyReport.TOTAL + " DOUBLE ,"
-                + DatabaseTable.MonthlyReport.COUNT + " INT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + MonthlyReport.TABLE_NAME + "("
+                + MonthlyReport.MONTH + " TEXT ,"
+                + MonthlyReport.YEAR + " TEXT ,"
+                + MonthlyReport.TOTAL + " DOUBLE ,"
+                + MonthlyReport.COUNT + " INT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableMonthlyReports");
@@ -108,15 +123,15 @@ public class CreateTable {
 
     public static void createTableItem(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableItem");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Item.TABLE_NAME + "("
-                + DatabaseTable.Item.ID + " TEXT ,"
-                + DatabaseTable.Item.NAME + " TEXT ,"
-                + DatabaseTable.Item.PRICE + " DOUBLE ,"
-                + DatabaseTable.Item.QUANTITY + " TEXT ,"
-                + DatabaseTable.Item.RECEIPTID + " TEXT ,"
-                + DatabaseTable.Item.SEQUENCE + " TEXT ,"
-                + DatabaseTable.Item.TAX + " TEXT ,"
-                + DatabaseTable.Item.EXPENSE_TAG_ID + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Item.TABLE_NAME + "("
+                + Item.ID + " TEXT ,"
+                + Item.NAME + " TEXT ,"
+                + Item.PRICE + " DOUBLE ,"
+                + Item.QUANTITY + " TEXT ,"
+                + Item.RECEIPTID + " TEXT ,"
+                + Item.SEQUENCE + " TEXT ,"
+                + Item.TAX + " TEXT ,"
+                + Item.EXPENSE_TAG_ID + " TEXT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
@@ -124,12 +139,12 @@ public class CreateTable {
 
     public static void createTableExpenseTag(SQLiteDatabase db) {
         Log.d(TAG, "executing createExpenseTag");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ExpenseTag.TABLE_NAME + "("
-                + DatabaseTable.ExpenseTag.ID + " TEXT ,"
-                + DatabaseTable.ExpenseTag.TAG + " TEXT ,"
-                + DatabaseTable.ExpenseTag.COLOR + " TEXT ,"
-                + DatabaseTable.ExpenseTag.ICON + " TEXT ,"
-                + DatabaseTable.ExpenseTag.DELETED + " BOOLEAN " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ExpenseTag.TABLE_NAME + "("
+                + ExpenseTag.ID + " TEXT ,"
+                + ExpenseTag.TAG + " TEXT ,"
+                + ExpenseTag.COLOR + " TEXT ,"
+                + ExpenseTag.ICON + " TEXT ,"
+                + ExpenseTag.DELETED + " BOOLEAN " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableItem");
@@ -137,15 +152,15 @@ public class CreateTable {
 
     public static void createTableNotification(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableNotification");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.Notification.TABLE_NAME + "("
-                + DatabaseTable.Notification.ID + " TEXT ,"
-                + DatabaseTable.Notification.MESSAGE + " TEXT ,"
-                + DatabaseTable.Notification.VISIBLE + " BOOLEAN ,"
-                + DatabaseTable.Notification.NOTIFICATION_TYPE + " TEXT ,"
-                + DatabaseTable.Notification.REFERENCE_ID + " TEXT ,"
-                + DatabaseTable.Notification.CREATED + " TEXT ,"
-                + DatabaseTable.Notification.UPDATED + " TEXT ,"
-                + DatabaseTable.Notification.ACTIVE + " BOOLEAN " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + Notification.TABLE_NAME + "("
+                + Notification.ID + " TEXT ,"
+                + Notification.MESSAGE + " TEXT ,"
+                + Notification.VISIBLE + " BOOLEAN ,"
+                + Notification.NOTIFICATION_TYPE + " TEXT ,"
+                + Notification.REFERENCE_ID + " TEXT ,"
+                + Notification.CREATED + " TEXT ,"
+                + Notification.UPDATED + " TEXT ,"
+                + Notification.ACTIVE + " BOOLEAN " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableNotification");
@@ -153,8 +168,8 @@ public class CreateTable {
 
     public static void createTableBillingAccount(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableNotification");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.BillingAccount.TABLE_NAME + "("
-                + DatabaseTable.BillingAccount.ACCOUNT_BILLING_TYPE + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + BillingAccount.TABLE_NAME + "("
+                + BillingAccount.ACCOUNT_BILLING_TYPE + " TEXT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableBillingAccount");
@@ -162,12 +177,12 @@ public class CreateTable {
 
     public static void createTableBillingHistory(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableNotification");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.BillingHistory.TABLE_NAME + "("
-                + DatabaseTable.BillingHistory.ID + " TEXT ,"
-                + DatabaseTable.BillingHistory.BILLED_MONTH + " TEXT ,"
-                + DatabaseTable.BillingHistory.BILLED_STATUS + " TEXT ,"
-                + DatabaseTable.BillingHistory.ACCOUNT_BILLING_TYPE + " TEXT ,"
-                + DatabaseTable.BillingHistory.BILLED_DATE + " TEXT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + BillingHistory.TABLE_NAME + "("
+                + BillingHistory.ID + " TEXT ,"
+                + BillingHistory.BILLED_MONTH + " TEXT ,"
+                + BillingHistory.BILLED_STATUS + " TEXT ,"
+                + BillingHistory.ACCOUNT_BILLING_TYPE + " TEXT ,"
+                + BillingHistory.BILLED_DATE + " TEXT " +
 
                 ");");
         Log.d(TAG, "Finished executing createTableBillingHistory");
@@ -175,34 +190,34 @@ public class CreateTable {
 
     public static void createTableItemReceipt(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableItemReceipt");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ItemReceipt.TABLE_NAME + "("
-                + DatabaseTable.ItemReceipt.RECEIPT_ID + " TEXT ,"
-                + DatabaseTable.ItemReceipt.BIZ_NAME + " TEXT ,"
-                + DatabaseTable.ItemReceipt.BIZ_STORE_ADDRESS + " TEXT ,"
-                + DatabaseTable.ItemReceipt.LAT + " DOUBLE ,"
-                + DatabaseTable.ItemReceipt.LNG + " DOUBLE ,"
-                + DatabaseTable.ItemReceipt.RECEIPT_DATE + " TEXT ,"
-                + DatabaseTable.ItemReceipt.EXPENSE_TAG_ID + " TEXT ,"
-                + DatabaseTable.ItemReceipt.ITEM_ID + " TEXT ,"
-                + DatabaseTable.ItemReceipt.NAME + " TEXT ,"
-                + DatabaseTable.ItemReceipt.PRICE + " DOUBLE ,"
-                + DatabaseTable.ItemReceipt.QUANTITY + " TEXT ,"
-                + DatabaseTable.ItemReceipt.TAX + " DOUBLE ,"
-                + DatabaseTable.ItemReceipt.ACTIVE + " INT ,"
-                + DatabaseTable.ItemReceipt.DELETED + " INT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ItemReceipt.TABLE_NAME + "("
+                + ItemReceipt.RECEIPT_ID + " TEXT ,"
+                + ItemReceipt.BIZ_NAME + " TEXT ,"
+                + ItemReceipt.BIZ_STORE_ADDRESS + " TEXT ,"
+                + ItemReceipt.LAT + " DOUBLE ,"
+                + ItemReceipt.LNG + " DOUBLE ,"
+                + ItemReceipt.RECEIPT_DATE + " TEXT ,"
+                + ItemReceipt.EXPENSE_TAG_ID + " TEXT ,"
+                + ItemReceipt.ITEM_ID + " TEXT ,"
+                + ItemReceipt.NAME + " TEXT ,"
+                + ItemReceipt.PRICE + " DOUBLE ,"
+                + ItemReceipt.QUANTITY + " TEXT ,"
+                + ItemReceipt.TAX + " DOUBLE ,"
+                + ItemReceipt.ACTIVE + " INT ,"
+                + ItemReceipt.DELETED + " INT " +
 
                 ");");
     }
 
     public static void createTableShoppingItem(SQLiteDatabase db) {
         Log.d(TAG, "executing createTableShoppingItem");
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + DatabaseTable.ShoppingItem.TABLE_NAME + "("
-                + DatabaseTable.ShoppingItem.NAME + " TEXT ,"
-                + DatabaseTable.ShoppingItem.CUSTOM_NAME + " TEXT ,"
-                + DatabaseTable.ShoppingItem.BIZ_NAME + " TEXT ,"
-                + DatabaseTable.ShoppingItem.COUNT + " INT ,"
-                + DatabaseTable.ShoppingItem.SMOOTH_COUNT + " DOUBLE, "
-                + DatabaseTable.ShoppingItem.CHECKED + " INT " +
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + ShoppingItem.TABLE_NAME + "("
+                + ShoppingItem.NAME + " TEXT ,"
+                + ShoppingItem.CUSTOM_NAME + " TEXT ,"
+                + ShoppingItem.BIZ_NAME + " TEXT ,"
+                + ShoppingItem.COUNT + " INT ,"
+                + ShoppingItem.SMOOTH_COUNT + " DOUBLE, "
+                + ShoppingItem.CHECKED + " INT " +
 
                 ");");
     }
