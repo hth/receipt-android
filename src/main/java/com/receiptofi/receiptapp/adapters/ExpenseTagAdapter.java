@@ -57,19 +57,19 @@ public class ExpenseTagAdapter extends BaseAdapter {
         }
         ViewHolder holder = (ViewHolder) view.getTag();
         ExpenseTagModel tagModel = (ExpenseTagModel) getItem(i);
-        holder.tagName.setText(tagModel.getName());
-        holder.tagName.setTextColor(context.getResources().getColor(R.color.tv_black));
-        holder.tagColor.setBackgroundColor(Color.parseColor(tagModel.getColor()));
+        holder.tag.setText(tagModel.getTag());
+        holder.tag.setTextColor(context.getResources().getColor(R.color.tv_black));
+        holder.color.setBackgroundColor(Color.parseColor(tagModel.getColor()));
         return view;
     }
 
     class ViewHolder {
-        ImageView tagColor;
-        TextView tagName;
+        ImageView color;
+        TextView tag;
 
         public ViewHolder(View view) {
-            tagColor = (ImageView) view.findViewById(R.id.tag_color);
-            tagName = (TextView) view.findViewById(R.id.tag_name);
+            color = (ImageView) view.findViewById(R.id.tag_color);
+            tag = (TextView) view.findViewById(R.id.tag_name);
             view.setTag(this);
         }
     }
