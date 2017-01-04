@@ -151,35 +151,24 @@
             android:theme="@style/Theme.Dialog" />
 
         <!-- GCM -->
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND">
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-
-                <category android:name="com.receiptofi.receiptapp" />
-            </intent-filter>
-        </receiver>
-
+        <!-- [START firebase_service] -->
         <service
-            android:name=".service.gcm.GcmListenerService"
-            android:exported="false">
+            android:name=".service.fcm.FirebaseMessagingService">
             <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
             </intent-filter>
         </service>
+        <!-- [END firebase_service] -->
+        <!-- [START firebase_iid_service] -->
         <service
-            android:name=".service.gcm.InstanceIDListenerService"
-            android:exported="false">
+            android:name=".service.fcm.FirebaseInstanceIDService">
             <intent-filter>
-                <action android:name="com.google.android.gms.iid.InstanceID" />
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
             </intent-filter>
         </service>
-        <service
-            android:name=".service.gcm.RegistrationIntentService"
-            android:exported="false"></service>
+        <!-- [END firebase_iid_service] -->
         <!-- GCM Ends -->
+
         <activity android:name=".HomeActivity">
             <meta-data
                 android:name="android.app.default_searchable"

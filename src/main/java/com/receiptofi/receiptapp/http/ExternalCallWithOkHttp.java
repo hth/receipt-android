@@ -90,6 +90,7 @@ public class ExternalCallWithOkHttp {
                     }
                     if (includeDevice == IncludeDevice.TYPE) {
                         headers.put(API.key.XR_DID, UserUtils.getDeviceId());
+                        headers.put(API.key.XR_TK, UserUtils.getToken());
                         headers.put(API.key.XR_DT, "A");
                     }
 
@@ -183,6 +184,7 @@ public class ExternalCallWithOkHttp {
                     }
                     if (includeDevice == IncludeDevice.TYPE) {
                         headers.put(API.key.XR_DID, UserUtils.getDeviceId());
+                        headers.put(API.key.XR_TK, UserUtils.getToken());
                         headers.put(API.key.XR_DT, "A");
                     }
 

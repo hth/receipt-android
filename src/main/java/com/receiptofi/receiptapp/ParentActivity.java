@@ -442,18 +442,19 @@ public class  ParentActivity extends AppCompatActivity implements ConnectionCall
                 //token = GoogleAuthUtil.getToken(LaunchActivity.this, Plus.AccountApi.getAccountName(mGoogleApiClient), scopes);
 
                 Bundle appActivities = new Bundle();
-                appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES, "");
+//                appActivities.putString(GoogleAuthUtil.KEY_REQUEST_VISIBLE_ACTIVITIES, "");
                 String scope = Scopes.PLUS_LOGIN + " " + Scopes.PLUS_ME;
                 String scopes = "oauth2:server:client_id:" + BuildConfig.GOOGLE_CLIENT_ID + ":api_scope:" + scope;
                 //String scopes = "oauth2:server:client_id:<SERVER-CLIENT-ID>:api_scope:<SCOPE1> <SCOPE2>";
 
-                token = GoogleAuthUtil.getToken(
-                        ParentActivity.this,                               // Context context
-                        Plus.AccountApi.getAccountName(mGoogleApiClient),  // String accountName
-                        scopes,                                            // String scope
-                        appActivities                                      // Bundle appActivities
-                );
+//                token = GoogleAuthUtil.getToken(
+//                        ParentActivity.this,                               // Context context
+//                        Plus.AccountApi.getAccountName(mGoogleApiClient),  // String accountName
+//                        scopes,                                            // String scope
+//                        appActivities                                      // Bundle appActivities
+//                );
                 Log.d(TAG, "token is: " + token);
+                throw new Exception("Failed Google Plus Login. To be implemented.");
             } catch (IOException transientEx) {
                 // network or server error, the call is expected to succeed if you try again later.
                 // Don't attempt to call again immediately - the request is likely to

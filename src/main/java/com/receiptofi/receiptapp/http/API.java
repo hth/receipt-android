@@ -53,6 +53,7 @@ public class API {
         public static final String XR_AUTH = "X-R-AUTH";
         public static final String XR_DID = "X-R-DID";
         public static final String XR_DT = "X-R-DT";
+        public static final String XR_TK = "X-R-TK";
 
         // Social
         public static final String PID = "pid";

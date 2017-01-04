@@ -1,14 +1,14 @@
 {
   "project_info": {
-    "project_id": "api-project-453221870821",
     "project_number": "453221870821",
-    "name": "Receiptofi\u0027s ReceiptApp"
+    "firebase_url": "https://api-project-453221870821.firebaseio.com",
+    "project_id": "api-project-453221870821",
+    "storage_bucket": "api-project-453221870821.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "client_id": "android:com.receiptofi.receiptapp",
-        "client_type": 1,
+        "mobilesdk_app_id": "1:453221870821:android:948b7242d695ef21",
         "android_client_info": {
           "package_name": "com.receiptofi.receiptapp"
         }
@@ -19,7 +19,7 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.receiptofi.receiptapp",
-            "certificate_hash": "8314931406912031d400dfcc4678e286a1c1d980"
+            "certificate_hash": "8314931406912031D400DFCC4678E286A1C1D980"
           }
         },
         {
@@ -27,31 +27,59 @@
           "client_type": 1,
           "android_info": {
             "package_name": "com.receiptofi.receiptapp",
-            "certificate_hash": "1be6ea6850b20fcbe13733368ad2c9eead008dde"
+            "certificate_hash": "1BE6EA6850B20FCBE13733368AD2C9EEAD008DDE"
           }
+        },
+        {
+          "client_id": "453221870821-3ac8ueammo308tqkmjljtbcsodc1pmsd.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "453221870821-ep91mo37gl800a032opsfhfq96qaqhlb.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "453221870821-6cmml4ooa5nlnis091f3hidpi3l0vbce.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "453221870821-0i0da6j1sffstgkm4ebbu0793nl7nd11.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
-      "api_key": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAMmwvgRo1cFQsJhXthOa20XM8Gr52Oc1Y"
+        }
+      ],
       "services": {
         "analytics_service": {
-          "status": 1
-        },
-        "cloud_messaging_service": {
           "status": 2,
-          "apns_config": []
+          "analytics_property": {
+            "tracking_id": "UA-65975717-1"
+          }
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "google_signin_service": {
-          "status": 1
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "453221870821-1pe13gr72io039ip9g8ngm1306skl9vp.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.receiptofi.receiptapp"
+              }
+            },
+            {
+              "client_id": "453221870821-3ac8ueammo308tqkmjljtbcsodc1pmsd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }
   ],
-  "ARTIFACT_VERSION": "1"
+  "configuration_version": "1"
 }

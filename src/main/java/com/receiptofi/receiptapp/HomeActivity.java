@@ -25,7 +25,6 @@ import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.receiptofi.receiptapp.fragments.HomeFragment;
 import com.receiptofi.receiptapp.fragments.HomeFragment1;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailFragment;
@@ -33,7 +32,6 @@ import com.receiptofi.receiptapp.fragments.ReceiptListFragment;
 import com.receiptofi.receiptapp.fragments.SettingFragment;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.ProfileModel;
-import com.receiptofi.receiptapp.service.gcm.RegistrationIntentService;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.Constants;
 import com.receiptofi.receiptapp.utils.UserUtils;
@@ -108,11 +106,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
 
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
+
     }
 
     @Override
@@ -203,29 +197,6 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         if (currActivity != null && currActivity.equals(this))
             receiptofiApplication.setCurrentActivity(null);
     }
-
-    /**
-     * Check the device to make sure it has the Google Play Services APK. If
-     * it doesn't, display a dialog that allows users to download the APK from
-     * the Google Play Store or enable it in the device's system settings.
-     */
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                //GooglePlayServicesUtil.getErrorDialog(resultCode, this, PLAY_SERVICES_RESOLUTION_REQUEST).show();
-                showToastMsg("Certain feature would not be available due to missing Google Play Service.",
-                        SuperToast.Background.RED,
-                        SuperToast.Duration.EXTRA_LONG);
-            } else {
-                Log.i(TAG, "This device is not supported.");
-                finish();
-            }
-            return false;
-        }
-        return true;
-    }
-
 
     public void showToastMsg(String msg, int backgroundColor, int duration) {
         SuperActivityToast superActivityToast = new SuperActivityToast(HomeActivity.this);

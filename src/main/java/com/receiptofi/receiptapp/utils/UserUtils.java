@@ -31,6 +31,10 @@ public class UserUtils {
         return KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
     }
 
+    public static String getToken() {
+        return KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_TK);
+    }
+
     /**
      * Supports UTF-8 Encoding.
      *

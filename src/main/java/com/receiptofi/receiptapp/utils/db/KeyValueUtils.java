@@ -101,6 +101,7 @@ public class KeyValueUtils {
         public static final String UNPROCESSED_DOCUMENT = "UNPROCESSED_DOCUMENT";
         public static final String SOCIAL_LOGIN = "SOCIAL_LOGIN";
         public static final String XR_DID = API.key.XR_DID;
+        public static final String XR_TK = API.key.XR_TK;
         public static final String LAST_FETCHED = "LAST_FETCHED";
         public static final String GET_ALL_COMPLETE = "GET_ALL_COMPLETE";
         public static final String LATEST_APK = "LATEST_APK";
