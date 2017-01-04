@@ -43,7 +43,6 @@ import com.receiptofi.receiptapp.fragments.SettingFragment;
 import com.receiptofi.receiptapp.fragments.SubscriptionFragment;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.model.ProfileModel;
-import com.receiptofi.receiptapp.service.gcm.RegistrationIntentService;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
@@ -227,12 +226,6 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
 
         setBackPattern(MaterialNavigationDrawer.BACKPATTERN_BACK_TO_FIRST);
         getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-        if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
-            Intent intent = new Intent(this, RegistrationIntentService.class);
-            startService(intent);
-        }
     }
 
     @Override

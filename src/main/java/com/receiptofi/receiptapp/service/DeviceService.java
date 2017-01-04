@@ -11,6 +11,7 @@ import android.util.Log;
 
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
+import com.google.firebase.iid.*;
 import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
@@ -127,7 +128,11 @@ public class DeviceService {
      */
     public static void registerDevice(final Context context) {
         Log.d(TAG, "register device");
-        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
+        String did = KeyValueUtils.getValue(KeyValueUtils.KEYS.XR_DID);
+        if (TextUtils.isEmpty(did)) {
+            KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_DID, UUID.randomUUID().toString());
+        }
+        KeyValueUtils.updateInsert(KeyValueUtils.KEYS.XR_TK, FirebaseInstanceId.getInstance().getToken());
 
         ExternalCallWithOkHttp.doPost(context, API.REGISTER_DEVICE, IncludeAuthentication.YES, IncludeDevice.TYPE, new ResponseHandler() {
 
