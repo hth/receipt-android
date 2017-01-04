@@ -170,7 +170,7 @@ android {
         applicationId "com.receiptofi.receiptapp"
         minSdkVersion 16
         targetSdkVersion 25
-        multiDexEnabled true
+        multiDexEnabled false
         testHandleProfiling true
         testFunctionalTest true
         versionCode versionBuild
