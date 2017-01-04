@@ -40,7 +40,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         // TODO(developer): Handle FCM messages here.
         // Not getting messages here? See why this may be: https://goo.gl/39bRNJ
-        Log.d(TAG, "From: " + remoteMessage.getFrom());
+        Log.i(TAG, "Message From: " + remoteMessage.getFrom());
 
         // Check if message contains a data payload.
         if (remoteMessage.getData().size() > 0) {
@@ -88,7 +88,8 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
         // Also if you intend on generating your own notifications as a result of a received FCM
         // message, here is where that should be initiated. See sendNotification method below.
-        //ssendNotification("DONE!");
+        //TODO(hth) comment this line
+        sendNotification(remoteMessage.getData().get("message"));
     }
     // [END receive_message]
 
@@ -113,6 +114,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
                 .setContentText(message)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
+                .setPriority(Notification.PRIORITY_HIGH)
                 .setContentIntent(pendingIntent);
 
         NotificationManager notificationManager =
