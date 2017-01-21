@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.receiptofi.receiptapp.R;
@@ -91,6 +92,8 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
                 holder.bizName = (TextView) convertView.findViewById(R.id.exp_list_child_buz_name);
                 holder.date = (TextView) convertView.findViewById(R.id.exp_list_child_date);
                 holder.amount = (TextView) convertView.findViewById(R.id.exp_list_child_amount);
+                holder.splitCout = (TextView)convertView.findViewById(R.id.tvSplitCount);
+                holder.splitCountImgView = (ImageView)convertView.findViewById(R.id.imvReceiptCount);
                 convertView.setTag(holder);
             } else {
                 holder = (ChildViewHolder) convertView.getTag();
@@ -111,12 +114,15 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
                     context.getString(
                             R.string.receipt_list_child_amount,
                             AppUtils.currencyFormatter().format(receiptData.getSplitTotal())));
-
+            int spitCount = receiptData.getSplitCount();
+            if(spitCount > 1)
+            {
+                holder.splitCout.setText("+ "+String.valueOf(spitCount));
+                holder.splitCountImgView.setVisibility(View.VISIBLE);
+            }
             return convertView;
         } catch (IndexOutOfBoundsException e) {
             Log.e(TAG, "IndexOutOfBoundsException " + e.getLocalizedMessage(), e);
-        } catch (ParseException e) {
-            Log.e(TAG, "ParseException " + e.getLocalizedMessage(), e);
         } catch (Exception e) {
             Log.e(TAG, "Exception " + e.getLocalizedMessage(), e);
         }
@@ -168,5 +174,7 @@ public class ReceiptListAdapter extends BaseExpandableListAdapter {
         TextView bizName;
         TextView date;
         TextView amount;
+        TextView splitCout;
+        ImageView splitCountImgView;
     }
 }

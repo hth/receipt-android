@@ -161,7 +161,7 @@ public class ExpenseTagUtils {
         );
     }
 
-    private static List<ExpenseTagModel> getAll() {
+    public static List<ExpenseTagModel> getAll() {
         Log.d(TAG, "Fetching all expense tag");
         List<ExpenseTagModel> list = new LinkedList<>();
         Cursor cursor = null;

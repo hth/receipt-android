@@ -301,4 +301,20 @@
 
     <string name="msg1"> Tapping \'Sign Up\' confirms that you agree to</string>
     <string name="msg2"><u>ReceiptApp Terms of Use</u></string>
+    
+    <string name="details">Details</string>
+    <string name="options">Options</string>
+    <string name="previewreceipt">Preview Receipt</string>
+    <string name="downloadreceipt">DOWNLOAD RECEIPT</string>
+    <string name="datamismatch">Data Mismatch</string>
+    <string name="verifyreceiptagain">VERIFY RECEIPT AGAIN</string>
+    <string name="deletereceipt">Delete Receipt</string>
+    <string name="delete">DELETE</string>
+    <string name="chooseexpensetag">Choose expense tag</string>
+    <string name="splitexpense">Split Expense</string>
+    <string name="friendemail">Friend\'s Email</string>
+    <string name="invite">INVITE</string>
+    <string name="notes">Notes</string>
+    <string name="save">SAVE</string>
+    
 </resources>
