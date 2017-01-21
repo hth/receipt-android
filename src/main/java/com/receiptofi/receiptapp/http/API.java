@@ -54,6 +54,9 @@ public class API {
         public static final String XR_DID = "X-R-DID";
         public static final String XR_DT = "X-R-DT";
 
+        //TODO(hth) add for sending app version number
+        public static final String XR_VR = "X-R-VR";
+
         // Social
         public static final String PID = "pid";
         public static final String ACCESS_TOKEN = "at";
