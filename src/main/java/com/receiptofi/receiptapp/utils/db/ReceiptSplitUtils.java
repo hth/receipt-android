@@ -1,12 +1,15 @@
 package com.receiptofi.receiptapp.utils.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
+import android.util.Log;
 
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.model.ReceiptSplitModel;
 
+import java.util.LinkedList;
 import java.util.List;
 
 import static com.receiptofi.receiptapp.ReceiptofiApplication.RDH;
@@ -17,6 +20,7 @@ import static com.receiptofi.receiptapp.ReceiptofiApplication.RDH;
  */
 public class ReceiptSplitUtils {
 
+    private static final String TAG = ReceiptSplitUtils.class.getSimpleName();
     private ReceiptSplitUtils() {
     }
 
@@ -62,5 +66,29 @@ public class ReceiptSplitUtils {
                 null,
                 values
         );
+    }
+
+    public static List<ReceiptSplitModel> getReceiptSplit(String rID)
+    {
+        List<ReceiptSplitModel> list = new LinkedList<>();
+        Cursor cursor = null;
+        try {
+           /* cursor = RDH.getReadableDatabase().query(DatabaseTable.ReceiptSplit.TABLE_NAME,null,DatabaseTable.ReceiptSplit.RID + "=?",new String[]{rID},null,null,null);*/
+            cursor = RDH.getReadableDatabase().rawQuery("Select * from "+ DatabaseTable.ReceiptSplit.TABLE_NAME + " where rid = ?",new String[]{rID});
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    ReceiptSplitModel item = new ReceiptSplitModel(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3));
+                    list.add(item);
+                }
+                }
+
+            }catch (Exception e) {
+            Log.e(TAG, "Error getting expense tag " + e.getLocalizedMessage(), e);
+        } finally {
+            if (null != cursor) {
+                cursor.close();
+            }
+        }
+        return list;
     }
 }

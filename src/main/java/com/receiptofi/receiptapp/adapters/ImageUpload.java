@@ -62,7 +62,7 @@ public class ImageUpload {
             msg.what = HomeFragment.IMAGE_ALREADY_QUEUED;
             msg.obj = context.getApplicationContext().getString(R.string.image_exists_in_queue);
             if (ReceiptofiApplication.isHomeActivityVisible()) {
-                ((MainMaterialDrawerActivity) context).homeFragment.updateHandler.sendMessage(msg);
+                ((HomeActivity) context).homeFragment.updateHandler.sendMessage(msg);
             }
         }
     }

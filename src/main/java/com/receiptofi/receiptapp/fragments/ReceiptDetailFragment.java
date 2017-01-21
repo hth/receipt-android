@@ -2,10 +2,8 @@ package com.receiptofi.receiptapp.fragments;
 
 import android.app.DatePickerDialog;
 import android.app.Fragment;
-import android.app.SearchManager;
 import android.content.ContentResolver;
 import android.content.ContentValues;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -21,7 +19,10 @@ import android.os.Message;
 import android.provider.CalendarContract.Calendars;
 import android.provider.CalendarContract.Events;
 import android.provider.CalendarContract.Reminders;
-import android.text.InputType;
+import android.support.v7.app.AlertDialog;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -31,8 +32,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -44,18 +46,23 @@ import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
-import com.joanzapata.iconify.widget.IconButton;
 import com.joanzapata.iconify.widget.IconTextView;
 import com.receiptofi.receiptapp.BuildConfig;
 import com.receiptofi.receiptapp.FilterListActivity;
+import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptListActivity;
+import com.receiptofi.receiptapp.adapters.ExpenseTagAdapterRecycleView;
 import com.receiptofi.receiptapp.adapters.ReceiptItemListAdapter;
+import com.receiptofi.receiptapp.model.ExpenseTagModel;
 import com.receiptofi.receiptapp.model.ReceiptDetailObservable;
 import com.receiptofi.receiptapp.model.ReceiptItemModel;
 import com.receiptofi.receiptapp.model.ReceiptModel;
+import com.receiptofi.receiptapp.model.ReceiptSplitModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.Constants;
+import com.receiptofi.receiptapp.utils.db.ExpenseTagUtils;
+import com.receiptofi.receiptapp.utils.db.ReceiptSplitUtils;
 import com.receiptofi.receiptapp.utils.db.ReceiptUtils;
 import com.receiptofi.receiptapp.views.ToastBox;
 
@@ -95,18 +102,27 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     private TextView taxAmountView;
     private TextView totalAmountView;
     private List<ReceiptItemModel> itemList;
+    private  TextView rdBizSplitTotal;
+    private TextView rdBizSplitCount;
 
     private IconTextView tagIcon;
-    private IconButton btnDownloadImage;
+    private Button btnDownloadImage;
     private ImageView receiptImage;
-
+    private ImageView rdBizSplitImg;
+    private View rdBizTagColor;
+    private Button rdBtnDetailList,rdbtnOptionList,btnVerifyReceipt,btnDeleteReceipt;
+    private RecyclerView expenseTagRecycleView;
+    private EditText edtNotes;
     private String blobIds = "";
     private SearchView searchView;
     private DataSetObserver observer;
     public static ReceiptDetailObservable receiptDetailObservable = ReceiptDetailObservable.getInstance();
     private String receiptId;
+    private LinearLayout rdListLayout,rdOptionList;
 
     public static final int RECEIPT_DETAIL_REFRESHED = 0x4436;
+    public List<ExpenseTagModel> expenseTagModelList;
+    private List<ReceiptSplitModel> rSplitModelList;
 
     public final Handler updateHandler = new Handler(new Handler.Callback() {
         @Override
@@ -142,8 +158,11 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         }
     });
 
+
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        expenseTagModelList = getAllExpenseTag();
         observer = new DataSetObserver() {
             @Override
             public void onChanged() {
@@ -201,6 +220,15 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         rdBizAddLine2 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line2);
         rdBizAddLine3 = (TextView) receiptDetailView.findViewById(R.id.rd_biz_add_line3);
         rdBizPhone = (TextView) receiptDetailView.findViewById(R.id.rd_biz_phone);
+        rdBizSplitTotal = (TextView)receiptDetailView.findViewById(R.id.tvSplitTotal);
+        rdBizSplitCount = (TextView)receiptDetailView.findViewById(R.id.tvSplitCount);
+        rdBizSplitImg = (ImageView)receiptDetailView.findViewById(R.id.imvReceiptCount);
+        rdBizTagColor = (View)receiptDetailView.findViewById(R.id.exp_list_child_tag_color);
+        rdBtnDetailList = (Button)receiptDetailView.findViewById(R.id.btn_rddetailList);
+        rdbtnOptionList = (Button)receiptDetailView.findViewById(R.id.btn_rdoptions);
+        expenseTagRecycleView = (RecyclerView)receiptDetailView.findViewById(R.id.chooseExpenseRecyclerView);
+                rdListLayout = (LinearLayout)receiptDetailView.findViewById(R.id.detaillistLayout);
+        rdOptionList =(LinearLayout)receiptDetailView.findViewById(R.id.optionsLayout);
 
         // Replace the phone textview left drawable icon with fa-phone.
         Drawable rdBizPhoneIcon = new IconDrawable(getActivity(), FontAwesomeIcons.fa_phone_square)
@@ -222,16 +250,20 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         totalAmountView = (TextView) totalFooter.findViewById(R.id.rd_item_list_footer_total_amount);
         rdItemsList.addFooterView(totalFooter);
 
-        tagIcon = (IconTextView) receiptDetailView.findViewById(R.id.tag_icon);
-        btnDownloadImage = (IconButton) receiptDetailView.findViewById(R.id.btn_download_receipt);
+       // tagIcon = (IconTextView) receiptDetailView.findViewById(R.id.tag_icon);
+        btnDownloadImage = (Button) receiptDetailView.findViewById(R.id.btnDownloadReceipt);
+        btnVerifyReceipt = (Button)receiptDetailView.findViewById(R.id.btnVerifyReceiptAgain);
         receiptImage = (ImageView) receiptDetailView.findViewById(R.id.receiptImage);
+        btnDeleteReceipt = (Button)receiptDetailView.findViewById(R.id.btnDeleteReceipt);
+
+        edtNotes = (EditText)receiptDetailView.findViewById(R.id.edtNotes);
         btnDownloadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(blobIds)) {
                     String url = BuildConfig.AWSS3 + BuildConfig.AWSS3_BUCKET + blobIds;
-                    if (getActivity() instanceof ReceiptListActivity) {
-                        ((ReceiptListActivity) getActivity()).showReceiptDetailImageFragment(url);
+                    if (getActivity() instanceof HomeActivity) {
+                        ((HomeActivity) getActivity()).showReceiptDetailImageFragment(url);
                     } else if (getActivity() instanceof FilterListActivity) {
                         ((FilterListActivity) getActivity()).showReceiptDetailImageFragment(url);
                     }
@@ -244,10 +276,50 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                     superActivityToast.setTouchToDismiss(true);
                     superActivityToast.show();
                 }
+            }
+        });
 
+        rdBtnDetailList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailListOptionsLayoutVisibleInvisible(true);
+            }
+        });
+
+        rdbtnOptionList.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                detailListOptionsLayoutVisibleInvisible(false);
+            }
+        });
+
+        //Edit Note ------ Click Listner
+        edtNotes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(getActivity());
+                final EditText edittext = new EditText(getActivity());
+                edittext.setText(edtNotes.getText().toString());
+                alertDialog.setMessage("Enter Your Message");
+                alertDialog.setTitle("Enter Your Title");
+                alertDialog.setView(edittext);
+
+                alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                       edtNotes.setText(edittext.getText().toString());
+                    }
+                });
+                alertDialog.show();
 
             }
         });
+
+
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),5);
+        expenseTagRecycleView.setLayoutManager(layoutManager);
+        expenseTagRecycleView.setItemAnimator(new DefaultItemAnimator());
+        expenseTagRecycleView.setAdapter(new ExpenseTagAdapterRecycleView(getActivity(),expenseTagModelList));
         return receiptDetailView;
     }
 
@@ -272,6 +344,8 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
             // Set article based on saved instance state defined during onCreateView
             updateReceiptDetailView(mCurrentIndex, mCurrentPosition, mTypeFilter);
         }
+        rSplitModelList = ReceiptSplitUtils.getReceiptSplit(receiptId);
+        detailListOptionsLayoutVisibleInvisible(true);
     }
 
     @Override
@@ -487,6 +561,18 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
                     }
                 });
             }
+            // ---- add split cout ------
+            if(receiptModel.getSplitCount()>1) {
+                rdBizSplitCount.setText("+ "+String.valueOf(receiptModel.getSplitCount()));
+                rdBizSplitImg.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                rdBizSplitImg.setVisibility(View.INVISIBLE);
+            }
+            rdBizSplitTotal.setText(getActivity().getString(
+                    R.string.receipt_list_child_amount,
+                    AppUtils.currencyFormatter().format(receiptModel.getSplitTotal())));
 
             // Update trackers
             mCurrentIndex = index;
@@ -508,10 +594,11 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
         /** Two checks. Check expenseTagModel is not null for avoiding to fail when expenseTagId is not empty. */
         if (!TextUtils.isEmpty(receiptModel.getExpenseTagId()) && null != receiptModel.getExpenseTagModel()) {
             String colorCode = receiptModel.getExpenseTagModel().getColor();
-            tagIcon.setTextColor(Color.parseColor(colorCode));
-            tagIcon.setVisibility(View.VISIBLE);
+          //  tagIcon.setTextColor(Color.parseColor(colorCode));
+         //   tagIcon.setVisibility(View.VISIBLE);
+            rdBizTagColor.setBackgroundColor(Color.parseColor(colorCode));
         } else {
-            tagIcon.setVisibility(View.INVISIBLE);
+           // tagIcon.setVisibility(View.INVISIBLE);
         }
     }
 
@@ -657,5 +744,29 @@ public class ReceiptDetailFragment extends Fragment implements DatePickerDialog.
     }
 
   /*  navigate to previous fragment */
+
+     private void detailListOptionsLayoutVisibleInvisible(boolean isDetailListVisible)
+     {
+         if(isDetailListVisible)
+         {
+
+             rdListLayout.setVisibility(View.VISIBLE);
+             rdOptionList.setVisibility(View.GONE);
+         }
+         else
+         {
+             rdListLayout.setVisibility(View.GONE);
+             rdOptionList.setVisibility(View.VISIBLE);
+
+
+         }
+     }
+
+    private List<ExpenseTagModel>  getAllExpenseTag()
+    {
+        //ExpenseTagUtils expenseTagUtils = new ExpenseTagUtils();
+        List<ExpenseTagModel> expenseTagModelList = ExpenseTagUtils.getAll();
+        return expenseTagModelList;
+    }
 
 }

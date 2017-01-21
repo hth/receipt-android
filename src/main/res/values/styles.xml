@@ -75,18 +75,18 @@
     </style>
 
     <style name="rd_list_item_text_left_primary_style" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">@color/app_theme_txt_color</item>
+        <item name="android:textColor">@color/app_black</item>
         <item name="android:paddingTop">@dimen/rd_list_item_vertical_padding</item>
     </style>
 
     <style name="rd_list_item_text_left_secondary_style" parent="@android:style/TextAppearance.Small">
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/gray_dark</item>
+        <item name="android:textColor">@color/app_black</item>
         <item name="android:paddingBottom">@dimen/rd_list_item_vertical_padding</item>
     </style>
 
     <style name="rd_list_item_price_text" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">@color/gray_darker</item>
+        <item name="android:textColor">@color/app_black</item>
     </style>
 
     <style name="rd_list_item_header_text" parent="@android:style/TextAppearance.Medium">
@@ -95,12 +95,12 @@
     </style>
 
     <style name="rd_list_item_tax_footer_text" parent="@android:style/TextAppearance.Small">
-        <item name="android:textColor">@color/gray_darker</item>
+        <item name="android:textColor">@color/app_black</item>
         <item name="android:textStyle">bold</item>
     </style>
 
     <style name="rd_list_item_total_footer_text" parent="@android:style/TextAppearance.Medium">
-        <item name="android:textColor">@color/gray_darker</item>
+        <item name="android:textColor">@color/app_black</item>
         <item name="android:textStyle">bold</item>
     </style>
 

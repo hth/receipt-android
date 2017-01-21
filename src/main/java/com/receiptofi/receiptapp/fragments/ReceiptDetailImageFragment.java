@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.receiptapp.BuildConfig;
+import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptListActivity;
 import com.receiptofi.receiptapp.utils.AppUtils;
@@ -188,7 +189,7 @@ public class ReceiptDetailImageFragment extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            if (!(context instanceof ReceiptListActivity)) {
+            if (!(context instanceof HomeActivity)) {
                 mListener = (OnFragmentInteractionListener) context;
             }
         } catch (ClassCastException e) {

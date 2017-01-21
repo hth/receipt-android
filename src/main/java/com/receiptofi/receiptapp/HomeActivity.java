@@ -2,6 +2,7 @@ package com.receiptofi.receiptapp;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
@@ -29,6 +30,8 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.receiptofi.receiptapp.fragments.HomeFragment;
 import com.receiptofi.receiptapp.fragments.HomeFragment1;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailFragment;
+import com.receiptofi.receiptapp.fragments.ReceiptDetailImageForTabletDialogFragment;
+import com.receiptofi.receiptapp.fragments.ReceiptDetailImageFragment;
 import com.receiptofi.receiptapp.fragments.ReceiptListFragment;
 import com.receiptofi.receiptapp.fragments.SettingFragment;
 import com.receiptofi.receiptapp.http.API;
@@ -430,9 +433,31 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         childIndex = childPosition;
     }
 
-   /* @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        finish();
-    }*/
+
+    public void showReceiptDetailImageFragment(String url) {
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        if (AppUtils.isTablet(this)) {
+            // Handle Table environment
+            FragmentManager fm = getFragmentManager();
+            ReceiptDetailImageForTabletDialogFragment detailImage = new ReceiptDetailImageForTabletDialogFragment();
+            Bundle args_tablet = new Bundle();
+            args_tablet.putString(Constants.ARG_IMAGE_URL, url);
+            detailImage.setArguments(args_tablet);
+            detailImage.show(fm, "fragment_detail_image");
+
+        } else {
+            // Create fragment and give it an argument for the selected article
+            ReceiptDetailImageFragment newFragment = new ReceiptDetailImageFragment();
+            Bundle args = new Bundle();
+            args.putString(Constants.ARG_IMAGE_URL, url);
+            newFragment.setArguments(args);
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            // Handle normal phone environment
+            transaction.replace(R.id.fragment_container, newFragment);
+            transaction.addToBackStack(null);
+            // Commit the transaction
+            transaction.commit();
+        }
+    }
 }

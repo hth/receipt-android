@@ -52,15 +52,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:id="@+id/tvReceiptCount"
+                android:id="@+id/tvSplitCount"
                 android:padding="2dp"
-                android:textSize="13sp"
+                android:textSize="15sp"
                 android:textColor="@color/app_light_blue_100"
-                android:text="+1"/>
+                android:text=""/>
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="match_parent"
-                android:id="@+id/imvReceiptCount"/>
+                android:id="@+id/imvReceiptCount"
+                android:src="@drawable/split2" android:visibility="invisible"/>
             <View
                 android:id="@+id/exp_list_child_tag_color"
                 android:layout_width="20dp"

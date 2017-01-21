@@ -5,6 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/app_light_bg"
+    android:orientation="vertical"
     android:fillViewport="true">
 
     <LinearLayout
@@ -20,19 +21,19 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/white"
             android:orientation="vertical">
 
-            <TextView
+           <!-- <TextView
                 android:id="@+id/empty_view"
                 style="@style/text_larger"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@string/notify_empty_detail"/>
+                android:text="@string/notify_empty_detail"/>-->
 
             <include layout="@layout/rd_address_block"/>
-
             <LinearLayout
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
@@ -60,47 +61,269 @@
                     android:layout_weight="1"
                     android:gravity="center_vertical|right"/>
             </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp">
-
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.6"
+                    android:id="@+id/tvSplitTotal"
+                    />
                 <LinearLayout
-                    android:id="@+id/header"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp">
-
+                    android:layout_width="0dp"
+                    android:layout_weight="0.4"
+                    android:layout_marginRight="10dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:gravity="right">
                     <TextView
-                        android:id="@+id/rd_list_item_header_title"
-                        style="@style/rd_list_item_header_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                        android:layout_weight="1"
-                        android:gravity="left|center_vertical"
-                        android:text="@string/rd_item_header_title"/>
-
-                    <TextView
-                        android:id="@+id/rd_list_item_header_amount"
-                        style="@style/rd_list_item_header_text"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/activity_horizontal_margin"
-                        android:layout_weight="1"
-                        android:gravity="right|center_vertical"
-                        android:text="@string/rd_item_header_amount"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:id="@+id/tvSplitCount"
+                        android:padding="2dp"
+                        android:textSize="15sp"
+                        android:textColor="@color/app_light_blue_100"
+                        android:text=""/>
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/imvReceiptCount"
+                        android:src="@drawable/split2" android:visibility="invisible"/>
+                    <View
+                        android:id="@+id/exp_list_child_tag_color"
+                        android:layout_width="20dp"
+                        android:padding="2dp"
+                        android:layout_height="20dp"
+                        />
                 </LinearLayout>
+            </LinearLayout>
 
-                <ListView
-                    android:id="@+id/rd_items_list"
+
+
+           <!-- <RelativeLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:background="@color/app_light_blue_200"
+                android:layout_marginTop="10dp">-->
+                <LinearLayout
+                    android:id="@+id/btnlayout"
+                    android:layout_width="300dp"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal"
+                  android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true">
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btn_rddetailList"
+                        android:text="@string/details"
+                        />
+                    <Button
+                        android:layout_width="0dp"
+                        android:layout_weight="1"
+                        android:layout_height="match_parent"
+                        android:id="@+id/btn_rdoptions"
+                        android:text="@string/options"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/listOptainMainLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/header"
-                    android:listSelector="@drawable/list_selector_app_theme"/>
-            </RelativeLayout>
+                    android:orientation="vertical"
+                    android:layout_below="@+id/btnlayout"
+                    >
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:id="@+id/detaillistLayout"
+                        >
+                        <LinearLayout
+                            android:id="@+id/header"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="5dp">
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"
+                                />
+
+                         <!--   <TextView
+                                android:id="@+id/rd_list_item_header_title"
+                                style="@style/rd_list_item_header_text"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                                android:layout_weight="1"
+                                android:gravity="left|center_vertical"
+                                android:text="@string/rd_item_header_title"/>
+
+                            <TextView
+                                android:id="@+id/rd_list_item_header_amount"
+                                style="@style/rd_list_item_header_text"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                                android:layout_weight="1"
+                                android:gravity="right|center_vertical"
+                                android:text="@string/rd_item_header_amount"/>-->
+                        </LinearLayout>
+
+                        <ListView
+                            android:id="@+id/rd_items_list"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/header"
+                            android:listSelector="@drawable/list_selector_app_theme"/>
+
+                    </LinearLayout>
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/optionsLayout"
+                            android:orientation="vertical"
+                            >
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1" android:text="@string/previewreceipt"/>
+                                <Button
+                                    android:id="@+id/btnDownloadReceipt"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:background="@color/app_blue"
+                                    android:textColor="@color/white"
+                                    android:text="@string/downloadreceipt"/>
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/datamismatch"/>
+                                <Button
+                                    android:id="@+id/btnVerifyReceiptAgain"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/app_blue"
+                                    android:textColor="@color/white"
+                                    android:layout_weight="1"
+                                    android:text="@string/verifyreceiptagain"/>
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"/>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/deletereceipt"/>
+                                <Button
+                                    android:id="@+id/btnDeleteReceipt"
+                                    android:layout_width="0dp"
+                                    android:background="@color/app_blue"
+                                    android:textColor="@color/white"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:text="@string/delete"/>
+                            </LinearLayout>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@string/chooseexpensetag"/>
+                            <android.support.v7.widget.RecyclerView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/chooseExpenseRecyclerView"
+                                >
+                            </android.support.v7.widget.RecyclerView>
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/gray"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:text="@string/splitexpense" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <EditText
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.7"
+                                    android:text="@string/deletereceipt"/>
+                                <Button
+                                    android:id="@+id/btnInvite"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.3"
+                                    android:text="@string/delete"/>
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" android:orientation="horizontal"
+                                android:id="@+id/splitmemberLayout">
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.1"
+                                    android:text="@string/notes"/>
+                                <Button
+                                    android:id="@+id/btnSaveNotes"
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="0.3"
+                                    android:text="@string/save"/>
+                            </LinearLayout>
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:id="@+id/edtNotes"
+                                />
+                        </LinearLayout>
+                    </ScrollView>
+
+
+                                   </LinearLayout>
+
+            <!--</RelativeLayout>-->
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>
