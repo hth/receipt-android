@@ -59,9 +59,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
     private TextView buildVersion;
     private TextView logIn;
 
-    private boolean isLeftButtonClicked = false;
-    private boolean isRightButtonClicked = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,8 +147,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         if (super.loader != null) {
             super.loader.dismiss();
         }
-        isLeftButtonClicked = false;
-        isRightButtonClicked = false;
     }
 
     @Override
@@ -192,24 +187,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
             default:
                 Log.d(TAG, "done executing onClick no id match");
                 break;
-        }
-    }
-
-    public void leftButtonClick(View view) {
-        Log.d(TAG, "inside leftButtonClick");
-        isLeftButtonClicked = true;
-        if (isRightButtonClicked) {
-            email.setText("li@receiptofi.com");
-            password.setText("Chongzhi");
-        }
-    }
-
-    public void rightButtonClick(View view) {
-        Log.d(TAG, "inside rightButtonClick");
-        isRightButtonClicked = true;
-        if (isLeftButtonClicked) {
-            email.setText("testme@r.com");
-            password.setText("testtest");
         }
     }
 
