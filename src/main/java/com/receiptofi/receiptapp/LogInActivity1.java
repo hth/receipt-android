@@ -72,9 +72,10 @@ public class LogInActivity1 extends ParentActivity implements View.OnClickListen
             }
         });
 
-        if (RECEIPTOFI_MOBILE.contains("sandbox")) {
+        if (!"release".equals(BuildConfig.BUILD_TYPE)) {
             email.setText("testme@r.com");
             password.setText("testtest");
+            logIn.setEnabled(true);
         }
     }
 

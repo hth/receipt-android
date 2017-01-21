@@ -121,14 +121,6 @@ public class LogInActivity extends ParentActivity implements View.OnClickListene
         LinearLayout googleLogin = (LinearLayout) findViewById(R.id.google_login);
         googleLogin.setOnClickListener(this);
 
-        if (!"debug".equals(BuildConfig.BUILD_TYPE)) {
-            Button left_bt = (Button) findViewById(R.id.hidden_left_Button);
-            left_bt.setVisibility(View.INVISIBLE);
-
-            Button right_bt = (Button) findViewById(R.id.hidden_right_Button);
-            right_bt.setVisibility(View.INVISIBLE);
-        }
-
         if ("release".equals(BuildConfig.BUILD_TYPE)) {
             buildVersion = (TextView) findViewById(R.id.login_build_version);
             buildVersion.setVisibility(View.INVISIBLE);
