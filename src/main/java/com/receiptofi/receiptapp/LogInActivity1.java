@@ -41,36 +41,41 @@ public class LogInActivity1 extends ParentActivity implements View.OnClickListen
     private static final String TAG = LogInActivity1.class.getSimpleName();
     private StringBuilder errors = new StringBuilder();
     private Toolbar toolbar;
-    private EditText email,password;
-    private  String emailStr,passwordStr;
-    private Button forgotPasswordButton,logIn;
-    private LinearLayout fbLogin,googleLogin;
+    private EditText email, password;
+    private String emailStr, passwordStr;
+    private Button forgotPasswordButton, logIn;
+    private LinearLayout fbLogin, googleLogin;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-       setContentView(R.layout.login_page1);
+        setContentView(R.layout.login_page1);
 
-        toolbar = (Toolbar)findViewById(R.id.logintoolbar);
+        toolbar = (Toolbar) findViewById(R.id.logintoolbar);
         toolbar.setTitle("");
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        forgotPasswordButton = (Button)findViewById(R.id.forgot_password_button);
-        logIn = (Button)findViewById(R.id.login_button);
+        forgotPasswordButton = (Button) findViewById(R.id.forgot_password_button);
+        logIn = (Button) findViewById(R.id.login_button);
         email = (EditText) findViewById(R.id.email);
         password = (EditText) findViewById(R.id.password);
-        fbLogin = (LinearLayout)findViewById(R.id.facebook_login);
-        googleLogin = (LinearLayout)findViewById(R.id.google_login);
+        fbLogin = (LinearLayout) findViewById(R.id.facebook_login);
+        googleLogin = (LinearLayout) findViewById(R.id.google_login);
         fbLogin.setOnClickListener(this);
         googleLogin.setOnClickListener(this);
         logIn.setOnClickListener(this);
         forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LogInActivity1.this,PasswordRecoveryActivity1.class);
+                Intent intent = new Intent(LogInActivity1.this, PasswordRecoveryActivity1.class);
                 startActivity(intent);
             }
         });
 
+        if (RECEIPTOFI_MOBILE.contains("sandbox")) {
+            email.setText("testme@r.com");
+            password.setText("testtest");
+        }
     }
 
     @Override
@@ -217,6 +222,7 @@ public class LogInActivity1 extends ParentActivity implements View.OnClickListen
             }
         });
     }
+
     private void addErrorMsg(String msg) {
         if (errors.length() == 0) {
             errors.append(msg);
