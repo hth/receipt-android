@@ -113,10 +113,10 @@ public class ExternalCallWithOkHttp {
                     Response response = okHttpClient(3).newCall(request).execute();
                     updateResponseHandler(response.code(), response, response.body().string(), responseHandler);
                 } catch (ConnectException e) {
-                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    Log.e(TAG, "api=" + api + " reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(new RuntimeException(context.getString(R.string.connect_to_server_failure)));
                 } catch (Exception e) {
-                    Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
+                    Log.e(TAG, "api=" + api + " reason=" + e.getLocalizedMessage(), e);
                     responseHandler.onException(new RuntimeException(context.getString(R.string.post_get_general_error)));
                 }
             }
