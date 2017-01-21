@@ -111,27 +111,11 @@
                 android:layout_height="@dimen/activity_vertical_margin_wide"
                 android:orientation="horizontal">
 
-                <Button
-                    android:id="@+id/hidden_left_Button"
-                    android:layout_width="@dimen/activity_vertical_margin_wide"
-                    android:layout_height="@dimen/activity_vertical_margin_wide"
-                    android:layout_gravity="start|left"
-                    android:onClick="leftButtonClick"
-                    android:background="@color/transparent"/>
-
                 <View
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
                     android:layout_weight="1"/>
-
-                <Button
-                    android:id="@+id/hidden_right_Button"
-                    android:layout_width="@dimen/activity_vertical_margin_wide"
-                    android:layout_height="@dimen/activity_vertical_margin_wide"
-                    android:layout_gravity="end|right"
-                    android:onClick="rightButtonClick"
-                    android:background="@color/transparent"/>
 
             </LinearLayout>
 
