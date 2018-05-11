@@ -3,20 +3,20 @@ package com.receiptofi.receiptapp.db;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import static com.receiptofi.receiptapp.db.DatabaseTable.BillingAccount;
+import static com.receiptofi.receiptapp.db.DatabaseTable.BillingHistory;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ExpenseTag;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ImageIndex;
+import static com.receiptofi.receiptapp.db.DatabaseTable.Item;
+import static com.receiptofi.receiptapp.db.DatabaseTable.ItemReceipt;
+import static com.receiptofi.receiptapp.db.DatabaseTable.KeyValue;
+import static com.receiptofi.receiptapp.db.DatabaseTable.MonthlyReport;
+import static com.receiptofi.receiptapp.db.DatabaseTable.Notification;
 import static com.receiptofi.receiptapp.db.DatabaseTable.Profile;
 import static com.receiptofi.receiptapp.db.DatabaseTable.Receipt;
 import static com.receiptofi.receiptapp.db.DatabaseTable.ReceiptSplit;
-import static com.receiptofi.receiptapp.db.DatabaseTable.ImageIndex;
-import static com.receiptofi.receiptapp.db.DatabaseTable.UploadQueue;
-import static com.receiptofi.receiptapp.db.DatabaseTable.KeyValue;
-import static com.receiptofi.receiptapp.db.DatabaseTable.MonthlyReport;
-import static com.receiptofi.receiptapp.db.DatabaseTable.Item;
-import static com.receiptofi.receiptapp.db.DatabaseTable.ExpenseTag;
-import static com.receiptofi.receiptapp.db.DatabaseTable.Notification;
-import static com.receiptofi.receiptapp.db.DatabaseTable.BillingAccount;
-import static com.receiptofi.receiptapp.db.DatabaseTable.BillingHistory;
-import static com.receiptofi.receiptapp.db.DatabaseTable.ItemReceipt;
 import static com.receiptofi.receiptapp.db.DatabaseTable.ShoppingItem;
+import static com.receiptofi.receiptapp.db.DatabaseTable.UploadQueue;
 
 /**
  * User: hitender

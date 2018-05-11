@@ -271,7 +271,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            mListener = (OnFragmentInteractionListener) context;
+           // mListener = (OnFragmentInteractionListener) context;
         } catch (ClassCastException e) {
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             throw new ClassCastException(context.toString() + " must implement OnFragmentInteractionListener");

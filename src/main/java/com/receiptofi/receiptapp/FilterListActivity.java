@@ -5,7 +5,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.app.SearchManager;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -21,13 +20,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.Iconify;
-import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.adapters.ExpenseTagListAdapter;
 import com.receiptofi.receiptapp.fragments.FilterListFragment;
 import com.receiptofi.receiptapp.fragments.ReceiptDetailFragment;
@@ -89,13 +84,13 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
         setContentView(R.layout.filter_list_page);
 
         /** Setup back up button with its own icon. */
-        int upId = Resources.getSystem().getIdentifier("up", "id", "android");
-        if (upId > 0) {
-            ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
-                    .colorRes(R.color.white)
-                    .actionBarSize());
-        }
+//        int upId = Resources.getSystem().getIdentifier("up", "id", "android");
+//        if (upId > 0) {
+//            ImageView up = (ImageView) findViewById(upId);
+//            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
+//                    .colorRes(R.color.white)
+//                    .actionBarSize());
+//        }
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         initDrawerView();

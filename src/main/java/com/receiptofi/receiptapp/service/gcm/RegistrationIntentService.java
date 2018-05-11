@@ -9,9 +9,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.google.android.gms.gcm.GcmPubSub;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 
 import java.io.IOException;

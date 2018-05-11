@@ -6,7 +6,6 @@ import android.os.Message;
 import android.util.Log;
 
 import com.receiptofi.receiptapp.HomeActivity;
-import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.fragments.HomeFragment;

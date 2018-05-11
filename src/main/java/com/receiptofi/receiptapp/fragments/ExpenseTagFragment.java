@@ -29,7 +29,6 @@ import com.baoyz.swipemenulistview.SwipeMenuListView;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.adapters.ExpenseTagAdapter;
@@ -286,7 +285,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     }
 
     private void deleteExpenseTag(final ExpenseTagModel tagModel) {
-        new AlertDialog.Builder(getActivity())
+        new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme)
                 .setTitle(getString(R.string.expense_tag_dialog_delete_label))
                 .setMessage(getString(R.string.expense_tag_dialog_text, tagModel.getTag()))
                 .setNegativeButton(getString(R.string.expense_tag_dialog_button_cancel), new DialogInterface.OnClickListener() {

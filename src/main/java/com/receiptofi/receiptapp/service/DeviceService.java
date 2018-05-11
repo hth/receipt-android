@@ -14,7 +14,6 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.MainMaterialDrawerActivity;
 import com.receiptofi.receiptapp.ReceiptofiApplication;
-import com.receiptofi.receiptapp.fragments.ExpenseTagFragment;
 import com.receiptofi.receiptapp.fragments.HomeFragment;
 import com.receiptofi.receiptapp.fragments.HomeFragment1;
 import com.receiptofi.receiptapp.http.API;

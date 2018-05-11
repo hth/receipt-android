@@ -3,46 +3,51 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-   android:orientation="vertical"
+    android:orientation="vertical"
     android:weightSum="1"
-    tools:context="com.receiptofi.receiptapp.HomeActivity" >
+    tools:context="com.receiptofi.receiptapp.HomeActivity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_weight="0.10"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="0.10"
         android:background="@color/app_blue">
+
         <TextView
+            android:id="@+id/toolbar_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Home"
             android:layout_gravity="center"
-            android:textSize="20sp"
+            android:gravity="center"
+            android:text="Home"
             android:textColor="@color/white"
-            android:textStyle="bold"
-            android:gravity="center" android:id="@+id/toolbar_title"/>
+            android:textSize="20sp"
+            android:textStyle="bold" />
     </android.support.v7.widget.Toolbar>
-<LinearLayout
-    android:id="@+id/fragment_container"
-    android:layout_width="match_parent"
-    android:layout_height="0dp"
-    android:layout_weight="0.80"
-    android:orientation="vertical"
-    >
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.80"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
     <View
         android:id="@+id/grayline"
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="@color/gray"/>
+        android:background="@color/gray" />
+
     <LinearLayout
         android:id="@+id/bottomNavigation"
-        android:layout_weight="0.10"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:paddingTop="10dp"
-        android:orientation="horizontal">
+        android:layout_weight="0.10"
+        android:orientation="horizontal"
+        android:paddingTop="10dp">
 
         <LinearLayout
             android:id="@+id/bottom_nav_home"
@@ -62,84 +67,93 @@
                 android:id="@+id/btn_home"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@null"
                 android:drawableTop="@drawable/home_blue"
                 android:gravity="center"
-                android:background="@null"
-                android:textStyle="bold"
-                android:textSize="10sp"
                 android:text="@string/home"
                 android:textColor="@color/bottomnavigationtext"
-                />
+                android:textSize="10sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/bottom_nav_receipts"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <Button
                 android:id="@+id/btn_receipts"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@null"
                 android:drawableTop="@drawable/receipts_blue"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:background="@null"
-                android:textSize="10sp"
                 android:text="@string/receipts"
                 android:textColor="@color/bottomnavigationtext"
-                />
+                android:textSize="10sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/bottom_nav_split"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
+
             <Button
                 android:id="@+id/btn_split"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:background="@null"
                 android:drawableTop="@drawable/split_blue"
                 android:gravity="center"
-                android:textStyle="bold"
-                android:background="@null"
-                android:textSize="10sp"
                 android:text="@string/split"
                 android:textColor="@color/bottomnavigationtext"
-                />
+                android:textSize="10sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/bottom_nav_shoping_list"
             android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <Button
                 android:id="@+id/btn_shoppingList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:textStyle="bold"
                 android:background="@null"
-                android:textSize="10sp"
-                android:drawableTop="@drawable/shopping_list_blue" android:text="@string/shoppinglist"
+                android:drawableTop="@drawable/shopping_list_blue"
+                android:gravity="center"
+                android:text="@string/shoppinglist"
                 android:textColor="@color/bottomnavigationtext"
-                />
+                android:textSize="10sp"
+                android:textStyle="bold" />
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/bottom_nav_me"
             android:layout_width="0dp"
-            android:layout_height="match_parent" android:layout_weight="1" android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
             <Button
                 android:id="@+id/btn_me"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:gravity="center"
-                android:textStyle="bold"
                 android:background="@null"
-                android:textSize="10sp"
-                android:drawableTop="@drawable/me_blue" android:text="@string/me"
+                android:drawableTop="@drawable/me_blue"
+                android:gravity="center"
+                android:text="@string/me"
                 android:textColor="@color/bottomnavigationtext"
-                />
+                android:textSize="10sp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

@@ -19,7 +19,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.github.johnpersano.supertoasts.SuperToast;
-import com.receiptofi.receiptapp.ParentActivity;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.http.ExternalCallWithOkHttp;
 import com.receiptofi.receiptapp.http.ResponseHandler;

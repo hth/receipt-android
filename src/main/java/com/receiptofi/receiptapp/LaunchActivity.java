@@ -5,13 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.receiptofi.receiptapp.http.API;
+import com.receiptofi.receiptapp.activities.MyDrawerActivity;
 import com.receiptofi.receiptapp.utils.UserUtils;
-import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 
 /**
  * Launch activity facilities.
@@ -33,8 +31,8 @@ public class LaunchActivity extends ParentActivity implements View.OnClickListen
         Log.d(TAG,"LaunchActivity Oncreate");
          if (UserUtils.isValidAppUser()) {
              // Change to Main activity activity
-           //startActivity(new Intent(this, MainMaterialDrawerActivity.class));
-             startActivity(new Intent(this, HomeActivity.class));
+           startActivity(new Intent(this, MyDrawerActivity.class));
+            // startActivity(new Intent(this, HomeActivity.class));
             finish();
         }
         Log.d(TAG, "executing onCreate");

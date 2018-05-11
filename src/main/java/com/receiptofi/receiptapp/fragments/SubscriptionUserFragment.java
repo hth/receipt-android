@@ -19,7 +19,6 @@ import android.widget.TextView;
 
 import com.braintreepayments.api.Braintree;
 import com.braintreepayments.api.dropin.BraintreePaymentActivity;
-
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.github.johnpersano.supertoasts.util.Style;

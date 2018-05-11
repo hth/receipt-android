@@ -6,7 +6,6 @@ import android.util.Log;
 
 import com.receiptofi.receiptapp.ReceiptofiApplication;
 import com.receiptofi.receiptapp.db.DatabaseTable;
-import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.model.ReceiptSplitModel;
 
 import java.util.LinkedList;

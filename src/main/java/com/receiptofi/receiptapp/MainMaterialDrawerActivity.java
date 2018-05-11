@@ -166,7 +166,7 @@ public class MainMaterialDrawerActivity extends MaterialNavigationDrawer impleme
                         new IconDrawable(receiptofiApplication, FontAwesomeIcons.fa_shopping_cart)
                                 .colorRes(R.color.white)
                                 .actionBarSize(),
-                        new Intent(this, ShoppingPlaceActivity.class)));
+                        new Intent(this, ShoppingPlaceActivityF.class)));
 
         this.addSection(
                 newSection(

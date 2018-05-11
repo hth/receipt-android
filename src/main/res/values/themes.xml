@@ -18,5 +18,12 @@
         <item name="android:background">@color/app_theme_bg</item>
         <item name="android:textColor">@color/white</item>
     </style>-->
-
+    <style name="BaseTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="colorControlNormal">@android:color/white</item>
+        //the rest of your codes...
+    </style>
+    <style name="Theme.AppCompat.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
 </resources>

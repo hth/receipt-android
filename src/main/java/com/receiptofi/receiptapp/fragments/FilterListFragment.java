@@ -28,17 +28,13 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 import com.joanzapata.iconify.IconDrawable;
-import com.joanzapata.iconify.Iconify;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.FilterListActivity;
 import com.receiptofi.receiptapp.R;
-import com.receiptofi.receiptapp.ReceiptListActivity;
 import com.receiptofi.receiptapp.adapters.FilterListAdapter;
-import com.receiptofi.receiptapp.adapters.ReceiptListAdapter;
 import com.receiptofi.receiptapp.model.FilterGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptGroup;
 import com.receiptofi.receiptapp.model.ReceiptGroupHeader;
-import com.receiptofi.receiptapp.model.ReceiptGroupObservable;
 import com.receiptofi.receiptapp.model.ReceiptModel;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.views.PinnedHeaderExpandableListView;

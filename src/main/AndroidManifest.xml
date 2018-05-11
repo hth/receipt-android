@@ -82,10 +82,19 @@
                 android:value=".MainMaterialDrawerActivity" />
         </activity>
         <activity
+            android:name=".ShoppingPlaceActivityF"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="Shopping Places"
+            android:parentActivityName=".MainMaterialDrawerActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value=".MainMaterialDrawerActivity" />
+        </activity>
+        <activity
             android:name=".ShoppingListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:label="Shopping List"
-            android:parentActivityName=".ShoppingPlaceActivity"></activity>
+            android:parentActivityName=".ShoppingPlaceActivity" />
         <activity
             android:name=".FilterListActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
@@ -135,7 +144,7 @@
         </activity>
         <activity
             android:name=".SubscribeConfirmationActivity"
-            android:label="@string/title_activity_subscribe_confirmation"></activity>
+            android:label="@string/title_activity_subscribe_confirmation" />
         <!-- Required to use Drop-In -->
         <activity
             android:name="com.braintreepayments.api.dropin.BraintreePaymentActivity"
@@ -178,7 +187,7 @@
         </service>
         <service
             android:name=".service.gcm.RegistrationIntentService"
-            android:exported="false"></service>
+            android:exported="false" />
         <!-- GCM Ends -->
         <activity android:name=".HomeActivity">
             <meta-data
@@ -188,33 +197,38 @@
         <activity
             android:name=".SignUpActivity1"
             android:label="@string/label_sign_up"
-            android:windowSoftInputMode="stateAlwaysVisible" >
-            <meta-data android:value="com.receiptofi.receiptapp.LaunchActivity"
+            android:windowSoftInputMode="stateAlwaysVisible">
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                ></meta-data>
-
+                android:value="com.receiptofi.receiptapp.LaunchActivity" />
         </activity>
         <activity
             android:name=".LogInActivity1"
             android:label="@string/label_sign_up"
-            android:windowSoftInputMode="stateAlwaysVisible" >
-            <meta-data android:value="com.receiptofi.receiptapp.LaunchActivity"
+            android:windowSoftInputMode="stateAlwaysVisible">
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                ></meta-data>
+                android:value="com.receiptofi.receiptapp.LaunchActivity" />
         </activity>
         <activity
             android:name=".PasswordRecoveryActivity1"
             android:label="@string/label_sign_up"
-            android:windowSoftInputMode="stateAlwaysVisible" >
-            <meta-data android:value="com.receiptofi.receiptapp.LogInActivity1"
+            android:windowSoftInputMode="stateAlwaysVisible">
+            <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                ></meta-data>
+                android:value="com.receiptofi.receiptapp.LogInActivity1" />
         </activity>
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="4cab8d76e7a11fbe785f44a564e97988ff0f5bd6"
-            />
+            android:value="4cab8d76e7a11fbe785f44a564e97988ff0f5bd6" />
+
+        <activity
+            android:name=".activities.MyDrawerActivity"
+            android:label="@string/title_activity_main_temp"
+            android:theme="@style/BaseTheme"
+            android:screenOrientation="portrait"/>
+
     </application>
 
 </manifest>

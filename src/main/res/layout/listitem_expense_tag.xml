@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    card_view:cardCornerRadius="10dp"
+    card_view:cardElevation="2dp"
+    card_view:cardUseCompatPadding="true">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/tag_color"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="@dimen/tagColorMargin"
+            android:layout_marginLeft="@dimen/tagColorMargin_left"
+            android:layout_marginTop="@dimen/tagColorMargin"
+            android:background="@color/red" />
+
+        <TextView
+            android:id="@+id/tag_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginBottom="@dimen/tagTextMargin"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="@dimen/tagTextMargin"
+            android:layout_toLeftOf="@+id/iv_edit"
+            android:layout_toRightOf="@+id/tag_color"
+            android:text="@string/hello_world"
+            android:textColor="@android:color/black"
+            android:textSize="18sp" />
+
+        <ImageView
+            android:id="@+id/iv_edit"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_edit"
+            android:layout_toLeftOf="@+id/iv_delete" />
+
+        <ImageView
+            android:id="@+id/iv_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_delete"
+            android:layout_alignParentRight="true" />
+
+    </RelativeLayout>
+</android.support.v7.widget.CardView>

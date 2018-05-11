@@ -1,6 +1,5 @@
 package com.receiptofi.receiptapp.fragments;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.graphics.Color;
@@ -18,7 +17,6 @@ import com.github.johnpersano.supertoasts.SuperToast;
 import com.receiptofi.receiptapp.BuildConfig;
 import com.receiptofi.receiptapp.HomeActivity;
 import com.receiptofi.receiptapp.R;
-import com.receiptofi.receiptapp.ReceiptListActivity;
 import com.receiptofi.receiptapp.utils.AppUtils;
 import com.receiptofi.receiptapp.utils.Constants;
 import com.receiptofi.receiptapp.utils.OnSwipeTouchListener;

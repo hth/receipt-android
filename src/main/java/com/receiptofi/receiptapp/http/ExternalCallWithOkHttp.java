@@ -30,7 +30,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-import static okhttp3.OkHttpClient.*;
+import static okhttp3.OkHttpClient.Builder;
 
 /**
  * User: hitender

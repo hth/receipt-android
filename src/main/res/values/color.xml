@@ -7,6 +7,10 @@
     <color name="app_theme_bg_gradient_start">#FF1CAADB</color>
     <color name="app_theme_bg_gradient_end">#FF1999C4</color>
 
+
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#43BDE7</color>
+    <color name="colorPrimaryDark">#0F9CBC</color>
     <!--       Color from Android      -->
     <color name="transparent">@android:color/transparent</color>
     <color name="black">@android:color/black</color>

@@ -101,7 +101,7 @@ public class ExpenseTagDialog extends DialogFragment {
             ((IconDrawable) tagIcon).color(Color.parseColor(tagModel.getColor()));
         }
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), R.style.MyDialogTheme);
         if (DialogMode.MODE_UPDATE == dialogMode) {
             builder.setTitle(getString(R.string.expense_tag_dialog_edit_label));
         } else {

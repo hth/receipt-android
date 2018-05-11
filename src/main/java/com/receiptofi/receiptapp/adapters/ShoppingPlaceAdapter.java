@@ -18,7 +18,6 @@ import com.joanzapata.iconify.IconDrawable;
 import com.joanzapata.iconify.fonts.FontAwesomeIcons;
 import com.receiptofi.receiptapp.R;
 import com.receiptofi.receiptapp.ShoppingListActivity;
-import com.receiptofi.receiptapp.ShoppingPlaceActivity;
 import com.receiptofi.receiptapp.model.helper.Coordinate;
 import com.receiptofi.receiptapp.model.helper.ShoppingPlace;
 import com.receiptofi.receiptapp.model.types.DistanceUnit;

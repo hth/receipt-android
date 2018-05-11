@@ -1,16 +1,18 @@
 package com.receiptofi.receiptapp;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -20,9 +22,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.amulyakhare.textdrawable.TextDrawable;
 import com.github.johnpersano.supertoasts.SuperActivityToast;
 import com.github.johnpersano.supertoasts.SuperToast;
 import com.google.android.gms.common.ConnectionResult;
@@ -43,8 +43,6 @@ import com.receiptofi.receiptapp.utils.UserUtils;
 import com.receiptofi.receiptapp.utils.db.KeyValueUtils;
 import com.receiptofi.receiptapp.utils.db.ProfileUtils;
 
-import org.apache.commons.lang3.text.WordUtils;
-
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
 
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, ReceiptListFragment.OnReceiptSelectedListener {
@@ -58,7 +56,8 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     private String  tagSplit = "SPLIT";
     private String tagShoppingList = "SHOPPINGLIST";
     private String tagReceiptDetail = "RECEIPTDETAIL";
-
+    private static final int REQUEST_CODE_PERMISSION = 2;
+    private String mPermission = Manifest.permission.ACCESS_FINE_LOCATION;
     //--- Bottom nav button
     public LinearLayout llbottom_nav_home,bottom_nav_receipts,bottom_nav_split,bottom_nav_shoping_list,bottom_nav_me;
     public  Button btn_home,btn_receipts,btn_shoppingList,btn_split,btn_me;
@@ -244,21 +243,20 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View v) {
         int id = v.getId();
 
-        switch (id)
-        {
+        switch (id) {
             case R.id.btn_home:
                 HomeFragment homeFragment = new HomeFragment();
-                replaceFragmentwithTag(homeFragment,tagHome);
+                replaceFragmentwithTag(homeFragment, tagHome);
                 homebuttonClick();
                 break;
             case R.id.btn_me:
-                SettingFragment  settingFragment = SettingFragment.getInstance();
-                replaceFragmentwithTag(settingFragment,tagMe);
-                btn_home.setCompoundDrawablesWithIntrinsicBounds(null,drawablehomeblue,null,null);
-                btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null,drawablereceiptblue,null,null);
-                btn_split.setCompoundDrawablesWithIntrinsicBounds(null,drawablesplitblue,null,null);
-                btn_shoppingList.setCompoundDrawablesWithIntrinsicBounds(null,drawableshoppinglistblue,null,null);
-                btn_me.setCompoundDrawablesWithIntrinsicBounds(null,drawablemered,null,null);
+                SettingFragment settingFragment = SettingFragment.getInstance();
+                replaceFragmentwithTag(settingFragment, tagMe);
+                btn_home.setCompoundDrawablesWithIntrinsicBounds(null, drawablehomeblue, null, null);
+                btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null, drawablereceiptblue, null, null);
+                btn_split.setCompoundDrawablesWithIntrinsicBounds(null, drawablesplitblue, null, null);
+                btn_shoppingList.setCompoundDrawablesWithIntrinsicBounds(null, drawableshoppinglistblue, null, null);
+                btn_me.setCompoundDrawablesWithIntrinsicBounds(null, drawablemered, null, null);
 
 
                 btn_home.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
@@ -269,12 +267,12 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btn_receipts:
                 ReceiptListFragment fragment = ReceiptListFragment.getInstance();
-                replaceFragmentwithTag(fragment,tagReceipt);
-                btn_home.setCompoundDrawablesWithIntrinsicBounds(null,drawablehomeblue,null,null);
-                btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null,drawablereceiptred,null,null);
-                btn_split.setCompoundDrawablesWithIntrinsicBounds(null,drawablesplitblue,null,null);
-                btn_shoppingList.setCompoundDrawablesWithIntrinsicBounds(null,drawableshoppinglistblue,null,null);
-                btn_me.setCompoundDrawablesWithIntrinsicBounds(null,drawablemeblue,null,null);
+                replaceFragmentwithTag(fragment, tagReceipt);
+                btn_home.setCompoundDrawablesWithIntrinsicBounds(null, drawablehomeblue, null, null);
+                btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null, drawablereceiptred, null, null);
+                btn_split.setCompoundDrawablesWithIntrinsicBounds(null, drawablesplitblue, null, null);
+                btn_shoppingList.setCompoundDrawablesWithIntrinsicBounds(null, drawableshoppinglistblue, null, null);
+                btn_me.setCompoundDrawablesWithIntrinsicBounds(null, drawablemeblue, null, null);
 
 
                 btn_home.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
@@ -284,18 +282,30 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
                 btn_me.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
                 break;
             case R.id.btn_shoppingList:
-                btn_home.setCompoundDrawablesWithIntrinsicBounds(null,drawablehomeblue,null,null);
-                btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null,drawablereceiptblue,null,null);
-                btn_split.setCompoundDrawablesWithIntrinsicBounds(null,drawablesplitblue,null,null);
-                btn_shoppingList.setCompoundDrawablesWithIntrinsicBounds(null,drawableshoppinglistred,null,null);
-                btn_me.setCompoundDrawablesWithIntrinsicBounds(null,drawablemeblue,null,null);
+
+                if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                        && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+                    ActivityCompat.requestPermissions(this, new String[]{mPermission},
+                            REQUEST_CODE_PERMISSION);
+
+                } else {
+
+                    ShoppingPlaceActivity frag = new ShoppingPlaceActivity();
+                    replaceFragmentwithTag(frag, tagReceipt);
+                    btn_home.setCompoundDrawablesWithIntrinsicBounds(null, drawablehomeblue, null, null);
+                    btn_receipts.setCompoundDrawablesWithIntrinsicBounds(null, drawablereceiptblue, null, null);
+                    btn_split.setCompoundDrawablesWithIntrinsicBounds(null, drawablesplitblue, null, null);
+                    btn_shoppingList.setCompoundDrawablesWithIntrinsicBounds(null, drawableshoppinglistred, null, null);
+                    btn_me.setCompoundDrawablesWithIntrinsicBounds(null, drawablemeblue, null, null);
 
 
-                btn_home.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
-                btn_receipts.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
-                btn_split.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
-                btn_shoppingList.setTextColor(HomeActivity.this.getResources().getColor(R.color.app_red));
-                btn_me.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
+                    btn_home.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
+                    btn_receipts.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
+                    btn_split.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
+                    btn_shoppingList.setTextColor(HomeActivity.this.getResources().getColor(R.color.app_red));
+                    btn_me.setTextColor(HomeActivity.this.getResources().getColor(R.color.gray_dark));
+                }
                 break;
             case R.id.btn_split:
                 btn_home.setCompoundDrawablesWithIntrinsicBounds(null,drawablehomeblue,null,null);

@@ -12,6 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="@dimen/tv_horizontal_margin"
+        android:textSize="20sp"
         android:text="@string/hello_world"/>
 
     <TextView
@@ -22,6 +23,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/notification_text"
+        android:textSize="16sp"
         android:paddingLeft="@dimen/tv_horizontal_margin"
         android:text="@string/hello_world"/>
 

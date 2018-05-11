@@ -292,7 +292,7 @@ public class  ParentActivity extends AppCompatActivity implements ConnectionCall
             @Override
             public void run() {
                 loginToastRunning = false;
-                Intent i = new Intent(ParentActivity.this, HomeActivity.class);
+                Intent i = new Intent(ParentActivity.this, MainMaterialDrawerActivity.class);
                // Intent i = new Intent(ParentActivity.this, HomeActivity.class);
                 i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(i);

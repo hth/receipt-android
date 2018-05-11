@@ -301,7 +301,7 @@
 
     <string name="msg1"> Tapping \'Sign Up\' confirms that you agree to</string>
     <string name="msg2"><u>ReceiptApp Terms of Use</u></string>
-    
+
     <string name="details">Details</string>
     <string name="options">Options</string>
     <string name="previewreceipt">Preview Receipt</string>
@@ -316,5 +316,19 @@
     <string name="invite">INVITE</string>
     <string name="notes">Notes</string>
     <string name="save">SAVE</string>
-    
+    <string name="title_activity_my_drawer">MyDrawerActivity</string>
+    <string name="title_section1">Section 1</string>
+    <string name="title_section2">Section 2</string>
+    <string name="title_section3">Section 3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_example">Example action</string>
+    <string name="title_activity_main_temp">MainActivity_temp</string>
+    <string name="title_activity_main_activitydfgdg">MainActivitydfgdg</string>
+    <string name="shopping_place">Shopping Places</string>
+    <string name="tag_expense">Tag Expences</string>
+    <string name="subscription">Subscription</string>
+
 </resources>
