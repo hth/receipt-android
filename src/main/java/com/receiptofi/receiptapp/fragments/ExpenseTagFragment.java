@@ -156,7 +156,7 @@ public class ExpenseTagFragment extends Fragment implements DialogInterface.OnDi
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mListener = (OnFragmentInteractionListener) activity;
+//            mListener = (OnFragmentInteractionListener) activity;
         } catch (ClassCastException e) {
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
         }
