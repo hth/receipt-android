@@ -19,12 +19,10 @@ import java.util.List;
 public class NotificationFragment extends Fragment {
     private static final String TAG = NotificationFragment.class.getSimpleName();
 
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
     private View mView;
     private ListView listView;
     private TextView mEmptyTextview;
@@ -47,24 +45,20 @@ public class NotificationFragment extends Fragment {
     }
 
     public NotificationFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         mView = inflater.inflate(R.layout.fragment_notification, container, false);
         setupView();
-        // start query
         new NotificationDataTask().execute();
         return mView;
     }
@@ -74,9 +68,6 @@ public class NotificationFragment extends Fragment {
         mEmptyTextview = (TextView) mView.findViewById(R.id.empty_view);
     }
 
-    private void setListData(List<NotificationModel> notificationModels) {
-        listView.setAdapter(new NotificationAdapter(getActivity(), notificationModels));
-    }
 
     private class NotificationDataTask extends AsyncTask<Void, Void, List<NotificationModel>> {
 
@@ -87,7 +78,8 @@ public class NotificationFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<NotificationModel> notificationModels) {
-            setListData(notificationModels);
+            listView.setAdapter(new NotificationAdapter(getActivity(), notificationModels));
+
             // Show up the empty view when this user has empty notification.
             if (notificationModels.size() == 0) {
                 mEmptyTextview.setVisibility(View.VISIBLE);

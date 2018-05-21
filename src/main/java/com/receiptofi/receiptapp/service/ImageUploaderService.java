@@ -91,7 +91,7 @@ public class ImageUploaderService {
                     msg.obj = "Uploaded " + fileName + " successfully.";
                     msg.arg1 = unprocessedCount;
                     if (ReceiptofiApplication.isHomeActivityVisible()) {
-                        ((HomeActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
+                        ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                     }
                 }
 
@@ -108,7 +108,7 @@ public class ImageUploaderService {
                 msg.what = HomeFragment.IMAGE_UPLOAD_FAILURE;
                 msg.obj = exception.getLocalizedMessage();
                 if (ReceiptofiApplication.isHomeActivityVisible()) {
-                    ((HomeActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
+                    ((MainMaterialDrawerActivity) AppUtils.getHomePageContext()).homeFragment.updateHandler.sendMessage(msg);
                 }
             }
 

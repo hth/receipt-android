@@ -393,7 +393,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
         /** Setup the background color. */
         View v = getView();
         Assert.assertNotNull("View is null", v);
-        v.setBackgroundColor(Color.WHITE);
+        v.setBackgroundColor(Color.BLACK);
     }
 
     @Override

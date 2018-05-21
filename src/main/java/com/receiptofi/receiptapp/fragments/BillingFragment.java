@@ -146,8 +146,13 @@ public class BillingFragment extends Fragment {
 
         @Override
         protected void onPostExecute(BillingAccountModel billingAccountModel) {
-            billingAccountData = billingAccountModel;
+
             Log.d(TAG, "Completed querying, sending notification to fragment");
+            if(null!=billingAccountModel)
+                billingAccountData = billingAccountModel;
+            else{
+                billingAccountData = new BillingAccountModel();
+            }
             showData();
         }
     }

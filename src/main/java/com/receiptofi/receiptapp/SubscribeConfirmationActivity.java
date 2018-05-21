@@ -20,15 +20,13 @@ import com.receiptofi.receiptapp.model.wrapper.TransactionWrapper;
 import com.receiptofi.receiptapp.utils.Constants;
 
 public class SubscribeConfirmationActivity extends Activity {
-    private static final String TAG = SubscribeConfirmationActivity.class.getSimpleName();
 
-    public TextView tvMessage;
-    public Button btnSubscribe;
+
+    private TextView tvMessage;
     private String type;
     private PlanModel pm;
     private String firstName;
     private String lastName;
-    private String postalCode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,14 +44,14 @@ public class SubscribeConfirmationActivity extends Activity {
         getActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvMessage = (TextView) findViewById(R.id.tv_subscription_confirmation_message);
-        btnSubscribe = (Button) findViewById(R.id.br_subscription_confirmation);
+        //btnSubscribe = (Button) findViewById(R.id.br_subscription_confirmation);
        // btnSubscribe.setRippleSpeed(Constants.RIPPLE_SPEED_EFFECT);
 
         type = getIntent().getStringExtra(Constants.INTENT_EXTRA_TRANSACTION_TYPE);
         pm = getIntent().getParcelableExtra(Constants.INTENT_EXTRA_PLAN_MODEL);
         firstName = getIntent().getStringExtra(Constants.INTENT_EXTRA_FIRST_NAME);
         lastName = getIntent().getStringExtra(Constants.INTENT_EXTRA_LAST_NAME);
-        postalCode = getIntent().getStringExtra(Constants.INTENT_EXTRA_POSTAL_CODE);
+        //postalCode = getIntent().getStringExtra(Constants.INTENT_EXTRA_POSTAL_CODE);
 
         String message = "";
         if (!TextUtils.isEmpty(type) && pm != null && !TextUtils.isEmpty(firstName) && !TextUtils.isEmpty(lastName)) {

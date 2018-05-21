@@ -38,12 +38,12 @@ public class SubscriptionUserActivity extends Activity {
         /** Setup back up button with its own icon. */
         int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
-            ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
-                    .colorRes(R.color.white)
-                    .actionBarSize());
+//            ImageView up = (ImageView) findViewById(upId);
+//            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
+//                    .colorRes(R.color.white)
+//                    .actionBarSize());
         }
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getActionBar().setDisplayHomeAsUpEnabled(true);
 
         // Check whether the activity is using the layout version with
         // the fragment_container FrameLayout. If so, we must add the first fragment

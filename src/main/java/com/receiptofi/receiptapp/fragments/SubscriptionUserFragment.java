@@ -137,16 +137,16 @@ public class SubscriptionUserFragment extends Fragment implements View.OnClickLi
             }
 
             LinearLayout subscriptionPlanLinearLayout = (LinearLayout) rootView.findViewById(R.id.subscription_user);
-            View childPlan = inflater.inflate(R.layout.subscription_plan_list_item, null);
+            View childPlan = inflater.inflate(R.layout.list_item_inner, null);
             subscriptionPlanLinearLayout.addView(childPlan, 1);
 
-            planName = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_name);
+            planName = (TextView) childPlan.findViewById(R.id.tv_plan_name);
             planName.setText(pm.getName());
 
-            planDescription = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_description);
+            planDescription = (TextView) childPlan.findViewById(R.id.tv_plan_description);
             planDescription.setText(pm.getDescription());
 
-            planPrice = (TextView) childPlan.findViewById(R.id.subscription_plan_list_item_plan_price);
+            planPrice = (TextView) childPlan.findViewById(R.id.tv_plan_price);
             planPrice.setText("$" + String.valueOf(pm.getPrice()));
 
             etFirstName = (EditText) rootView.findViewById(R.id.subscription_user_first_name);

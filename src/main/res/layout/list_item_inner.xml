@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:minHeight="?android:attr/listPreferredItemHeightSmall"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin">
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin">
 
     <LinearLayout
         android:id="@+id/rd_list_item_left"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:orientation="vertical"
-        android:layout_toLeftOf="@+id/subscription_plan_list_item_plan_price"
-        android:layout_alignParentLeft="true">
+        android:layout_toLeftOf="@+id/tv_plan_price"
+        android:orientation="vertical">
 
         <TextView
-            android:id="@+id/subscription_plan_list_item_plan_name"
+            android:id="@+id/tv_plan_name"
             style="@style/rd_list_item_text_left_primary_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:height="35dp"
             android:paddingLeft="10dp"
-            android:text="Monthly 10"/>
+            android:text="Monthly 10" />
 
         <TextView
-            android:id="@+id/subscription_plan_list_item_plan_description"
+            android:id="@+id/tv_plan_description"
             style="@style/rd_list_item_text_left_secondary_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,28 +34,28 @@
             android:lines="2"
             android:paddingLeft="10dp"
             android:paddingRight="20dp"
-            android:text="Process 120 receipts annually. Get two months discount."/>
+            android:text="Process 120 receipts annually. Get two months discount." />
 
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/subscription_plan_list_item_next_arrow"
+        android:id="@+id/iv_next_arrow"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
         android:layout_gravity="right"
-        android:paddingLeft="10dp"/>
+        android:paddingLeft="10dp" />
 
     <TextView
-        android:id="@+id/subscription_plan_list_item_plan_price"
+        android:id="@+id/tv_plan_price"
         style="@style/rd_list_item_price_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_toLeftOf="@id/subscription_plan_list_item_next_arrow"
+        android:layout_toLeftOf="@id/iv_next_arrow"
         android:gravity="right"
         android:paddingRight="10dp"
-        android:text="000"/>
+        android:text="000" />
 
 </RelativeLayout>

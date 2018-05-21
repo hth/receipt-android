@@ -28,6 +28,7 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.plus.Plus;
+import com.receiptofi.receiptapp.activities.MyDrawerActivity;
 import com.receiptofi.receiptapp.http.API;
 import com.receiptofi.receiptapp.http.ExternalCallWithOkHttp;
 import com.receiptofi.receiptapp.http.ResponseHandler;

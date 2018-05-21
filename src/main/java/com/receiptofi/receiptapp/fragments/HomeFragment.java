@@ -1,9 +1,11 @@
 package com.receiptofi.receiptapp.fragments;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -12,6 +14,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.TextUtils;
@@ -71,7 +75,11 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
+    private final int CAMERA_AND_STORAGE_PERMISSION_CODE = 102;
+    private final String[] CAMERA_AND_STORAGE_PERMISSION_PERMS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -271,7 +279,7 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-           // mListener = (OnFragmentInteractionListener) context;
+            mListener = (OnFragmentInteractionListener) context;
         } catch (ClassCastException e) {
             Log.e(TAG, "reason=" + e.getLocalizedMessage(), e);
             throw new ClassCastException(context.toString() + " must implement OnFragmentInteractionListener");
@@ -290,7 +298,12 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         cameraLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                takePhoto();
+
+                if (isCameraAndStoragePermissionAllowed()) {
+                    takePhoto();
+                } else {
+                    requestCameraAndStoragePermission();
+                }
             }
         });
     }
@@ -514,4 +527,56 @@ public class HomeFragment extends Fragment implements OnChartValueSelectedListen
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp,
                 getActivity().getResources().getDisplayMetrics());
     }
+
+    private boolean isExternalStoragePermissionAllowed() {
+        //Getting the permission status
+        int result_read = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int result_write = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        //If permission is granted returning true
+        if (result_read == PackageManager.PERMISSION_GRANTED && result_write == PackageManager.PERMISSION_GRANTED)
+            return true;
+        //If permission is not granted returning false
+        return false;
+    }
+
+    private boolean isCameraPermissionAllowed() {
+        //Getting the permission status
+        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        //If permission is granted returning true
+        if (result == PackageManager.PERMISSION_GRANTED)
+            return true;
+        //If permission is not granted returning false
+        return false;
+    }
+
+    private boolean isCameraAndStoragePermissionAllowed() {
+        return (isCameraPermissionAllowed() && isExternalStoragePermissionAllowed());
+    }
+
+    private void requestCameraAndStoragePermission() {
+        ActivityCompat.requestPermissions(
+                getActivity(),
+                CAMERA_AND_STORAGE_PERMISSION_PERMS,
+                CAMERA_AND_STORAGE_PERMISSION_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == CAMERA_AND_STORAGE_PERMISSION_CODE) {
+            try {
+                //both remaining permission allowed
+                if (grantResults.length == 2 && (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                    takePhoto();
+                } else if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {//one remaining permission allowed
+                    takePhoto();
+                } else if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    //No permission allowed
+                    //Do nothing
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

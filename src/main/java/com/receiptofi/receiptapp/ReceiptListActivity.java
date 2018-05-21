@@ -82,12 +82,12 @@ public class ReceiptListActivity extends HomeActivity implements ReceiptListFrag
         /** Setup back up button with its own icon. */
         int upId = Resources.getSystem().getIdentifier("up", "id", "android");
         if (upId > 0) {
-            ImageView up = (ImageView) findViewById(upId);
-            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
-                    .colorRes(R.color.white)
-                    .actionBarSize());
+//            ImageView up = (ImageView) findViewById(upId);
+//            up.setImageDrawable(new IconDrawable(this, FontAwesomeIcons.fa_chevron_left)
+//                    .colorRes(R.color.white)
+//                    .actionBarSize());
         }
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+    //    getActionBar().setDisplayHomeAsUpEnabled(true);
 
         initDrawerView();
 

@@ -48,7 +48,7 @@ import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, ReceiptListFragment.OnReceiptSelectedListener {
 
     private ReceiptofiApplication receiptofiApplication;
-    public HomeFragment1 homeFragment;
+    public HomeFragment homeFragment;
     private static final String TAG = HomeActivity.class.getSimpleName();
     private String tagHome = "HOME";
     private String tagReceipt = "RECEIPT";
@@ -100,7 +100,7 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
         ReceiptofiApplication.homeActivityResumed();
         receiptofiApplication = (ReceiptofiApplication) getApplicationContext();
 
-        homeFragment = HomeFragment1.newInstance("", "");
+        homeFragment = HomeFragment.newInstance("", "");
 
         ProfileModel profileModel = ProfileUtils.getProfile();
         String name = profileModel != null ? profileModel.getName() : "";

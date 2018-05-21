@@ -148,7 +148,7 @@ public class SubscriptionFragment extends Fragment {
         private final LayoutInflater inflater;
 
         public PlanListAdapter(Context context) {
-            super(context, R.layout.subscription_plan_list_item, PlanWrapper.getPlanModels());
+            super(context, R.layout.list_item_subscription_plan, PlanWrapper.getPlanModels());
             inflater = LayoutInflater.from(context);
         }
 
@@ -177,16 +177,16 @@ public class SubscriptionFragment extends Fragment {
             try {
                 ViewHolder holder;
                 if (convertView == null) {
-                    convertView = inflater.inflate(R.layout.subscription_plan_list_item, parent, false);
-                    ImageView nextAction = (ImageView) convertView.findViewById(R.id.subscription_plan_list_item_next_arrow);
+                    convertView = inflater.inflate(R.layout.list_item_subscription_plan, parent, false);
+                    ImageView nextAction = (ImageView) convertView.findViewById(R.id.iv_next_arrow);
                     nextAction.setImageDrawable(new IconDrawable(getActivity(), FontAwesomeIcons.fa_chevron_right)
                             .colorRes(R.color.app_theme_bg)
                             .sizePx(44));
 
                     holder = new ViewHolder();
-                    holder.planName = (TextView) convertView.findViewById(R.id.subscription_plan_list_item_plan_name);
-                    holder.planDescription = (TextView) convertView.findViewById(R.id.subscription_plan_list_item_plan_description);
-                    holder.planPrice = (TextView) convertView.findViewById(R.id.subscription_plan_list_item_plan_price);
+                    holder.planName = (TextView) convertView.findViewById(R.id.tv_plan_name);
+                    holder.planDescription = (TextView) convertView.findViewById(R.id.tv_plan_description);
+                    holder.planPrice = (TextView) convertView.findViewById(R.id.tv_plan_price);
                     convertView.setTag(holder);
                 } else {
                     holder = (ViewHolder) convertView.getTag();

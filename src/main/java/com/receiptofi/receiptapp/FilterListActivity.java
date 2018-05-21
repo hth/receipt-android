@@ -91,7 +91,7 @@ public class FilterListActivity extends Activity implements FilterListFragment.O
 //                    .colorRes(R.color.white)
 //                    .actionBarSize());
 //        }
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+//        getActionBar().setDisplayHomeAsUpEnabled(true);
 
         initDrawerView();
 

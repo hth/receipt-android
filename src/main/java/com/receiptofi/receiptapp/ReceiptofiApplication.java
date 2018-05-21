@@ -2,6 +2,7 @@ package com.receiptofi.receiptapp;
 
 import android.app.Activity;
 import android.app.Application;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -57,7 +58,8 @@ public class ReceiptofiApplication extends Application {
         Fabric.with(this, new Crashlytics());
         JodaTimeAndroid.init(this);
         Iconify.with(new FontAwesomeModule());
-
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         RDH = DatabaseHandler.getsInstance(this);
         if (KeyValueUtils.doesTableExists() &&
                 TextUtils.isEmpty(UserUtils.getAuth()) &&
@@ -74,9 +76,14 @@ public class ReceiptofiApplication extends Application {
     }
 
     private void logUser() {
-        ProfileModel profileModel = ProfileUtils.getProfile();
-        Crashlytics.setUserIdentifier(UserUtils.getDeviceId());
-        Crashlytics.setUserEmail(profileModel.getMail());
-        Crashlytics.setUserName(profileModel.getRid());
+        try {
+
+            ProfileModel profileModel = ProfileUtils.getProfile();
+            Crashlytics.setUserIdentifier(UserUtils.getDeviceId());
+            Crashlytics.setUserEmail(profileModel.getMail());
+            Crashlytics.setUserName(profileModel.getRid());
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

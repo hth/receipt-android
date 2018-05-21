@@ -1,10 +1,12 @@
 package com.receiptofi.receiptapp.fragments;
 
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.net.Uri;
@@ -13,6 +15,8 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -57,7 +61,11 @@ import static android.app.Activity.RESULT_OK;
  */
 public class HomeFragment1 extends Fragment implements View.OnClickListener, OnChartValueSelectedListener {
     private static  final String TAG = HomeFragment1.class.getSimpleName();
-
+    private final int CAMERA_AND_STORAGE_PERMISSION_CODE = 102;
+    private final String[] CAMERA_AND_STORAGE_PERMISSION_PERMS = {
+            Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            Manifest.permission.CAMERA
+    };
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -251,7 +259,11 @@ private  LinearLayout llTakePhoto,llChoosePhoto;
         switch (id)
         {
             case R.id.ll_take_photo:
-                takePhoto();
+                if (isCameraAndStoragePermissionAllowed()) {
+                    takePhoto();
+                } else {
+                    requestCameraAndStoragePermission();
+                }
                 break;
             case R.id.ll_choose_photo:
                 chooseImage();
@@ -484,5 +496,54 @@ private  LinearLayout llTakePhoto,llChoosePhoto;
         }
     }
 
+    private boolean isExternalStoragePermissionAllowed() {
+        //Getting the permission status
+        int result_read = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE);
+        int result_write = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        //If permission is granted returning true
+        if (result_read == PackageManager.PERMISSION_GRANTED && result_write == PackageManager.PERMISSION_GRANTED)
+            return true;
+        //If permission is not granted returning false
+        return false;
+    }
 
+    private boolean isCameraPermissionAllowed() {
+        //Getting the permission status
+        int result = ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA);
+        //If permission is granted returning true
+        if (result == PackageManager.PERMISSION_GRANTED)
+            return true;
+        //If permission is not granted returning false
+        return false;
+    }
+
+    private boolean isCameraAndStoragePermissionAllowed() {
+        return (isCameraPermissionAllowed() && isExternalStoragePermissionAllowed());
+    }
+
+    private void requestCameraAndStoragePermission() {
+        ActivityCompat.requestPermissions(
+                getActivity(),
+                CAMERA_AND_STORAGE_PERMISSION_PERMS,
+                CAMERA_AND_STORAGE_PERMISSION_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == CAMERA_AND_STORAGE_PERMISSION_CODE) {
+            try {
+                //both remaining permission allowed
+                if (grantResults.length == 2 && (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED)) {
+                    takePhoto();
+                } else if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {//one remaining permission allowed
+                    takePhoto();
+                } else if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_DENIED) {
+                    //No permission allowed
+                    //Do nothing
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

@@ -3,6 +3,7 @@ package com.receiptofi.receiptapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.app.FragmentManager;
@@ -43,7 +44,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         super.onCreate(savedInstanceState);
         setContentView(R.layout.act_my_drawer);
 
-        HomeFragment1 scanfragment = HomeFragment1.newInstance("", "");
+        HomeFragment1 homeFragment1 = HomeFragment1.newInstance("", "");
         notificationFragment = NotificationFragment.newInstance("", "");
         expenseTagFragment = ExpenseTagFragment.newInstance("", "");
         billingFragment = new BillingFragment();
@@ -51,7 +52,7 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         settingFragment = new SettingFragment();
         FragmentManager fragmentManager = getFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
-        transaction.replace(R.id.frame_layout, scanfragment).commit();
+        transaction.replace(R.id.frame_layout, homeFragment1).commit();
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -117,5 +118,10 @@ public class MyDrawerActivity extends AppCompatActivity implements NavigationVie
         FragmentManager fragmentManager = getFragmentManager();
         final FragmentTransaction transaction = fragmentManager.beginTransaction();
         transaction.replace(R.id.content_frame, fragment, fragment.getClass().getSimpleName()).commit();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }
